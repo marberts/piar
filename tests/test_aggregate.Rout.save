@@ -1,0 +1,586 @@
+
+R version 4.0.5 (2021-03-31) -- "Shake and Throw"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(piar)
+> set.seed(12345)
+> 
+> unclass(aggregate(elemental_index(numeric(0)), aggregation_structure(list())))
+$index
+named list()
+
+$contributions
+named list()
+
+$levels
+character(0)
+
+$periods
+character(0)
+
+> 
+> unclass(aggregate(elemental_index(1:5), aggregation_structure(list())))
+$index
+$index$`1`
+numeric(0)
+
+
+$contributions
+$contributions$`1`
+list()
+
+
+$levels
+character(0)
+
+$periods
+[1] "1"
+
+> 
+> unclass(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))
+$index
+$index$`1`
+ 2 
+NA 
+
+
+$contributions
+$contributions$`1`
+$contributions$`1`$`2`
+numeric(0)
+
+
+
+$levels
+[1] "2"
+
+$periods
+[1] "1"
+
+> 
+> #---- Matched sample ----
+> ms_epr <- with(
++   ms_prices, 
++   elemental_index(price_relative(price, period, product),
++                   period, business, contrib = TRUE, na.rm = TRUE)
++ )
+> 
+> ms_pias <- with(
++   ms_weights,
++   aggregation_structure(c(expand_classification(classification), list(business)), weight)
++ )
+> 
+> (ms_index <- aggregate(ms_epr, ms_pias, na.rm = TRUE))
+   202001    202002    202003   202004
+1       1 1.3007239 1.0630743 2.734761
+11      1 1.3007239 1.0630743 1.574515
+12      1 1.3007239 1.0630743 4.576286
+B1      1 0.8949097 0.3342939 1.574515
+B2      1 1.3007239 1.0630743 2.770456
+B3      1 2.0200036 1.6353355 0.537996
+B4      1 1.3007239 1.0630743 4.576286
+B5      1 1.3007239 1.0630743 4.576286
+> 
+> unclass(ms_index)
+$index
+$index$`202001`
+ 1 11 12 B1 B2 B3 B4 B5 
+ 1  1  1  1  1  1  1  1 
+
+$index$`202002`
+        1        11        12        B1        B2        B3        B4        B5 
+1.3007239 1.3007239 1.3007239 0.8949097 1.3007239 2.0200036 1.3007239 1.3007239 
+
+$index$`202003`
+        1        11        12        B1        B2        B3        B4        B5 
+1.0630743 1.0630743 1.0630743 0.3342939 1.0630743 1.6353355 1.0630743 1.0630743 
+
+$index$`202004`
+       1       11       12       B1       B2       B3       B4       B5 
+2.734761 1.574515 4.576286 1.574515 2.770456 0.537996 4.576286 4.576286 
+
+
+$contributions
+$contributions$`202001`
+$contributions$`202001`$`1`
+ 11.B1.1  11.B1.2  11.B1.3  11.B2.4  11.B2.5  11.B2.6  11.B3.7  11.B3.8 
+       0       NA        0        0        0        0        0        0 
+ 11.B3.9 11.B3.10 
+       0        0 
+
+$contributions$`202001`$`11`
+ B1.1  B1.2  B1.3  B2.4  B2.5  B2.6  B3.7  B3.8  B3.9 B3.10 
+    0    NA     0     0     0     0     0     0     0     0 
+
+$contributions$`202001`$`12`
+numeric(0)
+
+$contributions$`202001`$B1
+ 1  2  3 
+ 0 NA  0 
+
+$contributions$`202001`$B2
+4 5 6 
+0 0 0 
+
+$contributions$`202001`$B3
+ 7  8  9 10 
+ 0  0  0  0 
+
+$contributions$`202001`$B4
+numeric(0)
+
+$contributions$`202001`$B5
+numeric(0)
+
+
+$contributions$`202002`
+$contributions$`202002`$`1`
+    11.B1.2     11.B1.3     11.B2.4     11.B2.5     11.B2.6     11.B3.7 
+         NA -0.06718490          NA          NA          NA  0.51646606 
+    11.B3.8     11.B3.9    11.B3.10 
+ 0.01906845 -0.07980493 -0.08782076 
+
+$contributions$`202002`$`11`
+       B1.2        B1.3        B2.4        B2.5        B2.6        B3.7 
+         NA -0.06718490          NA          NA          NA  0.51646606 
+       B3.8        B3.9       B3.10 
+ 0.01906845 -0.07980493 -0.08782076 
+
+$contributions$`202002`$`12`
+numeric(0)
+
+$contributions$`202002`$B1
+         2          3 
+        NA -0.1050903 
+
+$contributions$`202002`$B2
+ 4  5  6 
+NA NA NA 
+
+$contributions$`202002`$B3
+          7           8           9          10 
+ 1.43186903  0.05286606 -0.22125406 -0.24347742 
+
+$contributions$`202002`$B4
+numeric(0)
+
+$contributions$`202002`$B5
+numeric(0)
+
+
+$contributions$`202003`
+$contributions$`202003`$`1`
+   11.B1.2    11.B1.3    11.B2.4    11.B2.5    11.B2.6    11.B3.7    11.B3.8 
+-0.2928098         NA         NA         NA         NA -0.2054665  0.1755868 
+   11.B3.9   11.B3.10   12.B4.11   12.B4.12 
+ 0.1125689  0.2731949         NA         NA 
+
+$contributions$`202003`$`11`
+      B1.2       B1.3       B2.4       B2.5       B2.6       B3.7       B3.8 
+-0.2928098         NA         NA         NA         NA -0.2054665  0.1755868 
+      B3.9      B3.10 
+ 0.1125689  0.2731949 
+
+$contributions$`202003`$`12`
+B4.11 B4.12 
+   NA    NA 
+
+$contributions$`202003`$B1
+         2          3 
+-0.6657061         NA 
+
+$contributions$`202003`$B2
+ 4  5  6 
+NA NA NA 
+
+$contributions$`202003`$B3
+         7          8          9         10 
+-0.3668053  0.3134630  0.2009616  0.4877162 
+
+$contributions$`202003`$B4
+11 12 
+NA NA 
+
+$contributions$`202003`$B5
+numeric(0)
+
+
+$contributions$`202004`
+$contributions$`202004`$`1`
+     11.B1.3      11.B2.4      11.B2.5      11.B2.6      11.B3.7      11.B3.8 
+          NA -0.018209690  0.094562963  0.427935081 -0.011177530 -0.003784845 
+     11.B3.9     11.B3.10     12.B4.11     12.B4.12 
+-0.058699008 -0.078173579  0.059392635  1.322915301 
+
+$contributions$`202004`$`11`
+        B1.3         B2.4         B2.5         B2.6         B3.7         B3.8 
+          NA -0.029682639  0.154142010  0.697554008 -0.018219891 -0.006169473 
+        B3.9        B3.10 
+-0.095682103 -0.127426555 
+
+$contributions$`202004`$`12`
+    B4.11     B4.12 
+0.1536597 3.4226265 
+
+$contributions$`202004`$B1
+ 3 
+NA 
+
+$contributions$`202004`$B2
+          4           5           6 
+-0.06393061  0.33199180  1.50239515 
+
+$contributions$`202004`$B3
+          7           8           9          10 
+-0.03401103 -0.01151654 -0.17860957 -0.23786686 
+
+$contributions$`202004`$B4
+       11        12 
+0.1536597 3.4226265 
+
+$contributions$`202004`$B5
+numeric(0)
+
+
+
+$levels
+[1] "1"  "11" "12" "B1" "B2" "B3" "B4" "B5"
+
+$periods
+[1] "202001" "202002" "202003" "202004"
+
+> 
+> # adding up
+> all.equal(apply(cumprod(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[1]]),
++           cumprod(ms_index)[1, ])
+[1] TRUE
+> 
+> all.equal(apply(cumprod(ms_index)[2:3, ], 2, weighted.mean, weights(ms_pias)[[2]]),
++           cumprod(ms_index)[1, ])
+[1] TRUE
+> 
+> # re-aggregating the index shouldn't do anything
+> all.equal(aggregate(ms_index, ms_pias)[], ms_index[])
+[1] TRUE
+Warning message:
+In aggregate.aggregate(ms_index, ms_pias) : aggregating an aggregated index
+> 
+> all.equal(aggregate(ms_index, ms_pias, na.rm = TRUE)[], ms_index[])
+[1] TRUE
+Warning message:
+In aggregate.aggregate(ms_index, ms_pias, na.rm = TRUE) :
+  aggregating an aggregated index
+> 
+> # re-arranging the index shouldn't do anything
+> ms_epr <- with(
++   ms_prices[sample(nrow(ms_prices)), ], 
++   elemental_index(price_relative(price, period, product),
++                   period, business, contrib = TRUE, na.rm = TRUE)
++ )
+> 
+> ms_pias <- with(
++   ms_weights[sample(nrow(ms_weights)), ],
++   aggregation_structure(c(expand_classification(classification), list(business)), weight)
++ )
+> 
+> all.equal(aggregate(ms_epr, ms_pias, na.rm = TRUE)[rownames(ms_index[]), ], ms_index[])
+[1] TRUE
+> 
+> # are contributions getting aggregated correctly?
+> all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+[1] TRUE
+> 
+> # are weights updated correctly?
+> apply(cumprod(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
+   202001   202002    202003    202004
+B1    553 494.8851  165.4371  260.4832
+B2    646 840.2676  893.2670 2474.7571
+B3    312 630.2411 1030.6557  554.4886
+B4    622 809.0503  860.0806 3935.9748
+B5    330 429.2389  456.3128 2088.2182
+> 
+> # try a weird index
+> ms_epr <- with(
++   ms_prices,
++   elemental_index(price_relative(price, period, product), 
++                   period, business, contrib = TRUE, r = 0.2)
++ )
+> 
+> ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
+> 
+> all.equal(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)[], ms_index[])
+[1] TRUE
+Warning message:
+In aggregate.aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE) :
+  aggregating an aggregated index
+> 
+> all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+[1] TRUE
+> 
+> all.equal(apply(cumprod(ms_index)[2:3, ], 2, gpindex::mean_generalized(-1.7), weights(ms_pias)[[2]]),
++           cumprod(ms_index)[1, ])
+[1] TRUE
+> 
+> ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)
+> 
+> all.equal(aggregate(ms_index, ms_pias, r = -1.7)[], ms_index[])
+[1] TRUE
+Warning message:
+In aggregate.aggregate(ms_index, ms_pias, r = -1.7) :
+  aggregating an aggregated index
+> 
+> all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]]) + 1))
+[1] TRUE
+> 
+> #---- Fixed sample ----
+> fs_epr <- with(
++   fs_prices, 
++   elemental_index(price_relative(price, period, business),
++                   period, classification, w = weight, contrib = TRUE)
++ )
+> 
+> fs_pias <- with(
++   fs_weights,
++   aggregation_structure(expand_classification(classification), weight)
++ )
+> 
+> (fs_index <- aggregate(fs_epr, fs_pias, na.rm = TRUE))
+    202001    202002   202003    202004
+1        1 0.6870399 2.459613 1.0826599
+11       1 0.9358411 2.459613 1.0826599
+12       1 0.6122296 2.485335 1.0826599
+13       1 0.6111111 1.685065 1.0826599
+111      1 0.9358411 2.459613 1.0826599
+112      1 0.9358411 2.459613 1.0826599
+121      1 0.6122296 2.485335 1.6137244
+122      1 0.6122296 2.485335 0.8607865
+131      1 0.6111111 1.685065 1.0826599
+> 
+> unclass(fs_index)
+$index
+$index$`202001`
+  1  11  12  13 111 112 121 122 131 
+  1   1   1   1   1   1   1   1   1 
+
+$index$`202002`
+        1        11        12        13       111       112       121       122 
+0.6870399 0.9358411 0.6122296 0.6111111 0.9358411 0.9358411 0.6122296 0.6122296 
+      131 
+0.6111111 
+
+$index$`202003`
+       1       11       12       13      111      112      121      122 
+2.459613 2.459613 2.485335 1.685065 2.459613 2.459613 2.485335 2.485335 
+     131 
+1.685065 
+
+$index$`202004`
+        1        11        12        13       111       112       121       122 
+1.0826599 1.0826599 1.0826599 1.0826599 1.0826599 1.0826599 1.6137244 0.8607865 
+      131 
+1.0826599 
+
+
+$contributions
+$contributions$`202001`
+$contributions$`202001`$`1`
+ 11.111.B1  11.111.B2  11.112.B3  11.112.B4  11.112.B5  11.112.B6  12.121.B7 
+        NA         NA          0          0          0          0          0 
+ 12.121.B8  12.122.B9 12.122.B10 13.131.B11 
+         0          0          0          0 
+
+$contributions$`202001`$`11`
+111.B1 111.B2 112.B3 112.B4 112.B5 112.B6 
+    NA     NA      0      0      0      0 
+
+$contributions$`202001`$`12`
+ 121.B7  121.B8  122.B9 122.B10 
+      0       0       0       0 
+
+$contributions$`202001`$`13`
+131.B11 
+      0 
+
+$contributions$`202001`$`111`
+B1 B2 
+ 0 NA 
+
+$contributions$`202001`$`112`
+B3 B4 B5 B6 
+ 0  0  0  0 
+
+$contributions$`202001`$`121`
+B7 B8 
+ 0  0 
+
+$contributions$`202001`$`122`
+ B9 B10 
+  0   0 
+
+$contributions$`202001`$`131`
+B11 
+  0 
+
+
+$contributions$`202002`
+$contributions$`202002`$`1`
+   11.111.B1    11.111.B2    11.112.B3    11.112.B4    11.112.B5    11.112.B6 
+          NA           NA -0.044997764  0.027946139  0.015527246 -0.013312942 
+   12.121.B7    12.121.B8    12.122.B9   12.122.B10   13.131.B11 
+ 0.009926947 -0.298423745           NA           NA -0.009625963 
+
+$contributions$`202002`$`11`
+     111.B1      111.B2      112.B3      112.B4      112.B5      112.B6 
+         NA          NA -0.19457749  0.12084355  0.06714228 -0.05756728 
+
+$contributions$`202002`$`12`
+     121.B7      121.B8      122.B9     122.B10 
+ 0.01334287 -0.40111329          NA          NA 
+
+$contributions$`202002`$`13`
+   131.B11 
+-0.3888889 
+
+$contributions$`202002`$`111`
+         B1          B2 
+-0.01593625          NA 
+
+$contributions$`202002`$`112`
+         B3          B4          B5          B6 
+-0.19457749  0.12084355  0.06714228 -0.05756728 
+
+$contributions$`202002`$`121`
+         B7          B8 
+ 0.01334287 -0.40111329 
+
+$contributions$`202002`$`122`
+ B9 B10 
+ NA  NA 
+
+$contributions$`202002`$`131`
+       B11 
+-0.3888889 
+
+
+$contributions$`202003`
+$contributions$`202003`$`1`
+ 11.112.B3  11.112.B4  11.112.B5  11.112.B6  12.121.B7  12.121.B8  12.122.B9 
+        NA         NA         NA         NA 1.42445724 0.01313658         NA 
+12.122.B10 13.131.B11 
+        NA 0.02201921 
+
+$contributions$`202003`$`11`
+112.B3 112.B4 112.B5 112.B6 
+    NA     NA     NA     NA 
+
+$contributions$`202003`$`12`
+    121.B7     121.B8     122.B9    122.B10 
+1.47176230 0.01357284         NA         NA 
+
+$contributions$`202003`$`13`
+  131.B11 
+0.6850649 
+
+$contributions$`202003`$`111`
+numeric(0)
+
+$contributions$`202003`$`112`
+         B3          B4          B5          B6 
+         NA -0.28701511 -0.22302618  0.09626026 
+
+$contributions$`202003`$`121`
+        B7         B8 
+1.47176230 0.01357284 
+
+$contributions$`202003`$`122`
+ B9 B10 
+ NA  NA 
+
+$contributions$`202003`$`131`
+      B11 
+0.6850649 
+
+
+$contributions$`202004`
+$contributions$`202004`$`1`
+  11.112.B3   11.112.B4   11.112.B5   11.112.B6   12.121.B7   12.121.B8 
+         NA          NA          NA          NA  0.01068311  0.17016725 
+  12.122.B9  12.122.B10  13.131.B11 
+-0.50981277  0.41162229          NA 
+
+$contributions$`202004`$`11`
+112.B3 112.B4 112.B5 112.B6 
+    NA     NA     NA     NA 
+
+$contributions$`202004`$`12`
+     121.B7      121.B8      122.B9     122.B10 
+ 0.01068311  0.17016725 -0.50981277  0.41162229 
+
+$contributions$`202004`$`13`
+131.B11 
+     NA 
+
+$contributions$`202004`$`111`
+numeric(0)
+
+$contributions$`202004`$`112`
+         B3          B4          B5          B6 
+         NA  0.03435672 -0.36973118  0.20165502 
+
+$contributions$`202004`$`121`
+        B7         B8 
+0.03625365 0.57747078 
+
+$contributions$`202004`$`122`
+        B9        B10 
+-0.7228073  0.5835939 
+
+$contributions$`202004`$`131`
+B11 
+ NA 
+
+
+
+$levels
+[1] "1"   "11"  "12"  "13"  "111" "112" "121" "122" "131"
+
+$periods
+[1] "202001" "202002" "202003" "202004"
+
+> 
+> # re-aggregating the index shouldn't do anything
+> all.equal(aggregate(fs_index, fs_pias)[], fs_index[])
+[1] TRUE
+Warning message:
+In aggregate.aggregate(fs_index, fs_pias) : aggregating an aggregated index
+> 
+> # are contributions getting aggregated correctly?
+> all.equal(fs_index[1, ], sapply(fs_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+[1] TRUE
+> 
+> # adding up
+> all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[1]]),
++           cumprod(fs_index)[1, ])
+[1] TRUE
+> 
+> all.equal(apply(cumprod(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),
++           cumprod(fs_index)[1, ])
+[1] TRUE
+> 
+> proc.time()
+   user  system elapsed 
+  0.143   0.007   0.145 

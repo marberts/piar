@@ -1,0 +1,403 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{Sweave}
+
+%\VignetteIndexEntry{Making price indexes}
+
+\title{Making price indexes}
+\author{Steve Martin}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\maketitle
+
+Most price indexes are made with a two-step procedure, where period-over-period \emph{elemental indexes} are first calculated for a collection of \emph{elemental aggregates} at each point in time, and then aggregated according to a \emph{price index aggregation structure}. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. The \texttt{piar} package contains a collections of functions that revolve around this work flow, making it easy to build standard price indexes in \textsf{R}.
+
+The purpose of this vignette is to give several extended examples of how to use the functions in this package to make different types of price indexes. This should serve both as a introduction to the functionality in \texttt{piar}, and a reference for solving specific index-number problems.
+
+\section{Matched-sample index}
+
+The first example covers calculating a matched-sample index, where a fixed set of businesses each provide prices for a collection of products over time. The products reported by a businesses can change over time, but the set of businesses is fixed for the duration of the sample. Each businesses has a weight that is established when the sample is drawn, and represents a particular segment of the economy.
+
+The usual approach for calculating a matched-sample index starts by computing the elemental index for each business as an equally-weighted geometric mean of price relatives (i.e., a Jevons index). From there, index values for different segments of the economy are calculated as an arithmetic mean of the elemental indexes, using the businesses-level weights (either a Young or Lowe index, depending how the weights are constructed).
+
+The \texttt{ms\_prices} dataset has price data for five businesses over four quarters, and the \texttt{ms\_weights} dataset has the weight data. Note that these data have fairly realistic patterns of missing data.
+
+<<>>=
+library(piar)
+
+head(ms_prices)
+
+ms_weights
+@
+
+The \texttt{elemental\_index()} function makes, well, elemental indexes, using information on price relatives, elemental aggregates (businesses), and time periods (quarters). By default it makes a Jevons index, but any generalized bilateral index is possible. The only wrinkle is that price data here are in levels, and not relatives, but the \texttt{price\_relative()} function can make the necessary conversion.
+
+<<>>=
+relative <- with(ms_prices, price_relative(price, period, product))
+
+ms_epr <- with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE))
+@
+
+As with most functions in \textsf{R}, missing values are contagious by default in \texttt{piar}. Setting \texttt{na.rm = TRUE} in \texttt{elemental\_index()} means that missing price relatives are ignored, which is equivalent to imputing these missing relatives with the value of the elemental index for the respective businesses (i.e., parental imputation). Other types of imputation are possible, and are the topic of a subsequent example.
+
+The \texttt{elemental\_index()} function returns a special index object, and there are a number of methods for working with these objects. Probably the most useful allows the resulting elemental indexes to be extracted like a matrix, even though it's not a matrix. (Note that there are only indexes for four businesses, not five, because the fifth business never reports any prices; an elemental index can be made for this business with a small change to the call to \texttt{elemental\_index()}.)
+
+<<>>=
+ms_epr[]
+ms_epr[, "202004"]
+ms_epr["B1", ]
+@
+
+With the elemental indexes out of the way, it's time to make a price-index aggregation structure that maps each businesses to its position in the aggregation hierarchy. The only hiccup is unpacking the digit-wise classification for each businesses that defines the hierarchy---that's the job of the \texttt{expand\_classification()} function.
+
+<<>>=
+pias <- with(
+  ms_weights, 
+  aggregation_structure(c(expand_classification(classification), list(business)), weight)
+)
+@
+
+It is now simple to aggregate the elemental indexes according to this aggregation structure with the \texttt{aggregate()} function. As with the elemental indexes, missing values are ignored by setting \texttt{na.rm = TRUE}, which is equivalent to parentally imputing missing values. Note that, unlike the elemental indexes, missing values are filled in to ensure the index can be chained over time.
+
+<<>>=
+ms_index <- aggregate(ms_epr, pias, na.rm = TRUE)
+ms_index[]
+@
+
+\section{Extracting index values}
+
+The index values for both elemental and aggregated indexes can be extracted like a matrix. What's really happening is that the index object is first coerced into a matrix, then extracted in the usual way. This coercion can be done explicitly with the \texttt{as.matrix()} function.
+
+<<>>=
+as.matrix(ms_index)
+@
+
+In some cases it's more convenient to have a data frame.
+
+<<>>=
+as.data.frame(ms_index)
+@
+The index object can also be directly queried as a list for finer control.
+
+<<>>=
+ms_index$index$`202004`
+@
+
+\section{Chaining}
+
+The \texttt{elemental\_index()} function makes period-over-period elemental indexes, which can then be aggregated to make a period-over-period index. Chaining an index is the process of taking the cumulative product of each of these period-over-period indexes to make a time series that compares prices to a fixed base period.
+
+The \texttt{cumprod()} function can be used to chain the values in an index object.
+
+<<>>=
+(ms_index_chained <- cumprod(ms_index))
+@
+This gives the same result as directly manipulating the index as a matrix.
+
+<<>>=
+apply(as.matrix(ms_index), 1, cumprod)
+@
+
+Chained indexes often need be to rebased, and this can be done with standard matrix operations. For example, rebasing the index so that 202004 is the base period just required dividing the chained index by the slice for 202004.
+
+<<>>=
+ms_index_chained  / ms_index_chained[, "202004"]
+@
+In some cases the base period is the average of several periods; setting the base period to the second half of 2020 just requires dividing by the row-wise mean.
+
+<<>>=
+ms_index_chained  / rowMeans(ms_index_chained[, c("202003", "202004")])
+@
+
+\section{Multi-dimensional aggregation structures}
+
+Price indexes are often aggregate over multiple dimensions. Matched sample indexes that use sequential Poisson sampling are a good example, as there are usually take-all and take-some strata in addition to, say, an industry classification.
+
+<<>>=
+(ms_weights <- transform(ms_weights, stratum = c("TS", "TA", "TS", "TS", "TS")))
+@
+
+The easiest way to deal with multiple digit-wise classifications is to turn them into one classification. In this example the ``stratum" dimension comes before the ``classification" dimension for the purposes of parental imputation.
+
+<<>>=
+(classification_sps <- with(ms_weights, paste0(classification, stratum)))
+@
+
+This classification can be expanded with the \texttt{expand\_classification()} function as before, just with an extra instruction to say that the last ``digit" in the classification is two characters wide, not one.
+
+<<>>=
+(classification_sps <- expand_classification(classification_sps, width = c(1, 1, 2)))
+pias_sps <- with(
+  ms_weights, 
+  aggregation_structure(c(classification_sps, list(business)), weight)
+)
+@
+The elemental indexes can now be aggregated according to this new aggregation structure.
+
+<<>>=
+aggregate(ms_epr, pias_sps, na.rm = TRUE)[]
+@
+
+\section{Non-parental imputation during aggregation}
+
+Parental imputation is the usual way to impute missing index values during aggregation, and it is simple to do with \texttt{aggregate()}. In some cases, however, a business-level index may get imputed with the value for another business, rather than for an entire group of businesses. The simplest way to do this sort of imputation is to alter the aggregation structure so that standard parental imputation does this.
+
+Business B2 is missing all of their data in the second period, and so far the index values for B2 have been imputed from the \texttt{"11"} group that includes businesses B1 and B3. Suppose instead that missing index values for B2 should be imputed from business B1. This can be achieved by adding another dimension to the aggregation structure.
+
+<<>>=
+ms_weights$impute <- c("C1", "C1", "C3", "C4", "C5")
+ms_weights
+@
+Business B1 and B2 can now be identified as belonging to the same category for the purpose of imputation, and will be used to impute each other with parental imputation, while all other businesses belong to their own category.
+
+Making the aggregation structure is the same as before, just with the imputation layer added above the elemental aggregates layer.
+<<>>=
+pias <- with(
+  ms_weights, 
+  aggregation_structure(c(expand_classification(classification), 
+                          list(impute), 
+                          list(business)), 
+                        weight)
+)
+@
+The index can now be calculated as usual.
+
+<<>>=
+ms_index <- aggregate(ms_epr, pias, na.rm = TRUE)
+ms_index[]
+@
+
+\section{Alternate index-number formulas}
+
+By default, the \texttt{elemental\_index()} function calculates a Jevons index. Although this is the standard index-number formula for making elemental indexes, many other types of index-numbers are possible. The Carli index (equally-weighted arithmetic mean of price relatives) is the main competitor to the Jevons, and requires specifying the order of the index \texttt{r} when calling \texttt{elemental\_index()}. An order of 1 corresponds to an arithmetic mean.
+
+<<>>=
+with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE, r = 1))[]
+@
+
+The Coggeshall index (equally-weighted harmonic mean of price relatives) is another competitor to the Jevons, but is seldom used in practice. Despite it being more exotic, it is just as easy to make by specifying an order of \texttt{r = -1}.
+
+<<>>=
+with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE, r = -1))[]
+@
+The type of mean used to aggregate elemental indexes can be controlled in the same way in the call to \texttt{aggregate()}. The default makes an arithmetic index, but any type of generalized index is possible. 
+
+Many superlative indexes can be made by supplying unequal and possibly time-varying weights when making the elemental indexes. These weights often come from information on quantities.
+
+<<>>=
+ms_prices_sup <- transform(ms_prices, quantity = 10 - price)
+@
+
+The T\"{o}rnqvist index is a popular superlative index-number formula, using average period-over-period value shares as the weights in a geometric mean. The only tricky part is making the weights from data on prices and quantities.
+
+<<>>=
+cols <- c("price", "quantity")
+back_cols <- paste("back", cols, sep = "_")
+ms_prices_sup[back_cols] <- lapply(ms_prices_sup[cols], gpindex::back_price,
+                                   period = ms_prices_sup$period, 
+                                   product = ms_prices_sup$product)
+ms_prices_sup <- na.omit(ms_prices_sup)
+
+f <- interaction(ms_prices_sup$period, ms_prices_sup$business)
+
+ms_prices_sup$weight <- with(
+  lapply(ms_prices_sup, split, f),
+  unsplit(Map(gpindex::index_weights("Tornqvist"), 
+              price, back_price, quantity, back_quantity), 
+          f)
+)
+@
+As \texttt{elemental\_index()} makes a geometric index by default, all that is needed to make a T\"{o}rnqvist index is to provide the weights.
+
+<<>>=
+with(ms_prices_sup, elemental_index(price / back_price, period, business, weight))[]
+@
+
+\section{Quote contributions}
+
+It's often convenient to decompose an index into the (additive) contribution of each price relative, also known as the quote contributions. This can be done with the same work flow as in the previous examples, specifying \texttt{contrib = TRUE} when calling \texttt{elemental\_index()}.
+
+<<>>=
+ms_epr <- with(ms_prices, elemental_index(relative, period, business, contrib = TRUE))
+@
+As with index values, quote contributions can be extracted as either a matrix or a data frame.
+
+<<>>=
+as.matrix(ms_epr, type = "contributions")
+
+as.data.frame(ms_epr, type = "contributions")
+@
+Finer control can also be had with list indexing.
+
+<<>>=
+ms_epr$contributions$`202004`$B3
+@
+Aggregating the elemental indexes automatically aggregates quote contributions, so no extra steps are needed after the elemental indexes are made.
+
+\section{Updating a basket}
+
+The functions in \texttt{piar} are all designed to work within a ``basket", which is a fancy way of saying within a given aggregation structure. Over time, however, aggregation structures change as the weights used to aggregate an index get updated, and new samples of businesses are drawn. The general approach to keep the time series going is to ``chain" the index across baskets.
+
+It is easier to see how to chain an index over time with a simple example that just splits the \texttt{ms\_prices} data in two.
+
+<<>>=
+ms_prices1 <- subset(ms_prices, period <= "202003")
+ms_prices2 <- subset(ms_prices, period >= "202003")
+@
+The index for the first basket can be calculate as usual.
+
+<<>>=
+ms_epr1 <- with(
+  ms_prices1, 
+  elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
+)
+
+pias1 <- with(
+  ms_weights, 
+  aggregation_structure(c(expand_classification(classification), list(business)), weight)
+)
+
+ms_index1 <- aggregate(ms_epr1, pias1, na.rm = TRUE)
+ms_index1[]
+@
+
+Nothing special needs to be done to make the elemental indexes for the new basket.
+
+<<>>=
+ms_epr2 <- with(
+  ms_prices2, 
+  elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
+)
+@
+Aggregating these elemental indexes, however, requires an aggregation structure. The results of the first example can be reproduced by simply ``price updating" the original weights, then building the aggregation structure as usual.
+
+<<>>=
+ms_weights2 <- transform(
+  ms_weights, 
+  weight = gpindex::weights_update(cumprod(ms_index1)[business, "202003"], weight)
+)
+pias2 <- with(
+  ms_weights2, 
+  aggregation_structure(c(expand_classification(classification), list(business)), weight)
+)
+ms_index2 <- aggregate(ms_epr2, pias2, na.rm = TRUE)
+ms_index2[]
+@
+This produces two sets of period-over-period indexes that can now be combined together with standard matrix operations. Chaining the index just involves taking the cumulative product.
+
+<<>>=
+(ms_index <- cbind(ms_index1[], ms_index2[, -1, drop = FALSE]))
+apply(ms_index, 1, cumprod)
+@
+
+\section{Carry-forward imputation}
+
+The previous examples used parental imputation to both impute missing price relatives when calculating the elemental indexes, and to impute missing elemental indexes during aggregation. Another common imputation strategy when making elemental indexes is to carry forward the previous price to impute for missing prices, and parentally impute missing elemental indexes during aggregation. As the \texttt{elemental\_index()} function accepts price relatives as its input, other types of imputations can be done prior to passing price relatives to this function.
+
+Carry-forward imputation is a particularly simple imputation as it just sets missing price relatives to 1.
+
+<<>>=
+ms_prices$relative <- with(ms_prices, replace(relative, is.na(relative), 1))
+
+ms_epr <- with(ms_prices, elemental_index(relative, period, business))
+
+ms_epr[]
+@
+Aggregation follows the same steps as in the previous examples, with missing values set to be ignored in order to parentally impute missing elemental indexes.
+
+<<>>=
+ms_index <- aggregate(ms_epr, pias, na.rm = TRUE)
+ms_index[]
+@
+
+\section{Calculating an index from multiple sources}
+
+All of the examples so far have built an index from a single source of price data. In many cases the elemental indexes are built from multiple sources of data, either because no single source of data has the necessary coverage, or different index-number formulas are employed for different elemental aggregates. 
+
+It is straightforward to merge index objects together, provided they're for the same time periods. To keep the example simple, suppose that \texttt{ms\_prices} is split in two.
+
+<<>>=
+ms_prices1 <- subset(ms_prices, business %in% c("B1", "B2", "B3"))
+ms_prices2 <- subset(ms_prices, business == "B4")
+@
+
+Elemental indexes can be made for both groups separately with the usual recipe. Note that there is no data for business B4 in the first two periods, so the time periods need to be made explicit.
+
+<<>>=
+ms_epr1 <- with(
+  ms_prices1, 
+  elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
+)
+ms_epr1[]
+ms_epr2 <- with(
+  transform(ms_prices2, period = factor(period, levels = ms_epr1$period)), 
+  elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
+)
+ms_epr2[drop = FALSE]
+@
+Once the elemental indexes are made, they can be merged together and then aggregated.
+
+<<>>=
+ms_epr <- merge(ms_epr1, ms_epr2)
+aggregate(ms_epr, pias, na.rm = TRUE)[]
+@
+
+A slightly more complex case is when some of the input data are already a price index. For example, suppose the index values for businesses B4 and B5 come from some outside process, and are taken as inputs.
+
+<<>>=
+ms_prices2 <- subset(
+  as.data.frame(aggregate(ms_epr, pias, na.rm = TRUE)),
+  level %in% c("B4", "B5")
+)
+ms_prices2
+@
+All that is required is to pass the pre-existing indexes to \texttt{elemental\_index()} to cast it into the correct form. This won't affect their values, but will allow them to be merged with the other elemental indexes, and aggregated.
+
+<<>>=
+ms_epr2 <- with(ms_prices2, elemental_index(value, period, level))
+ms_epr <- merge(ms_epr1, ms_epr2)
+aggregate(ms_epr, pias, na.rm = TRUE)[]
+@
+
+\section{Fixed-sample index}
+
+A fixed-sample index is similar to a matched-sample index, except that the products reported by businesses can't change over time, and these products usually have weights. In this example, a fixed collection of businesses each provide a single price for the same product over time. As in the matched-sample case, each of these businesses has a weight and belongs in a classification structure. 
+
+<<>>=
+head(fs_prices)
+
+fs_weights
+@
+
+Compared to the match-sample case, businesses take the role of products, and businesses are grouped according to the lowest level in the classification to form elemental aggregates. The main difference when making the index is that the businesses-level weights are now used when calculating the elemental indexes. 
+
+<<>>=
+fs_prices$relative <- with(fs_prices, price_relative(price, period, business))
+
+fs_epr <- with(
+  fs_prices, 
+  elemental_index(relative, period, classification, weight, na.rm = TRUE)
+)
+
+fs_epr[]
+@
+Aggregation is done in the same way, just with a different (and simpler) aggregation structure.
+
+<<>>=
+pias <- with(
+  fs_weights, 
+  aggregation_structure(expand_classification(classification), weight)
+)
+
+fs_index <- aggregate(fs_epr, pias, na.rm = TRUE)
+fs_index[]
+@
+
+All of topics for the previous examples work the same with a fixed-sample index, and so there's no need to repeat them.
+
+\end{document}

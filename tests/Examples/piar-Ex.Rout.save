@@ -1,0 +1,375 @@
+
+R version 4.0.5 (2021-03-31) -- "Shake and Throw"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "piar"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('piar')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("aggregate")
+> ### * aggregate
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: aggregate
+> ### Title: Aggregate elemental price indexes
+> ### Aliases: aggregate.index
+> 
+> ### ** Examples
+> 
+> prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
+> 
+> # A two-level aggregation structure
+> 
+> pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:3)
+> 
+> # Calculate elemental indexes
+> 
+> epr <- with(prices, elemental_index(rel, period, ea))
+> 
+> # Aggregate (note the imputation for elemental index 'c')
+> aggregate(epr, pias)
+           1        2
+top       NA       NA
+a   1.732051 5.916080
+b   2.828427 6.928203
+c         NA       NA
+> 
+> aggregate(epr, pias, na.rm = TRUE)
+           1        2
+top 2.462968 6.690949
+a   1.732051 5.916080
+b   2.828427 6.928203
+c   2.462968 6.690949
+> 
+> # Works for non-arithmetic indexes, too
+> 
+> aggregate(epr, pias, na.rm = TRUE, r = -1)
+           1        2
+top 2.335617 6.433477
+a   1.732051 5.916080
+b   2.828427 6.928203
+c   2.335617 6.433477
+> 
+> 
+> 
+> cleanEx()
+> nameEx("aggregation_structure")
+> ### * aggregation_structure
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: aggregation structure
+> ### Title: Price index aggregation structure
+> ### Aliases: aggregation_structure weights.pias
+> 
+> ### ** Examples
+> 
+> # A simple example
+> 
+> x1 <- c("1", "1", "1")
+> x2 <- c("11", "11", "12")
+> x3 <- c("111", "112", "121")
+> 
+> aggregation_structure(list(x1, x2, x3))
+Price index aggregation structure with 3 elementary aggregates and 2 upper-level indexes 
+> 
+> # The aggregation structure can also be made by expanding 'x3'
+> 
+> expand_classification(x3)
+[[1]]
+[1] "1" "1" "1"
+
+[[2]]
+[1] "11" "11" "12"
+
+[[3]]
+[1] "111" "112" "121"
+
+> 
+> all.equal(aggregation_structure(list(x1, x2, x3)), 
++           aggregation_structure(expand_classification(x3)))
+[1] TRUE
+> 
+> # Unequal weights
+> 
+> aggregation_structure(list(x1, x2, x3), 1:3)
+Price index aggregation structure with 3 elementary aggregates and 2 upper-level indexes 
+>           
+> # Extract the weights
+> 
+> weights(aggregation_structure(list(x1, x2, x3)))
+[[1]]
+111 112 121 
+  1   1   1 
+
+[[2]]
+11 12 
+ 2  1 
+
+[[3]]
+1 
+3 
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("elemental_index")
+> ### * elemental_index
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: elemental index
+> ### Title: Elemental price index
+> ### Aliases: elemental_index
+> 
+> ### ** Examples
+> 
+> prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
+> 
+> # A simple elemental price structure using a jevons index
+> 
+> epr <- with(prices, elemental_index(rel, period, ea))
+> 
+> # Extract the indexes like a matrix
+> 
+> epr["a", ]
+       1        2 
+1.732051 5.916080 
+> 
+> epr[, 1:2]
+         1        2
+a 1.732051 5.916080
+b 2.828427 6.928203
+> 
+> # The index calculation can be done with a bit of matrix algebra
+> # But it's slower and more memory intensive
+> 
+> mm <- model.matrix(~ ea:factor(period) - 1, prices)
+> exp(solve(crossprod(mm), crossprod(mm, log(prices$rel))))
+                        [,1]
+eaa:factor(period)1 1.732051
+eab:factor(period)1 2.828427
+eaa:factor(period)2 5.916080
+eab:factor(period)2 6.928203
+> 
+> # Can also be done with tapply(), but it's less general
+> 
+> with(prices, t(tapply(rel, list(period, ea), gpindex::mean_geometric, na.rm = TRUE)))
+         1        2
+a 1.732051 5.916080
+b 2.828427 6.928203
+> 
+> epr
+         1        2
+a 1.732051 5.916080
+b 2.828427 6.928203
+> 
+> # Works with any kind of generalized price index, such as a Coggeshall
+> 
+> with(prices, elemental_index(rel, period, ea, r = -1))
+         1        2
+a 1.500000 5.833333
+b 2.666667 6.857143
+> 
+> 
+> 
+> cleanEx()
+> nameEx("expand_classification")
+> ### * expand_classification
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: expand classification
+> ### Title: Expand classification
+> ### Aliases: expand_classification
+> 
+> ### ** Examples
+> 
+> expand_classification(c("111", "112", "121"))
+[[1]]
+[1] "1" "1" "1"
+
+[[2]]
+[1] "11" "11" "12"
+
+[[3]]
+[1] "111" "112" "121"
+
+> 
+> # The last 'digit' is either TA or TS
+> expand_classification(c("111TA", "112TA", "121TS"), width = c(1, 1, 1, 2))
+[[1]]
+[1] "1" "1" "1"
+
+[[2]]
+[1] "11" "11" "12"
+
+[[3]]
+[1] "111" "112" "121"
+
+[[4]]
+[1] "111TA" "112TA" "121TS"
+
+> 
+> # The first 'digit' is either 11 or 12
+> expand_classification(c("111", "112", "121"), width = c(2, 1))
+[[1]]
+[1] "11" "11" "12"
+
+[[2]]
+[1] "111" "112" "121"
+
+> 
+> # Shorter codes are padded with NAs
+> expand_classification(c("111TA", "112TA", "121"), width = c(2, 1, 2))
+[[1]]
+[1] "11" "11" "12"
+
+[[2]]
+[1] "111" "112" "121"
+
+[[3]]
+[1] "111TA"   "112TA"   "121NANA"
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("index_methods")
+> ### * index_methods
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: index methods
+> ### Title: Methods for objects of class "index"
+> ### Aliases: index_methods as.data.frame.index as.matrix.index
+> ###   cumprod.index merge.index stack.index
+> 
+> ### ** Examples
+> 
+> prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
+> 
+> # A simple elemental price structure using a jevons index
+> 
+> epr <- with(prices, elemental_index(rel, period, ea))
+> 
+> # Turn the index into a rectangular array 
+> 
+> as.data.frame(epr)
+  period level    value
+1      1     a 1.732051
+2      1     b 2.828427
+3      2     a 5.916080
+4      2     b 6.928203
+> as.matrix(epr) # same as epr[]
+         1        2
+a 1.732051 5.916080
+b 2.828427 6.928203
+> cumprod(epr) # chained index
+         1        2
+a 1.732051 10.24695
+b 2.828427 19.59592
+> 
+> # It is easy to rebase an index because columns are time periods
+> 
+> cumprod(epr) / cumprod(epr)[, 2]
+          1 2
+a 0.1690309 1
+b 0.1443376 1
+> 
+> # Merge two identical indexes
+> 
+> prices2 <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[3:4], 4))
+> epr2 <- with(prices2, elemental_index(rel, period, ea))
+> as.matrix(merge(epr, epr2))
+         1        2
+a 1.732051 5.916080
+b 2.828427 6.928203
+c 1.732051 5.916080
+d 2.828427 6.928203
+> 
+> # Stack two identical indexes
+> 
+> prices3 <- data.frame(rel = 1:8, period = rep(3:4, each = 4), ea = rep(letters[1:2], 4))
+> epr3 <- with(prices3, elemental_index(rel, period, ea))
+> as.matrix(stack(epr, epr3))
+         1        2        3        4
+a 1.732051 5.916080 1.732051 5.916080
+b 2.828427 6.928203 2.828427 6.928203
+> 
+> 
+> 
+> cleanEx()
+> nameEx("price_relative")
+> ### * price_relative
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: price relative
+> ### Title: Price relative
+> ### Aliases: price_relative
+> 
+> ### ** Examples
+> 
+> price_relative(1:6, rep(1:2, each = 3), rep(letters[1:3], 2))
+  a   b   c   a   b   c 
+1.0 1.0 1.0 4.0 2.5 2.0 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("shadow_price")
+> ### * shadow_price
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: shadow price
+> ### Title: Shadow price imputation
+> ### Aliases: shadow_price
+> 
+> ### ** Examples
+> 
+> prices <- data.frame(price = c(1:7, NA), period = rep(1:2, each = 4), 
++                      product = 1:4, ea = rep(letters[1:2], 4))
+> 
+> with(prices, shadow_price(price, period, product, ea))
+[1]  1  2  3  4  5  6  7 12
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.216 0.016 0.233 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
