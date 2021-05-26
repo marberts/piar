@@ -7,6 +7,7 @@ S3method(as.data.frame, index)
 S3method(as.matrix, index)
 S3method(merge, index)
 S3method(stack, index)
+S3method(unstack, index)
 S3method(print, index)
 S3method(cumprod, index)
 S3method(aggregate, index)
@@ -17,7 +18,7 @@ S3method(weights, pias)
 
 importFrom(stats, aggregate, weights)
 
-importFrom(utils, stack)
+importFrom(utils, stack, unstack)
 
 importFrom(gpindex, mean_generalized, weights_factor, contributions, 
            weights_transmute, weights_scale, back_price)

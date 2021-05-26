@@ -5,6 +5,7 @@
 \alias{cumprod.index}
 \alias{merge.index}
 \alias{stack.index}
+\alias{unstack.index}
 
 \title{
 Methods for objects of class \code{'index'}
@@ -24,6 +25,8 @@ Methods to put index values/quote contributions in a tabular form, chain an inde
 \method{merge}{index}(x, y, ...)
 
 \method{stack}{index}(x, y, ...)
+
+\method{unstack}{index}(x, ...)
 }
 
 \arguments{
@@ -41,6 +44,8 @@ The \code{as.matrix()} method turns an index into a matrix with a row for each l
 The \code{cumprod()} method takes the cumulative product of the values in the \code{index} component of \code{x}, and returns a matrix. The result is the same as \code{t(apply(as.matrix(x), 1, cumprod))}.
 
 The \code{merge()} method combines two index object with common time periods, merging together the index values and quote contributions for each time period in \code{x} and \code{y}. The \code{stack()} methods combines two index objects with common levels, stacking index values and quote contributions for each level in \code{y} after those in \code{x}. Both methods return an object of the same class as \code{x}.
+
+The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}.
 }
 
 \seealso{
@@ -75,4 +80,8 @@ as.matrix(merge(epr, epr2))
 prices3 <- data.frame(rel = 1:8, period = rep(3:4, each = 4), ea = rep(letters[1:2], 4))
 epr3 <- with(prices3, elemental_index(rel, period, ea))
 as.matrix(stack(epr, epr3))
+
+# Unstack does the reverse
+
+all.equal(c(unstack(epr), unstack(epr3)), unstack(stack(epr, epr3)))
 }

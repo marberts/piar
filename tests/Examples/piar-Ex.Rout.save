@@ -264,7 +264,7 @@ b 2.666667 6.857143
 > ### Name: index methods
 > ### Title: Methods for objects of class "index"
 > ### Aliases: index_methods as.data.frame.index as.matrix.index
-> ###   cumprod.index merge.index stack.index
+> ###   cumprod.index merge.index stack.index unstack.index
 > 
 > ### ** Examples
 > 
@@ -317,6 +317,11 @@ d 2.828427 6.928203
          1        2        3        4
 a 1.732051 5.916080 1.732051 5.916080
 b 2.828427 6.928203 2.828427 6.928203
+>
+> # Unstack does the reverse
+>
+> all.equal(c(unstack(epr), unstack(epr3)), unstack(stack(epr, epr3)))
+[1] TRUE
 > 
 > 
 > 

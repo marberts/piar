@@ -73,6 +73,18 @@ stack.index <- function(x, y, ...) {
   x
 }
 
+unstack.index <- function(x, ...) {
+  res <- vector("list", length(x$periods))
+  for (i in seq_along(res)) {
+    res[[i]]$index <- x$index[i]
+    res[[i]]$contributions <- x$contributions[i]
+    res[[i]]$levels <- x$levels
+    res[[i]]$periods <- x$periods[i]
+    class(res[[i]]) <- class(x)
+  }
+  res
+}
+
 print.index <- function(x, ...) {
   print(as.matrix(x), ...)
   invisible(x)
