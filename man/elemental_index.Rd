@@ -45,6 +45,10 @@ This function is a simple wrapper that applies \code{\link[=mean_generalized]{me
 By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Non-parental imputation of missing relatives should be done prior to calling \code{elemental_index()}.
 }
 
+\section{Warning}{
+There is nothing stopping you from passing a vector fixed-base price relatives as \code{x} to get a fixed-base index, but you should only do this if you know what you're doing, and are very careful. Other functions (namely \link[=aggregate.index]{aggregate()}) assume that elemental indexes are calculated period-over-period, not with a fixed base period.
+}
+
 \seealso{
 \code{\link{price_relative}} for making price relatives for the same products over time.
 

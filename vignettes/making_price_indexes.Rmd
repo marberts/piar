@@ -445,9 +445,9 @@ Making the Paasche index for each period is now just a case of mapping the `aggr
 (paasche <- Reduce(stack, Map(aggregate, fs_epr, pias, na.rm = TRUE, r = -1)))
 ```
 
-With a Paasche index in hand, it is now trivial to make a Fisher index by first making the Laspeyres index (using the first aggregation structure), and then doing a simple matrix operation.
+With a Paasche index in hand, it is now trivial to make a Fisher index by first making the chained Laspeyres index, and then doing a simple matrix operation.
 
 ```{r}
-laspeyres <- aggregate(Reduce(stack, fs_epr), pias[[1]], na.rm = TRUE)
+laspeyres <- Reduce(stack, Map(aggregate, fs_epr, pias[c(1, 1, 2, 3)], na.rm = TRUE))
 sqrt(as.matrix(laspeyres) * as.matrix(paasche))
 ```
