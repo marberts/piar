@@ -1,6 +1,6 @@
 Package: piar
 Title: Price Index Aggregation in R
-Version: 0.1.0.9018
+Version: 0.1.0.9019
 Authors@R: c(
     person("Steve", "Martin", role = c("aut", "cre"), email = "steve.martin5@canada.ca"),
     person("Her Majesty the Queen in Right of Canada, as represented by the Minister of Statistics Canada", role = c("cph"))
@@ -8,6 +8,8 @@ Authors@R: c(
 Description: Most price indexes are made with a two-step procedure, where period-over-period elemental indexes are first calculated for a collection of elemental aggregates at each point in time, and then aggregated according to a price index aggregation structure. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. This package contains a collections of functions that revolve around this work flow, making it easy to build standard price indexes.
 Depends: R (>= 3.5)
 Imports: stats, utils, gpindex (>= 0.2.5)
+Suggests: rmarkdown, knitr
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+VignetteBuilder: knitr
