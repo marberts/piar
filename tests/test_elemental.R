@@ -32,12 +32,24 @@ all.equal(epr3[], rbind(epr1[], epr2[]))
 all.equal(epr3$index$a, sapply(epr3$contributions$a, sum, na.rm = TRUE) + 1)
 epr3$levels
 
+all.equal(merge(elemental_index(integer(0), integer(0), integer(0)), 
+                elemental_index(integer(0), integer(0), integer(0))),
+          elemental_index(integer(0), integer(0), integer(0)))
+
 #---- Stacking ----
 epr2 <- with(dat, elemental_index(rel, toupper(period), ea, r = -1, contrib = TRUE, na.rm = TRUE))
 epr3 <- stack(epr1, epr2)
 all.equal(epr3[], cbind(epr1[], epr2[]))
 all.equal(epr3$index$A, sapply(epr3$contributions$A, sum, na.rm = TRUE) + 1)
 epr3$periods
+
+all.equal(stack(elemental_index(integer(0), integer(0), integer(0)), 
+                elemental_index(integer(0), integer(0), integer(0))),
+          elemental_index(integer(0), integer(0), integer(0)))
+
+all.equal(unstack(stack(elemental_index(integer(0), integer(0), integer(0)), 
+                        elemental_index(integer(0), integer(0), integer(0)))),
+          elemental_index(integer(0), integer(0), integer(0)))
 
 #---- Toy example ----
 dat <- data.frame(rel = c(1:6, NA, 7, 8),

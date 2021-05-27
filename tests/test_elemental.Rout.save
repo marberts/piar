@@ -120,6 +120,11 @@ In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
 [1] TRUE
 > epr3$levels
 [1] "1" "2" "3" "4" "5"
+>
+> all.equal(merge(elemental_index(integer(0), integer(0), integer(0)), 
++                 elemental_index(integer(0), integer(0), integer(0))),
++           elemental_index(integer(0), integer(0), integer(0)))
+[1] TRUE
 > 
 > #---- Stacking ----
 > epr2 <- with(dat, elemental_index(rel, toupper(period), ea, r = -1, contrib = TRUE, na.rm = TRUE))
@@ -133,6 +138,16 @@ In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
 [20] "t" "u" "v" "w" "x" "y" "z" "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L"
 [39] "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
 > 
+> all.equal(stack(elemental_index(integer(0), integer(0), integer(0)), 
++                 elemental_index(integer(0), integer(0), integer(0))),
++           elemental_index(integer(0), integer(0), integer(0)))
+[1] TRUE
+>
+> all.equal(unstack(stack(elemental_index(integer(0), integer(0), integer(0)), 
++                         elemental_index(integer(0), integer(0), integer(0)))),
++           elemental_index(integer(0), integer(0), integer(0)))
+[1] TRUE
+>
 > #---- Toy example ----
 > dat <- data.frame(rel = c(1:6, NA, 7, 8),
 +                   period = c(1, 1, 1, 1, 1, 2, 2, 2, 2),

@@ -46,6 +46,8 @@ merge.index <- function(x, y, ...) {
   if (!identical(class(x), class(y))) {
     warning("'x' is a ", paste(class(x), collapse = " "), " but 'y' is a ", paste(class(y), collapse = " "))
   }
+  if (!length(x$levels)) return(y)
+  if (!length(y$levels)) return(x)
   for (t in x$periods) {
     x$index[[t]] <- c(x$index[[t]], y$index[[t]])
     x$contributions[[t]] <- c(x$contributions[[t]], y$contributions[[t]])
@@ -67,6 +69,8 @@ stack.index <- function(x, y, ...) {
   if (!identical(class(x), class(y))) {
     warning("'x' is a ", paste(class(x), collapse = " "), " but 'y' is a ", paste(class(y), collapse = " "))
   }
+  if (!length(x$periods)) return(y)
+  if (!length(y$periods)) return(x)
   x$index <- c(x$index, y$index)
   x$contributions <- c(x$contributions, y$contributions)
   x$periods <- union(x$periods, y$periods)
@@ -74,6 +78,7 @@ stack.index <- function(x, y, ...) {
 }
 
 unstack.index <- function(x, ...) {
+  if (!length(x$periods)) return(x)
   res <- vector("list", length(x$periods))
   for (i in seq_along(res)) {
     res[[i]]$index <- x$index[i]

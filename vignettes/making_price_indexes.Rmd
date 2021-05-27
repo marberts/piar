@@ -411,7 +411,7 @@ All of topics for the previous examples work the same with a fixed-sample index,
 
 ## Paasche index
 
-All of the examples so far have used a single set of weights to aggregate an index. Although this is by far the most common case, there are cases where the weights to aggregate change every period. The Paasche index is the notable example, as the weights for aggregation are the current-period revenue shares in each period.
+All of the examples so far have used a single set of weights to aggregate an index. Although this is by far the most common case, there are situations where the weights to aggregate change every period. The Paasche index is the notable example, as the weights for aggregation are the current-period revenue shares in each period.
 
 ```{r}
 weights <- data.frame(period = rep(c("202001", "202002", "202003", "202004"), each = 5),
@@ -442,5 +442,12 @@ pias <- with(
 Making the Paasche index for each period is now just a case of mapping the `aggregate()` function to each elemental index and aggregation structure, and then reducing the result with the `stack()` function.
 
 ```{r}
-Reduce(stack, Map(aggregate, fs_epr, pias, na.rm = TRUE, r = -1))
+(paasche <- Reduce(stack, Map(aggregate, fs_epr, pias, na.rm = TRUE, r = -1)))
+```
+
+With a Paasche index in hand, it is now trivial to make a Fisher index by first making the Laspeyres index (using the first aggregation structure), and then doing a simple matrix operation.
+
+```{r}
+laspeyres <- aggregate(Reduce(stack, fs_epr), pias[[1]], na.rm = TRUE)
+sqrt(as.matrix(laspeyres) * as.matrix(paasche))
 ```
