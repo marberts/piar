@@ -40,7 +40,7 @@ An object of class \code{'aggregate'}, inheriting from class \code{'index'}, whi
 \item{contributions}{A named list with an entry for each \code{period}, which itself contains a list with an entry for each level in \code{pias} with a named vector that gives the additive contribution for each price relative.}
 \item{levels}{The levels for \code{pias}.}
 \item{periods}{The levels for \code{period}.}
-\item{r}{The order \code{r} of the mean used to aggregate \code{x}.}
+\item{weights}{A named list with an entry for each \code{period} that contains the price updated weights from \code{pias}.}
 }
 
 \seealso{
@@ -70,4 +70,8 @@ aggregate(epr, pias, na.rm = TRUE)
 # Works for non-arithmetic indexes, too
 
 aggregate(epr, pias, na.rm = TRUE, r = -1)
+
+# Extract the price updated weights
+
+weights(aggregate(epr, pias, na.rm = TRUE))
 }

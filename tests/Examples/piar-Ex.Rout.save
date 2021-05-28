@@ -69,6 +69,18 @@ top 2.335617 6.433477
 a   1.732051 5.916080
 b   2.828427 6.928203
 c   2.335617 6.433477
+>
+> # Extract the price updated weights
+> 
+> weights(aggregate(epr, pias, na.rm = TRUE))
+$`1`
+       a        b        c 
+1.732051 5.656854 7.388905 
+
+$`2`
+       a        b        c 
+10.24695 39.19184 49.43879 
+
 > 
 > 
 > 

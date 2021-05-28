@@ -15,6 +15,12 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+> ## ---- include = FALSE---------------------------------------------------------
+> knitr::opts_chunk$set(
++   collapse = TRUE,
++   comment = "#>"
++ )
+> 
 > ## -----------------------------------------------------------------------------
 > library(piar)
 > 
@@ -391,14 +397,7 @@ B5      1 1.3007239 1.0630743
 + )
 > 
 > ## -----------------------------------------------------------------------------
-> ms_weights2 <- transform(
-+   ms_weights, 
-+   weight = gpindex::weights_update(cumprod(ms_index1)[business, "202003"], weight)
-+ )
-> pias2 <- with(
-+   ms_weights2, 
-+   aggregation_structure(c(expand_classification(classification), list(business)), weight)
-+ )
+> pias2 <- update(pias1, ms_index1)
 > (ms_index2 <- aggregate(ms_epr2, pias2, na.rm = TRUE))
    202003   202004
 1       1 2.734761
@@ -636,7 +635,7 @@ B5      1 1.1272256 0.8157123 4.576286
 + )
 > 
 > ## -----------------------------------------------------------------------------
-> Reduce(stack, Map(aggregate, fs_epr, pias, na.rm = TRUE, r = -1))
+> (paasche <- Reduce(stack, Map(aggregate, fs_epr, pias, na.rm = TRUE, r = -1)))
     202001    202002   202003    202004
 1        1 0.6931440 1.101696 0.9814774
 11       1 0.9574968 0.586219 0.8662806
@@ -648,7 +647,21 @@ B5      1 1.1272256 0.8157123 4.576286
 122      1 0.6122296 2.485335 0.8607865
 131      1 0.6111111 1.685065 0.9814774
 > 
+> ## -----------------------------------------------------------------------------
+> laspeyres <- Reduce(stack, Map(aggregate, fs_epr, pias[c(1, 1, 2, 3)], na.rm = TRUE))
+> sqrt(as.matrix(laspeyres) * as.matrix(paasche))
+    202001    202002   202003    202004
+1        1 0.6864365 1.355614 1.0195395
+11       1 0.9547020 0.586219 0.8662806
+12       1 0.6122296 2.485335 1.1671399
+13       1 0.6111111 1.685065 1.0195395
+111      1 0.9840637 0.586219 0.8662806
+112      1 0.9358411 0.586219 0.8662806
+121      1 0.6122296 2.485335 1.6137244
+122      1 0.6122296 2.485335 0.8607865
+131      1 0.6111111 1.685065 1.0195395
+> 
 > 
 > proc.time()
    user  system elapsed 
-  0.480   0.176   0.722 
+  0.159   0.012   0.165 

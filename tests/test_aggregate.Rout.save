@@ -1,5 +1,5 @@
 
-R version 4.0.5 (2021-03-31) -- "Shake and Throw"
+R version 4.1.0 (2021-05-18) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -31,8 +31,8 @@ character(0)
 $periods
 character(0)
 
-$r
-[1] 1
+$weights
+named list()
 
 > 
 > unclass(aggregate(elemental_index(1:5), aggregation_structure(list())))
@@ -52,8 +52,10 @@ character(0)
 $periods
 [1] "1"
 
-$r
-[1] 1
+$weights
+$weights$`1`
+named numeric(0)
+
 
 > 
 > unclass(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))
@@ -76,8 +78,11 @@ $levels
 $periods
 [1] "1"
 
-$r
-[1] 1
+$weights
+$weights$`1`
+ 2 
+NA 
+
 
 > 
 > #---- Matched sample ----
@@ -272,8 +277,23 @@ $levels
 $periods
 [1] "202001" "202002" "202003" "202004"
 
-$r
-[1] 1
+$weights
+$weights$`202001`
+ B1  B2  B3  B4  B5 
+553 646 312 622 330 
+
+$weights$`202002`
+      B1       B2       B3       B4       B5 
+494.8851 840.2676 630.2411 809.0503 429.2389 
+
+$weights$`202003`
+       B1        B2        B3        B4        B5 
+ 165.4371  893.2670 1030.6557  860.0806  456.3128 
+
+$weights$`202004`
+       B1        B2        B3        B4        B5 
+ 260.4832 2474.7571  554.4886 3935.9748 2088.2182 
+
 
 > 
 > # adding up
@@ -328,7 +348,7 @@ B5    330 429.2389  456.3128 2088.2182
 > weights(update(ms_pias, ms_index), ea_only = TRUE)
        B5        B3        B4        B1        B2 
 2088.2182  554.4886 3935.9748  260.4832 2474.7571 
->
+> 
 > # try a weird index
 > ms_epr <- with(
 +   ms_prices,
@@ -577,8 +597,23 @@ $levels
 $periods
 [1] "202001" "202002" "202003" "202004"
 
-$r
-[1] 1
+$weights
+$weights$`202001`
+111 112 121 122 131 
+300  27 310 742  35 
+
+$weights$`202002`
+      111       112       121       122       131 
+280.75232  25.26771 189.79117 454.27435  21.38889 
+
+$weights$`202003`
+       111        112        121        122        131 
+ 690.54207   62.14879  471.69467 1129.02402   36.04167 
+
+$weights$`202004`
+      111       112       121       122       131 
+747.62219  67.28600 761.18522 971.84867  39.02087 
+
 
 > 
 > # re-aggregating the index shouldn't do anything
@@ -602,4 +637,4 @@ In aggregate.aggregate(fs_index, fs_pias) : aggregating an aggregated index
 > 
 > proc.time()
    user  system elapsed 
-  0.143   0.007   0.145 
+  0.134   0.016   0.144 
