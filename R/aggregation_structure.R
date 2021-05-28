@@ -2,7 +2,7 @@
 aggregation_structure <- function(x, w = rep(1, length(ea))) {
   x <- lapply(x, as.character)
   len <- length(x)
-  ea <- if (len) x[[len]] # x[[0]] is an error
+  ea <- if (len) x[[len]] else character(0) # x[[0]] is an error
   w <- as.numeric(w)
   # basic argument checking to make sure inputs can make an aggregation structure
   if (any(lengths(x) != length(w))) {
@@ -70,6 +70,7 @@ print.pias <- function(x, ...) {
       length(x$child), 
       "upper-level", if (length(x$child) == 1) "index" else "indexes",
       "\n")
+  print(c(rev(lapply(x$child, names)), list(names(x$weights))))
   invisible(x)
 }
 
