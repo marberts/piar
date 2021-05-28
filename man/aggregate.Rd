@@ -40,6 +40,7 @@ An object of class \code{'aggregate'}, inheriting from class \code{'index'}, whi
 \item{contributions}{A named list with an entry for each \code{period}, which itself contains a list with an entry for each level in \code{pias} with a named vector that gives the additive contribution for each price relative.}
 \item{levels}{The levels for \code{pias}.}
 \item{periods}{The levels for \code{period}.}
+\item{r}{The order \code{r} of the mean used to aggregate \code{x}.}
 }
 
 \seealso{

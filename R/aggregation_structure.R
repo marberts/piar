@@ -72,3 +72,16 @@ print.pias <- function(x, ...) {
       "\n")
   invisible(x)
 }
+
+update.pias <- function(object, index, ...) {
+  if (!inherits(index, "aggregate")) {
+    stop("'index' is not an aggregate index; use aggregate() to make one")
+  }
+  price_update <- weights_factor(index$r)
+  if (!all(object$levels %in% index$levels)) {
+    warning("not all weights in pias have a corresponding index value")
+  }
+  epr <- cumprod(index)[, length(index$periods)]
+  object$weights[] <- price_update(epr[names(object$weights)], object$weights)
+  object
+}

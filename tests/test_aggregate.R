@@ -55,6 +55,8 @@ all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]], 
 # are weights updated correctly?
 apply(cumprod(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
 
+weights(update(ms_pias, ms_index), ea_only = TRUE)
+
 # try a weird index
 ms_epr <- with(
   ms_prices,

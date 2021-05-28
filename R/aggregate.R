@@ -48,5 +48,6 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     if (pias$height) pias$weights <- price_update(index[eas], w[[1]])
   }
   x$levels <- pias$levels
+  x$r <- r
   structure(x, class = c("aggregate", "index"))
 }

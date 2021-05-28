@@ -31,6 +31,9 @@ character(0)
 $periods
 character(0)
 
+$r
+[1] 1
+
 > 
 > unclass(aggregate(elemental_index(1:5), aggregation_structure(list())))
 $index
@@ -48,6 +51,9 @@ character(0)
 
 $periods
 [1] "1"
+
+$r
+[1] 1
 
 > 
 > unclass(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))
@@ -69,6 +75,9 @@ $levels
 
 $periods
 [1] "1"
+
+$r
+[1] 1
 
 > 
 > #---- Matched sample ----
@@ -263,6 +272,9 @@ $levels
 $periods
 [1] "202001" "202002" "202003" "202004"
 
+$r
+[1] 1
+
 > 
 > # adding up
 > all.equal(apply(cumprod(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[1]]),
@@ -313,6 +325,10 @@ B3    312 630.2411 1030.6557  554.4886
 B4    622 809.0503  860.0806 3935.9748
 B5    330 429.2389  456.3128 2088.2182
 > 
+> weights(update(ms_pias, ms_index), ea_only = TRUE)
+       B5        B3        B4        B1        B2 
+2088.2182  554.4886 3935.9748  260.4832 2474.7571 
+>
 > # try a weird index
 > ms_epr <- with(
 +   ms_prices,
@@ -560,6 +576,9 @@ $levels
 
 $periods
 [1] "202001" "202002" "202003" "202004"
+
+$r
+[1] 1
 
 > 
 > # re-aggregating the index shouldn't do anything

@@ -15,8 +15,9 @@ S3method(aggregate, aggregate)
 
 S3method(print, pias)
 S3method(weights, pias)
+S3method(update, pias)
 
-importFrom(stats, aggregate, weights)
+importFrom(stats, aggregate, weights, update)
 
 importFrom(utils, stack, unstack)
 
