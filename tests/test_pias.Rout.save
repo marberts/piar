@@ -29,17 +29,17 @@ $levels
 character(0)
 
 $weights
-named numeric(0)
+numeric(0)
 
 $height
 [1] 0
 
 > 
 > weights(aggregation_structure(list()))
-named list()
+list()
 > 
 > weights(aggregation_structure(list()), ea_only = TRUE)
-named numeric(0)
+numeric(0)
 > 
 > unclass(aggregation_structure(list(1:5)))
 $child

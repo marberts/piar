@@ -19,8 +19,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   }
   # loop over each time period
   eas <- names(pias$weights)
-  x$weights <- structure(rep(list(structure(numeric(0), names = character(0))), 
-                             length(x$periods)), names = x$periods)
+  x$weights <- structure(rep(list(numeric(0)), length(x$periods)), names = x$periods)
   for (t in seq_along(x$periods)) {
     rel <- con <- vector("list", pias$height)
     # align epr with weights so that positional indexing works

@@ -34,7 +34,12 @@ character(0)
 $weights
 named list()
 
-> 
+>
+> all.equal(update(aggregation_structure(list()), 
++                  aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
++           aggregation_structure(list()))
+[1] TRUE
+>
 > unclass(aggregate(elemental_index(1:5), aggregation_structure(list())))
 $index
 $index$`1`
@@ -54,9 +59,14 @@ $periods
 
 $weights
 $weights$`1`
-named numeric(0)
+numeric(0)
 
 
+> 
+> all.equal(update(aggregation_structure(list()),
++                  aggregate(elemental_index(1:5), aggregation_structure(list()))),
++           aggregation_structure(list()))
+[1] TRUE
 > 
 > unclass(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))
 $index
@@ -85,6 +95,15 @@ NA
 
 
 > 
+> is.na(weights(update(aggregation_structure(list("2")), 
++                aggregate(elemental_index(1:5), aggregation_structure(list("2"))))))
+[1] TRUE
+> 
+> all.equal(update(aggregation_structure(list(1)), 
++                  aggregate(elemental_index(rep(1, 10)), aggregation_structure(list(1)))),
++           aggregation_structure(list(1)))
+[1] TRUE
+>
 > #---- Matched sample ----
 > ms_epr <- with(
 +   ms_prices, 

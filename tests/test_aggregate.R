@@ -3,9 +3,24 @@ set.seed(12345)
 
 unclass(aggregate(elemental_index(numeric(0)), aggregation_structure(list())))
 
+all.equal(update(aggregation_structure(list()), 
+                 aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
+          aggregation_structure(list()))
+
 unclass(aggregate(elemental_index(1:5), aggregation_structure(list())))
 
+all.equal(update(aggregation_structure(list()),
+                 aggregate(elemental_index(1:5), aggregation_structure(list()))),
+          aggregation_structure(list()))
+
 unclass(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))
+
+is.na(weights(update(aggregation_structure(list("2")), 
+               aggregate(elemental_index(1:5), aggregation_structure(list("2"))))))
+
+all.equal(update(aggregation_structure(list(1)), 
+                 aggregate(elemental_index(rep(1, 10)), aggregation_structure(list(1)))),
+          aggregation_structure(list(1)))
 
 #---- Matched sample ----
 ms_epr <- with(
