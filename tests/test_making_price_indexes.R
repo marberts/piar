@@ -1,3 +1,9 @@
+## ---- include = FALSE---------------------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
 ## -----------------------------------------------------------------------------
 library(piar)
 
@@ -140,14 +146,7 @@ ms_epr2 <- with(
 )
 
 ## -----------------------------------------------------------------------------
-ms_weights2 <- transform(
-  ms_weights, 
-  weight = gpindex::weights_update(cumprod(ms_index1)[business, "202003"], weight)
-)
-pias2 <- with(
-  ms_weights2, 
-  aggregation_structure(c(expand_classification(classification), list(business)), weight)
-)
+pias2 <- update(pias1, ms_index1)
 (ms_index2 <- aggregate(ms_epr2, pias2, na.rm = TRUE))
 
 ## -----------------------------------------------------------------------------
@@ -235,5 +234,9 @@ pias <- with(
 )
 
 ## -----------------------------------------------------------------------------
-Reduce(stack, Map(aggregate, fs_epr, pias, na.rm = TRUE, r = -1))
+(paasche <- Reduce(stack, Map(aggregate, fs_epr, pias, na.rm = TRUE, r = -1)))
+
+## -----------------------------------------------------------------------------
+laspeyres <- Reduce(stack, Map(aggregate, fs_epr, pias[c(1, 1, 2, 3)], na.rm = TRUE))
+sqrt(as.matrix(laspeyres) * as.matrix(paasche))
 

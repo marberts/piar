@@ -18,7 +18,7 @@
   contributions <- if (contrib) {
     mapply(Vectorize(contrib_fun, SIMPLIFY = FALSE), x, w, SIMPLIFY = FALSE)
   } else {
-    Map(split, split(structure(numeric(0), names = character(0)), period), eas)
+    Map(split, split(numeric(0), period), eas)
   }
   # return 'elemental' object
   res <- list(index = index,

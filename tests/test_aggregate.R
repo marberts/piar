@@ -3,9 +3,24 @@ set.seed(12345)
 
 unclass(aggregate(elemental_index(numeric(0)), aggregation_structure(list())))
 
+all.equal(update(aggregation_structure(list()), 
+                 aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
+          aggregation_structure(list()))
+
 unclass(aggregate(elemental_index(1:5), aggregation_structure(list())))
 
+all.equal(update(aggregation_structure(list()),
+                 aggregate(elemental_index(1:5), aggregation_structure(list()))),
+          aggregation_structure(list()))
+
 unclass(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))
+
+is.na(weights(update(aggregation_structure(list("2")), 
+               aggregate(elemental_index(1:5), aggregation_structure(list("2"))))))
+
+all.equal(update(aggregation_structure(list(1)), 
+                 aggregate(elemental_index(rep(1, 10)), aggregation_structure(list(1)))),
+          aggregation_structure(list(1)))
 
 #---- Matched sample ----
 ms_epr <- with(
@@ -54,6 +69,8 @@ all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]], 
 
 # are weights updated correctly?
 apply(cumprod(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
+
+weights(update(ms_pias, ms_index), ea_only = TRUE)
 
 # try a weird index
 ms_epr <- with(
