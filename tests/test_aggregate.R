@@ -1,6 +1,7 @@
 library(piar)
 set.seed(12345)
 
+# length 0 inputs
 unclass(aggregate(elemental_index(numeric(0)), aggregation_structure(list())))
 
 all.equal(update(aggregation_structure(list()), 
@@ -122,3 +123,9 @@ all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[1]
 
 all.equal(apply(cumprod(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),
           cumprod(fs_index)[1, ])
+
+# non-missing indexes should be the same
+fs_index2 <- aggregate(fs_epr, fs_pias)
+fs_index2[] - fs_index[]
+
+all.equal(fs_index2["121", ], sapply(fs_index2$contributions, function(x) sum(x[["121"]], na.rm = TRUE) + 1))

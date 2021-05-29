@@ -18,6 +18,7 @@ Type 'q()' to quit R.
 > library(piar)
 > set.seed(12345)
 > 
+> # length 0 inputs
 > unclass(aggregate(elemental_index(numeric(0)), aggregation_structure(list())))
 $index
 named list()
@@ -34,12 +35,12 @@ character(0)
 $weights
 named list()
 
->
+> 
 > all.equal(update(aggregation_structure(list()), 
 +                  aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
 +           aggregation_structure(list()))
 [1] TRUE
->
+> 
 > unclass(aggregate(elemental_index(1:5), aggregation_structure(list())))
 $index
 $index$`1`
@@ -103,7 +104,7 @@ NA
 +                  aggregate(elemental_index(rep(1, 10)), aggregation_structure(list(1)))),
 +           aggregation_structure(list(1)))
 [1] TRUE
->
+> 
 > #---- Matched sample ----
 > ms_epr <- with(
 +   ms_prices, 
@@ -654,6 +655,23 @@ In aggregate.aggregate(fs_index, fs_pias) : aggregating an aggregated index
 +           cumprod(fs_index)[1, ])
 [1] TRUE
 > 
+> # non-missing indexes should be the same
+> fs_index2 <- aggregate(fs_epr, fs_pias)
+> fs_index2[] - fs_index[]
+    202001 202002 202003 202004
+1       NA     NA     NA     NA
+11      NA     NA     NA     NA
+12       0     NA     NA     NA
+13       0      0      0     NA
+111     NA     NA    NaN    NaN
+112      0      0     NA     NA
+121      0      0      0      0
+122      0     NA     NA      0
+131      0      0      0     NA
+> 
+> all.equal(fs_index2["121", ], sapply(fs_index2$contributions, function(x) sum(x[["121"]], na.rm = TRUE) + 1))
+[1] TRUE
+> 
 > proc.time()
    user  system elapsed 
-  0.134   0.016   0.144 
+  0.436   0.166   0.649 
