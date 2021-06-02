@@ -14,7 +14,7 @@ shadow_price <- function(x, period, product, ea, pias = NULL, w = rep(1, length(
   }
   ea <- split(as.factor(ea), period)
   w <- split(w, period)
-  price_update <- weights_factor(r2)
+  price_update <- factor_weights(r2)
   for (t in seq_along(res)[-1]) {
     # calculate relatives
     matches <- match(product[[t]], product[[t - 1]], incomparables = NA)

@@ -25,11 +25,11 @@ elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)),
 
 \item{na.rm}{Should missing values in \code{x} and \code{w} be removed? By default, missing values are not removed. Setting to \code{TRUE} is equivalent to parental imputation.}
 
-\item{r}{Order of the price index used to calculate the elemental price indexes: 0 for a geometric index (the default), 1 for an arithmetic index, or -1 for a harmonic index. Other values are possible; see \code{\link[=mean_generalized]{mean_generalized()}} for details.}
+\item{r}{Order of the price index used to calculate the elemental price indexes: 0 for a geometric index (the default), 1 for an arithmetic index, or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 }
 
 \details{
-This function is a simple wrapper that applies \code{\link[=mean_generalized]{mean_generalized()}} and \code{\link[=contributions]{contributions()}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index and, optionally, quote contributions.
+This function is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean()}} and \code{\link[=contributions]{contributions()}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index and, optionally, quote contributions.
 }
 
 \value{
@@ -80,7 +80,7 @@ exp(solve(crossprod(mm), crossprod(mm, log(prices$rel))))
 
 # Can also be done with tapply(), but it's less general
 
-with(prices, t(tapply(rel, list(period, ea), gpindex::mean_geometric, na.rm = TRUE)))
+with(prices, t(tapply(rel, list(period, ea), gpindex::geometric_mean, na.rm = TRUE)))
 
 epr
 

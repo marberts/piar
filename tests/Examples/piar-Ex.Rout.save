@@ -205,7 +205,7 @@ eab:factor(period)2 6.928203
 > 
 > # Can also be done with tapply(), but it's less general
 > 
-> with(prices, t(tapply(rel, list(period, ea), gpindex::mean_geometric, na.rm = TRUE)))
+> with(prices, t(tapply(rel, list(period, ea), gpindex::geometric_mean, na.rm = TRUE)))
          1        2
 a 1.732051 5.916080
 b 2.828427 6.928203

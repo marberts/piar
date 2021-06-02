@@ -21,5 +21,5 @@ importFrom(stats, aggregate, weights, update)
 
 importFrom(utils, stack, unstack)
 
-importFrom(gpindex, mean_generalized, weights_factor, contributions, 
-           weights_transmute, weights_scale, back_price)
+importFrom(gpindex, generalized_mean, factor_weights, contributions, 
+           transmute_weights, scale_weights, back_price)

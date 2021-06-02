@@ -8,13 +8,13 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     stop("'pias' must be a price index aggregation structure; use pias() to make one")
   }
   # helpful functions
-  price_update <- weights_factor(r)
+  price_update <- factor_weights(r)
   # 'i' is defined in the loop below; it's used to loop over the height of 'pias'
   aggregate_index <- function(z) {
-    mean_generalized(r)(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm)
+    generalized_mean(r)(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm)
   }
   aggregate_contrib <- function(z) {
-    w <- weights_scale(weights_transmute(r, 1)(rel[[i - 1]][z], w[[i - 1]][z]))
+    w <- scale_weights(transmute_weights(r, 1)(rel[[i - 1]][z], w[[i - 1]][z]))
     unlist(Map("*", con[[i - 1]][z], w))
   }
   # loop over each time period

@@ -18,7 +18,7 @@ A method to aggregate period-over-period elemental price indexes using a price i
 
 \item{na.rm}{Should missing values in \code{x} be removed? By default, missing values are not removed. Setting to \code{TRUE} is equivalent to parental imputation.}
 
-\item{r}{Order of the price index used to aggregate the elemental price indexes: 0 for a geometric index, 1 for an arithmetic index (the default), or -1 for a harmonic index. Other values are possible; see \code{\link[=mean_generalized]{mean_generalized()}} for details.}
+\item{r}{Order of the price index used to aggregate the elemental price indexes: 0 for a geometric index, 1 for an arithmetic index (the default), or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }

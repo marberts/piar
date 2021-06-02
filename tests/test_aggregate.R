@@ -86,7 +86,7 @@ all.equal(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)[], ms_index[])
 
 all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
 
-all.equal(apply(cumprod(ms_index)[2:3, ], 2, gpindex::mean_generalized(-1.7), weights(ms_pias)[[2]]),
+all.equal(apply(cumprod(ms_index)[2:3, ], 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
           cumprod(ms_index)[1, ])
 
 ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)

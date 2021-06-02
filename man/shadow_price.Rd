@@ -25,9 +25,9 @@ shadow_price(x, period, product, ea, pias = NULL,
 
 \item{w}{A numeric vector of weights for the prices in \code{x} (i.e., quote/product weights). The default is to give each price equal weight.}
 
-\item{r1}{Order of the price index used to calculate the elemental price indexes: 0 for a geometric index (the default), 1 for an arithmetic index, or -1 for a harmonic index. Other values are possible; see \code{\link[=mean_generalized]{mean_generalized()}} for details.}
+\item{r1}{Order of the price index used to calculate the elemental price indexes: 0 for a geometric index (the default), 1 for an arithmetic index, or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
-\item{r2}{Order of the price index used to aggregate the elemental price indexes: 0 for a geometric index, 1 for an arithmetic index (the default), or -1 for a harmonic index. Other values are possible; see \code{\link[=mean_generalized]{mean_generalized()}} for details.}
+\item{r2}{Order of the price index used to aggregate the elemental price indexes: 0 for a geometric index, 1 for an arithmetic index (the default), or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 }
 
 \details{

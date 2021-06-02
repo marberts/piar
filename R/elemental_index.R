@@ -31,5 +31,5 @@
 
 elemental_index <- function(x, period = rep(1L, length(x)), ea = rep(1L, length(x)),
                             w = rep(1, length(x)), contrib = FALSE, na.rm = FALSE, r = 0) {
-  .elemental_index(x, period, ea, w, contrib, na.rm, mean_generalized(r), contributions(r))
+  .elemental_index(x, period, ea, w, contrib, na.rm, generalized_mean(r), contributions(r))
 }
