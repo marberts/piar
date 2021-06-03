@@ -37,21 +37,21 @@ merge.index <- function(x, y, ...) {
   if (!inherits(y, "index")) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
+  if (!identical(class(x), class(y))) {
+    stop("'x' is an ", paste(class(x), collapse = " "), " but 'y' is an ", paste(class(y), collapse = " "))
+  }
   if (any(x$periods != y$periods)) {
     stop("'x' and 'y' must be indexes for the same time periods")
   }
   if (length(intersect(x$levels, y$levels))) {
     warning("some levels appear in both 'x' and 'y'")
   }
-  if (!identical(class(x), class(y))) {
-    warning("'x' is a ", paste(class(x), collapse = " "), " but 'y' is a ", paste(class(y), collapse = " "))
-  }
   if (!length(x$levels)) return(y)
   if (!length(y$levels)) return(x)
   for (t in x$periods) {
     x$index[[t]] <- c(x$index[[t]], y$index[[t]])
     x$contributions[[t]] <- c(x$contributions[[t]], y$contributions[[t]])
-    if (inherits(x, "aggregate")) x$weights[[t]] <- c(x$weights[[t]], y$weights[[t]])
+    x$weights[[t]] <- c(x$weights[[t]], y$weights[[t]])
   }
   x$levels <- union(x$levels, y$levels)
   x
@@ -61,21 +61,21 @@ stack.index <- function(x, y, ...) {
   if (!inherits(y, "index")) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
+  if (!identical(class(x), class(y))) {
+    stop("'x' is an ", paste(class(x), collapse = " "), " but 'y' is an ", paste(class(y), collapse = " "))
+  }
   if (any(x$levels != y$levels)) {
     stop("'x' and 'y' must be indexes for the same levels")
   }
   if (length(intersect(x$periods, y$periods))) {
     warning("some periods appear in both 'x' and 'y'")
   }
-  if (!identical(class(x), class(y))) {
-    warning("'x' is a ", paste(class(x), collapse = " "), " but 'y' is a ", paste(class(y), collapse = " "))
-  }
   if (!length(x$periods)) return(y)
   if (!length(y$periods)) return(x)
   x$index <- c(x$index, y$index)
   x$contributions <- c(x$contributions, y$contributions)
   x$periods <- union(x$periods, y$periods)
-  if (inherits(x, "aggregate")) x$weights <- c(x$weights, y$weights)
+  x$weights <- c(x$weights, y$weights)
   x
 }
 

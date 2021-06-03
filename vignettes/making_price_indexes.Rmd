@@ -102,7 +102,7 @@ This gives the same result as directly manipulating the index as a matrix.
 apply(as.matrix(ms_index), 1, cumprod)
 ```
 
-Chained indexes often need be to rebased, and this can be done with standard matrix operations. For example, rebasing the index so that 202004 is the base period just requireS dividing the chained index by the slice for 202004.
+Chained indexes often need be to rebased, and this can be done with standard matrix operations. For example, rebasing the index so that 202004 is the base period just requires dividing the chained index by the slice for 202004.
 
 ```{r}
 ms_index_chained  / ms_index_chained[, "202004"]
