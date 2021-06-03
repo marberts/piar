@@ -65,6 +65,10 @@ ms_pias <- with(
 
 all.equal(aggregate(ms_epr, ms_pias, na.rm = TRUE)[rownames(ms_index[]), ], ms_index[])
 
+# stacking shouldn't do anything
+
+all.equal(Reduce(stack, unstack(ms_index)), ms_index)
+
 # are contributions getting aggregated correctly?
 all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
 

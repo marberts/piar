@@ -51,6 +51,7 @@ merge.index <- function(x, y, ...) {
   for (t in x$periods) {
     x$index[[t]] <- c(x$index[[t]], y$index[[t]])
     x$contributions[[t]] <- c(x$contributions[[t]], y$contributions[[t]])
+    if (inherits(x, "aggregate")) x$weights[[t]] <- c(x$weights[[t]], y$weights[[t]])
   }
   x$levels <- union(x$levels, y$levels)
   x
@@ -74,6 +75,7 @@ stack.index <- function(x, y, ...) {
   x$index <- c(x$index, y$index)
   x$contributions <- c(x$contributions, y$contributions)
   x$periods <- union(x$periods, y$periods)
+  if (inherits(x, "aggregate")) x$weights <- c(x$weights, y$weights)
   x
 }
 
@@ -85,6 +87,7 @@ unstack.index <- function(x, ...) {
     res[[i]]$contributions <- x$contributions[i]
     res[[i]]$levels <- x$levels
     res[[i]]$periods <- x$periods[i]
+    res[[i]]$weights <- x$weights[i]
     class(res[[i]]) <- class(x)
   }
   res

@@ -49,6 +49,8 @@ all.equal(epr3[], cbind(epr1[], epr2[]))
 all.equal(epr3$index$A, sapply(epr3$contributions$A, sum, na.rm = TRUE) + 1)
 epr3$periods
 
+all.equal(epr1, Reduce(stack, unstack(epr1)))
+
 all.equal(stack(elemental_index(integer(0), integer(0), integer(0)), 
                 elemental_index(integer(0), integer(0), integer(0))),
           elemental_index(integer(0), integer(0), integer(0)))

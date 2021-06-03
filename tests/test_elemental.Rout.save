@@ -180,6 +180,9 @@ In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
 [20] "t" "u" "v" "w" "x" "y" "z" "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L"
 [39] "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
+>
+> all.equal(epr1, Reduce(stack, unstack(epr1)))
+[1] TRUE
 > 
 > all.equal(stack(elemental_index(integer(0), integer(0), integer(0)), 
 +                 elemental_index(integer(0), integer(0), integer(0))),
