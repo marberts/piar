@@ -5,6 +5,8 @@ set.seed(1234)
 #---- Length 0 inputs ----
 unclass(elemental_index(integer(0), integer(0), integer(0)))
 
+unclass(superlative_elemental_index(integer(0), integer(0), integer(0), integer(0)))
+
 as.matrix(elemental_index(numeric(0)))
 
 as.matrix(elemental_index(numeric(0)), type = "contributions")
@@ -18,13 +20,17 @@ all.equal(as.data.frame(elemental_index(numeric(0)), type = "contributions"),
 #---- Adding up contributions ----
 dat <- data.frame(rel = replace(rlnorm(1e4), sample(1e4, 10), NA),
                   period = sample(letters, 1e4, TRUE),
-                  ea = sample(1:5, 1e4, TRUE))
+                  ea = sample(1:5, 1e4, TRUE),
+                  w1 = replace(rlnorm(1e4), sample(1e4, 10), NA),
+                  w2 = runif(1e4))
 
 (epr1 <- with(dat, elemental_index(rel, period, ea, contrib = TRUE)))
 (epr2 <- with(dat, elemental_index(rel, period, ea, r = -1, contrib = TRUE, na.rm = TRUE)))
+(epr3 <- with(dat, superlative_elemental_index(rel, period, ea, w1, w2, contrib = TRUE, na.rm = TRUE)))
 all.equal(cumprod(epr1), t(apply(as.matrix(epr1), 1, cumprod)))
 all.equal(epr1$index, lapply(epr1$contributions, function(x) sapply(x, sum) + 1))
 all.equal(epr2$index, lapply(epr2$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
+all.equal(epr3$index, lapply(epr3$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 
 #---- Merging ----
 epr3 <- merge(epr1, epr2)

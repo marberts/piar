@@ -171,13 +171,13 @@ Price index aggregation structure with 3 elementary aggregates and 2 upper-level
 > 
 > ### Name: elemental index
 > ### Title: Elemental price index
-> ### Aliases: elemental_index
+> ### Aliases: elemental_index superlative_elemental_index
 > 
 > ### ** Examples
 > 
 > prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
 > 
-> # A simple elemental price structure using a jevons index
+> # A simple elemental price structure using a Jevons index
 > 
 > epr <- with(prices, elemental_index(rel, period, ea))
 > 
@@ -221,6 +221,16 @@ b 2.828427 6.928203
          1        2
 a 1.500000 5.833333
 b 2.666667 6.857143
+> 
+> # Make Fisher indexes
+> 
+> prices$base_weights <- 1:8
+> prices$current_weights <- 8:1
+> 
+> with(prices, superlative_elemental_index(rel, period, ea, base_weights, current_weights))
+         1        2
+a 1.870829 5.837718
+b 2.901905 6.761234
 > 
 > 
 > 
@@ -398,7 +408,7 @@ b 2.828427 6.928203 2.828427 6.928203
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.081 0.004 0.086 0 0 
+Time elapsed:  0.228 0.027 0.265 0 0 
 > grDevices::dev.off()
 null device 
           1 

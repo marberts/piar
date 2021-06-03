@@ -1,5 +1,5 @@
 
-R version 4.0.5 (2021-03-31) -- "Shake and Throw"
+R version 4.1.0 (2021-05-18) -- "Camp Pontanezen"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -34,6 +34,20 @@ $periods
 character(0)
 
 > 
+> unclass(superlative_elemental_index(integer(0), integer(0), integer(0), integer(0)))
+$index
+named list()
+
+$contributions
+named list()
+
+$levels
+character(0)
+
+$periods
+character(0)
+
+> 
 > as.matrix(elemental_index(numeric(0)))
 <0 x 0 matrix>
 > 
@@ -51,7 +65,9 @@ character(0)
 > #---- Adding up contributions ----
 > dat <- data.frame(rel = replace(rlnorm(1e4), sample(1e4, 10), NA),
 +                   period = sample(letters, 1e4, TRUE),
-+                   ea = sample(1:5, 1e4, TRUE))
++                   ea = sample(1:5, 1e4, TRUE),
++                   w1 = replace(rlnorm(1e4), sample(1e4, 10), NA),
++                   w2 = runif(1e4))
 > 
 > (epr1 <- with(dat, elemental_index(rel, period, ea, contrib = TRUE)))
           a         b         c         d         e         f         g
@@ -103,11 +119,38 @@ character(0)
 3 0.6553243 0.4989662 0.8721370 0.6188208 0.5166762
 4 0.6061881 0.7444958 0.5644340 0.6251404 0.7964932
 5 0.3890438 0.6811875 0.6443716 0.6728371 0.6414463
+> (epr3 <- with(dat, superlative_elemental_index(rel, period, ea, w1, w2, contrib = TRUE, na.rm = TRUE)))
+          a         b         c         d         e         f         g
+1 1.1557528 0.8046280 0.9123902 1.0001831 0.9125489 1.1725583 1.0780146
+2 0.7948881 1.0185246 1.0280318 0.9493348 1.4989769 0.9188825 0.7993088
+3 0.9083333 1.0936418 0.8735682 0.8938790 0.9782774 1.1033680 1.1944081
+4 0.9087451 0.9927389 0.8970248 0.9623171 1.2423814 0.9828936 0.9468110
+5 1.0256817 0.9704534 0.8876262 0.8948243 0.8407150 1.0513354 1.1431276
+          h         i         j         k         l         m         n
+1 1.0389738 0.8978236 0.8502776 1.0440379 0.8092747 1.1984784 1.0000413
+2 1.1849273 0.9072620 1.0195389 1.0843558 1.0090683 1.2327599 1.0423762
+3 1.3921875 1.1044604 1.0832780 1.1512185 1.1768615 1.2246824 0.9535494
+4 0.8062410 1.0572087 1.1187785 0.9818612 1.1224826 0.8364708 1.2362252
+5 0.9938159 0.9293493 0.9412905 1.2650342 1.1449725 0.8577759 1.0236659
+          o         p         q         r         s         t         u
+1 1.0338999 0.9912650 1.0640955 0.7475203 0.8785091 1.2748334 0.9351787
+2 0.9765408 0.8330938 0.9281186 1.0045017 0.8609109 1.5673944 1.1179160
+3 0.9065069 1.0280993 0.9661142 0.8435537 1.0437240 0.8583835 0.9304664
+4 1.2027368 1.0824947 1.1657441 1.0632273 0.8780912 0.9152148 1.0607419
+5 1.1409127 0.9987273 0.8323567 0.7751675 1.2124479 0.7432386 0.7053440
+          v         w         x         y         z
+1 0.8595880 0.9648985 1.1495894 1.0088459 0.9514898
+2 1.1795126 0.9506495 0.8709796 1.0374182 0.9099144
+3 0.8663784 0.7134403 1.4519454 1.0570721 1.1161922
+4 0.9991889 1.1171289 0.9172644 0.9628353 1.5686819
+5 0.6495562 1.4171272 1.0121937 0.9456089 0.9649770
 > all.equal(cumprod(epr1), t(apply(as.matrix(epr1), 1, cumprod)))
 [1] TRUE
 > all.equal(epr1$index, lapply(epr1$contributions, function(x) sapply(x, sum) + 1))
 [1] TRUE
 > all.equal(epr2$index, lapply(epr2$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
+[1] TRUE
+> all.equal(epr3$index, lapply(epr3$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 [1] TRUE
 > 
 > #---- Merging ----
@@ -120,7 +163,7 @@ In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
 [1] TRUE
 > epr3$levels
 [1] "1" "2" "3" "4" "5"
->
+> 
 > all.equal(merge(elemental_index(integer(0), integer(0), integer(0)), 
 +                 elemental_index(integer(0), integer(0), integer(0))),
 +           elemental_index(integer(0), integer(0), integer(0)))
@@ -142,12 +185,12 @@ In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
 +                 elemental_index(integer(0), integer(0), integer(0))),
 +           elemental_index(integer(0), integer(0), integer(0)))
 [1] TRUE
->
+> 
 > all.equal(unstack(stack(elemental_index(integer(0), integer(0), integer(0)), 
 +                         elemental_index(integer(0), integer(0), integer(0)))),
 +           elemental_index(integer(0), integer(0), integer(0)))
 [1] TRUE
->
+> 
 > #---- Toy example ----
 > dat <- data.frame(rel = c(1:6, NA, 7, 8),
 +                   period = c(1, 1, 1, 1, 1, 2, 2, 2, 2),
@@ -279,4 +322,4 @@ $periods
 > 
 > proc.time()
    user  system elapsed 
-  0.146   0.030   0.168 
+  0.592   0.207   0.739 

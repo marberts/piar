@@ -1,4 +1,4 @@
-export(elemental_index, price_relative,
+export(elemental_index, superlative_elemental_index, price_relative,
        aggregation_structure, expand_classification,
        shadow_price)
 
@@ -22,4 +22,4 @@ importFrom(stats, aggregate, weights, update)
 importFrom(utils, stack, unstack)
 
 importFrom(gpindex, generalized_mean, factor_weights, contributions, 
-           transmute_weights, scale_weights, back_price)
+           transmute_weights, scale_weights, back_price, nested_mean, nested_contributions)
