@@ -38,7 +38,7 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 \details{
 \code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean()}} and \code{\link[=contributions]{contributions()}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions.
 
-\code{superlative_elemental_index()} work the same, except that it wraps \code{\link[=nested_mean]{nested_mean()}} and \code{\link[=nested_contributions]{nested_contributions()}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}.
+\code{superlative_elemental_index()} works the same, except that it wraps \code{\link[=nested_mean]{nested_mean()}} and \code{\link[=nested_contributions]{nested_contributions()}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}.
 }
 
 \value{

@@ -26,11 +26,14 @@ A method to aggregate period-over-period elemental price indexes using a price i
 \details{
 This function aggregates period-over-period elemental indexes by looping over each time period in \code{x} and
 \enumerate{
-\item price updating the weights in \code{pias};
-\item aggregating the elemental indexes and quote contributions in each level of \code{pias}.
+\item aggregating the elemental indexes and quote contributions in each level of \code{pias};
+\item price updating the weights in \code{pias}.
 }
+The result is a collection of aggregated period-over-period indexes that can be chained together to get a fixed-base index. See section C in chapter 9 of the PPI manual for details when aggregating with an arithmetic index (the default).
 
 By default, any missing elemental indexes will propagate when aggregating the index. Setting \code{na.rm = TRUE} ignores missing values, and is equivalent to parental imputation. As a price index generally cannot have missing values (for otherwise it can't be chained over time), any missing values for a level of \code{pias} are recursively imputed by the value of its immediate parent.
+
+Aggregating quote contributions uses a generalization of the method in chapter 9, section C.8, of the PPI manual (equation 9.25) that is applicable to non-arithmetic indexes.
 }
 
 \value{
@@ -41,6 +44,10 @@ An object of class \code{'aggregate'}, inheriting from class \code{'index'}, whi
 \item{levels}{The levels for \code{pias}.}
 \item{periods}{The levels for \code{period}.}
 \item{weights}{A named list with an entry for each \code{period} that contains the price updated weights from \code{pias}.}
+}
+
+\references{
+ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). Producer Price Index Manual: Theory and Practice. International Monetary Fund.
 }
 
 \seealso{
