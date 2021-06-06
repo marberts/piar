@@ -24,7 +24,9 @@ A numeric vector of price relatives, with \code{product} as names.
 }
 
 \seealso{
-\code{\link[=back_price]{back_price()}} to get only the back price.
+\code{\link[=back_price]{back_price}} to get only the back price.
+
+\code{\link{carry_forward}} and \code{\link{shadow_price}} for imputations for missing prices.
 }
 
 \examples{

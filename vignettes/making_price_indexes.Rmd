@@ -301,12 +301,13 @@ apply(ms_index, 1, cumprod)
 
 The previous examples used parental imputation to both impute missing price relatives when calculating the elemental indexes, and to impute missing elemental indexes during aggregation. Another common imputation strategy when making elemental indexes is to carry forward the previous price to impute for missing prices, and parentally impute missing elemental indexes during aggregation. As the `elemental_index()` function accepts price relatives as its input, other types of imputations can be done prior to passing price relatives to this function.
 
-Carry-forward imputation is a particularly simple imputation as it just sets missing price relatives to 1.
-
 ```{r}
-ms_prices$relative <- with(ms_prices, replace(relative, is.na(relative), 1))
+ms_prices$relative <- with(
+  ms_prices, 
+  price_relative(carry_forward(price, period, product), period, product)
+)
 
-(ms_epr <- with(ms_prices, elemental_index(relative, period, business)))
+(ms_epr <- with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE)))
 ```
 
 Aggregation follows the same steps as in the previous examples, with missing values set to be ignored in order to parentally impute missing elemental indexes.

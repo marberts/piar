@@ -5,7 +5,7 @@
 \title{Elemental price index}
 
 \description{
-Compute period-over-period elemental price indexes/relatives and, optionally, quote contributions.
+Compute period-over-period or fixed-base elemental price indexes/relatives and, optionally, quote contributions.
 }
 
 \usage{
@@ -18,7 +18,7 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 }
 
 \arguments{
-\item{x}{A numeric vector of period-over-period price relatives. This can be made with \code{\link[=price_relative]{price_relative()}}. Names for this vector are used as product names for quote contributions.}
+\item{x}{A numeric vector of period-over-period or fixed-base price relatives. The former can be made with \code{\link[=price_relative]{price_relative()}}. Names for this vector are used as product names for quote contributions.}
 
 \item{period}{A factor, or something that can be coerced into one, giving the time period associated with each price relative in \code{x}. The ordering of time periods follows of the levels of \code{period}, to agree with \code{\link[=cut.Date]{cut()}}. The default assumes that all price relatives belong to one time period.}
 
@@ -36,9 +36,11 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 }
 
 \details{
-\code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean()}} and \code{\link[=contributions]{contributions()}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions.
+\code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions. See chapter 9, section B, of the PPI manual for more detail about making elemental indexes.
 
-\code{superlative_elemental_index()} works the same, except that it wraps \code{\link[=nested_mean]{nested_mean()}} and \code{\link[=nested_contributions]{nested_contributions()}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}.
+\code{superlative_elemental_index()} works the same, except that it wraps \code{\link[=nested_mean]{nested_mean(s)}} and \code{\link[=nested_contributions]{nested_contributions(s)}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}.
+
+By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental imputation, and needs to be explicitly set in the call to \code{elemental_index()} or \code{superlative_elemental_index()}. Non-parental imputation of missing relatives should be done prior to calling \code{elemental_index()} or \code{superlative_elemental_index()}.
 }
 
 \value{
@@ -50,12 +52,8 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 \item{periods}{The levels for \code{period}.}
 }
 
-\note{
-By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental imputation, and needs to be explicitly set in the call to \code{elemental_index()} or \code{superlative_elemental_index()}. Non-parental imputation of missing relatives should be done prior to calling \code{elemental_index()} or \code{superlative_elemental_index()}.
-}
-
-\section{Warning}{
-There is nothing stopping you from passing a vector fixed-base price relatives as \code{x} to get a fixed-base index, but you should only do this if you know what you're doing, and are very careful. Other functions (namely \link[=aggregate.index]{aggregate()}) assume that elemental indexes are calculated period-over-period, not with a fixed base period.
+\references{
+ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). Producer Price Index Manual: Theory and Practice. International Monetary Fund.
 }
 
 \seealso{

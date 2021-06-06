@@ -1,3 +1,4 @@
+#---- Shadow price imputation ----
 shadow_price <- function(x, period, product, ea, pias = NULL, w = rep(1, length(x)), r1 = 0, r2 = 1) {
   if (!same_length(x, period, product, ea, w)) {
     stop("'x', 'period', 'product', 'ea', and 'w' must be the same length")
@@ -8,8 +9,7 @@ shadow_price <- function(x, period, product, ea, pias = NULL, w = rep(1, length(
   period <- as.factor(period)
   res <- split(x, period)
   product <- split(as.integer(as.factor(product)), period)
-  warn <- any(vapply(product, anyDuplicated, numeric(1)) > 0)
-  if (warn) {
+  if (any(vapply(product, anyDuplicated, numeric(1)) > 0)) {
     warning("there are duplicated period-product pairs")
   }
   ea <- split(as.factor(ea), period)
@@ -31,6 +31,28 @@ shadow_price <- function(x, period, product, ea, pias = NULL, w = rep(1, length(
     # add shadow prices to 'x'
     impute <- is.na(price)
     res[[t]][impute] <- epr[as.character(ea[[t]][impute])] * back_price[impute]
+  }
+  res <- unsplit(res, period)
+  attributes(res) <- attributes(x)
+  res
+}
+
+#--- Carry forward imputation ----
+carry_forward <- function(x, period, product) {
+  if (!same_length(x, period, product)) {
+    stop("'x', 'period', and 'product' must be the same length")
+  }
+  if (!length(x)) return(x[0])
+  period <- as.factor(period)
+  res <- split(x, period)
+  product <- split(as.integer(as.factor(product)), period)
+  if (any(vapply(product, anyDuplicated, numeric(1)) > 0)) {
+    warning("there are duplicated period-product pairs")
+  }
+  for (t in seq_along(res)[-1]) {
+    nas <- is.na(res[[t]])
+    matches <- match(product[[t]][nas], product[[t - 1]], incomparables = NA)
+    res[[t]][nas] <- res[[t - 1]][matches]
   }
   res <- unsplit(res, period)
   attributes(res) <- attributes(x)

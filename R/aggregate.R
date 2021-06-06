@@ -3,7 +3,7 @@ aggregate.aggregate <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   NextMethod()
 }
 
-aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, chained = TRUE, ...) {
   if (!inherits(pias, "pias")) {
     stop("'pias' must be a price index aggregation structure; use pias() to make one")
   }
@@ -19,7 +19,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   }
   # loop over each time period
   eas <- names(pias$weights)
-  x$weights <- structure(rep(list(numeric(0)), length(x$periods)), names = x$periods)
+  x$weights <- structure(rep(list(pias$weights), length(x$periods)), names = x$periods)
   for (t in seq_along(x$periods)) {
     rel <- con <- vector("list", pias$height)
     # align epr with weights so that positional indexing works
@@ -46,7 +46,9 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     x$index[[t]] <- index
     x$contributions[[t]] <- unlist(rev(con), recursive = FALSE)
     # price update weights for all periods after the first
-    if (pias$height) pias$weights <- x$weights[[t]] <- price_update(index[eas], w[[1]])
+    if (pias$height && chained) {
+      pias$weights <- x$weights[[t]] <- price_update(index[eas], w[[1]]) 
+    }
   }
   x$levels <- pias$levels
   structure(x, class = c("aggregate", "index"))

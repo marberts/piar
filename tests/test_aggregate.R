@@ -133,3 +133,18 @@ fs_index2 <- aggregate(fs_epr, fs_pias)
 fs_index2[] - fs_index[]
 
 all.equal(fs_index2["121", ], sapply(fs_index2$contributions, function(x) sum(x[["121"]], na.rm = TRUE) + 1))
+
+#---- Fixed base index ----
+prices <- data.frame(price = 1:15, period = letters[1:3], product = rep(1:5, each = 3), ea = rep(c("f1", "f2"), c(6, 9)))
+prices$pop_rel <- with(prices, price_relative(price, period, product))
+prices$fx_rel <- with(prices, price / gpindex::base_price(price, period, product))
+
+pias <- aggregation_structure(list(c("1", "1"), c("f1", "f2")), 1:2)
+
+epr_pop <- with(prices, elemental_index(pop_rel, period, ea))
+epr_fx <- with(prices, elemental_index(fx_rel, period, ea))
+
+index_pop <- aggregate(epr_pop, pias)
+index_fx <- aggregate(epr_fx, pias, chained = FALSE)
+
+all.equal(as.matrix(index_fx), cumprod(index_pop))

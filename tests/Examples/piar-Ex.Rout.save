@@ -47,6 +47,7 @@ Type 'q()' to quit R.
 > epr <- with(prices, elemental_index(rel, period, ea))
 > 
 > # Aggregate (note the imputation for elemental index 'c')
+> 
 > aggregate(epr, pias)
            1        2
 top       NA       NA
@@ -296,6 +297,29 @@ b 2.901905 6.761234
 > 
 > 
 > cleanEx()
+> nameEx("impute_prices")
+> ### * impute_prices
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: impute prices
+> ### Title: Impute missing prices
+> ### Aliases: carry_forward shadow_price
+> 
+> ### ** Examples
+> 
+> prices <- data.frame(price = c(1:7, NA), period = rep(1:2, each = 4), 
++                      product = 1:4, ea = rep(letters[1:2], 4))
+>                      
+> with(prices, carry_forward(price, period, product))
+[1] 1 2 3 4 5 6 7 4
+> 
+> with(prices, shadow_price(price, period, product, ea))
+[1]  1  2  3  4  5  6  7 12
+> 
+> 
+> 
+> cleanEx()
 > nameEx("index_methods")
 > ### * index_methods
 > 
@@ -383,32 +407,12 @@ b 2.828427 6.928203 2.828427 6.928203
 > 
 > 
 > 
-> cleanEx()
-> nameEx("shadow_price")
-> ### * shadow_price
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: shadow price
-> ### Title: Shadow price imputation
-> ### Aliases: shadow_price
-> 
-> ### ** Examples
-> 
-> prices <- data.frame(price = c(1:7, NA), period = rep(1:2, each = 4), 
-+                      product = 1:4, ea = rep(letters[1:2], 4))
-> 
-> with(prices, shadow_price(price, period, product, ea))
-[1]  1  2  3  4  5  6  7 12
-> 
-> 
-> 
 > ### * <FOOTER>
 > ###
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.228 0.027 0.265 0 0 
+Time elapsed:  0.242 0.018 0.27 0 0 
 > grDevices::dev.off()
 null device 
           1 
