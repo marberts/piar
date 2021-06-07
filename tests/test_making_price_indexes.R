@@ -1,9 +1,3 @@
-## ---- include = FALSE---------------------------------------------------------
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-
 ## -----------------------------------------------------------------------------
 library(piar)
 
@@ -154,9 +148,12 @@ pias2 <- update(pias1, ms_index1)
 apply(ms_index, 1, cumprod)
 
 ## -----------------------------------------------------------------------------
-ms_prices$relative <- with(ms_prices, replace(relative, is.na(relative), 1))
+ms_prices$relative <- with(
+  ms_prices, 
+  price_relative(carry_forward(price, period, product), period, product)
+)
 
-(ms_epr <- with(ms_prices, elemental_index(relative, period, business)))
+(ms_epr <- with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE)))
 
 ## -----------------------------------------------------------------------------
 (ms_index <- aggregate(ms_epr, pias, na.rm = TRUE))

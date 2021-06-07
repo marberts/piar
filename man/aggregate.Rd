@@ -16,7 +16,7 @@ A method to aggregate period-over-period or fixed-base elemental price indexes u
 
 \item{pias}{A price index aggregation structure. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{na.rm}{Should missing values in \code{x} be removed? By default, missing values are not removed. Setting to \code{TRUE} is equivalent to parental imputation.}
+\item{na.rm}{Should missing values in \code{x} be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to parental imputation.}
 
 \item{r}{Order of the generalized mean used to aggregate the elemental price indexes: 0 for a geometric index, 1 for an arithmetic index (the default), or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
@@ -54,7 +54,7 @@ An object of class \code{'aggregate'}, inheriting from class \code{'index'}, whi
 }
 
 \references{
-ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). Producer Price Index Manual: Theory and Practice. International Monetary Fund.
+ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). \emph{Producer Price Index Manual: Theory and Practice}. International Monetary Fund.
 }
 
 \seealso{

@@ -28,7 +28,7 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 
 \item{contrib}{Should quote contributions be calculated? The default does not calculate contributions, as this can take quite a bit longer.}
 
-\item{na.rm}{Should missing values in \code{x} and \code{w} be removed? By default, missing values are not removed. Setting to \code{TRUE} is equivalent to parental imputation.}
+\item{na.rm}{Should missing values in \code{x} and \code{w} be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to parental imputation.}
 
 \item{r}{Order of the generalized mean used to calculate the elemental price indexes: 0 for a geometric index (the default), 1 for an arithmetic index, or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
@@ -53,7 +53,7 @@ By default, missing price relatives in \code{x} will propagate throughout the in
 }
 
 \references{
-ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). Producer Price Index Manual: Theory and Practice. International Monetary Fund.
+ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). \emph{Producer Price Index Manual: Theory and Practice}. International Monetary Fund.
 }
 
 \seealso{

@@ -20,7 +20,7 @@ This package is designed to work with \emph{bilateral} price indexes. The \code{
 }
 
 \references{
-ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). Producer Price Index Manual: Theory and Practice. International Monetary Fund.
+ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). \emph{Producer Price Index Manual: Theory and Practice}. International Monetary Fund.
 }
 
 \author{
