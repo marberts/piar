@@ -17,9 +17,11 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, chained = TRUE, ...) 
     w <- scale_weights(transmute_weights(r, 1)(rel[[i - 1]][z], w[[i - 1]][z]))
     unlist(Map("*", con[[i - 1]][z], w))
   }
-  # loop over each time period
+  # initialize weights
   eas <- names(pias$weights)
   x$weights <- structure(rep(list(pias$weights), length(x$periods)), names = x$periods)
+  w <- weights(pias, na.rm = na.rm)
+  # loop over each time period
   for (t in seq_along(x$periods)) {
     rel <- con <- vector("list", pias$height)
     # align epr with weights so that positional indexing works
@@ -28,7 +30,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, chained = TRUE, ...) 
     con[[1]] <- named_extract(x$contributions[[t]], eas)
     # get rid of any NULL contributions
     con[[1]][!lengths(con[[1]])] <- list(numeric(0))
-    w <- weights(pias, na.rm = na.rm)
+    if (t > 1 && chained) w <- weights(pias, na.rm = na.rm)
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1]) {
       rel[[i]] <- vapply(pias$child[[i - 1]], aggregate_index, numeric(1))
