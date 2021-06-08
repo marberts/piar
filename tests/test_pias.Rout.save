@@ -83,7 +83,7 @@ Price index aggregation structure with 2 elementary aggregates and 2 upper-level
 
 Warning message:
 In aggregation_structure(list(1:2, c(3, 3), c(4, 5))) :
-  some nodes in the price index aggregation structure have multiple parent nodes; the aggregation structure does not represent a nested hierachy
+  some nodes in the price index aggregation structure have multiple parent nodes; the aggregation structure does not represent a nested hierarchy
 > 
 > # a real-ish example
 > x1 <- c("1", "1", "1", "2")

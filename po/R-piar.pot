@@ -1,0 +1,74 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: piar 0.1.0.9029\n"
+"POT-Creation-Date: 2021-06-07 23:09\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "aggregating an aggregated index"
+msgstr ""
+
+msgid "'pias' must be a price index aggregation structure; use pias() to make one"
+msgstr ""
+
+msgid "each vector in 'x' must be the same length as 'w'"
+msgstr ""
+
+msgid "there are duplicated elementary aggregates; the last vector in 'x' should not have duplicates"
+msgstr ""
+
+msgid "there are duplicated nodes in the aggregation structure; the same value cannot appear across multiple levels of 'x'"
+msgstr ""
+
+msgid "some nodes in the price index aggregation structure have multiple parent nodes; the aggregation structure does not represent a nested hierarchy"
+msgstr ""
+
+msgid "'x', 'period', 'ea', and 'w' must be the same length"
+msgstr ""
+
+msgid "'x', 'period', 'ea', 'w1', and 'w2' must be the same length"
+msgstr ""
+
+msgid "'width' cannot contain NAs"
+msgstr ""
+
+msgid "'x', 'period', 'product', 'ea', and 'w' must be the same length"
+msgstr ""
+
+msgid "there are duplicated period-product pairs"
+msgstr ""
+
+msgid "'x', 'period', and 'product' must be the same length"
+msgstr ""
+
+msgid "'y' is not an index; use elemental_index() to make one"
+msgstr ""
+
+msgid "'x' is an"
+msgstr ""
+
+msgid "but 'y' is an"
+msgstr ""
+
+msgid "'x' and 'y' must be indexes for the same time periods"
+msgstr ""
+
+msgid "some levels appear in both 'x' and 'y'"
+msgstr ""
+
+msgid "'x' and 'y' must be indexes for the same levels"
+msgstr ""
+
+msgid "some periods appear in both 'x' and 'y'"
+msgstr ""
+
+msgid "'index' is not an aggregate index; use aggregate() to make one"
+msgstr ""
+
+msgid "not all weights in pias have a corresponding index value"
+msgstr ""
