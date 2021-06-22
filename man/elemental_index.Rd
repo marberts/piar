@@ -36,7 +36,7 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 }
 
 \details{
-\code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions. See chapter 9, section B, of the PPI manual for more detail about making elemental indexes.
+\code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions. See chapter 9, section B, of the PPI manual for more detail about making elemental indexes, and chapter 5 of Balk (2008).
 
 \code{superlative_elemental_index()} works the same, except that it wraps \code{\link[=nested_mean]{nested_mean(s)}} and \code{\link[=nested_contributions]{nested_contributions(s)}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}.
 
@@ -53,6 +53,8 @@ By default, missing price relatives in \code{x} will propagate throughout the in
 }
 
 \references{
+Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}. Cambridge University Press.
+
 ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). \emph{Producer Price Index Manual: Theory and Practice}. International Monetary Fund.
 }
 

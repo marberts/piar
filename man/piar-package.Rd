@@ -12,7 +12,7 @@ Most price indexes are made with a two-step procedure, where period-over-period 
 \section{Usage}{
 The vignette \emph{Making price indexes} gives several extended examples of how to use the functions in this package to make different types of price indexes. Run \code{vignette("making_price_indexes", "piar")} to view it. But the basic work flow is fairly simple. 
 
-The starting point is to make period-over-period elemental price indexes with the \code{\link[=elemental_index]{elemental_index()}} function and an aggregation structure with the \code{\link[=aggregation_structure]{aggregation_structure()}} function. The \code{\link[=aggregate.index]{aggregate()}} method can then be used to aggregate the elemental indexes according to the aggregation structure. There are a variety of \code{\link[=index_methods]{index methods}} to work with these index objects, including chaining them over time. This workflow is described in chapter 9 of the PPI manual.
+The starting point is to make period-over-period elemental price indexes with the \code{\link[=elemental_index]{elemental_index()}} function and an aggregation structure with the \code{\link[=aggregation_structure]{aggregation_structure()}} function. The \code{\link[=aggregate.index]{aggregate()}} method can then be used to aggregate the elemental indexes according to the aggregation structure. There are a variety of \code{\link[=index_methods]{index methods}} to work with these index objects, including chaining them over time. This workflow is described in chapter 9 of the PPI manual and chapter 5 of Balk (2008).
 }
 
 \note{
@@ -20,6 +20,8 @@ This package is designed to work with \emph{bilateral} price indexes. The \code{
 }
 
 \references{
+Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}. Cambridge University Press.
+
 ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). \emph{Producer Price Index Manual: Theory and Practice}. International Monetary Fund.
 }
 
