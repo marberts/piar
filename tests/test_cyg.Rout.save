@@ -1,0 +1,61 @@
+
+R version 4.1.0 (2021-05-18) -- "Camp Pontanezen"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(piar)
+> 
+> wd <- getwd()
+> 
+> # Matched sample
+> 
+> ms_cyg <- read.csv(file.path(wd, "ms_cyg.csv"))
+> 
+> pias <- with(
++   ms_weights, 
++   aggregation_structure(c(expand_classification(classification), list(business)), weight)
++ )
+> 
+> sp <- with(ms_prices, shadow_price(price, period, product, business, pias))
+> 
+> rel <- with(ms_prices, price_relative(sp, period, product))
+> 
+> epr <- with(ms_prices, elemental_index(rel, period, business, na.rm = TRUE))
+> 
+> index <- aggregate(epr, pias, na.rm = TRUE)
+> 
+> all.equal(as.numeric(as.matrix(cumprod(index))), ms_cyg$index / 100)
+[1] TRUE
+> 
+> # Fixed sample
+> 
+> # fs_cyg <- read.csv(file.path(wd, "tests", "fs_cyg.csv"))
+> # 
+> # pias <- with(
+> #   fs_weights, 
+> #   aggregation_structure(expand_classification(classification), weight)
+> # )
+> # 
+> # rel <- with(fs_prices, price_relative(price, period, business))
+> # 
+> # epr <- with(fs_prices, elemental_index(rel, period, classification, weight, na.rm = TRUE, r = 1))
+> # 
+> # index <- aggregate(epr, pias, na.rm = TRUE)
+> # 
+> # all.equal(as.numeric(as.matrix(cumprod(index))), fs_cyg$index / 100)
+> 
+> proc.time()
+   user  system elapsed 
+  0.345   0.224   0.354 
