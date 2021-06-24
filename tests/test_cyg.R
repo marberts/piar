@@ -19,21 +19,28 @@ epr <- with(ms_prices, elemental_index(rel, period, business, na.rm = TRUE))
 
 index <- aggregate(epr, pias, na.rm = TRUE)
 
-all.equal(as.numeric(as.matrix(cumprod(index))), ms_cyg$index / 100)
+all.equal(as.numeric(cumprod(index)), ms_cyg$index / 100)
 
 # Fixed sample
 
-# fs_cyg <- read.csv(file.path(wd, "tests", "fs_cyg.csv"))
-# 
-# pias <- with(
-#   fs_weights, 
-#   aggregation_structure(expand_classification(classification), weight)
-# )
-# 
-# rel <- with(fs_prices, price_relative(price, period, business))
-# 
-# epr <- with(fs_prices, elemental_index(rel, period, classification, weight, na.rm = TRUE, r = 1))
-# 
-# index <- aggregate(epr, pias, na.rm = TRUE)
-# 
-# all.equal(as.numeric(as.matrix(cumprod(index))), fs_cyg$index / 100)
+fs_cyg <- read.csv(file.path(wd, "fs_cyg.csv"))
+
+weights <- fs_prices[1:11, c(2:3, 5)]
+weights$weight <- with(
+  weights, 
+  ave(weight, classification, FUN = gpindex::scale_weights) * 
+    fs_weights$weight[match(classification, fs_weights$classification)]
+)
+
+pias <- with(
+  weights, 
+  aggregation_structure(c(expand_classification(classification), list(business)), weight)
+)
+
+rel <- with(fs_prices, price_relative(price, period, business))
+
+epr <- with(fs_prices, elemental_index(rel, period, business))
+
+index <- aggregate(epr, pias, na.rm = TRUE)
+
+all.equal(as.numeric(cumprod(index)[1:9, 1:3]), fs_cyg$index[1:27] / 100)
