@@ -43,4 +43,4 @@ epr <- with(fs_prices, elemental_index(rel, period, business))
 
 index <- aggregate(epr, pias, na.rm = TRUE)
 
-all.equal(as.numeric(cumprod(index)[1:9, 1:3]), fs_cyg$index[1:27] / 100)
+all.equal(as.numeric(cumprod(index)[1:9, ]), fs_cyg$index / 100)
