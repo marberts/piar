@@ -7,7 +7,7 @@ Authors@R: c(
     )
 Description: Most price indexes are made with a two-step procedure, where period-over-period elemental indexes are first calculated for a collection of elemental aggregates at each point in time, and then aggregated according to a price index aggregation structure. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. This package contains a collections of functions that revolve around this work flow, making it easy to build standard price indexes.
 Depends: R (>= 3.5)
-Imports: stats, utils, gpindex (>= 0.3.0)
+Imports: stats, utils, gpindex (>= 0.3.1)
 Suggests: rmarkdown, knitr
 License: MIT + file LICENSE
 Encoding: UTF-8

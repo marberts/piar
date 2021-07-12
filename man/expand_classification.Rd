@@ -16,7 +16,7 @@ expand_classification(x, width = rep(1, max(nchar(x))))
 \arguments{
 \item{x}{A character vector, or something that can be coerced into one, of codes/labels for a specific level in a classification (e.g., 5-digit NAICS).}
 
-\item{width}{A numeric vector that gives the width of each "digit" in \code{x}. This cannot contain NAs. The default assumes each digit has a width of 1, as in the NAICS and NAPCS classifications.}
+\item{width}{A numeric vector that gives the width of each 'digit' in \code{x}. This cannot contain NAs. The default assumes each digit has a width of 1, as in the NAICS and NAPCS classifications.}
 }
 
 \value{

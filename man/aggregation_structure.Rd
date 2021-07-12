@@ -4,7 +4,7 @@
 \alias{update.pias}
 
 \title{
-Price index aggregation structure
+Aggregation structure
 }
 
 \description{

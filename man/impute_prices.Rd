@@ -2,7 +2,7 @@
 \alias{carry_forward}
 \alias{shadow_price}
 
-\title{Impute missing prices}
+\title{Impute prices}
 
 \description{
 Impute missing prices using the carry forward or shadow price method.
@@ -36,7 +36,7 @@ shadow_price(x, period, product, ea, pias = NULL,
 \details{
 The carry forward method replaces a missing price for a product by the price for the same product in the previous period.
 
-The shadow price method recursively imputes a missing price by the value of the price for the same product in the previous period multiplied by the value of the elemental index for the elemental aggregate to which that product belongs. This requires computing and aggregating an index (according to \code{pias}, unless \code{pias = NULL}) for each \code{period}, and so these imputations can take a while. The index values used to do the imputations are not returned because the index needs to be recalculated to get correct quote contributions.
+The shadow price method recursively imputes a missing price by the value of the price for the same product in the previous period multiplied by the value of the period-over-period elemental index for the elemental aggregate to which that product belongs. This requires computing and aggregating an index (according to \code{pias}, unless \code{pias = NULL}) for each \code{period}, and so these imputations can take a while. The index values used to do the imputations are not returned because the index needs to be recalculated to get correct quote contributions.
 }
 
 \value{

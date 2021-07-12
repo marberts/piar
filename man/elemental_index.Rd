@@ -38,9 +38,11 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 \details{
 \code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions. See chapter 9, section B, of the PPI manual for more detail about making elemental indexes, and chapter 5 of Balk (2008).
 
-\code{superlative_elemental_index()} works the same, except that it wraps \code{\link[=nested_mean]{nested_mean(s)}} and \code{\link[=nested_contributions]{nested_contributions(s)}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}.
+\code{superlative_elemental_index()} works the same, except that it wraps \code{\link[=nested_mean]{nested_mean(0, c(s, -s) / 2)}} and \code{\link[=nested_contributions]{nested_contributions(0, c(s, -s) / 2)}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}.
 
 By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental imputation, and needs to be explicitly set in the call to \code{elemental_index()} or \code{superlative_elemental_index()}. Non-parental imputation of missing relatives should be done prior to calling \code{elemental_index()} or \code{superlative_elemental_index()}.
+
+In some cases \code{x} are actually price indexes for elsewhere (e.g., a hedonic model), so there is one value for each period-elemental aggregate pair. In this case, \code{elemental_index()} will leave the values unaffected, and simply put them into a suitable form for, e.g., aggregation.
 }
 
 \value{
