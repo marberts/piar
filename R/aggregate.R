@@ -1,11 +1,11 @@
 aggregate.aggregate <- function(x, pias, na.rm = FALSE, r = 1, ...) {
-  warning("aggregating an aggregated index")
+  warning(gettext("aggregating an aggregated index"))
   NextMethod()
 }
 
 aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, chained = TRUE, ...) {
   if (!inherits(pias, "pias")) {
-    stop("'pias' must be a price index aggregation structure; use pias() to make one")
+    stop(gettext("'pias' must be a price index aggregation structure; use pias() to make one"))
   }
   # helpful functions
   price_update <- factor_weights(r)

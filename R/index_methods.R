@@ -35,16 +35,16 @@ cumprod.index <- function(x) {
 
 merge.index <- function(x, y, ...) {
   if (!inherits(y, "index")) {
-    stop("'y' is not an index; use elemental_index() to make one")
+    stop(gettext("'y' is not an index; use elemental_index() to make one"))
   }
   if (!identical(class(x), class(y))) {
-    stop("'x' is an ", paste(class(x), collapse = " "), " but 'y' is an ", paste(class(y), collapse = " "))
+    stop(gettextf("'x' is an %s but 'y' is an %s", paste(class(x), collapse = " "), paste(class(y), collapse = " ")))
   }
   if (any(x$periods != y$periods)) {
-    stop("'x' and 'y' must be indexes for the same time periods")
+    stop(gettext("'x' and 'y' must be indexes for the same time periods"))
   }
   if (length(intersect(x$levels, y$levels))) {
-    warning("some levels appear in both 'x' and 'y'")
+    warning(gettext("some levels appear in both 'x' and 'y'"))
   }
   if (!length(x$levels)) return(y)
   if (!length(y$levels)) return(x)
@@ -59,16 +59,16 @@ merge.index <- function(x, y, ...) {
 
 stack.index <- function(x, y, ...) {
   if (!inherits(y, "index")) {
-    stop("'y' is not an index; use elemental_index() to make one")
+    stop(gettext("'y' is not an index; use elemental_index() to make one"))
   }
   if (!identical(class(x), class(y))) {
-    stop("'x' is an ", paste(class(x), collapse = " "), " but 'y' is an ", paste(class(y), collapse = " "))
+    stop(gettextf("'x' is an %s but 'y' is an %s", paste(class(x), collapse = " "), paste(class(y), collapse = " ")))
   }
   if (any(x$levels != y$levels)) {
-    stop("'x' and 'y' must be indexes for the same levels")
+    stop(gettext("'x' and 'y' must be indexes for the same levels"))
   }
   if (length(intersect(x$periods, y$periods))) {
-    warning("some periods appear in both 'x' and 'y'")
+    warning(gettext("some periods appear in both 'x' and 'y'"))
   }
   if (!length(x$periods)) return(y)
   if (!length(y$periods)) return(x)

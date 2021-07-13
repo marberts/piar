@@ -30,8 +30,8 @@ Type 'q()' to quit R.
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: aggregate
-> ### Title: Aggregate elemental price indexes
+> ### Name: aggregate elemental indexes
+> ### Title: Aggregate elemental indexes
 > ### Aliases: aggregate.index
 > 
 > ### ** Examples
@@ -92,7 +92,7 @@ $`2`
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: aggregation structure
-> ### Title: Price index aggregation structure
+> ### Title: Aggregation structure
 > ### Aliases: aggregation_structure weights.pias update.pias
 > 
 > ### ** Examples
@@ -171,7 +171,7 @@ Price index aggregation structure with 3 elementary aggregates and 2 upper-level
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: elemental index
-> ### Title: Elemental price index
+> ### Title: Elemental index
 > ### Aliases: elemental_index superlative_elemental_index
 > 
 > ### ** Examples
@@ -303,7 +303,7 @@ b 2.901905 6.761234
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: impute prices
-> ### Title: Impute missing prices
+> ### Title: Impute prices
 > ### Aliases: carry_forward shadow_price
 > 
 > ### ** Examples

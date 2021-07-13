@@ -31,7 +31,7 @@ Methods to put index values/quote contributions in a tabular form, chain an inde
 
 \arguments{
 \item{x, y}{An object of class \code{'index'}, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
-\item{type}{A character vector specifying whether index values or quote contributions should be coerced into a data.frame/matrix.}
+\item{type}{A character vector specifying whether index values (the default) or quote contributions should be coerced into a data.frame/matrix.}
 \item{row.names}{Same as \code{\link[=as.data.frame]{as.data.frame()}}.}
 \item{...}{Further arguments passed to or used by methods.}
 }

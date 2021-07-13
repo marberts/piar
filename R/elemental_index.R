@@ -38,7 +38,7 @@
 elemental_index <- function(x, period = rep(1L, length(x)), ea = rep(1L, length(x)),
                             w = rep(1, length(x)), contrib = FALSE, na.rm = FALSE, r = 0) {
   if (!same_length(x, period, ea, w)) {
-    stop("'x', 'period', 'ea', and 'w' must be the same length")
+    stop(gettext("'x', 'period', 'ea', and 'w' must be the same length"))
   }
   .elemental_index(x, period, ea, w, contrib = contrib, na.rm = na.rm, index_fun = generalized_mean(r), contrib_fun = contributions(r))
 }
@@ -47,7 +47,7 @@ superlative_elemental_index <- function(x, period = rep(1L, length(x)), ea = rep
                                         w1 = rep(1, length(x)), w2 = rep(1, length(x)), 
                                         contrib = FALSE, na.rm = FALSE, s = 2) {
   if (!same_length(x, period, ea, w1, w2)) {
-    stop("'x', 'period', 'ea', 'w1', and 'w2' must be the same length")
+    stop(gettext("'x', 'period', 'ea', 'w1', and 'w2' must be the same length"))
   }
   .elemental_index(x, period, ea, w1, w2, contrib = contrib, na.rm = na.rm, index_fun = nested_mean(0, c(s / 2, -s / 2)), contrib_fun = nested_contributions(0, c(s / 2, -s / 2)))
 }

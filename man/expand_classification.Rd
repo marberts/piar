@@ -10,7 +10,7 @@ Turn a digit-wise representation of a hierarchical classification into a list th
 }
 
 \usage{
-expand_classification(x, width = rep(1, max(nchar(x))))
+expand_classification(x, width = rep(1, max(nchar(x), 0, na.rm = TRUE)))
 }
 
 \arguments{

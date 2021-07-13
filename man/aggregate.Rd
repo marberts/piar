@@ -1,7 +1,7 @@
-\name{aggregate}
+\name{aggregate elemental indexes}
 \alias{aggregate.index}
 
-\title{Aggregate elemental price indexes}
+\title{Aggregate elemental indexes}
 
 \description{
 A method to aggregate period-over-period or fixed-base elemental price indexes using a price index aggregation structure.
@@ -40,7 +40,7 @@ In most cases aggregation is done with an arithmetic mean (the default), and thi
 
 Aggregating quote contributions uses the method in chapter 9, section C.8, of the PPI manual (equation 9.25) when aggregating with an arithmetic mean. With a non-arithmetic mean, arithmetic weights are constructed using \code{\link[=transmute_weights]{transmute_weights()}} in order to apply this method.
 
-There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with \code{\link[=merge.index]{merge()}}). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the value of the index.
+There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with \code{\link[=merge.index]{merge()}}). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the value of the index. This can also happen when aggregating an already aggregated index in which missing index values have been imputed (i.e., when \code{na.rm = TRUE}).
 }
 
 \value{

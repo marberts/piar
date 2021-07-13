@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: piar 0.1.0.9029\n"
-"POT-Creation-Date: 2021-06-07 23:09\n"
+"POT-Creation-Date: 2021-07-13 15:35\n"
 "PO-Revision-Date: 2021-06-07 23:19\n"
 "Last-Translator: Steve Martin <steve.martin5@canada.ca>\n"
 "Language-Team: none\n"
@@ -59,17 +59,14 @@ msgstr "'x', 'period', 'product', 'ea' et 'w' doivent avoir la même longueur"
 msgid "there are duplicated period-product pairs"
 msgstr "il existe des paires période-produit en double"
 
-msgid "'x', 'period', and 'product' must be the same length"
-msgstr "'x', 'period' et 'product' doivent avoir la même longueur"
+msgid "all arguments must be the same length"
+msgstr "tous les arguments doivent avoir la même longueur"
 
 msgid "'y' is not an index; use elemental_index() to make one"
 msgstr "'y' n'est pas un indice ; utilisez elemental_index() pour en faire un"
 
-msgid "'x' is an"
-msgstr "'x' est un"
-
-msgid "but 'y' is an"
-msgstr "mais 'y' est un"
+msgid "'x' is an %s but 'y' is an %s"
+msgstr "'x' est un %s mais 'y' est un %s"
 
 msgid "'x' and 'y' must be indexes for the same time periods"
 msgstr "'x' et 'y' doivent être des index pour les mêmes périodes"

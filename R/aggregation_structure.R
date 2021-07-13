@@ -5,13 +5,13 @@ aggregation_structure <- function(x, w = rep(1, length(ea))) {
   w <- as.numeric(w)
   # basic argument checking to make sure inputs can make an aggregation structure
   if (any(lengths(x) != length(w))) {
-    stop("each vector in 'x' must be the same length as 'w'")
+    stop(gettext("each vector in 'x' must be the same length as 'w'"))
   }
   if (anyDuplicated(ea)) {
-    stop("there are duplicated elementary aggregates; the last vector in 'x' should not have duplicates")
+    stop(gettext("there are duplicated elementary aggregates; the last vector in 'x' should not have duplicates"))
   }
   if (anyDuplicated(unlist(lapply(x, unique), use.names = FALSE))) {
-    stop("there are duplicated nodes in the aggregation structure; the same value cannot appear across multiple levels of 'x'")
+    stop(gettext("there are duplicated nodes in the aggregation structure; the same value cannot appear across multiple levels of 'x'"))
   }
   upper <- x[-len] # nodes above eas
   lower <- x[-1] # nodes below initial nodes
@@ -22,7 +22,7 @@ aggregation_structure <- function(x, w = rep(1, length(ea))) {
     parent[[i]] <- lapply(split(upper[[len - i]], lower[[len - i]]), unique)
   }
   if (any(lengths(unlist(parent, recursive = FALSE)) > 1)) {
-    warning("some nodes in the price index aggregation structure have multiple parent nodes; the aggregation structure does not represent a nested hierarchy")
+    warning(gettext("some nodes in the price index aggregation structure have multiple parent nodes; the aggregation structure does not represent a nested hierarchy"))
   }
   parent <- lapply(parent, unlist)
   # positional matching for child nodes is much faster for aggregation

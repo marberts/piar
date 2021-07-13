@@ -2,7 +2,7 @@
 \alias{elemental_index}
 \alias{superlative_elemental_index}
 
-\title{Elemental price index}
+\title{Elemental index}
 
 \description{
 Compute period-over-period or fixed-base elemental price indexes/relatives and, optionally, quote contributions.
@@ -42,7 +42,7 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 
 By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental imputation, and needs to be explicitly set in the call to \code{elemental_index()} or \code{superlative_elemental_index()}. Non-parental imputation of missing relatives should be done prior to calling \code{elemental_index()} or \code{superlative_elemental_index()}.
 
-In some cases \code{x} are actually price indexes for elsewhere (e.g., a hedonic model), so there is one value for each period-elemental aggregate pair. In this case, \code{elemental_index()} will leave the values unaffected, and simply put them into a suitable form for, e.g., aggregation.
+In some cases \code{x} are actually price indexes from elsewhere (e.g., a hedonic model), so there is one value for each period-elemental aggregate pair. In this case, \code{elemental_index()} will leave the values unaffected, and simply put them into a suitable form for, e.g., aggregation.
 }
 
 \value{

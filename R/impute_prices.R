@@ -1,7 +1,7 @@
 #---- Shadow price imputation ----
 shadow_price <- function(x, period, product, ea, pias = NULL, w = rep(1, length(x)), r1 = 0, r2 = 1) {
   if (!same_length(x, period, product, ea, w)) {
-    stop("'x', 'period', 'product', 'ea', and 'w' must be the same length")
+    stop(gettext("'x', 'period', 'product', 'ea', and 'w' must be the same length"))
   }
   # this is mostly a combination of gpindex::back_price() and aggregate.index()
   # it just does it period-by-period and keeps track of prices to impute
@@ -10,7 +10,7 @@ shadow_price <- function(x, period, product, ea, pias = NULL, w = rep(1, length(
   res <- split(x, period)
   product <- split(as.integer(as.factor(product)), period)
   if (any(vapply(product, anyDuplicated, numeric(1)) > 0)) {
-    warning("there are duplicated period-product pairs")
+    warning(gettext("there are duplicated period-product pairs"))
   }
   ea <- split(as.factor(ea), period)
   w <- split(w, period)
@@ -37,22 +37,22 @@ shadow_price <- function(x, period, product, ea, pias = NULL, w = rep(1, length(
   res
 }
 
-#--- Carry forward imputation ----
+#---- Carry forward imputation ----
 carry_forward <- function(x, period, product) {
   if (!same_length(x, period, product)) {
-    stop("'x', 'period', and 'product' must be the same length")
+    stop(gettext("all arguments must be the same length"))
   }
   if (!length(x)) return(x[0])
   period <- as.factor(period)
   res <- split(x, period)
   product <- split(as.integer(as.factor(product)), period)
   if (any(vapply(product, anyDuplicated, numeric(1)) > 0)) {
-    warning("there are duplicated period-product pairs")
+    warning(gettext("there are duplicated period-product pairs"))
   }
   for (t in seq_along(res)[-1]) {
-    nas <- is.na(res[[t]])
-    matches <- match(product[[t]][nas], product[[t - 1]], incomparables = NA)
-    res[[t]][nas] <- res[[t - 1]][matches]
+    impute <- is.na(res[[t]])
+    matches <- match(product[[t]][impute], product[[t - 1]], incomparables = NA)
+    res[[t]][impute] <- res[[t - 1]][matches]
   }
   res <- unsplit(res, period)
   attributes(res) <- attributes(x)

@@ -28,10 +28,10 @@ print.pias <- function(x, ...) {
 
 update.pias <- function(object, index, ...) {
   if (!inherits(index, "aggregate")) {
-    stop("'index' is not an aggregate index; use aggregate() to make one")
+    stop(gettext("'index' is not an aggregate index; use aggregate() to make one"))
   }
   if (!all(object$levels %in% index$levels)) {
-    warning("not all weights in pias have a corresponding index value")
+    warning(gettext("not all weights in pias have a corresponding index value"))
   }
   w <- index$weights
   if (length(w)) object$weights[] <- w[[length(w)]][names(object$weights)]
