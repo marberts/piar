@@ -1,4 +1,4 @@
-\name{price relative}
+\name{price_relative}
 \alias{price_relative}
 
 \title{

@@ -1,4 +1,4 @@
-\name{elemental index}
+\name{elemental_index}
 \alias{elemental_index}
 \alias{superlative_elemental_index}
 

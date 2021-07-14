@@ -1,4 +1,4 @@
-\name{aggregation structure}
+\name{aggregation_structure}
 \alias{aggregation_structure}
 \alias{weights.pias}
 \alias{update.pias}

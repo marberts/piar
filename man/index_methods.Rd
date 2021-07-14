@@ -1,4 +1,4 @@
-\name{index methods}
+\name{index_methods}
 \alias{index_methods}
 \alias{as.data.frame.index}
 \alias{as.matrix.index}

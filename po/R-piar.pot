@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: piar 0.1.0.9030\n"
-"POT-Creation-Date: 2021-07-13 15:35\n"
+"Project-Id-Version: piar 0.1.0.9031\n"
+"POT-Creation-Date: 2021-07-14 09:45\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,7 +49,7 @@ msgstr ""
 msgid "'y' is not an index; use elemental_index() to make one"
 msgstr ""
 
-msgid "'x' is an %s but 'y' is an %s"
+msgid "'x' and 'y' must be the same type of index"
 msgstr ""
 
 msgid "'x' and 'y' must be indexes for the same time periods"

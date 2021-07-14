@@ -1,4 +1,4 @@
-\name{expand classification}
+\name{expand_classification}
 \alias{expand_classification}
 
 \title{

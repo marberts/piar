@@ -1,4 +1,4 @@
-\name{price data}
+\name{price_data}
 \alias{ms_prices}
 \alias{ms_weights}
 \alias{fs_prices}

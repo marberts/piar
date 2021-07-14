@@ -30,7 +30,7 @@ Type 'q()' to quit R.
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: aggregate elemental indexes
+> ### Name: aggregate
 > ### Title: Aggregate elemental indexes
 > ### Aliases: aggregate.index
 > 
@@ -91,7 +91,7 @@ $`2`
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: aggregation structure
+> ### Name: aggregation_structure
 > ### Title: Aggregation structure
 > ### Aliases: aggregation_structure weights.pias update.pias
 > 
@@ -170,7 +170,7 @@ Price index aggregation structure with 3 elementary aggregates and 2 upper-level
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: elemental index
+> ### Name: elemental_index
 > ### Title: Elemental index
 > ### Aliases: elemental_index superlative_elemental_index
 > 
@@ -241,7 +241,7 @@ b 2.901905 6.761234
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: expand classification
+> ### Name: expand_classification
 > ### Title: Expand classification
 > ### Aliases: expand_classification
 > 
@@ -302,7 +302,7 @@ b 2.901905 6.761234
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: impute prices
+> ### Name: impute_prices
 > ### Title: Impute prices
 > ### Aliases: carry_forward shadow_price
 > 
@@ -325,7 +325,7 @@ b 2.901905 6.761234
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: index methods
+> ### Name: index_methods
 > ### Title: Methods for index objects
 > ### Aliases: index_methods as.data.frame.index as.matrix.index
 > ###   cumprod.index merge.index stack.index unstack.index
@@ -395,7 +395,7 @@ b 2.828427 6.928203 2.828427 6.928203
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: price relative
+> ### Name: price_relative
 > ### Title: Price relative
 > ### Aliases: price_relative
 > 

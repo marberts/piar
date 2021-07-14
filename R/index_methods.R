@@ -38,7 +38,7 @@ merge.index <- function(x, y, ...) {
     stop(gettext("'y' is not an index; use elemental_index() to make one"))
   }
   if (!identical(class(x), class(y))) {
-    stop(gettextf("'x' is an %s but 'y' is an %s", paste(class(x), collapse = " "), paste(class(y), collapse = " ")))
+    stop(gettext("'x' and 'y' must be the same type of index"))
   }
   if (any(x$periods != y$periods)) {
     stop(gettext("'x' and 'y' must be indexes for the same time periods"))
@@ -62,7 +62,7 @@ stack.index <- function(x, y, ...) {
     stop(gettext("'y' is not an index; use elemental_index() to make one"))
   }
   if (!identical(class(x), class(y))) {
-    stop(gettextf("'x' is an %s but 'y' is an %s", paste(class(x), collapse = " "), paste(class(y), collapse = " ")))
+    stop(gettext("'x' and 'y' must be the same type of index"))
   }
   if (any(x$levels != y$levels)) {
     stop(gettext("'x' and 'y' must be indexes for the same levels"))

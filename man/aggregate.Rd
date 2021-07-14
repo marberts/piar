@@ -1,4 +1,4 @@
-\name{aggregate elemental indexes}
+\name{aggregate}
 \alias{aggregate.index}
 
 \title{Aggregate elemental indexes}
