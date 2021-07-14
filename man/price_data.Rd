@@ -10,7 +10,7 @@ Price data
 }
 
 \description{
-Sample price and weight data for both a 'match sample' and 'fixed sample' type index.
+Sample price and weight data for both a match sample and fixed sample type index.
 }
 
 \usage{

@@ -326,7 +326,7 @@ b 2.901905 6.761234
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: index methods
-> ### Title: Methods for objects of class "index"
+> ### Title: Methods for index objects
 > ### Aliases: index_methods as.data.frame.index as.matrix.index
 > ###   cumprod.index merge.index stack.index unstack.index
 > 

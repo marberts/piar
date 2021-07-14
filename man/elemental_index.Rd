@@ -46,7 +46,7 @@ In some cases \code{x} are actually price indexes from elsewhere (e.g., a hedoni
 }
 
 \value{
-\code{elemental_index()} and \code{superlative_elemental_index()} return an object of class \code{'elemental'}, inheriting from class \code{'index'}, which has the following components.
+\code{elemental_index()} and \code{superlative_elemental_index()} return an object of class \code{elemental}, inheriting from class \code{index}, which has the following components.
 
 \item{index}{A named list with an entry for each \code{period} that gives a named vector of index values for each level in \code{ea}.}
 \item{contributions}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}

@@ -16,7 +16,7 @@ The starting point is to make period-over-period elemental price indexes with th
 }
 
 \note{
-This package is designed to work with \emph{bilateral} price indexes. The \code{'IndexNumR'} package on the CRAN has support for making \emph{multilateral} price indexes.
+This package is designed to work with \emph{bilateral} price indexes. The \pkg{IndexNumR} package on the CRAN has support for making \emph{multilateral} price indexes.
 }
 
 \references{

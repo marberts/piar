@@ -24,7 +24,7 @@ aggregation_structure(x, w = rep(1, length(ea)))
 
 \item{w}{A numeric vector of weights for the elemental aggregates (i.e., the last vector in \code{x}). The default is to give each elemental aggregate the same weight.}
 
-\item{object}{An object of class \code{'pias'}, as made by \code{aggregation_structure()}.}
+\item{object}{An object of class \code{pias}, as made by \code{aggregation_structure()}.}
 
 \item{ea_only}{Should weights be return for only the elemental aggregates, or the entire aggregation structure (the default)?}
 
@@ -36,7 +36,7 @@ aggregation_structure(x, w = rep(1, length(ea)))
 }
 
 \value{
-\code{aggregation_structure()} returns an object of class \code{'pias'}, which has the following components.
+\code{aggregation_structure()} returns an object of class \code{pias}, which has the following components.
 
 \item{child}{A nested list that gives the names/positions of the immediate children for each node in each level of the aggregation structure above the terminal nodes.}
 \item{parent}{A list that gives the name/position of the immediate parent for each node of the aggregation structure below the initial nodes.}

@@ -44,7 +44,7 @@ There may not be contributions for all prices relatives in an elemental aggregat
 }
 
 \value{
-An object of class \code{'aggregate'}, inheriting from class \code{'index'}, which has the following components.
+An object of class \code{aggregate}, inheriting from class \code{index}, which has the following components.
 
 \item{index}{A named list with an entry for each \code{period} in \code{x} that gives a named vector of index values for each level in \code{pias}.}
 \item{contributions}{A named list with an entry for each \code{period}, which itself contains a list with an entry for each level in \code{pias} with a named vector that gives the additive contribution for each price relative.}
