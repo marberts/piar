@@ -465,7 +465,7 @@ B1      1 0.8949097 0.3342939      NaN
 B2      1       NaN       NaN 2.770456
 B3      1 2.0200036 1.6353355 0.537996
 > ms_epr2 <- with(
-+   transform(ms_prices2, period = factor(period, levels = ms_epr1$period)), 
++   transform(ms_prices2, period = factor(period, levels = ms_epr1$periods)), 
 +   elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
 + )
 > ms_epr2

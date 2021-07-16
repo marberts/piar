@@ -191,7 +191,7 @@ with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE, r = -1
 
 The type of mean used to aggregate elemental indexes can be controlled in the same way in the call to `aggregate()`. The default makes an arithmetic index, but any type of generalized index is possible. 
 
-Many superlative indexes can be made by supplying unequal and possibly time-varying weights when making the elemental indexes. These weights often come from information on quantities.
+Many superlative indexes can be made by supplying unequal and (usually) time-varying weights when making the elemental indexes. These weights often come from information on quantities.
 
 ```{r}
 ms_prices_sup <- transform(ms_prices, quantity = 10 - price)
@@ -336,7 +336,7 @@ ms_epr1 <- with(
 )
 ms_epr1
 ms_epr2 <- with(
-  transform(ms_prices2, period = factor(period, levels = ms_epr1$period)), 
+  transform(ms_prices2, period = factor(period, levels = ms_epr1$periods)), 
   elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
 )
 ms_epr2
@@ -414,7 +414,7 @@ weights <- data.frame(period = rep(c("202001", "202002", "202003", "202004"), ea
 head(weights)
 ```
 
-The only new tools needed to deal with time-varying weights are the `stack()` and `unstack()` functions. `stack()` appends a later index series onto an earlier one for the same levels, where `unstack()` pulls apart an index series for many periods into one-period indexes.
+The only new tools needed to deal with time-varying weights are the `stack()` and `unstack()` functions. `stack()` appends a later index series onto an earlier one for the same levels, whereas `unstack()` pulls apart an index series for many periods into a collection of one-period indexes.
 
 The first step to making a Paasche index is to unstack the elemental indexes into a list of elemental indexes for each period. (Trying to make the elemental indexes period-by-period can be dangerous when there are missing values.)
 

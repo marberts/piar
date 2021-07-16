@@ -3,7 +3,7 @@ aggregate.aggregate <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   NextMethod()
 }
 
-aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, chained = TRUE, ...) {
+aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) {
   if (!inherits(pias, "pias")) {
     stop(gettext("'pias' must be a price index aggregation structure; use pias() to make one"))
   }

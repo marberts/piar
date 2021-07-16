@@ -169,7 +169,7 @@ ms_epr1 <- with(
 )
 ms_epr1
 ms_epr2 <- with(
-  transform(ms_prices2, period = factor(period, levels = ms_epr1$period)), 
+  transform(ms_prices2, period = factor(period, levels = ms_epr1$periods)), 
   elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
 )
 ms_epr2

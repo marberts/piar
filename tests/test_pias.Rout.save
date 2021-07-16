@@ -209,6 +209,39 @@ NA  4
 5 4 
 
 > 
+> # update
+> epr <- elemental_index(integer(0))
+> index <- aggregate(epr, agg1)
+> weights(update(agg1, index))
+[[1]]
+111 112 121 211 
+  1   1   1   1 
+
+[[2]]
+11 12 21 
+ 2  1  1 
+
+[[3]]
+1 2 
+3 1 
+
+> 
+> epr <- elemental_index(1, ea = "111")
+> index <- aggregate(epr, agg1)
+> weights(update(agg1, index))
+[[1]]
+111 112 121 211 
+  1  NA  NA  NA 
+
+[[2]]
+11 12 21 
+NA NA NA 
+
+[[3]]
+ 1  2 
+NA NA 
+
+>
 > # change delimiter
 > (agg2 <- aggregation_structure(expand_classification(c("1.1.1", "1.1.2", "1.2.1"), c(2, 2, 1))))
 Price index aggregation structure with 3 elementary aggregates and 2 upper-level indexes 

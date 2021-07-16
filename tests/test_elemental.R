@@ -32,6 +32,10 @@ all.equal(epr1$index, lapply(epr1$contributions, function(x) sapply(x, sum) + 1)
 all.equal(epr2$index, lapply(epr2$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 all.equal(epr3$index, lapply(epr3$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 
+l <- with(dat, elemental_index(rel, period, ea, w1, r = 1, na.rm = TRUE))
+p <- with(dat, elemental_index(rel, period, ea, w2, r = -1, na.rm = TRUE))
+all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(epr3))
+
 #---- Merging ----
 epr3 <- merge(epr1, epr2)
 all.equal(epr3[], rbind(epr1[], epr2[]))

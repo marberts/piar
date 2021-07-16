@@ -38,6 +38,15 @@ weights(aggregation_structure(list(x1, x2, x3), c(NA, 2:4)))
 
 weights(aggregation_structure(list(x1, x2, x3), c(NA, 2:4)), na.rm = TRUE)
 
+# update
+epr <- elemental_index(integer(0))
+index <- aggregate(epr, agg1)
+weights(update(agg1, index))
+
+epr <- elemental_index(1, ea = "111")
+index <- aggregate(epr, agg1)
+weights(update(agg1, index))
+
 # change delimiter
 (agg2 <- aggregation_structure(expand_classification(c("1.1.1", "1.1.2", "1.2.1"), c(2, 2, 1))))
 

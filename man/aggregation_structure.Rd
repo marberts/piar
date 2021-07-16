@@ -26,7 +26,7 @@ aggregation_structure(x, w = rep(1, length(ea)))
 
 \item{object}{An object of class \code{pias}, as made by \code{aggregation_structure()}.}
 
-\item{ea_only}{Should weights be return for only the elemental aggregates, or the entire aggregation structure (the default)?}
+\item{ea_only}{Should weights be returned for only the elemental aggregates, or the entire aggregation structure (the default)?}
 
 \item{na.rm}{Should missing values be removed from \code{w} when aggregating the weights (i.e., when \code{ea_only = FALSE})? By default, missing values are not removed.}
 
@@ -38,8 +38,8 @@ aggregation_structure(x, w = rep(1, length(ea)))
 \value{
 \code{aggregation_structure()} returns an object of class \code{pias}, which has the following components.
 
-\item{child}{A nested list that gives the names/positions of the immediate children for each node in each level of the aggregation structure above the terminal nodes.}
-\item{parent}{A list that gives the name/position of the immediate parent for each node of the aggregation structure below the initial nodes.}
+\item{child}{A nested list that gives the positions of the immediate children for each node in each level of the aggregation structure above the terminal nodes.}
+\item{parent}{A list that gives the position of the immediate parent for each node of the aggregation structure below the initial nodes.}
 \item{levels}{A character vector that gives the levels of \code{x}.}
 \item{weights}{A named vector giving the weight for each elemental aggregate.}
 \item{height}{The length of \code{x}.}
