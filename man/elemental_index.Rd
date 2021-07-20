@@ -10,11 +10,10 @@ Compute period-over-period or fixed-base elemental price indexes/relatives and, 
 
 \usage{
 elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)), 
-                w = rep(1, length(x)), contrib = FALSE, na.rm = FALSE, r = 0)
+                w, contrib = FALSE, na.rm = FALSE, r = 0)
                 
 superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)), 
-                            w1 = rep(1, length(x)), w2 = rep(1, length(x)),
-                            contrib = FALSE, na.rm = FALSE, s = 2)
+                            w1, w2, contrib = FALSE, na.rm = FALSE, s = 2)
 }
 
 \arguments{

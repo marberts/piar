@@ -57,11 +57,6 @@ integer(0)
 > all.equal(ms_prices$price,
 +           with(ms_prices, shadow_price(price, period, product, business, pias2)))
 [1] TRUE
-Warning messages:
-1: In generalized_mean(r)(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm) :
-  some elements of 'x' or 'w' are less than or equal to 0; the generalized mean is not defined
-2: In generalized_mean(r)(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm) :
-  some elements of 'x' or 'w' are less than or equal to 0; the generalized mean is not defined
 > 
 > proc.time()
    user  system elapsed 

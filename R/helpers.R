@@ -5,6 +5,10 @@ same_length <- function(...) {
   all(res == res[1])
 }
 
+any_negative <- function(...) {
+  min(..., 1, na.rm = TRUE) <= 0 # the 1 stops the warnings with length-0 inputs
+}
+
 named_extract <- function(x, nm) {
   res <- x[nm]
   names(res) <- nm
