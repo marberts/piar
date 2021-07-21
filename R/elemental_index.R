@@ -5,7 +5,7 @@
   period <- as.factor(period)
   ea <- as.factor(ea) # as.factor() ensures eps is balanced
   if (contrib && is.null(names(x))) {
-    names(x) <- sequential_names(x, ea, period)
+    names(x) <- sequential_names(ea, period)
   }
   # turn x and w into lists with components for each period
   # inside each component is a list for each ea containing relatives and weights
@@ -14,7 +14,7 @@
   if (!missing(w1)) w1 <- Map(split, split(w1, period), eas)
   if (!missing(w2)) w2 <- Map(split, split(w2, period), eas)
   # case 1 has no weights, case 2 has w1 and no w2, 
-  # case 3 has no w1 and w2, and case 4 has w1 and w2
+  # case 3 has no w1 and has w2, and case 4 has w1 and w2
   case <- 1 + (!missing(w1)) + 2 * (!missing(w2))
   # calculate elemental indexes
   vindex_fun <- Vectorize(index_fun)

@@ -3,7 +3,7 @@ as.data.frame.index <- function(x, row.names = NULL, ..., type = c("index", "con
   res <- lapply(x[[type]], unlist)
   # as.*() ensures that level and value columns show up with NULL values
   value <- as.numeric(unlist(res, use.names = FALSE))
-  level <- as.character(unlist(lapply(res, names), use.names = FALSE))
+  level <- nested_names(res)
   period <- rep(x$periods, lengths(res))
   data.frame(period, level, value, row.names = row.names, stringsAsFactors = FALSE)
 }
@@ -14,8 +14,8 @@ as.matrix.index <- function(x, type = c("index", "contributions"), ...) {
     x$index
   } else {
     contrib <- lapply(x$contributions, unlist)
-    nm <- unlist(lapply(contrib, names), use.names = FALSE)
-    lapply(contrib, named_extract, unique(nm))
+    nm <- unique(nested_names(contrib))
+    lapply(contrib, named_extract, nm)
   }
   if (any(lengths(x))) { # rbind returns NULL for empty lists
     do.call(cbind, x)

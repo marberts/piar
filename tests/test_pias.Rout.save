@@ -71,7 +71,6 @@ $height
 > 
 > # should give a warning about improper parent nodes
 > aggregation_structure(list(1:2, c(3, 3), c(4, 5)))
-Price index aggregation structure with 2 elementary aggregates and 2 upper-level indexes 
 [[1]]
 [1] "1" "2"
 
@@ -91,7 +90,6 @@ In aggregation_structure(list(1:2, c(3, 3), c(4, 5))) :
 > x3 <- c("111", "112", "121", "211")
 > 
 > (agg1 <- aggregation_structure(list(x1, x2, x3)))
-Price index aggregation structure with 4 elementary aggregates and 2 upper-level indexes 
 [[1]]
 [1] "1" "2"
 
@@ -244,7 +242,6 @@ NA NA
 >
 > # change delimiter
 > (agg2 <- aggregation_structure(expand_classification(c("1.1.1", "1.1.2", "1.2.1"), c(2, 2, 1))))
-Price index aggregation structure with 3 elementary aggregates and 2 upper-level indexes 
 [[1]]
 [1] "1."
 
@@ -294,7 +291,6 @@ $height
 > 
 > # change start
 > (agg3 <- aggregation_structure(expand_classification(c("1.1.1", "1.1.2", "1.2.1"), c(4, 1))))
-Price index aggregation structure with 3 elementary aggregates and 1 upper-level index 
 [[1]]
 [1] "1.1." "1.2."
 

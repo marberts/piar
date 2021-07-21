@@ -1,6 +1,10 @@
 weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
-  if (ea_only) return(object$weights)
-  if (!object$height) return(as.list(object$weights))
+  if (ea_only) {
+    return(object$weights)
+  }
+  if (!object$height) {
+    return(as.list(object$weights))
+  }
   res <- vector("list", object$height)
   res[[1]] <- object$weights
   # 'i' is defined in the loop below
@@ -14,26 +18,20 @@ weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
 }
 
 print.pias <- function(x, ...) {
-  cat("Price index aggregation structure with", 
-      length(x$weights), 
-      "elementary",
-      if (length(x$weights) == 1) "aggregate" else "aggregates", 
-      "and", 
-      length(x$child), 
-      "upper-level", if (length(x$child) == 1) "index" else "indexes",
-      "\n")
   print(c(rev(lapply(x$child, names)), list(names(x$weights))))
   invisible(x)
 }
 
 update.pias <- function(object, index, ...) {
   if (!inherits(index, "aggregate")) {
-    stop(gettext("'index' is not an aggregate index; use aggregate() to make one"))
+    stop(gettext("'index' is not an aggregate index; use aggregate.index() to make one"))
   }
   if (!all(object$levels %in% index$levels)) {
-    warning(gettext("not all weights in pias have a corresponding index value"))
+    warning(gettext("not all weights in the aggregation structure have a corresponding index value"))
   }
   w <- index$weights
-  if (length(w)) object$weights[] <- w[[length(w)]][names(object$weights)]
+  if (length(w)) {
+    object$weights[] <- w[[length(w)]][names(object$weights)]
+  }
   object
 }

@@ -10,16 +10,19 @@ any_negative <- function(...) {
 }
 
 named_extract <- function(x, nm) {
-  res <- x[nm]
-  names(res) <- nm
-  res
+  nm <- as.character(nm)
+  structure(x[nm], names = nm)
 }
 
-sequential_names <- function(x, ...) {
+sequential_names <- function(...) {
   f <- interaction(...)
-  unsplit(Map(seq, tabulate(f)), f)
+  unsplit(Map(seq_len, tabulate(f)), f)
 }
 
 paste_until <- function(x, i) {
   paste(x[seq_len(i)], collapse = "")
+}
+
+nested_names <- function(x) {
+  as.character(unlist(lapply(x, names), use.names = FALSE))
 }

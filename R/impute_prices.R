@@ -1,7 +1,13 @@
 #---- Shadow price imputation ----
-shadow_price <- function(x, period, product, ea, pias = NULL, w = rep(1, length(x)), r1 = 0, r2 = 1) {
-  if (!same_length(x, period, product, ea, w)) {
-    stop(gettext("'x', 'period', 'product', 'ea', and 'w' must be the same length"))
+shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
+  if (missing(w)) {
+    if (!same_length(x, period, product, ea)) {
+      stop(gettext("'x', 'period', 'product, and 'ea' must be the same length"))
+    }
+  } else {
+    if (!same_length(x, period, product, ea, w)) {
+      stop(gettext("'x', 'period', 'product, 'ea', and 'w' must be the same length"))
+    }
   }
   # this is mostly a combination of gpindex::back_price() and aggregate.index()
   # it just does it period-by-period and keeps track of prices to impute
@@ -13,7 +19,7 @@ shadow_price <- function(x, period, product, ea, pias = NULL, w = rep(1, length(
     warning(gettext("there are duplicated period-product pairs"))
   }
   ea <- split(as.factor(ea), period)
-  w <- split(w, period)
+  if (!missing(w)) w <- split(w, period)
   price_update <- factor_weights(r2)
   for (t in seq_along(res)[-1]) {
     # calculate relatives
@@ -21,9 +27,13 @@ shadow_price <- function(x, period, product, ea, pias = NULL, w = rep(1, length(
     back_price <- res[[t - 1]][matches]
     price <- res[[t]]
     # calculate indexes
-    epr <- elemental_index(price / back_price, ea = ea[[t]], 
-                           w = w[[t]], na.rm = TRUE, r = r1)
-    if (!is.null(pias)) {
+    epr <- if (missing(w)) {
+      elemental_index(price / back_price, ea = ea[[t]], na.rm = TRUE, r = r1)
+    } else {
+      elemental_index(price / back_price, ea = ea[[t]], 
+                      w = w[[t]], na.rm = TRUE, r = r1)
+    }
+    if (!missing(pias)) {
       index <- aggregate(epr, pias, na.rm = TRUE, r = r2)
       epr <- index[names(pias$weights)]
       if (pias$height) pias$weights <- price_update(epr, pias$weights)

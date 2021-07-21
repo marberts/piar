@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: piar 0.1.0.9031\n"
-"POT-Creation-Date: 2021-07-14 09:45\n"
+"Project-Id-Version: piar 0.1.1.9002\n"
+"POT-Creation-Date: 2021-07-21 10:52\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -13,10 +13,10 @@ msgstr ""
 msgid "aggregating an aggregated index"
 msgstr ""
 
-msgid "'pias' must be a price index aggregation structure; use pias() to make one"
+msgid "'pias' must be a price index aggregation structure; use aggregation_structure() to make one"
 msgstr ""
 
-msgid "each vector in 'x' must be the same length as 'w'"
+msgid "all arguments must be the same length"
 msgstr ""
 
 msgid "there are duplicated elementary aggregates; the last vector in 'x' should not have duplicates"
@@ -28,22 +28,37 @@ msgstr ""
 msgid "some nodes in the price index aggregation structure have multiple parent nodes; the aggregation structure does not represent a nested hierarchy"
 msgstr ""
 
-msgid "'x', 'period', 'ea', and 'w' must be the same length"
+msgid "'x', 'period', and 'ea' must be the same length"
+msgstr ""
+
+msgid "'x', 'period', 'ea', 'w', must be the same length"
+msgstr ""
+
+msgid "some elements of 'x' or 'w' are less than or equal to 0"
+msgstr ""
+
+msgid "'x', 'period', 'ea', and 'w1' must be the same length"
+msgstr ""
+
+msgid "'x', 'period', 'ea', and 'w2' must be the same length"
 msgstr ""
 
 msgid "'x', 'period', 'ea', 'w1', and 'w2' must be the same length"
 msgstr ""
 
+msgid "some elements of 'x', 'w1', or 'w2' are less than or equal to 0"
+msgstr ""
+
 msgid "'width' cannot contain NAs"
 msgstr ""
 
-msgid "'x', 'period', 'product', 'ea', and 'w' must be the same length"
+msgid "'x', 'period', 'product, and 'ea' must be the same length"
+msgstr ""
+
+msgid "'x', 'period', 'product, 'ea', and 'w' must be the same length"
 msgstr ""
 
 msgid "there are duplicated period-product pairs"
-msgstr ""
-
-msgid "all arguments must be the same length"
 msgstr ""
 
 msgid "'y' is not an index; use elemental_index() to make one"
@@ -64,8 +79,8 @@ msgstr ""
 msgid "some periods appear in both 'x' and 'y'"
 msgstr ""
 
-msgid "'index' is not an aggregate index; use aggregate() to make one"
+msgid "'index' is not an aggregate index; use aggregate.index() to make one"
 msgstr ""
 
-msgid "not all weights in pias have a corresponding index value"
+msgid "not all weights in the aggregation structure have a corresponding index value"
 msgstr ""

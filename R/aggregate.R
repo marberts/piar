@@ -1,21 +1,23 @@
-aggregate.aggregate <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+aggregate.aggregate <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) {
   warning(gettext("aggregating an aggregated index"))
   NextMethod()
 }
 
 aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) {
   if (!inherits(pias, "pias")) {
-    stop(gettext("'pias' must be a price index aggregation structure; use pias() to make one"))
+    stop(gettext("'pias' must be a price index aggregation structure; use aggregation_structure() to make one"))
   }
   # helpful functions
   price_update <- factor_weights(r)
+  gen_mean <- generalized_mean(r)
+  arithmetic_weights <- transmute_weights(r, 1)
   # 'i' is defined in the loop below; it's used to loop over the height of 'pias'
   aggregate_index <- function(z) {
-    generalized_mean(r)(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm)
+    gen_mean(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm)
   }
   aggregate_contrib <- function(z) {
-    w <- scale_weights(transmute_weights(r, 1)(rel[[i - 1]][z], w[[i - 1]][z]))
-    unlist(Map("*", con[[i - 1]][z], w))
+    aw <- scale_weights(arithmetic_weights(rel[[i - 1]][z], w[[i - 1]][z]))
+    unlist(Map("*", con[[i - 1]][z], aw))
   }
   # initialize weights
   eas <- names(pias$weights)

@@ -12,7 +12,7 @@ Construct a price index aggregation structure from a hierarchical classification
 }
 
 \usage{
-aggregation_structure(x, w = rep(1, length(ea)))
+aggregation_structure(x, w)
 
 \method{weights}{pias}(object, ea_only = FALSE, na.rm = FALSE, ...)
 

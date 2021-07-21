@@ -1,11 +1,15 @@
-aggregation_structure <- function(x, w = rep(1, length(ea))) {
+aggregation_structure <- function(x, w) {
   x <- lapply(x, as.character)
   len <- length(x)
   ea <- if (len) x[[len]] # x[[0]] is an error
-  w <- as.numeric(w)
+  w <- if (missing(w)) {
+    rep(1, length(ea))
+  } else {
+    as.numeric(w)
+  }
   # basic argument checking to make sure inputs can make an aggregation structure
   if (any(lengths(x) != length(w))) {
-    stop(gettext("each vector in 'x' must be the same length as 'w'"))
+    stop(gettext("all arguments must be the same length"))
   }
   if (anyDuplicated(ea)) {
     stop(gettext("there are duplicated elementary aggregates; the last vector in 'x' should not have duplicates"))

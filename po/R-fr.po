@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: piar 0.1.0.9029\n"
-"POT-Creation-Date: 2021-07-14 09:45\n"
+"POT-Creation-Date: 2021-07-21 10:52\n"
 "PO-Revision-Date: 2021-06-07 23:19\n"
 "Last-Translator: Steve Martin <steve.martin5@canada.ca>\n"
 "Language-Team: none\n"
@@ -14,13 +14,14 @@ msgid "aggregating an aggregated index"
 msgstr "agréger un indice agrégé"
 
 msgid ""
-"'pias' must be a price index aggregation structure; use pias() to make one"
+"'pias' must be a price index aggregation structure; use "
+"aggregation_structure() to make one"
 msgstr ""
 "'pias' doit être une structure d'agrégation d'indices de prix.; utilisez "
-"pias() pour en faire un"
+"aggregation_structure() pour en faire un"
 
-msgid "each vector in 'x' must be the same length as 'w'"
-msgstr "chaque vecteur dans 'x' doit avoir la même longueur que 'w'"
+msgid "all arguments must be the same length"
+msgstr "tous les arguments doivent avoir la même longueur"
 
 msgid ""
 "there are duplicated elementary aggregates; the last vector in 'x' should "
@@ -44,23 +45,38 @@ msgstr ""
 "plusieurs nœuds parents.; la structure d'agrégation ne représente pas une "
 "hiérarchie imbriquée"
 
-msgid "'x', 'period', 'ea', and 'w' must be the same length"
+msgid "'x', 'period', and 'ea' must be the same length"
+msgstr "'x', 'period' et 'ea' doivent avoir la même longueur"
+
+msgid "'x', 'period', 'ea', 'w', must be the same length"
 msgstr "'x', 'period', 'ea' et 'w' doivent avoir la même longueur"
+
+msgid "some elements of 'x' or 'w' are less than or equal to 0"
+msgstr "certains éléments de 'x' ou 'w' sont inférieurs ou égaux à 0 "
+
+msgid "'x', 'period', 'ea', and 'w1' must be the same length"
+msgstr "'x', 'period', 'ea' et 'w1' doivent avoir la même longueur"
+
+msgid "'x', 'period', 'ea', and 'w2' must be the same length"
+msgstr "'x', 'period', 'ea' et 'w2' doivent avoir la même longueur"
 
 msgid "'x', 'period', 'ea', 'w1', and 'w2' must be the same length"
 msgstr "'x', 'period', 'ea', 'w1' et 'w2' doivent avoir la même longueur"
 
+msgid "some elements of 'x', 'w1', or 'w2' are less than or equal to 0"
+msgstr "certains éléments de 'x', 'w1' ou 'w2' sont inférieurs ou égaux à 0 "
+
 msgid "'width' cannot contain NAs"
 msgstr "'width' ne peut pas contenir de NA"
 
-msgid "'x', 'period', 'product', 'ea', and 'w' must be the same length"
+msgid "'x', 'period', 'product, and 'ea' must be the same length"
+msgstr "'x', 'period', 'product' et 'ea' doivent avoir la même longueur"
+
+msgid "'x', 'period', 'product, 'ea', and 'w' must be the same length"
 msgstr "'x', 'period', 'product', 'ea' et 'w' doivent avoir la même longueur"
 
 msgid "there are duplicated period-product pairs"
 msgstr "il existe des paires période-produit en double"
-
-msgid "all arguments must be the same length"
-msgstr "tous les arguments doivent avoir la même longueur"
 
 msgid "'y' is not an index; use elemental_index() to make one"
 msgstr "'y' n'est pas un indice ; utilisez elemental_index() pour en faire un"
@@ -80,9 +96,10 @@ msgstr "'x' et 'y' doivent être des index pour les mêmes niveaux"
 msgid "some periods appear in both 'x' and 'y'"
 msgstr "certains points apparaissent à la fois dans 'x' et 'y'"
 
-msgid "'index' is not an aggregate index; use aggregate() to make one"
+msgid "'index' is not an aggregate index; use aggregate.index() to make one"
 msgstr ""
-"'index' n'est pas un indice agrégé.; utilisez aggregate() pour en faire un"
+"'index' n'est pas un indice agrégé.; utilisez aggregate.index() pour en faire un"
 
-msgid "not all weights in pias have a corresponding index value"
+msgid ""
+"not all weights in the aggregation structure have a corresponding index value"
 msgstr "tous les poids dans pias n'ont pas une valeur d'indice correspondante"
