@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: piar 0.1.1.9002\n"
-"POT-Creation-Date: 2021-07-21 10:52\n"
+"Project-Id-Version: piar 0.2.0\n"
+"POT-Creation-Date: 2021-07-21 13:16\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "all arguments must be the same length"
 msgstr ""
 
-msgid "there are duplicated elementary aggregates; the last vector in 'x' should not have duplicates"
+msgid "there are duplicated elemental aggregates; the last vector in 'x' should not have duplicates"
 msgstr ""
 
 msgid "there are duplicated nodes in the aggregation structure; the same value cannot appear across multiple levels of 'x'"

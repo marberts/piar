@@ -20,7 +20,6 @@ shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
   }
   ea <- split(as.factor(ea), period)
   if (!missing(w)) w <- split(w, period)
-  price_update <- factor_weights(r2)
   for (t in seq_along(res)[-1]) {
     # calculate relatives
     matches <- match(product[[t]], product[[t - 1]], incomparables = NA)
@@ -36,7 +35,7 @@ shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
     if (!missing(pias)) {
       index <- aggregate(epr, pias, na.rm = TRUE, r = r2)
       epr <- index[names(pias$weights)]
-      if (pias$height) pias$weights <- price_update(epr, pias$weights)
+      pias <- update(pias, index)
     }
     # add shadow prices to 'x'
     impute <- is.na(price)

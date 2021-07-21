@@ -12,7 +12,7 @@ aggregation_structure <- function(x, w) {
     stop(gettext("all arguments must be the same length"))
   }
   if (anyDuplicated(ea)) {
-    stop(gettext("there are duplicated elementary aggregates; the last vector in 'x' should not have duplicates"))
+    stop(gettext("there are duplicated elemental aggregates; the last vector in 'x' should not have duplicates"))
   }
   if (anyDuplicated(unlist(lapply(x, unique), use.names = FALSE))) {
     stop(gettext("there are duplicated nodes in the aggregation structure; the same value cannot appear across multiple levels of 'x'"))
@@ -42,7 +42,7 @@ aggregation_structure <- function(x, w) {
   # return 'pias' object
   res <- list(child = as.list(child), 
               parent = as.list(parent),
-              levels = as.character(c(names(unlist(rev(child), recursive = FALSE)), ea)),
+              levels = as.character(c(nested_names(rev(child)), ea)),
               weights = structure(w, names = ea),
               height = len)
   structure(res, class = "pias")
