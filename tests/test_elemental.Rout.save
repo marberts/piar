@@ -19,7 +19,7 @@ Type 'q()' to quit R.
 > 
 > set.seed(1234)
 > 
-> #---- Length 0 inputs ----
+> # Make sure index objects are correctly structured with length-0 inputs
 > unclass(elemental_index(integer(0), integer(0), integer(0)))
 $index
 named list()
@@ -48,6 +48,7 @@ $periods
 character(0)
 
 > 
+> # Make sure table methods work with length-0 indexes
 > as.matrix(elemental_index(numeric(0)))
 <0 x 0 matrix>
 > 
@@ -62,110 +63,65 @@ character(0)
 +           data.frame(period = character(0), level = character(0), value = numeric(0)))
 [1] TRUE
 > 
-> #---- Adding up contributions ----
+> # Make indexes with some random data
 > dat <- data.frame(rel = replace(rlnorm(1e4), sample(1e4, 10), NA),
 +                   period = sample(letters, 1e4, TRUE),
 +                   ea = sample(1:5, 1e4, TRUE),
 +                   w1 = replace(rlnorm(1e4), sample(1e4, 10), NA),
 +                   w2 = runif(1e4))
 > 
-> (epr1 <- with(dat, elemental_index(rel, period, ea, contrib = TRUE)))
-          a         b         c         d         e         f         g
-1 1.1795016 0.9372512 0.9963854 0.9876633 1.0606479 1.2193233 0.9357125
-2 0.8649588 0.9870674 1.0275410 1.0543893 1.2847680 0.8786174        NA
-3 1.0499289 1.0421933 0.9447611 0.8774825 0.9446547 1.0039014 1.1632233
-4 0.9599931 1.0452961 0.9366665 1.0126552 1.0924715 1.0545793 0.9927397
-5 1.0380344        NA 1.0358629        NA 0.9698192 1.1150355 1.0132442
-          h         i         j        k         l         m         n
-1 0.9895446 0.9616791 0.8963501 1.073414 0.8559953 1.1388460 0.8649626
-2        NA 0.8919047 0.9507296 1.086750 0.8887897 1.0103301 1.0769206
-3 1.0247473 1.0659021 1.2794448 1.115758        NA 1.2754861 1.0329136
-4 0.8387395        NA 0.9022128 1.004306 1.0519212 0.8631791 1.2181229
-5 0.9445648 1.2148409 1.0134911 1.143393 1.0062292 0.9799716 1.1846872
-          o         p         q         r         s         t         u
-1 1.0017844 0.9874554 1.0273206 0.7959892 0.9484780 1.1502052 0.9410509
-2 1.0511209 0.8798572 1.0413400 1.0979488 0.9036885 1.1482391 1.1523252
-3 0.9234156 1.0756050 0.9657632 0.9677068 0.9860874 0.9007004 0.9593033
-4 1.1112095 1.1195084 1.1028351 1.0567589 0.9523466 0.8212541        NA
-5 1.0433844 0.9942107 1.0147105 0.8198734 1.0169988 0.7954177 0.8557604
-          v         w         x        y         z
-1 0.8219368 0.9073511 1.0082097 1.049145        NA
-2 1.1414045 1.0088473 0.9244572 1.078097 0.9194776
-3        NA 0.7753894 1.2874263 1.099617 0.9003615
-4 0.9978490 1.1365261 0.9892452 0.967742 1.2081251
-5 0.7851386        NA 1.0784924 1.029554 0.9219564
-> (epr2 <- with(dat, elemental_index(rel, period, ea, r = -1, contrib = TRUE, na.rm = TRUE)))
-          a         b         c         d         e         f         g
-1 0.7247840 0.6306511 0.6292257 0.6613724 0.6341632 0.7321376 0.4441965
-2 0.5440428 0.6300661 0.6828536 0.6960998 0.7750400 0.4774804 0.4996635
-3 0.5742180 0.6446309 0.4753505 0.5117867 0.5331488 0.6708789 0.7894033
-4 0.6418796 0.5810404 0.6073013 0.6923003 0.7277696 0.6430914 0.6184851
-5 0.6142105 0.7666888 0.6038480 0.5913389 0.6273857 0.7443844 0.6409746
-          h         i         j         k         l         m         n
-1 0.6749640 0.5896683 0.5654302 0.7825652 0.4999161 0.6600319 0.5103323
-2 0.8060113 0.5263799 0.6517825 0.6911474 0.5728483 0.6590486 0.6447630
-3 0.6940621 0.7129019 0.8830146 0.7080401 0.6733418 0.8213401 0.6636336
-4 0.5447422 0.6300425 0.5909716 0.6752691 0.6436750 0.5326621 0.7695336
-5 0.5722150 0.6980440 0.7325223 0.6913966 0.6737121 0.6517634 0.6333026
-          o         p         q         r         s         t         u
-1 0.6686850 0.6204841 0.5864714 0.5325269 0.6159488 0.6189122 0.5582204
-2 0.6526949 0.5191427 0.6001576 0.7084087 0.6020032 0.6240958 0.7109392
-3 0.6876136 0.6483357 0.6024728 0.5177528 0.6543424 0.5531714 0.6029692
-4 0.6554874 0.7211671 0.7141802 0.7073883 0.5816877 0.5554650 0.6761580
-5 0.6570075 0.5509452 0.5736032 0.4727045 0.6769216 0.5009140 0.4730328
-          v         w         x         y         z
-1 0.4341802 0.5470128 0.6644445 0.6435757 0.5680991
-2 0.7524665 0.5929764 0.6405621 0.6240266 0.5853489
-3 0.6553243 0.4989662 0.8721370 0.6188208 0.5166762
-4 0.6061881 0.7444958 0.5644340 0.6251404 0.7964932
-5 0.3890438 0.6811875 0.6443716 0.6728371 0.6414463
-> (epr3 <- with(dat, superlative_elemental_index(rel, period, ea, w1, w2, contrib = TRUE, na.rm = TRUE)))
-          a         b         c         d         e         f         g
-1 1.1557528 0.8046280 0.9123902 1.0001831 0.9125489 1.1725583 1.0780146
-2 0.7948881 1.0185246 1.0280318 0.9493348 1.4989769 0.9188825 0.7993088
-3 0.9083333 1.0936418 0.8735682 0.8938790 0.9782774 1.1033680 1.1944081
-4 0.9087451 0.9927389 0.8970248 0.9623171 1.2423814 0.9828936 0.9468110
-5 1.0256817 0.9704534 0.8876262 0.8948243 0.8407150 1.0513354 1.1431276
-          h         i         j         k         l         m         n
-1 1.0389738 0.8978236 0.8502776 1.0440379 0.8092747 1.1984784 1.0000413
-2 1.1849273 0.9072620 1.0195389 1.0843558 1.0090683 1.2327599 1.0423762
-3 1.3921875 1.1044604 1.0832780 1.1512185 1.1768615 1.2246824 0.9535494
-4 0.8062410 1.0572087 1.1187785 0.9818612 1.1224826 0.8364708 1.2362252
-5 0.9938159 0.9293493 0.9412905 1.2650342 1.1449725 0.8577759 1.0236659
-          o         p         q         r         s         t         u
-1 1.0338999 0.9912650 1.0640955 0.7475203 0.8785091 1.2748334 0.9351787
-2 0.9765408 0.8330938 0.9281186 1.0045017 0.8609109 1.5673944 1.1179160
-3 0.9065069 1.0280993 0.9661142 0.8435537 1.0437240 0.8583835 0.9304664
-4 1.2027368 1.0824947 1.1657441 1.0632273 0.8780912 0.9152148 1.0607419
-5 1.1409127 0.9987273 0.8323567 0.7751675 1.2124479 0.7432386 0.7053440
-          v         w         x         y         z
-1 0.8595880 0.9648985 1.1495894 1.0088459 0.9514898
-2 1.1795126 0.9506495 0.8709796 1.0374182 0.9099144
-3 0.8663784 0.7134403 1.4519454 1.0570721 1.1161922
-4 0.9991889 1.1171289 0.9172644 0.9628353 1.5686819
-5 0.6495562 1.4171272 1.0121937 0.9456089 0.9649770
+> epr1 <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
+> epr2 <- with(
++   dat, 
++   elemental_index(rel, period, ea, r = -1, contrib = TRUE, na.rm = TRUE)
++ )
+> epr3 <- with(
++   dat, 
++   superlative_elemental_index(rel, period, ea, w1, w2, contrib = TRUE, na.rm = TRUE)
++ )
+> 
+> # Compare with an alternate implementation
+> epr11 <- aggregate(rel ~ as.character(ea) + period, dat, 
++                    function(x) exp(weighted.mean(log(x))), 
++                    na.action = na.pass)
+> epr22 <- aggregate(rel ~ as.character(ea) + period, dat, 
++                    function(x) 1 / weighted.mean(1 / x, na.rm = TRUE),
++                    na.action = na.pass)
+> 
+> all.equal(as.data.frame(epr1), epr11[c(2, 1, 3)], check.attributes = FALSE)
+[1] TRUE
+> all.equal(as.data.frame(epr2), epr22[c(2, 1, 3)], check.attributes = FALSE)
+[1] TRUE
+> 
+> # cumprod.index method should be the same as using apply
 > all.equal(cumprod(epr1), t(apply(as.matrix(epr1), 1, cumprod)))
 [1] TRUE
-> all.equal(epr1$index, lapply(epr1$contributions, function(x) sapply(x, sum) + 1))
+> 
+> # Contributions should add up
+> all.equal(epr1$index, 
++           lapply(epr1$contributions, function(x) sapply(x, sum) + 1))
 [1] TRUE
-> all.equal(epr2$index, lapply(epr2$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
+> all.equal(epr2$index, 
++           lapply(epr2$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 [1] TRUE
-> all.equal(epr3$index, lapply(epr3$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
+> all.equal(epr3$index, 
++           lapply(epr3$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 [1] TRUE
->
-> #---- Superlative epr ----
+> 
+> # Compare Fisher index with the manual calculation
 > l <- with(dat, elemental_index(rel, period, ea, w1, r = 1, na.rm = TRUE))
 > p <- with(dat, elemental_index(rel, period, ea, w2, r = -1, na.rm = TRUE))
 > all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(epr3))
 [1] TRUE
 > 
+> # Should work for other kinds of superlative indexes
 > sepr <- with(dat, superlative_elemental_index(rel, period, ea, w2 = w2, na.rm = TRUE, s = 3))
 > l <- with(dat, elemental_index(rel, period, ea, r = 1.5, na.rm = TRUE))
 > p <- with(dat, elemental_index(rel, period, ea, w2, r = -1.5, na.rm = TRUE))
 > all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 [1] TRUE
 > 
-> #---- Merging ----
+> # Test merge.index method
 > epr3 <- merge(epr1, epr2)
 Warning message:
 In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
@@ -176,12 +132,13 @@ In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
 > epr3$levels
 [1] "1" "2" "3" "4" "5"
 > 
+> # Merging length-0 indexes does nothing
 > all.equal(merge(elemental_index(integer(0), integer(0), integer(0)), 
 +                 elemental_index(integer(0), integer(0), integer(0))),
 +           elemental_index(integer(0), integer(0), integer(0)))
 [1] TRUE
 > 
-> #---- Stacking ----
+> # Test stack.index method
 > epr2 <- with(dat, elemental_index(rel, toupper(period), ea, r = -1, contrib = TRUE, na.rm = TRUE))
 > epr3 <- stack(epr1, epr2)
 > all.equal(epr3[], cbind(epr1[], epr2[]))
@@ -192,10 +149,12 @@ In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
 [20] "t" "u" "v" "w" "x" "y" "z" "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L"
 [39] "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
->
+> 
+> # Stacking and unstacking are opposite operations
 > all.equal(epr1, Reduce(stack, unstack(epr1)))
 [1] TRUE
 > 
+> # Stacking/unstacking length-0 indexes does nothing
 > all.equal(stack(elemental_index(integer(0), integer(0), integer(0)), 
 +                 elemental_index(integer(0), integer(0), integer(0))),
 +           elemental_index(integer(0), integer(0), integer(0)))
@@ -206,7 +165,7 @@ In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
 +           elemental_index(integer(0), integer(0), integer(0)))
 [1] TRUE
 > 
-> #---- Toy example ----
+> # Toy example that can be easily verified
 > dat <- data.frame(rel = c(1:6, NA, 7, 8),
 +                   period = c(1, 1, 1, 1, 1, 2, 2, 2, 2),
 +                   ea = c("11", "11", "12", "12", "13", "11", "12", "11", "14"))
@@ -337,4 +296,4 @@ $periods
 > 
 > proc.time()
    user  system elapsed 
-  0.592   0.207   0.739 
+  0.632   0.253   0.679 

@@ -2,13 +2,14 @@ library(piar)
 
 wd <- getwd()
 
-# Matched sample
-
+# Matched sample index from Cygnus
 ms_cyg <- read.csv(file.path(wd, "ms_cyg.csv"))
 
+# Replicate the calculation with piar
 pias <- with(
   ms_weights, 
-  aggregation_structure(c(expand_classification(classification), list(business)), weight)
+  aggregation_structure(c(expand_classification(classification), list(business)), 
+                        weight)
 )
 
 sp <- with(ms_prices, shadow_price(price, period, product, business, pias))
@@ -21,10 +22,10 @@ index <- aggregate(epr, pias, na.rm = TRUE)
 
 all.equal(as.numeric(cumprod(index)), ms_cyg$index / 100)
 
-# Fixed sample
-
+# Fixed sample index from Cygnus
 fs_cyg <- read.csv(file.path(wd, "fs_cyg.csv"))
 
+# Reallocate the weights
 weights <- fs_prices[1:11, c(2:3, 5)]
 weights$weight <- with(
   weights, 
@@ -32,9 +33,11 @@ weights$weight <- with(
     fs_weights$weight[match(classification, fs_weights$classification)]
 )
 
+# Replicate with piar
 pias <- with(
   weights, 
-  aggregation_structure(c(expand_classification(classification), list(business)), weight)
+  aggregation_structure(c(expand_classification(classification), list(business)), 
+                        weight)
 )
 
 rel <- with(fs_prices, price_relative(price, period, business))

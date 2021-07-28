@@ -1,7 +1,7 @@
 library(piar)
 set.seed(12345)
 
-# length 0 inputs
+# Tests for corner cases
 unclass(aggregate(elemental_index(numeric(0)), aggregation_structure(list())))
 
 all.equal(update(aggregation_structure(list()), 
@@ -23,7 +23,7 @@ all.equal(update(aggregation_structure(list(1)),
                  aggregate(elemental_index(rep(1, 10)), aggregation_structure(list(1)))),
           aggregation_structure(list(1)))
 
-#---- Matched sample ----
+# Tests with a matched-sample index
 ms_epr <- with(
   ms_prices, 
   elemental_index(price_relative(price, period, product),
@@ -39,19 +39,19 @@ ms_pias <- with(
 
 unclass(ms_index)
 
-# adding up
+# Check adding up of lower-level indexes
 all.equal(apply(cumprod(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[1]]),
           cumprod(ms_index)[1, ])
 
 all.equal(apply(cumprod(ms_index)[2:3, ], 2, weighted.mean, weights(ms_pias)[[2]]),
           cumprod(ms_index)[1, ])
 
-# re-aggregating the index shouldn't do anything
+# Re-aggregating the index shouldn't do anything
 all.equal(aggregate(ms_index, ms_pias)[], ms_index[])
 
 all.equal(aggregate(ms_index, ms_pias, na.rm = TRUE)[], ms_index[])
 
-# re-arranging the index shouldn't do anything
+# Re-arranging the index shouldn't do anything
 ms_epr <- with(
   ms_prices[sample(nrow(ms_prices)), ], 
   elemental_index(price_relative(price, period, product),
@@ -65,19 +65,19 @@ ms_pias <- with(
 
 all.equal(aggregate(ms_epr, ms_pias, na.rm = TRUE)[rownames(ms_index[]), ], ms_index[])
 
-# stacking shouldn't do anything
-
+# Stacking shouldn't do anything
 all.equal(Reduce(stack, unstack(ms_index)), ms_index)
 
-# are contributions getting aggregated correctly?
-all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+# Aggregated contributions should add up
+all.equal(ms_index[1, ], 
+          sapply(ms_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
 
-# are weights updated correctly?
+# Check that weights are getting price updated correctly
 apply(cumprod(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
 
 weights(update(ms_pias, ms_index), ea_only = TRUE)
 
-# try a weird index
+# Do the same tests but with a weird index
 ms_epr <- with(
   ms_prices,
   elemental_index(price_relative(price, period, product), 
@@ -88,7 +88,8 @@ ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
 
 all.equal(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)[], ms_index[])
 
-all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+all.equal(ms_index[1, ], 
+          sapply(ms_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
 
 all.equal(apply(cumprod(ms_index)[2:3, ], 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
           cumprod(ms_index)[1, ])
@@ -99,7 +100,7 @@ all.equal(aggregate(ms_index, ms_pias, r = -1.7)[], ms_index[])
 
 all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]]) + 1))
 
-#---- Fixed sample ----
+# Tests with a fixed-sample index
 fs_epr <- with(
   fs_prices, 
   elemental_index(price_relative(price, period, business),
@@ -115,27 +116,32 @@ fs_pias <- with(
 
 unclass(fs_index)
 
-# re-aggregating the index shouldn't do anything
+# Re-aggregating the index shouldn't do anything
 all.equal(aggregate(fs_index, fs_pias)[], fs_index[])
 
-# are contributions getting aggregated correctly?
-all.equal(fs_index[1, ], sapply(fs_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+# Contributions should add up
+all.equal(fs_index[1, ], 
+          sapply(fs_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
 
-# adding up
+# Check adding up of lower level indexes
 all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[1]]),
           cumprod(fs_index)[1, ])
 
 all.equal(apply(cumprod(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),
           cumprod(fs_index)[1, ])
 
-# non-missing indexes should be the same
+# Non-missing indexes should be the same when missing values are not remove
 fs_index2 <- aggregate(fs_epr, fs_pias)
 fs_index2[] - fs_index[]
 
-all.equal(fs_index2["121", ], sapply(fs_index2$contributions, function(x) sum(x[["121"]], na.rm = TRUE) + 1))
+all.equal(fs_index2["121", ], 
+          sapply(fs_index2$contributions, function(x) sum(x[["121"]], na.rm = TRUE) + 1))
 
-#---- Fixed base index ----
-prices <- data.frame(price = 1:15, period = letters[1:3], product = rep(1:5, each = 3), ea = rep(c("f1", "f2"), c(6, 9)))
+# Tests with a fixed-base index
+prices <- data.frame(price = 1:15, 
+                     period = letters[1:3], 
+                     product = rep(1:5, each = 3), 
+                     ea = rep(c("f1", "f2"), c(6, 9)))
 prices$pop_rel <- with(prices, price_relative(price, period, product))
 prices$fx_rel <- with(prices, price / gpindex::base_price(price, period, product))
 
@@ -147,4 +153,5 @@ epr_fx <- with(prices, elemental_index(fx_rel, period, ea))
 index_pop <- aggregate(epr_pop, pias)
 index_fx <- aggregate(epr_fx, pias, chained = FALSE)
 
+# Chained calculation and fixed-base calculation should be the same
 all.equal(as.matrix(index_fx), cumprod(index_pop))
