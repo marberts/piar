@@ -15,9 +15,10 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+> #---- Tests for aggregation_structure() and associated methods ----
 > library(piar)
 > 
-> # Build a pias for two corner cases and make sure the weights.pias method works
+> # Build a pias for two corner cases and make sure the weights.pias() method works
 > unclass(aggregation_structure(list()))
 $child
 list()
@@ -90,7 +91,7 @@ In aggregation_structure(list(1:2, c(3, 3), c(4, 5))) :
 > x2 <- c("11", "11", "12", "21")
 > x3 <- c("111", "112", "121", "211")
 > 
-> # Test the print.pias method
+> # Test the print.pias() method
 > (agg1 <- aggregation_structure(list(x1, x2, x3)))
 [[1]]
 [1] "1" "2"
@@ -149,7 +150,7 @@ $height
 > all.equal(agg1, aggregation_structure(expand_classification(x3)))
 [1] TRUE
 > 
-> # Calculate weights with the weights.pias method
+> # Calculate weights with the weights.pias() method
 > weights(agg1)
 [[1]]
 111 112 121 211 
@@ -168,6 +169,7 @@ $height
 111 112 121 211 
   1   1   1   1 
 > 
+> # Unequal weights
 > weights(aggregation_structure(list(x1, x2, x3), 1:4))
 [[1]]
 111 112 121 211 
@@ -210,25 +212,14 @@ NA  4
 5 4 
 
 > 
-> # Update with the update.pias method
+> # Update with the update.pias() method
 > # Updating with a length-0 index should do nothing
 > epr <- elemental_index(integer(0))
 > index <- aggregate(epr, agg1)
-> weights(update(agg1, index))
-[[1]]
-111 112 121 211 
-  1   1   1   1 
-
-[[2]]
-11 12 21 
- 2  1  1 
-
-[[3]]
-1 2 
-3 1 
-
+> all.equal(update(agg1, index), agg1)
+[1] TRUE
 > 
-> # Updating with an index that doesn't line up with the pias introduces NAs
+> # Updating with an index that doesn't line up with the pias introduces NA weights
 > # These should carry up the aggregation structure
 > epr <- elemental_index(1, ea = "111")
 > index <- aggregate(epr, agg1)
@@ -245,9 +236,10 @@ NA NA NA
  1  2 
 NA NA 
 
->
+> 
 > # Accommodate a delimiter when expanding the classification by setting the width
-> (agg2 <- aggregation_structure(expand_classification(c("1.1.1", "1.1.2", "1.2.1"), c(2, 2, 1))))
+> (agg2 <- aggregation_structure(expand_classification(c("1.1.1", "1.1.2", "1.2.1"), 
++                                                      c(2, 2, 1))))
 [[1]]
 [1] "1."
 
@@ -296,7 +288,8 @@ $height
 
 > 
 > # Change start by setting the width
-> (agg3 <- aggregation_structure(expand_classification(c("1.1.1", "1.1.2", "1.2.1"), c(4, 1))))
+> (agg3 <- aggregation_structure(expand_classification(c("1.1.1", "1.1.2", "1.2.1"), 
++                                                      c(4, 1))))
 [[1]]
 [1] "1.1." "1.2."
 
@@ -334,4 +327,4 @@ $height
 > 
 > proc.time()
    user  system elapsed 
-  0.097   0.020   0.111 
+  0.103   0.012   0.109 

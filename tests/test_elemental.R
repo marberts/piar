@@ -1,3 +1,4 @@
+#---- Tests for elemental_index(), superlative_elemental_index(), and index methods ----
 library(piar)
 
 set.seed(1234)
@@ -7,7 +8,7 @@ unclass(elemental_index(integer(0), integer(0), integer(0)))
 
 unclass(superlative_elemental_index(integer(0), integer(0), integer(0), integer(0)))
 
-# Make sure table methods work with length-0 indexes
+# Make sure matrix/data.frame methods work with length-0 indexes
 as.matrix(elemental_index(numeric(0)))
 
 as.matrix(elemental_index(numeric(0)), type = "contributions")
@@ -25,7 +26,10 @@ dat <- data.frame(rel = replace(rlnorm(1e4), sample(1e4, 10), NA),
                   w1 = replace(rlnorm(1e4), sample(1e4, 10), NA),
                   w2 = runif(1e4))
 
-epr1 <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
+epr1 <- with(
+  dat, 
+  elemental_index(rel, period, ea, contrib = TRUE)
+)
 epr2 <- with(
   dat, 
   elemental_index(rel, period, ea, r = -1, contrib = TRUE, na.rm = TRUE)
@@ -40,13 +44,13 @@ epr11 <- aggregate(rel ~ as.character(ea) + period, dat,
                    function(x) exp(weighted.mean(log(x))), 
                    na.action = na.pass)
 epr22 <- aggregate(rel ~ as.character(ea) + period, dat, 
-                   function(x) 1 / weighted.mean(1 / x, na.rm = TRUE),
-                   na.action = na.pass)
+                   function(x) 1 / weighted.mean(1 / x),
+                   na.action = na.omit)
 
 all.equal(as.data.frame(epr1), epr11[c(2, 1, 3)], check.attributes = FALSE)
 all.equal(as.data.frame(epr2), epr22[c(2, 1, 3)], check.attributes = FALSE)
 
-# cumprod.index method should be the same as using apply
+# cumprod.index() method should be the same as using apply
 all.equal(cumprod(epr1), t(apply(as.matrix(epr1), 1, cumprod)))
 
 # Contributions should add up
@@ -68,22 +72,27 @@ l <- with(dat, elemental_index(rel, period, ea, r = 1.5, na.rm = TRUE))
 p <- with(dat, elemental_index(rel, period, ea, w2, r = -1.5, na.rm = TRUE))
 all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 
-# Test merge.index method
+# Test merge.index() method
 epr3 <- merge(epr1, epr2)
 all.equal(epr3[], rbind(epr1[], epr2[]))
 all.equal(epr3$index$a, sapply(epr3$contributions$a, sum, na.rm = TRUE) + 1)
 epr3$levels
+epr3$periods
 
 # Merging length-0 indexes does nothing
 all.equal(merge(elemental_index(integer(0), integer(0), integer(0)), 
                 elemental_index(integer(0), integer(0), integer(0))),
           elemental_index(integer(0), integer(0), integer(0)))
 
-# Test stack.index method
-epr2 <- with(dat, elemental_index(rel, toupper(period), ea, r = -1, contrib = TRUE, na.rm = TRUE))
+# Test stack.index() method
+epr2 <- with(
+  dat, 
+  elemental_index(rel, toupper(period), ea, r = -1, contrib = TRUE, na.rm = TRUE)
+)
 epr3 <- stack(epr1, epr2)
 all.equal(epr3[], cbind(epr1[], epr2[]))
 all.equal(epr3$index$A, sapply(epr3$contributions$A, sum, na.rm = TRUE) + 1)
+epr3$levels
 epr3$periods
 
 # Stacking and unstacking are opposite operations

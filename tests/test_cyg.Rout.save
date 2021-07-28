@@ -15,6 +15,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+> #---- Compare results from Cygnus with results from piar ----
 > library(piar)
 > 
 > wd <- getwd()
@@ -42,7 +43,7 @@ Type 'q()' to quit R.
 > 
 > # Fixed sample index from Cygnus
 > fs_cyg <- read.csv(file.path(wd, "fs_cyg.csv"))
->
+> 
 > # Reallocate the weights
 > weights <- fs_prices[1:11, c(2:3, 5)]
 > weights$weight <- with(
@@ -50,23 +51,23 @@ Type 'q()' to quit R.
 +   ave(weight, classification, FUN = gpindex::scale_weights) * 
 +     fs_weights$weight[match(classification, fs_weights$classification)]
 + )
->
+> 
 > # Replicate with piar
 > pias <- with(
 +   weights, 
 +   aggregation_structure(c(expand_classification(classification), list(business)), 
 +                         weight)
 + )
->
+> 
 > rel <- with(fs_prices, price_relative(price, period, business))
->
+> 
 > epr <- with(fs_prices, elemental_index(rel, period, business))
->
+> 
 > index <- aggregate(epr, pias, na.rm = TRUE)
->
+> 
 > all.equal(as.numeric(cumprod(index)[1:9, ]), fs_cyg$index / 100)
 [1] TRUE
 > 
 > proc.time()
    user  system elapsed 
-  0.345   0.224   0.354 
+  0.132   0.010   0.135 

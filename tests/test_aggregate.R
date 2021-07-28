@@ -1,4 +1,6 @@
+#---- Tests for aggregate.index() method ----
 library(piar)
+
 set.seed(12345)
 
 # Tests for corner cases

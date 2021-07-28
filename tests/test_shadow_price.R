@@ -1,3 +1,4 @@
+#---- Tests for shadow_price() ----
 library(piar)
 
 # Make an aggregation structure for the imputations
@@ -29,7 +30,8 @@ epr2 <- with(
 
 all.equal(epr[c(1, 3:4), 1:3], epr2[c(1, 3:4), 1:3]) # B2 is imputed from above the EA level
 
-all.equal(aggregate(epr, pias, na.rm = TRUE)[, 1:2], aggregate(epr2, pias, na.rm = TRUE)[, 1:2])
+all.equal(aggregate(epr, pias, na.rm = TRUE)[, 1:2], 
+          aggregate(epr2, pias, na.rm = TRUE)[, 1:2])
 
 # No imputation should happen if the pias doesn't line up with the elemental aggregates
 # Append a '1' to each business label to make a garbage pias

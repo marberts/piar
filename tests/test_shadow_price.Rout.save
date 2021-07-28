@@ -15,6 +15,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+> #---- Tests for shadow_price() ----
 > library(piar)
 > 
 > # Make an aggregation structure for the imputations
@@ -30,12 +31,12 @@ integer(0)
 > 
 > # Imputing shadow prices does nothing
 > (sp <- with(ms_prices, shadow_price(price, period, product, business, pias)))
- [1]  1.140000        NA  6.090000  6.230000  8.610000  6.400000  0.090000  
- [8]  2.330000  6.660000  5.140000  6.940000  5.450000  8.103510 11.199233  
- [15] 8.324633  8.370000  2.860000  2.670000  1.870000  2.320000  1.821902  
- [22] 3.030000  1.590000  0.400000  2.190000  8.110000  5.260000  9.150000  
- [29] 8.310000  0.460000  1.387840  2.650000  3.050000  5.070000  1.810000  
- [36] 7.600000  2.010000  2.590000  9.920000  8.070000
+ [1]  1.140000        NA  6.090000  6.230000  8.610000  6.400000  0.090000
+ [8]  2.330000  6.660000  5.140000  6.940000  5.450000  8.103510 11.199233
+[15]  8.324633  8.370000  2.860000  2.670000  1.870000  2.320000  1.821902
+[22]  3.030000  1.590000  0.400000  2.190000  8.110000  5.260000  9.150000
+[29]  8.310000  0.460000  1.387840  2.650000  3.050000  5.070000  1.810000
+[36]  7.600000  2.010000  2.590000  9.920000  8.070000
 > 
 > all.equal(sp, with(ms_prices, shadow_price(sp, period, product, business, pias)))
 [1] TRUE
@@ -55,7 +56,8 @@ integer(0)
 > all.equal(epr[c(1, 3:4), 1:3], epr2[c(1, 3:4), 1:3]) # B2 is imputed from above the EA level
 [1] TRUE
 > 
-> all.equal(aggregate(epr, pias, na.rm = TRUE)[, 1:2], aggregate(epr2, pias, na.rm = TRUE)[, 1:2])
+> all.equal(aggregate(epr, pias, na.rm = TRUE)[, 1:2], 
++           aggregate(epr2, pias, na.rm = TRUE)[, 1:2])
 [1] TRUE
 > 
 > # No imputation should happen if the pias doesn't line up with the elemental aggregates
@@ -72,4 +74,4 @@ integer(0)
 > 
 > proc.time()
    user  system elapsed 
-  0.106   0.016   0.117 
+  0.121   0.008   0.123 

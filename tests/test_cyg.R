@@ -1,3 +1,4 @@
+#---- Compare results from Cygnus with results from piar ----
 library(piar)
 
 wd <- getwd()

@@ -15,7 +15,9 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+> #---- Tests for aggregate.index() method ----
 > library(piar)
+> 
 > set.seed(12345)
 > 
 > # Tests for corner cases
@@ -702,4 +704,4 @@ In aggregate.aggregate(fs_index, fs_pias) : aggregating an aggregated index
 > 
 > proc.time()
    user  system elapsed 
-  0.513   0.235   0.557 
+  0.151   0.024   0.169 
