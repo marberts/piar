@@ -35,7 +35,7 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 }
 
 \details{
-\code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions. See chapter 9, section B, of the PPI manual for more detail about making elemental indexes, and chapter 5 of Balk (2008).
+\code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).
 
 \code{superlative_elemental_index()} works the same, except that it wraps \code{\link[=nested_mean]{nested_mean(0, c(s, -s) / 2)}} and \code{\link[=nested_contributions]{nested_contributions(0, c(s, -s) / 2)}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}.
 
@@ -56,7 +56,7 @@ In some cases \code{x} are actually price indexes from elsewhere (e.g., a hedoni
 \references{
 Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}. Cambridge University Press.
 
-ILO, IMF, OECD, Eurostat, UN, and World Bank. (2004). \emph{Producer Price Index Manual: Theory and Practice}. International Monetary Fund.
+ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index Manual: Theory and Practice}. International Monetary Fund.
 }
 
 \seealso{
