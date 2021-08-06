@@ -1,11 +1,11 @@
 #---- Shadow price imputation ----
 shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
   if (missing(w)) {
-    if (!same_length(x, period, product, ea)) {
+    if (different_length(x, period, product, ea)) {
       stop(gettext("'x', 'period', 'product, and 'ea' must be the same length"))
     }
   } else {
-    if (!same_length(x, period, product, ea, w)) {
+    if (different_length(x, period, product, ea, w)) {
       stop(gettext("'x', 'period', 'product, 'ea', and 'w' must be the same length"))
     }
   }
@@ -48,7 +48,7 @@ shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
 
 #---- Carry forward imputation ----
 carry_forward <- function(x, period, product) {
-  if (!same_length(x, period, product)) {
+  if (different_length(x, period, product)) {
     stop(gettext("all arguments must be the same length"))
   }
   if (!length(x)) return(x[0])

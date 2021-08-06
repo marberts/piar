@@ -47,11 +47,11 @@
 elemental_index <- function(x, period = rep(1L, length(x)), ea = rep(1L, length(x)),
                             w, contrib = FALSE, na.rm = FALSE, r = 0) {
   if (missing(w)) {
-    if (!same_length(x, period, ea)) {
+    if (different_length(x, period, ea)) {
       stop(gettext("'x', 'period', and 'ea' must be the same length"))
     }
   } else {
-    if (!same_length(x, period, ea, w)) {
+    if (different_length(x, period, ea, w)) {
       stop(gettext("'x', 'period', 'ea', 'w', must be the same length"))
     }
   }
@@ -66,19 +66,19 @@ elemental_index <- function(x, period = rep(1L, length(x)), ea = rep(1L, length(
 superlative_elemental_index <- function(x, period = rep(1L, length(x)), ea = rep(1L, length(x)),
                                         w1, w2, contrib = FALSE, na.rm = FALSE, s = 2) {
   if (missing(w1) && missing(w2)) {
-    if (!same_length(x, period, ea)) {
+    if (different_length(x, period, ea)) {
       stop(gettext("'x', 'period', and 'ea' must be the same length"))
     }
   } else if (missing(w2)) {
-    if (!same_length(x, period, ea, w1)) {
+    if (different_length(x, period, ea, w1)) {
       stop(gettext("'x', 'period', 'ea', and 'w1' must be the same length"))
     }
   } else if (missing(w1)) {
-    if (!same_length(x, period, ea, w2)) {
+    if (different_length(x, period, ea, w2)) {
       stop(gettext("'x', 'period', 'ea', and 'w2' must be the same length"))
     }
   } else {
-    if (!same_length(x, period, ea, w2)) {
+    if (different_length(x, period, ea, w2)) {
       stop(gettext("'x', 'period', 'ea', 'w1', and 'w2' must be the same length"))
     }
   }

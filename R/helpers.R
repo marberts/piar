@@ -1,8 +1,8 @@
 # None of these functions are exported
 
-same_length <- function(...) {
+different_length <- function(...) {
   res <- lengths(list(...))
-  all(res == res[1])
+  any(res != res[1])
 }
 
 any_negative <- function(...) {

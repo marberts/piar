@@ -375,6 +375,10 @@ B5    330 429.2389  456.3128 2088.2182
 > weights(update(ms_pias, ms_index), ea_only = TRUE)
        B5        B3        B4        B1        B2 
 2088.2182  554.4886 3935.9748  260.4832 2474.7571 
+>
+> weights(update(ms_pias, ms_index, "202003"), ea_only = TRUE)
+       B5        B3        B4        B1        B2 
+ 456.3128 1030.6557  860.0806  165.4371  893.2670 
 > 
 > # Do the same tests but with a weird index
 > ms_epr <- with(

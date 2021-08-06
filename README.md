@@ -9,8 +9,6 @@ Most price indexes are made with a two-step procedure, where period-over-period 
 
 ## Installation
 
-**piar** requires version >= 0.3.3 of the **gpindex** package, which is ahead of the version on CRAN.
-
 ```r
 devtools::install_github(c("marberts/gpindex", "marberts/piar"))
 ```

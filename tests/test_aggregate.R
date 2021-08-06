@@ -79,6 +79,8 @@ apply(cumprod(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
 
 weights(update(ms_pias, ms_index), ea_only = TRUE)
 
+weights(update(ms_pias, ms_index, "202003"), ea_only = TRUE)
+
 # Do the same tests but with a weird index
 ms_epr <- with(
   ms_prices,

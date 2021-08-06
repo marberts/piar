@@ -16,7 +16,7 @@ aggregation_structure(x, w)
 
 \method{weights}{pias}(object, ea_only = FALSE, na.rm = FALSE, ...)
 
-\method{update}{pias}(object, index, ...)
+\method{update}{pias}(object, index, period = rev(index$periods)[1], ...)
 }
 
 \arguments{
@@ -31,6 +31,8 @@ aggregation_structure(x, w)
 \item{na.rm}{Should missing values be removed from \code{w} when aggregating the weights (i.e., when \code{ea_only = FALSE})? By default, missing values are not removed.}
 
 \item{index}{An aggregate index, as made by \code{\link[=aggregate.index]{aggregate())}}.}
+
+\item{period}{The time period used to price update the weights. The default uses last period in \code{index}.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }

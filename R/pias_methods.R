@@ -22,7 +22,7 @@ print.pias <- function(x, ...) {
   invisible(x)
 }
 
-update.pias <- function(object, index, ...) {
+update.pias <- function(object, index, period = rev(index$periods)[1], ...) {
   if (!inherits(index, "aggregate")) {
     stop(gettext("'index' is not an aggregate index; use aggregate.index() to make one"))
   }
@@ -31,7 +31,7 @@ update.pias <- function(object, index, ...) {
   }
   w <- index$weights
   if (length(w)) {
-    object$weights[] <- w[[length(w)]][names(object$weights)]
+    object$weights[] <- w[[period]][names(object$weights)]
   }
   object
 }
