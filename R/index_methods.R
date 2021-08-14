@@ -28,6 +28,10 @@ as.matrix.index <- function(x, type = c("index", "contributions"), ...) {
   as.matrix(x)[i, j, drop = drop]
 }
 
+`[<-.index` <- function(x, i, j, value) {
+  x$index[[j]][[i]][] <- value
+}
+
 cumprod.index <- function(x) {
   x$index[] <- Reduce("*", x$index, accumulate = TRUE)
   as.matrix(x)
