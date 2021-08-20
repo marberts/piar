@@ -39,7 +39,7 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 
 \code{superlative_elemental_index()} works the same, except that it wraps \code{\link[=nested_mean]{nested_mean(0, c(s, -s) / 2)}} and \code{\link[=nested_contributions]{nested_contributions(0, c(s, -s) / 2)}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}.
 
-By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental imputation, and needs to be explicitly set in the call to \code{elemental_index()} or \code{superlative_elemental_index()}. Non-parental imputation of missing relatives should be done prior to calling \code{elemental_index()} or \code{superlative_elemental_index()}.
+By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()} or \code{superlative_elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()} or \code{superlative_elemental_index()}.
 
 In some cases \code{x} are actually price indexes from elsewhere (e.g., a hedonic model), so there is one value for each period-elemental aggregate pair. In this case, \code{elemental_index()} will leave the values unaffected, and simply put them into a suitable form for, e.g., aggregation.
 }
@@ -60,7 +60,7 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 }
 
 \seealso{
-\code{\link{price_relative}} for making price relatives for the same products over time.
+\code{\link{price_relative}} for making price relatives for the same products over time, and \code{\link{carry_forward}} and \code{\link{shadow_price}} for imputations for missing prices.
 
 \code{\link{aggregation_structure}} for making a price index aggregation structure.
 

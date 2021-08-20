@@ -34,7 +34,7 @@ This function aggregates elemental indexes by looping over each time period in \
 }
 The result is a collection of aggregated period-over-period indexes that can be chained together to get a fixed-base index when \code{x} are period-over-period elemental indexes and \code{chained = TRUE}. Otherwise, when \code{x} are fixed-base elemental indexes and \code{chained = FALSE}, the result is a collection of aggregated fixed-base indexes.
 
-By default, any missing elemental indexes will propagate when aggregating the index. Setting \code{na.rm = TRUE} ignores missing values, and is equivalent to parental imputation. As a price index generally cannot have missing values (for otherwise it can't be chained over time), any missing values for a level of \code{pias} are recursively imputed by the value of its immediate parent.
+By default, any missing elemental indexes will propagate when aggregating the index. Setting \code{na.rm = TRUE} ignores missing values, and is equivalent to parental (or overall mean) imputation. As a price index generally cannot have missing values (for otherwise it can't be chained over time), any missing values for a level of \code{pias} are removed and recursively replaced by the value of its immediate parent.
 
 In most cases aggregation is done with an arithmetic mean (the default), and this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020). Aggregating with a non-arithmetic mean follows the same steps, except that elemental indexes are aggregated with a mean of a different order (e.g., harmonic for a Paasche index), and the method for price updating the weights is slightly different.
 

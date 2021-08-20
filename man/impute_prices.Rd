@@ -33,13 +33,19 @@ shadow_price(x, period, product, ea, pias, w, r1 = 0, r2 = 1)
 }
 
 \details{
-The carry forward method replaces a missing price for a product by the price for the same product in the previous period.
+The carry forward method replaces a missing price for a product by the price for the same product in the previous period. It tends to push an index value towards 1, and is usually avoided; see paragraph 6.61 in the CPI manual (2020).
 
 The shadow price method recursively imputes a missing price by the value of the price for the same product in the previous period multiplied by the value of the period-over-period elemental index for the elemental aggregate to which that product belongs. This requires computing and aggregating an index (according to \code{pias}, unless \code{pias} is not supplied) for each \code{period}, and so these imputations can take a while. The index values used to do the imputations are not returned because the index needs to be recalculated to get correct quote contributions.
+
+Shadow price imputation is referred to as self-correcting overall mean imputation in chapter 6 of the CPI manual (2020). It is identical to simply excluding missing price relatives in the index calculation except in the period that a missing product returns.
 }
 
 \value{
 A copy of \code{x} with missing values replaced (where possible).
+}
+
+\references{
+ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index Manual: Theory and Practice}. International Monetary Fund.
 }
 
 \seealso{
