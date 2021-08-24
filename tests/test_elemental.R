@@ -11,6 +11,9 @@ unclass(superlative_elemental_index(integer(0), integer(0), integer(0), integer(
 # Make sure matrix/data.frame methods work with length-0 indexes
 as.matrix(elemental_index(numeric(0)))
 
+all.equal(as_elemental_index(as.matrix(elemental_index(numeric(0)))),
+          elemental_index(numeric(0)))
+
 as.matrix(elemental_index(numeric(0)), type = "contributions")
 
 all.equal(as.data.frame(elemental_index(numeric(0))),

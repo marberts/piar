@@ -41,7 +41,7 @@ superlative_elemental_index(x, period = rep(1, length(x)), ea = rep(1, length(x)
 
 By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()} or \code{superlative_elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()} or \code{superlative_elemental_index()}.
 
-In some cases \code{x} are actually price indexes from elsewhere (e.g., a hedonic model), so there is one value for each period-elemental aggregate pair. In this case, \code{elemental_index()} will leave the values unaffected, and simply put them into a suitable form for, e.g., aggregation.
+In some cases \code{x} are actually price indexes from elsewhere (e.g., a hedonic model), so there is one value for each period-elemental aggregate pair. In this case, \code{elemental_index()} will leave the values unaffected, and simply put them into a suitable form for, e.g., aggregation. But it may be easier to use \code{\link[=as_elemental_index]{as_elemental_index()}}.
 }
 
 \value{

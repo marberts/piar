@@ -53,9 +53,13 @@ character(0)
 > as.matrix(elemental_index(numeric(0)))
 <0 x 0 matrix>
 > 
+> all.equal(as_elemental_index(as.matrix(elemental_index(numeric(0)))),
++           elemental_index(numeric(0)))
+[1] TRUE
+> 
 > as.matrix(elemental_index(numeric(0)), type = "contributions")
 <0 x 0 matrix>
-> 
+>
 > all.equal(as.data.frame(elemental_index(numeric(0))),
 +           data.frame(period = character(0), level = character(0), value = numeric(0)))
 [1] TRUE
