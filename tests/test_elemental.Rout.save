@@ -309,6 +309,10 @@ $periods
 > as.data.frame(epr2, type = "contributions")
 [1] period level  value 
 <0 rows> (or 0-length row.names)
+>
+> # It shouldn't be possible to make a non-numeric index
+> is.numeric(as.matrix(as_elemental_index(data.frame(a = as.character(1:5), b = 1:5))))
+[1] TRUE
 > 
 > proc.time()
    user  system elapsed 

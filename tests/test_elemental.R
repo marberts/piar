@@ -134,3 +134,6 @@ all.equal(epr$periods, epr2$periods)
 
 as.matrix(epr2, type = "contributions")
 as.data.frame(epr2, type = "contributions")
+
+# It shouldn't be possible to make a non-numeric index
+is.numeric(as.matrix(as_elemental_index(data.frame(a = as.character(1:5), b = 1:5))))
