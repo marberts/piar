@@ -1,5 +1,8 @@
 aggregate.aggregate <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) {
-  warning(gettext("aggregating an aggregated index"))
+  NextMethod()
+}
+
+aggregate.elemental <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) {
   NextMethod()
 }
 
