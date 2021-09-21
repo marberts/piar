@@ -8,7 +8,7 @@ as_elemental_index.default <- function(x, ...) {
 
 as_elemental_index.matrix <- function(x, ...) {
   x[] <- as.numeric(x)
-    if (is.null(rownames(x))) {
+  if (is.null(rownames(x))) {
     rownames(x) <- seq_len(nrow(x))
   }
   if (is.null(colnames(x))) {

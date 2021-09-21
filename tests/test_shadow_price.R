@@ -43,3 +43,11 @@ pias2 <- with(
 
 all.equal(ms_prices$price,
           with(ms_prices, shadow_price(price, period, product, business, pias2)))
+
+# Jumbling prices does nothing
+set.seed(4321)
+
+jumble <- sample(nrow(ms_prices))
+ms_prices <- ms_prices[jumble, ]
+all.equal(with(ms_prices, shadow_price(price, period, product, business, pias)),
+          sp[jumble])
