@@ -330,14 +330,9 @@ $weights$`202004`
 > # Re-aggregating the index shouldn't do anything
 > all.equal(aggregate(ms_index, ms_pias)[], ms_index[])
 [1] TRUE
-Warning message:
-In aggregate.aggregate(ms_index, ms_pias) : aggregating an aggregated index
 > 
 > all.equal(aggregate(ms_index, ms_pias, na.rm = TRUE)[], ms_index[])
 [1] TRUE
-Warning message:
-In aggregate.aggregate(ms_index, ms_pias, na.rm = TRUE) :
-  aggregating an aggregated index
 > 
 > # Re-arranging the index shouldn't do anything
 > ms_epr <- with(
@@ -391,9 +386,6 @@ B5    330 429.2389  456.3128 2088.2182
 > 
 > all.equal(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)[], ms_index[])
 [1] TRUE
-Warning message:
-In aggregate.aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE) :
-  aggregating an aggregated index
 > 
 > all.equal(ms_index[1, ], 
 +           sapply(ms_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
@@ -407,9 +399,6 @@ In aggregate.aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE) :
 > 
 > all.equal(aggregate(ms_index, ms_pias, r = -1.7)[], ms_index[])
 [1] TRUE
-Warning message:
-In aggregate.aggregate(ms_index, ms_pias, r = -1.7) :
-  aggregating an aggregated index
 > 
 > all.equal(ms_index[1, ], sapply(ms_index$contributions, function(x) sum(x[[1]]) + 1))
 [1] TRUE
@@ -651,8 +640,6 @@ $weights$`202004`
 > # Re-aggregating the index shouldn't do anything
 > all.equal(aggregate(fs_index, fs_pias)[], fs_index[])
 [1] TRUE
-Warning message:
-In aggregate.aggregate(fs_index, fs_pias) : aggregating an aggregated index
 > 
 > # Contributions should add up
 > all.equal(fs_index[1, ], 

@@ -1,84 +1,64 @@
 \name{adjust_weights}
 \alias{adjust_weights}
-\alias{adjust_weights.pias}
 
 \title{
 Adjust weights
 }
 
 \description{
-Adjust annual weights for a sub-annual index
+Adjust aggregation weights covering multiple time periods in a price index aggregation structure.
 }
 
 \usage{
-adjust(x, ...)
-
-\method{adjust}{pias}(x, index, chained = TRUE, na.rm = FALSE, r = 1, ...)
+adjust_weights(x, index, chained = TRUE, na.rm = FALSE, r = 1, maxit = 10, tol = 0.0001)
 }
 
 \arguments{
-\item{x}{A list of character vectors that give the codes/labels for each level of the classification, ordered so that moving down the list goes down the hierarchy. The last vector gives the elemental aggregates, which should have no duplicates. All vectors should be the same length, and there should be no duplicates across different levels of \code{x}.}
+\item{x}{A price index aggregation structure. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{w}{A numeric vector of weights for the elemental aggregates (i.e., the last vector in \code{x}). The default is to give each elemental aggregate the same weight.}
+\item{index}{An aggregate index, as made by \code{\link[=aggregate.index]{aggregate()}}, that covers the time period (usually one year) of the weights in \code{x}.}
 
-\item{object}{An object of class \code{pias}, as made by \code{aggregation_structure()}.}
+\item{chained, na.rm, r}{See \code{\link[=aggregate.index]{aggregate()}}.}
 
-\item{ea_only}{Should weights be returned for only the elemental aggregates, or the entire aggregation structure (the default)?}
+\item{maxit}{The maximum number of iterations (default is 10).}
 
-\item{na.rm}{Should missing values be removed from \code{w} when aggregating the weights (i.e., when \code{ea_only = FALSE})? By default, missing values are not removed.}
+\item{tol}{The tolerance used to determine if the adjustment converges (default is 0.0001).}
+}
 
-\item{index}{An aggregate index, as made by \code{\link[=aggregate.index]{aggregate())}}.}
+\details{
+Adjusting the weight for an elemental aggregate involves deflating it to the first period in \code{index} using the average elemental index over all periods in \code{index}. This ensures that the average of the price-updated weights for \code{index} agrees with the weight in \code{x}.
 
-\item{period}{The time period used to price update the weights. The default uses last period in \code{index}.}
-
-\item{...}{Further arguments passed to or used by methods.}
+One wrinkle is dealing with missing elemental aggregates that are imputed with their group mean (i.e., when \code{na.rm = TRUE}). In this case, multiple iterations may be needed to get the average of the price-updated weights close to the weights in \code{x}. (Close is defined as the largest absolute difference between the average price-updated weights and the weights in \code{x} less than \code{tol}.)
 }
 
 \value{
-\code{aggregation_structure()} returns an object of class \code{pias}, which has the following components.
-
-\item{child}{A nested list that gives the positions of the immediate children for each node in each level of the aggregation structure above the terminal nodes.}
-\item{parent}{A list that gives the position of the immediate parent for each node of the aggregation structure below the initial nodes.}
-\item{levels}{A character vector that gives the levels of \code{x}.}
-\item{weights}{A named vector giving the weight for each elemental aggregate.}
-\item{height}{The length of \code{x}.}
-
-\code{weights()} returns a list with a named vector of weights for each level in the aggregation structure, unless \code{ea_only = TRUE}; in this case the return value is just a named vector.
-
-\code{update()} returns a copy of \code{object} with price-updated weights.
-}
-
-\section{Warning}{
-The \code{aggregation_structure()} function does its best to check its arguments, but there should be no expectation that the result of \code{aggregation_structure()} will make any sense if \code{x} does not represent a nested hierarchy.
+\code{adjust_weights()} returns a copy of \code{x} with adjusted weights.
 }
 
 \seealso{
-\code{\link[=aggregate.index]{aggregate}} to aggregate price indexes from \code{\link[=elemental_index]{elemental_index()}}.
+\code{\link{aggregation_structure}} to help make a price index aggregation structure.
 
-\code{\link{expand_classification}} to help make \code{x}.
+\code{\link[=aggregate.index]{aggregate}} to aggregate price indexes from \code{\link[=elemental_index]{elemental_index()}}.
 }
 
 \examples{
-# A simple example
+prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
 
-x1 <- c("1", "1", "1")
-x2 <- c("11", "11", "12")
-x3 <- c("111", "112", "121")
+# Aggregation structure
 
-aggregation_structure(list(x1, x2, x3))
+pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:3)
 
-# The aggregation structure can also be made by expanding 'x3'
+# Calculate elemental indexes
 
-expand_classification(x3)
+epr <- with(prices, elemental_index(rel, period, ea))
 
-all.equal(aggregation_structure(list(x1, x2, x3)), 
-          aggregation_structure(expand_classification(x3)))
+# Aggregate
 
-# Unequal weights
+index <- aggregate(epr, pias, na.rm = TRUE)
 
-aggregation_structure(list(x1, x2, x3), 1:3)
-          
-# Extract the weights
+# Adjust weights and re-aggregate
 
-weights(aggregation_structure(list(x1, x2, x3)))
+pias <- adjust_weights(pias, index, na.rm = TRUE)
+
+aggregate(epr, pias, na.rm = TRUE)
 }

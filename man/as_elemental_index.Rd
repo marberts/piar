@@ -32,7 +32,7 @@ The default method coerces \code{x} to a matrix prior to using the matrix method
 }
 
 \value{
-An object of class \code{elemental}, inhiereting from \code{index}.
+An object of class \code{elemental}, inheriting from \code{index}.
 }
 
 \seealso{

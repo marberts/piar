@@ -30,7 +30,7 @@ aggregation_structure(x, w)
 
 \item{na.rm}{Should missing values be removed from \code{w} when aggregating the weights (i.e., when \code{ea_only = FALSE})? By default, missing values are not removed.}
 
-\item{index}{An aggregate index, as made by \code{\link[=aggregate.index]{aggregate())}}.}
+\item{index}{An aggregate index, as made by \code{\link[=aggregate.index]{aggregate()}}.}
 
 \item{period}{The time period used to price update the weights. The default uses last period in \code{index}.}
 
