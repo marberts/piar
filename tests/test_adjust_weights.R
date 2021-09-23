@@ -9,3 +9,13 @@ weights(adjust_weights(pias, aggregate(epr, pias)))
 # Do it again with a fixed-base index
 epr2 <- elemental_index(cumprod(rel), period = 1:12)
 weights(adjust_weights(pias, aggregate(epr, pias, chained = FALSE)))
+
+# Adjusting weights does nothing if prices don't change
+ms_prices$price <- with(ms_prices, ifelse(is.na(price), NA, 1))
+epr <- with(ms_prices, elemental_index(price, period, business, na.rm = TRUE))
+pias <- with(
+  ms_weights,
+  aggregation_structure(c(expand_classification(classification), list(business)), weight)
+)
+index <- aggregate(epr, pias, na.rm = TRUE)
+all.equal(weights(pias), weights(adjust_weights(pias, index)))

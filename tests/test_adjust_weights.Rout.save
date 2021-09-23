@@ -1,0 +1,62 @@
+
+R version 4.1.1 (2021-08-10) -- "Kick Things"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(piar)
+> 
+> # Reproduce example for CPI
+> rel <- c(1.1, 0.82, 1.33, 1, 1, 1.08, 0.77, 0.9, 1.11, 1.1, 0.95, 1.05)
+> epr <- elemental_index(rel, period = 1:12)
+> pias <- aggregation_structure(list("b", 1), 155)
+> weights(adjust_weights(pias, aggregate(epr, pias)))
+stopped after 1 iterations with a maximum absolute difference of 2.8421709430404e-14
+[[1]]
+       1 
+142.8558 
+
+[[2]]
+       b 
+142.8558 
+
+> 
+> # Do it again with a fixed-base index
+> epr2 <- elemental_index(cumprod(rel), period = 1:12)
+> weights(adjust_weights(pias, aggregate(epr, pias, chained = FALSE)))
+stopped after 1 iterations with a maximum absolute difference of 2.8421709430404e-14
+[[1]]
+       1 
+142.8558 
+
+[[2]]
+       b 
+142.8558 
+
+> 
+> # Adjusting weights does nothing if prices don't change
+> ms_prices$price <- with(ms_prices, ifelse(is.na(price), NA, 1))
+> epr <- with(ms_prices, elemental_index(price, period, business, na.rm = TRUE))
+> pias <- with(
++   ms_weights,
++   aggregation_structure(c(expand_classification(classification), list(business)), weight)
++ )
+> index <- aggregate(epr, pias, na.rm = TRUE)
+> all.equal(weights(pias), weights(adjust_weights(pias, index)))
+stopped after 1 iterations with a maximum absolute difference of 0
+[1] TRUE
+> 
+> proc.time()
+   user  system elapsed 
+  0.117   0.020   0.130 

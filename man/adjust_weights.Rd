@@ -10,7 +10,7 @@ Adjust aggregation weights covering multiple time periods in a price index aggre
 }
 
 \usage{
-adjust_weights(x, index, chained = TRUE, na.rm = FALSE, r = 1, maxit = 10, tol = 0.0001)
+adjust_weights(x, index, chained = TRUE, na.rm = FALSE, r = 1, maxit = 10, tol = 1e-6)
 }
 
 \arguments{

@@ -1,4 +1,4 @@
-adjust_weights <- function(x, index, chained = TRUE, na.rm = FALSE, r = 1, maxit = 10, tol = 0.0001) {
+adjust_weights <- function(x, index, chained = TRUE, na.rm = FALSE, r = 1, maxit = 10, tol = 1e-6) {
   if (!inherits(x, "pias")) {
     stop(gettext("'x' must be a price index aggregation structure; use aggregation_structure() to make one"))
   }
