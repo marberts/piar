@@ -114,14 +114,10 @@ c   2.335617 6.433477
 > # Extract the price updated weights
 > 
 > weights(aggregate(epr, pias, na.rm = TRUE))
-$`1`
-       a        b        c 
-1.732051 5.656854 7.388905 
-
-$`2`
-       a        b        c 
-10.24695 39.19184 49.43879 
-
+         1        2
+a 1.732051 10.24695  
+b 5.656854 39.19184
+c 7.388905 49.43879
 > 
 > 
 > 
@@ -401,7 +397,8 @@ b 2.901905 6.761234
 > ### Name: index_methods
 > ### Title: Methods for index objects
 > ### Aliases: index_methods as.data.frame.index as.matrix.index
-> ###   cumprod.index merge.index stack.index unstack.index
+> ###   cumprod.index merge.index stack.index unstack.index levels.index
+> ###   time.index start.index end.index weights.aggregate
 > 
 > ### ** Examples
 > 
@@ -459,6 +456,17 @@ b 2.828427 6.928203 2.828427 6.928203
 > 
 > all.equal(c(unstack(epr), unstack(epr3)), unstack(stack(epr, epr3)))
 [1] TRUE
+>
+> # Extract useful features of the index
+> 
+> levels(epr)
+[1] "a" "b"
+> time(epr)
+[1] "1" "2"
+> start(epr)
+[1] "1"
+> end(epr)
+[1] "2"
 > 
 > 
 > 

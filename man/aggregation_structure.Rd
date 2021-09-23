@@ -16,7 +16,7 @@ aggregation_structure(x, w)
 
 \method{weights}{pias}(object, ea_only = FALSE, na.rm = FALSE, ...)
 
-\method{update}{pias}(object, index, period = rev(index$periods)[1], ...)
+\method{update}{pias}(object, index, period = end(index), ...)
 }
 
 \arguments{

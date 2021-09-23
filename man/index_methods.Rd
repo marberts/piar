@@ -6,13 +6,18 @@
 \alias{merge.index}
 \alias{stack.index}
 \alias{unstack.index}
+\alias{levels.index}
+\alias{time.index}
+\alias{start.index}
+\alias{end.index}
+\alias{weights.aggregate}
 
 \title{
 Methods for index objects
 }
 
 \description{
-Methods to put index values/quote contributions in a tabular form, chain an index, and merge indexes together.
+Methods to put index values/quote contributions in a tabular form, chain an index, merge indexes together, and extract useful information.
 }
 
 \usage{
@@ -27,10 +32,20 @@ Methods to put index values/quote contributions in a tabular form, chain an inde
 \method{stack}{index}(x, y, ...)
 
 \method{unstack}{index}(x, ...)
+
+\method{levels}{index}(x)
+
+\method{time}{index}(x, ...)
+
+\method{start}{index}(x, ...)
+
+\method{end}{index}(x, ...)
+
+\method{weights}{aggregate}(object, ...)
 }
 
 \arguments{
-\item{x, y}{An object of class \code{index}, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x, y, object}{An object of class \code{index}, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 \item{type}{A character vector specifying whether index values (the default) or quote contributions should be coerced into a data.frame/matrix.}
 \item{row.names}{Same as \code{\link[=as.data.frame]{as.data.frame()}}.}
 \item{...}{Further arguments passed to or used by methods.}
@@ -46,6 +61,12 @@ The \code{cumprod()} method takes the cumulative product of the values in the \c
 The \code{merge()} method combines two index object with common time periods, merging together the index values and quote contributions (and price-update weights if they're aggregated indexes) for each time period in \code{x} and \code{y}. The \code{stack()} methods combines two index objects with common levels, stacking index values and quote contributions (and price-update weights if they're aggregated indexes) for each level in \code{y} after those in \code{x}. Both methods return an object of the same class as \code{x}.
 
 The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}.
+
+The \code{levels()} method extracts the levels of an index.
+
+The \code{time()} method extracts the time period of the index. The \code{start()} and \code{end()} methods extract the first and last time periods.
+
+The \code{weights()} method extracts a matrix of the price-updated weights from an aggregated index.
 }
 
 \seealso{
@@ -84,4 +105,11 @@ as.matrix(stack(epr, epr3))
 # Unstack does the reverse
 
 all.equal(c(unstack(epr), unstack(epr3)), unstack(stack(epr, epr3)))
+
+# Extract useful features of the index
+
+levels(epr)
+time(epr)
+start(epr)
+end(epr)
 }

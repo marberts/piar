@@ -12,7 +12,7 @@ adjust_weights <- function(x, index, chained = TRUE, na.rm = FALSE, r = 1, maxit
     epr <- (if (chained) cumprod(index) else index)[eas, , drop = FALSE]
     x$weights <- x$weights / .rowMeans(epr, dim[1], dim[2])
     index <- aggregate(index, x, chained, na.rm, r)
-    wpu <- .rowMeans(do.call(cbind, weights(index)), dim[1], dim[2])
+    wpu <- .rowMeans(weights(index), dim[1], dim[2])
     dist <- max(abs(wpu - w0), na.rm = TRUE)
     if (dist < tol) break
   }

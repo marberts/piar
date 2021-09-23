@@ -22,9 +22,9 @@ print.pias <- function(x, ...) {
   invisible(x)
 }
 
-update.pias <- function(object, index, period = rev(index$periods)[1], ...) {
+update.pias <- function(object, index, period = end(index), ...) {
   if (!inherits(index, "aggregate")) {
-    stop(gettext("'index' is not an aggregate index; use aggregate.index() to make one"))
+    stop(gettext("'index' must be an aggregate index; use aggregate.index() to make one"))
   }
   if (!all(object$levels %in% index$levels)) {
     warning(gettext("not all weights in the aggregation structure have a corresponding index value"))

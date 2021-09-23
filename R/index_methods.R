@@ -1,7 +1,7 @@
 as.data.frame.index <- function(x, row.names = NULL, ..., type = c("index", "contributions")) {
   type <- match.arg(type)
   res <- lapply(x[[type]], unlist)
-  # as.*() ensures that level and value columns show up with NULL values
+  # as.numeric() ensures that the value column shows up with NULL values
   value <- as.numeric(unlist(res, use.names = FALSE))
   level <- nested_names(res)
   period <- rep(x$periods, lengths(res))
@@ -17,11 +17,7 @@ as.matrix.index <- function(x, type = c("index", "contributions"), ...) {
     nm <- unique(nested_names(contrib))
     lapply(contrib, named_extract, nm)
   }
-  if (any(lengths(x))) { # rbind returns NULL for empty lists
-    do.call(cbind, x)
-  } else {
-    matrix(numeric(0), ncol = 0, nrow = 0, dimnames = list(character(0), character(0)))
-  }
+  list2matrix(x)
 }
 
 `[.index` <- function(x, i, j, drop = TRUE) {
@@ -96,4 +92,24 @@ unstack.index <- function(x, ...) {
 print.index <- function(x, ...) {
   print(as.matrix(x), ...)
   invisible(x)
+}
+
+levels.index <- function(x) {
+  x$levels
+}
+
+time.index <- function(x, ...) {
+  x$periods
+}
+
+start.index <- function(x, ...) {
+  x$periods[min(length(x$period), 1L)]
+}
+
+end.index <- function(x, ...) {
+  x$periods[length(x$periods)]
+}
+
+weights.aggregate <- function(object, ...) {
+  list2matrix(object$weights)
 }

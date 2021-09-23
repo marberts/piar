@@ -26,3 +26,11 @@ paste_until <- function(x, i) {
 nested_names <- function(x) {
   as.character(unlist(lapply(x, names), use.names = FALSE))
 }
+
+list2matrix <- function(x) {
+  if (any(lengths(x))) { # cbind returns NULL for empty lists
+    do.call(cbind, x)
+  } else {
+    matrix(numeric(0), ncol = 0, nrow = 0, dimnames = list(character(0), character(0)))
+  }
+}

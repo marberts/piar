@@ -12,6 +12,12 @@ S3method(unstack, index)
 S3method(print, index)
 S3method(cumprod, index)
 S3method(aggregate, index)
+S3method(levels, index)
+S3method(time, index)
+S3method(start, index)
+S3method(end, index)
+
+S3method(weights, aggregate)
 
 S3method(print, pias)
 S3method(weights, pias)
@@ -20,7 +26,7 @@ S3method(update, pias)
 S3method(as_elemental_index, default)
 S3method(as_elemental_index, matrix)
 
-importFrom(stats, aggregate, weights, update)
+importFrom(stats, aggregate, weights, update, time, start, end)
 
 importFrom(utils, stack, unstack)
 
