@@ -2,18 +2,16 @@ vcov.aggregate <- function(object, pias, repweights, mse = TRUE) {
   if (!inherits(pias, "pias")) {
     stop(gettext("'pias' must be a price index aggregation structure; use aggregation_structure() to make one"))
   }
-  eas <- names(pias$weights)
-  upper <- setdiff(pias$levels, eas)
   repweights <- as.matrix(repweights)
-  if (!setequal(eas, rownames(repweights))) {
-    stop(gettext("'pias' and 'rep_weights' must have the same weights"))
+  if (nrow(repweights) != length(pias$weights)) {
+    stop(gettext("'repweights' must have a row for each weight in 'pias'"))
   }
-  repweights <- repweights[eas, , drop = FALSE]
   n <- ncol(repweights)
+  upper <- setdiff(pias$levels, names(pias$weights))
   dimnm <- list(upper, object$periods, seq_len(n))
   index_boot <- array(0, dim = lengths(dimnm), dimnames = dimnm)
   for (i in seq_len(n)) {
-    pias$weights <- repweights[, i]
+    pias$weights[] <- repweights[, i]
     index_boot[, , i] <- aggregate(object, pias, na.rm = TRUE)[upper, ]
   }
   centre <- if (mse) {
