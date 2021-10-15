@@ -1,0 +1,42 @@
+library(piar)
+library(sps)
+library(gpindex)
+
+set.seed(4321)
+
+prices <- data.frame(rel = runif(24), 
+                     period = 1:3, 
+                     id = rep(letters[1:8], each = 3))
+
+weights <- data.frame(l1 = rep(1, 8), 
+                      l2 = rep(c(11, 12), each = 4), 
+                      l3 = rep(c(111, 112, 121, 122), each = 2),
+                      l4 = letters[1:8],
+                      ew = round(1000 * runif(8)),
+                      dw = c(1, runif(6, 1, 10), 1))
+
+epr <- with(prices, elemental_index(rel, period, id))
+pias <- with(weights, aggregation_structure(weights[1:4], ew * dw))
+index <- aggregate(epr, pias)
+
+rw <- sps_repweights(weights$dw, B = 25, tau = 2)
+
+covar <- vcov(index, pias, rw * weights$ew, mse = FALSE)
+
+# Variance matrix should be symmetric
+apply(covar, 3, function(x) all.equal(x[upper.tri(x)], t(x)[upper.tri(x)]))
+all.equal(apply(covar, 3, rownames), apply(covar, 3, colnames))
+
+# Variance matrix should have a positive diagonal
+apply(covar, 3, function(x) all(diag(x) >= 0))
+
+# Variance for higher levels should agree with manual calculation
+# Period 1
+rws <- apply(rw * weights$ew, 2, scale_weights)
+all.equal(sum(tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25 * outer(epr[, 1], epr[, 1])),
+          covar[1, 1, 1])
+
+# Period 2
+rws <- apply(rw * weights(index)[, 1] / weights$dw, 2, scale_weights)
+all.equal(sum(tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25 * outer(epr[, 2], epr[, 2])),
+          covar[1, 1, 2])

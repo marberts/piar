@@ -40,7 +40,7 @@
   list2matrix(x$index)
 }
 
-vcov.aggregate <- function(object, pias, repweights, mse = TRUE) {
+vcov.aggregate <- function(object, pias, repweights, mse = TRUE, ...) {
   if (!inherits(pias, "pias")) {
     stop(gettext("'pias' must be a price index aggregation structure; use aggregation_structure() to make one"))
   }
