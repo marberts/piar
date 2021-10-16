@@ -21,6 +21,7 @@ index <- aggregate(epr, pias)
 
 rw <- sps_repweights(weights$dw, B = 25, tau = 2)
 
+#---- mse = FALSE case ----
 covar <- vcov(index, pias, rw * weights$ew, mse = FALSE)
 
 # Variance matrix should be symmetric
@@ -39,4 +40,26 @@ all.equal(sum(tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25 * outer(epr[, 1], ep
 # Period 2
 rws <- apply(rw * weights(index)[, 1] / weights$dw, 2, scale_weights)
 all.equal(sum(tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25 * outer(epr[, 2], epr[, 2])),
+          covar[1, 1, 2])
+
+#---- mse = TRUE case ----
+covar <- vcov(index, pias, rw * weights$ew)
+
+# Variance matrix should be symmetric
+apply(covar, 3, function(x) all.equal(x[upper.tri(x)], t(x)[upper.tri(x)]))
+all.equal(apply(covar, 3, rownames), apply(covar, 3, colnames))
+
+# Variance matrix should have a positive diagonal
+apply(covar, 3, function(x) all(diag(x) >= 0))
+
+# Variance for higher levels should agree with manual calculation
+# Period 1
+rws <- apply(rw * weights$ew, 2, scale_weights)
+w <- weights(pias, ea_only = TRUE)
+all.equal(sum(tcrossprod(sweep(rws, 1, scale_weights(w))) / 25 * outer(epr[, 1], epr[, 1])),
+          covar[1, 1, 1])
+
+# Period 2
+rws <- apply(rw * weights(index)[, 1] / weights$dw, 2, scale_weights)
+all.equal(sum(tcrossprod(sweep(rws, 1, scale_weights(weights(index)[, 1]))) / 25 * outer(epr[, 2], epr[, 2])),
           covar[1, 1, 2])

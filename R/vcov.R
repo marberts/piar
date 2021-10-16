@@ -54,7 +54,7 @@ vcov.aggregate <- function(object, pias, repweights, mse = TRUE, ...) {
   index_boot <- array(0, dim = lengths(dimnm), dimnames = dimnm)
   for (i in seq_len(n)) {
     pias$weights[] <- repweights[, i]
-    index_boot[, , i] <- .aggregate(object, pias, na.rm = TRUE)[upper, ]
+    index_boot[, , i] <- .aggregate(object, pias, na.rm = TRUE, ...)[upper, ]
   }
   centre <- if (mse) {
     as.matrix(object)[upper, , drop = FALSE]
