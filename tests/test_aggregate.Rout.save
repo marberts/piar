@@ -37,6 +37,12 @@ character(0)
 $weights
 named list()
 
+$r
+[1] 1
+
+$chained
+[1] TRUE
+
 > 
 > all.equal(update(aggregation_structure(list()), 
 +                  aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
@@ -64,6 +70,12 @@ $weights
 $weights$`1`
 numeric(0)
 
+
+$r
+[1] 1
+
+$chained
+[1] TRUE
 
 > 
 > all.equal(update(aggregation_structure(list()),
@@ -96,6 +108,12 @@ $weights$`1`
  2 
 NA 
 
+
+$r
+[1] 1
+
+$chained
+[1] TRUE
 
 > 
 > is.na(weights(update(aggregation_structure(list("2")), 
@@ -315,7 +333,13 @@ $weights$`202003`
 $weights$`202004`
        B1        B2        B3        B4        B5 
  260.4832 2474.7571  554.4886 3935.9748 2088.2182 
+ 
+ 
+$r
+[1] 1
 
+$chained
+[1] TRUE
 
 > 
 > # Check adding up of lower-level indexes
@@ -635,6 +659,12 @@ $weights$`202004`
       111       112       121       122       131 
 747.62219  67.28600 761.18522 971.84867  39.02087 
 
+
+$r
+[1] 1
+
+$chained
+[1] TRUE
 
 > 
 > # Re-aggregating the index shouldn't do anything

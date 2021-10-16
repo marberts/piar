@@ -51,6 +51,7 @@ An object of class \code{aggregate}, inheriting from class \code{index}, which h
 \item{levels}{The levels for \code{pias}.}
 \item{periods}{The levels for \code{period}.}
 \item{weights}{A named list with an entry for each \code{period} that contains the price updated weights from \code{pias}.}
+\item{r, chained}{The values for \code{r} and \code{chained}, usually \code{1} and \code{TRUE}.}
 }
 
 \references{
@@ -63,6 +64,8 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 \code{\link{elemental_index}} for making elemental price indexes.
 
 \code{\link[=index_methods]{index methods}} for methods to extract index values/quote contributions, chain an index, and merge indexes together.
+
+\code{\link{vcov}} for calculating a covariance matrix with bootstrap replicates.
 }
 
 \examples{

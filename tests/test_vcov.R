@@ -4,6 +4,12 @@ library(gpindex)
 
 set.seed(4321)
 
+# Corner cases
+vcov(aggregate(elemental_index(numeric(0)), aggregation_structure(character(0))),
+     aggregation_structure(character(0)),
+     matrix(numeric(0)))
+
+# Toy example
 prices <- data.frame(rel = runif(24), 
                      period = 1:3, 
                      id = rep(letters[1:8], each = 3))

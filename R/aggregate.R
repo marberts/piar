@@ -1,11 +1,3 @@
-aggregate.aggregate <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) {
-  NextMethod()
-}
-
-aggregate.elemental <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) {
-  NextMethod()
-}
-
 aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) {
   if (!inherits(pias, "pias")) {
     stop(gettext("'pias' must be a price index aggregation structure; use aggregation_structure() to make one"))
@@ -58,5 +50,7 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
     }
   }
   x$levels <- pias$levels
+  x$r <- r
+  x$chained <- chained
   structure(x, class = c("aggregate", "index"))
 }

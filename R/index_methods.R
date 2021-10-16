@@ -1,3 +1,4 @@
+#---- Coerce ----
 as.data.frame.index <- function(x, row.names = NULL, ..., type = c("index", "contributions")) {
   type <- match.arg(type)
   res <- lapply(x[[type]], unlist)
@@ -20,22 +21,59 @@ as.matrix.index <- function(x, type = c("index", "contributions"), ...) {
   list2matrix(x)
 }
 
+#---- Extract ----
 `[.index` <- function(x, i, j, drop = TRUE) {
   as.matrix(x)[i, j, drop = drop]
 }
 
+levels.index <- function(x) {
+  x$levels
+}
+
+time.index <- function(x, ...) {
+  x$periods
+}
+
+start.index <- function(x, ...) {
+  x$periods[min(length(x$period), 1L)]
+}
+
+end.index <- function(x, ...) {
+  x$periods[length(x$periods)]
+}
+
+weights.aggregate <- function(object, ...) {
+  list2matrix(object$weights)
+}
+
+#---- Math ----
 cumprod.index <- function(x) {
   x$index[] <- Reduce("*", x$index, accumulate = TRUE)
   as.matrix(x)
 }
 
+#---- Merge/stack ----
+merge.aggregate <- function(x, y, ...) {
+  if (!inherits(y, "aggregate")) {
+    stop(gettext("'y' is not an aggregate index; use aggregate() to make one"))
+  }
+  if (x$r != y$r) {
+    stop(gettext("cannot merge indexes of different orders"))
+  }
+  if (x$chained != y$chained) {
+    stop(gettext("cannot merge a period-over-period and a fixed-base index"))
+  }
+  NextMethod()
+}
+
+merge.elemental <- function(x, y, ...) {
+  if (!inherits(y, "elemental")) {
+    stop(gettext("'y' is not an elemental index; use elemental_index() to make one"))
+  }
+  NextMethod()
+}
+
 merge.index <- function(x, y, ...) {
-  if (!inherits(y, "index")) {
-    stop(gettext("'y' is not an index; use elemental_index() to make one"))
-  }
-  if (!identical(class(x), class(y))) {
-    stop(gettext("'x' and 'y' must be the same type of index"))
-  }
   if (any(x$periods != y$periods)) {
     stop(gettext("'x' and 'y' must be indexes for the same time periods"))
   }
@@ -53,13 +91,27 @@ merge.index <- function(x, y, ...) {
   x
 }
 
+stack.aggregate <- function(x, y, ...) {
+  if (!inherits(y, "aggregate")) {
+    stop(gettext("'y' is not an aggregate index; use aggregate() to make one"))
+  }
+  if (x$r != y$r) {
+    stop(gettext("cannot stack indexes of different orders"))
+  }
+  if (x$chained != y$chained) {
+    stop(gettext("cannot stack a period-over-period and a fixed-base index"))
+  }
+  NextMethod()
+}
+
+stack.elemental <- function(x, y, ...) {
+  if (!inherits(y, "elemental")) {
+    stop(gettext("'y' is not an elemental index; use elemental_index() to make one"))
+  }
+  NextMethod()
+}
+
 stack.index <- function(x, y, ...) {
-  if (!inherits(y, "index")) {
-    stop(gettext("'y' is not an index; use elemental_index() to make one"))
-  }
-  if (!identical(class(x), class(y))) {
-    stop(gettext("'x' and 'y' must be the same type of index"))
-  }
   if (any(x$levels != y$levels)) {
     stop(gettext("'x' and 'y' must be indexes for the same levels"))
   }
@@ -84,32 +136,15 @@ unstack.index <- function(x, ...) {
     res[[i]]$levels <- x$levels
     res[[i]]$periods <- x$periods[i]
     res[[i]]$weights <- x$weights[i]
+    res[[i]]$r <- x$r
+    res[[i]]$chained <- x$chained
     class(res[[i]]) <- class(x)
   }
   res
 }
 
+#---- Print ----
 print.index <- function(x, ...) {
   print(as.matrix(x), ...)
   invisible(x)
-}
-
-levels.index <- function(x) {
-  x$levels
-}
-
-time.index <- function(x, ...) {
-  x$periods
-}
-
-start.index <- function(x, ...) {
-  x$periods[min(length(x$period), 1L)]
-}
-
-end.index <- function(x, ...) {
-  x$periods[length(x$periods)]
-}
-
-weights.aggregate <- function(object, ...) {
-  list2matrix(object$weights)
 }
