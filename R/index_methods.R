@@ -1,33 +1,96 @@
-as.data.frame.index <- function(x, row.names = NULL, ..., type = c("index", "contributions")) {
-  type <- match.arg(type)
-  res <- lapply(x[[type]], unlist)
+#---- Coercion ----
+as.data.frame.index <- function(x, row.names = NULL, ...) {
+  index <- x$index
   # as.numeric() ensures that the value column shows up with NULL values
-  value <- as.numeric(unlist(res, use.names = FALSE))
-  level <- nested_names(res)
-  period <- rep(x$periods, lengths(res))
+  value <- as.numeric(unlist(index, use.names = FALSE))
+  level <- nested_names(index)
+  period <- rep(x$periods, lengths(index))
   data.frame(period, level, value, row.names = row.names, stringsAsFactors = FALSE)
 }
 
-as.matrix.index <- function(x, type = c("index", "contributions"), ...) {
-  type <- match.arg(type)
-  x <- if (type == "index") {
-    x$index
-  } else {
-    contrib <- lapply(x$contributions, unlist)
-    nm <- unique(nested_names(contrib))
-    lapply(contrib, named_extract, nm)
-  }
-  list2matrix(x)
+as.matrix.index <- function(x, ...) {
+  list2matrix(x$index)
 }
 
+as.data.frame.contrib <- function(x, row.names = NULL, ...) {
+  contrib <- lapply(x$contributions, unlist)
+  # as.numeric() ensures that the value column shows up with NULL values
+  value <- as.numeric(unlist(contrib, use.names = FALSE))
+  level <- nested_names(contrib)
+  period <- rep(x$periods, lengths(contrib))
+  data.frame(period, level, value, row.names = row.names, stringsAsFactors = FALSE)
+}
+
+as.matrix.contrib <- function(x, ...) {
+  contrib <- lapply(x$contributions, unlist)
+  nm <- unique(nested_names(contrib))
+  list2matrix(lapply(contrib, named_extract, nm))
+}
+
+#---- Extraction ----
 `[.index` <- function(x, i, j, drop = TRUE) {
   as.matrix(x)[i, j, drop = drop]
 }
 
-cumprod.index <- function(x) {
-  x$index[] <- Reduce("*", x$index, accumulate = TRUE)
-  as.matrix(x)
+levels.index <- function(x) {
+  x$levels
 }
+
+time.index <- function(x, ...) {
+  x$periods
+}
+
+start.index <- function(x, ...) {
+  x$periods[min(length(x$period), 1L)]
+}
+
+end.index <- function(x, ...) {
+  x$periods[length(x$periods)]
+}
+
+levels.contrib <- function(x) {
+  x$contrib
+}
+
+time.contrib <- function(x, ...) {
+  x$contrib
+}
+
+start.contrib <- function(x, ...) {
+  x$periods[min(length(x$period), 1L)]
+}
+
+end.contrib <- function(x, ...) {
+  x$periods[length(x$periods)]
+}
+
+weights.agg_index <- function(object, ...) {
+  list2matrix(object$weights)
+}
+
+#---- Printing ----
+print.index <- function(x, ...) {
+  print(as.matrix(x), ...)
+  invisible(x)
+}
+
+print.contrib <- function(x, ...) {
+  print(as.matrix(x), ...)
+  invisible(x)
+}
+
+#---- Math ----
+cumprod.elem_index <- function(x) {
+  x$index[] <- Reduce("*", x$index, accumulate = TRUE)
+  x
+}
+
+cumprod.agg_index <- function(x) {
+  if (!x$chained) warning(gettext("'x' is not a chained index"))
+  NextMethod()
+}
+
+#---- Merging/stacking ----
 
 merge.index <- function(x, y, ...) {
   if (!inherits(y, "index")) {
@@ -87,29 +150,4 @@ unstack.index <- function(x, ...) {
     class(res[[i]]) <- class(x)
   }
   res
-}
-
-print.index <- function(x, ...) {
-  print(as.matrix(x), ...)
-  invisible(x)
-}
-
-levels.index <- function(x) {
-  x$levels
-}
-
-time.index <- function(x, ...) {
-  x$periods
-}
-
-start.index <- function(x, ...) {
-  x$periods[min(length(x$period), 1L)]
-}
-
-end.index <- function(x, ...) {
-  x$periods[length(x$periods)]
-}
-
-weights.aggregate <- function(object, ...) {
-  list2matrix(object$weights)
 }

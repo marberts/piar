@@ -16,14 +16,10 @@ as_elemental_index.matrix <- function(x, ...) {
   }
   levels <- as.character(rownames(x)) # as.character is for matrices without rows
   periods <- as.character(colnames(x)) # same for columns
-  res <- structure(vector("list", 4), names = c("index", "contributions", "levels", "periods"))
-  res$index <- res$contributions <- structure(vector("list", ncol(x)), names = periods)
-  contrib <- structure(rep(list(numeric(0)), length(levels)), names = levels)
-  for (i in seq_along(periods)) {
-    res$index[[i]] <- x[, i]
-    res$contributions[[i]] <- contrib
-  }
+  res <- structure(vector("list", 3), names = c("index", "levels", "periods"))
+  res$index <- structure(vector("list", ncol(x)), names = periods)
+  for (i in seq_along(periods)) res$index[[i]] <- x[, i]
   res$levels <- levels
   res$periods <- periods
-  structure(res, class = c("elemental", "index"))
+  structure(res, class = c("elem_index", "index"))
 }
