@@ -1,14 +1,14 @@
 aggregation_structure <- function(x, w) {
   x <- lapply(x, as.character)
   len <- length(x)
-  ea <- if (len) x[[len]] # x[[0]] is an error
+  ea <- if (len) x[[len]] else character(0) # x[[0]] is an error
   w <- if (missing(w)) {
     rep(1, length(ea))
   } else {
     as.numeric(w)
   }
   # basic argument checking to make sure inputs can make an aggregation structure
-  if (any(lengths(x) != length(w))) {
+  if (length(ea) != length(w) || any(lengths(x) != length(w))) {
     stop(gettext("all arguments must be the same length"))
   }
   if (anyDuplicated(ea)) {

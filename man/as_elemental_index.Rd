@@ -2,6 +2,7 @@
 \alias{as_elemental_index}
 \alias{as_elemental_index.default}
 \alias{as_elemental_index.matrix}
+\alias{as_elemental_index.aggregate}
 
 \title{
 Coerce to an elemental index
@@ -17,6 +18,8 @@ as_elemental_index(x, ...)
 \method{as_elemental_index}{default}(x, ...)
 
 \method{as_elemental_index}{matrix}(x, ...)
+
+\method{as_elemental_index}{aggregate}(x, ...)
 }
 
 \arguments{
@@ -27,6 +30,8 @@ as_elemental_index(x, ...)
 
 \details{
 Numeric matrices are coerce into an elemental index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates. If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension.
+
+An aggregated index is coerced to an elemental index by simply extracting the elemental indexes (discarding the higher-level indexes).
 
 The default method coerces \code{x} to a matrix prior to using the matrix method.
 }

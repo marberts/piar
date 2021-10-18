@@ -54,20 +54,13 @@ cumprod.index <- function(x) {
 
 update.aggregate <- function(object, period = end(object), ...) {
   price_update <- factor_weights(object$r)
-  weights <- if (length(object$periods)) {
-    w <- object$weights[[period]]
-    elem <- object$index[[period]][names(w)]
-    price_update(elem, w)
+  w <- if (length(object$periods)) {
+    price_update(object$index[[period]][object$pias$eas],
+                 object$weights[[period]])
   } else {
-    numeric(0)
+    structure(rep_len(NA_real_, length(object$pias$eas)), names = object$pias$eas)
   }
-  res <- list(child = object$pias$child,
-              parent = object$pias$parent,
-              levels = object$levels,
-              eas = object$pias$eas,
-              weights = weights,
-              height = object$pias$height)
-  structure(res, class = "pias")
+  aggregate2pias(object, w)
 }
 
 #---- Merge/stack ----

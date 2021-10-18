@@ -10,7 +10,7 @@
 \alias{time.index}
 \alias{start.index}
 \alias{end.index}
-\alias{weights.aggregate}
+
 
 \title{
 Methods for index objects
@@ -40,12 +40,10 @@ Methods to put index values/quote contributions in a tabular form, chain an inde
 \method{start}{index}(x, ...)
 
 \method{end}{index}(x, ...)
-
-\method{weights}{aggregate}(object, ...)
 }
 
 \arguments{
-\item{x, y, object}{An object of class \code{index}, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x, y}{An object of class \code{index}, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 \item{type}{A character vector specifying whether index values (the default) or quote contributions should be coerced into a data.frame/matrix.}
 \item{row.names}{Same as \code{\link[=as.data.frame]{as.data.frame()}}.}
 \item{...}{Further arguments passed to or used by methods.}
@@ -65,8 +63,6 @@ The \code{unstack()} method breaks up \code{x} into a list of indexes, one for e
 The \code{levels()} method extracts the levels of an index.
 
 The \code{time()} method extracts the time period of the index. The \code{start()} and \code{end()} methods extract the first and last time periods.
-
-The \code{weights()} method extracts a matrix of the price-updated weights from an aggregated index.
 }
 
 \seealso{

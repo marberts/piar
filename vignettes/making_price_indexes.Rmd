@@ -286,7 +286,7 @@ ms_epr2 <- with(
 Aggregating these elemental indexes, however, requires an aggregation structure. The results of the first example can be reproduced by simply "price updating" the original weights, then building the aggregation structure as usual.
 
 ```{r}
-pias2 <- update(pias1, ms_index1)
+pias2 <- update(ms_index1)
 (ms_index2 <- aggregate(ms_epr2, pias2, na.rm = TRUE))
 ```
 

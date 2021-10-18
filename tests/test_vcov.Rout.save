@@ -20,11 +20,16 @@ Type 'q()' to quit R.
 > library(gpindex)
 > 
 > set.seed(4321)
->
+> 
 > # Corner cases
 > vcov(aggregate(elemental_index(numeric(0)), aggregation_structure(character(0))),
-+      aggregation_structure(character(0)),
 +      matrix(numeric(0)))
+<0 x 0 x 0 array of double>
+    
+
+> 
+> vcov(aggregate(elemental_index(numeric(0)), aggregation_structure(1:5)),
++      matrix(runif(10), ncol = 10))
 <0 x 0 x 0 array of double>
     
 
@@ -48,7 +53,7 @@ Type 'q()' to quit R.
 > rw <- sps_repweights(weights$dw, B = 25, tau = 2)
 > 
 > #---- mse = FALSE case ----
-> covar <- vcov(index, pias, rw * weights$ew, mse = FALSE)
+> covar <- vcov(index, rw * weights$ew, mse = FALSE)
 > 
 > # Variance matrix should be symmetric
 > apply(covar, 3, function(x) all.equal(x[upper.tri(x)], t(x)[upper.tri(x)]))
@@ -65,18 +70,18 @@ TRUE TRUE TRUE
 > # Variance for higher levels should agree with manual calculation
 > # Period 1
 > rws <- apply(rw * weights$ew, 2, scale_weights)
-> all.equal(sum(tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25 * outer(epr[, 1], epr[, 1])),
+> all.equal(sum(crossprod(epr[, 1], tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * epr[, 1]),
 +           covar[1, 1, 1])
 [1] TRUE
 > 
 > # Period 2
-> rws <- apply(rw * weights(index)[, 1] / weights$dw, 2, scale_weights)
-> all.equal(sum(tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25 * outer(epr[, 2], epr[, 2])),
+> rws <- apply(rw * weights(index)[, 2] / weights$dw, 2, scale_weights)
+> all.equal(sum(crossprod(epr[, 2], tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * epr[, 2]),
 +           covar[1, 1, 2])
 [1] TRUE
 > 
 > #---- mse = TRUE case ----
-> covar <- vcov(index, pias, rw * weights$ew)
+> covar <- vcov(index, rw * weights$ew)
 > 
 > # Variance matrix should be symmetric
 > apply(covar, 3, function(x) all.equal(x[upper.tri(x)], t(x)[upper.tri(x)]))
@@ -94,16 +99,16 @@ TRUE TRUE TRUE
 > # Period 1
 > rws <- apply(rw * weights$ew, 2, scale_weights)
 > w <- weights(pias, ea_only = TRUE)
-> all.equal(sum(tcrossprod(sweep(rws, 1, scale_weights(w))) / 25 * outer(epr[, 1], epr[, 1])),
+> all.equal(sum(crossprod(epr[, 1], tcrossprod(sweep(rws, 1, scale_weights(w))) / 25) * epr[, 1]),
 +           covar[1, 1, 1])
 [1] TRUE
 > 
 > # Period 2
-> rws <- apply(rw * weights(index)[, 1] / weights$dw, 2, scale_weights)
-> all.equal(sum(tcrossprod(sweep(rws, 1, scale_weights(weights(index)[, 1]))) / 25 * outer(epr[, 2], epr[, 2])),
+> rws <- apply(rw * weights(index)[, 2] / weights$dw, 2, scale_weights)
+> all.equal(sum(crossprod(epr[, 2], tcrossprod(sweep(rws, 1, scale_weights(weights(index)[, 2]))) / 25) * epr[, 2]),
 +           covar[1, 1, 2])
 [1] TRUE
->
+> 
 > proc.time()
    user  system elapsed 
-  0.138   0.015   0.146 
+  0.156   0.008   0.157 

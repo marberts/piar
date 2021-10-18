@@ -43,11 +43,13 @@ weights(aggregation_structure(list(x1, x2, x3), c(NA, 2:4)))
 
 weights(aggregation_structure(list(x1, x2, x3), c(NA, 2:4)), na.rm = TRUE)
 
-# Update with the update.pias() method
-# Updating with a length-0 index should do nothing
+# Update with the update.aggregate() method
+# Updating with a length-0 index should make the weights NA
 epr <- elemental_index(integer(0))
 index <- aggregate(epr, agg1)
-all.equal(update(agg1, index), agg1)
+all.equal(update(index)[-5], agg1[-5])
+weights(agg1)
+weights(update(index))
 
 # Updating with an index that doesn't line up with the pias introduces NA weights
 # These should carry up the aggregation structure

@@ -39,14 +39,8 @@ vcov.aggregate <- function(object, repweights, mse = TRUE, ...) {
   }
   n <- ncol(repweights)
   eas <- object$pias$eas
-  pias <- structure(list(parent = object$pias$parent,
-                         child = object$pias$child,
-                         levels = object$levels,
-                         eas = object$pias$eas,
-                         weights = structure(numeric(length(eas)), names = eas),
-                         height = object$pias$height),
-                    class = "pias")
-  upper <- setdiff(object$levels, object$pias$eas)
+  pias <- aggregate2pias(object, structure(numeric(length(eas)), names = eas))
+  upper <- if (length(object$periods)) setdiff(object$levels, object$pias$eas)
   dimnm <- list(upper, object$periods, seq_len(n))
   index_boot <- array(0, dim = lengths(dimnm), dimnames = dimnm)
   for (i in seq_len(n)) {

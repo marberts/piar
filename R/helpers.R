@@ -34,3 +34,13 @@ list2matrix <- function(x) {
     matrix(numeric(0), ncol = 0, nrow = 0, dimnames = list(character(0), character(0)))
   }
 }
+
+aggregate2pias <- function(x, w) {
+  structure(list(child = x$pias$child,
+                 parent = x$pias$parent,
+                 levels = x$levels,
+                 eas = x$pias$eas,
+                 weights = w,
+                 height = x$pias$height),
+            class = "pias")
+}

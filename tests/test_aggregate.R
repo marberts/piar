@@ -6,10 +6,15 @@ set.seed(12345)
 # Tests for corner cases
 unclass(aggregate(elemental_index(numeric(0)), aggregation_structure(list())))
 
+all.equal(as_elemental_index(aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
+          elemental_index(numeric(0)))
+
 all.equal(update(aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
           aggregation_structure(list()))
 
 unclass(aggregate(elemental_index(1:5), aggregation_structure(list())))
+
+unclass(as_elemental_index(aggregate(elemental_index(1:5), aggregation_structure(list()))))
 
 all.equal(update(aggregate(elemental_index(1:5), aggregation_structure(list()))),
           aggregation_structure(list()))
@@ -36,6 +41,8 @@ ms_pias <- with(
 (ms_index <- aggregate(ms_epr, ms_pias, na.rm = TRUE))
 
 unclass(ms_index)
+
+as_elemental_index(ms_index)
 
 # Check adding up of lower-level indexes
 all.equal(apply(cumprod(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[3]]),

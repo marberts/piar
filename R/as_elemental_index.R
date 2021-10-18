@@ -27,3 +27,14 @@ as_elemental_index.matrix <- function(x, ...) {
   res$periods <- periods
   structure(res, class = c("elemental", "index"))
 }
+
+as_elemental_index.aggregate <- function(x, ...) {
+  eas <- x$pias$eas
+  index <- lapply(x$index, `[`, eas)
+  contributions <- lapply(x$contributions, `[`, eas)
+  structure(list(index = index, 
+                 contributions = contributions, 
+                 levels = eas, 
+                 periods = x$periods), 
+            class = c("elemental", "index"))
+}

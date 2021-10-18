@@ -3,7 +3,7 @@ weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
     return(object$weights)
   }
   if (!object$height) {
-    return(as.list(object$weights))
+    return(list())
   }
   res <- vector("list", object$height)
   res[[1]] <- object$weights
@@ -18,7 +18,7 @@ weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
 }
 
 print.pias <- function(x, ...) {
-  print(c(rev(lapply(x$child, names)), list(names(x$weights))))
+  print(c(rev(lapply(x$child, names)), if (x$height) list(x$eas)))
   invisible(x)
 }
 

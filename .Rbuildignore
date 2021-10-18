@@ -4,3 +4,7 @@
 ^data-raw$
 ^\.github$
 ^LICENSE\.md$
+
+^tests/test_adjust_weights\.R$
+^tests/test_adjust_weights\.Rout.save$
+^man/adjust_weights\.Rd$
