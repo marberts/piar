@@ -8,15 +8,15 @@
     gen_mean(rel[[i - 1]][z], w[[i - 1]][z])
   }
   # initialize weights
-  eas <- names(pias$weights)
-  w <- weights(pias)
+  eas <- pias$eas
+  w <- rev(weights(pias))
   # loop over each time period
   for (t in seq_along(x$periods)) {
     rel <- vector("list", pias$height)
     # align epr with weights so that positional indexing works
     # preserve names if epr and pias weights don't agree
     rel[[1]] <- named_extract(x$index[[t]], eas)
-    if (t > 1 && chained) w <- weights(pias)
+    if (t > 1 && chained) w <- rev(weights(pias))
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1]) {
       rel[[i]] <- vapply(pias$child[[i - 1]], aggregate_index, numeric(1))
@@ -32,19 +32,21 @@
   list2matrix(x$index)
 }
 
-vcov.aggregate <- function(object, pias, repweights, mse = TRUE, ...) {
-  if (!inherits(pias, "pias")) {
-    stop(gettext("'pias' must be a price index aggregation structure; use aggregation_structure() to make one"))
-  }
-  if (!identical(object$levels, pias$levels)) {
-    stop(gettext("'pias' does not agree with the structure of 'object'"))
-  }
+vcov.aggregate <- function(object, repweights, mse = TRUE, ...) {
   repweights <- as.matrix(repweights)
-  if (nrow(repweights) != length(pias$weights)) {
+  if (nrow(repweights) != length(object$pias$eas)) {
     stop(gettext("'repweights' must have a row for each weight in 'pias'"))
   }
   n <- ncol(repweights)
-  upper <- setdiff(pias$levels, names(pias$weights))
+  eas <- object$pias$eas
+  pias <- structure(list(parent = object$pias$parent,
+                         child = object$pias$child,
+                         levels = object$levels,
+                         eas = object$pias$eas,
+                         weights = structure(numeric(length(eas)), names = eas),
+                         height = object$pias$height),
+                    class = "pias")
+  upper <- setdiff(object$levels, object$pias$eas)
   dimnm <- list(upper, object$periods, seq_len(n))
   index_boot <- array(0, dim = lengths(dimnm), dimnames = dimnm)
   for (i in seq_len(n)) {

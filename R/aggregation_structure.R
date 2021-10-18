@@ -43,6 +43,7 @@ aggregation_structure <- function(x, w) {
   res <- list(child = as.list(child), 
               parent = as.list(parent),
               levels = as.character(c(nested_names(rev(child)), ea)),
+              eas = as.character(ea),
               weights = structure(w, names = ea),
               height = len)
   structure(res, class = "pias")

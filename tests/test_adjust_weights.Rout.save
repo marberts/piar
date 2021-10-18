@@ -24,11 +24,11 @@ Type 'q()' to quit R.
 > weights(adjust_weights(pias, aggregate(epr, pias)))
 stopped after 1 iterations with a maximum absolute difference of 2.8421709430404e-14
 [[1]]
-       1 
+       b 
 142.8558 
 
 [[2]]
-       b 
+       1 
 142.8558 
 
 > 
@@ -37,11 +37,11 @@ stopped after 1 iterations with a maximum absolute difference of 2.8421709430404
 > weights(adjust_weights(pias, aggregate(epr, pias, chained = FALSE)))
 stopped after 1 iterations with a maximum absolute difference of 2.8421709430404e-14
 [[1]]
-       1 
+       b 
 142.8558 
 
 [[2]]
-       b 
+       1 
 142.8558 
 
 > 

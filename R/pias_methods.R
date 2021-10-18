@@ -14,7 +14,7 @@ weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
   for (i in seq_along(res)[-1]) {
     res[[i]] <- vapply(object$child[[i - 1]], add_weights, numeric(1))
   }
-  res
+  rev(res)
 }
 
 print.pias <- function(x, ...) {
@@ -22,16 +22,6 @@ print.pias <- function(x, ...) {
   invisible(x)
 }
 
-update.pias <- function(object, index, period = end(index), ...) {
-  if (!inherits(index, "aggregate")) {
-    stop(gettext("'index' must be an aggregate index; use aggregate.index() to make one"))
-  }
-  if (!all(object$levels %in% index$levels)) {
-    warning(gettext("not all weights in the aggregation structure have a corresponding index value"))
-  }
-  w <- index$weights
-  if (length(w)) {
-    object$weights[] <- w[[period]][names(object$weights)]
-  }
-  object
+levels.pias <- function(x) {
+  x$levels
 }

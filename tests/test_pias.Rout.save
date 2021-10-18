@@ -153,16 +153,16 @@ $height
 > # Calculate weights with the weights.pias() method
 > weights(agg1)
 [[1]]
-111 112 121 211 
-  1   1   1   1 
+1 2 
+3 1 
 
 [[2]]
 11 12 21 
  2  1  1 
 
 [[3]]
-1 2 
-3 1 
+111 112 121 211 
+  1   1   1   1 
 
 > 
 > weights(agg1, ea_only = TRUE)
@@ -172,44 +172,44 @@ $height
 > # Unequal weights
 > weights(aggregation_structure(list(x1, x2, x3), 1:4))
 [[1]]
-111 112 121 211 
-  1   2   3   4 
+1 2 
+6 4 
 
 [[2]]
 11 12 21 
  3  3  4 
-
+ 
 [[3]]
-1 2 
-6 4 
+111 112 121 211 
+  1   2   3   4 
 
 > 
 > weights(aggregation_structure(list(x1, x2, x3), c(NA, 2:4)))
 [[1]]
-111 112 121 211 
- NA   2   3   4 
+ 1  2 
+NA  4 
 
 [[2]]
 11 12 21 
 NA  3  4 
 
 [[3]]
- 1  2 
-NA  4 
+111 112 121 211 
+ NA   2   3   4 
 
 > 
 > weights(aggregation_structure(list(x1, x2, x3), c(NA, 2:4)), na.rm = TRUE)
 [[1]]
-111 112 121 211 
- NA   2   3   4 
+1 2 
+5 4 
 
 [[2]]
 11 12 21 
  2  3  4 
-
+ 
 [[3]]
-1 2 
-5 4 
+111 112 121 211 
+ NA   2   3   4 
 
 > 
 > # Update with the update.pias() method
@@ -225,16 +225,16 @@ NA  4
 > index <- aggregate(epr, agg1)
 > weights(update(agg1, index))
 [[1]]
-111 112 121 211 
-  1  NA  NA  NA 
+ 1  2 
+NA NA 
 
 [[2]]
 11 12 21 
-NA NA NA 
+NA NA NA
 
 [[3]]
- 1  2 
-NA NA 
+111 112 121 211 
+  1  NA  NA  NA 
 
 > 
 > # Accommodate a delimiter when expanding the classification by setting the width

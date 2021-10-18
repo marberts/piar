@@ -52,18 +52,27 @@ cumprod.index <- function(x) {
   as.matrix(x)
 }
 
+update.aggregate <- function(object, period = end(object), ...) {
+  price_update <- factor_weights(object$r)
+  weights <- if (length(object$periods)) {
+    w <- object$weights[[period]]
+    elem <- object$index[[period]][names(w)]
+    price_update(elem, w)
+  } else {
+    numeric(0)
+  }
+  res <- list(child = object$pias$child,
+              parent = object$pias$parent,
+              levels = object$levels,
+              eas = object$pias$eas,
+              weights = weights,
+              height = object$pias$height)
+  structure(res, class = "pias")
+}
+
 #---- Merge/stack ----
 merge.aggregate <- function(x, y, ...) {
-  if (!inherits(y, "aggregate")) {
-    stop(gettext("'y' is not an aggregate index; use aggregate() to make one"))
-  }
-  if (x$r != y$r) {
-    stop(gettext("cannot merge indexes of different orders"))
-  }
-  if (x$chained != y$chained) {
-    stop(gettext("cannot merge a period-over-period and a fixed-base index"))
-  }
-  NextMethod()
+  stop(gettext("cannot merge aggregated indexes"))
 }
 
 merge.elemental <- function(x, y, ...) {
@@ -100,6 +109,9 @@ stack.aggregate <- function(x, y, ...) {
   }
   if (x$chained != y$chained) {
     stop(gettext("cannot stack a period-over-period and a fixed-base index"))
+  }
+  if (!identical(x$pias, y$pias)) {
+    stop(gettext("'x' and 'y' must be generated from the same aggregation structure"))
   }
   NextMethod()
 }
@@ -138,6 +150,7 @@ unstack.index <- function(x, ...) {
     res[[i]]$weights <- x$weights[i]
     res[[i]]$r <- x$r
     res[[i]]$chained <- x$chained
+    res[[i]]$pias <- x$pias
     class(res[[i]]) <- class(x)
   }
   res

@@ -6,23 +6,19 @@ set.seed(12345)
 # Tests for corner cases
 unclass(aggregate(elemental_index(numeric(0)), aggregation_structure(list())))
 
-all.equal(update(aggregation_structure(list()), 
-                 aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
+all.equal(update(aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
           aggregation_structure(list()))
 
 unclass(aggregate(elemental_index(1:5), aggregation_structure(list())))
 
-all.equal(update(aggregation_structure(list()),
-                 aggregate(elemental_index(1:5), aggregation_structure(list()))),
+all.equal(update(aggregate(elemental_index(1:5), aggregation_structure(list()))),
           aggregation_structure(list()))
 
 unclass(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))
 
-is.na(weights(update(aggregation_structure(list("2")), 
-               aggregate(elemental_index(1:5), aggregation_structure(list("2"))))))
+is.na(weights(update(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))))
 
-all.equal(update(aggregation_structure(list(1)), 
-                 aggregate(elemental_index(rep(1, 10)), aggregation_structure(list(1)))),
+all.equal(update(aggregate(elemental_index(rep(1, 10)), aggregation_structure(list(1)))),
           aggregation_structure(list(1)))
 
 # Tests with a matched-sample index
@@ -42,7 +38,7 @@ ms_pias <- with(
 unclass(ms_index)
 
 # Check adding up of lower-level indexes
-all.equal(apply(cumprod(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[1]]),
+all.equal(apply(cumprod(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[3]]),
           cumprod(ms_index)[1, ])
 
 all.equal(apply(cumprod(ms_index)[2:3, ], 2, weighted.mean, weights(ms_pias)[[2]]),
@@ -77,9 +73,9 @@ all.equal(ms_index[1, ],
 # Check that weights are getting price updated correctly
 apply(cumprod(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
 
-weights(update(ms_pias, ms_index), ea_only = TRUE)
+weights(update(ms_index), ea_only = TRUE)
 
-weights(update(ms_pias, ms_index, "202003"), ea_only = TRUE)
+weights(update(ms_index, "202003"), ea_only = TRUE)
 
 # Do the same tests but with a weird index
 ms_epr <- with(
@@ -128,7 +124,7 @@ all.equal(fs_index[1, ],
           sapply(fs_index$contributions, function(x) sum(x[[1]], na.rm = TRUE) + 1))
 
 # Check adding up of lower level indexes
-all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[1]]),
+all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[3]]),
           cumprod(fs_index)[1, ])
 
 all.equal(apply(cumprod(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),

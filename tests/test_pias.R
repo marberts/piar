@@ -53,7 +53,7 @@ all.equal(update(agg1, index), agg1)
 # These should carry up the aggregation structure
 epr <- elemental_index(1, ea = "111")
 index <- aggregate(epr, agg1)
-weights(update(agg1, index))
+weights(update(index))
 
 # Accommodate a delimiter when expanding the classification by setting the width
 (agg2 <- aggregation_structure(expand_classification(c("1.1.1", "1.1.2", "1.2.1"), 

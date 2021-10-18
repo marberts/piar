@@ -22,11 +22,12 @@ S3method(start, index)
 S3method(end, index)
 
 S3method(weights, aggregate)
+S3method(update, aggregate)
 S3method(vcov, aggregate)
 
 S3method(print, pias)
 S3method(weights, pias)
-S3method(update, pias)
+S3method(levels, pias)
 
 S3method(as_elemental_index, default)
 S3method(as_elemental_index, matrix)

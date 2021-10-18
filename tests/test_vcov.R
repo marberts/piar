@@ -6,7 +6,6 @@ set.seed(4321)
 
 # Corner cases
 vcov(aggregate(elemental_index(numeric(0)), aggregation_structure(character(0))),
-     aggregation_structure(character(0)),
      matrix(numeric(0)))
 
 # Toy example
@@ -28,7 +27,7 @@ index <- aggregate(epr, pias)
 rw <- sps_repweights(weights$dw, B = 25, tau = 2)
 
 #---- mse = FALSE case ----
-covar <- vcov(index, pias, rw * weights$ew, mse = FALSE)
+covar <- vcov(index, rw * weights$ew, mse = FALSE)
 
 # Variance matrix should be symmetric
 apply(covar, 3, function(x) all.equal(x[upper.tri(x)], t(x)[upper.tri(x)]))
@@ -44,12 +43,12 @@ all.equal(sum(tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25 * outer(epr[, 1], ep
           covar[1, 1, 1])
 
 # Period 2
-rws <- apply(rw * weights(index)[, 1] / weights$dw, 2, scale_weights)
+rws <- apply(rw * weights(index)[, 2] / weights$dw, 2, scale_weights)
 all.equal(sum(tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25 * outer(epr[, 2], epr[, 2])),
           covar[1, 1, 2])
 
 #---- mse = TRUE case ----
-covar <- vcov(index, pias, rw * weights$ew)
+covar <- vcov(index, rw * weights$ew)
 
 # Variance matrix should be symmetric
 apply(covar, 3, function(x) all.equal(x[upper.tri(x)], t(x)[upper.tri(x)]))
@@ -66,6 +65,7 @@ all.equal(sum(tcrossprod(sweep(rws, 1, scale_weights(w))) / 25 * outer(epr[, 1],
           covar[1, 1, 1])
 
 # Period 2
-rws <- apply(rw * weights(index)[, 1] / weights$dw, 2, scale_weights)
-all.equal(sum(tcrossprod(sweep(rws, 1, scale_weights(weights(index)[, 1]))) / 25 * outer(epr[, 2], epr[, 2])),
+rws <- apply(rw * weights(index)[, 2] / weights$dw, 2, scale_weights)
+all.equal(sum(tcrossprod(sweep(rws, 1, scale_weights(weights(index)[, 2]))) / 25 * outer(epr[, 2], epr[, 2])),
           covar[1, 1, 2])
+

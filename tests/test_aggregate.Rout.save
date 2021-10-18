@@ -343,7 +343,7 @@ $chained
 
 > 
 > # Check adding up of lower-level indexes
-> all.equal(apply(cumprod(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[1]]),
+> all.equal(apply(cumprod(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[3]]),
 +           cumprod(ms_index)[1, ])
 [1] TRUE
 > 
@@ -677,7 +677,7 @@ $chained
 [1] TRUE
 > 
 > # Check adding up of lower level indexes
-> all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[1]]),
+> all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[3]]),
 +           cumprod(fs_index)[1, ])
 [1] TRUE
 > 

@@ -15,9 +15,9 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
     unlist(Map("*", con[[i - 1]][z], aw))
   }
   # initialize weights
-  eas <- names(pias$weights)
+  eas <- pias$eas
   x$weights <- structure(rep(list(pias$weights), length(x$periods)), names = x$periods)
-  w <- weights(pias, na.rm = na.rm)
+  w <- rev(weights(pias, na.rm = na.rm))
   # loop over each time period
   for (t in seq_along(x$periods)) {
     rel <- con <- vector("list", pias$height)
@@ -27,7 +27,10 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
     con[[1]] <- named_extract(x$contributions[[t]], eas)
     # get rid of any NULL contributions
     con[[1]][!lengths(con[[1]])] <- list(numeric(0))
-    if (t > 1 && chained) w <- weights(pias, na.rm = na.rm)
+    if (t > 1 && chained) {
+      w <- rev(weights(pias, na.rm = na.rm))
+      x$weights[[t]] <- w[[1]]
+    }
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1]) {
       rel[[i]] <- vapply(pias$child[[i - 1]], aggregate_index, numeric(1))
@@ -46,11 +49,12 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
     x$contributions[[t]] <- unlist(rev(con), recursive = FALSE)
     # price update weights for all periods after the first
     if (pias$height && chained) {
-      pias$weights <- x$weights[[t]] <- price_update(index[eas], w[[1]]) 
+      pias$weights <- price_update(index[eas], w[[1]]) 
     }
   }
   x$levels <- pias$levels
   x$r <- r
   x$chained <- chained
+  x$pias <- pias[c("child", "parent", "eas", "height")]
   structure(x, class = c("aggregate", "index"))
 }

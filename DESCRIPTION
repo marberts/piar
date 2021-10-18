@@ -1,6 +1,6 @@
 Package: piar
 Title: Price Index Aggregation in R
-Version: 0.2.0.9004
+Version: 0.2.0.9005
 Authors@R: c(
     person("Steve", "Martin", role = c("aut", "cre"), email = "steve.martin@statcan.gc.ca"),
     person("Ambuj", "Dewan", role = c("ctb")),
