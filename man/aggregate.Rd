@@ -85,7 +85,7 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 }
 
 \author{
-The \code{vcov()} method is based on a SAS routine by Justin Francis.
+The \code{vcov()} method is based on a SAS routine by Justin Francis that was first ported to R by Ambuj Dewan.
 }
 
 \seealso{

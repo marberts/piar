@@ -88,7 +88,8 @@ merge.index <- function(x, y, ...) {
   for (t in x$periods) {
     x$index[[t]] <- c(x$index[[t]], y$index[[t]])
     x$contributions[[t]] <- c(x$contributions[[t]], y$contributions[[t]])
-    x$weights[[t]] <- c(x$weights[[t]], y$weights[[t]])
+    # might be useful if this method is extended to aggregated indexes
+    # x$weights[[t]] <- c(x$weights[[t]], y$weights[[t]])
   }
   x$levels <- union(x$levels, y$levels)
   x

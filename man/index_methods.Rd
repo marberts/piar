@@ -56,7 +56,7 @@ The \code{as.matrix()} method turns an index into a matrix with a row for each l
 
 The \code{cumprod()} method takes the cumulative product of the values in the \code{index} component of \code{x}, and returns a matrix. The result is the same as \code{t(apply(as.matrix(x), 1, cumprod))}.
 
-The \code{merge()} method combines two index object with common time periods, merging together the index values and quote contributions (and price-update weights if they're aggregated indexes) for each time period in \code{x} and \code{y}. The \code{stack()} methods combines two index objects with common levels, stacking index values and quote contributions (and price-update weights if they're aggregated indexes) for each level in \code{y} after those in \code{x}. Both methods return an object of the same class as \code{x}.
+The \code{merge()} method combines two index object with common time periods, merging together the index values and quote contributions for each time period in \code{x} and \code{y}. The \code{stack()} methods combines two index objects with common levels, stacking index values and quote contributions (and price-update weights if they're aggregated indexes) for each level in \code{y} after those in \code{x}. Both methods return an object of the same class as \code{x}.
 
 The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}.
 
