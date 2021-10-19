@@ -2,11 +2,7 @@ aggregation_structure <- function(x, w) {
   x <- lapply(x, as.character)
   len <- length(x)
   ea <- if (len) x[[len]] else character(0) # x[[0]] is an error
-  w <- if (missing(w)) {
-    rep(1, length(ea))
-  } else {
-    as.numeric(w)
-  }
+  w <- if (missing(w)) rep(1, length(ea)) else as.numeric(w)
   # basic argument checking to make sure inputs can make an aggregation structure
   if (length(ea) != length(w) || any(lengths(x) != length(w))) {
     stop(gettext("all arguments must be the same length"))
@@ -42,8 +38,8 @@ aggregation_structure <- function(x, w) {
   # return 'pias' object
   res <- list(child = as.list(child), 
               parent = as.list(parent),
-              levels = as.character(c(nested_names(rev(child)), ea)),
-              eas = as.character(ea),
+              levels = c(nested_names(rev(child)), ea),
+              eas = ea,
               weights = structure(w, names = ea),
               height = len)
   structure(res, class = "pias")

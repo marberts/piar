@@ -58,7 +58,8 @@ update.aggregate <- function(object, period = end(object), ...) {
     price_update(object$index[[period]][object$pias$eas],
                  object$weights[[period]])
   } else {
-    structure(rep_len(NA_real_, length(object$pias$eas)), names = object$pias$eas)
+    structure(rep_len(NA_real_, length(object$pias$eas)), 
+              names = object$pias$eas)
   }
   aggregate2pias(object, w)
 }

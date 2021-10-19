@@ -12,8 +12,11 @@ A method to aggregate period-over-period or fixed-base elemental price indexes u
 
 \usage{
 \method{aggregate}{index}(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...)
+
 \method{weights}{aggregate}(object, ...)
+
 \method{update}{aggregate}(object, period = end(object), ...)
+
 \method{vcov}{aggregate}(object, repweights, mse = TRUE, ...)
 }
 
@@ -79,6 +82,10 @@ The \code{vcov()} method returns an array of covariance matrices for each \code{
 
 \references{
 ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index Manual: Theory and Practice}. International Monetary Fund.
+}
+
+\author{
+The \code{vcov()} method is based on a SAS routine by Justin Francis.
 }
 
 \seealso{
