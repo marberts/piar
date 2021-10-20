@@ -3,7 +3,7 @@
 \alias{piar-package}
 \alias{piar}
 
-\title{Price Index Aggregation in R}
+\title{Price Index Aggregation}
 
 \description{
 Most price indexes are made with a two-step procedure, where period-over-period \emph{elemental indexes} are first calculated for a collection of \emph{elemental aggregates} at each point in time, and then aggregated according to a \emph{price index aggregation structure}. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. This package contains a collections of functions that revolve around this work flow, making it easy to build standard price indexes.

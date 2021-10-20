@@ -35,7 +35,7 @@ A method to aggregate period-over-period or fixed-base elemental price indexes u
 
 \item{period}{The time period used to price update the weights. The default uses last period in \code{object}.}
 
-\item{repweights}{A matrix of bootstrap replicate weights with a row for each elemental aggregate and a column for each replicate.}
+\item{repweights}{A matrix, or something that can be coerced into one, of bootstrap replicate weights with a row for each elemental aggregate and a column for each replicate.}
 
 \item{mse}{Should covariances be centered off the value of the index in \code{object} (the default), or the mean of the replicates?}
 
