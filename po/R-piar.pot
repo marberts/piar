@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: piar 0.2.0\n"
-"POT-Creation-Date: 2021-07-21 13:16\n"
+"Project-Id-Version: piar 0.2.0.9009\n"
+"POT-Creation-Date: 2021-10-22 11:14\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10,10 +10,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-msgid "aggregating an aggregated index"
+msgid "'x' must be a price index aggregation structure; use aggregation_structure() to make one"
+msgstr ""
+
+msgid "'index' must be an aggregate index; use aggregate.index() to make one"
+msgstr ""
+
+msgid "weight adjustment did not converge"
+msgstr ""
+
+msgid "stopped after"
+msgstr ""
+
+msgid "iterations with a maximum absolute difference of"
 msgstr ""
 
 msgid "'pias' must be a price index aggregation structure; use aggregation_structure() to make one"
+msgstr ""
+
+msgid "'x' cannot contain NAs"
 msgstr ""
 
 msgid "all arguments must be the same length"
@@ -61,10 +76,10 @@ msgstr ""
 msgid "there are duplicated period-product pairs"
 msgstr ""
 
-msgid "'y' is not an index; use elemental_index() to make one"
+msgid "cannot merge aggregated indexes"
 msgstr ""
 
-msgid "'x' and 'y' must be the same type of index"
+msgid "'y' is not an elemental index; use elemental_index() to make one"
 msgstr ""
 
 msgid "'x' and 'y' must be indexes for the same time periods"
@@ -73,14 +88,23 @@ msgstr ""
 msgid "some levels appear in both 'x' and 'y'"
 msgstr ""
 
+msgid "'y' is not an aggregate index; use aggregate() to make one"
+msgstr ""
+
+msgid "cannot stack indexes of different orders"
+msgstr ""
+
+msgid "cannot stack a period-over-period and a fixed-base index"
+msgstr ""
+
+msgid "'x' and 'y' must be generated from the same aggregation structure"
+msgstr ""
+
 msgid "'x' and 'y' must be indexes for the same levels"
 msgstr ""
 
 msgid "some periods appear in both 'x' and 'y'"
 msgstr ""
 
-msgid "'index' is not an aggregate index; use aggregate.index() to make one"
-msgstr ""
-
-msgid "not all weights in the aggregation structure have a corresponding index value"
+msgid "'repweights' must have a row for each weight in 'pias'"
 msgstr ""

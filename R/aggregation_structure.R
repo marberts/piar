@@ -1,5 +1,8 @@
 aggregation_structure <- function(x, w) {
   x <- lapply(x, as.character)
+  if (any(vapply(x, anyNA, logical(1)))) {
+    stop(gettext("'x' cannot contain NAs"))
+  }
   len <- length(x)
   ea <- if (len) x[[len]] else character(0) # x[[0]] is an error
   w <- if (missing(w)) rep(1, length(ea)) else as.numeric(w)
@@ -28,11 +31,11 @@ aggregation_structure <- function(x, w) {
   # positional matching for child nodes is much faster for aggregation
   nm <- c(list(ea), lapply(child, names))
   for (i in seq_along(child)) {
-    child[[i]] <- lapply(child[[i]], match, table = nm[[i]], incomparables = NA)
+    child[[i]] <- lapply(child[[i]], match, table = nm[[i]])
   }
   # same for parent nodes
   for (i in seq_along(parent)) {
-    parent[[i]] <- match(parent[[i]][nm[[i]]], nm[-1][[i]], incomparables = NA)
+    parent[[i]] <- match(parent[[i]][nm[[i]]], nm[-1][[i]])
     names(parent[[i]]) <- nm[[i]]
   }
   # return 'pias' object

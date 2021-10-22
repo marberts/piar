@@ -144,6 +144,9 @@ fs_index2[] - fs_index[]
 all.equal(fs_index2["121", ], 
           sapply(fs_index2$contributions, function(x) sum(x[["121"]], na.rm = TRUE) + 1))
 
+all.equal(fs_index2["13", 1:3], 
+          sapply(fs_index2$contributions[1:3], function(x) sum(x[["13"]], na.rm = TRUE) + 1))
+
 # Tests with a fixed-base index
 prices <- data.frame(price = 1:15, 
                      period = letters[1:3], 

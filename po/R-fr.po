@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: piar 0.1.0.9029\n"
-"POT-Creation-Date: 2021-07-21 13:16\n"
+"POT-Creation-Date: 2021-10-22 11:14\n"
 "PO-Revision-Date: 2021-06-07 23:19\n"
 "Last-Translator: Steve Martin <steve.martin5@canada.ca>\n"
 "Language-Team: none\n"
@@ -10,8 +10,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "aggregating an aggregated index"
-msgstr "agréger un indice agrégé"
+msgid ""
+"'x' must be a price index aggregation structure; use aggregation_structure() "
+"to make one"
+msgstr ""
+"'x' doit être une structure d'agrégation d'indices de prix.; utilisez "
+"aggregation_structure() pour en faire un"
+
+msgid "'index' must be an aggregate index; use aggregate.index() to make one"
+msgstr ""
+"'index' doit être un indice agrégé.; utilisez aggregate.index() pour en "
+"faire un"
+
+msgid "weight adjustment did not converge"
+msgstr "l'ajustement du poids n'a pas convergé"
+
+msgid "stopped after"
+msgstr "arrêté après"
+
+msgid "iterations with a maximum absolute difference of"
+msgstr "itérations avec une différence absolue maximale de"
 
 msgid ""
 "'pias' must be a price index aggregation structure; use "
@@ -19,6 +37,9 @@ msgid ""
 msgstr ""
 "'pias' doit être une structure d'agrégation d'indices de prix.; utilisez "
 "aggregation_structure() pour en faire un"
+
+msgid "'x' cannot contain NAs"
+msgstr "'x' ne peut pas contenir de NA"
 
 msgid "all arguments must be the same length"
 msgstr "tous les arguments doivent avoir la même longueur"
@@ -78,11 +99,11 @@ msgstr "'x', 'period', 'product', 'ea' et 'w' doivent avoir la même longueur"
 msgid "there are duplicated period-product pairs"
 msgstr "il existe des paires période-produit en double"
 
-msgid "'y' is not an index; use elemental_index() to make one"
-msgstr "'y' n'est pas un indice ; utilisez elemental_index() pour en faire un"
+msgid "cannot merge aggregated indexes"
+msgstr "impossible de fusionner des index agrégés"
 
-msgid "'x' and 'y' must be the same type of index"
-msgstr "'x' et 'y' doivent être le même type d'index"
+msgid "'y' is not an elemental index; use elemental_index() to make one"
+msgstr "'y' n'est pas un indice élémentaire ; utilisez elemental_index() pour en faire un"
 
 msgid "'x' and 'y' must be indexes for the same time periods"
 msgstr "'x' et 'y' doivent être des index pour les mêmes périodes"
@@ -90,17 +111,25 @@ msgstr "'x' et 'y' doivent être des index pour les mêmes périodes"
 msgid "some levels appear in both 'x' and 'y'"
 msgstr "certains niveaux apparaissent à la fois dans 'x' et 'y'"
 
+msgid "'y' is not an aggregate index; use aggregate() to make one"
+msgstr ""
+"'y' n'est pas un indice agrégé; utilisez aggregate.index() pour en "
+"faire un"
+
+msgid "cannot stack indexes of different orders"
+msgstr "ne peut pas empiler des index d'ordres différents"
+
+msgid "cannot stack a period-over-period and a fixed-base index"
+msgstr "ne peut pas empiler un indice période sur période et un indice à base fixe"
+
+msgid "'x' and 'y' must be generated from the same aggregation structure"
+msgstr "'x' et 'y' doivent être générés à partir de la même structure d'agrégation"
+
 msgid "'x' and 'y' must be indexes for the same levels"
 msgstr "'x' et 'y' doivent être des index pour les mêmes niveaux"
 
 msgid "some periods appear in both 'x' and 'y'"
 msgstr "certains points apparaissent à la fois dans 'x' et 'y'"
 
-msgid "'index' is not an aggregate index; use aggregate.index() to make one"
-msgstr ""
-"'index' n'est pas un indice agrégé.; utilisez aggregate.index() pour en "
-"faire un"
-
-msgid ""
-"not all weights in the aggregation structure have a corresponding index value"
-msgstr "tous les poids dans pias n'ont pas une valeur d'indice correspondante"
+msgid "'repweights' must have a row for each weight in 'pias'"
+msgstr "'repweights' doit avoir une ligne pour chaque poids dans 'pias'"
