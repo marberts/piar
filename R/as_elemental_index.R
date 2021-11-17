@@ -12,7 +12,8 @@ as_elemental_index.matrix <- function(x, ...) {
   if (is.null(colnames(x))) colnames(x) <- seq_len(ncol(x))
   levels <- as.character(rownames(x)) # as.character is for matrices without rows
   periods <- as.character(colnames(x)) # same for columns
-  res <- list(index = NULL, contributions = NULL, levels = NULL, periods = NULL)
+  res <- list(index = NULL, contributions = NULL, levels = levels, 
+              periods = periods, contrib = FALSE)
   res$index <- res$contributions <- 
     structure(vector("list", ncol(x)), names = periods)
   contrib <- structure(rep(list(numeric(0)), length(levels)), names = levels)
@@ -20,8 +21,6 @@ as_elemental_index.matrix <- function(x, ...) {
     res$index[[i]] <- x[, i]
     res$contributions[[i]] <- contrib
   }
-  res$levels <- levels
-  res$periods <- periods
   structure(res, class = c("elemental", "index"))
 }
 
@@ -32,6 +31,7 @@ as_elemental_index.aggregate <- function(x, ...) {
   structure(list(index = index, 
                  contributions = contributions, 
                  levels = eas, 
-                 periods = x$periods), 
+                 periods = x$periods,
+                 contrib = x$contrib), 
             class = c("elemental", "index"))
 }

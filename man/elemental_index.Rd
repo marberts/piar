@@ -51,6 +51,7 @@ In some cases \code{x} are actually price indexes from elsewhere (e.g., a hedoni
 \item{contributions}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}
 \item{levels}{The levels for \code{ea}.}
 \item{periods}{The levels for \code{period}.}
+\item{contrib}{The value of \code{contrib}.}
 }
 
 \references{

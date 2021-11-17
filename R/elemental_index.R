@@ -39,7 +39,8 @@
   res <- list(index = index,
               contributions = contributions,
               levels = levels(ea),
-              periods = levels(period))
+              periods = levels(period),
+              contrib = contrib)
   structure(res, class = c("elemental", "index"))
 }
 

@@ -34,6 +34,9 @@ character(0)
 $periods
 character(0)
 
+$contrib
+[1] FALSE
+
 > 
 > unclass(superlative_elemental_index(integer(0), integer(0), integer(0), integer(0)))
 $index
@@ -47,6 +50,9 @@ character(0)
 
 $periods
 character(0)
+
+$contrib
+[1] FALSE
 
 > 
 > # Make sure matrix/data.frame methods work with length-0 indexes
@@ -244,6 +250,9 @@ $levels
 
 $periods
 [1] "1" "2"
+
+$contrib
+[1] TRUE
 
 > as.matrix(epr)
           1        2

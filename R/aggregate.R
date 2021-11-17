@@ -10,9 +10,13 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
   aggregate_index <- function(z) {
     gen_mean(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm)
   }
-  aggregate_contrib <- function(z) {
-    aw <- scale_weights(arithmetic_weights(rel[[i - 1]][z], w[[i - 1]][z]))
-    unlist(Map("*", con[[i - 1]][z], aw))
+  aggregate_contrib <- if (x$contrib) {
+    function(z) {
+      aw <- scale_weights(arithmetic_weights(rel[[i - 1]][z], w[[i - 1]][z]))
+      unlist(Map("*", con[[i - 1]][z], aw))
+    }
+  } else {
+    function(z) numeric(0)
   }
   # initialize weights
   eas <- pias$eas

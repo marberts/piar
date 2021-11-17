@@ -92,6 +92,7 @@ merge.index <- function(x, y, ...) {
     # x$weights[[t]] <- c(x$weights[[t]], y$weights[[t]])
   }
   x$levels <- union(x$levels, y$levels)
+  x$contrib <- x$contrib || y$contrib
   x
 }
 
@@ -131,6 +132,7 @@ stack.index <- function(x, y, ...) {
   x$contributions <- c(x$contributions, y$contributions)
   x$periods <- union(x$periods, y$periods)
   x$weights <- c(x$weights, y$weights)
+  x$contrib <- x$contrib || y$contrib
   x
 }
 
@@ -142,6 +144,7 @@ unstack.index <- function(x, ...) {
     res[[i]]$contributions <- x$contributions[i]
     res[[i]]$levels <- x$levels
     res[[i]]$periods <- x$periods[i]
+    res[[i]]$contrib <- x$contrib
     res[[i]]$weights <- x$weights[i]
     res[[i]]$r <- x$r
     res[[i]]$chained <- x$chained

@@ -1,5 +1,5 @@
 set.seed(1234)
-
+#---- Matched-sample data ----
 ms_prices <- data.frame(period = rep(sprintf("%d%02d", 2020, 1:4), c(10, 9, 11, 10)),
                         business = paste0("B", 
                                           c(1, 1, 1, 2, 2, 2, 3, 3, 3, 3,
@@ -18,6 +18,7 @@ ms_weights <- data.frame(business = paste0("B", 1:5),
 
 ms_prices$price[c(2, 13:15, 21, 31)] <- NA
 
+#---- Fixed-sample data ----
 fs_prices <- data.frame(period = rep(sprintf("%d%02d", 2020, 1:4), c(11, 11, 9, 9)),
                         business = paste0("B", c(1:11, 1:11, 3:11, 3:11)),
                         classification = c("111", "111", "112", "112", "112", "112", "121", "121", "122", "122", "131",
@@ -32,3 +33,17 @@ fs_prices$price[c(2, 20:21, 23, 40)] <- NA
 
 fs_weights <- data.frame(classification = c("111", "112", "121", "122", "131"),
                          weight = round(runif(5) * 1000, 0))
+
+#---- Big data ----
+big_prices <- data.frame(period = sprintf("%d%02d", 2020, 1:12),
+                         business = rep(paste0("B", 1:5000), each = 120),
+                         product = rep(1:50000, each = 12),
+                         price = runif(6e5, 0.5, 2))
+
+big_weights <- data.frame(business = paste0("B", 1:5000),
+                          classification = paste0(1, 
+                                                  rep(1:2, each = 2500), 
+                                                  rep(1:5, each = 500), 
+                                                  rep(1:5, each = 100), 
+                                                  rep(1:5, each = 20)),
+                          weight = runif(5000, 10, 1000))

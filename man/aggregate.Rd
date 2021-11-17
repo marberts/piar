@@ -69,6 +69,7 @@ An object of class \code{aggregate}, inheriting from class \code{index}, which h
 \item{contributions}{A named list with an entry for each \code{period}, which itself contains a list with an entry for each level in \code{pias} with a named vector that gives the additive contribution for each price relative.}
 \item{levels}{The levels for \code{pias}.}
 \item{periods}{The levels for \code{period}.}
+\item{contrib}{The value of \code{contrib} from \code{x}.}
 \item{weights}{A named list with an entry for each \code{period} that contains the weights used to aggregate the elemental indexes for each period.}
 \item{r, chained}{The values for \code{r} and \code{chained}, usually \code{1} and \code{TRUE}.}
 \item{pias}{A list containing the \code{child}, \code{parent}, \code{eas}, and \code{height} components of \code{pias}.}
