@@ -12,13 +12,16 @@ as_elemental_index.matrix <- function(x, ...) {
   if (is.null(colnames(x))) colnames(x) <- seq_len(ncol(x))
   levels <- as.character(rownames(x)) # as.character is for matrices without rows
   periods <- as.character(colnames(x)) # same for columns
+  if (anyDuplicated(levels) || anyDuplicated(periods)) {
+    stop(gettext("'x' cannot have duplicated row or column names"))
+  }
   res <- list(index = NULL, contributions = NULL, levels = levels, 
               periods = periods, contrib = FALSE)
   res$index <- res$contributions <- 
     structure(vector("list", ncol(x)), names = periods)
   contrib <- structure(rep(list(numeric(0)), length(levels)), names = levels)
   for (i in seq_along(periods)) {
-    res$index[[i]] <- x[, i]
+    res$index[[i]] <- x[, i, drop = nrow(x) > 1] # EA names are not kept for matrices with 1 row
     res$contributions[[i]] <- contrib
   }
   structure(res, class = c("elemental", "index"))

@@ -137,3 +137,6 @@ as.data.frame(epr2, type = "contributions")
 
 # It shouldn't be possible to make a non-numeric index
 is.numeric(as.matrix(as_elemental_index(data.frame(a = as.character(1:5), b = 1:5))))
+
+# Nor one without EA names
+as_elemental_index(matrix(1:5, ncol = 5, dimnames = list("a", 1:5)))

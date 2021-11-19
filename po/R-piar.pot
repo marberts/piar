@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: piar 0.2.0.9009\n"
-"POT-Creation-Date: 2021-10-22 11:14\n"
+"Project-Id-Version: piar 0.2.1.9002\n"
+"POT-Creation-Date: 2021-11-19 15:48\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,6 +41,9 @@ msgid "there are duplicated nodes in the aggregation structure; the same value c
 msgstr ""
 
 msgid "some nodes in the price index aggregation structure have multiple parent nodes; the aggregation structure does not represent a nested hierarchy"
+msgstr ""
+
+msgid "'x' cannot have duplicated row or column names"
 msgstr ""
 
 msgid "'x', 'period', and 'ea' must be the same length"

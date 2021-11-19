@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: piar 0.1.0.9029\n"
-"POT-Creation-Date: 2021-10-22 11:14\n"
+"POT-Creation-Date: 2021-11-19 15:48\n"
 "PO-Revision-Date: 2021-06-07 23:19\n"
 "Last-Translator: Steve Martin <steve.martin5@canada.ca>\n"
 "Language-Team: none\n"
@@ -66,6 +66,9 @@ msgstr ""
 "plusieurs nœuds parents.; la structure d'agrégation ne représente pas une "
 "hiérarchie imbriquée"
 
+msgid "'x' cannot have duplicated row or column names"
+msgstr "'x' ne peut pas avoir de noms de lignes ou de colonnes dupliqués"
+
 msgid "'x', 'period', and 'ea' must be the same length"
 msgstr "'x', 'period' et 'ea' doivent avoir la même longueur"
 
@@ -103,7 +106,9 @@ msgid "cannot merge aggregated indexes"
 msgstr "impossible de fusionner des index agrégés"
 
 msgid "'y' is not an elemental index; use elemental_index() to make one"
-msgstr "'y' n'est pas un indice élémentaire ; utilisez elemental_index() pour en faire un"
+msgstr ""
+"'y' n'est pas un indice élémentaire ; utilisez elemental_index() pour en "
+"faire un"
 
 msgid "'x' and 'y' must be indexes for the same time periods"
 msgstr "'x' et 'y' doivent être des index pour les mêmes périodes"
@@ -113,17 +118,18 @@ msgstr "certains niveaux apparaissent à la fois dans 'x' et 'y'"
 
 msgid "'y' is not an aggregate index; use aggregate() to make one"
 msgstr ""
-"'y' n'est pas un indice agrégé; utilisez aggregate.index() pour en "
-"faire un"
+"'y' n'est pas un indice agrégé; utilisez aggregate.index() pour en faire un"
 
 msgid "cannot stack indexes of different orders"
 msgstr "ne peut pas empiler des index d'ordres différents"
 
 msgid "cannot stack a period-over-period and a fixed-base index"
-msgstr "ne peut pas empiler un indice période sur période et un indice à base fixe"
+msgstr ""
+"ne peut pas empiler un indice période sur période et un indice à base fixe"
 
 msgid "'x' and 'y' must be generated from the same aggregation structure"
-msgstr "'x' et 'y' doivent être générés à partir de la même structure d'agrégation"
+msgstr ""
+"'x' et 'y' doivent être générés à partir de la même structure d'agrégation"
 
 msgid "'x' and 'y' must be indexes for the same levels"
 msgstr "'x' et 'y' doivent être des index pour les mêmes niveaux"
