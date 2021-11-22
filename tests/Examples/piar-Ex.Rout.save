@@ -324,7 +324,20 @@ b 2.901905 6.761234
 [1] "111TA"   "112TA"   "121NANA"
 
 > 
+> # Delimiters in the classification (like COICOP) can be handled
+> # with the 'width' argument
+> expand_classification(c("01.1.1", "01.1.2", "01.2.1"), width = c(2, 2, 2))
+[[1]]
+[1] "01" "01" "01"
+
+[[2]]
+[1] "01.1" "01.1" "01.2"
+
+[[3]]
+[1] "01.1.1" "01.1.2" "01.2.1"
+
 > 
+>
 > 
 > cleanEx()
 > nameEx("impute_prices")

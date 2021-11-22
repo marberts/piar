@@ -21,7 +21,8 @@ as_elemental_index.matrix <- function(x, ...) {
     structure(vector("list", ncol(x)), names = periods)
   contrib <- structure(rep(list(numeric(0)), length(levels)), names = levels)
   for (i in seq_along(periods)) {
-    res$index[[i]] <- x[, i, drop = nrow(x) > 1] # EA names are not kept for matrices with 1 row
+    # EA names are not kept for matrices with 1 row
+    res$index[[i]] <- structure(x[, i], names = rownames(x))
     res$contributions[[i]] <- contrib
   }
   structure(res, class = c("elemental", "index"))
