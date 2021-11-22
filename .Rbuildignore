@@ -4,5 +4,5 @@
 ^data-raw$
 ^\.github$
 ^LICENSE\.md$
-
+^README\.Rmd$
 ^man/adjust_weights\.Rd$

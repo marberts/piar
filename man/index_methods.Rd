@@ -62,7 +62,7 @@ The \code{unstack()} method breaks up \code{x} into a list of indexes, one for e
 
 The \code{levels()} method extracts the levels of an index.
 
-The \code{time()} method extracts the time period of the index. The \code{start()} and \code{end()} methods extract the first and last time periods.
+The \code{time()} method extracts the time periods of the index. The \code{start()} and \code{end()} methods extract the first and last time period.
 }
 
 \seealso{
