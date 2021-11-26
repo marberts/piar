@@ -215,8 +215,8 @@ b 2.828427 6.928203
 > # Extract the indexes like a matrix
 > 
 > epr["a", ]
-       1        2 
-1.732051 5.916080 
+         1       2 
+a 1.732051 5.91608 
 > 
 > epr[, 1:2]
          1        2
@@ -370,9 +370,9 @@ b 2.901905 6.761234
 > 
 > ### Name: index_methods
 > ### Title: Methods for index objects
-> ### Aliases: index_methods as.data.frame.index as.matrix.index
-> ###   cumprod.index merge.index stack.index unstack.index levels.index
-> ###   time.index start.index end.index
+> ### Aliases: index_methods [.index [<-.index as.data.frame.index 
+> ###   as.matrix.index cumprod.index merge.index stack.index unstack.index
+> ###   levels.index time.index start.index end.index
 > 
 > ### ** Examples
 > 
@@ -442,7 +442,15 @@ b 2.828427 6.928203 2.828427 6.928203
 > end(epr)
 [1] "2"
 > 
+> # Index values can be replaced like a matrix
+>
+> epr[1, "2"] <- 1
+> epr
+         1        2
+a 1.732051 1.000000
+b 2.828427 6.928203
 > 
+>
 > 
 > cleanEx()
 > nameEx("price_relative")

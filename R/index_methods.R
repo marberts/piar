@@ -22,8 +22,18 @@ as.matrix.index <- function(x, type = c("index", "contributions"), ...) {
 }
 
 #---- Extract ----
-`[.index` <- function(x, i, j, drop = TRUE) {
-  as.matrix(x)[i, j, drop = drop]
+`[.index` <- function(x, i, j) {
+  as.matrix(x)[i, j, drop = FALSE]
+}
+
+`[<-.index` <- function(x, i, j, value) {
+  res <- as.matrix(x)
+  res[i, j] <- as.numeric(value)
+  for (t in seq_along(x$periods)) {
+    x$index[[t]][i] <- res[i, t]
+    if (x$contrib) x$contributions[[t]][i] <- list(numeric(0))
+  }
+  x
 }
 
 levels.index <- function(x) {

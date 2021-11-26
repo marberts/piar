@@ -293,7 +293,7 @@ pias2 <- update(ms_index1)
 This produces two sets of period-over-period indexes that can now be combined together with standard matrix operations. Chaining the index just involves taking the cumulative product.
 
 ```{r}
-(ms_index <- cbind(ms_index1[], ms_index2[, -1, drop = FALSE]))
+(ms_index <- cbind(ms_index1[], ms_index2[, -1]))
 apply(ms_index, 1, cumprod)
 ```
 

@@ -144,7 +144,7 @@ pias2 <- update(ms_index1)
 (ms_index2 <- aggregate(ms_epr2, pias2, na.rm = TRUE))
 
 ## -----------------------------------------------------------------------------
-(ms_index <- cbind(ms_index1[], ms_index2[, -1, drop = FALSE]))
+(ms_index <- cbind(ms_index1[], ms_index2[, -1]))
 apply(ms_index, 1, cumprod)
 
 ## -----------------------------------------------------------------------------

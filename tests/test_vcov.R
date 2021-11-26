@@ -42,12 +42,12 @@ apply(covar, 3, function(x) all(diag(x) >= 0))
 # Variance for higher levels should agree with manual calculation
 # Period 1
 rws <- apply(rw * weights$ew, 2, scale_weights)
-all.equal(sum(crossprod(epr[, 1], tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * epr[, 1]),
+all.equal(sum(crossprod(epr[, 1], tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * t(epr[, 1])),
           covar[1, 1, 1])
 
 # Period 2
 rws <- apply(rw * weights(index)[, 2] / weights$dw, 2, scale_weights)
-all.equal(sum(crossprod(epr[, 2], tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * epr[, 2]),
+all.equal(sum(crossprod(epr[, 2], tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * t(epr[, 2])),
           covar[1, 1, 2])
 
 #---- mse = TRUE case ----
@@ -64,10 +64,10 @@ apply(covar, 3, function(x) all(diag(x) >= 0))
 # Period 1
 rws <- apply(rw * weights$ew, 2, scale_weights)
 w <- weights(pias, ea_only = TRUE)
-all.equal(sum(crossprod(epr[, 1], tcrossprod(sweep(rws, 1, scale_weights(w))) / 25) * epr[, 1]),
+all.equal(sum(crossprod(epr[, 1], tcrossprod(sweep(rws, 1, scale_weights(w))) / 25) * t(epr[, 1])),
           covar[1, 1, 1])
 
 # Period 2
 rws <- apply(rw * weights(index)[, 2] / weights$dw, 2, scale_weights)
-all.equal(sum(crossprod(epr[, 2], tcrossprod(sweep(rws, 1, scale_weights(weights(index)[, 2]))) / 25) * epr[, 2]),
+all.equal(sum(crossprod(epr[, 2], tcrossprod(sweep(rws, 1, scale_weights(weights(index)[, 2]))) / 25) * t(epr[, 2])),
           covar[1, 1, 2])

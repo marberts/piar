@@ -1,5 +1,7 @@
 \name{index_methods}
 \alias{index_methods}
+\alias{[.index}
+\alias{[<-.index}
 \alias{as.data.frame.index}
 \alias{as.matrix.index}
 \alias{cumprod.index}
@@ -21,6 +23,8 @@ Methods to put index values/quote contributions in a tabular form, chain an inde
 }
 
 \usage{
+\method{[}{index}(x, i, j)
+
 \method{as.data.frame}{index}(x, row.names = NULL, ..., type = c("index", "contributions"))
 
 \method{as.matrix}{index}(x, type = c("index", "contributions"), ...)
@@ -44,12 +48,15 @@ Methods to put index values/quote contributions in a tabular form, chain an inde
 
 \arguments{
 \item{x, y}{An object of class \code{index}, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{i, j}{See \link{Extract}.}
 \item{type}{A character vector specifying whether index values (the default) or quote contributions should be coerced into a data.frame/matrix.}
 \item{row.names}{Same as \code{\link[=as.data.frame]{as.data.frame()}}.}
 \item{...}{Further arguments passed to or used by methods.}
 }
 
 \value{
+The extraction method treats \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped; indexing \code{x} always returns a matrix. This means that indexing with a matrix is not possible. As \code{x} is not an atomic vector, indexing with a single index like `\code{x[1]} is taken to be the same as \code{x[1, ]}. The replacement method similarly treats \code{x} as a matrix, and behaves the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding quote contributions (if any).
+
 The \code{as.data.frame()} method turns an index/quote contributions into a data frame with three columns: period, level, and value.
 
 The \code{as.matrix()} method turns an index into a matrix with a row for each level and a column for each period. Quote contributions are padded with NAs to fit into a rectangular array.
@@ -108,4 +115,9 @@ levels(epr)
 time(epr)
 start(epr)
 end(epr)
+
+# Index values can be replaced like a matrix
+
+epr[1, "2"] <- 1
+epr
 }

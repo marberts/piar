@@ -73,6 +73,22 @@ $contrib
 > all.equal(as.data.frame(elemental_index(numeric(0)), type = "contributions"),
 +           data.frame(period = character(0), level = character(0), value = numeric(0)))
 [1] TRUE
+>
+> # Make sure indexing methods work with length-0 indexes
+> epr <- elemental_index(integer(0), integer(0), integer(0))
+> epr[]
+<0 x 0 matrix>
+> epr[0, ]
+<0 x 0 matrix>
+> epr[, 0]
+<0 x 0 matrix>
+> epr[-1, ]
+<0 x 0 matrix>
+> epr[-1]
+<0 x 0 matrix>
+> epr[0] <- 1
+> all.equal(epr, elemental_index(integer(0), integer(0), integer(0)))
+[1] TRUE
 > 
 > # Make indexes with some random data
 > dat <- data.frame(rel = replace(rlnorm(1e4), sample(1e4, 10), NA),
@@ -290,11 +306,14 @@ $contrib
 8      2  12.1        NA
 9      2  14.1 7.0000000
 > epr[, 1]
-      11       12       13       14 
-1.414214 3.464102 5.000000      NaN 
+          1
+11 1.414214         
+12 3.464102
+13 5.000000
+14      NaN
 > epr[1, ]
-       1        2 
-1.414214 6.480741 
+          1        2 
+11 1.414214 6.480741 
 > cumprod(epr)
           1        2
 11 1.414214 9.165151
@@ -319,8 +338,17 @@ $contrib
 [1] period level  value 
 <0 rows> (or 0-length row.names)
 >
+> epr[] <- epr2[]
+> all.equal(epr[-5], epr2[-5]) # contrib doesn't match
+[1] TRUE
+>
 > # It shouldn't be possible to make a non-numeric index
-> is.numeric(as.matrix(as_elemental_index(data.frame(a = as.character(1:5), b = 1:5))))
+> epr <- as_elemental_index(data.frame(a = as.character(1:5), b = 1:5))
+> is.numeric(as.matrix(epr))
+[1] TRUE
+> 
+> epr[, "b"] <- as.character(1:5)
+> all.equal(epr, as_elemental_index(data.frame(a = as.character(1:5), b = 1:5)))
 [1] TRUE
 >
 > # Nor one without EA names

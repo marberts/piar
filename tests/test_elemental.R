@@ -22,6 +22,16 @@ all.equal(as.data.frame(elemental_index(numeric(0))),
 all.equal(as.data.frame(elemental_index(numeric(0)), type = "contributions"),
           data.frame(period = character(0), level = character(0), value = numeric(0)))
 
+# Make sure indexing methods work with length-0 indexes
+epr <- elemental_index(integer(0), integer(0), integer(0))
+epr[]
+epr[0, ]
+epr[, 0]
+epr[-1, ]
+epr[-1]
+epr[0] <- 1
+all.equal(epr, elemental_index(integer(0), integer(0), integer(0)))
+
 # Make indexes with some random data
 dat <- data.frame(rel = replace(rlnorm(1e4), sample(1e4, 10), NA),
                   period = sample(letters, 1e4, TRUE),
@@ -135,8 +145,15 @@ all.equal(epr$periods, epr2$periods)
 as.matrix(epr2, type = "contributions")
 as.data.frame(epr2, type = "contributions")
 
+epr[] <- epr2[]
+all.equal(epr[-5], epr2[-5]) # contrib doesn't match
+
 # It shouldn't be possible to make a non-numeric index
-is.numeric(as.matrix(as_elemental_index(data.frame(a = as.character(1:5), b = 1:5))))
+epr <- as_elemental_index(data.frame(a = as.character(1:5), b = 1:5))
+is.numeric(as.matrix(epr))
+
+epr[, "b"] <- as.character(1:5)
+all.equal(epr, as_elemental_index(data.frame(a = as.character(1:5), b = 1:5)))
 
 # Nor one without EA names
 as_elemental_index(matrix(1:5, ncol = 5, dimnames = list("a", 1:5)))
