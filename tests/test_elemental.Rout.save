@@ -355,6 +355,135 @@ $contrib
 > as_elemental_index(matrix(1:5, ncol = 5, dimnames = list("a", 1:5)))
   1 2 3 4 5
 a 1 2 3 4 5
+>
+> # Test replacement method
+> epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
+> 
+> epr[, 1] <- 0
+> epr
+   1        2
+11 0 6.480741
+12 0       NA
+13 0      NaN
+14 0 8.000000
+> epr$contributions
+$`1`
+$`1`$`11`
+numeric(0)
+
+$`1`$`12`
+numeric(0)
+
+$`1`$`13`
+numeric(0)
+
+$`1`$`14`
+numeric(0)
+
+
+$`2`
+$`2`$`11`
+       1        2 
+2.596297 2.884444 
+
+$`2`$`12`
+ 1 
+NA 
+
+$`2`$`13`
+numeric(0)
+
+$`2`$`14`
+1 
+7 
+
+
+> 
+> epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
+> 
+> epr[1:2, "2"] <- 0
+> epr
+          1   2
+11 1.414214   0
+12 3.464102   0
+13 5.000000 NaN
+14      NaN   8
+> epr$contributions
+$`1`
+$`1`$`11`
+        1         2 
+0.0000000 0.4142136 
+
+$`1`$`12`
+       1        2 
+1.071797 1.392305 
+
+$`1`$`13`
+1 
+4 
+
+$`1`$`14`
+numeric(0)
+
+
+$`2`
+$`2`$`11`
+numeric(0)
+
+$`2`$`12`
+numeric(0)
+
+$`2`$`13`
+numeric(0)
+
+$`2`$`14`
+1 
+7 
+
+
+> 
+> epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
+> 
+> epr[c(T, F, F, T), -1] <- 0
+> epr
+          1   2
+11 1.414214   0
+12 3.464102  NA
+13 5.000000 NaN
+14      NaN   0
+> epr$contributions
+$`1`
+$`1`$`11`
+        1         2 
+0.0000000 0.4142136 
+
+$`1`$`12`
+       1        2 
+1.071797 1.392305 
+
+$`1`$`13`
+1 
+4 
+
+$`1`$`14`
+numeric(0)
+
+
+$`2`
+$`2`$`11`
+numeric(0)
+
+$`2`$`12`
+ 1 
+NA 
+
+$`2`$`13`
+numeric(0)
+
+$`2`$`14`
+numeric(0)
+
+
 > 
 > proc.time()
    user  system elapsed 

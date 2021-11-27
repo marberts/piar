@@ -29,7 +29,8 @@ as.matrix.index <- function(x, type = c("index", "contributions"), ...) {
 `[<-.index` <- function(x, i, j, value) {
   res <- as.matrix(x)
   res[i, j] <- as.numeric(value)
-  for (t in seq_along(x$periods)) {
+  cols <- colnames(res[0, j, drop = FALSE])
+  for (t in match(cols, colnames(res))) {
     x$index[[t]][i] <- res[i, t]
     if (x$contrib) x$contributions[[t]][i] <- list(numeric(0))
   }

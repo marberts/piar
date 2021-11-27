@@ -157,3 +157,22 @@ all.equal(epr, as_elemental_index(data.frame(a = as.character(1:5), b = 1:5)))
 
 # Nor one without EA names
 as_elemental_index(matrix(1:5, ncol = 5, dimnames = list("a", 1:5)))
+
+# Test replacement method
+epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
+
+epr[, 1] <- 0
+epr
+epr$contributions
+
+epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
+
+epr[1:2, "2"] <- 0
+epr
+epr$contributions
+
+epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
+
+epr[c(T, F, F, T), -1] <- 0
+epr
+epr$contributions
