@@ -484,7 +484,50 @@ $`2`$`14`
 numeric(0)
 
 
+>
+> epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
 > 
+> epr["11", ] <- 0
+> epr
+          1   2
+11 0.000000   0
+12 3.464102  NA
+13 5.000000 NaN
+14      NaN   8
+> epr$contributions
+$`1`
+$`1`$`11`
+numeric(0)
+
+$`1`$`12`
+       1        2 
+1.071797 1.392305 
+
+$`1`$`13`
+1 
+4 
+
+$`1`$`14`
+numeric(0)
+
+
+$`2`
+$`2`$`11`
+numeric(0)
+
+$`2`$`12`
+ 1 
+NA 
+
+$`2`$`13`
+numeric(0)
+
+$`2`$`14`
+1 
+7 
+
+
+>
 > proc.time()
    user  system elapsed 
   0.216   0.008   0.218 

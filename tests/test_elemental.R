@@ -176,3 +176,9 @@ epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
 epr[c(T, F, F, T), -1] <- 0
 epr
 epr$contributions
+
+epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
+
+epr["11", ] <- 0
+epr
+epr$contributions
