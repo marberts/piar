@@ -170,3 +170,28 @@ print.index <- function(x, ...) {
   print(as.matrix(x), ...)
   invisible(x)
 }
+
+head.index <- function(x, ...) {
+  head(as.matrix(x), ...)
+}
+
+tail.index <- function(x,  ...) {
+  tail(as.matrix(x), ...)
+}
+
+summary.index <- function(object, ...) {
+  res <- structure(vector("list", 2), names = c("index", "contrib"))
+  res$index <- summary(as.matrix(object), ...)
+  res$contrib <- if (object$contrib) summary(as.matrix(object, "contributions"), ...)
+  structure(res, class = "index_summary")
+}
+
+print.index_summary <- function(x, ...) {
+  cat("Indexes\n")
+  print(x$index)
+  if (!is.null(x$contrib)) {
+    cat("\nContributions\n")
+    print(x$contrib)
+  }
+  invisible(x)
+}

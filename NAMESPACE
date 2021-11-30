@@ -21,6 +21,10 @@ S3method(levels, index)
 S3method(time, index)
 S3method(start, index)
 S3method(end, index)
+S3method(head, index)
+S3method(tail, index)
+S3method(summary, index)
+S3method(print, index_summary)
 
 S3method(weights, aggregate)
 S3method(update, aggregate)
@@ -36,7 +40,7 @@ S3method(as_elemental_index, aggregate)
 
 importFrom(stats, aggregate, weights, update, time, start, end)
 
-importFrom(utils, stack, unstack)
+importFrom(utils, stack, unstack, head, tail)
 
 importFrom(gpindex, generalized_mean, factor_weights, contributions, 
            transmute_weights, scale_weights, back_price, nested_mean, nested_contributions)

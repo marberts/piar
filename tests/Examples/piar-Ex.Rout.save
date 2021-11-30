@@ -372,7 +372,8 @@ b 2.901905 6.761234
 > ### Title: Methods for index objects
 > ### Aliases: index_methods [.index [<-.index as.data.frame.index 
 > ###   as.matrix.index cumprod.index merge.index stack.index unstack.index
-> ###   levels.index time.index start.index end.index
+> ###   levels.index time.index start.index end.index head.index tail.index
+> ###   summary.index
 > 
 > ### ** Examples
 > 
@@ -449,6 +450,27 @@ b 2.828427 6.928203 2.828427 6.928203
          1        2
 a 1.732051 1.000000
 b 2.828427 6.928203
+>
+> # Summarize an index
+>
+> summary(with(prices, elemental_index(rel, period, ea, contrib = TRUE)))
+Indexes
+       1               2        
+ Min.   :1.732   Min.   :5.916  
+ 1st Qu.:2.006   1st Qu.:6.169  
+ Median :2.280   Median :6.422  
+ Mean   :2.280   Mean   :6.422  
+ 3rd Qu.:2.554   3rd Qu.:6.675  
+ Max.   :2.828   Max.   :6.928  
+
+Contributions
+       1                2        
+ Min.   :0.0000   Min.   :2.168  
+ 1st Qu.:0.4393   1st Qu.:2.552  
+ Median :0.6589   Median :2.714  
+ Mean   :0.6401   Mean   :2.711  
+ 3rd Qu.:0.8597   3rd Qu.:2.873  
+ Max.   :1.2426   Max.   :3.249  
 > 
 >
 > 

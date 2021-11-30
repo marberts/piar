@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/marberts/piar/workflows/R-CMD-check/badge.svg)](https://github.com/marberts/piar/actions)
-[![codecov](https://codecov.io/gh/marberts/piar/branch/master/graph/badge.svg?token=lHDHsGHsLd)](https://codecov.io/gh/marberts/piar)
+[![codecov](https://codecov.io/gh/marberts/piar/branch/master/graph/badge.svg?token=lHDHsGHsLd)](https://app.codecov.io/gh/marberts/piar)
 <!-- badges: end -->
 
 Most price indexes are made with a two-step procedure, where
@@ -16,14 +16,15 @@ then be chained together to form a time series that gives the evolution
 of prices with respect to a fixed base period. This package contains a
 collections of functions that revolve around this work flow, making it
 easy to build standard price indexes, and implement the methods
-described by Balk (2008, <ISBN:978-1-107-40496-0>), von der Lippe (2001,
-<ISBN:3-8246-0638-0>), and the CPI manual (2020,
-<ISBN:978-1-51354-298-0>) for bilateral price indexes.
+described by Balk (2008), von der Lippe (2001), and the CPI manual
+(2020) for bilateral price indexes.
 
 ## Installation
 
+The development version is available on Github.
+
 ``` r
-devtools::install_github(c("marberts/gpindex", "marberts/piar"))
+devtools::install_github("marberts/piar")
 ```
 
 ## Usage
@@ -96,3 +97,15 @@ cumprod(index)
 #> B4      1 1.3007239 1.3827662 6.3279338
 #> B5      1 1.3007239 1.3827662 6.3279338
 ```
+
+## References
+
+Balk, B. M. (2008). *Price and Quantity Index Numbers*. Cambridge
+University Press.
+
+ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). *Consumer Price
+Index Manual: Theory and Practice*. International Monetary Fund.
+
+von der Lippe, P. (2001). *Chain Indices: A Study in Price Index
+Theory*, Spectrum of Federal Statistics vol. 16. Federal Statistical
+Office, Wiesbaden.
