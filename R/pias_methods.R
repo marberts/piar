@@ -3,7 +3,7 @@ weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
   if (!object$height) return(list())
   res <- vector("list", object$height)
   res[[1]] <- object$weights
-  # 'i' is defined in the loop below
+  # 'i' is defined in the loop below for looping over the height of pias
   add_weights <- function(z) {
     sum(res[[i - 1]][z], na.rm = na.rm)
   }

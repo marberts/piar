@@ -30,6 +30,7 @@ as.matrix.index <- function(x, type = c("index", "contributions"), ...) {
   res <- as.matrix(x)
   res[i, j] <- as.numeric(value)
   periods <- colnames(res[0, j, drop = FALSE])
+  # only loop over periods that have a value replaced
   for (t in periods) {
     x$index[[t]][i] <- res[i, t]
     if (x$contrib) x$contributions[[t]][i] <- list(numeric(0))
@@ -69,8 +70,9 @@ update.aggregate <- function(object, period = end(object), ...) {
     price_update(object$index[[period]][object$pias$eas],
                  object$weights[[period]])
   } else {
-    structure(rep_len(NA_real_, length(object$pias$eas)), 
-              names = object$pias$eas)
+    # it's possible to have an index with levels and no periods,
+    # in which case price updating should return NAs
+    rep_len(NA_real_, length(object$pias$eas))
   }
   aggregate2pias(object, w)
 }
@@ -165,7 +167,7 @@ unstack.index <- function(x, ...) {
   res
 }
 
-#---- Print ----
+#---- Printing ----
 print.index <- function(x, ...) {
   print(as.matrix(x), ...)
   invisible(x)
@@ -179,10 +181,13 @@ tail.index <- function(x,  ...) {
   tail(as.matrix(x), ...)
 }
 
+#---- Summary ----
 summary.index <- function(object, ...) {
   res <- structure(vector("list", 2), names = c("index", "contrib"))
   res$index <- summary(as.matrix(object), ...)
-  res$contrib <- if (object$contrib) summary(as.matrix(object, "contributions"), ...)
+  res$contrib <- if (object$contrib) {
+    summary(as.matrix(object, "contributions"), ...)
+  }
   structure(res, class = "index_summary")
 }
 

@@ -37,16 +37,24 @@ vcov.aggregate <- function(object, repweights, mse = TRUE, ...) {
   if (nrow(repweights) != length(object$pias$eas)) {
     stop(gettext("'repweights' must have a row for each weight in 'pias'"))
   }
+  # it is possible to have levels but no periods, so return an empty array
+  if (!length(object$periods)) {
+    return(array(numeric(0), c(0, 0, 0), dimnames = list(NULL, NULL, NULL)))
+  }
   n <- ncol(repweights)
   eas <- object$pias$eas
-  pias <- aggregate2pias(object, structure(numeric(length(eas)), names = eas))
-  upper <- if (length(object$periods)) setdiff(object$levels, object$pias$eas)
+  upper <- setdiff(object$levels, object$pias$eas)
   dimnm <- list(upper, object$periods, seq_len(n))
+  # initialize an aggregation structure with no weights and an array to store
+  # indexes for looping over repweights
+  pias <- aggregate2pias(object, numeric(length(eas)))
   index_boot <- array(0, dim = lengths(dimnm), dimnames = dimnm)
   for (i in seq_len(n)) {
     pias$weights[] <- repweights[, i]
     index_boot[, , i] <- .aggregate(object, pias, object$chained, object$r)[upper, , drop = FALSE]
   }
+  # mse = TRUE is the default for variance estimation in SAS, 
+  # but not the survey package
   centre <- if (mse) {
     as.matrix(object)[upper, , drop = FALSE]
   } else {
