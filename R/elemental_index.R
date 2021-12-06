@@ -37,10 +37,10 @@
   }
   # return 'elemental' object
   res <- list(index = index,
-              contributions = contributions,
+              contrib = contributions,
               levels = levels(ea),
-              periods = levels(period),
-              contrib = contrib)
+              time = levels(period),
+              has_contrib = contrib)
   structure(res, class = c("elemental", "index"))
 }
 

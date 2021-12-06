@@ -68,11 +68,11 @@ all.equal(cumprod(epr1), t(apply(as.matrix(epr1), 1, cumprod)))
 
 # Contributions should add up
 all.equal(epr1$index, 
-          lapply(epr1$contributions, function(x) sapply(x, sum) + 1))
+          lapply(epr1$contrib, function(x) sapply(x, sum) + 1))
 all.equal(epr2$index, 
-          lapply(epr2$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
+          lapply(epr2$contrib, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 all.equal(epr3$index, 
-          lapply(epr3$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
+          lapply(epr3$contrib, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 
 # Compare Fisher index with the manual calculation
 l <- with(dat, elemental_index(rel, period, ea, w1, r = 1, na.rm = TRUE))
@@ -88,9 +88,9 @@ all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 # Test merge.index() method
 epr3 <- merge(epr1, epr2)
 all.equal(epr3[], rbind(epr1[], epr2[]))
-all.equal(epr3$index$a, sapply(epr3$contributions$a, sum, na.rm = TRUE) + 1)
+all.equal(epr3$index$a, sapply(epr3$contrib$a, sum, na.rm = TRUE) + 1)
 epr3$levels
-epr3$periods
+epr3$time
 
 # Merging length-0 indexes does nothing
 all.equal(merge(elemental_index(integer(0), integer(0), integer(0)), 
@@ -104,9 +104,9 @@ epr2 <- with(
 )
 epr3 <- stack(epr1, epr2)
 all.equal(epr3[], cbind(epr1[], epr2[]))
-all.equal(epr3$index$A, sapply(epr3$contributions$A, sum, na.rm = TRUE) + 1)
+all.equal(epr3$index$A, sapply(epr3$contrib$A, sum, na.rm = TRUE) + 1)
 epr3$levels
-epr3$periods
+epr3$time
 
 # Stacking and unstacking are opposite operations
 all.equal(epr1, Reduce(stack, unstack(epr1)))
@@ -128,9 +128,8 @@ dat <- data.frame(rel = c(1:6, NA, 7, 8),
 (epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE)))
 unclass(epr)
 as.matrix(epr)
-as.matrix(epr, type = "contributions")
+contrib(epr)
 as.data.frame(epr)
-as.data.frame(epr, type = "contributions")
 epr[, 1]
 epr[1, ]
 cumprod(epr)
@@ -140,10 +139,9 @@ epr2 <- with(dat, elemental_index(rel, period, ea))
 all.equal(epr[], epr2[])
 all.equal(epr2, with(as.data.frame(epr2), elemental_index(value, period, level)))
 all.equal(epr$levels, epr2$levels)
-all.equal(epr$periods, epr2$periods)
+all.equal(epr$time, epr2$time)
 
-as.matrix(epr2, type = "contributions")
-as.data.frame(epr2, type = "contributions")
+contrib(epr2)
 
 epr[] <- epr2[]
 all.equal(epr[-5], epr2[-5]) # contrib doesn't match
@@ -163,22 +161,22 @@ epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
 
 epr[, 1] <- 0
 epr
-epr$contributions
+epr$contrib
 
 epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
 
 epr[1:2, "2"] <- 0
 epr
-epr$contributions
+epr$contrib
 
 epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
 
 epr[c(T, F, F, T), -1] <- 0
 epr
-epr$contributions
+epr$contrib
 
 epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
 
 epr["11", ] <- 0
 epr
-epr$contributions
+epr$contrib

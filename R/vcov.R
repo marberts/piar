@@ -11,7 +11,7 @@
   eas <- pias$eas
   w <- rev(weights(pias))
   # loop over each time period
-  for (t in seq_along(x$periods)) {
+  for (t in seq_along(x$time)) {
     rel <- vector("list", pias$height)
     # align epr with weights so that positional indexing works
     # preserve names if epr and pias weights don't agree
@@ -38,13 +38,13 @@ vcov.aggregate <- function(object, repweights, mse = TRUE, ...) {
     stop(gettext("'repweights' must have a row for each weight in 'pias'"))
   }
   # it is possible to have levels but no periods, so return an empty array
-  if (!length(object$periods)) {
+  if (!length(object$time)) {
     return(array(numeric(0), c(0, 0, 0), dimnames = list(NULL, NULL, NULL)))
   }
   n <- ncol(repweights)
   eas <- object$pias$eas
   upper <- setdiff(object$levels, object$pias$eas)
-  dimnm <- list(upper, object$periods, seq_len(n))
+  dimnm <- list(upper, object$time, seq_len(n))
   # initialize an aggregation structure with no weights and an array to store
   # indexes for looping over repweights
   pias <- aggregate2pias(object, numeric(length(eas)))

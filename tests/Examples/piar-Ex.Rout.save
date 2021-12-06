@@ -373,7 +373,7 @@ b 2.901905 6.761234
 > ### Aliases: index_methods [.index [<-.index as.data.frame.index 
 > ###   as.matrix.index cumprod.index merge.index stack.index unstack.index
 > ###   levels.index time.index start.index end.index head.index tail.index
-> ###   summary.index
+> ###   summary.index contrib contrib.index
 > 
 > ### ** Examples
 > 

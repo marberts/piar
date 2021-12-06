@@ -1,24 +1,14 @@
 #---- Coerce ----
-as.data.frame.index <- function(x, row.names = NULL, ..., type = c("index", "contributions")) {
-  type <- match.arg(type)
-  res <- lapply(x[[type]], unlist)
+as.data.frame.index <- function(x, ...) {
   # as.numeric() ensures that the value column shows up with NULL values
-  value <- as.numeric(unlist(res, use.names = FALSE))
-  level <- nested_names(res)
-  period <- rep(x$periods, lengths(res))
-  data.frame(period, level, value, row.names = row.names, stringsAsFactors = FALSE)
+  value <- as.numeric(unlist(x$index, use.names = FALSE))
+  period <- rep(x$time, each = length(x$levels))
+  data.frame(period, level = x$levels, value, 
+             stringsAsFactors = FALSE)
 }
 
-as.matrix.index <- function(x, type = c("index", "contributions"), ...) {
-  type <- match.arg(type)
-  x <- if (type == "index") {
-    x$index
-  } else {
-    contrib <- lapply(x$contributions, unlist)
-    nm <- unique(nested_names(contrib))
-    lapply(contrib, named_extract, nm)
-  }
-  list2matrix(x)
+as.matrix.index <- function(x, ...) {
+  list2matrix(x$index)
 }
 
 #---- Extract ----
@@ -33,7 +23,7 @@ as.matrix.index <- function(x, type = c("index", "contributions"), ...) {
   # only loop over periods that have a value replaced
   for (t in periods) {
     x$index[[t]][i] <- res[i, t]
-    if (x$contrib) x$contributions[[t]][i] <- list(numeric(0))
+    if (x$has_contrib) x$contrib[[t]][i] <- list(numeric(0))
   }
   x
 }
@@ -43,19 +33,31 @@ levels.index <- function(x) {
 }
 
 time.index <- function(x, ...) {
-  x$periods
+  x$time
 }
 
 start.index <- function(x, ...) {
-  x$periods[min(length(x$period), 1L)]
+  x$time[min(length(x$time), 1L)]
 }
 
 end.index <- function(x, ...) {
-  x$periods[length(x$periods)]
+  x$time[length(x$time)]
 }
 
 weights.aggregate <- function(object, ...) {
   list2matrix(object$weights)
+}
+
+contrib <- function(x, ...) {
+  UseMethod("contrib")
+}
+
+contrib.index <- function(x, level = levels(x), ...) {
+  level <- match.arg(level)
+  res <- lapply(x$contrib, `[[`, level)
+  products <- unique(nested_names(res))
+  res <- lapply(res, named_extract, products)
+  list2matrix(res)
 }
 
 #---- Math ----
@@ -66,7 +68,7 @@ cumprod.index <- function(x) {
 
 update.aggregate <- function(object, period = end(object), ...) {
   price_update <- factor_weights(object$r)
-  w <- if (length(object$periods)) {
+  w <- if (length(object$time)) {
     price_update(object$index[[period]][object$pias$eas],
                  object$weights[[period]])
   } else {
@@ -90,7 +92,7 @@ merge.elemental <- function(x, y, ...) {
 }
 
 merge.index <- function(x, y, ...) {
-  if (any(x$periods != y$periods)) {
+  if (any(x$time != y$time)) {
     stop(gettext("'x' and 'y' must be indexes for the same time periods"))
   }
   if (length(intersect(x$levels, y$levels))) {
@@ -98,14 +100,14 @@ merge.index <- function(x, y, ...) {
   }
   if (!length(x$levels)) return(y)
   if (!length(y$levels)) return(x)
-  for (t in x$periods) {
+  for (t in x$time) {
     x$index[[t]] <- c(x$index[[t]], y$index[[t]])
-    x$contributions[[t]] <- c(x$contributions[[t]], y$contributions[[t]])
+    x$contrib[[t]] <- c(x$contrib[[t]], y$contrib[[t]])
     # might be useful if this method is extended to aggregated indexes
     # x$weights[[t]] <- c(x$weights[[t]], y$weights[[t]])
   }
   x$levels <- union(x$levels, y$levels)
-  x$contrib <- x$contrib || y$contrib
+  x$has_contrib <- x$has_contrib || y$has_contrib
   x
 }
 
@@ -136,28 +138,28 @@ stack.index <- function(x, y, ...) {
   if (any(x$levels != y$levels)) {
     stop(gettext("'x' and 'y' must be indexes for the same levels"))
   }
-  if (length(intersect(x$periods, y$periods))) {
+  if (length(intersect(x$time, y$time))) {
     warning(gettext("some periods appear in both 'x' and 'y'"))
   }
-  if (!length(x$periods)) return(y)
-  if (!length(y$periods)) return(x)
+  if (!length(x$time)) return(y)
+  if (!length(y$time)) return(x)
   x$index <- c(x$index, y$index)
-  x$contributions <- c(x$contributions, y$contributions)
-  x$periods <- union(x$periods, y$periods)
+  x$contrib <- c(x$contrib, y$contrib)
+  x$time <- union(x$time, y$time)
   x$weights <- c(x$weights, y$weights)
-  x$contrib <- x$contrib || y$contrib
+  x$has_contrib <- x$has_contrib || y$has_contrib
   x
 }
 
 unstack.index <- function(x, ...) {
-  if (!length(x$periods)) return(x)
-  res <- vector("list", length(x$periods))
+  if (!length(x$time)) return(x)
+  res <- vector("list", length(x$time))
   for (i in seq_along(res)) {
     res[[i]]$index <- x$index[i]
-    res[[i]]$contributions <- x$contributions[i]
+    res[[i]]$contrib <- x$contrib[i]
     res[[i]]$levels <- x$levels
-    res[[i]]$periods <- x$periods[i]
-    res[[i]]$contrib <- x$contrib
+    res[[i]]$time <- x$time[i]
+    res[[i]]$has_contrib <- x$has_contrib
     res[[i]]$weights <- x$weights[i]
     res[[i]]$r <- x$r
     res[[i]]$chained <- x$chained
@@ -184,9 +186,9 @@ tail.index <- function(x,  ...) {
 #---- Summary ----
 summary.index <- function(object, ...) {
   res <- structure(vector("list", 2), names = c("index", "contrib"))
-  res$index <- summary(as.matrix(object), ...)
-  res$contrib <- if (object$contrib) {
-    summary(as.matrix(object, "contributions"), ...)
+  res$index <- summary.data.frame(object$index, ...)
+  res$contrib <- if (object$has_contrib) {
+    summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
   }
   structure(res, class = "index_summary")
 }

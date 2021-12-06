@@ -25,16 +25,16 @@ Type 'q()' to quit R.
 $index
 named list()
 
-$contributions
+$contrib
 named list()
 
 $levels
 character(0)
 
-$periods
+$time
 character(0)
 
-$contrib
+$has_contrib
 [1] FALSE
 
 > 
@@ -42,16 +42,16 @@ $contrib
 $index
 named list()
 
-$contributions
+$contrib
 named list()
 
 $levels
 character(0)
 
-$periods
+$time
 character(0)
 
-$contrib
+$has_contrib
 [1] FALSE
 
 > 
@@ -129,13 +129,13 @@ $contrib
 > 
 > # Contributions should add up
 > all.equal(epr1$index, 
-+           lapply(epr1$contributions, function(x) sapply(x, sum) + 1))
++           lapply(epr1$contrib, function(x) sapply(x, sum) + 1))
 [1] TRUE
 > all.equal(epr2$index, 
-+           lapply(epr2$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
++           lapply(epr2$contrib, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 [1] TRUE
 > all.equal(epr3$index, 
-+           lapply(epr3$contributions, function(x) sapply(x, sum, na.rm = TRUE) + 1))
++           lapply(epr3$contrib, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 [1] TRUE
 > 
 > # Compare Fisher index with the manual calculation
@@ -157,11 +157,11 @@ Warning message:
 In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
 > all.equal(epr3[], rbind(epr1[], epr2[]))
 [1] TRUE
-> all.equal(epr3$index$a, sapply(epr3$contributions$a, sum, na.rm = TRUE) + 1)
+> all.equal(epr3$index$a, sapply(epr3$contrib$a, sum, na.rm = TRUE) + 1)
 [1] TRUE
 > epr3$levels
 [1] "1" "2" "3" "4" "5"
-> epr3$periods
+> epr3$time
  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
 [20] "t" "u" "v" "w" "x" "y" "z"
 > 
@@ -179,11 +179,11 @@ In merge.index(epr1, epr2) : some levels appear in both 'x' and 'y'
 > epr3 <- stack(epr1, epr2)
 > all.equal(epr3[], cbind(epr1[], epr2[]))
 [1] TRUE
-> all.equal(epr3$index$A, sapply(epr3$contributions$A, sum, na.rm = TRUE) + 1)
+> all.equal(epr3$index$A, sapply(epr3$contrib$A, sum, na.rm = TRUE) + 1)
 [1] TRUE
 > epr3$levels
 [1] "1" "2" "3" "4" "5"
-> epr3$periods
+> epr3$time
  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
 [20] "t" "u" "v" "w" "x" "y" "z" "A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L"
 [39] "M" "N" "O" "P" "Q" "R" "S" "T" "U" "V" "W" "X" "Y" "Z"
@@ -225,37 +225,37 @@ $index$`2`
 6.480741       NA      NaN 8.000000 
 
 
-$contributions
-$contributions$`1`
-$contributions$`1`$`11`
+$contrib
+$contrib$`1`
+$contrib$`1`$`11`
         1         2 
 0.0000000 0.4142136 
 
-$contributions$`1`$`12`
+$contrib$`1`$`12`
        1        2 
 1.071797 1.392305 
 
-$contributions$`1`$`13`
+$contrib$`1`$`13`
 1 
 4 
 
-$contributions$`1`$`14`
+$contrib$`1`$`14`
 numeric(0)
 
 
-$contributions$`2`
-$contributions$`2`$`11`
+$contrib$`2`
+$contrib$`2`$`11`
        1        2 
 2.596297 2.884444 
 
-$contributions$`2`$`12`
+$contrib$`2`$`12`
  1 
 NA 
 
-$contributions$`2`$`13`
+$contrib$`2`$`13`
 numeric(0)
 
-$contributions$`2`$`14`
+$contrib$`2`$`14`
 1 
 7 
 
@@ -264,10 +264,10 @@ $contributions$`2`$`14`
 $levels
 [1] "11" "12" "13" "14"
 
-$periods
+$time
 [1] "1" "2"
 
-$contrib
+$has_contrib
 [1] TRUE
 
 > as.matrix(epr)
@@ -276,14 +276,10 @@ $contrib
 12 3.464102       NA
 13 5.000000      NaN
 14      NaN 8.000000
-> as.matrix(epr, type = "contributions")
+> contrib(epr)
              1        2
-11.1 0.0000000 2.596297
-11.2 0.4142136 2.884444
-12.1 1.0717968       NA
-12.2 1.3923048       NA
-13.1 4.0000000       NA
-14.1        NA 7.000000
+1 0.0000000 2.596297
+2 0.4142136 2.884444
 > as.data.frame(epr)
   period level    value
 1      1    11 1.414214
@@ -294,17 +290,6 @@ $contrib
 6      2    12       NA
 7      2    13      NaN
 8      2    14 8.000000
-> as.data.frame(epr, type = "contributions")
-  period level     value
-1      1  11.1 0.0000000
-2      1  11.2 0.4142136
-3      1  12.1 1.0717968
-4      1  12.2 1.3923048
-5      1  13.1 4.0000000
-6      2  11.1 2.5962965
-7      2  11.2 2.8844442
-8      2  12.1        NA
-9      2  14.1 7.0000000
 > epr[, 1]
           1
 11 1.414214         
@@ -329,14 +314,11 @@ $contrib
 [1] TRUE
 > all.equal(epr$levels, epr2$levels)
 [1] TRUE
-> all.equal(epr$periods, epr2$periods)
+> all.equal(epr$time, epr2$time)
 [1] TRUE
 > 
-> as.matrix(epr2, type = "contributions")
+> contrib(epr2)
 <0 x 0 matrix>
-> as.data.frame(epr2, type = "contributions")
-[1] period level  value 
-<0 rows> (or 0-length row.names)
 >
 > epr[] <- epr2[]
 > all.equal(epr[-5], epr2[-5]) # contrib doesn't match
@@ -366,7 +348,7 @@ a 1 2 3 4 5
 12 0       NA
 13 0      NaN
 14 0 8.000000
-> epr$contributions
+> epr$contrib
 $`1`
 $`1`$`11`
 numeric(0)
@@ -408,7 +390,7 @@ $`2`$`14`
 12 3.464102   0
 13 5.000000 NaN
 14      NaN   8
-> epr$contributions
+> epr$contrib
 $`1`
 $`1`$`11`
         1         2 
@@ -451,7 +433,7 @@ $`2`$`14`
 12 3.464102  NA
 13 5.000000 NaN
 14      NaN   0
-> epr$contributions
+> epr$contrib
 $`1`
 $`1`$`11`
         1         2 
@@ -494,7 +476,7 @@ numeric(0)
 12 3.464102  NA
 13 5.000000 NaN
 14      NaN   8
-> epr$contributions
+> epr$contrib
 $`1`
 $`1`$`11`
 numeric(0)

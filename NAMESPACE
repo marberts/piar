@@ -1,7 +1,8 @@
 export(elemental_index, superlative_elemental_index, price_relative,
        aggregation_structure, expand_classification,
        carry_forward, shadow_price,
-       as_elemental_index)
+       as_elemental_index,
+       contrib)
 
 S3method("[", index)
 S3method("[<-", index)
@@ -23,6 +24,7 @@ S3method(start, index)
 S3method(end, index)
 S3method(head, index)
 S3method(tail, index)
+S3method(contrib, index)
 S3method(summary, index)
 S3method(print, index_summary)
 

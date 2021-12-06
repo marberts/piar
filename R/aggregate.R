@@ -10,7 +10,7 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
   aggregate_index <- function(z) {
     gen_mean(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm)
   }
-  aggregate_contrib <- if (x$contrib) {
+  aggregate_contrib <- if (x$has_contrib) {
     function(z) {
       aw <- scale_weights(arithmetic_weights(rel[[i - 1]][z], w[[i - 1]][z]))
       unlist(Map("*", con[[i - 1]][z], aw))
@@ -20,15 +20,15 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
   }
   # initialize weights
   eas <- pias$eas
-  x$weights <- structure(rep(list(pias$weights), length(x$periods)), names = x$periods)
+  x$weights <- structure(rep(list(pias$weights), length(x$time)), names = x$time)
   w <- rev(weights(pias, na.rm = na.rm))
   # loop over each time period
-  for (t in seq_along(x$periods)) {
+  for (t in seq_along(x$time)) {
     rel <- con <- vector("list", pias$height)
     # align epr with weights so that positional indexing works
     # preserve names if epr and pias weights don't agree
     rel[[1]] <- named_extract(x$index[[t]], eas)
-    con[[1]] <- named_extract(x$contributions[[t]], eas)
+    con[[1]] <- named_extract(x$contrib[[t]], eas)
     # get rid of any NULL contributions
     con[[1]][!lengths(con[[1]])] <- list(numeric(0))
     if (t > 1 && chained) {
@@ -50,7 +50,7 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
     # return index and contributions
     index <- unlist(rev(rel))
     x$index[[t]] <- index
-    x$contributions[[t]] <- unlist(rev(con), recursive = FALSE)
+    x$contrib[[t]] <- unlist(rev(con), recursive = FALSE)
     # price update weights for all periods after the first
     if (pias$height && chained) {
       pias$weights <- price_update(index[eas], w[[1]]) 

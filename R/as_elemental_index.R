@@ -15,15 +15,15 @@ as_elemental_index.matrix <- function(x, ...) {
   if (anyDuplicated(levels) || anyDuplicated(periods)) {
     stop(gettext("'x' cannot have duplicated row or column names"))
   }
-  res <- list(index = NULL, contributions = NULL, levels = levels, 
-              periods = periods, contrib = FALSE)
-  res$index <- res$contributions <- 
+  res <- list(index = NULL, contrib = NULL, levels = levels, 
+              time = periods, has_contrib = FALSE)
+  res$index <- res$contrib <- 
     structure(vector("list", ncol(x)), names = periods)
   contrib <- structure(rep(list(numeric(0)), length(levels)), names = levels)
   for (i in seq_along(periods)) {
     # EA names are not kept for matrices with 1 row
     res$index[[i]] <- structure(x[, i], names = rownames(x))
-    res$contributions[[i]] <- contrib
+    res$contrib[[i]] <- contrib
   }
   structure(res, class = c("elemental", "index"))
 }
@@ -31,11 +31,11 @@ as_elemental_index.matrix <- function(x, ...) {
 as_elemental_index.aggregate <- function(x, ...) {
   eas <- x$pias$eas
   index <- lapply(x$index, `[`, eas)
-  contributions <- lapply(x$contributions, `[`, eas)
+  contrib <- lapply(x$contrib, `[`, eas)
   structure(list(index = index, 
-                 contributions = contributions, 
+                 contrib = contrib, 
                  levels = eas, 
-                 periods = x$periods,
-                 contrib = x$contrib), 
+                 time = x$time,
+                 has_contrib = x$has_contrib), 
             class = c("elemental", "index"))
 }
