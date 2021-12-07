@@ -44,3 +44,10 @@ aggregate2pias <- function(x, w) {
                  height = x$pias$height),
             class = "pias")
 }
+
+arithmetic_weights <- function(r) {
+  aw <- transmute_weights(r, 1)
+  function(x, w) {
+    scale_weights(aw(x, w))
+  }
+}

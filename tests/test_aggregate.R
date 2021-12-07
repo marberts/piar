@@ -46,10 +46,10 @@ as_elemental_index(ms_index)
 
 # Check adding up of lower-level indexes
 all.equal(apply(cumprod(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[3]]),
-          cumprod(ms_index)[1, ])
+          as.matrix(cumprod(ms_index))[1, ])
 
 all.equal(apply(cumprod(ms_index)[2:3, ], 2, weighted.mean, weights(ms_pias)[[2]]),
-          cumprod(ms_index)[1, ])
+          as.matrix(cumprod(ms_index))[1, ])
 
 # Re-aggregating the index shouldn't do anything
 all.equal(aggregate(ms_index, ms_pias)[], ms_index[])
@@ -75,7 +75,7 @@ all.equal(Reduce(stack, unstack(ms_index)), ms_index)
 
 # Aggregated contributions should add up
 all.equal(as.matrix(ms_index)[1, ], 
-          sapply(ms_index$contrib, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+          colSums(contrib(ms_index), na.rm = TRUE) + 1)
 
 # Check that weights are getting price updated correctly
 apply(cumprod(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
@@ -96,16 +96,16 @@ ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
 all.equal(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)[], ms_index[])
 
 all.equal(as.matrix(ms_index)[1, ], 
-          sapply(ms_index$contrib, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+          colSums(contrib(ms_index), na.rm = TRUE) + 1)
 
 all.equal(apply(cumprod(ms_index)[2:3, ], 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
-          cumprod(ms_index)[1, ])
+          as.matrix(cumprod(ms_index))[1, ])
 
 ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)
 
 all.equal(aggregate(ms_index, ms_pias, r = -1.7)[], ms_index[])
 
-all.equal(as.matrix(ms_index)[1, ], sapply(ms_index$contrib, function(x) sum(x[[1]]) + 1))
+all.equal(as.matrix(ms_index)[1, ], colSums(contrib(ms_index)) + 1)
 
 # Tests with a fixed-sample index
 fs_epr <- with(
@@ -128,24 +128,24 @@ all.equal(aggregate(fs_index, fs_pias)[], fs_index[])
 
 # Contributions should add up
 all.equal(as.matrix(fs_index)[1, ], 
-          sapply(fs_index$contrib, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+          colSums(contrib(fs_index), na.rm = TRUE) + 1)
 
 # Check adding up of lower level indexes
 all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[3]]),
-          cumprod(fs_index)[1, ])
+          as.matrix(cumprod(fs_index))[1, ])
 
 all.equal(apply(cumprod(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),
-          cumprod(fs_index)[1, ])
+          as.matrix(cumprod(fs_index))[1, ])
 
 # Non-missing indexes should be the same when missing values are not remove
 fs_index2 <- aggregate(fs_epr, fs_pias)
 fs_index2[] - fs_index[]
 
 all.equal(as.matrix(fs_index2)["121", ], 
-          sapply(fs_index2$contrib, function(x) sum(x[["121"]], na.rm = TRUE) + 1))
+          colSums(contrib(fs_index2, "121"), na.rm = TRUE) + 1)
 
 all.equal(as.matrix(fs_index2)["13", 1:3], 
-          sapply(fs_index2$contrib[1:3], function(x) sum(x[["13"]], na.rm = TRUE) + 1))
+          colSums(contrib(fs_index2, "13"), na.rm = TRUE)[1:3] + 1)
 
 # Tests with a fixed-base index
 prices <- data.frame(price = 1:15, 
@@ -157,11 +157,13 @@ prices$fx_rel <- with(prices, price / gpindex::base_price(price, period, product
 
 pias <- aggregation_structure(list(c("1", "1"), c("f1", "f2")), 1:2)
 
-epr_pop <- with(prices, elemental_index(pop_rel, period, ea))
-epr_fx <- with(prices, elemental_index(fx_rel, period, ea))
+epr_pop <- with(prices, elemental_index(pop_rel, period, ea, contrib = TRUE))
+epr_fx <- with(prices, elemental_index(fx_rel, period, ea, contrib = TRUE, chained = FALSE))
 
 index_pop <- aggregate(epr_pop, pias)
-index_fx <- aggregate(epr_fx, pias, chained = FALSE)
+index_fx <- aggregate(epr_fx, pias)
 
 # Chained calculation and fixed-base calculation should be the same
-all.equal(as.matrix(index_fx), cumprod(index_pop))
+all.equal(as.matrix(index_fx), as.matrix(cumprod(index_pop)))
+
+all.equal(contrib(cumprod(index_pop)), contrib(index_fx))

@@ -23,7 +23,9 @@ as.matrix.index <- function(x, ...) {
   # only loop over periods that have a value replaced
   for (t in periods) {
     x$index[[t]][i] <- res[i, t]
-    if (x$has_contrib) x$contrib[[t]][i] <- list(numeric(0))
+    if (x$has_contrib) {
+      x$contrib$w[[t]][i] <- x$contrib$r[[t]][i] <- list(numeric(0))
+    }
   }
   x
 }
@@ -54,16 +56,26 @@ contrib <- function(x, ...) {
 
 contrib.index <- function(x, level = levels(x), ...) {
   level <- match.arg(level)
-  res <- lapply(x$contrib, `[[`, level)
-  products <- unique(nested_names(res))
-  res <- lapply(res, named_extract, products)
+  w <- lapply(x$contrib$w, `[[`, level)
+  r <- lapply(x$contrib$r, `[[`, level)
+  con <- Map(function(w, r) w * (r - 1), w, r)
+  products <- unique(nested_names(con))
+  out <- structure(vector("list", length(con)), names = names(con))
+  out[] <- list(structure(numeric(length(products)), names = products))
+  res <- Map(replace, out, lapply(con, names), con)
   list2matrix(res)
 }
 
 #---- Math ----
 cumprod.index <- function(x) {
-  x$index[] <- Reduce("*", x$index, accumulate = TRUE)
-  as.matrix(x)
+  if (x$chained) {
+    x$chained <- FALSE
+    x$index[] <- Reduce(`*`, x$index, accumulate = TRUE)
+    for (t in seq_along(x$time)[-1]) {
+      x$contrib$r[[t]] <- Map(`*`, x$contrib$r[[t]], x$index[[t - 1]])
+    }
+  }
+  x
 }
 
 update.aggregate <- function(object, period = end(object), ...) {
@@ -95,6 +107,9 @@ merge.index <- function(x, y, ...) {
   if (any(x$time != y$time)) {
     stop(gettext("'x' and 'y' must be indexes for the same time periods"))
   }
+  if (x$chained != y$chained) {
+    stop(gettext("cannot merge a fixed-base and period-over-period index"))
+  }
   if (length(intersect(x$levels, y$levels))) {
     warning(gettext("some levels appear in both 'x' and 'y'"))
   }
@@ -102,7 +117,8 @@ merge.index <- function(x, y, ...) {
   if (!length(y$levels)) return(x)
   for (t in x$time) {
     x$index[[t]] <- c(x$index[[t]], y$index[[t]])
-    x$contrib[[t]] <- c(x$contrib[[t]], y$contrib[[t]])
+    x$contrib$w[[t]] <- c(x$contrib$w[[t]], y$contrib$w[[t]])
+    x$contrib$r[[t]] <- c(x$contrib$r[[t]], y$contrib$r[[t]])
     # might be useful if this method is extended to aggregated indexes
     # x$weights[[t]] <- c(x$weights[[t]], y$weights[[t]])
   }
@@ -117,9 +133,6 @@ stack.aggregate <- function(x, y, ...) {
   }
   if (x$r != y$r) {
     stop(gettext("cannot stack indexes of different orders"))
-  }
-  if (x$chained != y$chained) {
-    stop(gettext("cannot stack a period-over-period and a fixed-base index"))
   }
   if (!identical(x$pias, y$pias)) {
     stop(gettext("'x' and 'y' must be generated from the same aggregation structure"))
@@ -138,13 +151,17 @@ stack.index <- function(x, y, ...) {
   if (any(x$levels != y$levels)) {
     stop(gettext("'x' and 'y' must be indexes for the same levels"))
   }
+  if (x$chained != y$chained) {
+    stop(gettext("cannot stack a period-over-period and a fixed-base index"))
+  }
   if (length(intersect(x$time, y$time))) {
     warning(gettext("some periods appear in both 'x' and 'y'"))
   }
   if (!length(x$time)) return(y)
   if (!length(y$time)) return(x)
   x$index <- c(x$index, y$index)
-  x$contrib <- c(x$contrib, y$contrib)
+  x$contrib$w <- c(x$contrib$w, y$contrib$w)
+  x$contrib$r <- c(x$contrib$r, y$contrib$r)
   x$time <- union(x$time, y$time)
   x$weights <- c(x$weights, y$weights)
   x$has_contrib <- x$has_contrib || y$has_contrib
@@ -156,7 +173,8 @@ unstack.index <- function(x, ...) {
   res <- vector("list", length(x$time))
   for (i in seq_along(res)) {
     res[[i]]$index <- x$index[i]
-    res[[i]]$contrib <- x$contrib[i]
+    res[[i]]$contrib$w <- x$contrib$w[i]
+    res[[i]]$contrib$r <- x$contrib$r[i]
     res[[i]]$levels <- x$levels
     res[[i]]$time <- x$time[i]
     res[[i]]$has_contrib <- x$has_contrib
@@ -185,20 +203,13 @@ tail.index <- function(x,  ...) {
 
 #---- Summary ----
 summary.index <- function(object, ...) {
-  res <- structure(vector("list", 2), names = c("index", "contrib"))
+  res <- structure(vector("list", 1), names = c("index"))
   res$index <- summary.data.frame(object$index, ...)
-  res$contrib <- if (object$has_contrib) {
-    summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
-  }
   structure(res, class = "index_summary")
 }
 
 print.index_summary <- function(x, ...) {
   cat("Indexes\n")
   print(x$index)
-  if (!is.null(x$contrib)) {
-    cat("\nContributions\n")
-    print(x$contrib)
-  }
   invisible(x)
 }
