@@ -3,8 +3,7 @@ as.data.frame.index <- function(x, ...) {
   # as.numeric() ensures that the value column shows up with NULL values
   value <- as.numeric(unlist(x$index, use.names = FALSE))
   period <- rep(x$time, each = length(x$levels))
-  data.frame(period, level = x$levels, value, 
-             stringsAsFactors = FALSE)
+  data.frame(period, level = x$levels, value, ...)
 }
 
 as.matrix.index <- function(x, ...) {
@@ -24,6 +23,7 @@ as.matrix.index <- function(x, ...) {
   for (t in periods) {
     x$index[[t]][i] <- res[i, t]
     if (x$has_contrib) {
+      # remove contributions for replaced values
       x$contrib$w[[t]][i] <- x$contrib$r[[t]][i] <- list(numeric(0))
     }
   }
@@ -56,11 +56,13 @@ contrib <- function(x, ...) {
 
 contrib.index <- function(x, level = levels(x), ...) {
   level <- match.arg(level)
+  # use decomposition weights and relatives to calculate contributions
   w <- lapply(x$contrib$w, `[[`, level)
   r <- lapply(x$contrib$r, `[[`, level)
   con <- Map(function(w, r) w * (r - 1), w, r)
   products <- unique(nested_names(con))
   out <- structure(vector("list", length(con)), names = names(con))
+  # products without a relative in a period have a contribution of 0
   out[] <- list(structure(numeric(length(products)), names = products))
   res <- Map(replace, out, lapply(con, names), con)
   list2matrix(res)
@@ -91,7 +93,7 @@ update.aggregate <- function(object, period = end(object), ...) {
   aggregate2pias(object, w)
 }
 
-#---- Merge/stack ----
+#---- Merge ----
 merge.aggregate <- function(x, y, ...) {
   stop(gettext("cannot merge aggregated indexes"))
 }
@@ -127,6 +129,7 @@ merge.index <- function(x, y, ...) {
   x
 }
 
+#---- Stack ----
 stack.aggregate <- function(x, y, ...) {
   if (!inherits(y, "aggregate")) {
     stop(gettext("'y' is not an aggregate index; use aggregate() to make one"))

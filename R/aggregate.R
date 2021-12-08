@@ -6,6 +6,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   price_update <- factor_weights(r)
   gen_mean <- generalized_mean(r)
   aw <- arithmetic_weights(r)
+  # functions to aggregate index values and contributions
   # 'i' is defined in the loop below; it's used to loop over the height of 'pias'
   aggregate_index <- function(z) {
     gen_mean(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm)
@@ -18,9 +19,15 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   } else {
     function(z) numeric(0)
   }
+  aggregate_rel <- if (x$has_contrib) {
+    function(z) unlist(conr[[i - 1]][z])
+  } else {
+    function(z) numeric(0)
+  }
   # initialize weights
   eas <- pias$eas
-  x$weights <- structure(rep(list(pias$weights), length(x$time)), names = x$time)
+  x$weights <- structure(rep(list(pias$weights), length(x$time)), 
+                         names = x$time)
   w <- rev(weights(pias, na.rm = na.rm))
   # loop over each time period
   for (t in seq_along(x$time)) {
@@ -33,6 +40,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     # get rid of any NULL contributions
     conw[[1]][!lengths(conw[[1]])] <- list(numeric(0))
     conr[[1]][!lengths(conr[[1]])] <- list(numeric(0))
+    # re-aggregate price-updated weights for all periods after first
     if (t > 1 && x$chained) {
       w <- rev(weights(pias, na.rm = na.rm))
       x$weights[[t]] <- w[[1]]
@@ -41,7 +49,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     for (i in seq_along(rel)[-1]) {
       rel[[i]] <- vapply(pias$child[[i - 1]], aggregate_index, numeric(1))
       conw[[i]] <- lapply(pias$child[[i - 1]], aggregate_contrib)
-      conr[[i]] <- lapply(pias$child[[i - 1]], function(z) unlist(conr[[i - 1]][z]))
+      conr[[i]] <- lapply(pias$child[[i - 1]], aggregate_rel)
     }
     # parental imputation
     if (na.rm) {

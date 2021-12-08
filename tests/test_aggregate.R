@@ -137,7 +137,7 @@ all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[3]
 all.equal(apply(cumprod(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),
           as.matrix(cumprod(fs_index))[1, ])
 
-# Non-missing indexes should be the same when missing values are not remove
+# Non-missing indexes should be the same when missing values are not removed
 fs_index2 <- aggregate(fs_epr, fs_pias)
 fs_index2[] - fs_index[]
 
@@ -166,4 +166,8 @@ index_fx <- aggregate(epr_fx, pias)
 # Chained calculation and fixed-base calculation should be the same
 all.equal(as.matrix(index_fx), as.matrix(cumprod(index_pop)))
 
-all.equal(contrib(cumprod(index_pop)), contrib(index_fx))
+epr_pop2 <- with(as.data.frame(epr_pop), elemental_index(value, period, level, contrib = TRUE))
+index_pop2 <- aggregate(epr_pop2, pias)
+epr_fx2 <- with(as.data.frame(epr_fx), elemental_index(value, period, level, contrib = TRUE, chained = FALSE))
+index_fx2 <- aggregate(epr_fx2, pias)
+all.equal(contrib(index_fx2), contrib(cumprod(index_pop2)))
