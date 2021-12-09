@@ -48,28 +48,6 @@ weights.aggregate <- function(object, ...) {
   list2matrix(object$weights)
 }
 
-contrib <- function(x, ...) {
-  UseMethod("contrib")
-}
-
-contrib.index <- function(x, level = levels(x), ...) {
-  level <- match.arg(level)
-  res <- lapply(x$contrib, `[[`, level)
-  products <- unique(nested_names(res))
-  res <- lapply(res, named_extract, products)
-  list2matrix(res)
-}
-
-#---- Math ----
-cumprod.index <- function(x) {
-  if (x$chained) {
-    x$chained <- FALSE
-    x$index[] <- Reduce(`*`, x$index, accumulate = TRUE)
-    x$contrib[] <- list(structure(rep(list(numeric(0)), length(x$levels)), names = x$levels))
-  }
-  x
-}
-
 #---- Merge ----
 merge.aggregate <- function(x, y, ...) {
   stop(gettext("cannot merge aggregated indexes"))

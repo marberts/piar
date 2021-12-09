@@ -44,3 +44,7 @@ aggregate2pias <- function(x, w) {
                  height = x$pias$height),
             class = "pias")
 }
+
+empty_contrib <- function(x) {
+  list(structure(rep(list(numeric(0)), length(x)), names = x))
+}

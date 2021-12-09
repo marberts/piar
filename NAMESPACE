@@ -2,33 +2,41 @@ export(elemental_index, superlative_elemental_index, price_relative,
        aggregation_structure, expand_classification,
        carry_forward, shadow_price,
        as_elemental_index,
-       contrib)
+       contrib, chain, unchain)
 
 S3method("[", index)
 S3method("[<-", index)
+
 S3method(as.data.frame, index)
 S3method(as.matrix, index)
+
 S3method(merge, aggregate)
 S3method(merge, elemental)
 S3method(merge, index)
+
 S3method(stack, aggregate)
 S3method(stack, elemental)
 S3method(stack, index)
+
 S3method(unstack, index)
+
 S3method(print, index)
-S3method(cumprod, index)
+S3method(summary, index)
+S3method(print, index_summary)
+
 S3method(aggregate, index)
+S3method(vcov, aggregate)
+
 S3method(levels, index)
 S3method(time, index)
 S3method(start, index)
 S3method(end, index)
 S3method(head, index)
 S3method(tail, index)
-S3method(contrib, index)
-S3method(summary, index)
-S3method(print, index_summary)
 
-S3method(vcov, aggregate)
+S3method(contrib, index)
+S3method(chain, index)
+S3method(unchain, index)
 
 S3method(print, pias)
 S3method(weights, pias)

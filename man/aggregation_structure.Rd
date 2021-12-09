@@ -1,6 +1,7 @@
 \name{aggregation_structure}
 \alias{aggregation_structure}
 \alias{weights.pias}
+\alias{update.pias}
 
 \title{
 Aggregation structure
@@ -14,6 +15,8 @@ Construct a price index aggregation structure from a hierarchical classification
 aggregation_structure(x, w)
 
 \method{weights}{pias}(object, ea_only = FALSE, na.rm = FALSE, ...)
+
+\method{update}{pias}(object, index, period = last(index), ...)
 }
 
 \arguments{
@@ -26,6 +29,10 @@ aggregation_structure(x, w)
 \item{ea_only}{Should weights be returned for only the elemental aggregates, or the entire aggregation structure (the default)?}
 
 \item{na.rm}{Should missing values be removed from \code{w} when aggregating the weights (i.e., when \code{ea_only = FALSE})? By default, missing values are not removed.}
+
+\item{index}{An object of class \code{aggregate}, as made by \code{\link[=aggregate.index]{aggregate()}}.}
+
+\item{period}{The time period used to price update the weights. The default uses last period in \code{object}.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
@@ -41,6 +48,8 @@ aggregation_structure(x, w)
 \item{height}{The length of \code{x}.}
 
 \code{weights()} returns a list with a named vector of weights for each level in the aggregation structure, unless \code{ea_only = TRUE}; in this case the return value is just a named vector.
+
+\code{update()} returns a copy of \code{object} with price-updated weights from the index values in \code{index}.
 }
 
 \section{Warning}{

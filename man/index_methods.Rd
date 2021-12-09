@@ -4,7 +4,6 @@
 \alias{[<-.index}
 \alias{as.data.frame.index}
 \alias{as.matrix.index}
-\alias{cumprod.index}
 \alias{merge.index}
 \alias{stack.index}
 \alias{unstack.index}
@@ -15,8 +14,6 @@
 \alias{head.index}
 \alias{tail.index}
 \alias{summary.index}
-\alias{contrib}
-\alias{contrib.index}
 
 \title{
 Methods for index objects
@@ -65,7 +62,7 @@ contrib(x, ...)
 \arguments{
 \item{x, y, object}{An object of class \code{index}, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 \item{i, j, value}{See \link{Extract}, with \code{value} being a numeric vector (or something that can coerced into one.)}
-\item{level}{The level of an index for which quote contributions are desired.}
+\item{level}{The level of an index for which quote contributions are desired, defaulting to the first level.}
 \item{...}{Further arguments passed to or used by methods.}
 }
 
@@ -74,7 +71,7 @@ The extraction method treats \code{x} as a matrix of index values with (named) r
 
 The \code{as.data.frame()} method turns an index into a data frame with three columns: period, level, and value. The \code{as.matrix()} method turns an index into a matrix with a row for each level and a column for each period.
 
-The \code{cumprod()} method takes the cumulative product of the values in the \code{index} component of \code{x}, and returns a matrix. The result is the same as \code{t(apply(as.matrix(x), 1, cumprod))}.
+The \code{cumprod()} method takes the cumulative product (chains) of the values in the \code{index} component of \code{x}, returning an index of the same type. This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod))}. Note that quote contributions cannot generally be chained over time, so the resulting index always has no quote contributions.
 
 The \code{merge()} method combines two index object with common time periods, merging together the index values and quote contributions for each time period in \code{x} and \code{y}. 
 

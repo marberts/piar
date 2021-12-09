@@ -1,8 +1,9 @@
 \name{aggregate}
 \alias{aggregate.index}
-\alias{weights.aggregate}
-\alias{update.aggregate}
 \alias{vcov.aggregate}
+\alias{contrib}
+\alias{contrib.default}
+\alias{contrib.index}
 
 \title{Aggregate elemental indexes}
 
@@ -11,29 +12,27 @@ A method to aggregate period-over-period or fixed-base elemental price indexes u
 }
 
 \usage{
-\method{aggregate}{index}(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...)
-
-\method{weights}{aggregate}(object, ...)
-
-\method{update}{aggregate}(object, period = end(object), ...)
+\method{aggregate}{index}(x, pias, na.rm = FALSE, r = 1, ...)
 
 \method{vcov}{aggregate}(object, repweights, mse = TRUE, ...)
+
+contrib(x, ...)
+
+\method{contrib}{default}(x, ...)
+
+\method{contrib}{index}(x, level = levels(x), ...)
 }
 
 \arguments{
-\item{x}{Period-over-period or fixed-base elemental price indexes. These can be made with \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{Period-over-period or fixed-base (elemental) price indexes. These can be made with \code{\link[=elemental_index]{elemental_index()}}.}
 
 \item{pias}{A price index aggregation structure. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
-
-\item{chained}{Should the weights in \code{pias} be price-updated for a chained calculation with period-over-period elemental indexes (the default), or should the weight be kept constant for a fixed-base index with fixed-base elemental indexes?}
 
 \item{na.rm}{Should missing values in \code{x} be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to parental imputation.}
 
 \item{r}{Order of the generalized mean used to aggregate the elemental price indexes: 0 for a geometric index, 1 for an arithmetic index (the default), or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
 \item{object}{An object of class \code{aggregate}, as made by \code{aggregate()}.}
-
-\item{period}{The time period used to price update the weights. The default uses last period in \code{object}.}
 
 \item{repweights}{A matrix, or something that can be coerced into one, of bootstrap replicate weights with a row for each elemental aggregate and a column for each replicate.}
 
@@ -47,9 +46,9 @@ The \code{aggregate()} method aggregates elemental indexes by looping over each 
 \enumerate{
 \item aggregating the elemental indexes (with \code{\link[=generalized_mean]{generalized_mean(r)}});
 \item aggregating quote contributions in each level of \code{pias} (if there are any);
-\item price updating the weights in \code{pias} if \code{chained = TRUE} (with \code{\link[=factor_weights]{factor_weights(r)}}).
+\item price updating the weights in \code{pias} with period-over-period elemental indexes (i.e., \code{x$chained = TRUE}) with \code{\link[=factor_weights]{factor_weights(r)}}.
 }
-The result is a collection of aggregated period-over-period indexes that can be chained together to get a fixed-base index when \code{x} are period-over-period elemental indexes and \code{chained = TRUE}. Otherwise, when \code{x} are fixed-base elemental indexes and \code{chained = FALSE}, the result is a collection of aggregated fixed-base indexes.
+The result is a collection of aggregated period-over-period indexes that can be chained together to get a fixed-base index when \code{x} are period-over-period elemental indexes. Otherwise, when \code{x} are fixed-base elemental indexes, the result is a collection of aggregated fixed-base indexes.
 
 By default, any missing elemental indexes will propagate when aggregating the index. Setting \code{na.rm = TRUE} ignores missing values, and is equivalent to parental (or overall mean) imputation. As an aggregated price index generally cannot have missing values (for otherwise it can't be chained over time), any missing values for a level of \code{pias} are removed and recursively replaced by the value of its immediate parent.
 
@@ -68,15 +67,11 @@ An object of class \code{aggregate}, inheriting from class \code{index}, which h
 \item{index}{A named list with an entry for each \code{period} in \code{x} that gives a named vector of index values for each level in \code{pias}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a list with an entry for each level in \code{pias} with a named vector that gives the additive contribution for each price relative.}
 \item{levels}{The levels for \code{pias}.}
-\item{time}{The levels for \code{period}.}
+\item{time}{The levels for \code{period} from \code{x}.}
 \item{has_contrib}{The value of \code{has_contrib} from \code{x}.}
-\item{weights}{A named list with an entry for each \code{period} that contains the weights used to aggregate the elemental indexes for each period.}
-\item{r, chained}{The values for \code{r} and \code{chained}, usually \code{1} and \code{TRUE}.}
+\item{chained}{The value for \code{chained} from \code{x}, usually \code{TRUE.}}
+\item{r}{The value for \code{r}, usually \code{1}.}
 \item{pias}{A list containing the \code{child}, \code{parent}, \code{eas}, and \code{height} components of \code{pias}.}
-
-The \code{weights()} method extracts the matrix of weights used to aggregate the elemental indexes in each \code{period}.
-
-The \code{update()} method price-updates the weights in the aggregation structured used to make \code{object}, and returns the resulting object of class \code{pias}.
 
 The \code{vcov()} method returns an array of covariance matrices for each \code{period}.
 }
@@ -119,8 +114,4 @@ aggregate(epr, pias, na.rm = TRUE)
 # Works for non-arithmetic indexes, too
 
 aggregate(epr, pias, na.rm = TRUE, r = -1)
-
-# Extract the weights
-
-weights(aggregate(epr, pias, na.rm = TRUE))
 }
