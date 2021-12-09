@@ -21,3 +21,16 @@ print.pias <- function(x, ...) {
 levels.pias <- function(x) {
   x$levels
 }
+
+update.pias <- function(object, index, period = end(index), ...) {
+  if (!inherits(index, "aggregate")) {
+    stop(gettext("'index' is not an aggregate index; use aggregate() to make one"))
+  }
+  price_update <- factor_weights(index$r)
+  if (!all(object$levels %in% index$levels)) {
+    warning(gettext("not all weights in 'object' have a corresponding index value"))
+  }
+  epr <- as.matrix(cumprod(index))[, period]
+  object$weights[] <- price_update(epr[names(object$weights)], object$weights)
+  object
+}

@@ -1,5 +1,5 @@
 #---- Internal functions ----
-.elemental_index <- function(x, period, ea, w1, w2, contrib, na.rm, index_fun, contrib_fun) {
+.elemental_index <- function(x, period, ea, w1, w2, contrib, chained, na.rm, index_fun, contrib_fun) {
   index_fun <- match.fun(index_fun)
   contrib_fun <- match.fun(contrib_fun)
   period <- as.factor(period)
@@ -40,13 +40,14 @@
               contrib = contributions,
               levels = levels(ea),
               time = levels(period),
-              has_contrib = contrib)
+              has_contrib = contrib,
+              chained = chained)
   structure(res, class = c("elemental", "index"))
 }
 
 #---- Exported functions ----
 elemental_index <- function(x, period = rep(1L, length(x)), ea = rep(1L, length(x)),
-                            w, contrib = FALSE, na.rm = FALSE, r = 0) {
+                            w, contrib = FALSE, chained = TRUE, na.rm = FALSE, r = 0) {
   if (missing(w)) {
     if (different_length(x, period, ea)) {
       stop(gettext("'x', 'period', and 'ea' must be the same length"))
@@ -59,13 +60,13 @@ elemental_index <- function(x, period = rep(1L, length(x)), ea = rep(1L, length(
   if (any_negative(x, if (!missing(w)) w)) {
     warning(gettext("some elements of 'x' or 'w' are less than or equal to 0"))
   }
-  .elemental_index(x, period, ea, w, contrib = contrib, na.rm = na.rm, 
+  .elemental_index(x, period, ea, w, contrib = contrib, na.rm = na.rm, chained = chained,
                    index_fun = generalized_mean(r), 
                    contrib_fun = contributions(r))
 }
 
 superlative_elemental_index <- function(x, period = rep(1L, length(x)), ea = rep(1L, length(x)),
-                                        w1, w2, contrib = FALSE, na.rm = FALSE, s = 2) {
+                                        w1, w2, contrib = FALSE, chained = TRUE, na.rm = FALSE, s = 2) {
   if (missing(w1) && missing(w2)) {
     if (different_length(x, period, ea)) {
       stop(gettext("'x', 'period', and 'ea' must be the same length"))
@@ -86,7 +87,7 @@ superlative_elemental_index <- function(x, period = rep(1L, length(x)), ea = rep
   if (any_negative(x, if (!missing(w1)) w1, if (!missing(w2)) w2)) {
     warning(gettext("some elements of 'x', 'w1', or 'w2' are less than or equal to 0"))
   }
-  .elemental_index(x, period, ea, w1, w2, contrib = contrib, na.rm = na.rm, 
+  .elemental_index(x, period, ea, w1, w2, contrib = contrib, na.rm = na.rm, chained = chained,
                    index_fun = nested_mean(0, c(s / 2, -s / 2)), 
                    contrib_fun = nested_contributions(0, c(s / 2, -s / 2)))
 }

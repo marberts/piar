@@ -3,8 +3,7 @@ as.data.frame.index <- function(x, ...) {
   # as.numeric() ensures that the value column shows up with NULL values
   value <- as.numeric(unlist(x$index, use.names = FALSE))
   period <- rep(x$time, each = length(x$levels))
-  data.frame(period, level = x$levels, value, 
-             stringsAsFactors = FALSE)
+  data.frame(period, level = x$levels, value, ...)
 }
 
 as.matrix.index <- function(x, ...) {
@@ -23,6 +22,7 @@ as.matrix.index <- function(x, ...) {
   # only loop over periods that have a value replaced
   for (t in periods) {
     x$index[[t]][i] <- res[i, t]
+    # drop contributions for replaced values
     if (x$has_contrib) x$contrib[[t]][i] <- list(numeric(0))
   }
   x
@@ -62,24 +62,15 @@ contrib.index <- function(x, level = levels(x), ...) {
 
 #---- Math ----
 cumprod.index <- function(x) {
-  x$index[] <- Reduce("*", x$index, accumulate = TRUE)
-  as.matrix(x)
-}
-
-update.aggregate <- function(object, period = end(object), ...) {
-  price_update <- factor_weights(object$r)
-  w <- if (length(object$time)) {
-    price_update(object$index[[period]][object$pias$eas],
-                 object$weights[[period]])
-  } else {
-    # it's possible to have an index with levels and no periods,
-    # in which case price updating should return NAs
-    rep_len(NA_real_, length(object$pias$eas))
+  if (x$chained) {
+    x$chained <- FALSE
+    x$index[] <- Reduce(`*`, x$index, accumulate = TRUE)
+    x$contrib[] <- list(structure(rep(list(numeric(0)), length(x$levels)), names = x$levels))
   }
-  aggregate2pias(object, w)
+  x
 }
 
-#---- Merge/stack ----
+#---- Merge ----
 merge.aggregate <- function(x, y, ...) {
   stop(gettext("cannot merge aggregated indexes"))
 }
@@ -94,6 +85,9 @@ merge.elemental <- function(x, y, ...) {
 merge.index <- function(x, y, ...) {
   if (any(x$time != y$time)) {
     stop(gettext("'x' and 'y' must be indexes for the same time periods"))
+  }
+  if (x$chained != y$chained) {
+    stop(gettext("cannot merge a fixed-base and period-over-period index"))
   }
   if (length(intersect(x$levels, y$levels))) {
     warning(gettext("some levels appear in both 'x' and 'y'"))
@@ -111,15 +105,13 @@ merge.index <- function(x, y, ...) {
   x
 }
 
+#---- Stack ----
 stack.aggregate <- function(x, y, ...) {
   if (!inherits(y, "aggregate")) {
     stop(gettext("'y' is not an aggregate index; use aggregate() to make one"))
   }
   if (x$r != y$r) {
     stop(gettext("cannot stack indexes of different orders"))
-  }
-  if (x$chained != y$chained) {
-    stop(gettext("cannot stack a period-over-period and a fixed-base index"))
   }
   if (!identical(x$pias, y$pias)) {
     stop(gettext("'x' and 'y' must be generated from the same aggregation structure"))
@@ -138,6 +130,9 @@ stack.index <- function(x, y, ...) {
   if (any(x$levels != y$levels)) {
     stop(gettext("'x' and 'y' must be indexes for the same levels"))
   }
+  if (x$chained != y$chained) {
+    stop(gettext("cannot stack a period-over-period and a fixed-base index"))
+  }
   if (length(intersect(x$time, y$time))) {
     warning(gettext("some periods appear in both 'x' and 'y'"))
   }
@@ -146,7 +141,6 @@ stack.index <- function(x, y, ...) {
   x$index <- c(x$index, y$index)
   x$contrib <- c(x$contrib, y$contrib)
   x$time <- union(x$time, y$time)
-  x$weights <- c(x$weights, y$weights)
   x$has_contrib <- x$has_contrib || y$has_contrib
   x
 }
@@ -160,9 +154,8 @@ unstack.index <- function(x, ...) {
     res[[i]]$levels <- x$levels
     res[[i]]$time <- x$time[i]
     res[[i]]$has_contrib <- x$has_contrib
-    res[[i]]$weights <- x$weights[i]
-    res[[i]]$r <- x$r
     res[[i]]$chained <- x$chained
+    res[[i]]$r <- x$r
     res[[i]]$pias <- x$pias
     class(res[[i]]) <- class(x)
   }

@@ -1,4 +1,4 @@
-aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) {
+aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   if (!inherits(pias, "pias")) {
     stop(gettext("'pias' must be a price index aggregation structure; use aggregation_structure() to make one"))
   }
@@ -6,6 +6,7 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
   price_update <- factor_weights(r)
   gen_mean <- generalized_mean(r)
   arithmetic_weights <- transmute_weights(r, 1)
+  # functions to aggregate index values and contributions
   # 'i' is defined in the loop below; it's used to loop over the height of 'pias'
   aggregate_index <- function(z) {
     gen_mean(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm)
@@ -20,7 +21,6 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
   }
   # initialize weights
   eas <- pias$eas
-  x$weights <- structure(rep(list(pias$weights), length(x$time)), names = x$time)
   w <- rev(weights(pias, na.rm = na.rm))
   # loop over each time period
   for (t in seq_along(x$time)) {
@@ -31,9 +31,9 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
     con[[1]] <- named_extract(x$contrib[[t]], eas)
     # get rid of any NULL contributions
     con[[1]][!lengths(con[[1]])] <- list(numeric(0))
-    if (t > 1 && chained) {
+    # re-aggregate price-updated weights for all periods after first
+    if (t > 1 && x$chained) {
       w <- rev(weights(pias, na.rm = na.rm))
-      x$weights[[t]] <- w[[1]]
     }
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1]) {
@@ -52,13 +52,12 @@ aggregate.index <- function(x, pias, chained = TRUE, na.rm = FALSE, r = 1, ...) 
     x$index[[t]] <- index
     x$contrib[[t]] <- unlist(rev(con), recursive = FALSE)
     # price update weights for all periods after the first
-    if (pias$height && chained) {
+    if (pias$height && x$chained) {
       pias$weights <- price_update(index[eas], w[[1]]) 
     }
   }
   x$levels <- pias$levels
   x$r <- r
-  x$chained <- chained
   x$pias <- pias[c("child", "parent", "eas", "height")]
   structure(x, class = c("aggregate", "index"))
 }

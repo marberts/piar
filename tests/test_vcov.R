@@ -46,7 +46,7 @@ all.equal(sum(crossprod(epr[, 1], tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25)
           covar[1, 1, 1])
 
 # Period 2
-rws <- apply(rw * weights(index)[, 2] / weights$dw, 2, scale_weights)
+rws <- apply(rw * weights(update(pias, index, 1), TRUE) / weights$dw, 2, scale_weights)
 all.equal(sum(crossprod(epr[, 2], tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * t(epr[, 2])),
           covar[1, 1, 2])
 
@@ -68,6 +68,6 @@ all.equal(sum(crossprod(epr[, 1], tcrossprod(sweep(rws, 1, scale_weights(w))) / 
           covar[1, 1, 1])
 
 # Period 2
-rws <- apply(rw * weights(index)[, 2] / weights$dw, 2, scale_weights)
-all.equal(sum(crossprod(epr[, 2], tcrossprod(sweep(rws, 1, scale_weights(weights(index)[, 2]))) / 25) * t(epr[, 2])),
+rws <- apply(rw * weights(update(pias, index, 1), TRUE) / weights$dw, 2, scale_weights)
+all.equal(sum(crossprod(epr[, 2], tcrossprod(sweep(rws, 1, scale_weights(weights(update(pias, index, 1), TRUE)))) / 25) * t(epr[, 2])),
           covar[1, 1, 2])

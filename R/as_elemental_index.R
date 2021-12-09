@@ -6,7 +6,7 @@ as_elemental_index.default <- function(x, ...) {
   as_elemental_index(as.matrix(x), ...)
 }
 
-as_elemental_index.matrix <- function(x, ...) {
+as_elemental_index.matrix <- function(x, chained = TRUE, ...) {
   storage.mode(x) <- "numeric"
   if (is.null(rownames(x))) rownames(x) <- seq_len(nrow(x))
   if (is.null(colnames(x))) colnames(x) <- seq_len(ncol(x))
@@ -16,14 +16,13 @@ as_elemental_index.matrix <- function(x, ...) {
     stop(gettext("'x' cannot have duplicated row or column names"))
   }
   res <- list(index = NULL, contrib = NULL, levels = levels, 
-              time = periods, has_contrib = FALSE)
+              time = periods, has_contrib = FALSE, chained = chained)
   res$index <- res$contrib <- 
     structure(vector("list", ncol(x)), names = periods)
-  contrib <- structure(rep(list(numeric(0)), length(levels)), names = levels)
+  res$contrib[] <- list(structure(rep(list(numeric(0)), length(levels)), names = levels))
   for (i in seq_along(periods)) {
     # EA names are not kept for matrices with 1 row
     res$index[[i]] <- structure(x[, i], names = rownames(x))
-    res$contrib[[i]] <- contrib
   }
   structure(res, class = c("elemental", "index"))
 }
@@ -36,6 +35,7 @@ as_elemental_index.aggregate <- function(x, ...) {
                  contrib = contrib, 
                  levels = eas, 
                  time = x$time,
-                 has_contrib = x$has_contrib), 
+                 has_contrib = x$has_contrib, 
+                 chained = x$chained), 
             class = c("elemental", "index"))
 }

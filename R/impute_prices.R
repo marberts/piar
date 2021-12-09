@@ -37,7 +37,7 @@ shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
     if (!missing(pias)) {
       index <- aggregate(epr, pias, na.rm = TRUE, r = r2)
       epr <- as_elemental_index(index)
-      pias <- update(index)
+      pias <- update(pias, index)
     }
     # add shadow prices to 'x'
     impute <- is.na(price)

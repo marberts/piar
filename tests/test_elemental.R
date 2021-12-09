@@ -14,12 +14,7 @@ as.matrix(elemental_index(numeric(0)))
 all.equal(as_elemental_index(as.matrix(elemental_index(numeric(0)))),
           elemental_index(numeric(0)))
 
-as.matrix(elemental_index(numeric(0)), type = "contributions")
-
 all.equal(as.data.frame(elemental_index(numeric(0))),
-          data.frame(period = character(0), level = character(0), value = numeric(0)))
-
-all.equal(as.data.frame(elemental_index(numeric(0)), type = "contributions"),
           data.frame(period = character(0), level = character(0), value = numeric(0)))
 
 # Make sure indexing methods work with length-0 indexes
@@ -64,7 +59,7 @@ all.equal(as.data.frame(epr1), epr11[c(2, 1, 3)], check.attributes = FALSE)
 all.equal(as.data.frame(epr2), epr22[c(2, 1, 3)], check.attributes = FALSE)
 
 # cumprod.index() method should be the same as using apply
-all.equal(cumprod(epr1), t(apply(as.matrix(epr1), 1, cumprod)))
+all.equal(as.matrix(cumprod(epr1)), t(apply(as.matrix(epr1), 1, cumprod)))
 
 # Contributions should add up
 all.equal(epr1$index, 
