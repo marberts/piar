@@ -134,6 +134,7 @@ epr2 <- with(dat, elemental_index(rel, period, ea))
 
 all.equal(epr[], epr2[])
 all.equal(epr2, with(as.data.frame(epr2), elemental_index(value, period, level)))
+all.equal(chain(epr2), as_elemental_index(as.matrix(chain(epr2)), chain = FALSE))
 all.equal(epr$levels, epr2$levels)
 all.equal(epr$time, epr2$time)
 
