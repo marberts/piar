@@ -82,8 +82,8 @@ update.pias <- function(object, index, period = end(index), ...) {
   if (!all(object$levels %in% index$levels)) {
     warning(gettext("not all weights in 'object' have a corresponding index value"))
   }
-  # an aggregate index can have levels but no periods; elementals should be NA
-  epr <- if (length(period)) {
+  # an aggregate index can have only levels or periods; elementals should be NA
+  epr <- if (length(period) && length(object$levels)) {
     as.matrix(chain(index))[, period]
   } else {
     NA_real_
@@ -109,3 +109,7 @@ expand_classification <- function(class, width) {
     vapply(class, paste_until, character(1), i)
   })
 }
+
+#---- Test ----
+# not exported
+is_pias <- function(x) inherits(x, "pias")

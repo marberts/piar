@@ -5,6 +5,7 @@
 \alias{as_elemental_index.default}
 \alias{as_elemental_index.matrix}
 \alias{as_elemental_index.agg_ind}
+\alias{is_elemental_index}
 
 \title{Elemental index}
 
@@ -26,10 +27,12 @@ as_elemental_index(x, ...)
 \method{as_elemental_index}{matrix}(x, chain = TRUE, ...)
 
 \method{as_elemental_index}{agg_ind}(x, ...)
+
+is_elemental_index(x)
 }
 
 \arguments{
-\item{rel}{A numeric vector of period-over-period or fixed-base price relatives. The former can be made with \code{\link[=price_relative]{price_relative()}}. Names for this vector are used as product names for quote contributions.}
+\item{rel}{A numeric vector of period-over-period or fixed-based price relatives. The former can be made with \code{\link[=price_relative]{price_relative()}}. Names for this vector are used as product names for quote contributions.}
 
 \item{period}{A factor, or something that can be coerced into one, giving the time period associated with each price relative in \code{rel}. The ordering of time periods follows of the levels of \code{period}, to agree with \code{\link[=cut.Date]{cut()}}. The default assumes that all price relatives belong to one time period.}
 
@@ -57,17 +60,17 @@ as_elemental_index(x, ...)
 
 \code{superlative_elemental_index()} works the same, except that it wraps \code{\link[=nested_mean]{nested_mean(0, c(s, -s) / 2)}} and \code{\link[=nested_contributions]{nested_contributions(0, c(s, -s) / 2)}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}. The default (\code{s = 2} and no weights) makes CSWD elemental indexes.
 
-The interpretation of the index depends on how the price relatives in \code{rel} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base elemental indexes. For the latter, \code{chained} should be \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
+The interpretation of the index depends on how the price relatives in \code{rel} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base elemental indexes. For the latter, \code{chain} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
 
 By default, missing price relatives in \code{rel} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()} or \code{superlative_elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()} or \code{superlative_elemental_index()}.
 
-In some cases \code{rel} are actually price indexes from elsewhere (e.g., a hedonic model), so there is one value for each period-elemental aggregate pair. In this case, \code{elemental_index()} will leave the values unaffected, and simply put them into a suitable form for, e.g., aggregation. But it may be easier to use \code{{as_elemental_index()}}.
+In some cases \code{rel} are actually price indexes from elsewhere (e.g., a hedonic model), so there is one value for each period by elemental aggregate pair. In this case, \code{elemental_index()} will leave the values unaffected, and simply put them into a suitable form for, e.g., aggregation. 
 
-Numeric matrices are coerce into an elemental index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces \code{x} to a matrix prior to using the matrix method. An aggregated index is coerced to an elemental index by simply extracting the elemental indexes (discarding the higher-level indexes).
+It may be easier to use \code{{as_elemental_index()}} to form an elemental index from pre-computed values. Numeric matrices are coerce into an elemental index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces \code{x} to a matrix prior to using the matrix method. An aggregated index is coerced to an elemental index by simply extracting the elemental indexes (discarding the higher-level indexes).
 }
 
 \value{
-Each of these functions return an object of class \code{elem_ind}, inheriting from class \code{ind}, which has the following components.
+Each of these functions returns an elemental index, except \code{is_elemental_index()} which returns \code{TRUE} when \code{x} is an elemental index. This is an object of class \code{elem_ind}, inheriting from class \code{ind}, which has the following components.
 
 \item{index}{A named list with an entry for each \code{period} that gives a named vector of index values for each level in \code{ea}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}
@@ -98,8 +101,8 @@ prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:
 
 (epr <- with(prices, elemental_index(rel, period, ea)))
 
-# The index calculation can be done with a bit of matrix algebra
-# But it's slower and more memory intensive
+# The index calculation can be done with a bit of matrix algebra, 
+# but it's slower and more memory intensive
 
 mm <- model.matrix(~ ea:factor(period) - 1, prices)
 exp(solve(crossprod(mm), crossprod(mm, log(prices$rel))))

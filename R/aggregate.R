@@ -130,14 +130,7 @@ vcov.agg_ind <- function(object, repweights, mse = TRUE, ...) {
   res
 }
 
-#---- Extract contributions ----
-contrib <- function(x, ...) {
-  UseMethod("contrib")
-}
+#---- Test ----
+is_aggregate_index <- function(x) inherits(x, "agg_ind")
 
-contrib.ind <- function(x, level = levels(x), ...) {
-  res <- lapply(x$contrib, `[[`, match.arg(level))
-  products <- unique(nested_names(res))
-  res <- lapply(res, named_extract, products)
-  list2matrix(res)
-}
+is_index <- function(x) inherits(x, "ind")

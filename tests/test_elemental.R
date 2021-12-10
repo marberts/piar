@@ -27,6 +27,11 @@ epr[-1]
 epr[0] <- 1
 all.equal(epr, elemental_index(integer(0), integer(0), integer(0)))
 
+# And contributions extraction
+contrib(epr)
+
+contrib(elemental_index(integer(0), integer(0), integer(0), contrib = TRUE))
+
 # Make indexes with some random data
 dat <- data.frame(rel = replace(rlnorm(1e4), sample(1e4, 10), NA),
                   period = sample(letters, 1e4, TRUE),
@@ -58,13 +63,16 @@ epr22 <- aggregate(rel ~ as.character(ea) + period, dat,
 all.equal(as.data.frame(epr1), epr11[c(2, 1, 3)], check.attributes = FALSE)
 all.equal(as.data.frame(epr2), epr22[c(2, 1, 3)], check.attributes = FALSE)
 
-# chain() should be the same as using apply
+# chain() should be the same as using apply()
 all.equal(as.matrix(chain(epr1)), t(apply(as.matrix(epr1), 1, cumprod)))
-all.equal(unchain(chain(epr2))[-2], epr2[-2]) # contrib won't be the same
+all.equal(unchain(chain(epr2))[], epr2[]) # contrib won't be the same
 
 # Contributions should add up
 all.equal(epr1$index, 
           lapply(epr1$contrib, function(x) sapply(x, sum) + 1))
+
+all.equal(as.matrix(epr1)["5", ], colSums(contrib(epr1, "5")) + 1) # note the padding
+
 all.equal(epr2$index, 
           lapply(epr2$contrib, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 all.equal(epr3$index, 
@@ -81,7 +89,7 @@ l <- with(dat, elemental_index(rel, period, ea, r = 1.5, na.rm = TRUE))
 p <- with(dat, elemental_index(rel, period, ea, w2, r = -1.5, na.rm = TRUE))
 all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 
-# Test merge.index() method
+# Test merge.ind() method
 epr3 <- merge(epr1, epr2)
 all.equal(epr3[], rbind(epr1[], epr2[]))
 all.equal(epr3$index$a, sapply(epr3$contrib$a, sum, na.rm = TRUE) + 1)
@@ -93,7 +101,7 @@ all.equal(merge(elemental_index(integer(0), integer(0), integer(0)),
                 elemental_index(integer(0), integer(0), integer(0))),
           elemental_index(integer(0), integer(0), integer(0)))
 
-# Test stack.index() method
+# Test stack.ind() method
 epr2 <- with(
   dat, 
   elemental_index(rel, toupper(period), ea, r = -1, contrib = TRUE, na.rm = TRUE)
@@ -115,6 +123,16 @@ all.equal(stack(elemental_index(integer(0), integer(0), integer(0)),
 all.equal(unstack(stack(elemental_index(integer(0), integer(0), integer(0)), 
                         elemental_index(integer(0), integer(0), integer(0)))),
           elemental_index(integer(0), integer(0), integer(0)))
+
+# Test mean.ind()
+epr4 <- mean(epr1, 12)
+all.equal(levels(epr4), levels(epr))
+time(epr4)
+all.equal(as.matrix(epr4)[, 1], rowMeans(as.matrix(epr1)[, 1:12]))
+all.equal(as.matrix(epr4)[, 2], rowMeans(as.matrix(epr1)[, 13:24]))
+is_chain_index(epr4)
+is_chain_index(mean(chain(epr1)))
+contrib(epr4)
 
 # Toy example that can be easily verified
 dat <- data.frame(rel = c(1:6, NA, 7, 8),
@@ -141,7 +159,12 @@ all.equal(epr$time, epr2$time)
 contrib(epr2)
 
 epr[] <- epr2[]
-all.equal(epr[-5], epr2[-5]) # has_contrib doesn't match
+all.equal(epr[], epr2[])
+all.equal(contrib(epr), contrib(epr2))
+all.equal(levels(epr), levels(epr2))
+all.equal(time(epr), time(epr2))
+is_chain_index(epr)
+is_chain_index(epr2)
 
 # It shouldn't be possible to make a non-numeric index
 epr <- as_elemental_index(data.frame(a = as.character(1:5), b = 1:5))

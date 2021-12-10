@@ -23,13 +23,13 @@ expand_classification(class, width)
 }
 
 \arguments{
-\item{x}{A list of character vectors that give the codes/labels for each level of the classification, ordered so that moving down the list goes down the hierarchy. The last vector gives the elemental aggregates, which should have no duplicates. All vectors should be the same length, without \code{NA}s, and there should be no duplicates across different levels of \code{x}. \code{expand_classification()} can be used to make this.}
+\item{x}{A list of character vectors that give the codes/labels for each level of the classification, ordered so that moving down the list goes down the hierarchy. The last vector gives the elemental aggregates, which should have no duplicates. All vectors should be the same length, without \code{NA}s, and there should be no duplicates across different levels of \code{x}. \code{expand_classification()} can be used to make this when the classification is represented as a string.}
 
 \item{w}{A numeric vector of weights for the elemental aggregates (i.e., the last vector in \code{x}). The default is to give each elemental aggregate the same weight.}
 
 \item{object}{A price index aggregation structure, as made by \code{aggregation_structure()}.}
 
-\item{ea_only}{Should weights be returned for only the elemental aggregates, or the entire aggregation structure (the default)?}
+\item{ea_only}{Should weights be returned for only the elemental aggregates? The default gives the weights for the entire aggregation structure.}
 
 \item{na.rm}{Should missing values be removed from \code{w} when aggregating the weights (i.e., when \code{ea_only = FALSE})? By default, missing values are not removed.}
 
@@ -45,7 +45,7 @@ expand_classification(class, width)
 }
 
 \value{
-\code{aggregation_structure()} returns an object of class \code{pias}, which has the following components.
+\code{aggregation_structure()} returns a price index aggregation structure. This is an object of class \code{pias}, which has the following components.
 
 \item{child}{A nested list that gives the positions of the immediate children for each node in each level of the aggregation structure above the terminal nodes.}
 \item{parent}{A list that gives the position of the immediate parent for each node of the aggregation structure below the initial nodes.}

@@ -169,3 +169,20 @@ print.ind_summary <- function(x, ...) {
   }
   invisible(x)
 }
+
+#---- Averaging ----
+mean.ind <- function(x, window = 3, na.rm = FALSE, ...) {
+  index <- as.matrix(x)
+  len <- length(x$time) %/% window
+  loc <- seq(1, by = window, length.out = len)
+  periods <- x$time[loc]
+  res <- structure(vector("list", len), names = periods)
+  for (i in seq_along(loc)) {
+    res[[i]] <- rowMeans(index[, seq(loc[i], length.out = window)], na.rm = na.rm)
+  }
+  x$index <- res
+  x$time <- periods
+  x$contrib <- empty_contrib(x$levels)
+  x$has_contrib <- FALSE
+  x
+}

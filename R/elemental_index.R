@@ -135,3 +135,6 @@ as_elemental_index.agg_ind <- function(x, ...) {
                  chain = x$chain), 
             class = c("elem_ind", "ind"))
 }
+
+#---- Test ----
+is_elemental_index <- function(x) inherits(x, "elem_ind")

@@ -44,3 +44,8 @@ unchain.ind <- function(x, ...) {
   # do nothing for a chain index
   x
 }
+
+#---- Test ----
+is_chain_index <- function(x) {
+  is_index(x) && x$chain
+}

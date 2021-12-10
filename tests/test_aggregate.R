@@ -12,18 +12,18 @@ all.equal(as_elemental_index(aggregate(elemental_index(numeric(0)), aggregation_
 all.equal(update(aggregation_structure(list()), aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
           aggregation_structure(list()))
 
-unclass(aggregate(elemental_index(1:5), aggregation_structure(list())))
+unclass(aggregate(elemental_index(1:5, chain = TRUE), aggregation_structure(list())))
 
-unclass(as_elemental_index(aggregate(elemental_index(1:5), aggregation_structure(list()))))
+unclass(as_elemental_index(aggregate(elemental_index(1:5, chain = TRUE), aggregation_structure(list()))))
 
-all.equal(update(aggregation_structure(list()), aggregate(elemental_index(1:5), aggregation_structure(list()))),
+all.equal(update(aggregation_structure(list()), aggregate(elemental_index(1:5, chain = TRUE), aggregation_structure(list()))),
           aggregation_structure(list()))
 
 unclass(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))
 
-is.na(weights(update(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))))
+is.na(weights(update(aggregation_structure(list("2")), aggregate(elemental_index(1:5), aggregation_structure(list("2"))))))
 
-all.equal(update(aggregate(elemental_index(rep(1, 10)), aggregation_structure(list(1)))),
+all.equal(update(aggregation_structure(list(1)), aggregate(elemental_index(rep(1, 10)), aggregation_structure(list(1)))),
           aggregation_structure(list(1)))
 
 # Tests with a matched-sample index
@@ -137,7 +137,7 @@ all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[3]
 all.equal(apply(cumprod(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),
           as.matrix(cumprod(fs_index))[1, ])
 
-# Non-missing indexes should be the same when missing values are not remove
+# Non-missing indexes should be the same when missing values are not removed
 fs_index2 <- aggregate(fs_epr, fs_pias)
 fs_index2[] - fs_index[]
 
@@ -164,4 +164,4 @@ index_pop <- aggregate(epr_pop, pias)
 index_fx <- aggregate(epr_fx, pias)
 
 # Chained calculation and fixed-base calculation should be the same
-all.equal(as.matrix(index_fx), as.matrix(cumprod(index_pop)))
+all.equal(as.matrix(index_fx), as.matrix(chain(index_pop)))

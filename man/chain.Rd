@@ -6,13 +6,14 @@
 \alias{unchain.default}
 \alias{unchain.ind}
 \alias{cumprod.ind}
+\alias{is_chain_index}
 
 \title{
 Chain an index
 }
 
 \description{
-Chain a period-over-period index by taking the cumulative product its values to turn it into a fixed-base index. Unchain a fixed-base index by dividing its values for successive periods to get a period-over-period index.
+Chain a period-over-period index by taking the cumulative product of its values to turn it into a fixed-base index. Unchain a fixed-base index by dividing its values for successive periods to get a period-over-period index.
 }
 
 \usage{
@@ -29,6 +30,8 @@ unchain(x, ...)
 \method{chain}{default}(x, ...)
 
 \method{unchain}{ind}(x, ...)
+
+is_chain_index(x)
 }
 
 \arguments{
@@ -38,13 +41,17 @@ unchain(x, ...)
 }
 
 \details{
-Chaining an index object takes the cumulative product of the values for each level, and returns the same type of index (elemental or aggregate). This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod))}. Unchaining does the opposite. Quote contributions are removed when chaining/unchaining an index as it's not usually possible to chain them. Note that unchaining a period-over-period index (i.e., \code{x$chain == TRUE}) does nothing, as does chaining a fixed-base index (i.e., \code{x$chain == FALSE}).
+Chaining an index object takes the cumulative product of the values for each level, and returns the same type of index (elemental or aggregate). This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod))}. Unchaining does the opposite. Quote contributions are removed when chaining/unchaining an index, as it's not usually possible to chain them. Note that unchaining a period-over-period index (i.e., \code{is_chain_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., \code{is_chain_index(x) == FALSE}).
 
 The default methods attempts to coerce \code{x} into an elemental index with \code{\link[=as_elemental_index]{as_elemental_index()}} prior to chaining/unchaining.
 }
 
+\value{
+Each of these functions returns an index of the same type as \code{x}, except \code{is_chain_index} which returns \code{TRUE} when \code{x} is a period-over-period index (so that chaining makes sense).
+}
+
 \note{
-The \code{cumprod()} method is deprecated, and just calls \code{chain.ind()}.
+The \code{cumprod()} method is deprecated, and just calls \code{chain.ind()}. It will be removed in a future release.
 }
 
 \seealso{
@@ -66,7 +73,7 @@ chain(epr)
 
 all.equal(epr, unchain(chain(epr)))
 
-# # It is easy to rebase an index because columns are time periods
+# It is easy to rebase an index because columns are time periods
 
 as.matrix(chain(epr)) / as.matrix(chain(epr))[, 2]
 }
