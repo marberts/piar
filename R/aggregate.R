@@ -6,12 +6,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   # helpful functions
   price_update <- factor_weights(r)
   gen_mean <- generalized_mean(r)
-  aw <- function(r) {
-    arithmetic_weights <- transmute_weights(r, 1)
-    function(x, w) {
-      scale_weights(arithmetic_weights(x, w))
-    }
-  }
+  aw <- transmute_weights(r, 1)
   # functions to aggregate index values and contributions
   # 'i' is defined in the loop below; it's used to loop over the height of 'pias'
   aggregate_index <- function(z) {
@@ -19,7 +14,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   }
   aggregate_contrib <- if (x$has_contrib) {
     function(z) {
-      unlist(Map("*", con[[i - 1]][z], aw(rel[[i - 1]][z], w[[i - 1]][z])))
+      unlist(Map("*", con[[i - 1]][z], scale_weights(aw(rel[[i - 1]][z], w[[i - 1]][z]))))
     }
   } else {
     function(z) numeric(0)

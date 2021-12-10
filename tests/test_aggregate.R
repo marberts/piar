@@ -158,7 +158,7 @@ prices$fx_rel <- with(prices, price / gpindex::base_price(price, period, product
 pias <- aggregation_structure(list(c("1", "1"), c("f1", "f2")), 1:2)
 
 epr_pop <- with(prices, elemental_index(pop_rel, period, ea))
-epr_fx <- with(prices, elemental_index(fx_rel, period, ea, chained = FALSE))
+epr_fx <- with(prices, elemental_index(fx_rel, period, ea, chain = FALSE))
 
 index_pop <- aggregate(epr_pop, pias)
 index_fx <- aggregate(epr_fx, pias)
