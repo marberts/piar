@@ -75,7 +75,7 @@ levels.pias <- function(x) {
 }
 
 update.pias <- function(object, index, period = end(index), ...) {
-  if (!inherits(index, "aggregate")) {
+  if (!is_aggregate_index(index)) {
     stop(gettext("'index' is not an aggregate index; use aggregate() to make one"))
   }
   price_update <- factor_weights(index$r)
@@ -84,10 +84,28 @@ update.pias <- function(object, index, period = end(index), ...) {
   }
   # an aggregate index can have levels but no periods; elementals should be NA
   epr <- if (length(period)) {
-    as.matrix(cumprod(index))[, period]
+    as.matrix(chain(index))[, period]
   } else {
     NA_real_
   }
-  object$weights[] <- price_update(epr[names(object$eas)], object$weights)
+  object$weights[] <- price_update(epr[object$eas], object$weights)
   object
+}
+
+#---- Expand classification ----
+expand_classification <- function(class, width) {
+  class <- as.character(class)
+  width <- if (missing(width)) {
+    rep(1, max(nchar(class), 0, na.rm = TRUE))
+  } else {
+    as.numeric(width)
+  }
+  if (anyNA(width)) {
+    stop(gettext("'width' cannot contain NAs"))
+  }
+  w <- cumsum(width)
+  class <- strsplit(class, character(0), fixed = TRUE)
+  lapply(w, function(i) {
+    vapply(class, paste_until, character(1), i)
+  })
 }

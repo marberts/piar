@@ -43,19 +43,19 @@ weights(aggregation_structure(list(x1, x2, x3), c(NA, 2:4)))
 
 weights(aggregation_structure(list(x1, x2, x3), c(NA, 2:4)), na.rm = TRUE)
 
-# Update with the update.aggregate() method
+# Update with the update.pias() method
 # Updating with a length-0 index should make the weights NA
 epr <- elemental_index(integer(0))
 index <- aggregate(epr, agg1)
-all.equal(update(index)[-5], agg1[-5])
+all.equal(update(agg1, index)[-5], agg1[-5])
 weights(agg1)
-weights(update(index))
+weights(update(agg1, index))
 
 # Updating with an index that doesn't line up with the pias introduces NA weights
 # These should carry up the aggregation structure
 epr <- elemental_index(1, ea = "111")
 index <- aggregate(epr, agg1)
-weights(update(index))
+weights(update(agg1, index))
 
 # Accommodate a delimiter when expanding the classification by setting the width
 (agg2 <- aggregation_structure(expand_classification(c("1.1.1", "1.1.2", "1.2.1"), 

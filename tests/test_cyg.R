@@ -21,7 +21,7 @@ epr <- with(ms_prices, elemental_index(rel, period, business, na.rm = TRUE))
 
 index <- aggregate(epr, pias, na.rm = TRUE)
 
-all.equal(as.numeric(cumprod(index)), ms_cyg$index / 100)
+all.equal(as.numeric(as.matrix(chain(index))), ms_cyg$index / 100)
 
 # Fixed sample index from Cygnus
 fs_cyg <- read.csv(file.path(wd, "fs_cyg.csv"))
@@ -47,4 +47,4 @@ epr <- with(fs_prices, elemental_index(rel, period, business))
 
 index <- aggregate(epr, pias, na.rm = TRUE)
 
-all.equal(as.numeric(cumprod(index)[1:9, ]), fs_cyg$index / 100)
+all.equal(as.numeric(chain(index)[1:9, ]), fs_cyg$index / 100)

@@ -1,9 +1,22 @@
 \name{aggregate}
-\alias{aggregate.index}
-\alias{vcov.aggregate}
+\alias{aggregate.ind}
+\alias{vcov.agg_ind}
 \alias{contrib}
-\alias{contrib.default}
-\alias{contrib.index}
+\alias{contrib.ind}
+\alias{[.ind}
+\alias{[<-.ind}
+\alias{as.data.frame.ind}
+\alias{as.matrix.ind}
+\alias{merge.ind}
+\alias{stack.ind}
+\alias{unstack.ind}
+\alias{levels.ind}
+\alias{time.ind}
+\alias{start.ind}
+\alias{end.ind}
+\alias{head.ind}
+\alias{tail.ind}
+\alias{summary.ind}
 
 \title{Aggregate elemental indexes}
 
@@ -12,15 +25,17 @@ A method to aggregate period-over-period or fixed-base elemental price indexes u
 }
 
 \usage{
-\method{aggregate}{index}(x, pias, na.rm = FALSE, r = 1, ...)
+\method{aggregate}{ind}(x, pias, na.rm = FALSE, r = 1, ...)
 
-\method{vcov}{aggregate}(object, repweights, mse = TRUE, ...)
+\method{[}{ind}(x, i, j)
+
+\method{[}{ind}(x, i, j) <- value
+
+\method{vcov}{agg_ind}(object, repweights, mse = TRUE, ...)
 
 contrib(x, ...)
 
-\method{contrib}{default}(x, ...)
-
-\method{contrib}{index}(x, level = levels(x), ...)
+\method{contrib}{ind}(x, level = levels(x), ...)
 }
 
 \arguments{
@@ -32,11 +47,15 @@ contrib(x, ...)
 
 \item{r}{Order of the generalized mean used to aggregate the elemental price indexes: 0 for a geometric index, 1 for an arithmetic index (the default), or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
-\item{object}{An object of class \code{aggregate}, as made by \code{aggregate()}.}
+\item{i, j, value}{See \link{Extract}, with \code{value} being a numeric vector (or something that can coerced into one.)}
+
+\item{object}{An aggregate price index, as made by \code{aggregate()}.}
 
 \item{repweights}{A matrix, or something that can be coerced into one, of bootstrap replicate weights with a row for each elemental aggregate and a column for each replicate.}
 
 \item{mse}{Should covariances be centered off the value of the index in \code{object} (the default), or the mean of the replicates?}
+
+\item{level}{The level of an index for which quote contributions are desired, defaulting to the first level.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
@@ -56,24 +75,28 @@ In most cases aggregation is done with an arithmetic mean (the default), and thi
 
 Aggregating quote contributions uses the method in chapter 9 of the CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic mean. With a non-arithmetic mean, arithmetic weights are constructed using \code{\link[=transmute_weights]{transmute_weights(r, 1)}} in order to apply this method.
 
-There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with \code{\link[=merge.index]{merge()}}). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the change in the value of the index. This can also happen when aggregating an already aggregated index in which missing index values have been imputed (i.e., when \code{na.rm = TRUE}).
+There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with \code{{merge()}}). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the change in the value of the index. This can also happen when aggregating an already aggregated index in which missing index values have been imputed (i.e., when \code{na.rm = TRUE}).
+
+The extraction method treats \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped; indexing \code{x} always returns a matrix. This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like `\code{x[1]} is taken to be the same as \code{x[1, ]}. The replacement method similarly treats \code{x} as a matrix, and behaves the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding quote contributions (if any).
 
 The \code{vcov()} method is a simple wrapper to calculate the covariance matrix for an aggregated index when bootstrap replicate weights are available for the elemental aggregates. This approach ignores any sampling variance from the elemental indexes (which often use judgemental sampling), and ultimately depends on the method of generating replicate weights.
 }
 
 \value{
-An object of class \code{aggregate}, inheriting from class \code{index}, which has the following components.
+\code{aggregate()} returns an object of class \code{agg_ind}, inheriting from class \code{ind}, which has the following components.
 
 \item{index}{A named list with an entry for each \code{period} in \code{x} that gives a named vector of index values for each level in \code{pias}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a list with an entry for each level in \code{pias} with a named vector that gives the additive contribution for each price relative.}
 \item{levels}{The levels for \code{pias}.}
 \item{time}{The levels for \code{period} from \code{x}.}
 \item{has_contrib}{The value of \code{has_contrib} from \code{x}.}
-\item{chained}{The value for \code{chained} from \code{x}, usually \code{TRUE.}}
+\item{chain}{The value for \code{chain} from \code{x}, usually \code{TRUE.}}
 \item{r}{The value for \code{r}, usually \code{1}.}
 \item{pias}{A list containing the \code{child}, \code{parent}, \code{eas}, and \code{height} components of \code{pias}.}
 
 The \code{vcov()} method returns an array of covariance matrices for each \code{period}.
+
+The \code{contrib()} function extracts the \code{contrib} component of an index object, returning a matrix of quote contributions with a column of each \code{period} and a row for each product in \code{level}. Contributions are padded with 0 to fit into a rectangular array.
 }
 
 \references{
@@ -89,7 +112,7 @@ The \code{vcov()} method is based on a SAS routine by Justin Francis that was fi
 
 \code{\link{elemental_index}} for making elemental price indexes.
 
-\code{\link[=index_methods]{index methods}} for methods to extract index values/quote contributions, chain an index, and merge indexes together.
+\code{\link{chain}} for chaining period-over-period indexes.
 
 The \code{sps_repweights()} function in the \pkg{sps} package to generate replicates weights when elemental aggregates are sampled using sequential Poisson sampling.
 }
@@ -105,13 +128,50 @@ pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:
 
 epr <- with(prices, elemental_index(rel, period, ea))
 
+# Extract the indexes like a matrix
+
+epr["a", ]
+
+epr[, 1:2]
+
+epr[1, ] <- 1
+
 # Aggregate (note the imputation for elemental index 'c')
 
 aggregate(epr, pias)
 
-aggregate(epr, pias, na.rm = TRUE)
+(index <- aggregate(epr, pias, na.rm = TRUE))
 
 # Works for non-arithmetic indexes, too
 
 aggregate(epr, pias, na.rm = TRUE, r = -1)
+
+# Merge two indexes prior to aggregation
+
+prices2 <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[3:4], 4))
+epr2 <- with(prices2, elemental_index(rel, period, ea))
+aggregate(merge(epr, epr2), pias)
+
+# Stack two indexes prior to aggregation
+
+prices3 <- data.frame(rel = 1:8, period = rep(3:4, each = 4), ea = rep(letters[1:2], 4))
+epr3 <- with(prices3, elemental_index(rel, period, ea))
+aggregate(stack(epr, epr3), pias)
+
+# Unstack does the reverse
+
+all.equal(c(unstack(epr), unstack(epr3)), unstack(stack(epr, epr3)))
+
+# Extract useful features of the index
+
+head(index, 1)
+tail(index, 3)
+levels(epr)
+time(epr)
+start(epr)
+end(epr)
+
+# Turn the index into a data frame
+
+as.data.frame(index)
 }

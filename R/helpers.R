@@ -48,3 +48,15 @@ aggregate2pias <- function(x, w) {
 empty_contrib <- function(x) {
   list(structure(rep(list(numeric(0)), length(x)), names = x))
 }
+
+is_elemental_index <- function(x) inherits(x, "elem_ind")
+
+is_aggregate_index <- function(x) inherits(x, "agg_ind")
+
+is_index <- function(x) inherits(x, "ind")
+
+is_chained_index <- function(x) {
+  is_index(x) && x$chain
+}
+
+is_pias <- function(x) inherits(x, "pias")

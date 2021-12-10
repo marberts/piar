@@ -4,7 +4,7 @@
 \alias{as_elemental_index}
 \alias{as_elemental_index.default}
 \alias{as_elemental_index.matrix}
-\alias{as_elemental_index.aggregate}
+\alias{as_elemental_index.agg_ind}
 
 \title{Elemental index}
 
@@ -14,18 +14,18 @@ Compute period-over-period or fixed-base elemental price indexes (with optional 
 
 \usage{
 elemental_index(rel, period = rep(1, length(rel)), ea = rep(1, length(rel)), 
-                w, contrib = FALSE, chained = TRUE, na.rm = FALSE, r = 0)
+                w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0)
                 
 superlative_elemental_index(rel, period = rep(1, length(rel)), ea = rep(1, length(rel)), 
-                            w1, w2, contrib = FALSE, chained = TRUE, na.rm = FALSE, s = 2)
+                            w1, w2, contrib = FALSE, chain = TRUE, na.rm = FALSE, s = 2)
                             
 as_elemental_index(x, ...)
 
 \method{as_elemental_index}{default}(x, ...)
 
-\method{as_elemental_index}{matrix}(x, chained = TRUE, ...)
+\method{as_elemental_index}{matrix}(x, chain = TRUE, ...)
 
-\method{as_elemental_index}{aggregate}(x, ...)
+\method{as_elemental_index}{agg_ind}(x, ...)
 }
 
 \arguments{
@@ -39,7 +39,7 @@ as_elemental_index(x, ...)
 
 \item{contrib}{Should quote contributions be calculated? The default does not calculate contributions, as this can take quite a bit longer.}
 
-\item{chained}{Are the price relatives in \code{rel} period-over-period relatives for a chained calculation (the default)? This should be \code{FALSE} when \code{rel} are fixed-base relatives.}
+\item{chain}{Are the price relatives in \code{rel} period-over-period relatives for a chained calculation (the default)? This should be \code{FALSE} when \code{rel} are fixed-base relatives.}
 
 \item{na.rm}{Should missing values in \code{rel} and \code{w} be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to parental imputation.}
 
@@ -67,14 +67,14 @@ Numeric matrices are coerce into an elemental index object by treating each colu
 }
 
 \value{
-Each of these functions return an object of class \code{elemental}, inheriting from class \code{index}, which has the following components.
+Each of these functions return an object of class \code{elem_ind}, inheriting from class \code{ind}, which has the following components.
 
 \item{index}{A named list with an entry for each \code{period} that gives a named vector of index values for each level in \code{ea}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}
 \item{levels}{The levels for \code{ea}.}
 \item{time}{The levels for \code{period}.}
 \item{has_contrib}{The value of \code{contrib}.}
-\item{chained}{The value of \code{chained}.}
+\item{chain}{The value of \code{chain}.}
 }
 
 \references{
@@ -88,9 +88,7 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 
 \code{\link{aggregation_structure}} for making a price index aggregation structure.
 
-\code{\link[=aggregate.index]{aggregate}} to aggregate elemental price indexes according to a \code{\link[=aggregation_structure]{pias}}.
-
-\code{\link[=index_methods]{index methods}} for methods to extract index values/quote contributions, chain an index, and merge indexes together.
+\code{\link[=aggregate.ind]{aggregate}} to aggregate elemental price indexes according to a \code{\link[=aggregation_structure]{pias}}.
 }
 
 \examples{
@@ -98,13 +96,7 @@ prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:
 
 # A simple elemental price structure using a Jevons index
 
-epr <- with(prices, elemental_index(rel, period, ea))
-
-# Extract the indexes like a matrix
-
-epr["a", ]
-
-epr[, 1:2]
+(epr <- with(prices, elemental_index(rel, period, ea)))
 
 # The index calculation can be done with a bit of matrix algebra
 # But it's slower and more memory intensive
@@ -116,13 +108,11 @@ exp(solve(crossprod(mm), crossprod(mm, log(prices$rel))))
 
 with(prices, t(tapply(rel, list(period, ea), gpindex::geometric_mean, na.rm = TRUE)))
 
-epr
-
 # Works with any kind of generalized price index, such as a Coggeshall
 
 with(prices, elemental_index(rel, period, ea, r = -1))
 
-# Make Fisher indexes
+# Make a fisher index
 
 prices$base_weights <- 1:8
 prices$current_weights <- 8:1

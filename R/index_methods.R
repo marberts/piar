@@ -1,21 +1,21 @@
 #---- Coerce ----
-as.data.frame.index <- function(x, ...) {
+as.data.frame.ind <- function(x, ...) {
   # as.numeric() ensures that the value column shows up with NULL values
   value <- as.numeric(unlist(x$index, use.names = FALSE))
   period <- rep(x$time, each = length(x$levels))
   data.frame(period, level = x$levels, value, ...)
 }
 
-as.matrix.index <- function(x, ...) {
+as.matrix.ind <- function(x, ...) {
   list2matrix(x$index)
 }
 
 #---- Extract ----
-`[.index` <- function(x, i, j) {
+`[.ind` <- function(x, i, j) {
   as.matrix(x)[i, j, drop = FALSE]
 }
 
-`[<-.index` <- function(x, i, j, value) {
+`[<-.ind` <- function(x, i, j, value) {
   res <- as.matrix(x)
   res[i, j] <- as.numeric(value)
   periods <- colnames(res[0, j, drop = FALSE])
@@ -28,43 +28,39 @@ as.matrix.index <- function(x, ...) {
   x
 }
 
-levels.index <- function(x) {
+levels.ind <- function(x) {
   x$levels
 }
 
-time.index <- function(x, ...) {
+time.ind <- function(x, ...) {
   x$time
 }
 
-start.index <- function(x, ...) {
+start.ind <- function(x, ...) {
   x$time[min(length(x$time), 1L)]
 }
 
-end.index <- function(x, ...) {
+end.ind <- function(x, ...) {
   x$time[length(x$time)]
 }
 
-weights.aggregate <- function(object, ...) {
-  list2matrix(object$weights)
-}
-
 #---- Merge ----
-merge.aggregate <- function(x, y, ...) {
+merge.agg_ind <- function(x, y, ...) {
   stop(gettext("cannot merge aggregated indexes"))
 }
 
-merge.elemental <- function(x, y, ...) {
-  if (!inherits(y, "elemental")) {
+merge.elem_ind <- function(x, y, ...) {
+  if (!is_elemental_index(y)) {
     stop(gettext("'y' is not an elemental index; use elemental_index() to make one"))
   }
-  NextMethod()
+  NextMethod("merge")
 }
 
-merge.index <- function(x, y, ...) {
+merge.ind <- function(x, y, ...) {
   if (any(x$time != y$time)) {
     stop(gettext("'x' and 'y' must be indexes for the same time periods"))
   }
-  if (x$chained != y$chained) {
+  if (x$chain != y$chain) {
     stop(gettext("cannot merge a fixed-base and period-over-period index"))
   }
   if (length(intersect(x$levels, y$levels))) {
@@ -84,8 +80,8 @@ merge.index <- function(x, y, ...) {
 }
 
 #---- Stack ----
-stack.aggregate <- function(x, y, ...) {
-  if (!inherits(y, "aggregate")) {
+stack.agg_ind <- function(x, y, ...) {
+  if (!is_aggregate_index(y)) {
     stop(gettext("'y' is not an aggregate index; use aggregate() to make one"))
   }
   if (x$r != y$r) {
@@ -94,21 +90,21 @@ stack.aggregate <- function(x, y, ...) {
   if (!identical(x$pias, y$pias)) {
     stop(gettext("'x' and 'y' must be generated from the same aggregation structure"))
   }
-  NextMethod()
+  NextMethod("stack")
 }
 
-stack.elemental <- function(x, y, ...) {
-  if (!inherits(y, "elemental")) {
+stack.elem_ind <- function(x, y, ...) {
+  if (!is_elemental_index(y)) {
     stop(gettext("'y' is not an elemental index; use elemental_index() to make one"))
   }
-  NextMethod()
+  NextMethod("stack")
 }
 
-stack.index <- function(x, y, ...) {
+stack.ind <- function(x, y, ...) {
   if (any(x$levels != y$levels)) {
     stop(gettext("'x' and 'y' must be indexes for the same levels"))
   }
-  if (x$chained != y$chained) {
+  if (x$chain != y$chain) {
     stop(gettext("cannot stack a period-over-period and a fixed-base index"))
   }
   if (length(intersect(x$time, y$time))) {
@@ -123,7 +119,7 @@ stack.index <- function(x, y, ...) {
   x
 }
 
-unstack.index <- function(x, ...) {
+unstack.ind <- function(x, ...) {
   if (!length(x$time)) return(x)
   res <- vector("list", length(x$time))
   for (i in seq_along(res)) {
@@ -132,7 +128,7 @@ unstack.index <- function(x, ...) {
     res[[i]]$levels <- x$levels
     res[[i]]$time <- x$time[i]
     res[[i]]$has_contrib <- x$has_contrib
-    res[[i]]$chained <- x$chained
+    res[[i]]$chain <- x$chain
     res[[i]]$r <- x$r
     res[[i]]$pias <- x$pias
     class(res[[i]]) <- class(x)
@@ -141,30 +137,30 @@ unstack.index <- function(x, ...) {
 }
 
 #---- Printing ----
-print.index <- function(x, ...) {
+print.ind <- function(x, ...) {
   print(as.matrix(x), ...)
   invisible(x)
 }
 
-head.index <- function(x, ...) {
+head.ind <- function(x, ...) {
   head(as.matrix(x), ...)
 }
 
-tail.index <- function(x,  ...) {
+tail.ind <- function(x,  ...) {
   tail(as.matrix(x), ...)
 }
 
 #---- Summary ----
-summary.index <- function(object, ...) {
+summary.ind <- function(object, ...) {
   res <- structure(vector("list", 2), names = c("index", "contrib"))
   res$index <- summary.data.frame(object$index, ...)
   res$contrib <- if (object$has_contrib) {
     summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
   }
-  structure(res, class = "index_summary")
+  structure(res, class = "ind_summary")
 }
 
-print.index_summary <- function(x, ...) {
+print.ind_summary <- function(x, ...) {
   cat("Indexes\n")
   print(x$index)
   if (!is.null(x$contrib)) {

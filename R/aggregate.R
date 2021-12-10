@@ -1,6 +1,6 @@
 #---- Aggregate an index ----
-aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
-  if (!inherits(pias, "pias")) {
+aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+  if (!is_pias(pias)) {
     stop(gettext("'pias' must be a price index aggregation structure; use aggregation_structure() to make one"))
   }
   # helpful functions
@@ -36,7 +36,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     # get rid of any NULL contributions
     con[[1]][!lengths(con[[1]])] <- list(numeric(0))
     # re-aggregate price-updated weights for all periods after first
-    if (t > 1 && x$chained) {
+    if (t > 1 && x$chain) {
       w <- rev(weights(pias, na.rm = na.rm))
     }
     # loop over each level in the pias from the bottom up and aggregate
@@ -56,20 +56,20 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     x$index[[t]] <- index
     x$contrib[[t]] <- unlist(rev(con), recursive = FALSE)
     # price update weights for all periods after the first
-    if (pias$height && x$chained) {
+    if (pias$height && x$chain) {
       pias$weights <- price_update(index[pias$eas], w[[1]]) 
     }
   }
   x$levels <- pias$levels
   x$r <- r
   x$pias <- pias[c("child", "parent", "eas", "height")]
-  structure(x, class = c("aggregate", "index"))
+  structure(x, class = c("agg_ind", "ind"))
 }
 
 #---- Covariance calculation ----
 # Fast aggregate
-# This can be removed if aggregate.index gets fast enough
-.aggregate <- function(x, pias, chained, r) {
+# This can be removed if aggregate.ind gets fast enough
+.aggregate <- function(x, pias, chain, r) {
   # helpful functions
   price_update <- factor_weights(r)
   gen_mean <- generalized_mean(r)
@@ -86,7 +86,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     # align epr with weights so that positional indexing works
     # preserve names if epr and pias weights don't agree
     rel[[1]] <- named_extract(x$index[[t]], eas)
-    if (t > 1 && chained) w <- rev(weights(pias))
+    if (t > 1 && chain) w <- rev(weights(pias))
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1]) {
       rel[[i]] <- vapply(pias$child[[i - 1]], aggregate_index, numeric(1))
@@ -95,14 +95,14 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     index <- unlist(rev(rel))
     x$index[[t]] <- index
     # price update weights for all periods after the first
-    if (pias$height && chained) {
+    if (pias$height && chain) {
       pias$weights <- price_update(index[eas], w[[1]]) 
     }
   }
   list2matrix(x$index)
 }
 
-vcov.aggregate <- function(object, repweights, mse = TRUE, ...) {
+vcov.agg_ind <- function(object, repweights, mse = TRUE, ...) {
   repweights <- as.matrix(repweights)
   if (nrow(repweights) != length(object$pias$eas)) {
     stop(gettext("'repweights' must have a row for each weight in 'pias'"))
@@ -121,7 +121,7 @@ vcov.aggregate <- function(object, repweights, mse = TRUE, ...) {
   index_boot <- array(0, dim = lengths(dimnm), dimnames = dimnm)
   for (i in seq_len(n)) {
     pias$weights[] <- repweights[, i]
-    index_boot[, , i] <- .aggregate(object, pias, object$chained, object$r)[upper, , drop = FALSE]
+    index_boot[, , i] <- .aggregate(object, pias, object$chain, object$r)[upper, , drop = FALSE]
   }
   # mse = TRUE is the default for variance estimation in SAS, 
   # but not the survey package
@@ -140,12 +140,7 @@ contrib <- function(x, ...) {
   UseMethod("contrib")
 }
 
-contrib.default <- function(x, ...) {
-  x <- as_elemental_index(x)
-  NextMethod()
-}
-
-contrib.index <- function(x, level = levels(x), ...) {
+contrib.ind <- function(x, level = levels(x), ...) {
   res <- lapply(x$contrib, `[[`, match.arg(level))
   products <- unique(nested_names(res))
   res <- lapply(res, named_extract, products)

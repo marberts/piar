@@ -69,7 +69,7 @@ index <- aggregate(elementals, pias, na.rm = TRUE)
 
 # Chain them to get a time series
 
-cumprod(index)
+chain(index)
 ```
 
 ## References

@@ -58,8 +58,9 @@ epr22 <- aggregate(rel ~ as.character(ea) + period, dat,
 all.equal(as.data.frame(epr1), epr11[c(2, 1, 3)], check.attributes = FALSE)
 all.equal(as.data.frame(epr2), epr22[c(2, 1, 3)], check.attributes = FALSE)
 
-# cumprod.index() method should be the same as using apply
-all.equal(as.matrix(cumprod(epr1)), t(apply(as.matrix(epr1), 1, cumprod)))
+# chain() should be the same as using apply
+all.equal(as.matrix(chain(epr1)), t(apply(as.matrix(epr1), 1, cumprod)))
+all.equal(unchain(chain(epr2))[-2], epr2[-2]) # contrib won't be the same
 
 # Contributions should add up
 all.equal(epr1$index, 
@@ -127,7 +128,7 @@ contrib(epr)
 as.data.frame(epr)
 epr[, 1]
 epr[1, ]
-cumprod(epr)
+chain(epr)$contrib
 
 epr2 <- with(dat, elemental_index(rel, period, ea))
 
@@ -139,7 +140,7 @@ all.equal(epr$time, epr2$time)
 contrib(epr2)
 
 epr[] <- epr2[]
-all.equal(epr[-5], epr2[-5]) # contrib doesn't match
+all.equal(epr[-5], epr2[-5]) # has_contrib doesn't match
 
 # It shouldn't be possible to make a non-numeric index
 epr <- as_elemental_index(data.frame(a = as.character(1:5), b = 1:5))

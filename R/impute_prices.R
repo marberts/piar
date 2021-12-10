@@ -9,7 +9,7 @@ shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
       stop(gettext("'x', 'period', 'product, 'ea', and 'w' must be the same length"))
     }
   }
-  # this is mostly a combination of gpindex::back_price() and aggregate.index()
+  # this is mostly a combination of gpindex::back_price() and aggregate.ind()
   # it just does it period-by-period and keeps track of prices to impute
   if (!length(x)) return(x[0])
   period <- as.factor(period)

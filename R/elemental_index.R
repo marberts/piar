@@ -1,11 +1,11 @@
 #---- Internal functions ----
-.elemental_index <- function(rel, period, ea, w1, w2, contrib, chained, na.rm, index_fun, contrib_fun) {
+.elemental_index <- function(rel, period, ea, w1, w2, contrib, chain, na.rm, index_fun, contrib_fun) {
   index_fun <- match.fun(index_fun)
   contrib_fun <- match.fun(contrib_fun)
   period <- as.factor(period)
   ea <- as.factor(ea) # as.factor() ensures eps is balanced
-  if (contrib && is.null(names(x))) {
-    names(x) <- sequential_names(ea, period)
+  if (contrib && is.null(names(rel))) {
+    names(rel) <- sequential_names(ea, period)
   }
   # turn x and w into lists with components for each period
   # inside each component is a list for each ea containing relatives and weights
@@ -41,13 +41,13 @@
               levels = levels(ea),
               time = levels(period),
               has_contrib = contrib,
-              chained = chained)
-  structure(res, class = c("elemental", "index"))
+              chain = chain)
+  structure(res, class = c("elem_ind", "ind"))
 }
 
 #---- Calculate generalized-mean elemental indexes ----
 elemental_index <- function(rel, period = rep(1L, length(rel)), ea = rep(1L, length(rel)),
-                            w, contrib = FALSE, chained = TRUE, na.rm = FALSE, r = 0) {
+                            w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0) {
   if (missing(w)) {
     if (different_length(rel, period, ea)) {
       stop(gettext("'rel', 'period', and 'ea' must be the same length"))
@@ -60,14 +60,14 @@ elemental_index <- function(rel, period = rep(1L, length(rel)), ea = rep(1L, len
   if (any_negative(rel, if (!missing(w)) w)) {
     warning(gettext("some elements of 'rel' or 'w' are less than or equal to 0"))
   }
-  .elemental_index(rel, period, ea, w, contrib = contrib, na.rm = na.rm, chained = chained,
+  .elemental_index(rel, period, ea, w, contrib = contrib, na.rm = na.rm, chain = chain,
                    index_fun = generalized_mean(r), 
                    contrib_fun = contributions(r))
 }
 
 #---- Calculate superlative elemental indexes ----
 superlative_elemental_index <- function(rel, period = rep(1L, length(rel)), ea = rep(1L, length(rel)),
-                                        w1, w2, contrib = FALSE, chained = TRUE, na.rm = FALSE, s = 2) {
+                                        w1, w2, contrib = FALSE, chain = TRUE, na.rm = FALSE, s = 2) {
   if (missing(w1) && missing(w2)) {
     if (different_length(rel, period, ea)) {
       stop(gettext("'rel', 'period', and 'ea' must be the same length"))
@@ -88,7 +88,7 @@ superlative_elemental_index <- function(rel, period = rep(1L, length(rel)), ea =
   if (any_negative(rel, if (!missing(w1)) w1, if (!missing(w2)) w2)) {
     warning(gettext("some elements of 'rel', 'w1', or 'w2' are less than or equal to 0"))
   }
-  .elemental_index(rel, period, ea, w1, w2, contrib = contrib, na.rm = na.rm, chained = chained,
+  .elemental_index(rel, period, ea, w1, w2, contrib = contrib, na.rm = na.rm, chain = chain,
                    index_fun = nested_mean(0, c(s / 2, -s / 2)), 
                    contrib_fun = nested_contributions(0, c(s / 2, -s / 2)))
 }
@@ -102,7 +102,7 @@ as_elemental_index.default <- function(x, ...) {
   as_elemental_index(as.matrix(x), ...)
 }
 
-as_elemental_index.matrix <- function(x, chained = TRUE, ...) {
+as_elemental_index.matrix <- function(x, chain = TRUE, ...) {
   storage.mode(x) <- "numeric"
   if (is.null(rownames(x))) rownames(x) <- seq_len(nrow(x))
   if (is.null(colnames(x))) colnames(x) <- seq_len(ncol(x))
@@ -112,7 +112,7 @@ as_elemental_index.matrix <- function(x, chained = TRUE, ...) {
     stop(gettext("'x' cannot have duplicated row or column names"))
   }
   res <- list(index = NULL, contrib = NULL, levels = levels, 
-              time = periods, has_contrib = FALSE, chained = chained)
+              time = periods, has_contrib = FALSE, chain = chain)
   res$index <- res$contrib <- 
     structure(vector("list", ncol(x)), names = periods)
   res$contrib[] <- empty_contrib(levels)
@@ -120,10 +120,10 @@ as_elemental_index.matrix <- function(x, chained = TRUE, ...) {
     # EA names are not kept for matrices with 1 row
     res$index[[t]] <- structure(x[, t], names = rownames(x))
   }
-  structure(res, class = c("elemental", "index"))
+  structure(res, class = c("elem_ind", "ind"))
 }
 
-as_elemental_index.aggregate <- function(x, ...) {
+as_elemental_index.agg_ind <- function(x, ...) {
   eas <- x$pias$eas
   index <- lapply(x$index, `[`, eas)
   contrib <- lapply(x$contrib, `[`, eas)
@@ -132,6 +132,6 @@ as_elemental_index.aggregate <- function(x, ...) {
                  levels = eas, 
                  time = x$time,
                  has_contrib = x$has_contrib, 
-                 chained = x$chained), 
-            class = c("elemental", "index"))
+                 chain = x$chain), 
+            class = c("elem_ind", "ind"))
 }

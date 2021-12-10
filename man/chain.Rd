@@ -1,8 +1,11 @@
 \name{chain}
 \alias{chain}
-\alias{chain.index}
+\alias{chain.default}
+\alias{chain.ind}
 \alias{unchain}
-\alias{unchain.index}
+\alias{unchain.default}
+\alias{unchain.ind}
+\alias{cumprod.ind}
 
 \title{
 Chain an index
@@ -17,13 +20,15 @@ chain(x, ...)
 
 \method{chain}{default}(x, ...)
 
-\method{chain}{index}(x, ...)
+\method{chain}{ind}(x, ...)
+
+\method{cumprod}{ind}(x)
 
 unchain(x, ...)
 
 \method{chain}{default}(x, ...)
 
-\method{unchain}{index}(x, ...)
+\method{unchain}{ind}(x, ...)
 }
 
 \arguments{
@@ -33,13 +38,13 @@ unchain(x, ...)
 }
 
 \details{
-Chaining an index object takes the cumulative product of the values for each level, and returns the same type of index. Unchaining does the opposite. Quote contributions are removed when chaining/unchaining an index as it's not usually possible to chain them. Note that unchaining a period-over-period (i.e., \code{x$chain == TRUE}) index does nothing, as does chaining a fixed-base index (i.e., \code{x$chain == FALSE}).
+Chaining an index object takes the cumulative product of the values for each level, and returns the same type of index (elemental or aggregate). This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod))}. Unchaining does the opposite. Quote contributions are removed when chaining/unchaining an index as it's not usually possible to chain them. Note that unchaining a period-over-period index (i.e., \code{x$chain == TRUE}) does nothing, as does chaining a fixed-base index (i.e., \code{x$chain == FALSE}).
 
-The default method attempts to coerce \code{x} into an elemental index with \code{\link[=as_elemental_index]{as_elemental_index()}} prior to calling the next method.
+The default methods attempts to coerce \code{x} into an elemental index with \code{\link[=as_elemental_index]{as_elemental_index()}} prior to chaining/unchaining.
 }
 
-\value{
-An object that inherits from the \code{index} class.
+\note{
+The \code{cumprod()} method is deprecated, and just calls \code{chain.ind()}.
 }
 
 \seealso{
@@ -60,4 +65,8 @@ chain(epr)
 # Chaining and unchaining reverse each other
 
 all.equal(epr, unchain(chain(epr)))
+
+# # It is easy to rebase an index because columns are time periods
+
+as.matrix(chain(epr)) / as.matrix(chain(epr))[, 2]
 }
