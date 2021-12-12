@@ -32,7 +32,7 @@ Methods to aggregate period-over-period or fixed-based elemental price indexes u
 
 \method{[}{ind}(x, i, j) <- value
 
-\method{mean}{ind}(x, window = 3, na.rm = FALSE, ...)
+\method{mean}{ind}(x, window = 3, na.rm = FALSE, r = 1, ...)
 
 is_index(x)
 
@@ -48,7 +48,7 @@ is_aggregate_index(x)
 
 \item{na.rm}{Should missing values in \code{x} be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean imputation.}
 
-\item{r}{Order of the generalized mean used to aggregate the elemental price indexes: 0 for a geometric index, 1 for an arithmetic index (the default), or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
+\item{r}{Order of the generalized mean used to aggregate the price indexes in \code{x}: 1 for an arithmetic index (the default), 0 for a geometric index, or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
 \item{i, j, value}{See \link{Extract}, with \code{value} being a numeric vector (or something that can coerced into one.)}
 
@@ -82,7 +82,7 @@ There may not be contributions for all prices relatives in an elemental aggregat
 
 The extraction method treats \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped; indexing \code{x} always returns a matrix. This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like `\code{x[1]} is taken to be the same as \code{x[1, ]}. The replacement method similarly treats \code{x} as a matrix, and behaves the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding quote contributions (if any).
 
-Indexes can be aggregated over time by taking the (arithmetic) mean of each index value over a rolling window. The \code{mean()} method constructs a set of rolling windows of length \code{window}, starting in the first period of the index, and takes the unweighted arithmetic mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always avergaed over the \code{window} periods. Note that quote contributions are discarded when aggregating over time.
+Indexes can be aggregated over time by taking the (usually arithmetic) mean of each index value over a rolling window. The \code{mean()} method constructs a set of rolling windows of length \code{window}, starting in the first period of the index, and takes the unweighted mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. Note that quote contributions are discarded when aggregating over time.
 
 The \code{vcov()} method is a simple wrapper to calculate the covariance matrix for an aggregated index when bootstrap replicate weights are available for the elemental aggregates. This approach ignores any sampling variance from the elemental indexes (which often use judgemental sampling), and ultimately depends on the method of generating replicate weights.
 }

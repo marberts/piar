@@ -171,18 +171,21 @@ print.ind_summary <- function(x, ...) {
 }
 
 #---- Averaging ----
-mean.ind <- function(x, window = 3, na.rm = FALSE, ...) {
-  index <- as.matrix(x)
+mean.ind <- function(x, window = 3, na.rm = FALSE, r = 1, ...) {
+  xmat <- as.matrix(x)
+  gen_mean <- generalized_mean(r)
   len <- length(x$time) %/% window
   loc <- seq(1, by = window, length.out = len)
   periods <- x$time[loc]
-  res <- structure(vector("list", len), names = periods)
+  index <- contrib <- structure(vector("list", len), names = periods)
   for (i in seq_along(loc)) {
-    res[[i]] <- rowMeans(index[, seq(loc[i], length.out = window)], na.rm = na.rm)
+    j <- seq(loc[i], length.out = window)
+    index[[i]] <- apply(xmat[, j], 1, gen_mean, na.rm = na.rm)
   }
-  x$index <- res
+  contrib[] <- empty_contrib(x$levels)
+  x$index <- index
+  x$contrib <- contrib
   x$time <- periods
-  x$contrib <- empty_contrib(x$levels)
   x$has_contrib <- FALSE
   x
 }

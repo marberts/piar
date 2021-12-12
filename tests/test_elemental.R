@@ -32,6 +32,12 @@ contrib(epr)
 
 contrib(elemental_index(integer(0), integer(0), integer(0), contrib = TRUE))
 
+# And chaining
+all.equal(chain(elemental_index(numeric(0))), elemental_index(numeric(0), chain = FALSE))
+
+# And averaging
+all.equal(elemental_index(numeric(0)), mean(elemental_index(numeric(0))))
+
 # Make indexes with some random data
 dat <- data.frame(rel = replace(rlnorm(1e4), sample(1e4, 10), NA),
                   period = sample(letters, 1e4, TRUE),
@@ -132,7 +138,7 @@ all.equal(as.matrix(epr4)[, 1], rowMeans(as.matrix(epr1)[, 1:12]))
 all.equal(as.matrix(epr4)[, 2], rowMeans(as.matrix(epr1)[, 13:24]))
 is_chain_index(epr4)
 is_chain_index(mean(chain(epr1)))
-contrib(epr4)
+epr4$contrib
 
 # Toy example that can be easily verified
 dat <- data.frame(rel = c(1:6, NA, 7, 8),

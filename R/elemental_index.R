@@ -106,8 +106,8 @@ as_elemental_index.matrix <- function(x, chain = TRUE, ...) {
   storage.mode(x) <- "numeric"
   if (is.null(rownames(x))) rownames(x) <- seq_len(nrow(x))
   if (is.null(colnames(x))) colnames(x) <- seq_len(ncol(x))
-  levels <- as.character(rownames(x)) # as.character is for matrices without rows
-  periods <- as.character(colnames(x)) # same for columns
+  levels <- as.character(if (ncol(x)) rownames(x)) # as.character is for matrices without rows
+  periods <- as.character(if (nrow(x)) colnames(x)) # same for columns
   if (anyDuplicated(levels) || anyDuplicated(periods)) {
     stop(gettext("'x' cannot have duplicated row or column names"))
   }
