@@ -26,7 +26,7 @@ contrib(x, ...)
 }
 
 \value{
-A matrix of quote contributions with a column of each \code{period} and a row for each product in \code{level}. Contributions are padded with 0 to fit into a rectangular array.
+A matrix of quote contributions with a column of each \code{period} and a row for each product in \code{level}. Contributions are padded with 0 to fit into a rectangular array when products differ over time.
 }
 
 \seealso{

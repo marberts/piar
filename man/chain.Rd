@@ -9,7 +9,7 @@
 \alias{is_chain_index}
 
 \title{
-Chain an index
+Chain a price index
 }
 
 \description{
@@ -23,7 +23,7 @@ chain(x, ...)
 
 \method{chain}{ind}(x, ...)
 
-\method{cumprod}{ind}(x)
+\method{cumprod}{ind}(x) # deprecated
 
 unchain(x, ...)
 
@@ -35,15 +35,15 @@ is_chain_index(x)
 }
 
 \arguments{
-\item{x}{An object to chain/unchain.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
 
 \details{
-Chaining an index object takes the cumulative product of the values for each level, and returns the same type of index (elemental or aggregate). This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod))}. Unchaining does the opposite. Quote contributions are removed when chaining/unchaining an index, as it's not usually possible to chain them. Note that unchaining a period-over-period index (i.e., \code{is_chain_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., \code{is_chain_index(x) == FALSE}).
-
 The default methods attempts to coerce \code{x} into an elemental index with \code{\link[=as_elemental_index]{as_elemental_index()}} prior to chaining/unchaining.
+
+Chaining an index object takes the cumulative product of the index values for each level, and returns the same type of index (elemental or aggregate). This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod))}. Unchaining does the opposite, so these are inverse operations. Quote contributions are removed when chaining/unchaining an index, as it's not usually possible to chain them. Note that unchaining a period-over-period index (i.e., when \code{is_chain_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., when \code{is_chain_index(x) == FALSE}).
 }
 
 \value{
@@ -73,7 +73,8 @@ chain(epr)
 
 all.equal(epr, unchain(chain(epr)))
 
-# It is easy to rebase an index because columns are time periods
+# It is easy to rebase an index because columns are time periods,
+# but note the loss of information about period 0
 
 as.matrix(chain(epr)) / as.matrix(chain(epr))[, 2]
 }

@@ -1,13 +1,6 @@
 #---- Tests for aggregation_structure() and associated methods ----
 library(piar)
 
-# Build a pias for two corner cases and make sure the weights.pias() method works
-unclass(aggregation_structure(list(1:5)))
-
-weights(aggregation_structure(list(1:5)))
-
-weights(aggregation_structure(list(1:5)), ea_only = TRUE)
-
 # Build an improper pias
 # Should give a warning about improper parent nodes
 aggregation_structure(list(1:2, c(3, 3), c(4, 5)))

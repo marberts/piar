@@ -18,64 +18,6 @@ Type 'q()' to quit R.
 > #---- Tests for aggregation_structure() and associated methods ----
 > library(piar)
 > 
-> # Build a pias for two corner cases and make sure the weights.pias() method works
-> unclass(aggregation_structure(list()))
-$child
-list()
-
-$parent
-list()
-
-$levels
-character(0)
-
-$eas
-character(0)
-
-$weights
-named numeric(0)
-
-$height
-[1] 0
-
-> 
-> weights(aggregation_structure(list()))
-list()
-> 
-> weights(aggregation_structure(list()), ea_only = TRUE)
-named numeric(0)
-> 
-> unclass(aggregation_structure(list(1:5)))
-$child
-list()
-
-$parent
-list()
-
-$levels
-[1] "1" "2" "3" "4" "5"
-
-$eas
-[1] "1" "2" "3" "4" "5"
-
-$weights
-1 2 3 4 5 
-1 1 1 1 1 
-
-$height
-[1] 1
-
-> 
-> weights(aggregation_structure(list(1:5)))
-[[1]]
-1 2 3 4 5 
-1 1 1 1 1 
-
-> 
-> weights(aggregation_structure(list(1:5)), ea_only = TRUE)
-1 2 3 4 5 
-1 1 1 1 1 
-> 
 > # Build an improper pias
 > # Should give a warning about improper parent nodes
 > aggregation_structure(list(1:2, c(3, 3), c(4, 5)))
@@ -221,11 +163,11 @@ NA  3  4
  NA   2   3   4 
 
 > 
-> # Update with the update.aggregate() method
+> # Update with the update.pias() method
 > # Updating with a length-0 index should make the weights NA
 > epr <- elemental_index(integer(0))
 > index <- aggregate(epr, agg1)
-> all.equal(update(index)[-5], agg1[-5])
+> all.equal(update(agg1, index)[-5], agg1[-5])
 [1] TRUE
 > weights(agg1)
 [[1]]
@@ -240,7 +182,7 @@ NA  3  4
 111 112 121 211 
   1   1   1   1 
 
-> weights(update(index))
+> weights(update(agg1, index))
 [[1]]
  1  2 
 NA NA 
@@ -258,7 +200,7 @@ NA NA NA
 > # These should carry up the aggregation structure
 > epr <- elemental_index(1, ea = "111")
 > index <- aggregate(epr, agg1)
-> weights(update(index))
+> weights(update(agg1, index))
 [[1]]
  1  2 
 NA NA 

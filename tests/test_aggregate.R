@@ -22,11 +22,11 @@ unclass(ms_index)
 as_elemental_index(ms_index)
 
 # Check adding up of lower-level indexes
-all.equal(apply(cumprod(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[3]]),
-          as.matrix(cumprod(ms_index))[1, ])
+all.equal(apply(chain(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[3]]),
+          as.matrix(chain(ms_index))[1, ])
 
-all.equal(apply(cumprod(ms_index)[2:3, ], 2, weighted.mean, weights(ms_pias)[[2]]),
-          as.matrix(cumprod(ms_index))[1, ])
+all.equal(apply(chain(ms_index)[2:3, ], 2, weighted.mean, weights(ms_pias)[[2]]),
+          as.matrix(chain(ms_index))[1, ])
 
 # Re-aggregating the index shouldn't do anything
 all.equal(aggregate(ms_index, ms_pias)[], ms_index[])
@@ -75,8 +75,8 @@ all.equal(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)[], ms_index[])
 all.equal(as.matrix(ms_index)[1, ], 
           colSums(contrib(ms_index), na.rm = TRUE) + 1)
 
-all.equal(apply(cumprod(ms_index)[2:3, ], 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
-          as.matrix(cumprod(ms_index))[1, ])
+all.equal(apply(chain(ms_index)[2:3, ], 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
+          as.matrix(chain(ms_index))[1, ])
 
 ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)
 
@@ -109,11 +109,11 @@ all.equal(as.matrix(fs_index)[1, ],
           colSums(contrib(fs_index), na.rm = TRUE) + 1)
 
 # Check adding up of lower level indexes
-all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[3]]),
-          as.matrix(cumprod(fs_index))[1, ])
+all.equal(apply(chain(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[3]]),
+          as.matrix(chain(fs_index))[1, ])
 
-all.equal(apply(cumprod(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),
-          as.matrix(cumprod(fs_index))[1, ])
+all.equal(apply(chain(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),
+          as.matrix(chain(fs_index))[1, ])
 
 # Non-missing indexes should be the same when missing values are not removed
 fs_index2 <- aggregate(fs_epr, fs_pias)

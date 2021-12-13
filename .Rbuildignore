@@ -1,8 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^demo$
 ^data-raw$
 ^\.github$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^man/adjust_weights\.Rd$
+^vignettes/making_price_indexes\.Rmd$

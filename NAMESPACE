@@ -13,26 +13,24 @@ S3method(start, ind)
 S3method(end, ind)
 S3method(head, ind)
 S3method(tail, ind)
-
 S3method(as.data.frame, ind)
 S3method(as.matrix, ind)
-
 S3method(merge, agg_ind)
 S3method(merge, elem_ind)
 S3method(merge, ind)
-
 S3method(stack, agg_ind)
 S3method(stack, elem_ind)
 S3method(stack, ind)
 S3method(unstack, ind)
-
 S3method(print, ind)
 S3method(summary, ind)
 S3method(print, ind_summary)
-
 S3method(aggregate, ind)
 S3method(mean, ind)
 S3method(vcov, agg_ind)
+S3method(as_elemental_index, default)
+S3method(as_elemental_index, matrix)
+S3method(as_elemental_index, agg_ind)
 
 S3method(contrib, ind)
 
@@ -46,10 +44,6 @@ S3method(print, pias)
 S3method(weights, pias)
 S3method(levels, pias)
 S3method(update, pias)
-
-S3method(as_elemental_index, default)
-S3method(as_elemental_index, matrix)
-S3method(as_elemental_index, agg_ind)
 
 importFrom(stats, aggregate, weights, update, time, start, end)
 

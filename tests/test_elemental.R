@@ -64,8 +64,8 @@ all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 epr3 <- merge(epr1, epr2) # should give a warning
 all.equal(epr3[], rbind(epr1[], epr2[]))
 all.equal(epr3$index$a, sapply(epr3$contrib$a, sum, na.rm = TRUE) + 1)
-epr3$levels
-epr3$time
+all.equal(levels(epr3), as.character(1:5))
+all.equal(time(epr3), letters)
 
 # Test stack.ind() method
 epr2 <- with(
@@ -75,8 +75,8 @@ epr2 <- with(
 epr3 <- stack(epr1, epr2)
 all.equal(epr3[], cbind(epr1[], epr2[]))
 all.equal(epr3$index$A, sapply(epr3$contrib$A, sum, na.rm = TRUE) + 1)
-epr3$levels
-epr3$time
+all.equal(levels(epr3), as.character(1:5))
+all.equal(time(epr3), c(letters, LETTERS))
 
 # Stacking and unstacking are opposite operations
 all.equal(epr1, Reduce(stack, unstack(epr1)))

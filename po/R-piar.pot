@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: piar 0.2.1.9002\n"
-"POT-Creation-Date: 2021-11-19 15:48\n"
+"Project-Id-Version: piar 0.2.3.9006\n"
+"POT-Creation-Date: 2021-12-13 11:11\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,13 @@ msgstr ""
 msgid "'pias' must be a price index aggregation structure; use aggregation_structure() to make one"
 msgstr ""
 
+msgid "'repweights' must have a row for each weight in 'pias'"
+msgstr ""
+
 msgid "'x' cannot contain NAs"
+msgstr ""
+
+msgid "cannot make an aggregation structure with no elemental aggregates"
 msgstr ""
 
 msgid "all arguments must be the same length"
@@ -43,31 +49,43 @@ msgstr ""
 msgid "some nodes in the price index aggregation structure have multiple parent nodes; the aggregation structure does not represent a nested hierarchy"
 msgstr ""
 
-msgid "'x' cannot have duplicated row or column names"
+msgid "'index' is not an aggregate index; use aggregate() to make one"
 msgstr ""
 
-msgid "'x', 'period', and 'ea' must be the same length"
-msgstr ""
-
-msgid "'x', 'period', 'ea', 'w', must be the same length"
-msgstr ""
-
-msgid "some elements of 'x' or 'w' are less than or equal to 0"
-msgstr ""
-
-msgid "'x', 'period', 'ea', and 'w1' must be the same length"
-msgstr ""
-
-msgid "'x', 'period', 'ea', and 'w2' must be the same length"
-msgstr ""
-
-msgid "'x', 'period', 'ea', 'w1', and 'w2' must be the same length"
-msgstr ""
-
-msgid "some elements of 'x', 'w1', or 'w2' are less than or equal to 0"
+msgid "not all weights in 'object' have a corresponding index value"
 msgstr ""
 
 msgid "'width' cannot contain NAs"
+msgstr ""
+
+msgid "'cumprod()' is deprecated for index objects; use 'chain()' instead"
+msgstr ""
+
+msgid "cannot make an index with no periods or elemental aggregates"
+msgstr ""
+
+msgid "'rel', 'period', and 'ea' must be the same length"
+msgstr ""
+
+msgid "'rel', 'period', 'ea', 'w', must be the same length"
+msgstr ""
+
+msgid "some elements of 'rel' or 'w' are less than or equal to 0"
+msgstr ""
+
+msgid "'rel', 'period', 'ea', and 'w1' must be the same length"
+msgstr ""
+
+msgid "'rel', 'period', 'ea', and 'w2' must be the same length"
+msgstr ""
+
+msgid "'rel', 'period', 'ea', 'w1', and 'w2' must be the same length"
+msgstr ""
+
+msgid "some elements of 'rel', 'w1', or 'w2' are less than or equal to 0"
+msgstr ""
+
+msgid "'x' cannot have duplicated row or column names"
 msgstr ""
 
 msgid "'x', 'period', 'product, and 'ea' must be the same length"
@@ -88,6 +106,9 @@ msgstr ""
 msgid "'x' and 'y' must be indexes for the same time periods"
 msgstr ""
 
+msgid "cannot merge a fixed-base and period-over-period index"
+msgstr ""
+
 msgid "some levels appear in both 'x' and 'y'"
 msgstr ""
 
@@ -97,17 +118,14 @@ msgstr ""
 msgid "cannot stack indexes of different orders"
 msgstr ""
 
-msgid "cannot stack a period-over-period and a fixed-base index"
-msgstr ""
-
 msgid "'x' and 'y' must be generated from the same aggregation structure"
 msgstr ""
 
 msgid "'x' and 'y' must be indexes for the same levels"
 msgstr ""
 
-msgid "some periods appear in both 'x' and 'y'"
+msgid "cannot stack a period-over-period and a fixed-base index"
 msgstr ""
 
-msgid "'repweights' must have a row for each weight in 'pias'"
+msgid "some periods appear in both 'x' and 'y'"
 msgstr ""

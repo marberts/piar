@@ -9,7 +9,7 @@ Aggregation structure
 }
 
 \description{
-Construct a price index aggregation structure from a hierarchical classification.
+Create a price index aggregation structure from a hierarchical classification and aggregation weights.
 }
 
 \usage{
@@ -56,7 +56,7 @@ expand_classification(class, width)
 
 \code{weights()} returns a list with a named vector of weights for each level in the aggregation structure, unless \code{ea_only = TRUE}; in this case the return value is just a named vector.
 
-\code{update()} returns a copy of \code{object} with price-updated weights from the index values in \code{index}.
+\code{update()} returns a copy of \code{object} with price-updated weights using the index values in \code{index}.
 
 \code{expand_classification()} returns a list with a entry for each level in \code{x} giving the "digits" that represent each level in the hierarchy.
 }
@@ -67,15 +67,18 @@ The \code{aggregation_structure()} function does its best to check its arguments
 
 \seealso{
 \code{\link[=aggregate.ind]{aggregate}} to aggregate price indexes made with \code{\link[=elemental_index]{elemental_index()}}.
-
-\code{\link{expand_classification}} to help make \code{x}.
 }
 
 \examples{
 # A simple example
+#            1
+#      |-----+-----|
+#      11          12
+#  |---+---|       |
+#  111     112     121
 
-x1 <- c("1", "1", "1")
-x2 <- c("11", "11", "12")
+x1 <- c("1",   "1",   "1")
+x2 <- c("11",  "11",  "12")
 x3 <- c("111", "112", "121")
 
 aggregation_structure(list(x1, x2, x3))
