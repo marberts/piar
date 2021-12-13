@@ -27,14 +27,6 @@ nested_names <- function(x) {
   as.character(unlist(lapply(x, names), use.names = FALSE))
 }
 
-list2matrix <- function(x) {
-  if (any(lengths(x))) { # cbind returns NULL for empty lists
-    do.call(cbind, x)
-  } else {
-    matrix(numeric(0), ncol = 0, nrow = 0, dimnames = list(NULL, NULL))
-  }
-}
-
 aggregate2pias <- function(x, w) {
   structure(list(child = x$pias$child,
                  parent = x$pias$parent,

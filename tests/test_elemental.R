@@ -3,41 +3,6 @@ library(piar)
 
 set.seed(1234)
 
-# Make sure index objects are correctly structured with length-0 inputs
-unclass(elemental_index(integer(0), integer(0), integer(0)))
-
-unclass(superlative_elemental_index(integer(0), integer(0), integer(0), integer(0)))
-
-# Make sure matrix/data.frame methods work with length-0 indexes
-as.matrix(elemental_index(numeric(0)))
-
-all.equal(as_elemental_index(as.matrix(elemental_index(numeric(0)))),
-          elemental_index(numeric(0)))
-
-all.equal(as.data.frame(elemental_index(numeric(0))),
-          data.frame(period = character(0), level = character(0), value = numeric(0)))
-
-# Make sure indexing methods work with length-0 indexes
-epr <- elemental_index(integer(0), integer(0), integer(0))
-epr[]
-epr[0, ]
-epr[, 0]
-epr[-1, ]
-epr[-1]
-epr[0] <- 1
-all.equal(epr, elemental_index(integer(0), integer(0), integer(0)))
-
-# And contributions extraction
-contrib(epr)
-
-contrib(elemental_index(integer(0), integer(0), integer(0), contrib = TRUE))
-
-# And chaining
-all.equal(chain(elemental_index(numeric(0))), elemental_index(numeric(0), chain = FALSE))
-
-# And averaging
-all.equal(elemental_index(numeric(0)), mean(elemental_index(numeric(0))))
-
 # Make indexes with some random data
 dat <- data.frame(rel = replace(rlnorm(1e4), sample(1e4, 10), NA),
                   period = sample(letters, 1e4, TRUE),
@@ -96,16 +61,11 @@ p <- with(dat, elemental_index(rel, period, ea, w2, r = -1.5, na.rm = TRUE))
 all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 
 # Test merge.ind() method
-epr3 <- merge(epr1, epr2)
+epr3 <- merge(epr1, epr2) # should give a warning
 all.equal(epr3[], rbind(epr1[], epr2[]))
 all.equal(epr3$index$a, sapply(epr3$contrib$a, sum, na.rm = TRUE) + 1)
 epr3$levels
 epr3$time
-
-# Merging length-0 indexes does nothing
-all.equal(merge(elemental_index(integer(0), integer(0), integer(0)), 
-                elemental_index(integer(0), integer(0), integer(0))),
-          elemental_index(integer(0), integer(0), integer(0)))
 
 # Test stack.ind() method
 epr2 <- with(
@@ -121,18 +81,9 @@ epr3$time
 # Stacking and unstacking are opposite operations
 all.equal(epr1, Reduce(stack, unstack(epr1)))
 
-# Stacking/unstacking length-0 indexes does nothing
-all.equal(stack(elemental_index(integer(0), integer(0), integer(0)), 
-                elemental_index(integer(0), integer(0), integer(0))),
-          elemental_index(integer(0), integer(0), integer(0)))
-
-all.equal(unstack(stack(elemental_index(integer(0), integer(0), integer(0)), 
-                        elemental_index(integer(0), integer(0), integer(0)))),
-          elemental_index(integer(0), integer(0), integer(0)))
-
 # Test mean.ind()
 epr4 <- mean(epr1, 12)
-all.equal(levels(epr4), levels(epr))
+all.equal(levels(epr4), levels(epr1))
 time(epr4)
 all.equal(as.matrix(epr4)[, 1], rowMeans(as.matrix(epr1)[, 1:12]))
 all.equal(as.matrix(epr4)[, 2], rowMeans(as.matrix(epr1)[, 13:24]))

@@ -5,7 +5,10 @@ aggregation_structure <- function(x, w) {
     stop(gettext("'x' cannot contain NAs"))
   }
   len <- length(x)
-  ea <- if (len) x[[len]] else character(0) # x[[0]] is an error
+  if (!len) {
+    stop(gettext("cannot make an aggregation structure with no elemental aggregates"))
+  }
+  ea <- x[[len]]
   w <- if (missing(w)) rep(1, length(ea)) else as.numeric(w)
   # basic argument checking to make sure inputs can make an aggregation structure
   if (length(ea) != length(w) || any(lengths(x) != length(w))) {
@@ -52,7 +55,6 @@ aggregation_structure <- function(x, w) {
 #---- Methods ----
 weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
   if (ea_only) return(object$weights)
-  if (!object$height) return(list())
   res <- vector("list", object$height)
   res[[1]] <- object$weights
   # 'i' is defined in the loop below for looping over the height of pias
@@ -82,12 +84,7 @@ update.pias <- function(object, index, period = end(index), ...) {
   if (!all(object$levels %in% index$levels)) {
     warning(gettext("not all weights in 'object' have a corresponding index value"))
   }
-  # an aggregate index can have only levels or periods; elementals should be NA
-  epr <- if (length(period) && length(object$levels)) {
-    as.matrix(chain(index))[, period]
-  } else {
-    NA_real_
-  }
+  epr <- as.matrix(chain(index))[, period]
   object$weights[] <- price_update(epr[object$eas], object$weights)
   object
 }

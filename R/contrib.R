@@ -12,5 +12,5 @@ contrib.ind <- function(x, level = levels(x), ...) {
   # then replace with the actual values, so products that didn't sell
   # have 0 and not NA contributions
   res <- Map(replace, out, lapply(con, names), con)
-  list2matrix(res)
+  do.call(cbind, res)
 }

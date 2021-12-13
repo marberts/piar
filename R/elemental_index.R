@@ -4,6 +4,9 @@
   contrib_fun <- match.fun(contrib_fun)
   period <- as.factor(period)
   ea <- as.factor(ea) # as.factor() ensures eps is balanced
+  if (!(nlevels(period) && nlevels(ea))) {
+    stop(gettext("cannot make an index with no periods or elemental aggregates"))
+  }
   if (contrib && is.null(names(rel))) {
     names(rel) <- sequential_names(ea, period)
   }
@@ -46,7 +49,7 @@
 }
 
 #---- Calculate generalized-mean elemental indexes ----
-elemental_index <- function(rel, period = rep(1L, length(rel)), ea = rep(1L, length(rel)),
+elemental_index <- function(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)),
                             w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0) {
   if (missing(w)) {
     if (different_length(rel, period, ea)) {
@@ -66,7 +69,7 @@ elemental_index <- function(rel, period = rep(1L, length(rel)), ea = rep(1L, len
 }
 
 #---- Calculate superlative elemental indexes ----
-superlative_elemental_index <- function(rel, period = rep(1L, length(rel)), ea = rep(1L, length(rel)),
+superlative_elemental_index <- function(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)),
                                         w1, w2, contrib = FALSE, chain = TRUE, na.rm = FALSE, s = 2) {
   if (missing(w1) && missing(w2)) {
     if (different_length(rel, period, ea)) {
@@ -103,11 +106,14 @@ as_elemental_index.default <- function(x, ...) {
 }
 
 as_elemental_index.matrix <- function(x, chain = TRUE, ...) {
+  if (!(nrow(x) && ncol(x))) {
+    stop(gettext("cannot make an index with no periods or elemental aggregates"))
+  }
   storage.mode(x) <- "numeric"
   if (is.null(rownames(x))) rownames(x) <- seq_len(nrow(x))
   if (is.null(colnames(x))) colnames(x) <- seq_len(ncol(x))
-  levels <- as.character(if (ncol(x)) rownames(x)) # as.character is for matrices without rows
-  periods <- as.character(if (nrow(x)) colnames(x)) # same for columns
+  levels <- rownames(x)
+  periods <- colnames(x)
   if (anyDuplicated(levels) || anyDuplicated(periods)) {
     stop(gettext("'x' cannot have duplicated row or column names"))
   }

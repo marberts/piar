@@ -1,30 +1,7 @@
-#---- Tests for aggregate.index() method ----
+#---- Tests for aggregate.ind() method ----
 library(piar)
 
 set.seed(12345)
-
-# Tests for corner cases
-unclass(aggregate(elemental_index(numeric(0)), aggregation_structure(list())))
-
-all.equal(as_elemental_index(aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
-          elemental_index(numeric(0)))
-
-all.equal(update(aggregation_structure(list()), aggregate(elemental_index(numeric(0)), aggregation_structure(list()))),
-          aggregation_structure(list()))
-
-unclass(aggregate(elemental_index(1:5, chain = TRUE), aggregation_structure(list())))
-
-unclass(as_elemental_index(aggregate(elemental_index(1:5, chain = TRUE), aggregation_structure(list()))))
-
-all.equal(update(aggregation_structure(list()), aggregate(elemental_index(1:5, chain = TRUE), aggregation_structure(list()))),
-          aggregation_structure(list()))
-
-unclass(aggregate(elemental_index(1:5), aggregation_structure(list("2"))))
-
-is.na(weights(update(aggregation_structure(list("2")), aggregate(elemental_index(1:5), aggregation_structure(list("2"))))))
-
-all.equal(update(aggregation_structure(list(1)), aggregate(elemental_index(rep(1, 10)), aggregation_structure(list(1)))),
-          aggregation_structure(list(1)))
 
 # Tests with a matched-sample index
 ms_epr <- with(
@@ -75,10 +52,10 @@ all.equal(Reduce(stack, unstack(ms_index)), ms_index)
 
 # Aggregated contributions should add up
 all.equal(as.matrix(ms_index)[1, ], 
-          sapply(ms_index$contrib, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+          colSums(contrib(ms_index), na.rm = TRUE) + 1)
 
 # Check that weights are getting price updated correctly
-apply(cumprod(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
+apply(chain(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
 
 weights(update(ms_pias, ms_index), ea_only = TRUE)
 
@@ -96,7 +73,7 @@ ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
 all.equal(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)[], ms_index[])
 
 all.equal(as.matrix(ms_index)[1, ], 
-          sapply(ms_index$contrib, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+          colSums(contrib(ms_index), na.rm = TRUE) + 1)
 
 all.equal(apply(cumprod(ms_index)[2:3, ], 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
           as.matrix(cumprod(ms_index))[1, ])
@@ -105,7 +82,8 @@ ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)
 
 all.equal(aggregate(ms_index, ms_pias, r = -1.7)[], ms_index[])
 
-all.equal(as.matrix(ms_index)[1, ], sapply(ms_index$contrib, function(x) sum(x[[1]]) + 1))
+all.equal(as.matrix(ms_index)[1, ], 
+          colSums(contrib(ms_index)) + 1)
 
 # Tests with a fixed-sample index
 fs_epr <- with(
@@ -128,7 +106,7 @@ all.equal(aggregate(fs_index, fs_pias)[], fs_index[])
 
 # Contributions should add up
 all.equal(as.matrix(fs_index)[1, ], 
-          sapply(fs_index$contrib, function(x) sum(x[[1]], na.rm = TRUE) + 1))
+          colSums(contrib(fs_index), na.rm = TRUE) + 1)
 
 # Check adding up of lower level indexes
 all.equal(apply(cumprod(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[3]]),
@@ -142,10 +120,10 @@ fs_index2 <- aggregate(fs_epr, fs_pias)
 fs_index2[] - fs_index[]
 
 all.equal(as.matrix(fs_index2)["121", ], 
-          sapply(fs_index2$contrib, function(x) sum(x[["121"]], na.rm = TRUE) + 1))
+          colSums(contrib(fs_index2, "121"), na.rm = TRUE) + 1)
 
 all.equal(as.matrix(fs_index2)["13", 1:3], 
-          sapply(fs_index2$contrib[1:3], function(x) sum(x[["13"]], na.rm = TRUE) + 1))
+          contrib(fs_index2, "13")[, 1:3] + 1)
 
 # Tests with a fixed-base index
 prices <- data.frame(price = 1:15, 

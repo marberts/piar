@@ -2,12 +2,6 @@
 library(piar)
 
 # Build a pias for two corner cases and make sure the weights.pias() method works
-unclass(aggregation_structure(list()))
-
-weights(aggregation_structure(list()))
-
-weights(aggregation_structure(list()), ea_only = TRUE)
-
 unclass(aggregation_structure(list(1:5)))
 
 weights(aggregation_structure(list(1:5)))

@@ -7,7 +7,7 @@ as.data.frame.ind <- function(x, ...) {
 }
 
 as.matrix.ind <- function(x, ...) {
-  list2matrix(x$index)
+  do.call(cbind, x$index)
 }
 
 #---- Extract ----
@@ -66,13 +66,9 @@ merge.ind <- function(x, y, ...) {
   if (length(intersect(x$levels, y$levels))) {
     warning(gettext("some levels appear in both 'x' and 'y'"))
   }
-  if (!length(x$levels)) return(y)
-  if (!length(y$levels)) return(x)
   for (t in x$time) {
     x$index[[t]] <- c(x$index[[t]], y$index[[t]])
     x$contrib[[t]] <- c(x$contrib[[t]], y$contrib[[t]])
-    # might be useful if this method is extended to aggregated indexes
-    # x$weights[[t]] <- c(x$weights[[t]], y$weights[[t]])
   }
   x$levels <- union(x$levels, y$levels)
   x$has_contrib <- x$has_contrib || y$has_contrib
@@ -110,8 +106,6 @@ stack.ind <- function(x, y, ...) {
   if (length(intersect(x$time, y$time))) {
     warning(gettext("some periods appear in both 'x' and 'y'"))
   }
-  if (!length(x$time)) return(y)
-  if (!length(y$time)) return(x)
   x$index <- c(x$index, y$index)
   x$contrib <- c(x$contrib, y$contrib)
   x$time <- union(x$time, y$time)
@@ -120,7 +114,6 @@ stack.ind <- function(x, y, ...) {
 }
 
 unstack.ind <- function(x, ...) {
-  if (!length(x$time)) return(x)
   res <- vector("list", length(x$time))
   for (i in seq_along(res)) {
     res[[i]]$index <- x$index[i]
