@@ -213,7 +213,7 @@ B4    NaN       NaN       NaN 2.2353790
 >
 > ms_prices2[c("back_price", "back_quantity")] <- 
 +     ms_prices2[back_period(ms_prices2$period, ms_prices2$product), c("price", "quantity")]
-
+>
 > ms_prices2 <- na.omit(ms_prices2) # can't have NAs for Tornqvist weights
 >
 > ms_prices2$weight <- with(

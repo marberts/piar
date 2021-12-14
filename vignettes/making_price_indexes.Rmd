@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Most price indexes are made with a two-step procedure, where period-over-period *elemental indexes* are first calculated for a collection of *elemental aggregates* at each point in time, and then aggregated according to a *price index aggregation structure*. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. The **piar** package contains a collections of functions that revolve around this work flow, making it easy to build standard price indexes in **R**.
+Most price indexes are made with a two-step procedure, where period-over-period *elemental indexes* are calculated for a collection of *elemental aggregates* at each point in time, and then aggregated according to a *price index aggregation structure*. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. The **piar** package contains a collections of functions that revolve around this work flow, making it easy to build standard price indexes in **R**.
 
 The purpose of this vignette is to give several extended examples of how to use the functions in this package to make different types of price indexes. This should serve both as a introduction to the functionality in **piar**, and a reference for solving specific index-number problems.
 
@@ -34,7 +34,7 @@ head(ms_prices)
 ms_weights
 ```
 
-The `elemental_index()` function makes, well, elemental indexes, using information on price relatives, elemental aggregates (businesses), and time periods (quarters). By default it makes a Jevons index, but any generalized bilateral index is possible. The only wrinkle is that price data here are in levels, and not relatives, but the `price_relative()` function can make the necessary conversion.
+The `elemental_index()` function makes, well, elemental indexes, using information on price relatives, elemental aggregates (businesses), and time periods (quarters). By default it makes a Jevons index, but any bilateral generalized-mean index is possible. The only wrinkle is that price data here are in levels, and not relatives, but the `price_relative()` function can make the necessary conversion.
 
 ```{r}
 relative <- with(ms_prices, price_relative(price, period, product))
@@ -64,6 +64,8 @@ It is now simple to aggregate the elemental indexes according to this aggregatio
 ```{r}
 (ms_index <- aggregate(ms_epr, pias, na.rm = TRUE))
 ```
+
+Although simple, this example covers the core functionality of **piar**. The remaining examples in the vignette build on this one by adding complexities that often arise in practice
 
 ## Chaining
 
@@ -125,9 +127,9 @@ aggregate(ms_epr, pias_sps, na.rm = TRUE)
 
 ## Non-parental imputation during aggregation
 
-Parental imputation is the usual way to impute missing index values during aggregation, and it is simple to do with `aggregate()`. In some cases, however, a business-level index may get imputed with the value for another business, rather than for an entire group of businesses. The simplest way to do this sort of imputation is to alter the elemental indexes prior to aggregation. It is also possible to augment the aggregation structure with an imputation layer, but this is more complex.
+Parental imputation is the usual way to impute missing index values during aggregation, and it is simple to do with `aggregate()`. In some cases, however, a business-level index may get imputed with the value for, say, another business, rather than for an entire group of businesses. The simplest way to do this sort of imputation is to alter the elemental indexes prior to aggregation. It is also possible to augment the aggregation structure with an imputation layer, but this is more complex.
 
-Suppose that missing index values for business B2 should be imputed as 1, rather than the value for group 11.
+Suppose that missing index values for business B2 should be imputed as 1, rather than the value for group 11. This replacement can be done as if the index was a matrix.
 
 ```{r}
 ms_epr2 <- ms_epr
@@ -155,7 +157,7 @@ The Coggeshall index (equally-weighted harmonic mean of price relatives) is anot
 with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE, r = -1))
 ```
 
-The type of mean used to aggregate elemental indexes can be controlled in the same way in the call to `aggregate()`. The default makes an arithmetic index, but any type of generalized index is possible. 
+The type of mean used to aggregate elemental indexes can be controlled in the same way in the call to `aggregate()`. The default makes an arithmetic index, but any type of generalized-mean index is possible. 
 
 Many superlative indexes can be made by supplying unequal and (usually) time-varying weights when making the elemental indexes. These weights often come from information on quantities.
 
@@ -192,7 +194,7 @@ with(ms_prices2, elemental_index(price / back_price, period, business, weight))
 It's often convenient to decompose an index into the (additive) contribution of each price relative, also known as the quote contributions. This can be done with the same work flow as in the previous examples, specifying `contrib = TRUE` when calling `elemental_index()`.
 
 ```{r}
-ms_epr <- with(ms_prices, elemental_index(relative, period, business, contrib = TRUE))
+ms_epr <- with(ms_prices, elemental_index(relative, period, business, contrib = TRUE, na.rm = TRUE))
 ```
 
 As with index values, quote contributions for a given level of the index can be extracted as a matrix.
@@ -336,11 +338,10 @@ The first step to making a Paasche index is to unstack the elemental indexes int
 The second step is to make a sequence of aggregation structures for each set of weights.
 
 ```{r}
-pias <- with(
-  weights, 
-  Map(aggregation_structure, 
-      list(hierarchy), 
-      split(weight, period))
+pias <- with(weights, 
+             Map(aggregation_structure, 
+                 list(hierarchy), 
+                 split(weight, period))
 )
 ```
 

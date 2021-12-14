@@ -37,7 +37,7 @@ time.ind <- function(x, ...) {
 }
 
 start.ind <- function(x, ...) {
-  x$time[min(length(x$time), 1L)]
+  x$time[1L]
 }
 
 end.ind <- function(x, ...) {
