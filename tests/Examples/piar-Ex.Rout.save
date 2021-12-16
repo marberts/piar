@@ -294,28 +294,12 @@ b 6.928203
 > 
 > # Aggregate (note the imputation for elemental index 'c')
 > 
-> aggregate(epr, pias)
-           1        2
-top       NA       NA
-a   1.000000 1.000000
-b   2.828427 6.928203
-c         NA       NA
-> 
 > (index <- aggregate(epr, pias, na.rm = TRUE))
            1        2
 top 2.218951 6.037662
 a   1.000000 1.000000
 b   2.828427 6.928203
 c   2.218951 6.037662
-> 
-> # Works for non-arithmetic indexes, too
-> 
-> aggregate(epr, pias, na.rm = TRUE, r = -1)
-           1        2
-top 1.757359 1.549011
-a   1.000000 1.000000
-b   2.828427 6.928203
-c   1.757359 1.549011
 > 
 > # Merge two indexes prior to aggregation
 > 
@@ -392,9 +376,32 @@ a   1.000000 1.000000
 b   2.828427 6.928203
 c   2.218951 6.037662
 > 
+> # Calculate a CSWD index as a geometric index by constructing appropriate weights
+> 
+> library(gpindex)
+> 
+> fw <- function() {
++   a2g <- transmute_weights(1, 0)
++   h2g <- transmute_weights(-1, 0)
++   function(x, w1, w2) {
++       scale_weights(a2g(x, w1)) + scale_weights(h2g(x, w2))
++   }
++ }
+> 
+> with(
++     prices, 
++     elemental_index(rel, period, ea, grouped(fw())(rel, group = interaction(period, ea)))
++ )
+         1        2
+a 1.732051 5.916080
+b 2.828427 6.928203
+> 
 > 
 > 
 > cleanEx()
+
+detaching ‘package:gpindex’
+
 > nameEx("price_relative")
 > ### * price_relative
 > 
@@ -417,7 +424,7 @@ c   2.218951 6.037662
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.09 0.004 0.094 0 0 
+Time elapsed:  0.092 0.012 0.103 0 0 
 > grDevices::dev.off()
 null device 
           1 

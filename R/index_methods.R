@@ -164,19 +164,29 @@ print.ind_summary <- function(x, ...) {
 }
 
 #---- Averaging ----
-mean.ind <- function(x, window = 3, na.rm = FALSE, r = 1, ...) {
-  xmat <- as.matrix(x)
-  gen_mean <- generalized_mean(r)
+mean.ind <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
+  index <- x$index
+  if (!missing(w)) {
+    if (length(w) != length(x$time) * length(x$levels)) {
+      stop(gettext("'x' and 'w' must be the same length"))
+    }
+    w <- split(w, gl(length(x$time), length(x$levels)))
+  }
+  gen_mean <- Vectorize(generalized_mean(r))
   len <- length(x$time) %/% window
   loc <- seq(1, by = window, length.out = len)
   periods <- x$time[loc]
-  index <- contrib <- structure(vector("list", len), names = periods)
+  res <- contrib <- structure(vector("list", len), names = periods)
   for (i in seq_along(loc)) {
     j <- seq(loc[i], length.out = window)
-    index[[i]] <- apply(xmat[, j], 1, gen_mean, na.rm = na.rm)
+    res[[i]] <- if (missing(w)) {
+      gen_mean(structure(.mapply(c, index[j], list()), names = x$levels), na.rm = na.rm)
+    } else {
+      gen_mean(structure(.mapply(c, index[j], list()), names = x$levels), .mapply(c, w[j], list()), na.rm = na.rm)
+    }
   }
   contrib[] <- empty_contrib(x$levels)
-  x$index <- index
+  x$index <- res
   x$contrib <- contrib
   x$time <- periods
   x$has_contrib <- FALSE

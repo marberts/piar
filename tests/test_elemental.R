@@ -113,6 +113,12 @@ is_chain_index(epr4)
 is_chain_index(mean(chain(epr1)))
 epr4$contrib
 
+w <- matrix(seq_len(5 * 26), 5)
+all.equal(as.matrix(mean(epr1, w, window = 12))[, 1], 
+          diag(as.matrix(epr1)[, 1:12] %*% apply(w[, 1:12], 1, scale_weights)), check.attributes = FALSE)
+all.equal(as.matrix(mean(epr1, w, window = 12))[, 2], 
+          diag(as.matrix(epr1)[, 13:24] %*% apply(w[, 13:24], 1, scale_weights)), check.attributes = FALSE)
+
 # Toy example that can be easily verified
 dat <- data.frame(rel = c(1:6, NA, 7, 8),
                   period = c(1, 1, 1, 1, 1, 2, 2, 2, 2),

@@ -48,7 +48,7 @@ elemental_index(rel, ...)
 
 \method{vcov}{agg_ind}(object, repweights, mse = TRUE, ...)
 
-\method{mean}{ind}(x, window = 3, na.rm = FALSE, r = 1, ...)
+\method{mean}{ind}(x, w, window = 3, na.rm = FALSE, r = 1, ...)
 
 # Combine
 \method{merge}{ind}(x, y, ...)
@@ -95,13 +95,13 @@ is_aggregate_index(x)
 }
 
 \arguments{
-\item{rel}{Period-over-period or fixed-base price relatives, usually a numeric vector. The former can be made with \code{\link[=price_relative]{price_relative()}}.}
+\item{rel}{Period-over-period or fixed-base price relatives. Currently there is only a method for numeric vectors; these can be made with \code{\link[=price_relative]{price_relative()}}.}
 
 \item{period}{A factor, or something that can be coerced into one, giving the time period associated with each price relative in \code{rel}. The ordering of time periods follows of the levels of \code{period}, to agree with \code{\link[=cut.Date]{cut()}}. The default assumes that all price relatives belong to one time period.}
 
 \item{ea}{A factor, or something that can be coerced into one, giving the elemental aggregate associated with each price relative in \code{rel}. The default assumes that all price relatives belong to one elemental aggregate.}
 
-\item{w}{A numeric vector of weights for the price relatives in \code{rel} (i.e., quote/product weights). The default is to give each price relative equal weight.}
+\item{w}{A numeric vector of weights for the price relatives in \code{rel}/index values in \code{x}. The default is equal weights.}
 
 \item{contrib}{Should quote contributions be calculated? The default does not calculate contributions.}
 
@@ -137,6 +137,8 @@ The default method simply coerces \code{rel} to a numeric prior to calling the m
 The interpretation of the index depends on how the price relatives in \code{rel} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base elemental indexes. For the latter, \code{chain} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
 
 By default, missing price relatives in \code{rel} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
+
+Superlative quadratic mean indexes (e.g., the Fisher index) can be calculated by supplying the appropriate weights; see the example below. It is important to note that there are several ways to make these weights, and this affects how quote contributions are calculated. See \code{\link[=contributions]{contributions()}}, and the referneces therein, for more details.
 }
 
 \subsection{Aggregate}{
@@ -158,7 +160,9 @@ There may not be contributions for all prices relatives in an elemental aggregat
 
 The \code{vcov()} method is a simple wrapper to calculate the covariance matrix for an aggregated index when bootstrap replicate weights are available for the elemental aggregates. This approach ignores any sampling variance from the elemental indexes (which often use judgmental sampling), and ultimately depends on the method of generating replicate weights. It returns an array of covariance matrices for each \code{period}.
 
-Indexes can be aggregated over time by taking the (usually arithmetic) mean of index values for each level over a rolling window. The \code{mean()} method constructs a set of rolling windows of length \code{window}, starting in the first period of the index, and takes the unweighted mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. Note that quote contributions are discarded when aggregating over time.
+Indexes can be aggregated over time by taking the (usually arithmetic) mean of index values for each level over a rolling window. The \code{mean()} method constructs a set of rolling windows of length \code{window}, starting in the first period of the index, and takes the unweighted mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that quote contributions are discarded when aggregating over time. 
+
+An optional vector of weights can be specified when aggregating index values over time, which is often useful when aggregating a Paasche index; see section 4.3 of Balk (2008) for details. It is usually easiest to specify these weights as a matrix with a row for each index value in \code{x} and a column for each time period.
 }
 
 \subsection{Combine}{
@@ -225,8 +229,6 @@ The \code{vcov()} method is based on a SAS routine by Justin Francis that was fi
 
 \code{\link{aggregation_structure}} for making a price index aggregation structure.
 
-\code{\link{aggregation_structure}} for making a price index aggregation structure.
-
 \code{\link{chain}} for chaining period-over-period indexes.
 
 \code{\link{contrib}} for extracting quote contributions.
@@ -261,13 +263,7 @@ epr[1, ] <- 1 # can be useful for doing specific imputations
 
 # Aggregate (note the imputation for elemental index 'c')
 
-aggregate(epr, pias)
-
 (index <- aggregate(epr, pias, na.rm = TRUE))
-
-# Works for non-arithmetic indexes, too
-
-aggregate(epr, pias, na.rm = TRUE, r = -1)
 
 # Merge two indexes prior to aggregation
 

@@ -8,7 +8,7 @@ elemental_index.default <- function(rel, ...) {
 }
 
 elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)),
-                            w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0, ...) {
+                                    w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0, ...) {
   if (missing(w)) {
     if (different_length(rel, period, ea)) {
       stop(gettext("'rel', 'period', and 'ea' must be the same length"))
@@ -23,6 +23,8 @@ elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1,
   }
   period <- as.factor(period)
   ea <- as.factor(ea) # ensures elemental aggregates are balanced
+  periods <- levels(period)
+  eas <- levels(ea)
   if (!(nlevels(period) && nlevels(ea))) {
     stop(gettext("cannot make an index with no periods or elemental aggregates"))
   }
@@ -32,7 +34,6 @@ elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1,
   # splitting 'rel' into a nested list by period then ea is the same as
   # using interaction(), but makes it easier to get the results as
   # a list
-  eas <- levels(ea)
   ea <- split(ea, period)
   rel <- Map(split, split(rel, period), ea)
   # vectorize index and contribution functions to map over the
@@ -52,13 +53,13 @@ elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1,
   # mimic contributions structure instead of a NULL
   if (!contrib) {
     contributions <- rep(empty_contrib(eas), nlevels(period))
-    names(contributions) <- levels(period)
+    names(contributions) <- periods
   }
   # return 'elemental' object
   res <- list(index = index,
               contrib = contributions,
               levels = eas,
-              time = levels(period),
+              time = periods,
               has_contrib = contrib,
               chain = chain)
   structure(res, class = c("elem_ind", "ind"))
@@ -75,7 +76,7 @@ as_elemental_index.default <- function(x, ...) {
 
 as_elemental_index.matrix <- function(x, chain = TRUE, ...) {
   if (!(nrow(x) && ncol(x))) {
-    stop(gettext("cannot make an index with no periods or elemental aggregates"))
+    stop(gettext("cannot make an elemental index with no periods or elemental aggregates"))
   }
   storage.mode(x) <- "numeric"
   if (is.null(rownames(x))) rownames(x) <- seq_len(nrow(x))
