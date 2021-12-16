@@ -46,7 +46,7 @@ elemental_index(rel, ...)
 # Aggregate
 \method{aggregate}{ind}(x, pias, na.rm = FALSE, r = 1, ...)
 
-\method{vcov}{agg_ind}(object, repweights, mse = TRUE, ...)
+\method{vcov}{agg_ind}(object, repweights, mse = TRUE, ncpus = 1, ...)
 
 \method{mean}{ind}(x, w, window = 3, na.rm = FALSE, r = 1, ...)
 
@@ -120,6 +120,8 @@ is_aggregate_index(x)
 \item{repweights}{A matrix, or something that can be coerced into one, of bootstrap replicate weights with a row for each elemental aggregate and a column for each replicate.}
 
 \item{mse}{Should covariances be centered off the value of the index in \code{object} (the default), or the mean of the replicates?}
+
+\item{ncpus}{Number of cpus to use for parallel calculation of covariance matrix. The default does the calculation in serial, and is usually much faster for smaller indexes.}
 
 \item{window}{The size of the rolling-window used to average index values across time periods. The default (3) turns a monthly index into into a quarterly one.}
 

@@ -97,7 +97,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   do.call(cbind, x$index)
 }
 
-vcov.agg_ind <- function(object, repweights, mse = TRUE, ...) {
+vcov.agg_ind <- function(object, repweights, mse = TRUE, ncpus = 1, ...) {
   repweights <- as.matrix(repweights)
   if (nrow(repweights) != length(object$pias$eas)) {
     stop(gettext("'repweights' must have a row for each weight in 'pias'"))
@@ -109,11 +109,20 @@ vcov.agg_ind <- function(object, repweights, mse = TRUE, ...) {
   # initialize an aggregation structure with no weights and an array to store
   # indexes for looping over repweights
   pias <- aggregate2pias(object, numeric(length(eas)))
-  index_boot <- array(0, dim = lengths(dimnm), dimnames = dimnm)
-  for (i in seq_len(n)) {
+  # function to aggregate index for replicate 'i'
+  repl <- function(i) {
     pias$weights[] <- repweights[, i]
-    index_boot[, , i] <- .aggregate(object, pias, object$chain, object$r)[upper, , drop = FALSE]
+    .aggregate(object, pias, object$chain, object$r)[upper, , drop = FALSE]
   }
+  if (ncpus > 1) {
+    cl <- makeCluster(ncpus)
+    index_boot <- parLapply(cl, seq_len(n), repl)
+    stopCluster(cl)
+  } else {
+    index_boot <- lapply(seq_len(n), repl)
+  }
+  index_boot <- array(unlist(index_boot, use.names = FALSE), 
+                      dim = lengths(dimnm), dimnames = dimnm)
   # mse = TRUE is the default for variance estimation in SAS, 
   # but not the survey package
   centre <- if (mse) {
