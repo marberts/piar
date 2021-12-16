@@ -245,13 +245,13 @@ b 0.1443376 1
 > 
 > ### Name: price_indexes
 > ### Title: Price indexes
-> ### Aliases: elemental_index superlative_elemental_index aggregate.ind
-> ###   vcov.agg_ind mean.ind merge.ind stack.ind unstack.ind [.ind [<-.ind
-> ###   levels.ind time.ind start.ind end.ind head.ind tail.ind summary.ind
-> ###   as.matrix.ind as.data.frame.ind as_elemental_index
-> ###   as_elemental_index.default as_elemental_index.matrix
-> ###   as_elemental_index.agg_ind is_index is_elemental_index
-> ###   is_aggregate_index
+> ### Aliases: elemental_index elemental_index.default
+> ###   elemental_index.numeric aggregate.ind vcov.agg_ind mean.ind merge.ind
+> ###   stack.ind unstack.ind [.ind [<-.ind levels.ind time.ind start.ind
+> ###   end.ind head.ind tail.ind summary.ind as.matrix.ind as.data.frame.ind
+> ###   as_elemental_index as_elemental_index.default
+> ###   as_elemental_index.matrix as_elemental_index.agg_ind is_index
+> ###   is_elemental_index is_aggregate_index
 > 
 > ### ** Examples
 > 

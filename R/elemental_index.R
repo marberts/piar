@@ -1,56 +1,14 @@
-#---- Internal functions ----
-.elemental_index <- function(rel, period, ea, w1, w2, contrib, chain, na.rm, index_fun, contrib_fun) {
-  index_fun <- match.fun(index_fun)
-  contrib_fun <- match.fun(contrib_fun)
-  period <- as.factor(period)
-  ea <- as.factor(ea) # as.factor() ensures eps is balanced
-  if (!(nlevels(period) && nlevels(ea))) {
-    stop(gettext("cannot make an index with no periods or elemental aggregates"))
-  }
-  if (contrib && is.null(names(rel))) {
-    names(rel) <- sequential_names(ea, period)
-  }
-  # turn x and w into lists with components for each period
-  # inside each component is a list for each ea containing relatives and weights
-  eas <- split(ea, period)
-  rel <- Map(split, split(rel, period), eas)
-  if (!missing(w1)) w1 <- Map(split, split(w1, period), eas)
-  if (!missing(w2)) w2 <- Map(split, split(w2, period), eas)
-  # case 1 has no weights, case 2 has w1 and no w2, 
-  # case 3 has no w1 and has w2, and case 4 has w1 and w2
-  case <- 1 + (!missing(w1)) + 2 * (!missing(w2))
-  # calculate elemental indexes
-  vindex_fun <- Vectorize(index_fun)
-  na.rm <- if (length(rel)) na.rm # mapply complains about length-0 inputs
-  index <- switch(case,
-                  Map(vindex_fun, rel, na.rm = na.rm),
-                  Map(vindex_fun, rel, w1, na.rm = na.rm),
-                  Map(vindex_fun, rel, w2 = w2, na.rm = na.rm),
-                  Map(vindex_fun, rel, w1, w2, na.rm = na.rm))
-  # calculate quote contributions
-  vcontrib_fun <- Vectorize(contrib_fun, SIMPLIFY = FALSE)
-  contributions <- if (contrib) {
-    switch(case,
-           Map(vcontrib_fun, rel),
-           Map(vcontrib_fun, rel, w1),
-           Map(vcontrib_fun, rel, w2 = w2),
-           Map(vcontrib_fun, rel, w1, w2))
-  } else {
-    Map(split, split(numeric(0), period), eas)
-  }
-  # return 'elemental' object
-  res <- list(index = index,
-              contrib = contributions,
-              levels = levels(ea),
-              time = levels(period),
-              has_contrib = contrib,
-              chain = chain)
-  structure(res, class = c("elem_ind", "ind"))
+#---- Calculate generalized-mean elemental indexes ----
+elemental_index <- function(rel, ...) {
+  UseMethod("elemental_index")
 }
 
-#---- Calculate generalized-mean elemental indexes ----
-elemental_index <- function(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)),
-                            w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0) {
+elemental_index.default <- function(rel, ...) {
+  elemental_index(as.numeric(rel), ...)
+}
+
+elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)),
+                            w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0, ...) {
   if (missing(w)) {
     if (different_length(rel, period, ea)) {
       stop(gettext("'rel', 'period', and 'ea' must be the same length"))
@@ -61,39 +19,49 @@ elemental_index <- function(rel, period = gl(1, length(rel)), ea = gl(1, length(
     }
   }
   if (any_negative(rel, if (!missing(w)) w)) {
-    warning(gettext("some elements of 'rel' or 'w' are less than or equal to 0"))
+    warning(gettext("some elements of 'rel or 'w' are less than or equal to 0"))
   }
-  .elemental_index(rel, period, ea, w, contrib = contrib, na.rm = na.rm, chain = chain,
-                   index_fun = generalized_mean(r), 
-                   contrib_fun = contributions(r))
-}
-
-#---- Calculate superlative elemental indexes ----
-superlative_elemental_index <- function(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)),
-                                        w1, w2, contrib = FALSE, chain = TRUE, na.rm = FALSE, s = 2) {
-  if (missing(w1) && missing(w2)) {
-    if (different_length(rel, period, ea)) {
-      stop(gettext("'rel', 'period', and 'ea' must be the same length"))
-    }
-  } else if (missing(w2)) {
-    if (different_length(rel, period, ea, w1)) {
-      stop(gettext("'rel', 'period', 'ea', and 'w1' must be the same length"))
-    }
-  } else if (missing(w1)) {
-    if (different_length(rel, period, ea, w2)) {
-      stop(gettext("'rel', 'period', 'ea', and 'w2' must be the same length"))
-    }
+  period <- as.factor(period)
+  ea <- as.factor(ea) # ensures elemental aggregates are balanced
+  if (!(nlevels(period) && nlevels(ea))) {
+    stop(gettext("cannot make an index with no periods or elemental aggregates"))
+  }
+  if (contrib && is.null(names(rel))) {
+    names(rel) <- sequential_names(ea, period)
+  }
+  # splitting 'rel' into a nested list by period then ea is the same as
+  # using interaction(), but makes it easier to get the results as
+  # a list
+  eas <- levels(ea)
+  ea <- split(ea, period)
+  rel <- Map(split, split(rel, period), ea)
+  # vectorize index and contribution functions to map over the
+  # nested list of relatives
+  index_fun <- Vectorize(generalized_mean(r))
+  contrib_fun <- Vectorize(contributions(r), SIMPLIFY = FALSE)
+  # unweighted calculation
+  if (missing(w)) {
+    index <- Map(index_fun, rel, na.rm = na.rm)
+    contributions <- if (contrib) Map(contrib_fun, rel)
+  # weighted calculation
   } else {
-    if (different_length(rel, period, ea, w2)) {
-      stop(gettext("'rel', 'period', 'ea', 'w1', and 'w2' must be the same length"))
-    }
+    w <- Map(split, split(w, period), ea)
+    index <- Map(index_fun, rel, w, na.rm = na.rm)
+    contributions <- if (contrib) Map(contrib_fun, rel, w)
   }
-  if (any_negative(rel, if (!missing(w1)) w1, if (!missing(w2)) w2)) {
-    warning(gettext("some elements of 'rel', 'w1', or 'w2' are less than or equal to 0"))
+  # mimic contributions structure instead of a NULL
+  if (!contrib) {
+    contributions <- rep(empty_contrib(eas), nlevels(period))
+    names(contributions) <- levels(period)
   }
-  .elemental_index(rel, period, ea, w1, w2, contrib = contrib, na.rm = na.rm, chain = chain,
-                   index_fun = nested_mean(0, c(s / 2, -s / 2)), 
-                   contrib_fun = nested_contributions(0, c(s / 2, -s / 2)))
+  # return 'elemental' object
+  res <- list(index = index,
+              contrib = contributions,
+              levels = eas,
+              time = levels(period),
+              has_contrib = contrib,
+              chain = chain)
+  structure(res, class = c("elem_ind", "ind"))
 }
 
 #---- Coerce to an elemental index ----

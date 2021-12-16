@@ -1,5 +1,5 @@
 
-R version 4.1.0 (2021-05-18) -- "Camp Pontanezen"
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -15,8 +15,9 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> #---- Tests for elemental_index(), superlative_elemental_index(), and index methods ----
+> #---- Tests for elemental_index() and index methods ----
 > library(piar)
+> library(gpindex)
 > 
 > set.seed(1234)
 > 
@@ -35,9 +36,21 @@ Type 'q()' to quit R.
 +   dat, 
 +   elemental_index(rel, period, ea, r = -1, contrib = TRUE, na.rm = TRUE)
 + )
+> 
+> # Test a Fisher calculation
+> fw <- function(x, w1, w2) {
++   v1 <- scale_weights(transmute_weights(1, 0)(x, w1))
++   v2 <- scale_weights(transmute_weights(-1, 0)(x, w2))
++   v1 + v2
++ }
+> 
+> dat2 <- na.omit(dat)
+> 
+> w <- with(dat2, grouped(fw)(rel, w1, w2, group = interaction(period, ea)))
+> 
 > epr3 <- with(
-+   dat, 
-+   superlative_elemental_index(rel, period, ea, w1, w2, contrib = TRUE, na.rm = TRUE)
++   dat2, 
++   elemental_index(rel, period, ea, w, contrib = TRUE)
 + )
 > 
 > # Compare with an alternate implementation
@@ -71,19 +84,28 @@ Type 'q()' to quit R.
 +           lapply(epr2$contrib, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 [1] TRUE
 > all.equal(epr3$index, 
-+           lapply(epr3$contrib, function(x) sapply(x, sum, na.rm = TRUE) + 1))
++           lapply(epr3$contrib, function(x) sapply(x, sum) + 1))
 [1] TRUE
 > 
 > # Compare Fisher index with the manual calculation
-> l <- with(dat, elemental_index(rel, period, ea, w1, r = 1, na.rm = TRUE))
-> p <- with(dat, elemental_index(rel, period, ea, w2, r = -1, na.rm = TRUE))
+> l <- with(dat2, elemental_index(rel, period, ea, w1, r = 1))
+> p <- with(dat2, elemental_index(rel, period, ea, w2, r = -1))
 > all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(epr3))
 [1] TRUE
 > 
 > # Should work for other kinds of superlative indexes
-> sepr <- with(dat, superlative_elemental_index(rel, period, ea, w2 = w2, na.rm = TRUE, s = 3))
-> l <- with(dat, elemental_index(rel, period, ea, r = 1.5, na.rm = TRUE))
-> p <- with(dat, elemental_index(rel, period, ea, w2, r = -1.5, na.rm = TRUE))
+> fw <- function(x, w1, w2) {
++   v1 <- scale_weights(transmute_weights(1.5, 0)(x))
++   v2 <- scale_weights(transmute_weights(-1.5, 0)(x, w2))
++   v1 + v2
++ }
+> 
+> w <- with(dat2, grouped(fw)(rel, w1, w2, group = interaction(period, ea)))
+> 
+> sepr <- with(dat2, elemental_index(rel, period, ea, w))
+> 
+> l <- with(dat2, elemental_index(rel, period, ea, r = 1.5))
+> p <- with(dat2, elemental_index(rel, period, ea, w2, r = -1.5))
 > all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 [1] TRUE
 > 
@@ -120,7 +142,7 @@ In merge.ind(epr1, epr2) : some levels appear in both 'x' and 'y'
 [1] TRUE
 > 
 > # Test mean.ind()
-> epr4 <- mean(epr1, 12)
+> epr4 <- mean(epr1, window = 12)
 > all.equal(levels(epr4), levels(epr1))
 [1] TRUE
 > time(epr4)
@@ -336,12 +358,12 @@ numeric(0)
 > epr[, "b"] <- as.character(1:5)
 > all.equal(epr, as_elemental_index(data.frame(a = as.character(1:5), b = 1:5)))
 [1] TRUE
->
+> 
 > # Nor one without EA names
 > as_elemental_index(matrix(1:5, ncol = 5, dimnames = list("a", 1:5)))
   1 2 3 4 5
 a 1 2 3 4 5
->
+> 
 > # Test replacement method
 > epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
 > 
@@ -470,7 +492,7 @@ $`2`$`14`
 numeric(0)
 
 
->
+> 
 > epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
 > 
 > epr["11", ] <- 0
@@ -513,7 +535,7 @@ $`2`$`14`
 7 
 
 
->
+> 
 > proc.time()
    user  system elapsed 
-  0.216   0.008   0.218 
+  1.159   0.140   1.257 

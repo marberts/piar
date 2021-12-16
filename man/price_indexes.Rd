@@ -1,6 +1,7 @@
 \name{price_indexes}
 \alias{elemental_index}
-\alias{superlative_elemental_index}
+\alias{elemental_index.default}
+\alias{elemental_index.numeric}
 \alias{aggregate.ind}
 \alias{vcov.agg_ind}
 \alias{mean.ind}
@@ -35,11 +36,12 @@ There are methods to aggregate these indexes with a price index aggregation stru
 
 \usage{
 # Elemental indexes
-elemental_index(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)), 
-                w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0)
-                
-superlative_elemental_index(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)), 
-                            w1, w2, contrib = FALSE, chain = TRUE, na.rm = FALSE, s = 2)
+elemental_index(rel, ...)
+
+\method{elemental_index}{default}(rel, ...)
+
+\method{elemental_index}{numeric}(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)), 
+                w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0, ...)
                             
 # Aggregate
 \method{aggregate}{ind}(x, pias, na.rm = FALSE, r = 1, ...)
@@ -93,13 +95,13 @@ is_aggregate_index(x)
 }
 
 \arguments{
-\item{rel}{A numeric vector of period-over-period or fixed-base price relatives. The former can be made with \code{\link[=price_relative]{price_relative()}}. Names for this vector are used as product names for quote contributions.}
+\item{rel}{Period-over-period or fixed-base price relatives, usually a numeric vector. The former can be made with \code{\link[=price_relative]{price_relative()}}.}
 
 \item{period}{A factor, or something that can be coerced into one, giving the time period associated with each price relative in \code{rel}. The ordering of time periods follows of the levels of \code{period}, to agree with \code{\link[=cut.Date]{cut()}}. The default assumes that all price relatives belong to one time period.}
 
 \item{ea}{A factor, or something that can be coerced into one, giving the elemental aggregate associated with each price relative in \code{rel}. The default assumes that all price relatives belong to one elemental aggregate.}
 
-\item{w, w1, w2}{A numeric vector of weights for the price relatives in \code{rel} (i.e., quote/product weights). The default is to give each price relative equal weight.}
+\item{w}{A numeric vector of weights for the price relatives in \code{rel} (i.e., quote/product weights). The default is to give each price relative equal weight.}
 
 \item{contrib}{Should quote contributions be calculated? The default does not calculate contributions.}
 
@@ -108,8 +110,6 @@ is_aggregate_index(x)
 \item{na.rm}{Should missing values be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean imputation.}
 
 \item{r}{Order of the generalized mean to aggregate price relatives/index values. 0 for a geometric index (the default for making elemental indexes), 1 for an arithmetic index (the default for aggregating elemental indexes and averaging indexes over time), or -1 for a harmonic index (usually for a Paasche index). Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
-
-\item{s}{Order of the superlative quadratic mean to aggregate price relatives. The default (\code{s = 2}) makes a Fisher index. Other values are possible; see \code{\link[=nested_mean]{nested_mean()}} for details.}
 
 \item{x, y}{A price index object, as made by \code{elemental_index()} or \code{aggregate()}.}
 
@@ -130,13 +130,13 @@ is_aggregate_index(x)
 
 \details{
 \subsection{Elemental indexes}{
-\code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{rel} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions. The default (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).
+When supplied with a numeric vector, \code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{rel} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions (using names for \code{rel} as product names). The default (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).
 
-\code{superlative_elemental_index()} works the same, except that it wraps \code{\link[=nested_mean]{nested_mean(0, c(s, -s) / 2)}} and \code{\link[=nested_contributions]{nested_contributions(0, c(s, -s) / 2)}} (if \code{contrib = TRUE}) to compute a superlative quadratic mean index of order \code{s}. The default (\code{s = 2} and no weights) makes CSWD elemental indexes.
+The default method simply coerces \code{rel} to a numeric prior to calling the method above.
 
 The interpretation of the index depends on how the price relatives in \code{rel} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base elemental indexes. For the latter, \code{chain} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
 
-By default, missing price relatives in \code{rel} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()} or \code{superlative_elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()} or \code{superlative_elemental_index()}.
+By default, missing price relatives in \code{rel} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
 }
 
 \subsection{Aggregate}{
@@ -189,7 +189,7 @@ The \code{as.matrix()} method turns an index into a matrix with a row for each l
 \value{
 Most of these functions return index objects, of class \code{ind}, which often behaves like a matrix with a row for each level of the index and a column for each time period.
 
-\code{elemental_index()} and \code{superlative_elemental_index()} return an object of class \code{elem_ind}, inheriting from class \code{ind}, which has the following components.
+\code{elemental_index()} returns an object of class \code{elem_ind}, inheriting from class \code{ind}, which has the following components.
 
 \item{index}{A named list with an entry for each \code{period} that gives a named vector of index values for each level in \code{ea}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}
@@ -300,4 +300,21 @@ summary(index)
 
 as.data.frame(index)
 as.matrix(index)
+
+# Calculate a CSWD index as a geometric index by constructing appropriate weights
+
+library(gpindex)
+
+fw <- function() {
+  a2g <- transmute_weights(1, 0)
+  h2g <- transmute_weights(-1, 0)
+  function(x, w1, w2) {
+      scale_weights(a2g(x, w1)) + scale_weights(h2g(x, w2))
+  }
+}
+
+with(
+    prices, 
+    elemental_index(rel, period, ea, grouped(fw())(rel, group = interaction(period, ea)))
+)
 }

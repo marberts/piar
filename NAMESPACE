@@ -1,4 +1,4 @@
-export(elemental_index, superlative_elemental_index, as_elemental_index, 
+export(elemental_index, as_elemental_index, 
        is_elemental_index, is_aggregate_index, is_index, is_chain_index,
        price_relative,
        aggregation_structure, expand_classification,
@@ -28,6 +28,10 @@ S3method(print, ind_summary)
 S3method(aggregate, ind)
 S3method(mean, ind)
 S3method(vcov, agg_ind)
+
+S3method(elemental_index, default)
+S3method(elemental_index, numeric)
+
 S3method(as_elemental_index, default)
 S3method(as_elemental_index, matrix)
 S3method(as_elemental_index, agg_ind)

@@ -1,5 +1,6 @@
-#---- Tests for elemental_index(), superlative_elemental_index(), and index methods ----
+#---- Tests for elemental_index() and index methods ----
 library(piar)
+library(gpindex)
 
 set.seed(1234)
 
@@ -18,9 +19,21 @@ epr2 <- with(
   dat, 
   elemental_index(rel, period, ea, r = -1, contrib = TRUE, na.rm = TRUE)
 )
+
+# Test a Fisher calculation
+fw <- function(x, w1, w2) {
+  v1 <- scale_weights(transmute_weights(1, 0)(x, w1))
+  v2 <- scale_weights(transmute_weights(-1, 0)(x, w2))
+  v1 + v2
+}
+
+dat2 <- na.omit(dat)
+
+w <- with(dat2, grouped(fw)(rel, w1, w2, group = interaction(period, ea)))
+
 epr3 <- with(
-  dat, 
-  superlative_elemental_index(rel, period, ea, w1, w2, contrib = TRUE, na.rm = TRUE)
+  dat2, 
+  elemental_index(rel, period, ea, w, contrib = TRUE)
 )
 
 # Compare with an alternate implementation
@@ -47,17 +60,26 @@ all.equal(as.matrix(epr1)["5", ], colSums(contrib(epr1, "5")) + 1) # note the pa
 all.equal(epr2$index, 
           lapply(epr2$contrib, function(x) sapply(x, sum, na.rm = TRUE) + 1))
 all.equal(epr3$index, 
-          lapply(epr3$contrib, function(x) sapply(x, sum, na.rm = TRUE) + 1))
+          lapply(epr3$contrib, function(x) sapply(x, sum) + 1))
 
 # Compare Fisher index with the manual calculation
-l <- with(dat, elemental_index(rel, period, ea, w1, r = 1, na.rm = TRUE))
-p <- with(dat, elemental_index(rel, period, ea, w2, r = -1, na.rm = TRUE))
+l <- with(dat2, elemental_index(rel, period, ea, w1, r = 1))
+p <- with(dat2, elemental_index(rel, period, ea, w2, r = -1))
 all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(epr3))
 
 # Should work for other kinds of superlative indexes
-sepr <- with(dat, superlative_elemental_index(rel, period, ea, w2 = w2, na.rm = TRUE, s = 3))
-l <- with(dat, elemental_index(rel, period, ea, r = 1.5, na.rm = TRUE))
-p <- with(dat, elemental_index(rel, period, ea, w2, r = -1.5, na.rm = TRUE))
+fw <- function(x, w1, w2) {
+  v1 <- scale_weights(transmute_weights(1.5, 0)(x))
+  v2 <- scale_weights(transmute_weights(-1.5, 0)(x, w2))
+  v1 + v2
+}
+
+w <- with(dat2, grouped(fw)(rel, w1, w2, group = interaction(period, ea)))
+
+sepr <- with(dat2, elemental_index(rel, period, ea, w))
+
+l <- with(dat2, elemental_index(rel, period, ea, r = 1.5))
+p <- with(dat2, elemental_index(rel, period, ea, w2, r = -1.5))
 all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 
 # Test merge.ind() method
@@ -82,7 +104,7 @@ all.equal(time(epr3), c(letters, LETTERS))
 all.equal(epr1, Reduce(stack, unstack(epr1)))
 
 # Test mean.ind()
-epr4 <- mean(epr1, 12)
+epr4 <- mean(epr1, window = 12)
 all.equal(levels(epr4), levels(epr1))
 time(epr4)
 all.equal(as.matrix(epr4)[, 1], rowMeans(as.matrix(epr1)[, 1:12]))
