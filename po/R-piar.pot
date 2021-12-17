@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: piar 0.2.3.9006\n"
-"POT-Creation-Date: 2021-12-13 11:11\n"
+"Project-Id-Version: piar 0.2.3.9010\n"
+"POT-Creation-Date: 2021-12-16 22:43\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,28 +61,19 @@ msgstr ""
 msgid "'cumprod()' is deprecated for index objects; use 'chain()' instead"
 msgstr ""
 
-msgid "cannot make an index with no periods or elemental aggregates"
-msgstr ""
-
 msgid "'rel', 'period', and 'ea' must be the same length"
 msgstr ""
 
 msgid "'rel', 'period', 'ea', 'w', must be the same length"
 msgstr ""
 
-msgid "some elements of 'rel' or 'w' are less than or equal to 0"
+msgid "some elements of 'rel or 'w' are less than or equal to 0"
 msgstr ""
 
-msgid "'rel', 'period', 'ea', and 'w1' must be the same length"
+msgid "cannot make an index with no periods or elemental aggregates"
 msgstr ""
 
-msgid "'rel', 'period', 'ea', and 'w2' must be the same length"
-msgstr ""
-
-msgid "'rel', 'period', 'ea', 'w1', and 'w2' must be the same length"
-msgstr ""
-
-msgid "some elements of 'rel', 'w1', or 'w2' are less than or equal to 0"
+msgid "cannot make an elemental index with no periods or elemental aggregates"
 msgstr ""
 
 msgid "'x' cannot have duplicated row or column names"
@@ -128,4 +119,7 @@ msgid "cannot stack a period-over-period and a fixed-base index"
 msgstr ""
 
 msgid "some periods appear in both 'x' and 'y'"
+msgstr ""
+
+msgid "'x' and 'w' must be the same length"
 msgstr ""

@@ -107,5 +107,5 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). *Consumer Price
 Index Manual: Theory and Practice*. International Monetary Fund.
 
 von der Lippe, P. (2001). *Chain Indices: A Study in Price Index
-Theory*, Spectrum of Federal Statistics vol. 16. Federal Statistical
+Theory*, Spectrum of Federal Statistics vol. 16. Federal Statistical
 Office, Wiesbaden.

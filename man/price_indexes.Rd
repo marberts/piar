@@ -40,13 +40,16 @@ elemental_index(rel, ...)
 
 \method{elemental_index}{default}(rel, ...)
 
-\method{elemental_index}{numeric}(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)), 
-                w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0, ...)
+\method{elemental_index}{numeric}(rel, period = gl(1, length(rel)), 
+                ea = gl(1, length(rel)), w, contrib = FALSE, 
+                chain = TRUE, na.rm = FALSE, r = 0, ...)
                             
 # Aggregate
 \method{aggregate}{ind}(x, pias, na.rm = FALSE, r = 1, ...)
 
-\method{vcov}{agg_ind}(object, repweights, mse = TRUE, ncpus = 1, ...)
+\method{vcov}{agg_ind}(object, repweights, mse = TRUE, 
+     parallel = c("no", "mc", "snow"), ncpus = 1, 
+     cl = makeCluster(ncpus), ...)
 
 \method{mean}{ind}(x, w, window = 3, na.rm = FALSE, r = 1, ...)
 
@@ -121,7 +124,11 @@ is_aggregate_index(x)
 
 \item{mse}{Should covariances be centered off the value of the index in \code{object} (the default), or the mean of the replicates?}
 
-\item{ncpus}{Number of cpus to use for parallel calculation of covariance matrix. The default does the calculation in serial, and is usually much faster for smaller indexes.}
+\item{parallel}{One of \code{"no"} to compute the covariance matrix in serial (the default), \code{"mc"} to use the multicore functionality in \pkg{parallel}, or \code{"snow"} to use the clusters functionality in \pkg{parallel}.}
+
+\item{ncpus}{Number of cpus to use for computing the covariance matrix in parallel, with a default of 1.}
+
+\item{cl}{A cluster that can be used in \code{\link[=parLapply]{parLapply()}} for computing the covariance matrix in parallel.}
 
 \item{window}{The size of the rolling-window used to average index values across time periods. The default (3) turns a monthly index into into a quarterly one.}
 
@@ -140,7 +147,7 @@ The interpretation of the index depends on how the price relatives in \code{rel}
 
 By default, missing price relatives in \code{rel} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
 
-Superlative quadratic mean indexes (e.g., the Fisher index) can be calculated by supplying the appropriate weights; see the example below. It is important to note that there are several ways to make these weights, and this affects how quote contributions are calculated. See \code{\link[=contributions]{contributions()}}, and the referneces therein, for more details.
+Indexes based on nested generalized means, like the Fisher index (and superlative quadratic mean indexes more generally), can be calculated by supplying the appropriate weights; see the example below. It is important to note that there are several ways to make these weights, and this affects how quote contributions are calculated. See \code{\link[=contributions]{contributions()}}, and the references therein, for more details.
 }
 
 \subsection{Aggregate}{
@@ -303,16 +310,20 @@ as.matrix(index)
 
 library(gpindex)
 
-fw <- function() {
+# A general function to calculate weights to turn the geometric
+# mean of the arithmetic and harmonic mean (i.e., Fisher mean)
+# into a geometric mean
+
+fw <- (function() {
   a2g <- transmute_weights(1, 0)
   h2g <- transmute_weights(-1, 0)
   function(x, w1, w2) {
       scale_weights(a2g(x, w1)) + scale_weights(h2g(x, w2))
   }
-}
+})()
 
 with(
     prices, 
-    elemental_index(rel, period, ea, grouped(fw())(rel, group = interaction(period, ea)))
+    elemental_index(rel, period, ea, grouped(fw)(rel, group = interaction(period, ea)))
 )
 }

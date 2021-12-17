@@ -97,11 +97,12 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   do.call(cbind, x$index)
 }
 
-vcov.agg_ind <- function(object, repweights, mse = TRUE, ncpus = 1, ...) {
+vcov.agg_ind <- function(object, repweights, mse = TRUE, parallel = c("no", "mc", "snow"), ncpus = 1, cl = makeCluster(ncpus), ...) {
   repweights <- as.matrix(repweights)
   if (nrow(repweights) != length(object$pias$eas)) {
     stop(gettext("'repweights' must have a row for each weight in 'pias'"))
   }
+  parallel <- match.arg(parallel)
   n <- ncol(repweights)
   eas <- object$pias$eas
   upper <- setdiff(object$levels, object$pias$eas)
@@ -114,12 +115,13 @@ vcov.agg_ind <- function(object, repweights, mse = TRUE, ncpus = 1, ...) {
     pias$weights[] <- repweights[, i]
     .aggregate(object, pias, object$chain, object$r)[upper, , drop = FALSE]
   }
-  if (ncpus > 1) {
-    cl <- makeCluster(ncpus)
+  if (parallel == "no") {
+    index_boot <- lapply(seq_len(n), repl)
+  } else if (parallel == "mc") {
+    index_boot <- mclapply(seq_len(n), repl, mc.cores = ncpus)
+  } else if (parallel == "snow") {
     index_boot <- parLapply(cl, seq_len(n), repl)
     stopCluster(cl)
-  } else {
-    index_boot <- lapply(seq_len(n), repl)
   }
   index_boot <- array(unlist(index_boot, use.names = FALSE), 
                       dim = lengths(dimnm), dimnames = dimnm)

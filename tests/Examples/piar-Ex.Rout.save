@@ -207,10 +207,25 @@ b 0.1443376 1
 > 
 > epr <- with(prices, elemental_index(rel, period, ea, contrib = TRUE))
 > 
-> contrib(epr)
-          1        2
-1 0.0000000 2.167840
-2 0.7320508 2.748239
+> pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:3)
+> 
+> index <- aggregate(epr, pias, na.rm = TRUE)
+> 
+> # Quote contributions for the top-level index
+> contrib(index)
+            1         2
+a.1 0.0000000 0.5081686
+a.2 0.2440169 0.6442213
+b.1 0.3905243 2.0513858
+b.2 0.8284271 2.4871732
+> 
+> # Calculate EA contributions for the chained index
+> gpindex::arithmetic_contributions(chain(index)[c("a", "b", "c"), 2], 
++                                   weights(pias, ea_only = TRUE))
+         2
+a 1.541158
+b 6.198639
+c 7.739798
 > 
 > 
 > 
@@ -380,17 +395,21 @@ c   2.218951 6.037662
 > 
 > library(gpindex)
 > 
-> fw <- function() {
-+   a2g <- transmute_weights(1, 0)
-+   h2g <- transmute_weights(-1, 0)
-+   function(x, w1, w2) {
-+       scale_weights(a2g(x, w1)) + scale_weights(h2g(x, w2))
-+   }
-+ }
+> # A general function to calculate weights to turn the geometric
+> # mean of the arithmetic and harmonic mean (i.e., Fisher mean)
+> # into a geometric mean
+>
+> fw <- (function() {
++     a2g <- transmute_weights(1, 0)
++     h2g <- transmute_weights(-1, 0)
++     function(x, w1, w2) {
++         scale_weights(a2g(x, w1)) + scale_weights(h2g(x, w2))
++     }
++ })()
 > 
 > with(
 +     prices, 
-+     elemental_index(rel, period, ea, grouped(fw())(rel, group = interaction(period, ea)))
++     elemental_index(rel, period, ea, grouped(fw)(rel, group = interaction(period, ea)))
 + )
          1        2
 a 1.732051 5.916080

@@ -38,5 +38,14 @@ prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:
 
 epr <- with(prices, elemental_index(rel, period, ea, contrib = TRUE))
 
-contrib(epr)
+pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:3)
+
+index <- aggregate(epr, pias, na.rm = TRUE)
+
+# Quote contributions for the top-level index
+contrib(index)
+
+# Calculate EA contributions for the chained index
+gpindex::arithmetic_contributions(chain(index)[c("a", "b", "c"), 2], 
+                                  weights(pias, ea_only = TRUE))
 }
