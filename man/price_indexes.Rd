@@ -19,18 +19,16 @@
 \alias{summary.ind}
 \alias{as.matrix.ind}
 \alias{as.data.frame.ind}
-\alias{as_elemental_index}
-\alias{as_elemental_index.default}
-\alias{as_elemental_index.matrix}
-\alias{as_elemental_index.agg_ind}
+\alias{as_index}
+\alias{as_index.default}
+\alias{as_index.matrix}
 \alias{is_index}
-\alias{is_elemental_index}
 \alias{is_aggregate_index}
 
 \title{Price indexes}
 
 \description{
-Compute period-over-period or fixed-base (direct) elemental price indexes (with optional quote contributions), or coerce pre-computed index values into an elemental index object. There are methods to aggregate these indexes with a price index aggregation structure or average them over time, combine indexes together, extract useful information, and coerce into a tabular form.
+Compute period-over-period or fixed-base (direct) elemental price indexes (with optional quote contributions), or coerce pre-computed index values into an index object. There are methods to aggregate these indexes with a price index aggregation structure or average them over time, combine indexes together, extract useful information, and coerce into a tabular form.
 }
 
 \usage{
@@ -81,17 +79,13 @@ elemental_index(rel, ...)
 
 \method{as.data.frame}{ind}(x, ...)
                             
-as_elemental_index(x, ...)
+as_index(x, ...)
 
-\method{as_elemental_index}{default}(x, ...)
+\method{as_index}{default}(x, ...)
 
-\method{as_elemental_index}{matrix}(x, chain = TRUE, ...)
-
-\method{as_elemental_index}{agg_ind}(x, ...)
+\method{as_index}{matrix}(x, chain = TRUE, ...)
 
 is_index(x)
-
-is_elemental_index(x)
 
 is_aggregate_index(x)
 }
@@ -113,7 +107,7 @@ is_aggregate_index(x)
 
 \item{r}{Order of the generalized mean to aggregate price relatives/index values. 0 for a geometric index (the default for making elemental indexes), 1 for an arithmetic index (the default for aggregating elemental indexes and averaging indexes over time), or -1 for a harmonic index (usually for a Paasche index). Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
-\item{x, y}{A price index object, as made by \code{elemental_index()} or \code{aggregate()}.}
+\item{x, y}{A price index, as made by \code{elemental_index()} or \code{aggregate()}.}
 
 \item{pias}{A price index aggregation structure. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
@@ -174,7 +168,7 @@ An optional vector of weights can be specified when aggregating index values ove
 }
 
 \subsection{Combine}{
-The \code{merge()} method combines two index objects with common time periods, merging together the index values and quote contributions for each time period in \code{x} and \code{y}. This is useful for building up an index when different elemental aggregates come from different sources of data, or use different index-number formulas. Currently this method only works for elemental indexes.
+The \code{merge()} method combines two index objects with common time periods, merging together the index values and quote contributions for each time period in \code{x} and \code{y}. This is useful for building up an index when different elemental aggregates come from different sources of data, or use different index-number formulas. Currently this method does not work for aggregated indexes.
 
 The \code{stack()} method combines two index objects with common levels, stacking index values and quote contributions for each level in \code{y} after those in \code{x}. The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}. These methods can be used in a map-reduce to make an index with multiple aggregation structures (like a Paasche index).
 
@@ -182,7 +176,9 @@ These methods return an object of the same class as \code{x}.
 }
 
 \subsection{Extract}{
-The extraction method treats \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped; indexing \code{x} always returns a matrix. This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like \code{x[1]} is taken to be the same as \code{x[1, ]}. The replacement method similarly treats \code{x} as a matrix, and behaves the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding quote contributions (if any).
+The extraction method treats \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as indexing \code{x} always returns an index object. This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like \code{x[1]} is taken to be the same as \code{x[1, ]}. Note that indexing an aggregated index cannot generally preserve the aggregation structure, so the resulting index is \emph{not} an aggregated index.
+
+The replacement method similarly treats \code{x} as a matrix, and behaves the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding quote contributions (if any).
 
 The \code{levels()} method extracts the levels of an index, and the \code{time()} method extracts the time periods of the index. The \code{start()} and \code{end()} methods extract the first and last time period.
 
@@ -194,14 +190,12 @@ The \code{summary()} method summarizes \code{x} as a matrix of index values (i.e
 \subsection{Coerce}{
 The \code{as.matrix()} method turns an index into a matrix with a row for each level and a column for each period. The \code{as.data.frame()} method turns an index into a data frame with three columns: period, level, and value. 
 
-\code{as_elemental_index()} is useful to form an elemental index from pre-computed values. Numeric matrices are coerce into an elemental index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces \code{x} to a matrix prior to using the matrix method. An aggregated index is coerced to an elemental index by simply extracting the elemental indexes (discarding the higher-level indexes).
+\code{as_index()} is useful to form an elemental index from pre-computed values. Numeric matrices are coerce into an elemental index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces \code{x} to a matrix prior to using the matrix method.
 }
 }
 
 \value{
-Most of these functions return index objects, of class \code{ind}, which often behaves like a matrix with a row for each level of the index and a column for each time period.
-
-\code{elemental_index()} returns an object of class \code{elem_ind}, inheriting from class \code{ind}, which has the following components.
+Most of these functions return index objects of class \code{ind}. These often behaves like a matrix with a row for each level of the index and a column for each time period, and have the following components.
 
 \item{index}{A named list with an entry for each \code{period} that gives a named vector of index values for each level in \code{ea}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}

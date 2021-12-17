@@ -1,7 +1,7 @@
 #---- Make an aggregation structure ----
 aggregation_structure <- function(x, w) {
   x <- lapply(x, as.character)
-  if (any(vapply(x, anyNA, logical(1)))) {
+  if (any(vapply(x, anyNA, logical(1L)))) {
     stop(gettext("'x' cannot contain NAs"))
   }
   len <- length(x)
@@ -21,14 +21,14 @@ aggregation_structure <- function(x, w) {
     stop(gettext("there are duplicated nodes in the aggregation structure; the same value cannot appear across multiple levels of 'x'"))
   }
   upper <- x[-len] # nodes above eas
-  lower <- x[-1] # nodes below initial nodes
-  child <- parent <- vector("list", len)[-1]
+  lower <- x[-1L] # nodes below initial nodes
+  child <- parent <- vector("list", len)[-1L]
   # produce a list for each level with all the parent and child nodes
   for (i in seq_along(upper)) {
     child[[i]] <- lapply(split(lower[[len - i]], upper[[len - i]]), unique)
     parent[[i]] <- lapply(split(upper[[len - i]], lower[[len - i]]), unique)
   }
-  if (any(lengths(unlist(parent, recursive = FALSE)) > 1)) {
+  if (any(lengths(unlist(parent, recursive = FALSE)) > 1L)) {
     warning(gettext("some nodes in the price index aggregation structure have multiple parent nodes; the aggregation structure does not represent a nested hierarchy"))
   }
   parent <- lapply(parent, unlist)
@@ -39,7 +39,7 @@ aggregation_structure <- function(x, w) {
   }
   # same for parent nodes
   for (i in seq_along(parent)) {
-    parent[[i]] <- match(parent[[i]][nm[[i]]], nm[-1][[i]])
+    parent[[i]] <- match(parent[[i]][nm[[i]]], nm[-1L][[i]])
     names(parent[[i]]) <- nm[[i]]
   }
   # return 'pias' object
@@ -56,13 +56,13 @@ aggregation_structure <- function(x, w) {
 weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
   if (ea_only) return(object$weights)
   res <- vector("list", object$height)
-  res[[1]] <- object$weights
+  res[[1L]] <- object$weights
   # 'i' is defined in the loop below for looping over the height of pias
   add_weights <- function(z) {
-    sum(res[[i - 1]][z], na.rm = na.rm)
+    sum(res[[i - 1L]][z], na.rm = na.rm)
   }
-  for (i in seq_along(res)[-1]) {
-    res[[i]] <- vapply(object$child[[i - 1]], add_weights, numeric(1))
+  for (i in seq_along(res)[-1L]) {
+    res[[i]] <- vapply(object$child[[i - 1L]], add_weights, numeric(1L))
   }
   rev(res)
 }
@@ -93,7 +93,7 @@ update.pias <- function(object, index, period = end(index), ...) {
 expand_classification <- function(class, width) {
   class <- as.character(class)
   width <- if (missing(width)) {
-    rep(1, max(nchar(class), 0, na.rm = TRUE))
+    rep(1L, max(nchar(class), 0L, na.rm = TRUE))
   } else {
     as.numeric(width)
   }
@@ -101,9 +101,9 @@ expand_classification <- function(class, width) {
     stop(gettext("'width' cannot contain NAs"))
   }
   w <- cumsum(width)
-  class <- strsplit(class, character(0), fixed = TRUE)
+  class <- strsplit(class, character(0L), fixed = TRUE)
   lapply(w, function(i) {
-    vapply(class, paste_until, character(1), i)
+    vapply(class, paste_until, character(1L), i)
   })
 }
 

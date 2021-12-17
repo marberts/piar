@@ -12,18 +12,31 @@ as.matrix.ind <- function(x, ...) {
 
 #---- Extract ----
 `[.ind` <- function(x, i, j) {
-  as.matrix(x)[i, j, drop = FALSE]
+  # get the row/col names that form the submatrix for extraction
+  dnm <- dimnames(as.matrix(x)[i, j, drop = FALSE])
+  periods <- dnm[[2L]]
+  levels <- dnm[[1L]]
+  # it's safe to make a new object here because the class is always 'ind'
+  res <- list(index = NULL, contrib = NULL, 
+              levels = levels, time = periods, 
+              has_contrib = x$has_contrib, chain = x$chain)
+  # only loop over periods that have a value extracted
+  for (t in periods) {
+    res$index[[t]] <- x$index[[t]][levels]
+    res$contrib[[t]] <- x$contrib[[t]][levels]
+  }
+  structure(res, class = "ind")
 }
 
 `[<-.ind` <- function(x, i, j, value) {
   res <- as.matrix(x)
   res[i, j] <- as.numeric(value)
-  periods <- colnames(res[0, j, drop = FALSE])
+  periods <- colnames(res[0L, j, drop = FALSE])
   # only loop over periods that have a value replaced
   for (t in periods) {
     x$index[[t]][i] <- res[i, t]
     # drop contributions for replaced values
-    if (x$has_contrib) x$contrib[[t]][i] <- list(numeric(0))
+    x$contrib[[t]][i] <- list(numeric(0L))
   }
   x
 }
@@ -49,28 +62,26 @@ merge.agg_ind <- function(x, y, ...) {
   stop(gettext("cannot merge aggregated indexes"))
 }
 
-merge.elem_ind <- function(x, y, ...) {
-  if (!is_elemental_index(y)) {
-    stop(gettext("'y' is not an elemental index; use elemental_index() to make one"))
-  }
-  NextMethod("merge")
-}
-
 merge.ind <- function(x, y, ...) {
-  if (any(x$time != y$time)) {
+  if (!is_index(y)) {
+    stop("'y' is not an index; use elemental_index() to make one")
+  }
+  if (!identical(x$time, y$time)) {
     stop(gettext("'x' and 'y' must be indexes for the same time periods"))
+  }
+  if (length(intersect(x$levels, y$levels))) {
+    stop(gettext("the same levels appear in both 'x' and 'y'"))
   }
   if (x$chain != y$chain) {
     stop(gettext("cannot merge a fixed-base and period-over-period index"))
   }
-  if (length(intersect(x$levels, y$levels))) {
-    warning(gettext("some levels appear in both 'x' and 'y'"))
-  }
+  # loop over time periods and combine index values/contributions
   for (t in x$time) {
     x$index[[t]] <- c(x$index[[t]], y$index[[t]])
     x$contrib[[t]] <- c(x$contrib[[t]], y$contrib[[t]])
   }
-  x$levels <- union(x$levels, y$levels)
+  # it's safe to use c() and not union() because there can't be duplicate levels
+  x$levels <- c(x$levels, y$levels)
   x$has_contrib <- x$has_contrib || y$has_contrib
   x
 }
@@ -89,26 +100,23 @@ stack.agg_ind <- function(x, y, ...) {
   NextMethod("stack")
 }
 
-stack.elem_ind <- function(x, y, ...) {
-  if (!is_elemental_index(y)) {
-    stop(gettext("'y' is not an elemental index; use elemental_index() to make one"))
-  }
-  NextMethod("stack")
-}
-
 stack.ind <- function(x, y, ...) {
-  if (any(x$levels != y$levels)) {
+  if (!is_index(y)) {
+    stop(gettext("'y' is not an index; use elemental_index() to make one"))
+  }
+  if (!identical(x$levels, y$levels)) {
     stop(gettext("'x' and 'y' must be indexes for the same levels"))
+  }
+  if (length(intersect(x$time, y$time))) {
+    stop(gettext("the same periods appear in both 'x' and 'y'"))
   }
   if (x$chain != y$chain) {
     stop(gettext("cannot stack a period-over-period and a fixed-base index"))
   }
-  if (length(intersect(x$time, y$time))) {
-    warning(gettext("some periods appear in both 'x' and 'y'"))
-  }
   x$index <- c(x$index, y$index)
   x$contrib <- c(x$contrib, y$contrib)
-  x$time <- union(x$time, y$time)
+  # it's safe to use c() and not union() because there can't be duplicate periods
+  x$time <- c(x$time, y$time)
   x$has_contrib <- x$has_contrib || y$has_contrib
   x
 }
@@ -145,7 +153,7 @@ tail.ind <- function(x,  ...) {
 
 #---- Summary ----
 summary.ind <- function(object, ...) {
-  res <- structure(vector("list", 2), names = c("index", "contrib"))
+  res <- structure(vector("list", 2L), names = c("index", "contrib"))
   res$index <- summary.data.frame(object$index, ...)
   res$contrib <- if (object$has_contrib) {
     summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
@@ -174,15 +182,19 @@ mean.ind <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
   }
   gen_mean <- Vectorize(generalized_mean(r))
   len <- length(x$time) %/% window
-  loc <- seq(1, by = window, length.out = len)
+  # get the starting location for each window
+  loc <- seq(1L, by = window, length.out = len)
   periods <- x$time[loc]
   res <- contrib <- structure(vector("list", len), names = periods)
+  # loop over each window and calculate the mean for each level
   for (i in seq_along(loc)) {
     j <- seq(loc[i], length.out = window)
     res[[i]] <- if (missing(w)) {
+      # structure() is needed because .mapply doesn't keep names
       gen_mean(structure(.mapply(c, index[j], list()), names = x$levels), na.rm = na.rm)
     } else {
-      gen_mean(structure(.mapply(c, index[j], list()), names = x$levels), .mapply(c, w[j], list()), na.rm = na.rm)
+      gen_mean(structure(.mapply(c, index[j], list()), names = x$levels), 
+               .mapply(c, w[j], list()), na.rm = na.rm)
     }
   }
   contrib[] <- empty_contrib(x$levels)

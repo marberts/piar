@@ -4,7 +4,7 @@ chain <- function(x, ...) {
 }
 
 chain.default <- function(x, ...) {
-  chain(as_elemental_index(x), ...)
+  chain(as_index(x), ...)
 }
 
 chain.ind <- function(x, ...) {
@@ -30,13 +30,13 @@ unchain <- function(x, ...) {
 }
 
 unchain.default <- function(x, ...) {
-  unchain(as_elemental_index(x, chain = FALSE), ...)
+  unchain(as_index(x, chain = FALSE), ...)
 }
 
 unchain.ind <- function(x, ...) {
   if (!x$chain) {
     x$chain <- TRUE
-    x$index[-1] <- Map(`/`, x$index[-1], x$index[-length(x$index)])
+    x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
     # contributions are difficult to unchain, so remove them
     x$has_contrib <- FALSE
     x$contrib[] <- empty_contrib(x$levels)

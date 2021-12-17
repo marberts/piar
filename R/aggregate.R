@@ -10,14 +10,14 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   # functions to aggregate index values and contributions
   # 'i' is defined in the loop below; it's used to loop over the height of 'pias'
   aggregate_index <- function(z) {
-    gen_mean(rel[[i - 1]][z], w[[i - 1]][z], na.rm = na.rm)
+    gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm)
   }
   aggregate_contrib <- if (x$has_contrib) {
     function(z) {
-      unlist(Map("*", con[[i - 1]][z], scale_weights(aw(rel[[i - 1]][z], w[[i - 1]][z]))))
+      unlist(Map("*", con[[i - 1L]][z], scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))))
     }
   } else {
-    function(z) numeric(0)
+    function(z) numeric(0L)
   }
   # put the aggregation weights upside down to line up with pias
   w <- rev(weights(pias, na.rm = na.rm))
@@ -26,24 +26,24 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     rel <- con <- vector("list", pias$height)
     # align epr with weights so that positional indexing works
     # preserve names if epr and pias weights don't agree
-    rel[[1]] <- named_extract(x$index[[t]], pias$eas)
-    con[[1]] <- named_extract(x$contrib[[t]], pias$eas)
+    rel[[1L]] <- named_extract(x$index[[t]], pias$eas)
+    con[[1L]] <- named_extract(x$contrib[[t]], pias$eas)
     # get rid of any NULL contributions
-    con[[1]][!lengths(con[[1]])] <- list(numeric(0))
+    con[[1L]][!lengths(con[[1L]])] <- list(numeric(0L))
     # re-aggregate price-updated weights for all periods after first
-    if (t > 1 && x$chain) {
+    if (t > 1L && x$chain) {
       w <- rev(weights(pias, na.rm = na.rm))
     }
     # loop over each level in the pias from the bottom up and aggregate
-    for (i in seq_along(rel)[-1]) {
-      rel[[i]] <- vapply(pias$child[[i - 1]], aggregate_index, numeric(1))
-      con[[i]] <- lapply(pias$child[[i - 1]], aggregate_contrib)
+    for (i in seq_along(rel)[-1L]) {
+      rel[[i]] <- vapply(pias$child[[i - 1L]], aggregate_index, numeric(1L))
+      con[[i]] <- lapply(pias$child[[i - 1L]], aggregate_contrib)
     }
     # parental imputation
     if (na.rm) {
-      for (i in rev(seq_along(rel))[-1]) {
+      for (i in rev(seq_along(rel))[-1L]) {
         impute <- is.na(rel[[i]])
-        rel[[i]][impute] <- rel[[i + 1]][pias$parent[[i]][impute]]
+        rel[[i]][impute] <- rel[[i + 1L]][pias$parent[[i]][impute]]
       }
     }
     # return index and contributions
@@ -52,7 +52,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     x$contrib[[t]] <- unlist(rev(con), recursive = FALSE)
     # price update weights for all periods after the first
     if (x$chain) {
-      pias$weights <- price_update(index[pias$eas], w[[1]]) 
+      pias$weights <- price_update(index[pias$eas], w[[1L]]) 
     }
   }
   x$levels <- pias$levels
@@ -70,7 +70,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   gen_mean <- generalized_mean(r)
   # 'i' is defined in the loop below; it's used to loop over the height of 'pias'
   aggregate_index <- function(z) {
-    gen_mean(rel[[i - 1]][z], w[[i - 1]][z])
+    gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z])
   }
   # initialize weights
   eas <- pias$eas
@@ -80,18 +80,18 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     rel <- vector("list", pias$height)
     # align epr with weights so that positional indexing works
     # preserve names if epr and pias weights don't agree
-    rel[[1]] <- named_extract(x$index[[t]], eas)
-    if (t > 1 && chain) w <- rev(weights(pias))
+    rel[[1L]] <- named_extract(x$index[[t]], eas)
+    if (t > 1L && chain) w <- rev(weights(pias))
     # loop over each level in the pias from the bottom up and aggregate
-    for (i in seq_along(rel)[-1]) {
-      rel[[i]] <- vapply(pias$child[[i - 1]], aggregate_index, numeric(1))
+    for (i in seq_along(rel)[-1L]) {
+      rel[[i]] <- vapply(pias$child[[i - 1L]], aggregate_index, numeric(1))
     }
     # return index and contributions
     index <- unlist(rev(rel))
     x$index[[t]] <- index
     # price update weights for all periods after the first
     if (chain) {
-      pias$weights <- price_update(index[eas], w[[1]]) 
+      pias$weights <- price_update(index[eas], w[[1L]]) 
     }
   }
   do.call(cbind, x$index)
@@ -130,14 +130,12 @@ vcov.agg_ind <- function(object, repweights, mse = TRUE, parallel = c("no", "mc"
   centre <- if (mse) {
     as.matrix(object)[upper, , drop = FALSE]
   } else {
-    apply(index_boot, 2, rowMeans)
+    apply(index_boot, 2L, rowMeans)
   }
-  res <- array(0, lengths(dimnm[c(1, 1, 2)]), dimnames = dimnm[c(1, 1, 2)])
-  res[] <- apply(sweep(index_boot, 1:2, centre), 2, tcrossprod) / n
+  res <- array(0, lengths(dimnm[c(1L, 1L, 2L)]), dimnames = dimnm[c(1L, 1L, 2L)])
+  res[] <- apply(sweep(index_boot, 1:2, centre), 2L, tcrossprod) / n
   res
 }
 
 #---- Test ----
 is_aggregate_index <- function(x) inherits(x, "agg_ind")
-
-is_index <- function(x) inherits(x, "ind")

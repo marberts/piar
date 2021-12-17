@@ -62,21 +62,21 @@ elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1,
               time = periods,
               has_contrib = contrib,
               chain = chain)
-  structure(res, class = c("elem_ind", "ind"))
+  structure(res, class = "ind")
 }
 
 #---- Coerce to an elemental index ----
-as_elemental_index <- function(x, ...) {
-  UseMethod("as_elemental_index")
+as_index <- function(x, ...) {
+  UseMethod("as_index")
 }
 
-as_elemental_index.default <- function(x, ...) {
-  as_elemental_index(as.matrix(x), ...)
+as_index.default <- function(x, ...) {
+  as_index(as.matrix(x), ...)
 }
 
-as_elemental_index.matrix <- function(x, chain = TRUE, ...) {
+as_index.matrix <- function(x, chain = TRUE, ...) {
   if (!(nrow(x) && ncol(x))) {
-    stop(gettext("cannot make an elemental index with no periods or elemental aggregates"))
+    stop(gettext("cannot make an index with no periods or elemental aggregates"))
   }
   storage.mode(x) <- "numeric"
   if (is.null(rownames(x))) rownames(x) <- seq_len(nrow(x))
@@ -95,21 +95,8 @@ as_elemental_index.matrix <- function(x, chain = TRUE, ...) {
     # EA names are not kept for matrices with 1 row
     res$index[[t]] <- structure(x[, t], names = rownames(x))
   }
-  structure(res, class = c("elem_ind", "ind"))
-}
-
-as_elemental_index.agg_ind <- function(x, ...) {
-  eas <- x$pias$eas
-  index <- lapply(x$index, `[`, eas)
-  contrib <- lapply(x$contrib, `[`, eas)
-  structure(list(index = index, 
-                 contrib = contrib, 
-                 levels = eas, 
-                 time = x$time,
-                 has_contrib = x$has_contrib, 
-                 chain = x$chain), 
-            class = c("elem_ind", "ind"))
+  structure(res, class = "ind")
 }
 
 #---- Test ----
-is_elemental_index <- function(x) inherits(x, "elem_ind")
+is_index <- function(x) inherits(x, "ind")

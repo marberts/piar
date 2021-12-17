@@ -1,5 +1,5 @@
 
-R version 4.1.1 (2021-08-10) -- "Kick Things"
+R version 4.1.2 (2021-11-01) -- "Bird Hippie"
 Copyright (C) 2021 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -254,9 +254,12 @@ $pias$height
 [1] 3
 
 
->
-> as_elemental_index(ms_index)
+> 
+> as_index(ms_index)
    202001    202002    202003   202004
+1       1 1.3007239 1.0630743 2.734761
+11      1 1.3007239 1.0630743 1.574515
+12      1 1.3007239 1.0630743 4.576286
 B1      1 0.8949097 0.3342939 1.574515
 B2      1 1.3007239 1.0630743 2.770456
 B3      1 2.0200036 1.6353355 0.537996
@@ -264,19 +267,19 @@ B4      1 1.3007239 1.0630743 4.576286
 B5      1 1.3007239 1.0630743 4.576286
 > 
 > # Check adding up of lower-level indexes
-> all.equal(apply(chain(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[3]]),
+> all.equal(apply(as.matrix(chain(ms_index)[4:8, ]), 2, weighted.mean, weights(ms_pias)[[3]]),
 +           as.matrix(chain(ms_index))[1, ])
 [1] TRUE
 > 
-> all.equal(apply(chain(ms_index)[2:3, ], 2, weighted.mean, weights(ms_pias)[[2]]),
+> all.equal(apply(as.matrix(chain(ms_index)[2:3, ]), 2, weighted.mean, weights(ms_pias)[[2]]),
 +           as.matrix(chain(ms_index))[1, ])
 [1] TRUE
 > 
 > # Re-aggregating the index shouldn't do anything
-> all.equal(aggregate(ms_index, ms_pias)[], ms_index[])
+> all.equal(as.matrix(aggregate(ms_index, ms_pias)), as.matrix(ms_index))
 [1] TRUE
 > 
-> all.equal(aggregate(ms_index, ms_pias, na.rm = TRUE)[], ms_index[])
+> all.equal(as.matrix(aggregate(ms_index, ms_pias, na.rm = TRUE)), as.matrix(ms_index))
 [1] TRUE
 > 
 > # Re-arranging the index shouldn't do anything
@@ -291,7 +294,7 @@ B5      1 1.3007239 1.0630743 4.576286
 +   aggregation_structure(c(expand_classification(classification), list(business)), weight)
 + )
 > 
-> all.equal(aggregate(ms_epr, ms_pias, na.rm = TRUE)[rownames(ms_index[]), ], ms_index[])
+> all.equal(as.matrix(aggregate(ms_epr, ms_pias, na.rm = TRUE)[levels(ms_index), ]), as.matrix(ms_index))
 [1] TRUE
 > 
 > # Stacking shouldn't do anything
@@ -304,7 +307,7 @@ B5      1 1.3007239 1.0630743 4.576286
 [1] TRUE
 > 
 > # Check that weights are getting price updated correctly
-> apply(chain(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
+> apply(as.matrix(chain(ms_index)[4:8, ]), 2, `*`, ms_weights$weight)
    202001   202002    202003    202004
 B1    553 494.8851  165.4371  260.4832
 B2    646 840.2676  893.2670 2474.7571
@@ -329,20 +332,20 @@ B5    330 429.2389  456.3128 2088.2182
 > 
 > ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
 > 
-> all.equal(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)[], ms_index[])
+> all.equal(as.matrix(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)), as.matrix(ms_index))
 [1] TRUE
 > 
 > all.equal(as.matrix(ms_index)[1, ], 
 +           colSums(contrib(ms_index), na.rm = TRUE) + 1)
 [1] TRUE
 > 
-> all.equal(apply(chain(ms_index)[2:3, ], 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
+> all.equal(apply(as.matrix(chain(ms_index)[2:3, ]), 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
 +           as.matrix(chain(ms_index))[1, ])
 [1] TRUE
 > 
 > ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)
 > 
-> all.equal(aggregate(ms_index, ms_pias, r = -1.7)[], ms_index[])
+> all.equal(aggregate(ms_index, ms_pias, r = -1.7), ms_index)
 [1] TRUE
 > 
 > all.equal(as.matrix(ms_index)[1, ], 
@@ -611,7 +614,7 @@ $pias$height
 
 > 
 > # Re-aggregating the index shouldn't do anything
-> all.equal(aggregate(fs_index, fs_pias)[], fs_index[])
+> all.equal(as.matrix(aggregate(fs_index, fs_pias)), as.matrix(fs_index))
 [1] TRUE
 > 
 > # Contributions should add up
@@ -620,17 +623,17 @@ $pias$height
 [1] TRUE
 > 
 > # Check adding up of lower level indexes
-> all.equal(apply(chain(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[3]]),
+> all.equal(apply(as.matrix(chain(fs_index)[5:9, ]), 2, weighted.mean, weights(fs_pias)[[3]]),
 +           as.matrix(chain(fs_index))[1, ])
 [1] TRUE
 > 
-> all.equal(apply(chain(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),
+> all.equal(apply(as.matrix(chain(fs_index)[2:4, ]), 2, weighted.mean, weights(fs_pias)[[2]]),
 +           as.matrix(chain(fs_index))[1, ])
 [1] TRUE
 > 
 > # Non-missing indexes should be the same when missing values are not removed
 > fs_index2 <- aggregate(fs_epr, fs_pias)
-> fs_index2[] - fs_index[]
+> as.matrix(fs_index2) - as.matrix(fs_index)
     202001 202002 202003 202004
 1       NA     NA     NA     NA
 11      NA     NA     NA     NA
@@ -645,7 +648,7 @@ $pias$height
 > all.equal(as.matrix(fs_index2)["121", ], 
 +           colSums(contrib(fs_index2, "121"), na.rm = TRUE) + 1)
 [1] TRUE
->
+> 
 > all.equal(as.matrix(fs_index2)["13", 1:3], 
 +           contrib(fs_index2, "13")[, 1:3] + 1)
 [1] TRUE
@@ -667,9 +670,9 @@ $pias$height
 > index_fx <- aggregate(epr_fx, pias)
 > 
 > # Chained calculation and fixed-base calculation should be the same
-> all.equal(as.matrix(index_fx), as.matrix(chain(index_pop)))
+> all.equal(index_fx, chain(index_pop))
 [1] TRUE
 > 
 > proc.time()
    user  system elapsed 
-  0.161   0.012   0.167 
+  0.158   0.012   0.164 

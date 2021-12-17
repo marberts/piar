@@ -41,9 +41,9 @@ is_chain_index(x)
 }
 
 \details{
-The default methods attempts to coerce \code{x} into an elemental index with \code{\link[=as_elemental_index]{as_elemental_index()}} prior to chaining/unchaining.
+The default methods attempts to coerce \code{x} into an index with \code{\link[=as_index]{as_index()}} prior to chaining/unchaining.
 
-Chaining an index object takes the cumulative product of the index values for each level, and returns the same type of index (elemental or aggregate). This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod))}. Unchaining does the opposite, so these are inverse operations. Quote contributions are removed when chaining/unchaining an index, as it's not usually possible to chain them. Note that unchaining a period-over-period index (i.e., when \code{is_chain_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., when \code{is_chain_index(x) == FALSE}).
+Chaining an index object takes the cumulative product of the index values for each level, and returns the same type of index. This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod))}. Unchaining does the opposite, so these are inverse operations. Quote contributions are removed when chaining/unchaining an index, as it's not usually possible to chain them. Note that unchaining a period-over-period index (i.e., when \code{is_chain_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., when \code{is_chain_index(x) == FALSE}).
 }
 
 \value{

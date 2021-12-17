@@ -49,7 +49,7 @@ all.equal(as.data.frame(epr2), epr22[c(2, 1, 3)], check.attributes = FALSE)
 
 # chain() should be the same as using apply()
 all.equal(as.matrix(chain(epr1)), t(apply(as.matrix(epr1), 1, cumprod)))
-all.equal(unchain(chain(epr2))[], epr2[]) # contrib won't be the same
+all.equal(as.matrix(unchain(chain(epr2))), as.matrix(epr2)) # contrib won't be the same
 
 # Contributions should add up
 all.equal(epr1$index, 
@@ -83,10 +83,15 @@ p <- with(dat2, elemental_index(rel, period, ea, w2, r = -1.5))
 all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 
 # Test merge.ind() method
+epr2 <- with(
+  dat, 
+  elemental_index(rel, period, paste0(1, ea), r = -1, contrib = TRUE, na.rm = TRUE)
+)
+
 epr3 <- merge(epr1, epr2) # should give a warning
-all.equal(epr3[], rbind(epr1[], epr2[]))
+all.equal(as.matrix(epr3), rbind(as.matrix(epr1), as.matrix(epr2)))
 all.equal(epr3$index$a, sapply(epr3$contrib$a, sum, na.rm = TRUE) + 1)
-all.equal(levels(epr3), as.character(1:5))
+all.equal(levels(epr3), as.character(c(1:5, 11:15)))
 all.equal(time(epr3), letters)
 
 # Test stack.ind() method
@@ -95,7 +100,7 @@ epr2 <- with(
   elemental_index(rel, toupper(period), ea, r = -1, contrib = TRUE, na.rm = TRUE)
 )
 epr3 <- stack(epr1, epr2)
-all.equal(epr3[], cbind(epr1[], epr2[]))
+all.equal(as.matrix(epr3), cbind(as.matrix(epr1), as.matrix(epr2)))
 all.equal(epr3$index$A, sapply(epr3$contrib$A, sum, na.rm = TRUE) + 1)
 all.equal(levels(epr3), as.character(1:5))
 all.equal(time(epr3), c(letters, LETTERS))
@@ -129,22 +134,22 @@ unclass(epr)
 as.matrix(epr)
 contrib(epr)
 as.data.frame(epr)
-epr[, 1]
-epr[1, ]
+unclass(epr[, 1])
+unclass(epr[1, ])
 chain(epr)$contrib
 
 epr2 <- with(dat, elemental_index(rel, period, ea))
 
-all.equal(epr[], epr2[])
+all.equal(as.matrix(epr), as.matrix(epr2))
 all.equal(epr2, with(as.data.frame(epr2), elemental_index(value, period, level)))
-all.equal(chain(epr2), as_elemental_index(as.matrix(chain(epr2)), chain = FALSE))
+all.equal(chain(epr2), as_index(as.matrix(chain(epr2)), chain = FALSE))
 all.equal(epr$levels, epr2$levels)
 all.equal(epr$time, epr2$time)
 
 contrib(epr2)
 
-epr[] <- epr2[]
-all.equal(epr[], epr2[])
+epr[] <- as.matrix(epr2)
+all.equal(as.matrix(epr), as.matrix(epr2))
 all.equal(contrib(epr), contrib(epr2))
 all.equal(levels(epr), levels(epr2))
 all.equal(time(epr), time(epr2))
@@ -152,14 +157,14 @@ is_chain_index(epr)
 is_chain_index(epr2)
 
 # It shouldn't be possible to make a non-numeric index
-epr <- as_elemental_index(data.frame(a = as.character(1:5), b = 1:5))
+epr <- as_index(data.frame(a = as.character(1:5), b = 1:5))
 is.numeric(as.matrix(epr))
 
 epr[, "b"] <- as.character(1:5)
-all.equal(epr, as_elemental_index(data.frame(a = as.character(1:5), b = 1:5)))
+all.equal(epr, as_index(data.frame(a = as.character(1:5), b = 1:5)))
 
 # Nor one without EA names
-as_elemental_index(matrix(1:5, ncol = 5, dimnames = list("a", 1:5)))
+as_index(matrix(1:5, ncol = 5, dimnames = list("a", 1:5)))
 
 # Test replacement method
 epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: piar 0.1.0.9029\n"
-"POT-Creation-Date: 2021-12-16 22:43\n"
+"POT-Creation-Date: 2021-12-17 14:03\n"
 "PO-Revision-Date: 2021-06-07 23:19\n"
 "Last-Translator: Steve Martin <steve.martin5@canada.ca>\n"
 "Language-Team: none\n"
@@ -101,9 +101,6 @@ msgstr "certains éléments de 'rel' ou 'w' sont inférieurs ou égaux à 0 "
 msgid "cannot make an index with no periods or elemental aggregates"
 msgstr "ne peut pas faire un index sans périodes ou agrégats élémentaires"
 
-msgid "cannot make an elemental index with no periods or elemental aggregates"
-msgstr "ne peut pas faire un index sans périodes ou agrégats élémentaires"
-
 msgid "'x' cannot have duplicated row or column names"
 msgstr "'x' ne peut pas avoir de noms de lignes ou de colonnes dupliqués"
 
@@ -119,19 +116,19 @@ msgstr "il existe des paires période-produit en double"
 msgid "cannot merge aggregated indexes"
 msgstr "impossible de fusionner des index agrégés"
 
-msgid "'y' is not an elemental index; use elemental_index() to make one"
+msgid "'y' is not an index; use elemental_index() to make one"
 msgstr ""
-"'y' n'est pas un indice élémentaire ; utilisez elemental_index() pour en "
+"'y' n'est pas un indice ; utilisez elemental_index() pour en "
 "faire un"
 
 msgid "'x' and 'y' must be indexes for the same time periods"
 msgstr "'x' et 'y' doivent être des index pour les mêmes périodes"
 
+msgid "the same levels appear in both 'x' and 'y'"
+msgstr "certains niveaux apparaissent à la fois dans 'x' et 'y'"
+
 msgid "cannot merge a fixed-base and period-over-period index"
 msgstr "ne peut pas fusionner un indice à base fixe et sur une période"
-
-msgid "some levels appear in both 'x' and 'y'"
-msgstr "certains niveaux apparaissent à la fois dans 'x' et 'y'"
 
 msgid "'y' is not an aggregate index; use aggregate() to make one"
 msgstr ""
@@ -147,15 +144,19 @@ msgstr ""
 msgid "'x' and 'y' must be indexes for the same levels"
 msgstr "'x' et 'y' doivent être des index pour les mêmes niveaux"
 
+msgid "the same periods appear in both 'x' and 'y'"
+msgstr "certains points apparaissent à la fois dans 'x' et 'y'"
+
 msgid "cannot stack a period-over-period and a fixed-base index"
 msgstr ""
 "ne peut pas empiler un indice période sur période et un indice à base fixe"
 
-msgid "some periods appear in both 'x' and 'y'"
-msgstr "certains points apparaissent à la fois dans 'x' et 'y'"
-
 msgid "'x' and 'w' must be the same length"
 msgstr "'x' et 'w' doivent avoir la même longueur"
+
+#~ msgid ""
+#~ "cannot make an elemental index with no periods or elemental aggregates"
+#~ msgstr "ne peut pas faire un index sans périodes ou agrégats élémentaires"
 
 #~ msgid "'rel', 'period', 'ea', and 'w1' must be the same length"
 #~ msgstr "'rel', 'period', 'ea' et 'w1' doivent avoir la même longueur"

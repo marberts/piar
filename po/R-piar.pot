@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: piar 0.2.3.9010\n"
-"POT-Creation-Date: 2021-12-16 22:43\n"
+"POT-Creation-Date: 2021-12-17 14:03\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,9 +73,6 @@ msgstr ""
 msgid "cannot make an index with no periods or elemental aggregates"
 msgstr ""
 
-msgid "cannot make an elemental index with no periods or elemental aggregates"
-msgstr ""
-
 msgid "'x' cannot have duplicated row or column names"
 msgstr ""
 
@@ -91,16 +88,16 @@ msgstr ""
 msgid "cannot merge aggregated indexes"
 msgstr ""
 
-msgid "'y' is not an elemental index; use elemental_index() to make one"
+msgid "'y' is not an index; use elemental_index() to make one"
 msgstr ""
 
 msgid "'x' and 'y' must be indexes for the same time periods"
 msgstr ""
 
-msgid "cannot merge a fixed-base and period-over-period index"
+msgid "the same levels appear in both 'x' and 'y'"
 msgstr ""
 
-msgid "some levels appear in both 'x' and 'y'"
+msgid "cannot merge a fixed-base and period-over-period index"
 msgstr ""
 
 msgid "'y' is not an aggregate index; use aggregate() to make one"
@@ -115,10 +112,10 @@ msgstr ""
 msgid "'x' and 'y' must be indexes for the same levels"
 msgstr ""
 
-msgid "cannot stack a period-over-period and a fixed-base index"
+msgid "the same periods appear in both 'x' and 'y'"
 msgstr ""
 
-msgid "some periods appear in both 'x' and 'y'"
+msgid "cannot stack a period-over-period and a fixed-base index"
 msgstr ""
 
 msgid "'x' and 'w' must be the same length"

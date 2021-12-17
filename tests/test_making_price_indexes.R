@@ -32,7 +32,7 @@ t(apply(as.matrix(ms_index), 1, cumprod))
 as.matrix(ms_index_chained) / as.matrix(ms_index_chained)[, "202004"]
 
 ## -----------------------------------------------------------------------------
-as.matrix(ms_index_chained) / rowMeans(ms_index_chained[, c("202003", "202004")])
+as.matrix(ms_index_chained) / rowMeans(as.matrix(ms_index_chained)[, c("202003", "202004")])
 
 ## -----------------------------------------------------------------------------
 (ms_weights <- transform(ms_weights, stratum = c("TS", "TA", "TS", "TS", "TS")))
@@ -52,7 +52,7 @@ aggregate(ms_epr, pias_sps, na.rm = TRUE)
 
 ## -----------------------------------------------------------------------------
 ms_epr2 <- ms_epr
-ms_epr2["B2", is.na(ms_epr2["B2", ])] <- 1
+ms_epr2["B2", 2:3] <- 1
 ms_epr2
 
 ## -----------------------------------------------------------------------------

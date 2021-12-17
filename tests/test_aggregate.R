@@ -19,19 +19,19 @@ ms_pias <- with(
 
 unclass(ms_index)
 
-as_elemental_index(ms_index)
+as_index(ms_index)
 
 # Check adding up of lower-level indexes
-all.equal(apply(chain(ms_index)[4:8, ], 2, weighted.mean, weights(ms_pias)[[3]]),
+all.equal(apply(as.matrix(chain(ms_index)[4:8, ]), 2, weighted.mean, weights(ms_pias)[[3]]),
           as.matrix(chain(ms_index))[1, ])
 
-all.equal(apply(chain(ms_index)[2:3, ], 2, weighted.mean, weights(ms_pias)[[2]]),
+all.equal(apply(as.matrix(chain(ms_index)[2:3, ]), 2, weighted.mean, weights(ms_pias)[[2]]),
           as.matrix(chain(ms_index))[1, ])
 
 # Re-aggregating the index shouldn't do anything
-all.equal(aggregate(ms_index, ms_pias)[], ms_index[])
+all.equal(as.matrix(aggregate(ms_index, ms_pias)), as.matrix(ms_index))
 
-all.equal(aggregate(ms_index, ms_pias, na.rm = TRUE)[], ms_index[])
+all.equal(as.matrix(aggregate(ms_index, ms_pias, na.rm = TRUE)), as.matrix(ms_index))
 
 # Re-arranging the index shouldn't do anything
 ms_epr <- with(
@@ -45,7 +45,7 @@ ms_pias <- with(
   aggregation_structure(c(expand_classification(classification), list(business)), weight)
 )
 
-all.equal(aggregate(ms_epr, ms_pias, na.rm = TRUE)[rownames(ms_index[]), ], ms_index[])
+all.equal(as.matrix(aggregate(ms_epr, ms_pias, na.rm = TRUE)[levels(ms_index), ]), as.matrix(ms_index))
 
 # Stacking shouldn't do anything
 all.equal(Reduce(stack, unstack(ms_index)), ms_index)
@@ -55,7 +55,7 @@ all.equal(as.matrix(ms_index)[1, ],
           colSums(contrib(ms_index), na.rm = TRUE) + 1)
 
 # Check that weights are getting price updated correctly
-apply(chain(ms_index)[4:8, ], 2, `*`, ms_weights$weight)
+apply(as.matrix(chain(ms_index)[4:8, ]), 2, `*`, ms_weights$weight)
 
 weights(update(ms_pias, ms_index), ea_only = TRUE)
 
@@ -70,17 +70,17 @@ ms_epr <- with(
 
 ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
 
-all.equal(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)[], ms_index[])
+all.equal(as.matrix(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)), as.matrix(ms_index))
 
 all.equal(as.matrix(ms_index)[1, ], 
           colSums(contrib(ms_index), na.rm = TRUE) + 1)
 
-all.equal(apply(chain(ms_index)[2:3, ], 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
+all.equal(apply(as.matrix(chain(ms_index)[2:3, ]), 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
           as.matrix(chain(ms_index))[1, ])
 
 ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)
 
-all.equal(aggregate(ms_index, ms_pias, r = -1.7)[], ms_index[])
+all.equal(aggregate(ms_index, ms_pias, r = -1.7), ms_index)
 
 all.equal(as.matrix(ms_index)[1, ], 
           colSums(contrib(ms_index)) + 1)
@@ -102,22 +102,22 @@ fs_pias <- with(
 unclass(fs_index)
 
 # Re-aggregating the index shouldn't do anything
-all.equal(aggregate(fs_index, fs_pias)[], fs_index[])
+all.equal(as.matrix(aggregate(fs_index, fs_pias)), as.matrix(fs_index))
 
 # Contributions should add up
 all.equal(as.matrix(fs_index)[1, ], 
           colSums(contrib(fs_index), na.rm = TRUE) + 1)
 
 # Check adding up of lower level indexes
-all.equal(apply(chain(fs_index)[5:9, ], 2, weighted.mean, weights(fs_pias)[[3]]),
+all.equal(apply(as.matrix(chain(fs_index)[5:9, ]), 2, weighted.mean, weights(fs_pias)[[3]]),
           as.matrix(chain(fs_index))[1, ])
 
-all.equal(apply(chain(fs_index)[2:4, ], 2, weighted.mean, weights(fs_pias)[[2]]),
+all.equal(apply(as.matrix(chain(fs_index)[2:4, ]), 2, weighted.mean, weights(fs_pias)[[2]]),
           as.matrix(chain(fs_index))[1, ])
 
 # Non-missing indexes should be the same when missing values are not removed
 fs_index2 <- aggregate(fs_epr, fs_pias)
-fs_index2[] - fs_index[]
+as.matrix(fs_index2) - as.matrix(fs_index)
 
 all.equal(as.matrix(fs_index2)["121", ], 
           colSums(contrib(fs_index2, "121"), na.rm = TRUE) + 1)
@@ -142,4 +142,4 @@ index_pop <- aggregate(epr_pop, pias)
 index_fx <- aggregate(epr_fx, pias)
 
 # Chained calculation and fixed-base calculation should be the same
-all.equal(as.matrix(index_fx), as.matrix(chain(index_pop)))
+all.equal(index_fx, chain(index_pop))

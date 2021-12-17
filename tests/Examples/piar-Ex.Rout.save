@@ -220,12 +220,10 @@ b.1 0.3905243 2.0513858
 b.2 0.8284271 2.4871732
 > 
 > # Calculate EA contributions for the chained index
-> gpindex::arithmetic_contributions(chain(index)[c("a", "b", "c"), 2], 
+> gpindex::arithmetic_contributions(as.matrix(chain(index))[c("a", "b", "c"), 2], 
 +                                   weights(pias, ea_only = TRUE))
-         2
-a 1.541158
-b 6.198639
-c 7.739798
+       a        b        c 
+1.541158 6.198639 7.739798 
 > 
 > 
 > 
@@ -264,9 +262,7 @@ c 7.739798
 > ###   elemental_index.numeric aggregate.ind vcov.agg_ind mean.ind merge.ind
 > ###   stack.ind unstack.ind [.ind [<-.ind levels.ind time.ind start.ind
 > ###   end.ind head.ind tail.ind summary.ind as.matrix.ind as.data.frame.ind
-> ###   as_elemental_index as_elemental_index.default
-> ###   as_elemental_index.matrix as_elemental_index.agg_ind is_index
-> ###   is_elemental_index is_aggregate_index
+> ###   as_index as_index.default as_index.matrix is_index is_aggregate_index
 > 
 > ### ** Examples
 > 
@@ -398,13 +394,13 @@ c   2.218951 6.037662
 > # A general function to calculate weights to turn the geometric
 > # mean of the arithmetic and harmonic mean (i.e., Fisher mean)
 > # into a geometric mean
->
+> 
 > fw <- (function() {
-+     a2g <- transmute_weights(1, 0)
-+     h2g <- transmute_weights(-1, 0)
-+     function(x, w1, w2) {
-+         scale_weights(a2g(x, w1)) + scale_weights(h2g(x, w2))
-+     }
++   a2g <- transmute_weights(1, 0)
++   h2g <- transmute_weights(-1, 0)
++   function(x, w1, w2) {
++       scale_weights(a2g(x, w1)) + scale_weights(h2g(x, w2))
++   }
 + })()
 > 
 > with(
@@ -443,7 +439,7 @@ detaching ‘package:gpindex’
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.092 0.012 0.103 0 0 
+Time elapsed:  0.099 0.004 0.104 0 0 
 > grDevices::dev.off()
 null device 
           1 

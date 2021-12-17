@@ -1,5 +1,4 @@
-export(elemental_index, as_elemental_index, 
-       is_elemental_index, is_aggregate_index, is_index, is_chain_index,
+export(elemental_index, as_index, is_index, is_aggregate_index, is_chain_index,
        price_relative,
        aggregation_structure, expand_classification,
        carry_forward, shadow_price,
@@ -16,10 +15,8 @@ S3method(tail, ind)
 S3method(as.data.frame, ind)
 S3method(as.matrix, ind)
 S3method(merge, agg_ind)
-S3method(merge, elem_ind)
 S3method(merge, ind)
 S3method(stack, agg_ind)
-S3method(stack, elem_ind)
 S3method(stack, ind)
 S3method(unstack, ind)
 S3method(print, ind)
@@ -32,9 +29,8 @@ S3method(vcov, agg_ind)
 S3method(elemental_index, default)
 S3method(elemental_index, numeric)
 
-S3method(as_elemental_index, default)
-S3method(as_elemental_index, matrix)
-S3method(as_elemental_index, agg_ind)
+S3method(as_index, default)
+S3method(as_index, matrix)
 
 S3method(contrib, ind)
 

@@ -2,7 +2,7 @@
 
 different_length <- function(...) {
   res <- lengths(list(...))
-  any(res != res[1])
+  any(res != res[1L])
 }
 
 any_negative <- function(...) {
@@ -38,5 +38,5 @@ aggregate2pias <- function(x, w) {
 }
 
 empty_contrib <- function(x) {
-  list(structure(rep(list(numeric(0)), length(x)), names = x))
+  list(structure(rep(list(numeric(0L)), length(x)), names = x))
 }

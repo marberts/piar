@@ -46,6 +46,6 @@ index <- aggregate(epr, pias, na.rm = TRUE)
 contrib(index)
 
 # Calculate EA contributions for the chained index
-gpindex::arithmetic_contributions(chain(index)[c("a", "b", "c"), 2], 
+gpindex::arithmetic_contributions(as.matrix(chain(index))[c("a", "b", "c"), 2], 
                                   weights(pias, ea_only = TRUE))
 }
