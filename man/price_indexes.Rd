@@ -30,8 +30,7 @@
 \title{Price indexes}
 
 \description{
-Compute period-over-period or fixed-base elemental price indexes (with optional quote contributions), or coerce pre-computed index values into an elemental index object.
-There are methods to aggregate these indexes with a price index aggregation structure or average them over time, combine indexes together, extract useful information, and coerce into a tabular form.
+Compute period-over-period or fixed-base (direct) elemental price indexes (with optional quote contributions), or coerce pre-computed index values into an elemental index object. There are methods to aggregate these indexes with a price index aggregation structure or average them over time, combine indexes together, extract useful information, and coerce into a tabular form.
 }
 
 \usage{
@@ -143,7 +142,7 @@ When supplied with a numeric vector, \code{elemental_index()} is a simple wrappe
 
 The default method simply coerces \code{rel} to a numeric prior to calling the method above.
 
-The interpretation of the index depends on how the price relatives in \code{rel} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base elemental indexes. For the latter, \code{chain} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
+The interpretation of the index depends on how the price relatives in \code{rel} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base (direct) elemental indexes. For the latter, \code{chain} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
 
 By default, missing price relatives in \code{rel} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
 
@@ -157,7 +156,7 @@ The \code{aggregate()} method aggregates elemental indexes by looping over each 
 \item aggregates quote contributions for each level of \code{pias} (if there are any);
 \item price updates the weights in \code{pias} with \code{\link[=factor_weights]{factor_weights(r)}} (only for period-over-period elemental indexes, i.e., \code{is_chain_index(x) == TRUE}).
 }
-The result is a collection of aggregated period-over-period indexes that can be chained together to get a fixed-base index when \code{x} are period-over-period elemental indexes. Otherwise, when \code{x} are fixed-base elemental indexes, the result is a collection of aggregated fixed-base indexes.
+The result is a collection of aggregated period-over-period indexes that can be chained together to get a fixed-base index when \code{x} are period-over-period elemental indexes. Otherwise, when \code{x} are fixed-base elemental indexes, the result is a collection of aggregated fixed-base (direct) indexes.
 
 By default, missing elemental indexes will propagate when aggregating the index. Missing elemental indexes can be due to both missingness of these values in \code{x}, and the presence of elemental aggregates in \code{pias} that are not part of \code{x}. Setting \code{na.rm = TRUE} ignores missing values, and is equivalent to parental (or overall mean) imputation. As an aggregated price index generally cannot have missing values (for otherwise it can't be chained over time), any missing values for a level of \code{pias} are removed and recursively replaced by the value of its immediate parent.
 
