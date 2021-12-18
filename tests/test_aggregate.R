@@ -143,3 +143,23 @@ index_fx <- aggregate(epr_fx, pias)
 
 # Chained calculation and fixed-base calculation should be the same
 all.equal(index_fx, chain(index_pop))
+
+# Tests for methods
+s1 <- merge(ms_index, fs_epr)
+s1
+is_aggregate_index(s1)
+levels(s1)
+time(s1)
+contrib(s1, "111")
+
+s2 <- ms_index[, 3:4]
+s2$r <- s2$pias <- NULL
+class(s2) <- "ind"
+
+all.equal(stack(ms_index[, 1:2], s2), ms_index)
+
+all.equal(stack(s2, ms_index[, 1:2]), ms_index[, c(3:4, 1:2)])
+
+all.equal(stack(index_pop[-1, 1], index_pop[-1, letters[2:3]]), epr_pop)
+
+all.equal(unstack(index_fx), list(index_fx[, 1], index_fx[, "b"], index_fx[, c(FALSE, FALSE, TRUE)]))

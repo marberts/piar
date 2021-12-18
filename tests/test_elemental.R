@@ -88,7 +88,7 @@ epr2 <- with(
   elemental_index(rel, period, paste0(1, ea), r = -1, contrib = TRUE, na.rm = TRUE)
 )
 
-epr3 <- merge(epr1, epr2) # should give a warning
+epr3 <- merge(epr1, epr2)
 all.equal(as.matrix(epr3), rbind(as.matrix(epr1), as.matrix(epr2)))
 all.equal(epr3$index$a, sapply(epr3$contrib$a, sum, na.rm = TRUE) + 1)
 all.equal(levels(epr3), as.character(c(1:5, 11:15)))
@@ -149,7 +149,7 @@ all.equal(epr$time, epr2$time)
 contrib(epr2)
 
 epr[] <- as.matrix(epr2)
-all.equal(as.matrix(epr), as.matrix(epr2))
+all.equal(as.matrix(epr), as.matrix(epr2)) # has_contrib is not equal
 all.equal(contrib(epr), contrib(epr2))
 all.equal(levels(epr), levels(epr2))
 all.equal(time(epr), time(epr2))

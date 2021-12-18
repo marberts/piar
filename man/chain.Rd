@@ -13,21 +13,21 @@ Chain a price index
 }
 
 \description{
-Chain a period-over-period index by taking the cumulative product of its values to turn it into a fixed-base index. Unchain a fixed-base index by dividing its values for successive periods to get a period-over-period index.
+Chain a period-over-period index by taking the cumulative product of its values to turn it into a fixed-base (direct) index. Unchain a fixed-base index by dividing its values for successive periods to get a period-over-period index.
 }
 
 \usage{
 chain(x, ...)
 
-\method{chain}{default}(x, ...)
+\method{chain}{default}(x, link = rep(1, length(levels(x))), ...)
 
-\method{chain}{ind}(x, ...)
+\method{chain}{ind}(x, link = rep(1, length(levels(x))), ...)
 
 \method{cumprod}{ind}(x) # deprecated
 
 unchain(x, ...)
 
-\method{chain}{default}(x, ...)
+\method{unchain}{default}(x, ...)
 
 \method{unchain}{ind}(x, ...)
 
@@ -37,13 +37,15 @@ is_chain_index(x)
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
+\item{link}{A numeric vector of link values for each level in \code{x}. The default is a vector of 1s so that no linking is done.}
+
 \item{...}{Further arguments passed to or used by methods.}
 }
 
 \details{
 The default methods attempts to coerce \code{x} into an index with \code{\link[=as_index]{as_index()}} prior to chaining/unchaining.
 
-Chaining an index object takes the cumulative product of the index values for each level, and returns the same type of index. This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod))}. Unchaining does the opposite, so these are inverse operations. Quote contributions are removed when chaining/unchaining an index, as it's not usually possible to chain them. Note that unchaining a period-over-period index (i.e., when \code{is_chain_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., when \code{is_chain_index(x) == FALSE}).
+Chaining an index takes the cumulative product of the index values for each level, and returns the same type of index. This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod)) * link}. Unchaining does the opposite, so these are inverse operations. Quote contributions are removed when chaining/unchaining an index, as it's not usually possible to chain them. Note that unchaining a period-over-period index (i.e., when \code{is_chain_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., when \code{is_chain_index(x) == FALSE}).
 }
 
 \value{

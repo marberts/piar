@@ -14,18 +14,26 @@ as.matrix.ind <- function(x, ...) {
 `[.ind` <- function(x, i, j) {
   # get the row/col names that form the submatrix for extraction
   dnm <- dimnames(as.matrix(x)[i, j, drop = FALSE])
-  periods <- dnm[[2L]]
-  levels <- dnm[[1L]]
-  # it's safe to make a new object here because the class is always 'ind'
-  res <- list(index = NULL, contrib = NULL, 
-              levels = levels, time = periods, 
-              has_contrib = x$has_contrib, chain = x$chain)
-  # only loop over periods that have a value extracted
-  for (t in periods) {
-    res$index[[t]] <- x$index[[t]][levels]
-    res$contrib[[t]] <- x$contrib[[t]][levels]
+  if (!all(lengths(dnm))) {
+    stop(gettext("cannot extract no levels/time periods from 'x'"))
   }
-  structure(res, class = "ind")
+  levels <- dnm[[1L]]
+  periods <- dnm[[2L]]
+  # only loop over periods that have a value extracted
+  x$index <- x$index[periods]
+  x$contrib <- x$contrib[periods]
+  for (t in periods) {
+    x$index[[t]] <- x$index[[t]][levels]
+    x$contrib[[t]] <- x$contrib[[t]][levels]
+  }
+  # remove aggregate components if any rows are dropped
+  if (!identical(levels, x$levels)) {
+    x$r <- x$pias <- NULL
+    class(x) <- "ind"
+  }
+  x$levels <- levels
+  x$time <- periods
+  x
 }
 
 `[<-.ind` <- function(x, i, j, value) {
@@ -59,7 +67,9 @@ end.ind <- function(x, ...) {
 
 #---- Merge ----
 merge.agg_ind <- function(x, y, ...) {
-  stop(gettext("cannot merge aggregated indexes"))
+  x$r <- x$pias <- NULL
+  class(x) <- "ind"
+  NextMethod("merge")
 }
 
 merge.ind <- function(x, y, ...) {
@@ -88,14 +98,13 @@ merge.ind <- function(x, y, ...) {
 
 #---- Stack ----
 stack.agg_ind <- function(x, y, ...) {
-  if (!is_aggregate_index(y)) {
-    stop(gettext("'y' is not an aggregate index; use aggregate() to make one"))
-  }
-  if (x$r != y$r) {
-    stop(gettext("cannot stack indexes of different orders"))
-  }
-  if (!identical(x$pias, y$pias)) {
-    stop(gettext("'x' and 'y' must be generated from the same aggregation structure"))
+  if (is_aggregate_index(y)) {
+    if (x$r != y$r) {
+      stop(gettext("cannot stack indexes of different orders"))
+    }
+    if (!identical(x$pias, y$pias)) {
+      stop(gettext("'x' and 'y' must be generated from the same aggregation structure"))
+    }
   }
   NextMethod("stack")
 }
@@ -118,6 +127,11 @@ stack.ind <- function(x, y, ...) {
   # it's safe to use c() and not union() because there can't be duplicate periods
   x$time <- c(x$time, y$time)
   x$has_contrib <- x$has_contrib || y$has_contrib
+  if (is_aggregate_index(y)) {
+    x$r <- y$r
+    x$pias <- y$pias
+    class(x) <- c("agg_ind", "ind")
+  }
   x
 }
 

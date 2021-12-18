@@ -168,15 +168,15 @@ An optional vector of weights can be specified when aggregating index values ove
 }
 
 \subsection{Combine}{
-The \code{merge()} method combines two index objects with common time periods, merging together the index values and quote contributions for each time period in \code{x} and \code{y}. This is useful for building up an index when different elemental aggregates come from different sources of data, or use different index-number formulas. Currently this method does not work for aggregated indexes.
+The \code{merge()} method combines two index objects with common time periods, merging together the index values and quote contributions for each time period in \code{x} and \code{y}. This is useful for building up an index when different elemental aggregates come from different sources of data, or use different index-number formulas. 
 
 The \code{stack()} method combines two index objects with common levels, stacking index values and quote contributions for each level in \code{y} after those in \code{x}. The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}. These methods can be used in a map-reduce to make an index with multiple aggregation structures (like a Paasche index).
 
-These methods return an object of the same class as \code{x}.
+It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging always returns an index of class \code{ind}. If at least one of \code{x} or \code{y} is an aggregate index then result is also an aggregate index; otherwise, it is the same class as \code{x}.
 }
 
 \subsection{Extract}{
-The extraction method treats \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as indexing \code{x} always returns an index object. This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like \code{x[1]} is taken to be the same as \code{x[1, ]}. Note that indexing an aggregated index cannot generally preserve the aggregation structure, so the resulting index is \emph{not} an aggregated index.
+The extraction method treats \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as indexing \code{x} always returns an index object. This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like \code{x[1]} is taken to be the same as \code{x[1, ]}. Note that indexing an aggregated index cannot generally preserve the aggregation structure if any levels are removed, and in this case the resulting index is \emph{not} an aggregated index.
 
 The replacement method similarly treats \code{x} as a matrix, and behaves the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding quote contributions (if any).
 

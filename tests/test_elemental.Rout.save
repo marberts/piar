@@ -115,7 +115,7 @@ Type 'q()' to quit R.
 +   elemental_index(rel, period, paste0(1, ea), r = -1, contrib = TRUE, na.rm = TRUE)
 + )
 > 
-> epr3 <- merge(epr1, epr2) # should give a warning
+> epr3 <- merge(epr1, epr2)
 > all.equal(as.matrix(epr3), rbind(as.matrix(epr1), as.matrix(epr2)))
 [1] TRUE
 > all.equal(epr3$index$a, sapply(epr3$contrib$a, sum, na.rm = TRUE) + 1)
@@ -414,7 +414,7 @@ numeric(0)
      1 2
 > 
 > epr[] <- as.matrix(epr2)
-> all.equal(as.matrix(epr), as.matrix(epr2))
+> all.equal(as.matrix(epr), as.matrix(epr2)) # has_contrib is not equal
 [1] TRUE
 > all.equal(contrib(epr), contrib(epr2))
 [1] TRUE

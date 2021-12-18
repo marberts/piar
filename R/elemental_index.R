@@ -98,5 +98,9 @@ as_index.matrix <- function(x, chain = TRUE, ...) {
   structure(res, class = "ind")
 }
 
+as_index.ind <- function(x, ...) {
+  x
+}
+
 #---- Test ----
 is_index <- function(x) inherits(x, "ind")

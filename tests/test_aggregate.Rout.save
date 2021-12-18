@@ -673,6 +673,51 @@ $pias$height
 > all.equal(index_fx, chain(index_pop))
 [1] TRUE
 > 
+> # Tests for methods
+> s1 <- merge(ms_index, fs_epr)
+> s1
+    202001    202002   202003    202004
+1       NA        NA       NA        NA
+11      NA        NA       NA        NA
+12      NA        NA       NA        NA
+B5      NA        NA       NA        NA
+B3       1 3.5979069 1.833441 0.5518434
+B4     NaN       NaN       NA 5.4702987
+B1      NA        NA       NA        NA
+B2       1        NA       NA 3.1529512
+111     NA        NA      NaN       NaN
+112      1 0.9358411       NA        NA
+121      1 0.6122296 2.485335 1.6137244
+122      1        NA       NA 0.8607865
+131      1 0.6111111 1.685065        NA
+> is_aggregate_index(s1)
+[1] FALSE
+> levels(s1)
+ [1] "1"   "11"  "12"  "B5"  "B3"  "B4"  "B1"  "B2"  "111" "112" "121" "122" 
+[13] "131"
+> time(s1)
+[1] "202001" "202002" "202003" "202004"
+> contrib(s1, "111")
+   202001      202002 202003 202004
+B1      0 -0.01593625      0      0
+B2     NA          NA      0      0
+> 
+> s2 <- ms_index[, 3:4]
+> s2$r <- s2$pias <- NULL
+> class(s2) <- "ind"
+> 
+> all.equal(stack(ms_index[, 1:2], s2), ms_index)
+[1] TRUE
+> 
+> all.equal(stack(s2, ms_index[, 1:2]), ms_index[, c(3:4, 1:2)])
+[1] TRUE
+> 
+> all.equal(stack(index_pop[-1, 1], index_pop[-1, letters[2:3]]), epr_pop)
+[1] TRUE
+> 
+> all.equal(unstack(index_fx), list(index_fx[, 1], index_fx[, "b"], index_fx[, c(FALSE, FALSE, TRUE)]))
+[1] TRUE
+>
 > proc.time()
    user  system elapsed 
   0.158   0.012   0.164 

@@ -3,13 +3,17 @@ chain <- function(x, ...) {
   UseMethod("chain")
 }
 
-chain.default <- function(x, ...) {
+chain.default <- function(x, link = rep(1, length(levels(x))), ...) {
   chain(as_index(x), ...)
 }
 
-chain.ind <- function(x, ...) {
+chain.ind <- function(x, link = rep(1, length(levels(x))), ...) {
   if (x$chain) {
+    if (length(link) != length(x$levels)) {
+      stop(gettext("'link' must have a value for each level of 'x'"))
+    }
     x$chain <- FALSE
+    x$index[[1]] <- x$index[[1]] * link
     x$index[] <- Reduce(`*`, x$index, accumulate = TRUE)
     # contributions are difficult to chain, so remove them
     x$has_contrib <- FALSE
