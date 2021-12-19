@@ -65,7 +65,7 @@ elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1,
   structure(res, class = "ind")
 }
 
-#---- Coerce to an elemental index ----
+#---- Coerce to an index ----
 as_index <- function(x, ...) {
   UseMethod("as_index")
 }

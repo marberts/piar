@@ -20,12 +20,8 @@ as.matrix.ind <- function(x, ...) {
   levels <- dnm[[1L]]
   periods <- dnm[[2L]]
   # only loop over periods that have a value extracted
-  x$index <- x$index[periods]
-  x$contrib <- x$contrib[periods]
-  for (t in periods) {
-    x$index[[t]] <- x$index[[t]][levels]
-    x$contrib[[t]] <- x$contrib[[t]][levels]
-  }
+  x$index <- lapply(x$index[periods], `[`, levels)
+  x$contrib <- lapply(x$contrib[periods], `[`, levels)
   # remove aggregate components if any rows are dropped
   if (!identical(levels, x$levels)) {
     x$r <- x$pias <- NULL
@@ -86,10 +82,8 @@ merge.ind <- function(x, y, ...) {
     stop(gettext("cannot merge a fixed-base and period-over-period index"))
   }
   # loop over time periods and combine index values/contributions
-  for (t in x$time) {
-    x$index[[t]] <- c(x$index[[t]], y$index[[t]])
-    x$contrib[[t]] <- c(x$contrib[[t]], y$contrib[[t]])
-  }
+  x$index <- Map(c, x$index, y$index)
+  x$contrib <- Map(c, x$contrib, y$contrib)
   # it's safe to use c() and not union() because there can't be duplicate levels
   x$levels <- c(x$levels, y$levels)
   x$has_contrib <- x$has_contrib || y$has_contrib

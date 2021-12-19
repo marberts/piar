@@ -19,7 +19,7 @@ Chain a period-over-period index by taking the cumulative product of its values 
 \usage{
 chain(x, ...)
 
-\method{chain}{default}(x, link = rep(1, length(levels(x))), ...)
+\method{chain}{default}(x, ...)
 
 \method{chain}{ind}(x, link = rep(1, length(levels(x))), ...)
 
@@ -37,7 +37,7 @@ is_chain_index(x)
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
-\item{link}{A numeric vector of link values for each level in \code{x}. The default is a vector of 1s so that no linking is done.}
+\item{link}{A numeric vector, or something that can coerced into one, of link values for each level in \code{x}. The default is a vector of 1s so that no linking is done.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
