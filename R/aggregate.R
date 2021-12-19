@@ -64,10 +64,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
 #---- Covariance calculation ----
 # Fast aggregate
 # This can be removed if aggregate.ind gets fast enough
-.aggregate <- function(x, pias, chain, r) {
-  # helpful functions
-  price_update <- factor_weights(r)
-  gen_mean <- generalized_mean(r)
+.aggregate <- function(x, pias, price_update, gen_mean) {
   # 'i' is defined in the loop below; it's used to loop over the height of 'pias'
   aggregate_index <- function(z) {
     gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z])
@@ -81,7 +78,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     # align epr with weights so that positional indexing works
     # preserve names if epr and pias weights don't agree
     rel[[1L]] <- named_extract(x$index[[t]], eas)
-    if (t > 1L && chain) w <- rev(weights(pias))
+    if (t > 1L && x$chain) w <- rev(weights(pias))
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
       rel[[i]] <- vapply(pias$child[[i - 1L]], aggregate_index, numeric(1))
@@ -90,7 +87,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     index <- unlist(rev(rel))
     x$index[[t]] <- index
     # price update weights for all periods after the first
-    if (chain) {
+    if (x$chain) {
       pias$weights <- price_update(index[eas], w[[1L]]) 
     }
   }
@@ -111,9 +108,11 @@ vcov.agg_ind <- function(object, repweights, mse = TRUE, parallel = c("no", "mc"
   # indexes for looping over repweights
   pias <- aggregate2pias(object, numeric(length(eas)))
   # function to aggregate index for replicate 'i'
+  price_update <- factor_weights(object$r)
+  gen_mean <- generalized_mean(object$r)
   repl <- function(i) {
     pias$weights[] <- repweights[, i]
-    .aggregate(object, pias, object$chain, object$r)[upper, , drop = FALSE]
+    .aggregate(object, pias, price_update, gen_mean)[upper, , drop = FALSE]
   }
   if (parallel == "no") {
     index_boot <- lapply(seq_len(n), repl)
