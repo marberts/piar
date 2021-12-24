@@ -53,7 +53,7 @@ Each of these functions returns an index of the same type as \code{x}, except \c
 }
 
 \note{
-The \code{cumprod()} method is deprecated, and just calls \code{chain.ind()}. It will be removed in a future release.
+The \code{cumprod()} method is deprecated, and just calls \code{as.matrix(chain.ind())}. It will be removed in a future release.
 }
 
 \seealso{

@@ -387,25 +387,20 @@ a   1.000000 1.000000
 b   2.828427 6.928203
 c   2.218951 6.037662
 > 
-> # Calculate a CSWD index as a geometric index by constructing appropriate weights
+> # Calculate a CSWD index (same as the Jevons in this example) 
+> # as an arithmetic index by constructing appropriate weights
 > 
 > library(gpindex)
 > 
 > # A general function to calculate weights to turn the geometric
 > # mean of the arithmetic and harmonic mean (i.e., Fisher mean)
-> # into a geometric mean
+> # into an arithmetic mean
 > 
-> fw <- (function() {
-+   a2g <- transmute_weights(1, 0)
-+   h2g <- transmute_weights(-1, 0)
-+   function(x, w1, w2) {
-+       scale_weights(a2g(x, w1)) + scale_weights(h2g(x, w2))
-+   }
-+ })()
+> fw <- grouped(nested_transmute(0, c(1, -1), 1))
 > 
 > with(
 +     prices, 
-+     elemental_index(rel, period, ea, grouped(fw)(rel, group = interaction(period, ea)))
++     elemental_index(rel, period, ea, fw(rel, group = interaction(period, ea)), r = 1)
 + )
          1        2
 a 1.732051 5.916080
