@@ -41,7 +41,11 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: rcmdcheck
+          extra-packages: rcmdcheck, remotes
+      
+      - name: Install gpindex
+        run: remotes::install_github("marberts/gpindex")
+        shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v1
 
