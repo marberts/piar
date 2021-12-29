@@ -10,6 +10,10 @@ as.matrix.ind <- function(x, ...) {
   do.call(cbind, x$index)
 }
 
+as.double.ind <- function(x, ...) {
+  as.numeric(as.matrix(x))
+}
+
 #---- Extract ----
 `[.ind` <- function(x, i, j) {
   # get the row/col names that form the submatrix for extraction
@@ -75,7 +79,7 @@ merge.ind <- function(x, y, ...) {
   if (!identical(x$time, y$time)) {
     stop(gettext("'x' and 'y' must be indexes for the same time periods"))
   }
-  if (length(intersect(x$levels, y$levels))) {
+  if (any(x$levels %in% y$levels)) {
     stop(gettext("the same levels appear in both 'x' and 'y'"))
   }
   if (x$chain != y$chain) {
@@ -110,7 +114,7 @@ stack.ind <- function(x, y, ...) {
   if (!identical(x$levels, y$levels)) {
     stop(gettext("'x' and 'y' must be indexes for the same levels"))
   }
-  if (length(intersect(x$time, y$time))) {
+  if (any(x$time %in% y$time)) {
     stop(gettext("the same periods appear in both 'x' and 'y'"))
   }
   if (x$chain != y$chain) {

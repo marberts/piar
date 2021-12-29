@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: piar 0.2.3.9010\n"
-"POT-Creation-Date: 2021-12-17 14:03\n"
+"Project-Id-Version: piar 0.2.3.9013\n"
+"POT-Creation-Date: 2021-12-29 16:54\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,7 +58,13 @@ msgstr ""
 msgid "'width' cannot contain NAs"
 msgstr ""
 
+msgid "'link' must have a value for each level of 'x'"
+msgstr ""
+
 msgid "'cumprod()' is deprecated for index objects; use 'chain()' instead"
+msgstr ""
+
+msgid "'base' must have a value for each level of 'x'"
 msgstr ""
 
 msgid "'rel', 'period', and 'ea' must be the same length"
@@ -85,7 +91,7 @@ msgstr ""
 msgid "there are duplicated period-product pairs"
 msgstr ""
 
-msgid "cannot merge aggregated indexes"
+msgid "cannot extract no levels/time periods from 'x'"
 msgstr ""
 
 msgid "'y' is not an index; use elemental_index() to make one"
@@ -98,9 +104,6 @@ msgid "the same levels appear in both 'x' and 'y'"
 msgstr ""
 
 msgid "cannot merge a fixed-base and period-over-period index"
-msgstr ""
-
-msgid "'y' is not an aggregate index; use aggregate() to make one"
 msgstr ""
 
 msgid "cannot stack indexes of different orders"

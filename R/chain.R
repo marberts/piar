@@ -9,11 +9,12 @@ chain.default <- function(x, ...) {
 
 chain.ind <- function(x, link = rep(1, length(levels(x))), ...) {
   if (x$chain) {
+    link <- as.numeric(link)
     if (length(link) != length(x$levels)) {
       stop(gettext("'link' must have a value for each level of 'x'"))
     }
     x$chain <- FALSE
-    x$index[[1]] <- x$index[[1]] * as.numeric(link)
+    x$index[[1]] <- x$index[[1]] * link
     x$index[] <- Reduce(`*`, x$index, accumulate = TRUE)
     # contributions are difficult to chain, so remove them
     x$has_contrib <- FALSE
@@ -46,6 +47,30 @@ unchain.ind <- function(x, ...) {
     x$contrib[] <- empty_contrib(x$levels)
   }
   # do nothing for a chain index
+  x
+}
+
+#---- Rebase ----
+rebase <- function(x, ...) {
+  UseMethod("rebase")
+}
+
+rebase.default <- function(x, ...) {
+  rebase(as_index(x), ...)
+}
+
+rebase.ind <- function(x, base = rep(1, length(levels(x))), ...) {
+  if (!x$chain) {
+    base <- as.numeric(base)
+    if (length(base) != length(x$levels)) {
+      stop(gettext("'base' must have a value for each level of 'x'"))
+    }
+    x$index <- Map(`/`, x$index, list(base))
+    # contributions are difficult to rebase, so remove them
+    x$has_contrib <- FALSE
+    x$contrib[] <- empty_contrib(x$levels)
+  }
+  # do nothing for a period-over-period index
   x
 }
 

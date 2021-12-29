@@ -2,7 +2,7 @@ export(elemental_index, as_index, is_index, is_aggregate_index, is_chain_index,
        price_relative,
        aggregation_structure, expand_classification,
        carry_forward, shadow_price,
-       contrib, chain, unchain)
+       contrib, chain, unchain, rebase)
 
 S3method("[", ind)
 S3method("[<-", ind)
@@ -14,6 +14,7 @@ S3method(head, ind)
 S3method(tail, ind)
 S3method(as.data.frame, ind)
 S3method(as.matrix, ind)
+S3method(as.double, ind)
 S3method(merge, agg_ind)
 S3method(merge, ind)
 S3method(stack, agg_ind)
@@ -39,6 +40,8 @@ S3method(chain, default)
 S3method(chain, ind)
 S3method(unchain, default)
 S3method(unchain, ind)
+S3method(rebase, default)
+S3method(rebase, ind)
 S3method(cumprod, ind)
 
 S3method(print, pias)

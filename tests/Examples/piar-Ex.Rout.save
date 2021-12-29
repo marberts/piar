@@ -154,9 +154,10 @@ Type 'q()' to quit R.
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: chain
-> ### Title: Chain a price index
+> ### Title: Chain and rebase a price index
 > ### Aliases: chain chain.default chain.ind unchain unchain.default
-> ###   unchain.ind cumprod.ind is_chain_index
+> ###   unchain.ind rebase rebase.default rebase.ind cumprod.ind 
+> ###   is_chain_index
 > 
 > ### ** Examples
 > 
@@ -181,10 +182,10 @@ b 2.828427 19.59592
 > all.equal(epr, unchain(chain(epr)))
 [1] TRUE
 > 
-> # It is easy to rebase an index because columns are time periods,
-> # but note the loss of information about period 0
+> # Change the base period to period 2 (note the loss of information for period 0)
 > 
-> as.matrix(chain(epr)) / as.matrix(chain(epr))[, 2]
+> epr <- chain(epr)
+> rebase(epr, epr[, 2])
           1 2
 a 0.1690309 1
 b 0.1443376 1

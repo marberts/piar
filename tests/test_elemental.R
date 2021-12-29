@@ -51,6 +51,9 @@ all.equal(as.data.frame(epr2), epr22[c(2, 1, 3)], check.attributes = FALSE)
 all.equal(as.matrix(chain(epr1)), t(apply(as.matrix(epr1), 1, cumprod)))
 all.equal(as.matrix(unchain(chain(epr2))), as.matrix(epr2)) # contrib won't be the same
 
+# rebase() should be the same as division
+all.equal(as.matrix(rebase(chain(epr1), 1:5)), as.matrix(chain(epr1)) / 1:5)
+
 # Contributions should add up
 all.equal(epr1$index, 
           lapply(epr1$contrib, function(x) sapply(x, sum) + 1))
@@ -137,6 +140,8 @@ as.data.frame(epr)
 unclass(epr[, 1])
 unclass(epr[1, ])
 chain(epr)$contrib
+all.equal(chain(epr), rebase(chain(epr)))
+all.equal(rebase(epr), epr)
 
 epr2 <- with(dat, elemental_index(rel, period, ea))
 
@@ -188,5 +193,9 @@ epr$contrib
 epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
 
 epr["11", ] <- 0
+epr
+epr$contrib
+
+epr[-1, ] <- epr[1, ]
 epr
 epr$contrib

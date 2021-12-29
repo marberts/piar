@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: piar 0.1.0.9029\n"
-"POT-Creation-Date: 2021-12-17 14:03\n"
+"POT-Creation-Date: 2021-12-29 16:54\n"
 "PO-Revision-Date: 2021-06-07 23:19\n"
 "Last-Translator: Steve Martin <steve.martin5@canada.ca>\n"
 "Language-Team: none\n"
@@ -84,10 +84,16 @@ msgstr ""
 msgid "'width' cannot contain NAs"
 msgstr "'width' ne peut pas contenir de NA"
 
+msgid "'link' must have a value for each level of 'x'"
+msgstr "'link' doit avoir une valeur pour chaque niveau de 'x'"
+
 msgid "'cumprod()' is deprecated for index objects; use 'chain()' instead"
 msgstr ""
 "'cumprod()' est déconseillé pour les objets index; utilisez 'chain()' à la "
 "place"
+
+msgid "'base' must have a value for each level of 'x'"
+msgstr "'base' doit avoir une valeur pour chaque niveau de 'x'"
 
 msgid "'rel', 'period', and 'ea' must be the same length"
 msgstr "'rel', 'period' et 'ea' doivent avoir la même longueur"
@@ -113,13 +119,11 @@ msgstr "'x', 'period', 'product', 'ea' et 'w' doivent avoir la même longueur"
 msgid "there are duplicated period-product pairs"
 msgstr "il existe des paires période-produit en double"
 
-msgid "cannot merge aggregated indexes"
-msgstr "impossible de fusionner des index agrégés"
+msgid "cannot extract no levels/time periods from 'x'"
+msgstr "ne peut extraire aucun niveau/période de 'x'"
 
 msgid "'y' is not an index; use elemental_index() to make one"
-msgstr ""
-"'y' n'est pas un indice ; utilisez elemental_index() pour en "
-"faire un"
+msgstr "'y' n'est pas un indice ; utilisez elemental_index() pour en faire un"
 
 msgid "'x' and 'y' must be indexes for the same time periods"
 msgstr "'x' et 'y' doivent être des index pour les mêmes périodes"
@@ -129,10 +133,6 @@ msgstr "certains niveaux apparaissent à la fois dans 'x' et 'y'"
 
 msgid "cannot merge a fixed-base and period-over-period index"
 msgstr "ne peut pas fusionner un indice à base fixe et sur une période"
-
-msgid "'y' is not an aggregate index; use aggregate() to make one"
-msgstr ""
-"'y' n'est pas un indice agrégé; utilisez aggregate.index() pour en faire un"
 
 msgid "cannot stack indexes of different orders"
 msgstr "ne peut pas empiler des index d'ordres différents"
@@ -153,20 +153,3 @@ msgstr ""
 
 msgid "'x' and 'w' must be the same length"
 msgstr "'x' et 'w' doivent avoir la même longueur"
-
-#~ msgid ""
-#~ "cannot make an elemental index with no periods or elemental aggregates"
-#~ msgstr "ne peut pas faire un index sans périodes ou agrégats élémentaires"
-
-#~ msgid "'rel', 'period', 'ea', and 'w1' must be the same length"
-#~ msgstr "'rel', 'period', 'ea' et 'w1' doivent avoir la même longueur"
-
-#~ msgid "'rel', 'period', 'ea', and 'w2' must be the same length"
-#~ msgstr "'rel', 'period', 'ea' et 'w2' doivent avoir la même longueur"
-
-#~ msgid "'rel', 'period', 'ea', 'w1', and 'w2' must be the same length"
-#~ msgstr "'rel', 'period', 'ea', 'w1' et 'w2' doivent avoir la même longueur"
-
-#~ msgid "some elements of 'rel', 'w1', or 'w2' are less than or equal to 0"
-#~ msgstr ""
-#~ "certains éléments de 'rel', 'w1' ou 'w2' sont inférieurs ou égaux à 0 "

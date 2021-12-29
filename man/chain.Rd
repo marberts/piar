@@ -5,15 +5,18 @@
 \alias{unchain}
 \alias{unchain.default}
 \alias{unchain.ind}
+\alias{rebase}
+\alias{rebase.default}
+\alias{rebase.ind}
 \alias{cumprod.ind}
 \alias{is_chain_index}
 
 \title{
-Chain a price index
+Chain and rebase a price index
 }
 
 \description{
-Chain a period-over-period index by taking the cumulative product of its values to turn it into a fixed-base (direct) index. Unchain a fixed-base index by dividing its values for successive periods to get a period-over-period index.
+Chain a period-over-period index by taking the cumulative product of its values to turn it into a fixed-base (direct) index. Unchain a fixed-base index by dividing its values for successive periods to get a period-over-period index. Rebase a fixed-base index by dividing its values with the value of the index in the new base period.
 }
 
 \usage{
@@ -31,6 +34,13 @@ unchain(x, ...)
 
 \method{unchain}{ind}(x, ...)
 
+rebase(x, ...)
+
+\method{rebase}{default}(x, ...)
+
+\method{rebase}{ind}(x, base = rep(1, length(levels(x))), ...)
+
+
 is_chain_index(x)
 }
 
@@ -39,13 +49,19 @@ is_chain_index(x)
 
 \item{link}{A numeric vector, or something that can coerced into one, of link values for each level in \code{x}. The default is a vector of 1s so that no linking is done.}
 
+\item{base}{A numeric vector, or something that can coerced into one, of base-period index values for each level in \code{x}. The default is a vector of 1s so that the base period remains the same.}
+
 \item{...}{Further arguments passed to or used by methods.}
 }
 
 \details{
-The default methods attempts to coerce \code{x} into an index with \code{\link[=as_index]{as_index()}} prior to chaining/unchaining.
+The default methods attempts to coerce \code{x} into an index with \code{\link[=as_index]{as_index()}} prior to chaining/unchaining/rebasing.
 
-Chaining an index takes the cumulative product of the index values for each level, and returns the same type of index. This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod)) * link}. Unchaining does the opposite, so these are inverse operations. Quote contributions are removed when chaining/unchaining an index, as it's not usually possible to chain them. Note that unchaining a period-over-period index (i.e., when \code{is_chain_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., when \code{is_chain_index(x) == FALSE}).
+Chaining an index takes the cumulative product of the index values for each level, and returns the same type of index. This is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod)) * link}. Unchaining does the opposite, so these are inverse operations. Note that unchaining a period-over-period index (i.e., when \code{is_chain_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., when \code{is_chain_index(x) == FALSE}).
+
+Rebasing a fixed-base index divides the values for each level of this index by the corresponding values for each level in the new base period. It's roughly the same as \code{as.matrix(x) / base}. Like unchaining, rebasing a period-over-period index does nothing.
+
+Quote contributions are removed when chaining/unchaining/rebasing an index, as it's not usually possible to update them correctly.
 }
 
 \value{
@@ -75,8 +91,8 @@ chain(epr)
 
 all.equal(epr, unchain(chain(epr)))
 
-# It is easy to rebase an index because columns are time periods,
-# but note the loss of information about period 0
+# Change the base period to period 2 (note the loss of information for period 0)
 
-as.matrix(chain(epr)) / as.matrix(chain(epr))[, 2]
+epr <- chain(epr)
+rebase(epr, epr[, 2])
 }
