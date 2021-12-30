@@ -24,9 +24,9 @@ This package is designed to work with \emph{bilateral} price indexes. The \pkg{I
 \references{
 Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}. Cambridge University Press.
 
-ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index Manual: Theory and Practice}. International Monetary Fund.
-
 Chiru, R., Huang, N., Lequain, M. Smith, P., and Wright, A. (2015). \emph{The Canadian Consumer Price Index Reference Paper}, Statistics Canada catalogue 62-553-X. Statistics Canada.
+
+ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index Manual: Theory and Practice}. International Monetary Fund.
 
 von der Lippe, P. (2001). \emph{Chain Indices: A Study in Price Index Theory}, Spectrum of Federal Statistics vol. 16. Federal Statistical Office, Wiesbaden.
 }

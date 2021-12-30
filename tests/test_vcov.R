@@ -1,5 +1,4 @@
 library(piar)
-library(sps)
 library(gpindex)
 
 set.seed(4321)
@@ -24,7 +23,7 @@ epr <- with(prices, elemental_index(rel, period, id))
 pias <- with(weights, aggregation_structure(weights[1:4], ew * dw))
 index <- aggregate(epr, pias)
 
-rw <- sps_repweights(weights$dw, B = 25, tau = 2)
+rw <- matrix(runif(8 * 25), 8)
 
 #---- mse = FALSE case ----
 covar <- vcov(index, rw * weights$ew, mse = FALSE)
