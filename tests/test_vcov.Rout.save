@@ -16,7 +16,6 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(piar)
-> library(sps)
 > library(gpindex)
 > 
 > set.seed(4321)
@@ -49,7 +48,7 @@ Type 'q()' to quit R.
 > pias <- with(weights, aggregation_structure(weights[1:4], ew * dw))
 > index <- aggregate(epr, pias)
 > 
-> rw <- sps_repweights(weights$dw, B = 25, tau = 2)
+> rw <- matrix(runif(8 * 25), 8)
 > 
 > #---- mse = FALSE case ----
 > covar <- vcov(index, rw * weights$ew, mse = FALSE)

@@ -121,7 +121,7 @@ is_aggregate_index(x)
 
 \item{ncpus}{Number of cpus to use for computing the covariance matrix in parallel, with a default of 1.}
 
-\item{cl}{A cluster that can be used in \code{\link[=parLapply]{parLapply()}} for computing the covariance matrix in parallel.}
+\item{cl}{A cluster that can be used in \code{\link[=parLapply]{parLapply()}} for computing the covariance matrix in parallel. Only applies if \code{parallel = "snow"}.}
 
 \item{window}{The size of the rolling-window used to average index values across time periods. The default (3) turns a monthly index into into a quarterly one.}
 
@@ -160,7 +160,7 @@ Aggregating quote contributions uses the method in chapter 9 of the CPI manual (
 
 There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with \code{merge()}). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the change in the value of the index. This can also happen when aggregating an already aggregated index in which missing index values have been imputed (i.e., when \code{na.rm = TRUE}).
 
-The \code{vcov()} method is a simple wrapper to calculate the covariance matrix for an aggregated index when bootstrap replicate weights are available for the elemental aggregates. This approach ignores any sampling variance from the elemental indexes (which often use judgmental sampling), and ultimately depends on the method of generating replicate weights. It returns an array of covariance matrices for each \code{period}.
+The \code{vcov()} method is a simple wrapper to calculate the covariance matrix for an aggregated index when bootstrap replicate weights are available for the elemental aggregates. This approach is usually applicable when elemental aggregates are sampled, and provides an estimator of the sampling variance of the price index. It ignores any sampling variance from the elemental indexes (which often use judgmental sampling), and ultimately depends on the method of generating replicate weights. It returns an array of covariance matrices for each \code{period}. (Chapters 3 and 4 of Selvanathan and Rao (1994), especially section 4.7, provide analytic variance estimators for some common price indexes that are applicable with simple random sampling.)
 
 Indexes can be aggregated over time by taking the (usually arithmetic) mean of index values for each level over a rolling window. The \code{mean()} method constructs a set of rolling windows of length \code{window}, starting in the first period of the index, and takes the unweighted mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that quote contributions are discarded when aggregating over time. 
 
@@ -220,6 +220,8 @@ Most of these functions return index objects of class \code{ind}. These often be
 Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}. Cambridge University Press.
 
 ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index Manual: Theory and Practice}. International Monetary Fund.
+
+Selvanathan, E. A., and Rao, D. S. P. (1994). \emph{Index Numbers: A Stochastic Approach}. MacMillan.
 }
 
 \author{

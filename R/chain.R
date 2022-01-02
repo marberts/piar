@@ -46,7 +46,7 @@ unchain.ind <- function(x, ...) {
     x$has_contrib <- FALSE
     x$contrib[] <- empty_contrib(x$levels)
   }
-  # do nothing for a chain index
+  # do nothing for a chained index
   x
 }
 
@@ -56,7 +56,7 @@ rebase <- function(x, ...) {
 }
 
 rebase.default <- function(x, ...) {
-  rebase(as_index(x), ...)
+  rebase(as_index(x, chain = FALSE), ...)
 }
 
 rebase.ind <- function(x, base = rep(1, length(levels(x))), ...) {
