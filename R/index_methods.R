@@ -1,7 +1,6 @@
 #---- Coerce ----
 as.data.frame.ind <- function(x, ...) {
-  # as.numeric() ensures that the value column shows up with NULL values
-  value <- as.numeric(unlist(x$index, use.names = FALSE))
+  value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))
   data.frame(period, level = x$levels, value, ...)
 }
@@ -11,7 +10,7 @@ as.matrix.ind <- function(x, ...) {
 }
 
 as.double.ind <- function(x, ...) {
-  as.numeric(as.matrix(x))
+  as.double(as.matrix(x))
 }
 
 #---- Extract ----
@@ -194,6 +193,9 @@ mean.ind <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
   }
   gen_mean <- Vectorize(generalized_mean(r))
   len <- length(x$time) %/% window
+  if (!len) {
+    stop(gettext("'x' must have at least 'window' time periods"))
+  }
   # get the starting location for each window
   loc <- seq(1L, by = window, length.out = len)
   periods <- x$time[loc]

@@ -28,7 +28,7 @@
 \title{Price indexes}
 
 \description{
-Compute period-over-period or fixed-base (direct) elemental price indexes (with optional quote contributions), or coerce pre-computed index values into an index object. There are methods to aggregate these indexes with a price index aggregation structure or average them over time, combine indexes together, extract useful information, and coerce into a tabular form.
+Compute period-over-period or fixed-base (direct) elemental price indexes (with optional quote contributions), or coerce pre-computed index values into an index object. There are methods to aggregate these indexes with a price index aggregation structure or average them over subperiods, combine indexes together, extract useful information, and coerce into a tabular form.
 }
 
 \usage{
@@ -105,7 +105,7 @@ is_aggregate_index(x)
 
 \item{na.rm}{Should missing values be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean imputation.}
 
-\item{r}{Order of the generalized mean to aggregate price relatives/index values. 0 for a geometric index (the default for making elemental indexes), 1 for an arithmetic index (the default for aggregating elemental indexes and averaging indexes over time), or -1 for a harmonic index (usually for a Paasche index). Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
+\item{r}{Order of the generalized mean to aggregate price relatives/index values. 0 for a geometric index (the default for making elemental indexes), 1 for an arithmetic index (the default for aggregating elemental indexes and averaging indexes over subperiods), or -1 for a harmonic index (usually for a Paasche index). Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
 \item{x, y}{A price index, as made by \code{elemental_index()} or \code{aggregate()}.}
 
@@ -119,7 +119,7 @@ is_aggregate_index(x)
 
 \item{parallel}{One of \code{"no"} to compute the covariance matrix in serial (the default), \code{"mc"} to use the multicore functionality in \pkg{parallel}, or \code{"snow"} to use the clusters functionality in \pkg{parallel}.}
 
-\item{ncpus}{Number of cpus to use for computing the covariance matrix in parallel, with a default of 1.}
+\item{ncpus}{Number of cpus to use for computing the covariance matrix if \code{parallel} is not \code{"no"}, with a default of 1.}
 
 \item{cl}{A cluster that can be used in \code{\link[=parLapply]{parLapply()}} for computing the covariance matrix in parallel. Only applies if \code{parallel = "snow"}.}
 
@@ -140,7 +140,7 @@ The interpretation of the index depends on how the price relatives in \code{rel}
 
 By default, missing price relatives in \code{rel} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
 
-Indexes based on nested generalized means, like the Fisher index (and superlative quadratic mean indexes more generally), can be calculated by supplying the appropriate weights; see the example below. It is important to note that there are several ways to make these weights, and this affects how quote contributions are calculated. See \code{\link[=contributions]{contributions()}}, and the references therein, for more details.
+Indexes based on nested generalized means, like the Fisher index (and superlative quadratic mean indexes more generally), can be calculated by supplying the appropriate weights with \code{\link[=nested_transmute]{nested_transmute()}}; see the example below. It is important to note that there are several ways to make these weights, and this affects how quote contributions are calculated.
 }
 
 \subsection{Aggregate}{
@@ -162,9 +162,9 @@ There may not be contributions for all prices relatives in an elemental aggregat
 
 The \code{vcov()} method is a simple wrapper to calculate the covariance matrix for an aggregated index when bootstrap replicate weights are available for the elemental aggregates. This approach is usually applicable when elemental aggregates are sampled, and provides an estimator of the sampling variance of the price index. It ignores any sampling variance from the elemental indexes (which often use judgmental sampling), and ultimately depends on the method of generating replicate weights. It returns an array of covariance matrices for each \code{period}. (Chapters 3 and 4 of Selvanathan and Rao (1994), especially section 4.7, provide analytic variance estimators for some common price indexes that are applicable with simple random sampling.)
 
-Indexes can be aggregated over time by taking the (usually arithmetic) mean of index values for each level over a rolling window. The \code{mean()} method constructs a set of rolling windows of length \code{window}, starting in the first period of the index, and takes the unweighted mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that quote contributions are discarded when aggregating over time. 
+Indexes can be aggregated over subperiods by taking the (usually arithmetic) mean of index values for each level over a rolling window. The \code{mean()} method constructs a set of rolling windows of length \code{window}, starting in the first period of the index, and takes the unweighted mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that quote contributions are discarded when aggregating over subperiods. 
 
-An optional vector of weights can be specified when aggregating index values over time, which is often useful when aggregating a Paasche index; see section 4.3 of Balk (2008) for details. It is usually easiest to specify these weights as a matrix with a row for each index value in \code{x} and a column for each time period.
+An optional vector of weights can be specified when aggregating index values over subperiods, which is often useful when aggregating a Paasche index; see section 4.3 of Balk (2008) for details. It is usually easiest to specify these weights as a matrix with a row for each index value in \code{x} and a column for each time period.
 }
 
 \subsection{Combine}{
@@ -233,7 +233,7 @@ The \code{vcov()} method is based on a SAS routine by Justin Francis that was fi
 
 \code{\link{aggregation_structure}} for making a price index aggregation structure.
 
-\code{\link{chain}} for chaining period-over-period indexes.
+\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
 
 \code{\link{contrib}} for extracting quote contributions.
 
