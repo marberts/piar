@@ -42,6 +42,8 @@ relative <- with(ms_prices, price_relative(price, period, product))
 (ms_epr <- with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE)))
 ```
 
+(Homogeneous elemental aggregates often leads to unit-value elemental indexes that are not based on price relatives. These cases can be dealt with by first aggregating prices for each elemental aggregate, `aggregate(price ~ period + product, ms_prices, mean)`, at each point in time with an arithmetic mean, then forming price relatives to feed into `elemental_index()`.)
+
 As with most functions in **R**, missing values are contagious by default in **piar**. Setting `na.rm = TRUE` in `elemental_index()` means that missing price relatives are ignored, which is equivalent to imputing these missing relatives with the value of the elemental index for the respective businesses (i.e., parental or overall mean imputation). Other types of imputation are possible, and are the topic of a subsequent example.
 
 The `elemental_index()` function returns a special index object, and there are a number of methods for working with these objects. Probably the most useful of these methods allows the resulting elemental indexes to be extracted like a matrix, even though it's not a matrix. (Note that there are only indexes for four businesses, not five, because the fifth business never reports any prices; an elemental index can be made for this business with a small change to the call to `elemental_index()`.)
@@ -65,7 +67,7 @@ It is now simple to aggregate the elemental indexes according to this aggregatio
 (ms_index <- aggregate(ms_epr, pias, na.rm = TRUE))
 ```
 
-Although simple, this example covers the core functionality of **piar**. The remaining examples in the vignette build on this one by adding complexities that often arise in practice
+Although simple, this example covers the core functionality of **piar**. The remaining examples in the vignette build on this one by adding complexities that often arise in practice.
 
 ## Chaining
 
@@ -83,16 +85,16 @@ This gives almost the same result as directly manipulating the index as a matrix
 t(apply(as.matrix(ms_index), 1, cumprod))
 ```
 
-Chained indexes often need be to rebased, and this can be done with standard matrix operations. For example, rebasing the index so that 202004 is the base period just requires dividing the chained index by the slice for 202004.
+Chained indexes often need be to rebased, and this can be done with the `rebase()` function. For example, rebasing the index so that 202004 is the base period just requires dividing the chained index by the slice for 202004.
 
 ```{r}
-as.matrix(ms_index_chained) / as.matrix(ms_index_chained)[, "202004"]
+rebase(ms_index_chained, ms_index_chained[, "202004"])
 ```
 
 In some cases the base period is the average of several periods; setting the base period to the second half of 2020 just requires dividing by the row-wise mean.
 
 ```{r}
-as.matrix(ms_index_chained) / rowMeans(as.matrix(ms_index_chained)[, c("202003", "202004")])
+rebase(ms_index_chained, rowMeans(as.matrix(ms_index_chained)[, c("202003", "202004")]))
 ```
 
 ## Multi-dimensional aggregation structures

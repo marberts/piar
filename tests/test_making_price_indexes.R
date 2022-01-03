@@ -29,10 +29,10 @@ pias <- aggregation_structure(hierarchy, ms_weights$weight)
 t(apply(as.matrix(ms_index), 1, cumprod))
 
 ## -----------------------------------------------------------------------------
-as.matrix(ms_index_chained) / as.matrix(ms_index_chained)[, "202004"]
+rebase(ms_index_chained, ms_index_chained[, "202004"])
 
 ## -----------------------------------------------------------------------------
-as.matrix(ms_index_chained) / rowMeans(as.matrix(ms_index_chained)[, c("202003", "202004")])
+rebase(ms_index_chained, rowMeans(as.matrix(ms_index_chained)[, c("202003", "202004")]))
 
 ## -----------------------------------------------------------------------------
 (ms_weights <- transform(ms_weights, stratum = c("TS", "TA", "TS", "TS", "TS")))

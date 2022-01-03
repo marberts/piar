@@ -123,7 +123,7 @@ is_aggregate_index(x)
 
 \item{cl}{A cluster that can be used in \code{\link[=parLapply]{parLapply()}} for computing the covariance matrix in parallel. Only applies if \code{parallel = "snow"}.}
 
-\item{window}{The size of the rolling-window used to average index values across time periods. The default (3) turns a monthly index into into a quarterly one.}
+\item{window}{The size of the window used to average index values across subperiods. The default (3) turns a monthly index into into a quarterly one.}
 
 \item{i, j, value}{See \link{Extract}, with \code{value} being a numeric vector (or something that can coerced into one.)}
 
@@ -162,7 +162,7 @@ There may not be contributions for all prices relatives in an elemental aggregat
 
 The \code{vcov()} method is a simple wrapper to calculate the covariance matrix for an aggregated index when bootstrap replicate weights are available for the elemental aggregates. This approach is usually applicable when elemental aggregates are sampled, and provides an estimator of the sampling variance of the price index. It ignores any sampling variance from the elemental indexes (which often use judgmental sampling), and ultimately depends on the method of generating replicate weights. It returns an array of covariance matrices for each \code{period}. (Chapters 3 and 4 of Selvanathan and Rao (1994), especially section 4.7, provide analytic variance estimators for some common price indexes that are applicable with simple random sampling.)
 
-Indexes can be aggregated over subperiods by taking the (usually arithmetic) mean of index values for each level over a rolling window. The \code{mean()} method constructs a set of rolling windows of length \code{window}, starting in the first period of the index, and takes the unweighted mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that quote contributions are discarded when aggregating over subperiods. 
+Indexes can be aggregated over subperiods by taking the (usually arithmetic) mean of index values for each level over consecutive windows of subperiods. The \code{mean()} method constructs a set of windows of length \code{window}, starting in the first period of the index, and takes the unweighted mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that quote contributions are discarded when aggregating over subperiods. 
 
 An optional vector of weights can be specified when aggregating index values over subperiods, which is often useful when aggregating a Paasche index; see section 4.3 of Balk (2008) for details. It is usually easiest to specify these weights as a matrix with a row for each index value in \code{x} and a column for each time period.
 }

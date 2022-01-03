@@ -23,7 +23,7 @@ expand_classification(class, width)
 }
 
 \arguments{
-\item{x}{A list of character vectors that give the codes/labels for each level of the classification, ordered so that moving down the list goes down the hierarchy. The last vector gives the elemental aggregates, which should have no duplicates. All vectors should be the same length, without \code{NA}s, and there should be no duplicates across different levels of \code{x}. \code{expand_classification()} can be used to make this when the classification is represented as a string.}
+\item{x}{A list of character vectors that give the codes/labels for each level of the classification, ordered so that moving down the list goes down the hierarchy. The last vector gives the elemental aggregates, which should have no duplicates. All vectors should be the same length, without \code{NA}s, and there should be no duplicates across different levels of \code{x}. This is usually a collection of columns in a data frame; \code{expand_classification()} can be used when the classification is represented as a string.}
 
 \item{w}{A numeric vector of weights for the elemental aggregates (i.e., the last vector in \code{x}). The default is to give each elemental aggregate the same weight.}
 

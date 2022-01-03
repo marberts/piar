@@ -5,10 +5,10 @@ aggregation_structure <- function(x, w) {
     stop(gettext("'x' cannot contain NAs"))
   }
   len <- length(x)
-  if (!len) {
+  ea <- x[[len]]
+  if (!length(ea)) {
     stop(gettext("cannot make an aggregation structure with no elemental aggregates"))
   }
-  ea <- x[[len]]
   w <- if (missing(w)) rep(1, length(ea)) else as.numeric(w)
   # basic argument checking to make sure inputs can make an aggregation structure
   if (length(ea) != length(w) || any(lengths(x) != length(w))) {
@@ -43,8 +43,8 @@ aggregation_structure <- function(x, w) {
     names(parent[[i]]) <- nm[[i]]
   }
   # return 'pias' object
-  res <- list(child = as.list(child), 
-              parent = as.list(parent),
+  res <- list(child = child, 
+              parent = parent,
               levels = c(nested_names(rev(child)), ea),
               eas = ea,
               weights = structure(w, names = ea),

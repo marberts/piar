@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: piar 0.1.0.9029\n"
-"POT-Creation-Date: 2021-12-29 16:54\n"
+"POT-Creation-Date: 2022-01-02 21:00\n"
 "PO-Revision-Date: 2021-06-07 23:19\n"
 "Last-Translator: Steve Martin <steve.martin5@canada.ca>\n"
 "Language-Team: none\n"
@@ -9,27 +9,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-msgid ""
-"'x' must be a price index aggregation structure; use aggregation_structure() "
-"to make one"
-msgstr ""
-"'x' doit être une structure d'agrégation d'indices de prix.; utilisez "
-"aggregation_structure() pour en faire un"
-
-msgid "'index' must be an aggregate index; use aggregate.index() to make one"
-msgstr ""
-"'index' doit être un indice agrégé.; utilisez aggregate.index() pour en "
-"faire un"
-
-msgid "weight adjustment did not converge"
-msgstr "l'ajustement du poids n'a pas convergé"
-
-msgid "stopped after"
-msgstr "arrêté après"
-
-msgid "iterations with a maximum absolute difference of"
-msgstr "itérations avec une différence absolue maximale de"
 
 msgid ""
 "'pias' must be a price index aggregation structure; use "
@@ -153,3 +132,6 @@ msgstr ""
 
 msgid "'x' and 'w' must be the same length"
 msgstr "'x' et 'w' doivent avoir la même longueur"
+
+msgid "'x' must have at least 'window' time periods"
+msgstr "'x' doit avoir au moins des périodes de 'window'"

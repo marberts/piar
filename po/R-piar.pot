@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: piar 0.2.3.9013\n"
-"POT-Creation-Date: 2021-12-29 16:54\n"
+"Project-Id-Version: piar 0.2.3.9014\n"
+"POT-Creation-Date: 2022-01-02 21:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9,21 +9,6 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-
-msgid "'x' must be a price index aggregation structure; use aggregation_structure() to make one"
-msgstr ""
-
-msgid "'index' must be an aggregate index; use aggregate.index() to make one"
-msgstr ""
-
-msgid "weight adjustment did not converge"
-msgstr ""
-
-msgid "stopped after"
-msgstr ""
-
-msgid "iterations with a maximum absolute difference of"
-msgstr ""
 
 msgid "'pias' must be a price index aggregation structure; use aggregation_structure() to make one"
 msgstr ""
@@ -122,4 +107,7 @@ msgid "cannot stack a period-over-period and a fixed-base index"
 msgstr ""
 
 msgid "'x' and 'w' must be the same length"
+msgstr ""
+
+msgid "'x' must have at least 'window' time periods"
 msgstr ""
