@@ -1,6 +1,6 @@
 Package: piar
 Title: Price Index Aggregation
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
     person("Steve", "Martin", role = c("aut", "cre"), email = "steve.martin@statcan.gc.ca", comment = c(ORCID = "0000-0003-2544-9480")),
     person("Her Majesty the Queen in Right of Canada, as represented by the Minister of Statistics Canada", role = c("cph"))

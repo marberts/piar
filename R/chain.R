@@ -25,7 +25,7 @@ chain.ind <- function(x, link = rep(1, length(levels(x))), ...) {
 }
 
 cumprod.ind <- function(x) {
-  warnings(gettext("'cumprod()' is deprecated for index objects; use 'chain()' instead"))
+  warning(gettext("'cumprod()' is deprecated for index objects; use 'chain()' instead"))
   as.matrix(chain.ind(x))
 }
 
