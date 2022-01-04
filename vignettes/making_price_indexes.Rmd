@@ -29,6 +29,8 @@ The `ms_prices` dataset has price data for five businesses over four quarters, a
 ```{r}
 library(piar)
 
+options(stringsAsFactors = FALSE)
+
 head(ms_prices)
 
 ms_weights

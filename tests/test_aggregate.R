@@ -34,14 +34,16 @@ all.equal(as.matrix(aggregate(ms_index, ms_pias)), as.matrix(ms_index))
 all.equal(as.matrix(aggregate(ms_index, ms_pias, na.rm = TRUE)), as.matrix(ms_index))
 
 # Re-arranging the index shouldn't do anything
+s <- c(14, 16, 26, 28, 24, 29, 11, 32, 36, 2, 22, 34, 6, 7, 10, 17, 8, 27, 37, 1, 12, 33, 20, 3, 9, 40, 13, 4, 38, 23, 31, 15, 25, 39, 21, 30, 35, 19, 18, 5)
 ms_epr <- with(
-  ms_prices[sample(nrow(ms_prices)), ], 
+  ms_prices[s, ], 
   elemental_index(price_relative(price, period, product),
                   period, business, contrib = TRUE, na.rm = TRUE)
 )
 
+s <- c(5, 3, 4, 1, 2)
 ms_pias <- with(
-  ms_weights[sample(nrow(ms_weights)), ],
+  ms_weights[s, ],
   aggregation_structure(c(expand_classification(classification), list(business)), weight)
 )
 

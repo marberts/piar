@@ -1,4 +1,6 @@
 #---- Tests for elemental_index() and index methods ----
+options(stringsAsFactors = FALSE)
+
 library(piar)
 library(gpindex)
 

@@ -16,6 +16,8 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > #---- Tests for elemental_index() and index methods ----
+> options(stringsAsFactors = FALSE)
+>
 > library(piar)
 > library(gpindex)
 > 
