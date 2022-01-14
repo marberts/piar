@@ -77,7 +77,7 @@ elemental_index(rel, ...)
 # Coerce
 \method{as.matrix}{ind}(x, ...)
 
-\method{as.data.frame}{ind}(x, ...)
+\method{as.data.frame}{ind}(x, ..., stringsAsFactors = FALSE)
                             
 as_index(x, ...)
 
@@ -126,6 +126,8 @@ is_aggregate_index(x)
 \item{window}{The size of the window used to average index values across subperiods. The default (3) turns a monthly index into into a quarterly one.}
 
 \item{i, j, value}{See \link{Extract}, with \code{value} being a numeric vector (or something that can coerced into one.)}
+
+\item{stringsAsFactors}{See \code{\link{as.data.frame}}}.
 
 \item{...}{Further arguments passed to or used by methods.}
 }

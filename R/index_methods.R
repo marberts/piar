@@ -1,8 +1,8 @@
 #---- Coerce ----
-as.data.frame.ind <- function(x, ...) {
+as.data.frame.ind <- function(x, ..., stringsAsFactors = FALSE) {
   value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))
-  data.frame(period, level = x$levels, value, ...)
+  data.frame(period, level = x$levels, value, stringsAsFactors = stringsAsFactors)
 }
 
 as.matrix.ind <- function(x, ...) {
