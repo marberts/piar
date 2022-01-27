@@ -84,7 +84,7 @@ update.pias <- function(object, index, period = end(index), ...) {
   if (!all(object$levels %in% index$levels)) {
     warning(gettext("not all weights in 'object' have a corresponding index value"))
   }
-  epr <- as.matrix(chain(index))[, period]
+  epr <- as.matrix(chain(index))[, period[1]]
   object$weights[] <- price_update(epr[object$eas], object$weights)
   object
 }

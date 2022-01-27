@@ -156,8 +156,7 @@ Type 'q()' to quit R.
 > ### Name: chain
 > ### Title: Chain and rebase a price index
 > ### Aliases: chain chain.default chain.ind unchain unchain.default
-> ###   unchain.ind rebase rebase.default rebase.ind cumprod.ind 
-> ###   is_chain_index
+> ###   unchain.ind rebase rebase.default rebase.ind is_chain_index
 > 
 > ### ** Examples
 > 

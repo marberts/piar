@@ -8,7 +8,6 @@
 \alias{rebase}
 \alias{rebase.default}
 \alias{rebase.ind}
-\alias{cumprod.ind}
 \alias{is_chain_index}
 
 \title{
@@ -25,8 +24,6 @@ chain(x, ...)
 \method{chain}{default}(x, ...)
 
 \method{chain}{ind}(x, link = rep(1, length(levels(x))), ...)
-
-\method{cumprod}{ind}(x) # deprecated
 
 unchain(x, ...)
 
@@ -65,10 +62,6 @@ Quote contributions are removed when chaining/unchaining/rebasing an index, as i
 
 \value{
 Each of these functions returns an index of the same type as \code{x}, except \code{is_chain_index()} which returns \code{TRUE} when \code{x} is a period-over-period index (so that chaining makes sense).
-}
-
-\note{
-The \code{cumprod()} method is deprecated, and just calls \code{as.matrix(chain.ind())}. It will be removed in a future release.
 }
 
 \seealso{

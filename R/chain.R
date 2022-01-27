@@ -24,11 +24,6 @@ chain.ind <- function(x, link = rep(1, length(levels(x))), ...) {
   x
 }
 
-cumprod.ind <- function(x) {
-  warning(gettext("'cumprod()' is deprecated for index objects; use 'chain()' instead"))
-  as.matrix(chain.ind(x))
-}
-
 #---- Unchaining ----
 unchain <- function(x, ...) {
   UseMethod("unchain")

@@ -42,7 +42,6 @@ S3method(unchain, default)
 S3method(unchain, ind)
 S3method(rebase, default)
 S3method(rebase, ind)
-S3method(cumprod, ind)
 
 S3method(print, pias)
 S3method(weights, pias)
