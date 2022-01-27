@@ -227,7 +227,7 @@ Selvanathan, E. A., and Rao, D. S. P. (1994). \emph{Index Numbers: A Stochastic 
 }
 
 \author{
-The \code{vcov()} method is based on a SAS routine by Justin Francis that was first ported to R by Ambuj Dewan.
+The \code{vcov()} method is loosely based on a SAS routine by Justin Francis that was first ported to R by Ambuj Dewan, and subsequently rewritten by Steve Martin.
 }
 
 \seealso{
