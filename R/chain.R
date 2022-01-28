@@ -60,7 +60,7 @@ rebase.ind <- function(x, base = rep(1, length(levels(x))), ...) {
     if (length(base) != length(x$levels)) {
       stop(gettext("'base' must have a value for each level of 'x'"))
     }
-    x$index <- Map(`/`, x$index, list(base))
+    x$index[] <- Map(`/`, x$index, list(base))
     # contributions are difficult to rebase, so remove them
     x$has_contrib <- FALSE
     x$contrib[] <- empty_contrib(x$levels)

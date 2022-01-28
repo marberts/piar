@@ -55,7 +55,7 @@ elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1,
     contributions <- rep(empty_contrib(eas), nlevels(period))
     names(contributions) <- periods
   }
-  # return 'elemental' object
+  # return 'ind' object
   res <- list(index = index,
               contrib = contributions,
               levels = eas,
