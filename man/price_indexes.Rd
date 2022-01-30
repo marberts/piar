@@ -226,8 +226,8 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 Selvanathan, E. A., and Rao, D. S. P. (1994). \emph{Index Numbers: A Stochastic Approach}. MacMillan.
 }
 
-\author{
-The \code{vcov()} method is loosely based on a SAS routine by Justin Francis that was first ported to R by Ambuj Dewan, and subsequently rewritten by Steve Martin.
+\source{
+The \code{vcov()} method was influenced by a SAS routine by Justin Francis that was first ported to R by Ambuj Dewan, and subsequently rewritten by Steve Martin.
 }
 
 \seealso{

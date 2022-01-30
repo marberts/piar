@@ -23,9 +23,9 @@ expand_classification(class, width)
 }
 
 \arguments{
-\item{x}{A list of character vectors that give the codes/labels for each level of the classification, ordered so that moving down the list goes down the hierarchy. The last vector gives the elemental aggregates, which should have no duplicates. All vectors should be the same length, without \code{NA}s, and there should be no duplicates across different levels of \code{x}. This is usually a collection of columns in a data frame; \code{expand_classification()} can be used when the classification is represented as a string.}
+\item{x}{A list of character vectors (or vectors to be coerced to character) that give the codes/labels for the aggregation weights for each level of the classification, ordered so that moving down the list goes down the hierarchy. The last vector gives the elemental aggregates, which should have no duplicates. All vectors should be the same length, without \code{NA}s, and there should be no duplicates across different levels of \code{x}. This is usually a collection of columns in a data frame with a row for each aggregation weight; \code{expand_classification()} can be used when the classification is represented as a string.}
 
-\item{w}{A numeric vector of weights for the elemental aggregates (i.e., the last vector in \code{x}). The default is to give each elemental aggregate the same weight.}
+\item{w}{A numeric vector of aggregation weights for the elemental aggregates (i.e., the last vector in \code{x}). The default is to give each elemental aggregate the same weight.}
 
 \item{object}{A price index aggregation structure, as made by \code{aggregation_structure()}.}
 
@@ -35,7 +35,7 @@ expand_classification(class, width)
 
 \item{index}{An aggregate price index, as made by \code{\link[=aggregate.ind]{aggregate()}}.}
 
-\item{period}{The time period used to price update the weights. The default uses last period in \code{object}.}
+\item{period}{The time period used to price update the weights. The default uses the last period in \code{object}.}
 
 \item{class}{A character vector, or something that can be coerced into one, of codes/labels for a specific level in a classification (e.g., 5-digit COICOP, 5-digit NAICS, 4-digit SIC).}
 
