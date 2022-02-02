@@ -192,7 +192,7 @@ The \code{summary()} method summarizes \code{x} as a matrix of index values (i.e
 \subsection{Coerce}{
 The \code{as.matrix()} method turns an index into a matrix with a row for each level and a column for each period. The \code{as.data.frame()} method turns an index into a data frame with three columns: period, level, and value. 
 
-\code{as_index()} is useful to form an elemental index from pre-computed values. Numeric matrices are coerce into an elemental index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces \code{x} to a matrix prior to using the matrix method.
+\code{as_index()} is useful to form an elemental index from pre-computed values. Numeric matrices are coerced into an elemental index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces \code{x} to a matrix prior to using the matrix method.
 }
 }
 

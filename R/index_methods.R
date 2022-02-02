@@ -39,11 +39,16 @@ as.double.ind <- function(x, ...) {
   res <- as.matrix(x)
   res[i, j] <- as.numeric(value)
   periods <- colnames(res[0L, j, drop = FALSE])
+  levels <- rownames(res[i, 0L, drop = FALSE])
   # only loop over periods that have a value replaced
   for (t in periods) {
-    x$index[[t]][i] <- res[i, t]
+    x$index[[t]][levels] <- res[levels, t]
     # drop contributions for replaced values
-    x$contrib[[t]][i] <- list(numeric(0L))
+    x$contrib[[t]][levels] <- list(numeric(0L))
+  }
+  # remove marker for contributions if all values are replaced
+  if (setequal(levels, x$levels) && setequal(periods, x$time)) {
+    x$has_contrib <- FALSE
   }
   x
 }
