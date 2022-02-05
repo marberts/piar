@@ -5,21 +5,28 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/piar)](https://cran.r-project.org/package=piar)
 [![R-CMD-check](https://github.com/marberts/piar/workflows/R-CMD-check/badge.svg)](https://github.com/marberts/piar/actions)
 [![codecov](https://codecov.io/gh/marberts/piar/branch/master/graph/badge.svg?token=lHDHsGHsLd)](https://app.codecov.io/gh/marberts/piar)
 <!-- badges: end -->
 
 Most price indexes are made with a two-step procedure, where
-period-over-period are first calculated for a collection of at each
-point in time, and then aggregated according to a . These indexes can
-then be chained together to form a time series that gives the evolution
-of prices with respect to a fixed base period. This package contains a
-collections of functions that revolve around this work flow, making it
-easy to build standard price indexes, and implement the methods
-described by Balk (2008), von der Lippe (2001), and the CPI manual
-(2020) for bilateral price indexes.
+period-over-period *elemental indexes* are first calculated for a
+collection of *elemental aggregates* at each point in time, and then
+aggregated according to a *price index aggregation structure*. These
+indexes can then be chained together to form a time series that gives
+the evolution of prices with respect to a fixed base period. This
+package contains a collections of functions that revolve around this
+work flow, making it easy to build standard price indexes, and implement
+the methods described by Balk (2008), von der Lippe (2001), and the CPI
+manual (2020) for bilateral price indexes.
 
 ## Installation
+
+``` r
+install.packages("piar")
+```
 
 The development version is available on Github.
 
@@ -107,5 +114,5 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). *Consumer Price
 Index Manual: Theory and Practice*. International Monetary Fund.
 
 von der Lippe, P. (2001). *Chain Indices: A Study in Price Index
-Theory*, Spectrum of Federal Statistics vol. 16. Federal Statistical
+Theory*, Spectrum of Federal Statistics vol. 16. Federal Statistical
 Office, Wiesbaden.
