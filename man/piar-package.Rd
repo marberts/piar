@@ -34,3 +34,7 @@ von der Lippe, P. (2001). \emph{Chain Indices: A Study in Price Index Theory}, S
 \author{
 \strong{Maintainer}: Steve Martin \email{stevemartin041@gmail.com}
 }
+
+\seealso{
+\url{https://github.com/marberts/piar}
+}

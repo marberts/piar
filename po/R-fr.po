@@ -130,8 +130,3 @@ msgstr "'x' et 'w' doivent avoir la même longueur"
 
 msgid "'x' must have at least 'window' time periods"
 msgstr "'x' doit avoir au moins des périodes de 'window'"
-
-#~ msgid "'cumprod()' is deprecated for index objects; use 'chain()' instead"
-#~ msgstr ""
-#~ "'cumprod()' est déconseillé pour les objets index; utilisez 'chain()' à "
-#~ "la place"
