@@ -89,6 +89,30 @@ update.pias <- function(object, index, period = end(index), ...) {
   object
 }
 
+as.matrix.pias <- function(x, ...) {
+  res <- vector("list", length(x$child))
+  w <- rev(weights(x))
+  for (l in seq_along(res)) {
+    children <- x$child[[l]]
+    parents <- x$parent[[l]]
+    mat <- matrix(0, nrow = length(children), ncol = length(parents))
+    rownames(mat) <- names(children)
+    for (i in seq_along(children)) {
+      cols <- children[[i]]
+      mat[i, cols] <- scale_weights(w[[l]][cols])
+    }
+    res[[l]] <- mat
+  }
+  res <- rev(res)
+  # this drops the matrix for the level above the eas
+  ans <- do.call(rbind, Map(`%*%`, res[-length(res)], res[-1L]))
+  eas <- diag(length(x$eas))
+  rownames(eas) <- x$eas
+  ans <- if (length(res)) rbind(ans, res[[length(res)]], eas) else eas
+  colnames(ans) <- x$eas
+  ans
+}
+
 #---- Expand classification ----
 expand_classification <- function(class, width) {
   class <- as.character(class)
