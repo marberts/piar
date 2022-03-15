@@ -55,3 +55,12 @@ unclass(agg2)
                                                      c(4, 1))))
 
 unclass(agg3)
+
+# Aggregation matrix
+as.matrix(agg3)
+
+as.matrix(aggregation_structure(1))
+
+as.matrix(aggregation_structure(1:3, 2))
+
+as.matrix(aggregation_structure(list(letters[1:3]), 1:3))

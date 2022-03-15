@@ -271,6 +271,10 @@ epr[1, ] <- 1 # can be useful for doing specific imputations
 
 (index <- aggregate(epr, pias, na.rm = TRUE))
 
+# Aggregation can equivalently be done as matrix multiplication
+
+as.matrix(pias) \%*\% as.matrix(chain(index[letters[1:3]]))
+
 # Merge two indexes prior to aggregation
 
 prices2 <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[3:4], 4))

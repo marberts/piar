@@ -20,6 +20,8 @@ aggregation_structure(x, w)
 
 \method{update}{pias}(object, index, period = end(index), ...)
 
+\method{as.matrix}{pias}(x, ...)
+
 expand_classification(class, width)
 }
 
@@ -58,6 +60,8 @@ expand_classification(class, width)
 \code{weights()} returns a list with a named vector of weights for each level in the aggregation structure, unless \code{ea_only = TRUE}; in this case the return value is just a named vector.
 
 \code{update()} returns a copy of \code{object} with price-updated weights using the index values in \code{index}.
+
+\code{as.matrix()} represents an aggregation structure as a matrix, such that multiplying with a (column) vector of elemental indexes gives the aggregated index.
 
 \code{expand_classification()} returns a list with a entry for each level in \code{x} giving the "digits" that represent each level in the hierarchy.
 }
