@@ -32,6 +32,7 @@ S3method(elemental_index, numeric)
 
 S3method(as_index, default)
 S3method(as_index, matrix)
+S3method(as_index, data.frame)
 S3method(as_index, ind)
 
 S3method(contrib, ind)

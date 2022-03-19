@@ -22,6 +22,7 @@
 \alias{as_index}
 \alias{as_index.default}
 \alias{as_index.matrix}
+\alias{as_index.data.frame}
 \alias{is_index}
 \alias{is_aggregate_index}
 
@@ -85,6 +86,8 @@ as_index(x, ...)
 
 \method{as_index}{matrix}(x, chain = TRUE, ...)
 
+\method{as_index}{data.frame}(x, cols = 1:3, chain = TRUE, ...)
+
 is_index(x)
 
 is_aggregate_index(x)
@@ -107,7 +110,7 @@ is_aggregate_index(x)
 
 \item{r}{Order of the generalized mean to aggregate price relatives/index values. 0 for a geometric index (the default for making elemental indexes), 1 for an arithmetic index (the default for aggregating elemental indexes and averaging indexes over subperiods), or -1 for a harmonic index (usually for a Paasche index). Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
-\item{x, y}{A price index, as made by \code{elemental_index()} or \code{aggregate()}.}
+\item{x, y}{A price index, usually made by \code{elemental_index()} or \code{aggregate()}.}
 
 \item{pias}{A price index aggregation structure. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
@@ -128,6 +131,8 @@ is_aggregate_index(x)
 \item{i, j, value}{See \link{Extract}, with \code{value} being a numeric vector (or something that can coerced into one.)}
 
 \item{stringsAsFactors}{See \code{\link{as.data.frame}}}.
+
+\item{cols}{A vector giving the positions/names of the period, level, and value columns in \code{x}. The default assumes that the first column contains time periods, the second contains levels, and the third contains index values.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
@@ -192,7 +197,9 @@ The \code{summary()} method summarizes \code{x} as a matrix of index values (i.e
 \subsection{Coerce}{
 The \code{as.matrix()} method turns an index into a matrix with a row for each level and a column for each period. The \code{as.data.frame()} method turns an index into a data frame with three columns: period, level, and value. 
 
-\code{as_index()} is useful to form an elemental index from pre-computed values. Numeric matrices are coerced into an elemental index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces \code{x} to a matrix prior to using the matrix method.
+\code{as_index()} is useful to form an elemental index from pre-computed values. Numeric matrices are coerced into an elemental index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). This essentially reverses calling \code{as.matrix()} on an index object. If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces \code{x} to a matrix prior to using the matrix method.
+
+The data frame method for \code{as_index()} is best understood as reversing the effect of \code{as.data.frame()} on an index object. It constructs a matrix by taking the unique values of \code{x[[cols[1]]]} as columns and the unique values of \code{x[[cols[2]]]} as rows (in the order they appear). It then populates this matrix with the corresponding values in \code{x[[cols[3]]]}, and uses the matrix method for \code{as_index()}. Note that the resulting index is therefore sensitive to the ordering of \code{x}.
 }
 }
 
@@ -306,6 +313,9 @@ summary(index)
 
 as.data.frame(index)
 as.matrix(index)
+
+all.equal(as_index(as.data.frame(epr)), epr)
+all.equal(as_index(as.matrix(epr)), epr)
 
 # Calculate a CSWD index (same as the Jevons in this example) 
 # as an arithmetic index by constructing appropriate weights

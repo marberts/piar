@@ -262,7 +262,8 @@ b.2 0.8284271 2.4871732
 > ###   elemental_index.numeric aggregate.ind vcov.agg_ind mean.ind merge.ind
 > ###   stack.ind unstack.ind [.ind [<-.ind levels.ind time.ind start.ind
 > ###   end.ind head.ind tail.ind summary.ind as.matrix.ind as.data.frame.ind
-> ###   as_index as_index.default as_index.matrix is_index is_aggregate_index
+> ###   as_index as_index.default as_index.matrix as_index.data.frame  
+> ###   is_index is_aggregate_index
 > 
 > ### ** Examples
 > 
@@ -395,7 +396,12 @@ top 2.218951 6.037662
 a   1.000000 1.000000
 b   2.828427 6.928203
 c   2.218951 6.037662
-> 
+>
+> all.equal(as_index(as.data.frame(epr)), epr)
+[1] TRUE
+> all.equal(as_index(as.matrix(epr)), epr)
+[1] TRUE
+>
 > # Calculate a CSWD index (same as the Jevons in this example) 
 > # as an arithmetic index by constructing appropriate weights
 > 

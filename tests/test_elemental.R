@@ -113,6 +113,10 @@ all.equal(time(epr3), c(letters, LETTERS))
 # Stacking and unstacking are opposite operations
 all.equal(epr1, Reduce(stack, unstack(epr1)))
 
+# Coercion are opposite operations
+all.equal(chain(epr1), as_index(as.matrix(chain(epr1)), chain = FALSE))
+all.equal(chain(epr1), as_index(as.data.frame(chain(epr1))[c(2, 1, 3)], c(2, 1, 3), chain = FALSE))
+
 # Test mean.ind()
 epr4 <- mean(epr1, window = 12)
 all.equal(levels(epr4), levels(epr1))
@@ -164,11 +168,13 @@ is_chain_index(epr)
 is_chain_index(epr2)
 
 # It shouldn't be possible to make a non-numeric index
-epr <- as_index(data.frame(a = as.character(1:5), b = 1:5))
+mat <- as.matrix(data.frame(a = as.character(1:5), b = 1:5))
+
+epr <- as_index(mat)
 is.numeric(as.matrix(epr))
 
 epr[, "b"] <- as.character(1:5)
-all.equal(epr, as_index(data.frame(a = as.character(1:5), b = 1:5)))
+all.equal(epr, as_index(mat))
 
 # Nor one without EA names
 as_index(matrix(1:5, ncol = 5, dimnames = list("a", 1:5)))

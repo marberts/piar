@@ -1,3 +1,5 @@
 Version 0.3.3
 
 - Added an as.matrix() method for 'pias' objects. This makes it easy to aggregate a price index as a matrix operation; just matrix multiplying the aggregation matrix with the elemental indexes.
+
+- Added an as_index() method for data frames. This is faster and simpler than turning a data frame into an index with elemental_index(df$value, df$period, df$level).
