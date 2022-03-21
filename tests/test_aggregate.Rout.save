@@ -268,7 +268,7 @@ B5      1 1.3007239 1.0630743 4.576286
 > 
 > # Check against matrix calculation
 > all.equal(as.matrix(ms_pias) %*% as.matrix(chain(ms_index[paste0("B", 1:5)])), 
-+           as.matrix(chain(ms_index)))
++           as.matrix(chain(ms_index[1:3, ])))
 [1] TRUE
 >
 > # Check adding up of lower-level indexes
@@ -351,7 +351,7 @@ B5    330 429.2389  456.3128 2088.2182
 [1] TRUE
 > 
 > all.equal((as.matrix(ms_pias) %*% as.matrix(chain(ms_index[paste0("B", s)]))^(-1.7))^(1 /-1.7), 
-+           as.matrix(chain(ms_index)))
++           as.matrix(chain(ms_index[1:3, ])))
 [1] TRUE
 >
 > ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)

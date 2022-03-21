@@ -318,9 +318,6 @@ c   2.218951 6.037662
 > as.matrix(pias) %*% as.matrix(chain(index[letters[1:3]]))
            1        2
 top 2.218951 13.39728
-a   1.000000  1.00000
-b   2.828427 19.59592
-c   2.218951 13.39728
 > 
 > # Merge two indexes prior to aggregation
 > 

@@ -23,7 +23,7 @@ as_index(ms_index)
 
 # Check against matrix calculation
 all.equal(as.matrix(ms_pias) %*% as.matrix(chain(ms_index[paste0("B", 1:5)])), 
-          as.matrix(chain(ms_index)))
+          as.matrix(chain(ms_index[1:3, ])))
 
 # Check adding up of lower-level indexes
 all.equal(apply(as.matrix(chain(ms_index)[4:8, ]), 2, weighted.mean, weights(ms_pias)[[3]]),
@@ -85,7 +85,7 @@ all.equal(apply(as.matrix(chain(ms_index)[2:3, ]), 2, gpindex::generalized_mean(
           as.matrix(chain(ms_index))[1, ])
 
 all.equal((as.matrix(ms_pias) %*% as.matrix(chain(ms_index[paste0("B", s)]))^(-1.7))^(1 /-1.7), 
-          as.matrix(chain(ms_index)))
+          as.matrix(chain(ms_index[1:3, ])))
 
 ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)
 

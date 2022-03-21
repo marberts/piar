@@ -67,6 +67,17 @@ weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
   rev(res)
 }
 
+# Simpler but slower implementation
+# requires changing how a pias is stored in an agg_ind object for vcov()
+# weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
+#   if (ea_only) return(object$weights)
+#   res <- lapply(object$upper, 
+#                 function(x) {
+#                   vapply(split(object$weights, x), sum, numeric(1L), na.rm = na.rm)
+#                 })
+#   c(res, list(object$weights))
+# }
+
 print.pias <- function(x, ...) {
   print(c(rev(lapply(x$child, names)), if (x$height) list(x$eas)))
   invisible(x)
@@ -84,33 +95,59 @@ update.pias <- function(object, index, period = end(index), ...) {
   if (!all(object$levels %in% index$levels)) {
     warning(gettext("not all weights in 'object' have a corresponding index value"))
   }
-  epr <- as.matrix(chain(index))[, period[1]]
+  epr <- as.matrix(chain(index))[, period[1]] # drop dimensions
   object$weights[] <- price_update(epr[object$eas], object$weights)
   object
 }
 
+# as.matrix.pias <- function(x, ...) {
+#   res <- vector("list", length(x$child))
+#   w <- rev(weights(x))
+#   for (l in seq_along(res)) {
+#     children <- x$child[[l]]
+#     parents <- x$parent[[l]]
+#     mat <- matrix(0, nrow = length(children), ncol = length(parents))
+#     rownames(mat) <- names(children)
+#     for (i in seq_along(children)) {
+#       cols <- children[[i]]
+#       mat[i, cols] <- scale_weights(w[[l]][cols])
+#     }
+#     res[[l]] <- mat
+#   }
+#   res <- rev(res)
+#   # this drops the matrix for the level above the eas
+#   ans <- do.call(rbind, Map(`%*%`, res[-length(res)], res[-1L]))
+#   eas <- diag(length(x$eas))
+#   rownames(eas) <- x$eas
+#   ans <- if (length(res)) rbind(ans, res[[length(res)]], eas) else eas
+#   colnames(ans) <- x$eas
+#   ans
+# }
+
 as.matrix.pias <- function(x, ...) {
-  res <- vector("list", length(x$child))
-  w <- rev(weights(x))
-  for (l in seq_along(res)) {
-    children <- x$child[[l]]
-    parents <- x$parent[[l]]
-    mat <- matrix(0, nrow = length(children), ncol = length(parents))
-    rownames(mat) <- names(children)
-    for (i in seq_along(children)) {
-      cols <- children[[i]]
-      mat[i, cols] <- scale_weights(w[[l]][cols])
+  nea <- length(x$eas)
+  loc <- seq_len(nea)
+  lev <- lapply(pias2list(x)[-x$height], as.factor)
+  rows <- vector("list", length(lev))
+  for (i in seq_along(rows)) {
+    mat <- matrix(0, nrow = nlevels(lev[[i]]), ncol = nea, 
+                  dimnames = list(levels(lev[[i]]), x$eas))
+    cols <- split(loc, lev[[i]])
+    w <- split(x$weights, lev[[i]])
+    for (r in seq_len(nrow(mat))) {
+      mat[r, cols[[r]]] <- scale_weights(w[[r]])
     }
-    res[[l]] <- mat
+    rows[[i]] <- mat
   }
-  res <- rev(res)
-  # this drops the matrix for the level above the eas
-  ans <- do.call(rbind, Map(`%*%`, res[-length(res)], res[-1L]))
-  eas <- diag(length(x$eas))
-  rownames(eas) <- x$eas
-  ans <- if (length(res)) rbind(ans, res[[length(res)]], eas) else eas
-  colnames(ans) <- x$eas
-  ans
+  do.call(rbind, rows)
+}
+
+as.data.frame.pias <- function(x, ..., stringsAsFactors = FALSE) {
+  res <- as.data.frame(pias2list(x), 
+                       col.names = c(paste0("level", seq_along(x$child), "ea")),
+                       stringsAsFactors = stringsAsFactors)
+  res$weight <- x$weight
+  res
 }
 
 #---- Expand classification ----

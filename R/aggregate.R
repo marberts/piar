@@ -81,7 +81,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     if (t > 1L && x$chain) w <- rev(weights(pias))
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
-      rel[[i]] <- vapply(pias$child[[i - 1L]], aggregate_index, numeric(1))
+      rel[[i]] <- vapply(pias$child[[i - 1L]], aggregate_index, numeric(1L))
     }
     # return index and contributions
     index <- unlist(rev(rel))

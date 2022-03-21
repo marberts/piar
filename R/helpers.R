@@ -37,6 +37,17 @@ aggregate2pias <- function(x, w) {
             class = "pias")
 }
 
+pias2list <- function(x) {
+  if (x$height == 1L) return(list(x$eas))
+  res <- vector("list", length(x$parent))
+  res[[1L]] <- x$parent[[1L]]
+  for (i in seq_along(x$parent)[-1L]) {
+    res[[i]] <- x$parent[[i]][res[[i - 1L]]]
+  }
+  top <- names(x$child[[length(x$child)]])[res[[length(res)]]]
+  c(list(top), lapply(rev(res), names))
+}
+
 empty_contrib <- function(x) {
   list(structure(rep(list(numeric(0L)), length(x)), names = x))
 }
