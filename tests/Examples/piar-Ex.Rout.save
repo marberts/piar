@@ -33,7 +33,7 @@ Type 'q()' to quit R.
 > ### Name: aggregation_structure
 > ### Title: Aggregation structure
 > ### Aliases: aggregation_structure weights.pias update.pias as.matrix.pias
-> ###   expand_classification
+> ###   as.data.frame.pias expand_classification
 > 
 > ### ** Examples
 > 

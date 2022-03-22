@@ -49,6 +49,7 @@ S3method(weights, pias)
 S3method(levels, pias)
 S3method(update, pias)
 S3method(as.matrix, pias)
+S3method(as.data.frame, pias)
 
 importFrom(stats, aggregate, weights, update, time, start, end)
 

@@ -5,7 +5,7 @@ aggregation_structure <- function(x, w) {
     stop(gettext("'x' cannot contain NAs"))
   }
   len <- length(x)
-  ea <- x[[len]]
+  ea <- if (len) x[[len]]
   if (!length(ea)) {
     stop(gettext("cannot make an aggregation structure with no elemental aggregates"))
   }
@@ -67,17 +67,6 @@ weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
   rev(res)
 }
 
-# Simpler but slower implementation
-# requires changing how a pias is stored in an agg_ind object for vcov()
-# weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
-#   if (ea_only) return(object$weights)
-#   res <- lapply(object$upper, 
-#                 function(x) {
-#                   vapply(split(object$weights, x), sum, numeric(1L), na.rm = na.rm)
-#                 })
-#   c(res, list(object$weights))
-# }
-
 print.pias <- function(x, ...) {
   print(c(rev(lapply(x$child, names)), if (x$height) list(x$eas)))
   invisible(x)
@@ -100,38 +89,17 @@ update.pias <- function(object, index, period = end(index), ...) {
   object
 }
 
-# as.matrix.pias <- function(x, ...) {
-#   res <- vector("list", length(x$child))
-#   w <- rev(weights(x))
-#   for (l in seq_along(res)) {
-#     children <- x$child[[l]]
-#     parents <- x$parent[[l]]
-#     mat <- matrix(0, nrow = length(children), ncol = length(parents))
-#     rownames(mat) <- names(children)
-#     for (i in seq_along(children)) {
-#       cols <- children[[i]]
-#       mat[i, cols] <- scale_weights(w[[l]][cols])
-#     }
-#     res[[l]] <- mat
-#   }
-#   res <- rev(res)
-#   # this drops the matrix for the level above the eas
-#   ans <- do.call(rbind, Map(`%*%`, res[-length(res)], res[-1L]))
-#   eas <- diag(length(x$eas))
-#   rownames(eas) <- x$eas
-#   ans <- if (length(res)) rbind(ans, res[[length(res)]], eas) else eas
-#   colnames(ans) <- x$eas
-#   ans
-# }
-
 as.matrix.pias <- function(x, ...) {
   nea <- length(x$eas)
   loc <- seq_len(nea)
+  # don't need the eas
   lev <- lapply(pias2list(x)[-x$height], as.factor)
   rows <- vector("list", length(lev))
+  # generate the rows for each level of the matrix and rbind together
   for (i in seq_along(rows)) {
     mat <- matrix(0, nrow = nlevels(lev[[i]]), ncol = nea, 
                   dimnames = list(levels(lev[[i]]), x$eas))
+    # splitting orders the rows of the matrix the same as the aggregation structure
     cols <- split(loc, lev[[i]])
     w <- split(x$weights, lev[[i]])
     for (r in seq_len(nrow(mat))) {
@@ -143,8 +111,10 @@ as.matrix.pias <- function(x, ...) {
 }
 
 as.data.frame.pias <- function(x, ..., stringsAsFactors = FALSE) {
+  # could use recycle0 = TRUE in paste0
+  colnames <- c(if (length(x$child)) paste0("level", seq_along(x$child)), "ea")
   res <- as.data.frame(pias2list(x), 
-                       col.names = c(paste0("level", seq_along(x$child), "ea")),
+                       col.names = colnames,
                        stringsAsFactors = stringsAsFactors)
   res$weight <- x$weight
   res

@@ -18,6 +18,26 @@ unclass(agg1)
 # Using expand classification should give the same result
 all.equal(agg1, aggregation_structure(expand_classification(x3)))
 
+# Coercion methods
+as.matrix(aggregation_structure(1))
+
+as.data.frame(aggregation_structure(1))
+
+all.equal(agg1, 
+          with(as.data.frame(agg1), aggregation_structure(list(level1, level2, ea), weight)))
+
+# 4-levels, out of order
+y1 <- c(1, 1, 1, 1, 1, 1)
+y2 <- c(11, 11, 11, 12, 12, 12)
+y3 <- c(111, 111, 112, 121, 122, 122)
+y4 <- c(1111, 1112, 1121, 1211, 1221, 1222)
+ord <- c(1, 6, 2, 4, 5, 3)
+agg2 <- aggregation_structure(list(y1[ord], y2[ord], y3[ord], y4[ord]), c(rep(1, 5), 2))
+
+as.matrix(agg2)
+
+as.data.frame(agg2)
+
 # Calculate weights with the weights.pias() method
 weights(agg1)
 
