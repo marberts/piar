@@ -34,10 +34,11 @@ as_index.matrix <- function(x, chain = TRUE, ...) {
 as_index.data.frame <- function(x, cols = 1:3, chain = TRUE, ...) {
   x <- x[cols]
   x[1:2] <- lapply(x[1:2], as.character)
-  time <- unique(x[[1]])
-  levels <- unique(x[[2]])
-  res <- matrix(0, nrow = length(levels), ncol = length(time), dimnames = list(levels, time))
-  res[as.matrix(x[2:1])] <- as.numeric(x[[3]])
+  time <- unique(x[[1L]])
+  levels <- unique(x[[2L]])
+  # elemental_index() usually gives NaN for missing cells
+  res <- matrix(NA_real_, nrow = length(levels), ncol = length(time), dimnames = list(levels, time))
+  res[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
   as_index(res, chain, ...)
 }
 

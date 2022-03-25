@@ -130,7 +130,7 @@ is_aggregate_index(x)
 
 \item{i, j, value}{See \link{Extract}, with \code{value} being a numeric vector (or something that can coerced into one.)}
 
-\item{stringsAsFactors}{See \code{\link{as.data.frame}}}.
+\item{stringsAsFactors}{See \code{\link{as.data.frame}}.}
 
 \item{cols}{A vector giving the positions/names of the period, level, and value columns in \code{x}. The default assumes that the first column contains time periods, the second contains levels, and the third contains index values.}
 

@@ -114,6 +114,7 @@ all.equal(time(epr3), c(letters, LETTERS))
 all.equal(epr1, Reduce(stack, unstack(epr1)))
 
 # Coercion are opposite operations
+all.equal(as_index(as.matrix(epr1)), as_index(as.data.frame(epr1)))
 all.equal(chain(epr1), as_index(as.matrix(chain(epr1)), chain = FALSE))
 all.equal(chain(epr1), as_index(as.data.frame(chain(epr1))[c(2, 1, 3)], c(2, 1, 3), chain = FALSE))
 
@@ -137,6 +138,9 @@ all.equal(as.matrix(mean(epr1, w, window = 12))[, 2],
 dat <- data.frame(rel = c(1:6, NA, 7, 8),
                   period = c(1, 1, 1, 1, 1, 2, 2, 2, 2),
                   ea = c("11", "11", "12", "12", "13", "11", "12", "11", "14"))
+
+all.equal(as_index(dat, c("period", "ea", "rel")),
+          with(dat[c(2, 4, 5, 7, 8, 9), ], elemental_index(rel, period, ea)))
 
 (epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE)))
 unclass(epr)
