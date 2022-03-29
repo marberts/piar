@@ -8,7 +8,7 @@ elemental_index.default <- function(rel, ...) {
 }
 
 elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)),
-                                    w, contrib = FALSE, chain = TRUE, na.rm = FALSE, r = 0, ...) {
+                                    w, contrib = FALSE, chainable = TRUE, na.rm = FALSE, r = 0, ...) {
   if (missing(w)) {
     if (different_length(rel, period, ea)) {
       stop(gettext("'rel', 'period', and 'ea' must be the same length"))
@@ -61,6 +61,6 @@ elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1,
               levels = eas,
               time = periods,
               has_contrib = contrib,
-              chain = chain)
+              chainable = chainable)
   structure(res, class = "ind")
 }

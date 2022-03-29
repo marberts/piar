@@ -168,9 +168,9 @@ Type 'q()' to quit R.
 [1] TRUE
 > all.equal(as.matrix(epr4)[, 2], rowMeans(as.matrix(epr1)[, 13:24]))
 [1] TRUE
-> is_chain_index(epr4)
+> is_chainable_index(epr4)
 [1] TRUE
-> is_chain_index(mean(chain(epr1)))
+> is_chainable_index(mean(chain(epr1)))
 [1] FALSE
 > epr4$contrib
 $a
@@ -287,7 +287,7 @@ $time
 $has_contrib
 [1] TRUE
 
-$chain
+$chainable
 [1] TRUE
 
 > as.matrix(epr)
@@ -345,7 +345,7 @@ $time
 $has_contrib
 [1] TRUE
 
-$chain
+$chainable
 [1] TRUE
 
 > unclass(epr[1, ])
@@ -382,7 +382,7 @@ $time
 $has_contrib
 [1] TRUE
 
-$chain
+$chainable
 [1] TRUE
 
 > chain(epr)$contrib
@@ -444,9 +444,9 @@ NULL
 [1] TRUE
 > all.equal(time(epr), time(epr2))
 [1] TRUE
-> is_chain_index(epr)
+> is_chainable_index(epr)
 [1] TRUE
-> is_chain_index(epr2)
+> is_chainable_index(epr2)
 [1] TRUE
 > 
 > # It shouldn't be possible to make a non-numeric index

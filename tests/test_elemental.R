@@ -124,8 +124,8 @@ all.equal(levels(epr4), levels(epr1))
 time(epr4)
 all.equal(as.matrix(epr4)[, 1], rowMeans(as.matrix(epr1)[, 1:12]))
 all.equal(as.matrix(epr4)[, 2], rowMeans(as.matrix(epr1)[, 13:24]))
-is_chain_index(epr4)
-is_chain_index(mean(chain(epr1)))
+is_chainable_index(epr4)
+is_chainable_index(mean(chain(epr1)))
 epr4$contrib
 
 w <- matrix(seq_len(5 * 26), 5)
@@ -168,8 +168,8 @@ all.equal(as.matrix(epr), as.matrix(epr2)) # has_contrib is not equal
 all.equal(contrib(epr), contrib(epr2))
 all.equal(levels(epr), levels(epr2))
 all.equal(time(epr), time(epr2))
-is_chain_index(epr)
-is_chain_index(epr2)
+is_chainable_index(epr)
+is_chainable_index(epr2)
 
 # It shouldn't be possible to make a non-numeric index
 mat <- as.matrix(data.frame(a = as.character(1:5), b = 1:5))

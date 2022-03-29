@@ -35,6 +35,8 @@ all.equal(apply(as.matrix(chain(ms_index)[2:3, ]), 2, weighted.mean, weights(ms_
 # Re-aggregating the index shouldn't do anything
 all.equal(as.matrix(aggregate(ms_index, ms_pias)), as.matrix(ms_index))
 
+all.equal(aggregate(chain(ms_index), ms_pias), chain(ms_index))
+
 all.equal(as.matrix(aggregate(ms_index, ms_pias, na.rm = TRUE)), as.matrix(ms_index))
 
 # Re-arranging the index shouldn't do anything
@@ -77,6 +79,8 @@ ms_epr <- with(
 ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
 
 all.equal(as.matrix(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)), as.matrix(ms_index))
+
+all.equal(aggregate(chain(ms_index), ms_pias, r = -1.7), chain(ms_index))
 
 all.equal(as.matrix(ms_index)[1, ], 
           colSums(contrib(ms_index), na.rm = TRUE) + 1)
@@ -153,6 +157,9 @@ index_fx <- aggregate(epr_fx, pias)
 # Chained calculation and fixed-base calculation should be the same
 all.equal(index_fx, chain(index_pop))
 all.equal(chain(index_pop[, -1], as.matrix(index_fx[, 1])), index_fx[, -1])
+
+# Should work for a non-arithmetic index
+all.equal(chain(aggregate(epr_pop, pias, r = 3)), aggregate(epr_fx, pias, r = 3))
 
 # Tests for methods
 s1 <- merge(ms_index, fs_epr)

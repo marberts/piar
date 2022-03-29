@@ -1,4 +1,4 @@
-export(elemental_index, as_index, is_index, is_aggregate_index, is_chain_index,
+export(elemental_index, as_index, is_index, is_aggregate_index, is_chainable_index, is_chain_index,
        price_relative,
        aggregation_structure, expand_classification,
        carry_forward, shadow_price,

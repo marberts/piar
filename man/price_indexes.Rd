@@ -40,7 +40,7 @@ elemental_index(rel, ...)
 
 \method{elemental_index}{numeric}(rel, period = gl(1, length(rel)), 
                 ea = gl(1, length(rel)), w, contrib = FALSE, 
-                chain = TRUE, na.rm = FALSE, r = 0, ...)
+                chainable = TRUE, na.rm = FALSE, r = 0, ...)
                             
 # Aggregate
 \method{aggregate}{ind}(x, pias, na.rm = FALSE, r = 1, ...)
@@ -84,9 +84,9 @@ as_index(x, ...)
 
 \method{as_index}{default}(x, ...)
 
-\method{as_index}{matrix}(x, chain = TRUE, ...)
+\method{as_index}{matrix}(x, chainable = TRUE, ...)
 
-\method{as_index}{data.frame}(x, cols = 1:3, chain = TRUE, ...)
+\method{as_index}{data.frame}(x, cols = 1:3, chainable = TRUE, ...)
 
 is_index(x)
 
@@ -104,7 +104,7 @@ is_aggregate_index(x)
 
 \item{contrib}{Should quote contributions be calculated? The default does not calculate contributions.}
 
-\item{chain}{Are the price relatives in \code{rel} period-over-period relatives for a chained calculation (the default)? This should be \code{FALSE} when \code{rel} are fixed-base relatives.}
+\item{chainable}{Are the price relatives in \code{rel} period-over-period relatives for a chained calculation (the default)? This should be \code{FALSE} when \code{rel} are fixed-base relatives.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean imputation.}
 
@@ -143,7 +143,7 @@ When supplied with a numeric vector, \code{elemental_index()} is a simple wrappe
 
 The default method simply coerces \code{rel} to a numeric prior to calling the method above.
 
-The interpretation of the index depends on how the price relatives in \code{rel} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base (direct) elemental indexes. For the latter, \code{chain} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
+The interpretation of the index depends on how the price relatives in \code{rel} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base (direct) elemental indexes. For the latter, \code{chainable} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
 
 By default, missing price relatives in \code{rel} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
 
@@ -155,7 +155,7 @@ The \code{aggregate()} method aggregates elemental indexes by looping over each 
 \enumerate{
 \item aggregates the elemental indexes with \code{\link[=generalized_mean]{generalized_mean(r)}} for each level of \code{pias};
 \item aggregates quote contributions for each level of \code{pias} (if there are any);
-\item price updates the weights in \code{pias} with \code{\link[=factor_weights]{factor_weights(r)}} (only for period-over-period elemental indexes, i.e., \code{is_chain_index(x) == TRUE}).
+\item price updates the weights in \code{pias} with \code{\link[=factor_weights]{factor_weights(r)}} (only for period-over-period elemental indexes, i.e., \code{is_chainable_index(x) == TRUE}).
 }
 The result is a collection of aggregated period-over-period indexes that can be chained together to get a fixed-base index when \code{x} are period-over-period elemental indexes. Otherwise, when \code{x} are fixed-base elemental indexes, the result is a collection of aggregated fixed-base (direct) indexes.
 
@@ -211,7 +211,7 @@ Most of these functions return index objects of class \code{ind}. These often be
 \item{levels}{The levels for \code{ea}.}
 \item{time}{The levels for \code{period}.}
 \item{has_contrib}{The value of \code{contrib}.}
-\item{chain}{The value of \code{chain}, usually \code{TRUE}.}
+\item{chainable}{The value of \code{chainable}, usually \code{TRUE}.}
 
 \code{aggregate()} returns an aggregate index. This is an object of class \code{agg_ind}, inheriting from class \code{ind}, which has the following components.
 
@@ -220,7 +220,7 @@ Most of these functions return index objects of class \code{ind}. These often be
 \item{levels}{The levels for \code{pias}.}
 \item{time}{The levels for \code{period} from \code{x}.}
 \item{has_contrib}{The value of \code{has_contrib} from \code{x}.}
-\item{chain}{The value for \code{chain} from \code{x}, usually \code{TRUE.}}
+\item{chainable}{The value for \code{chainable} from \code{x}, usually \code{TRUE.}}
 \item{r}{The value for \code{r}, usually \code{1}.}
 \item{pias}{A list containing the \code{child}, \code{parent}, \code{eas}, and \code{height} components of \code{pias}.}
 }

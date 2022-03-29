@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: piar 0.1.0.9029\n"
-"POT-Creation-Date: 2022-02-05 13:13\n"
+"POT-Creation-Date: 2022-03-28 23:12\n"
 "PO-Revision-Date: 2021-06-07 23:19\n"
 "Last-Translator: Steve Martin <steve.martin5@canada.ca>\n"
 "Language-Team: none\n"
@@ -63,11 +63,20 @@ msgstr ""
 msgid "'width' cannot contain NAs"
 msgstr "'width' ne peut pas contenir de NA"
 
+msgid "cannot make an index with no periods or elemental aggregates"
+msgstr "ne peut pas faire un index sans périodes ou agrégats élémentaires"
+
+msgid "'x' cannot have duplicated row or column names"
+msgstr "'x' ne peut pas avoir de noms de lignes ou de colonnes dupliqués"
+
 msgid "'link' must have a value for each level of 'x'"
 msgstr "'link' doit avoir une valeur pour chaque niveau de 'x'"
 
 msgid "'base' must have a value for each level of 'x'"
 msgstr "'base' doit avoir une valeur pour chaque niveau de 'x'"
+
+msgid "'is_chain_index()' is deprecated; use 'is_chainable_index()' instead"
+msgstr "'is_chain_index()' est obsolète; utilisez 'is_chainable_index()' à la place"
 
 msgid "'rel', 'period', and 'ea' must be the same length"
 msgstr "'rel', 'period' et 'ea' doivent avoir la même longueur"
@@ -77,12 +86,6 @@ msgstr "'rel', 'period', 'ea' et 'w' doivent avoir la même longueur"
 
 msgid "some elements of 'rel or 'w' are less than or equal to 0"
 msgstr "certains éléments de 'rel' ou 'w' sont inférieurs ou égaux à 0 "
-
-msgid "cannot make an index with no periods or elemental aggregates"
-msgstr "ne peut pas faire un index sans périodes ou agrégats élémentaires"
-
-msgid "'x' cannot have duplicated row or column names"
-msgstr "'x' ne peut pas avoir de noms de lignes ou de colonnes dupliqués"
 
 msgid "'x', 'period', 'product, and 'ea' must be the same length"
 msgstr "'x', 'period', 'product' et 'ea' doivent avoir la même longueur"

@@ -31,7 +31,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     # get rid of any NULL contributions
     con[[1L]][!lengths(con[[1L]])] <- list(numeric(0L))
     # re-aggregate price-updated weights for all periods after first
-    if (t > 1L && x$chain) {
+    if (t > 1L && x$chainable) {
       w <- rev(weights(pias, na.rm = na.rm))
     }
     # loop over each level in the pias from the bottom up and aggregate
@@ -51,7 +51,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     x$index[[t]] <- index
     x$contrib[[t]] <- unlist(rev(con), recursive = FALSE)
     # price update weights for all periods after the first
-    if (x$chain) {
+    if (x$chainable) {
       pias$weights <- price_update(index[pias$eas], w[[1L]]) 
     }
   }
@@ -78,7 +78,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     # align epr with weights so that positional indexing works
     # preserve names if epr and pias weights don't agree
     rel[[1L]] <- named_extract(x$index[[t]], eas)
-    if (t > 1L && x$chain) w <- rev(weights(pias))
+    if (t > 1L && x$chainable) w <- rev(weights(pias))
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
       rel[[i]] <- vapply(pias$child[[i - 1L]], aggregate_index, numeric(1L))
@@ -87,7 +87,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     index <- unlist(rev(rel))
     x$index[[t]] <- index
     # price update weights for all periods after the first
-    if (x$chain) {
+    if (x$chainable) {
       pias$weights <- price_update(index[eas], w[[1L]]) 
     }
   }

@@ -8,6 +8,7 @@
 \alias{rebase}
 \alias{rebase.default}
 \alias{rebase.ind}
+\alias{is_chainable_index}
 \alias{is_chain_index}
 
 \title{
@@ -37,7 +38,9 @@ rebase(x, ...)
 
 \method{rebase}{ind}(x, base = rep(1, length(levels(x))), ...)
 
-is_chain_index(x)
+is_chainable_index(x)
+
+is_chain_index(x) # deprecated
 }
 
 \arguments{
@@ -53,7 +56,7 @@ is_chain_index(x)
 \details{
 The default methods attempts to coerce \code{x} into an index with \code{\link[=as_index]{as_index()}} prior to chaining/unchaining/rebasing.
 
-Chaining an index takes the cumulative product of the index values for each level; this is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod)) * link}. Unchaining does the opposite, so these are inverse operations. Note that unchaining a period-over-period index (i.e., when \code{is_chain_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., when \code{is_chain_index(x) == FALSE}).
+Chaining an index takes the cumulative product of the index values for each level; this is roughly the same as \code{t(apply(as.matrix(x), 1, cumprod)) * link}. Unchaining does the opposite, so these are inverse operations. Note that unchaining a period-over-period index (i.e., when \code{is_chainable_index(x) == TRUE}) does nothing, as does chaining a fixed-base index (i.e., when \code{is_chainable_index(x) == FALSE}).
 
 Rebasing a fixed-base index divides the values for each level of this index by the corresponding values for each level in the new base period. It's roughly the same as \code{as.matrix(x) / base}. Like unchaining, rebasing a period-over-period index does nothing.
 
@@ -61,7 +64,7 @@ Quote contributions are removed when chaining/unchaining/rebasing an index, as i
 }
 
 \value{
-Each of these functions returns an index of the same type as \code{x}, except \code{is_chain_index()} which returns \code{TRUE} when \code{x} is a period-over-period index (so that chaining makes sense).
+Each of these functions returns an index of the same type as \code{x}, except \code{is_chainable_index()} which returns \code{TRUE} when \code{x} is a period-over-period index (so that chaining makes sense).
 }
 
 \seealso{

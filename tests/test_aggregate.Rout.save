@@ -215,7 +215,7 @@ $time
 $has_contrib
 [1] TRUE
 
-$chain
+$chainable
 [1] TRUE
 
 $r
@@ -283,6 +283,9 @@ B5      1 1.3007239 1.0630743 4.576286
 > # Re-aggregating the index shouldn't do anything
 > all.equal(as.matrix(aggregate(ms_index, ms_pias)), as.matrix(ms_index))
 [1] TRUE
+>
+> all.equal(aggregate(chain(ms_index), ms_pias), chain(ms_index))
+[1] TRUE
 > 
 > all.equal(as.matrix(aggregate(ms_index, ms_pias, na.rm = TRUE)), as.matrix(ms_index))
 [1] TRUE
@@ -340,6 +343,9 @@ B5    330 429.2389  456.3128 2088.2182
 > ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
 > 
 > all.equal(as.matrix(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)), as.matrix(ms_index))
+[1] TRUE
+>
+> all.equal(aggregate(chain(ms_index), ms_pias, r = -1.7), chain(ms_index))
 [1] TRUE
 > 
 > all.equal(as.matrix(ms_index)[1, ], 
@@ -581,7 +587,7 @@ $time
 $has_contrib
 [1] TRUE
 
-$chain
+$chainable
 [1] TRUE
 
 $r
@@ -684,6 +690,10 @@ $pias$height
 > all.equal(index_fx, chain(index_pop))
 [1] TRUE
 > all.equal(chain(index_pop[, -1], as.matrix(index_fx[, 1])), index_fx[, -1])
+[1] TRUE
+>
+> # Should work for a non-arithmetic index
+> all.equal(chain(aggregate(epr_pop, pias, r = 3)), aggregate(epr_fx, pias, r = 3))
 [1] TRUE
 > 
 > # Tests for methods

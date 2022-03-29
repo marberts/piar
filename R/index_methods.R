@@ -86,7 +86,7 @@ merge.ind <- function(x, y, ...) {
   if (any(x$levels %in% y$levels)) {
     stop(gettext("the same levels appear in both 'x' and 'y'"))
   }
-  if (x$chain != y$chain) {
+  if (x$chainable != y$chainable) {
     stop(gettext("cannot merge a fixed-base and period-over-period index"))
   }
   # loop over time periods and combine index values/contributions
@@ -121,7 +121,7 @@ stack.ind <- function(x, y, ...) {
   if (any(x$time %in% y$time)) {
     stop(gettext("the same periods appear in both 'x' and 'y'"))
   }
-  if (x$chain != y$chain) {
+  if (x$chainable != y$chainable) {
     stop(gettext("cannot stack a period-over-period and a fixed-base index"))
   }
   x$index <- c(x$index, y$index)
@@ -145,7 +145,7 @@ unstack.ind <- function(x, ...) {
     res[[i]]$levels <- x$levels
     res[[i]]$time <- x$time[i]
     res[[i]]$has_contrib <- x$has_contrib
-    res[[i]]$chain <- x$chain
+    res[[i]]$chainable <- x$chainable
     res[[i]]$r <- x$r
     res[[i]]$pias <- x$pias
     class(res[[i]]) <- class(x)

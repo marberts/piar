@@ -7,7 +7,7 @@ as_index.default <- function(x, ...) {
   as_index(as.matrix(x), ...)
 }
 
-as_index.matrix <- function(x, chain = TRUE, ...) {
+as_index.matrix <- function(x, chainable = TRUE, ...) {
   if (!(nrow(x) && ncol(x))) {
     stop(gettext("cannot make an index with no periods or elemental aggregates"))
   }
@@ -20,7 +20,7 @@ as_index.matrix <- function(x, chain = TRUE, ...) {
     stop(gettext("'x' cannot have duplicated row or column names"))
   }
   res <- list(index = NULL, contrib = NULL, levels = levels, 
-              time = periods, has_contrib = FALSE, chain = chain)
+              time = periods, has_contrib = FALSE, chainable = chainable)
   res$index <- res$contrib <- 
     structure(vector("list", ncol(x)), names = periods)
   res$contrib[] <- empty_contrib(levels)
@@ -31,7 +31,7 @@ as_index.matrix <- function(x, chain = TRUE, ...) {
   structure(res, class = "ind")
 }
 
-as_index.data.frame <- function(x, cols = 1:3, chain = TRUE, ...) {
+as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
   x <- x[cols]
   x[1:2] <- lapply(x[1:2], as.character)
   time <- unique(x[[1L]])
@@ -39,7 +39,7 @@ as_index.data.frame <- function(x, cols = 1:3, chain = TRUE, ...) {
   # elemental_index() usually gives NaN for missing cells
   res <- matrix(NA_real_, nrow = length(levels), ncol = length(time), dimnames = list(levels, time))
   res[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
-  as_index(res, chain, ...)
+  as_index(res, chainable, ...)
 }
 
 as_index.ind <- function(x, ...) {
