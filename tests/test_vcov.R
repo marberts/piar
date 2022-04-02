@@ -27,6 +27,8 @@ rw <- matrix(runif(8 * 25), 8)
 
 #---- mse = FALSE case ----
 covar <- vcov(index, rw * weights$ew, mse = FALSE)
+all.equal(covar, vcov(index, rw * weights$ew, mse = FALSE, parallel = "mc"))
+all.equal(covar, vcov(index, rw * weights$ew, mse = FALSE, parallel = "snow"))
 
 # Variance matrix should be symmetric
 apply(covar, 3, function(x) all.equal(x[upper.tri(x)], t(x)[upper.tri(x)]))

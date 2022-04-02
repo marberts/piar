@@ -94,7 +94,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   do.call(cbind, x$index)
 }
 
-vcov.agg_ind <- function(object, repweights, mse = TRUE, parallel = c("no", "mc", "snow"), ncpus = 1, cl = makeCluster(ncpus), ...) {
+vcov.agg_ind <- function(object, repweights, mse = TRUE, parallel = c("no", "mc", "snow"), ncpus = 2, cl = NULL, ...) {
   repweights <- as.matrix(repweights)
   if (nrow(repweights) != length(object$pias$eas)) {
     stop(gettext("'repweights' must have a row for each weight in 'pias'"))
@@ -104,8 +104,7 @@ vcov.agg_ind <- function(object, repweights, mse = TRUE, parallel = c("no", "mc"
   eas <- object$pias$eas
   upper <- setdiff(object$levels, object$pias$eas)
   dimnm <- list(upper, object$time, seq_len(n))
-  # initialize an aggregation structure with no weights and an array to store
-  # indexes for looping over repweights
+  # initialize an aggregation structure with no weights
   pias <- aggregate2pias(object, numeric(length(eas)))
   # function to aggregate index for replicate 'i'
   price_update <- factor_weights(object$r)
@@ -119,8 +118,13 @@ vcov.agg_ind <- function(object, repweights, mse = TRUE, parallel = c("no", "mc"
   } else if (parallel == "mc") {
     index_boot <- mclapply(seq_len(n), repl, mc.cores = ncpus)
   } else if (parallel == "snow") {
-    index_boot <- parLapply(cl, seq_len(n), repl)
-    stopCluster(cl)
+    if (is.null(cl)) {
+      cl <- makeCluster(ncpus)
+      index_boot <- parLapply(cl, seq_len(n), repl)
+      stopCluster(cl)
+    } else {
+      index_boot <- parLapply(cl, seq_len(n), repl)
+    }
   }
   index_boot <- array(unlist(index_boot, use.names = FALSE), 
                       dim = lengths(dimnm), dimnames = dimnm)

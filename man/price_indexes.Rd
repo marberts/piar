@@ -46,8 +46,8 @@ elemental_index(rel, ...)
 \method{aggregate}{ind}(x, pias, na.rm = FALSE, r = 1, ...)
 
 \method{vcov}{agg_ind}(object, repweights, mse = TRUE, 
-     parallel = c("no", "mc", "snow"), ncpus = 1, 
-     cl = makeCluster(ncpus), ...)
+     parallel = c("no", "mc", "snow"), ncpus = 2, 
+     cl = NULL, ...)
 
 \method{mean}{ind}(x, w, window = 3, na.rm = FALSE, r = 1, ...)
 
@@ -122,9 +122,9 @@ is_aggregate_index(x)
 
 \item{parallel}{One of \code{"no"} to compute the covariance matrix in serial (the default), \code{"mc"} to use the multicore functionality in \pkg{parallel}, or \code{"snow"} to use the clusters functionality in \pkg{parallel}.}
 
-\item{ncpus}{Number of cpus to use for computing the covariance matrix if \code{parallel} is not \code{"no"}, with a default of 1.}
+\item{ncpus}{Number of cpus to use for computing the covariance matrix if \code{parallel} is not \code{"no"}, with a default of 2.}
 
-\item{cl}{A cluster that can be used in \code{\link[=parLapply]{parLapply()}} for computing the covariance matrix in parallel. Only applies if \code{parallel = "snow"}.}
+\item{cl}{A cluster that can be used in \code{\link[=parLapply]{parLapply()}} for computing the covariance matrix in parallel. The default makes a new cluster with \code{ncpus} workers. Only applies if \code{parallel = "snow"}.}
 
 \item{window}{The size of the window used to average index values across subperiods. The default (3) turns a monthly index into into a quarterly one.}
 

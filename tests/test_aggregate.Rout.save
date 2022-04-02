@@ -676,7 +676,7 @@ $pias$height
 +                      product = rep(1:5, each = 3), 
 +                      ea = rep(c("f1", "f2"), c(6, 9)))
 > prices$pop_rel <- with(prices, price_relative(price, period, product))
-> prices$fx_rel <- with(prices, price / gpindex::base_price(price, period, product))
+> prices$fx_rel <- with(prices, price / price[gpindex::base_period(period, product)])
 > 
 > pias <- aggregation_structure(list(c("1", "1"), c("f1", "f2")), 1:2)
 > 
