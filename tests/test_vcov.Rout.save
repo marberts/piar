@@ -52,9 +52,9 @@ Type 'q()' to quit R.
 > 
 > #---- mse = FALSE case ----
 > covar <- vcov(index, rw * weights$ew, mse = FALSE)
-> all.equal(covar, vcov(index, rw * weights$ew, mse = FALSE, parallel = "mc"))
+> all.equal(covar, vcov(index, rw * weights$ew, mse = FALSE, parallel = "mc", ncpus = 1))
 [1] TRUE
-> all.equal(covar, vcov(index, rw * weights$ew, mse = FALSE, parallel = "snow"))
+> all.equal(covar, vcov(index, rw * weights$ew, mse = FALSE, parallel = "snow", ncpus = 1))
 [1] TRUE
 > 
 > # Variance matrix should be symmetric
