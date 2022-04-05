@@ -68,32 +68,32 @@ vcov.agg_ind <- function(object, repweights, mse = TRUE, ...) {
   if (nrow(repweights) != length(eas)) {
     stop(gettext("'repweights' must have a row for each weight in 'pias'"))
   }
+  upper <- setdiff(object$levels, eas)
   n <- ncol(repweights)
   r <- object$r
-  # matrix aggregation needs to be done with a chained index
-  elem <- as.matrix(chain(object[eas, ]))
+  # template aggregation structure with no weights for each bootstrap replicate
   pias <- aggregate2pias(object, numeric(length(eas)))
-  index_boot <- lapply(seq_len(n), function(i) {
+  # matrix aggregation is much faster than aggregate.ind(), but needs to be done 
+  # with a chained index
+  elem <- as.matrix(chain(object[eas, ]))
+  repindex <- lapply(seq_len(n), function(i) {
     pias$weights[] <- repweights[, i]
     res <- (as.matrix(pias) %*% elem^r)^(1 / r)
     # undo chaining for a period-over-period index
     if (object$chainable) res[, -1] <- res[, -1] / res[, -ncol(res)]
     res
   })
-  upper <- setdiff(object$levels, eas)
+  # it's easier to calculate the variance with an array of indexes
   dimnm <- list(upper, object$time, seq_len(n))
-  index_boot <- array(unlist(index_boot, use.names = FALSE), 
-                      dim = lengths(dimnm), dimnames = dimnm)
+  repindex <- array(unlist(repindex, use.names = FALSE), dim = lengths(dimnm), dimnames = dimnm)
   # mse = TRUE is the default for variance estimation in SAS, 
   # but not the survey package
   centre <- if (mse) {
     as.matrix(object[upper, ])
   } else {
-    apply(index_boot, 2L, rowMeans)
+    apply(repindex, 2L, rowMeans)
   }
-  res <- array(0, lengths(dimnm[1:2]), dimnames = dimnm[1:2])
-  res[] <- apply(sweep(index_boot, 1:2, centre), 1:2, crossprod) / n
-  res
+  apply(sweep(repindex, 1:2, centre), 1:2, crossprod) / n
 }
 
 #---- Test ----
