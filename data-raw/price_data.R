@@ -47,3 +47,16 @@ big_weights <- data.frame(business = paste0("B", 1:5000),
                                                   rep(1:5, each = 100), 
                                                   rep(1:5, each = 20)),
                           weight = runif(5000, 10, 1000))
+
+big_prices2 <- data.frame(period = sprintf("%d%02d", rep(2011:2020, each = 12), 1:12),
+                          business = rep(paste0("B", 1:2500), each = 120 * 10),
+                          product = rep(1:25000, each = 120),
+                          price = runif(3e6, 0.5, 2))
+
+big_weights2 <- data.frame(business = paste0("B", 1:2500),
+                           classification = paste0(1, 
+                                                   rep(1:2, each = 1250), 
+                                                   rep(1:5, each = 250), 
+                                                   rep(1:5, each = 50), 
+                                                   rep(1:5, each = 10)),
+                           weight = runif(2500, 10, 1000))

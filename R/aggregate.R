@@ -62,81 +62,37 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
 }
 
 #---- Covariance calculation ----
-# Fast aggregate
-# This can be removed if aggregate.ind gets fast enough
-.aggregate <- function(x, pias, price_update, gen_mean) {
-  # 'i' is defined in the loop below; it's used to loop over the height of 'pias'
-  aggregate_index <- function(z) {
-    gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z])
-  }
-  # initialize weights
-  eas <- pias$eas
-  w <- rev(weights(pias))
-  # loop over each time period
-  for (t in seq_along(x$time)) {
-    rel <- vector("list", pias$height)
-    # align epr with weights so that positional indexing works
-    # preserve names if epr and pias weights don't agree
-    rel[[1L]] <- named_extract(x$index[[t]], eas)
-    if (t > 1L && x$chainable) w <- rev(weights(pias))
-    # loop over each level in the pias from the bottom up and aggregate
-    for (i in seq_along(rel)[-1L]) {
-      rel[[i]] <- vapply(pias$child[[i - 1L]], aggregate_index, numeric(1L))
-    }
-    # return index and contributions
-    index <- unlist(rev(rel))
-    x$index[[t]] <- index
-    # price update weights for all periods after the first
-    if (x$chainable) {
-      pias$weights <- price_update(index[eas], w[[1L]]) 
-    }
-  }
-  do.call(cbind, x$index)
-}
-
-vcov.agg_ind <- function(object, repweights, mse = TRUE, parallel = c("no", "mc", "snow"), ncpus = 2, cl = NULL, ...) {
+vcov.agg_ind <- function(object, repweights, mse = TRUE, ...) {
   repweights <- as.matrix(repweights)
-  if (nrow(repweights) != length(object$pias$eas)) {
+  eas <- object$pias$eas
+  if (nrow(repweights) != length(eas)) {
     stop(gettext("'repweights' must have a row for each weight in 'pias'"))
   }
-  parallel <- match.arg(parallel)
   n <- ncol(repweights)
-  eas <- object$pias$eas
-  upper <- setdiff(object$levels, object$pias$eas)
-  dimnm <- list(upper, object$time, seq_len(n))
-  # initialize an aggregation structure with no weights
+  r <- object$r
+  # matrix aggregation needs to be done with a chained index
+  elem <- as.matrix(chain(object[eas, ]))
   pias <- aggregate2pias(object, numeric(length(eas)))
-  # function to aggregate index for replicate 'i'
-  price_update <- factor_weights(object$r)
-  gen_mean <- generalized_mean(object$r)
-  repl <- function(i) {
+  index_boot <- lapply(seq_len(n), function(i) {
     pias$weights[] <- repweights[, i]
-    .aggregate(object, pias, price_update, gen_mean)[upper, , drop = FALSE]
-  }
-  if (parallel == "no") {
-    index_boot <- lapply(seq_len(n), repl)
-  } else if (parallel == "mc") {
-    index_boot <- mclapply(seq_len(n), repl, mc.cores = ncpus)
-  } else if (parallel == "snow") {
-    if (is.null(cl)) {
-      cl <- makeCluster(ncpus)
-      index_boot <- parLapply(cl, seq_len(n), repl)
-      stopCluster(cl)
-    } else {
-      index_boot <- parLapply(cl, seq_len(n), repl)
-    }
-  }
+    res <- (as.matrix(pias) %*% elem^r)^(1 / r)
+    # undo chaining for a period-over-period index
+    if (object$chainable) res[, -1] <- res[, -1] / res[, -ncol(res)]
+    res
+  })
+  upper <- setdiff(object$levels, eas)
+  dimnm <- list(upper, object$time, seq_len(n))
   index_boot <- array(unlist(index_boot, use.names = FALSE), 
                       dim = lengths(dimnm), dimnames = dimnm)
   # mse = TRUE is the default for variance estimation in SAS, 
   # but not the survey package
   centre <- if (mse) {
-    as.matrix(object)[upper, , drop = FALSE]
+    as.matrix(object[upper, ])
   } else {
     apply(index_boot, 2L, rowMeans)
   }
-  res <- array(0, lengths(dimnm[c(1L, 1L, 2L)]), dimnames = dimnm[c(1L, 1L, 2L)])
-  res[] <- apply(sweep(index_boot, 1:2, centre), 2L, tcrossprod) / n
+  res <- array(0, lengths(dimnm[1:2]), dimnames = dimnm[1:2])
+  res[] <- apply(sweep(index_boot, 1:2, centre), 1:2, crossprod) / n
   res
 }
 

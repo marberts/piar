@@ -26,46 +26,45 @@ index <- aggregate(epr, pias)
 rw <- matrix(runif(8 * 25), 8)
 
 #---- mse = FALSE case ----
-covar <- vcov(index, rw * weights$ew, mse = FALSE)
-all.equal(covar, vcov(index, rw * weights$ew, mse = FALSE, parallel = "mc", ncpus = 1))
-all.equal(covar, vcov(index, rw * weights$ew, mse = FALSE, parallel = "snow", ncpus = 1))
-
-# Variance matrix should be symmetric
-apply(covar, 3, function(x) all.equal(x[upper.tri(x)], t(x)[upper.tri(x)]))
-all.equal(apply(covar, 3, rownames), apply(covar, 3, colnames))
-
-# Variance matrix should have a positive diagonal
-apply(covar, 3, function(x) all(diag(x) >= 0))
+(covar <- vcov(index, rw * weights$ew, mse = FALSE))
 
 # Variance for higher levels should agree with manual calculation
 # Period 1
 rws <- apply(rw * weights$ew, 2, scale_weights)
 all.equal(sum(crossprod(as.matrix(epr[, 1]), tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * t(as.matrix(epr[, 1]))),
-          covar[1, 1, 1])
+          covar[1, 1])
 
 # Period 2
 rws <- apply(rw * weights(update(pias, index, 1), TRUE) / weights$dw, 2, scale_weights)
 all.equal(sum(crossprod(as.matrix(epr[, 2]), tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * t(as.matrix(epr[, 2]))),
-          covar[1, 1, 2])
+          covar[1, 2])
 
 #---- mse = TRUE case ----
-covar <- vcov(index, rw * weights$ew)
-
-# Variance matrix should be symmetric
-apply(covar, 3, function(x) all.equal(x[upper.tri(x)], t(x)[upper.tri(x)]))
-all.equal(apply(covar, 3, rownames), apply(covar, 3, colnames))
-
-# Variance matrix should have a positive diagonal
-apply(covar, 3, function(x) all(diag(x) >= 0))
+(covar <- vcov(index, rw * weights$ew))
 
 # Variance for higher levels should agree with manual calculation
 # Period 1
 rws <- apply(rw * weights$ew, 2, scale_weights)
 w <- weights(pias, ea_only = TRUE)
 all.equal(sum(crossprod(as.matrix(epr[, 1]), tcrossprod(sweep(rws, 1, scale_weights(w))) / 25) * t(as.matrix(epr[, 1]))),
-          covar[1, 1, 1])
+          covar[1, 1])
 
 # Period 2
 rws <- apply(rw * weights(update(pias, index, 1), TRUE) / weights$dw, 2, scale_weights)
 all.equal(sum(crossprod(as.matrix(epr[, 2]), tcrossprod(sweep(rws, 1, scale_weights(weights(update(pias, index, 1), TRUE)))) / 25) * t(as.matrix(epr[, 2]))),
-          covar[1, 1, 2])
+          covar[1, 2])
+
+#---- chained index ----
+(covar <- vcov(chain(index), rw * weights$ew))
+
+# Variance for higher levels should agree with manual calculation
+# Period 1
+rws <- apply(rw * weights$ew, 2, scale_weights)
+w <- weights(pias, ea_only = TRUE)
+all.equal(sum(crossprod(as.matrix(epr[, 1]), tcrossprod(sweep(rws, 1, scale_weights(w))) / 25) * t(as.matrix(epr[, 1]))),
+          covar[1, 1])
+
+# Period 2
+epr <- chain(epr)
+all.equal(sum(crossprod(as.matrix(epr[, 2]), tcrossprod(sweep(rws, 1, scale_weights(w))) / 25) * t(as.matrix(epr[, 2]))),
+          covar[1, 2])

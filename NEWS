@@ -1,4 +1,8 @@
-Version 0.3.3
+Version 0.4.0
+
+- The vcov() method for aggregate indexes now returns a matrix of variances instead of an array of covariances, as the covariances are usually misleading. In most cases elemental aggregates are sampled independently, in which case the covariances are 0. 
+
+- The vcov() method for aggregate indexes is now much faster, and the options for parallel computing have been removed.
 
 - Added an as.matrix() method for 'pias' objects. This makes it easy to aggregate a price index as a matrix operation; just matrix multiply the aggregation matrix with the elemental indexes.
 

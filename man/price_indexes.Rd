@@ -45,9 +45,7 @@ elemental_index(rel, ...)
 # Aggregate
 \method{aggregate}{ind}(x, pias, na.rm = FALSE, r = 1, ...)
 
-\method{vcov}{agg_ind}(object, repweights, mse = TRUE, 
-     parallel = c("no", "mc", "snow"), ncpus = 2, 
-     cl = NULL, ...)
+\method{vcov}{agg_ind}(object, repweights, mse = TRUE, ...)
 
 \method{mean}{ind}(x, w, window = 3, na.rm = FALSE, r = 1, ...)
 
@@ -120,12 +118,6 @@ is_aggregate_index(x)
 
 \item{mse}{Should covariances be centered off the value of the index in \code{object} (the default), or the mean of the replicates?}
 
-\item{parallel}{One of \code{"no"} to compute the covariance matrix in serial (the default), \code{"mc"} to use the multicore functionality in \pkg{parallel}, or \code{"snow"} to use the clusters functionality in \pkg{parallel}.}
-
-\item{ncpus}{Number of cpus to use for computing the covariance matrix if \code{parallel} is not \code{"no"}, with a default of 2.}
-
-\item{cl}{A cluster that can be used in \code{\link[=parLapply]{parLapply()}} for computing the covariance matrix in parallel. The default makes a new cluster with \code{ncpus} workers. Only applies if \code{parallel = "snow"}.}
-
 \item{window}{The size of the window used to average index values across subperiods. The default (3) turns a monthly index into into a quarterly one.}
 
 \item{i, j, value}{See \link{Extract}, with \code{value} being a numeric vector (or something that can coerced into one.)}
@@ -167,7 +159,7 @@ Aggregating quote contributions uses the method in chapter 9 of the CPI manual (
 
 There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with \code{merge()}). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the change in the value of the index. This can also happen when aggregating an already aggregated index in which missing index values have been imputed (i.e., when \code{na.rm = TRUE}).
 
-The \code{vcov()} method is a simple wrapper to calculate the covariance matrix for an aggregated index when bootstrap replicate weights are available for the elemental aggregates. This approach is usually applicable when elemental aggregates are sampled, and provides an estimator of the sampling variance of the price index. It ignores any sampling variance from the elemental indexes (which often use judgmental sampling), and ultimately depends on the method of generating replicate weights. It returns an array of covariance matrices for each \code{period}. (Chapters 3 and 4 of Selvanathan and Rao (1994), especially section 4.7, provide analytic variance estimators for some common price indexes that are applicable with simple random sampling.)
+The \code{vcov()} method is a simple wrapper to calculate the variance matrix for an aggregated index when bootstrap replicate weights are available for the elemental aggregates. This approach is usually applicable when elemental aggregates are sampled, and provides an estimator of the sampling variance of the price index. It ignores any sampling variance from the elemental indexes (which often use judgmental sampling), and ultimately depends on the method of generating replicate weights. It returns a matrix of variances with a row for each upper-level index and a column for each time period. (Chapters 3 and 4 of Selvanathan and Rao (1994), especially section 4.7, provide analytic variance estimators for some common price indexes that are applicable with simple random sampling.)
 
 Indexes can be aggregated over subperiods by taking the (usually arithmetic) mean of index values for each level over consecutive windows of subperiods. The \code{mean()} method constructs a set of windows of length \code{window}, starting in the first period of the index, and takes the unweighted mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that quote contributions are discarded when aggregating over subperiods. 
 
