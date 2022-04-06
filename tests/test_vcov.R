@@ -4,6 +4,9 @@ library(gpindex)
 set.seed(4321)
 
 # Corner case
+vcov(aggregate(elemental_index(numeric(0)), aggregation_structure("a")),
+     matrix(1:10, ncol = 10))
+
 vcov(aggregate(elemental_index(numeric(0)), aggregation_structure(1:5)),
      matrix(runif(10), ncol = 10))
 

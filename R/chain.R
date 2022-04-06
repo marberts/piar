@@ -14,7 +14,7 @@ chain.ind <- function(x, link = rep(1, length(levels(x))), ...) {
       stop(gettext("'link' must have a value for each level of 'x'"))
     }
     x$chainable <- FALSE
-    x$index[[1]] <- x$index[[1]] * link
+    x$index[[1L]] <- x$index[[1L]] * link
     x$index[] <- Reduce(`*`, x$index, accumulate = TRUE)
     # contributions are difficult to chain, so remove them
     x$has_contrib <- FALSE

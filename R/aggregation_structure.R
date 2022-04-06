@@ -91,6 +91,9 @@ update.pias <- function(object, index, period = end(index), ...) {
 
 as.matrix.pias <- function(x, ...) {
   nea <- length(x$eas)
+  if (x$height == 1L) {
+    return(matrix(numeric(0), ncol = nea, dimnames = list(NULL, x$eas)))
+  }
   loc <- seq_len(nea)
   # don't need the eas
   lev <- lapply(pias2list(x)[-x$height], as.factor)

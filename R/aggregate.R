@@ -89,7 +89,7 @@ vcov.agg_ind <- function(object, repweights, mse = TRUE, ...) {
   # mse = TRUE is the default for variance estimation in SAS, 
   # but not the survey package
   centre <- if (mse) {
-    as.matrix(object[upper, ])
+    as.matrix(object)[upper, , drop = FALSE]
   } else {
     apply(repindex, 2L, rowMeans)
   }
