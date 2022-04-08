@@ -436,7 +436,7 @@ numeric(0)
 NULL
 > 
 > epr[] <- as.matrix(epr2)
-> all.equal(as.matrix(epr), as.matrix(epr2)) # has_contrib is not equal
+> all.equal(epr, epr2)
 [1] TRUE
 > all.equal(contrib(epr), contrib(epr2))
 [1] TRUE

@@ -35,7 +35,7 @@ rw <- matrix(runif(8 * 25), 8)
 # Period 1
 rws <- apply(rw * weights$ew, 2, scale_weights)
 all.equal(sum(crossprod(as.matrix(epr[, 1]), tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * t(as.matrix(epr[, 1]))),
-          covar[1, 1])
+          covar[1, 1]) # 0.004973962 according to svymean
 
 # Period 2
 rws <- apply(rw * weights(update(pias, index, 1), TRUE) / weights$dw, 2, scale_weights)
@@ -50,7 +50,7 @@ all.equal(sum(crossprod(as.matrix(epr[, 2]), tcrossprod(sweep(rws, 1, rowMeans(r
 rws <- apply(rw * weights$ew, 2, scale_weights)
 w <- weights(pias, ea_only = TRUE)
 all.equal(sum(crossprod(as.matrix(epr[, 1]), tcrossprod(sweep(rws, 1, scale_weights(w))) / 25) * t(as.matrix(epr[, 1]))),
-          covar[1, 1])
+          covar[1, 1]) # 0.02001844 according to svymean
 
 # Period 2
 rws <- apply(rw * weights(update(pias, index, 1), TRUE) / weights$dw, 2, scale_weights)
@@ -65,9 +65,9 @@ all.equal(sum(crossprod(as.matrix(epr[, 2]), tcrossprod(sweep(rws, 1, scale_weig
 rws <- apply(rw * weights$ew, 2, scale_weights)
 w <- weights(pias, ea_only = TRUE)
 all.equal(sum(crossprod(as.matrix(epr[, 1]), tcrossprod(sweep(rws, 1, scale_weights(w))) / 25) * t(as.matrix(epr[, 1]))),
-          covar[1, 1])
+          covar[1, 1]) 
 
 # Period 2
 epr <- chain(epr)
 all.equal(sum(crossprod(as.matrix(epr[, 2]), tcrossprod(sweep(rws, 1, scale_weights(w))) / 25) * t(as.matrix(epr[, 2]))),
-          covar[1, 2])
+          covar[1, 2]) # 0.004125957 according to svymean

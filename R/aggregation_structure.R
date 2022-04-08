@@ -1,17 +1,16 @@
 #---- Make an aggregation structure ----
 aggregation_structure <- function(x, w) {
   x <- lapply(x, as.character)
+  len <- length(x)
+  if (!len || !length(ea <- x[[len]])) {
+    stop(gettext("cannot make an aggregation structure with no elemental aggregates"))
+  }
   if (any(vapply(x, anyNA, logical(1L)))) {
     stop(gettext("'x' cannot contain NAs"))
   }
-  len <- length(x)
-  ea <- if (len) x[[len]]
-  if (!length(ea)) {
-    stop(gettext("cannot make an aggregation structure with no elemental aggregates"))
-  }
   w <- if (missing(w)) rep(1, length(ea)) else as.numeric(w)
   # basic argument checking to make sure inputs can make an aggregation structure
-  if (length(ea) != length(w) || any(lengths(x) != length(w))) {
+  if (any(lengths(x) != length(w))) {
     stop(gettext("all arguments must be the same length"))
   }
   if (anyDuplicated(ea)) {

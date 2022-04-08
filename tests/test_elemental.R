@@ -164,7 +164,7 @@ all.equal(epr$time, epr2$time)
 contrib(epr2)
 
 epr[] <- as.matrix(epr2)
-all.equal(as.matrix(epr), as.matrix(epr2)) # has_contrib is not equal
+all.equal(epr, epr2)
 all.equal(contrib(epr), contrib(epr2))
 all.equal(levels(epr), levels(epr2))
 all.equal(time(epr), time(epr2))
