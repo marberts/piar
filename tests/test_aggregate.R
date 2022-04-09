@@ -39,6 +39,11 @@ all.equal(aggregate(chain(ms_index), ms_pias), chain(ms_index))
 
 all.equal(as.matrix(aggregate(ms_index, ms_pias, na.rm = TRUE)), as.matrix(ms_index))
 
+# A two-step aggregation should give the same result
+pias2 <- aggregation_structure(list(c(1, 1), c(11, 12)), weights(ms_pias)[[2]])
+
+aggregate(ms_index, pias2)
+
 # Aggregating only elementals should just add B5
 ms_epr2 <- aggregate(ms_epr, aggregation_structure(list(ms_weights$business), ms_weights$weight))
 
