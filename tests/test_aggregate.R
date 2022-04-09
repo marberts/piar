@@ -39,6 +39,14 @@ all.equal(aggregate(chain(ms_index), ms_pias), chain(ms_index))
 
 all.equal(as.matrix(aggregate(ms_index, ms_pias, na.rm = TRUE)), as.matrix(ms_index))
 
+# Aggregating only elementals should just add B5
+ms_epr2 <- aggregate(ms_epr, aggregation_structure(list(ms_weights$business), ms_weights$weight))
+
+all.equal(ms_epr, ms_epr2[1:4, ])
+ms_epr2[5, ]
+
+all.equal(contrib(ms_epr), contrib(ms_epr2))
+
 # Re-arranging the index shouldn't do anything
 s <- c(14, 16, 26, 28, 24, 29, 11, 32, 36, 2, 22, 34, 6, 7, 10, 17, 8, 27, 37, 1, 12, 33, 20, 3, 9, 40, 13, 4, 38, 23, 31, 15, 25, 39, 21, 30, 35, 19, 18, 5)
 ms_epr <- with(
