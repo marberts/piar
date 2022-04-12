@@ -69,6 +69,30 @@ end.ind <- function(x, ...) {
   x$time[length(x$time)]
 }
 
+head.ind <- function(x, n = 6L, ...) {
+  nl <- levels <- length(x$levels)
+  np <- periods <- length(x$time)
+  if (!is.na(n[1L])) {
+    nl <- if (n[1L] < 0L) max(levels + n[1L], 0L) else min(n[1L], levels)
+  }
+  if (!is.na(n[2L])) {
+    np <- if (n[2L] < 0L) max(periods + n[2L], 0L) else min(n[2L], periods)
+  }
+  x[seq_len(nl), seq_len(np)]
+}
+
+tail.ind <- function(x, n = 6L, ...) {
+  nl <- levels <- length(x$levels)
+  np <- periods <- length(x$time)
+  if (!is.na(n[1L])) {
+    nl <- if (n[1L] < 0L) max(levels + n[1L], 0L) else min(n[1L], levels)
+  }
+  if (!is.na(n[2L])) {
+    np <- if (n[2L] < 0L) max(periods + n[2L], 0L) else min(n[2L], periods)
+  }
+  x[seq.int(to = levels, length.out = nl), seq.int(to = periods, length.out = np)]
+}
+
 #---- Merge ----
 merge.agg_ind <- function(x, y, ...) {
   x$r <- x$pias <- NULL
@@ -157,14 +181,6 @@ unstack.ind <- function(x, ...) {
 print.ind <- function(x, ...) {
   print(as.matrix(x), ...)
   invisible(x)
-}
-
-head.ind <- function(x, ...) {
-  head(as.matrix(x), ...)
-}
-
-tail.ind <- function(x,  ...) {
-  tail(as.matrix(x), ...)
 }
 
 #---- Summary ----

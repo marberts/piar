@@ -134,6 +134,14 @@ all.equal(as.matrix(mean(epr1, w, window = 12))[, 1],
 all.equal(as.matrix(mean(epr1, w, window = 12))[, 2], 
           diag(as.matrix(epr1)[, 13:24] %*% apply(w[, 13:24], 1, scale_weights)), check.attributes = FALSE)
 
+# Test head/tail
+all.equal(head(epr1, 2), epr1[1:2])
+all.equal(head(epr1, c(-2, 2)), epr1[1:3, 1:2])
+all.equal(head(epr1, c(NA, 2)), epr1[, 1:2])
+all.equal(tail(epr1, 2), epr1[4:5])
+all.equal(tail(epr1, c(-2, 2)), epr1[3:5, 25:26])
+all.equal(tail(epr1, c(NA, 2)), epr1[, 25:26])
+
 # Toy example that can be easily verified
 dat <- data.frame(rel = c(1:6, NA, 7, 8),
                   period = c(1, 1, 1, 1, 1, 2, 2, 2, 2),

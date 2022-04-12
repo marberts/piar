@@ -69,9 +69,9 @@ elemental_index(rel, ...)
 
 \method{end}{ind}(x, ...)
 
-\method{head}{ind}(x, ...)
+\method{head}{ind}(x, n = 6, ...)
 
-\method{tail}{ind}(x, ...)
+\method{tail}{ind}(x, n = 6, ...)
 
 # Coerce
 \method{as.matrix}{ind}(x, ...)
@@ -121,6 +121,8 @@ is_aggregate_index(x)
 \item{window}{The size of the window used to average index values across subperiods. The default (3) turns a monthly index into into a quarterly one.}
 
 \item{i, j, value}{See \link{Extract}, with \code{value} being a numeric vector (or something that can coerced into one.)}
+
+\item{n}{See \code{\link{head}}.}
 
 \item{stringsAsFactors}{See \code{\link{as.data.frame}}.}
 
