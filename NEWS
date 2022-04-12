@@ -6,7 +6,7 @@ Version 0.4.0
 
 - The vcov() method for aggregate indexes is now much faster. The options for parallel computing have been removed, as they're unlikely to be useful for even large indexes.
 
-- The head() and tail() methods for index objects now return an index objects instead of a matrix.
+- The head() and tail() methods for index objects now return an index object instead of a matrix, as documented.
 
 # New features
 

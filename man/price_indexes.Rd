@@ -173,7 +173,7 @@ The \code{merge()} method combines two index objects with common time periods, m
 
 The \code{stack()} method combines two index objects with common levels, stacking index values and quote contributions for each level in \code{y} after those in \code{x}. The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}. These methods can be used in a map-reduce to make an index with multiple aggregation structures (like a Paasche index).
 
-It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging always returns an index of class \code{ind}. If at least one of \code{x} or \code{y} is an aggregate index then result of stacking these indexes is also an aggregate index; otherwise, it is the same class as \code{x}.
+It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging always returns an index of class \code{ind}. If at least one of \code{x} or \code{y} is an aggregate index then the result of stacking these indexes is also an aggregate index; otherwise, it is the same class as \code{x}.
 }
 
 \subsection{Extract}{
