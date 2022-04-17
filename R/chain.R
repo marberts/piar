@@ -7,7 +7,7 @@ chain.default <- function(x, ...) {
   chain(as_index(x), ...)
 }
 
-chain.ind <- function(x, link = rep(1, length(levels(x))), ...) {
+chain.ind <- function(x, link = rep(1, nlevels(x)), ...) {
   if (x$chainable) {
     link <- as.numeric(link)
     if (length(link) != length(x$levels)) {
@@ -54,7 +54,7 @@ rebase.default <- function(x, ...) {
   rebase(as_index(x, chainable = FALSE), ...)
 }
 
-rebase.ind <- function(x, base = rep(1, length(levels(x))), ...) {
+rebase.ind <- function(x, base = rep(1, nlevels(x)), ...) {
   if (!x$chainable) {
     base <- as.numeric(base)
     if (length(base) != length(x$levels)) {

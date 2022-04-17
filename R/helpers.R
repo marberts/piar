@@ -41,6 +41,7 @@ pias2list <- function(x) {
   if (x$height == 1L) return(list(x$eas))
   res <- vector("list", length(x$parent))
   res[[1L]] <- x$parent[[1L]]
+  # walk up the parent nodes to reconstruct the inputs that generated 'x'
   for (i in seq_along(x$parent)[-1L]) {
     res[[i]] <- x$parent[[i]][res[[i - 1L]]]
   }

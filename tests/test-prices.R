@@ -4,7 +4,7 @@ library(piar)
 wd <- getwd()
 
 # Matched sample index
-ms_cyg <- read.csv(file.path(wd, "ms_prices.csv"))
+ms_cyg <- read.csv(file.path(wd, "ms-prices.csv"))
 
 # Replicate the calculation with piar
 pias <- with(
@@ -24,7 +24,7 @@ index <- aggregate(epr, pias, na.rm = TRUE)
 all.equal(as.numeric(as.matrix(chain(index))), ms_cyg$index / 100)
 
 # Fixed sample index
-fs_cyg <- read.csv(file.path(wd, "fs_prices.csv"))
+fs_cyg <- read.csv(file.path(wd, "fs-prices.csv"))
 
 # Reallocate the weights
 weights <- fs_prices[1:11, c(2:3, 5)]

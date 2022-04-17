@@ -24,7 +24,7 @@ chain(x, ...)
 
 \method{chain}{default}(x, ...)
 
-\method{chain}{ind}(x, link = rep(1, length(levels(x))), ...)
+\method{chain}{ind}(x, link = rep(1, nlevels(x)), ...)
 
 unchain(x, ...)
 
@@ -36,7 +36,7 @@ rebase(x, ...)
 
 \method{rebase}{default}(x, ...)
 
-\method{rebase}{ind}(x, base = rep(1, length(levels(x))), ...)
+\method{rebase}{ind}(x, base = rep(1, nlevels(x)), ...)
 
 is_chainable_index(x)
 

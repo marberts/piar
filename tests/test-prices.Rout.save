@@ -21,7 +21,7 @@ Type 'q()' to quit R.
 > wd <- getwd()
 > 
 > # Matched sample index
-> ms_cyg <- read.csv(file.path(wd, "ms_prices.csv"))
+> ms_cyg <- read.csv(file.path(wd, "ms-prices.csv"))
 > 
 > # Replicate the calculation with piar
 > pias <- with(
@@ -42,7 +42,7 @@ Type 'q()' to quit R.
 [1] TRUE
 > 
 > # Fixed sample index
-> fs_cyg <- read.csv(file.path(wd, "fs_prices.csv"))
+> fs_cyg <- read.csv(file.path(wd, "fs-prices.csv"))
 > 
 > # Reallocate the weights
 > weights <- fs_prices[1:11, c(2:3, 5)]
