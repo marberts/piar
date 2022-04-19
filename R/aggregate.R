@@ -61,7 +61,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   structure(x, class = c("agg_ind", "ind"))
 }
 
-#---- Covariance calculation ----
+#---- Variance calculation ----
 vcov.agg_ind <- function(object, repweights, mse = TRUE, ...) {
   repweights <- as.matrix(repweights)
   eas <- object$pias$eas
