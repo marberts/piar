@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: piar 0.3.2.9008\n"
-"POT-Creation-Date: 2022-03-28 23:12\n"
+"Project-Id-Version: piar 0.3.2.9018\n"
+"POT-Creation-Date: 2022-04-21 14:33\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,10 +16,10 @@ msgstr ""
 msgid "'repweights' must have a row for each weight in 'pias'"
 msgstr ""
 
-msgid "'x' cannot contain NAs"
+msgid "cannot make an aggregation structure with no elemental aggregates"
 msgstr ""
 
-msgid "cannot make an aggregation structure with no elemental aggregates"
+msgid "'x' cannot contain NAs"
 msgstr ""
 
 msgid "all arguments must be the same length"

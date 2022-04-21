@@ -72,7 +72,7 @@ Type 'q()' to quit R.
 > # Period 2
 > rws <- apply(rw * weights(update(pias, index, 1), TRUE) / weights$dw, 2, scale_weights)
 > all.equal(sum(crossprod(as.matrix(epr[, 2]), tcrossprod(sweep(rws, 1, rowMeans(rws))) / 25) * t(as.matrix(epr[, 2]))),
-+           covar[1, 2])
++           covar[1, 2]) # 0.003076949 according to svymean
 [1] TRUE
 > 
 > #---- mse = TRUE case ----
@@ -97,7 +97,7 @@ Type 'q()' to quit R.
 > # Period 2
 > rws <- apply(rw * weights(update(pias, index, 1), TRUE) / weights$dw, 2, scale_weights)
 > all.equal(sum(crossprod(as.matrix(epr[, 2]), tcrossprod(sweep(rws, 1, scale_weights(weights(update(pias, index, 1), TRUE)))) / 25) * t(as.matrix(epr[, 2]))),
-+           covar[1, 2])
++           covar[1, 2]) # 0.008153173 according to svymean
 [1] TRUE
 > 
 > #---- chained index ----
@@ -116,7 +116,7 @@ Type 'q()' to quit R.
 > rws <- apply(rw * weights$ew, 2, scale_weights)
 > w <- weights(pias, ea_only = TRUE)
 > all.equal(sum(crossprod(as.matrix(epr[, 1]), tcrossprod(sweep(rws, 1, scale_weights(w))) / 25) * t(as.matrix(epr[, 1]))),
-+           covar[1, 1])
++           covar[1, 1]) # 0.02001844 according to svymean
 [1] TRUE
 > 
 > # Period 2

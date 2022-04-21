@@ -56,4 +56,4 @@ importFrom(stats, aggregate, weights, update, time, start, end)
 importFrom(utils, stack, unstack, head, tail)
 
 importFrom(gpindex, generalized_mean, factor_weights, contributions, 
-           transmute_weights, scale_weights, back_period, nested_mean, nested_contributions)
+           transmute_weights, scale_weights, back_period)
