@@ -75,6 +75,10 @@ levels.pias <- function(x) {
   x$levels
 }
 
+`levels<-.pias` <- function(x, value) {
+  stop("cannot replace levels attribute")
+}
+
 update.pias <- function(object, index, period = end(index), ...) {
   if (!is_aggregate_index(index)) {
     stop(gettext("'index' is not an aggregate index; use aggregate() to make one"))

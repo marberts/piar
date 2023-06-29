@@ -57,6 +57,10 @@ levels.ind <- function(x) {
   x$levels
 }
 
+`levels<-.ind` <- function(x, value) {
+  stop("cannot replace levels attribute")
+}
+
 time.ind <- function(x, ...) {
   x$time
 }
