@@ -1,0 +1,32 @@
+url: https://marberts/github.io/piar
+
+template:
+  bootstrap: 5
+  bootswatch: united
+  
+reference:
+- title: Package overview
+  contents:
+  - piar-package
+  
+- title: Aggregation structure
+  desc: Functions to make and work with price-index aggregation structures
+  contents:
+  - aggregation_structure
+  
+- title: Price indexes
+  desc: Functions to make and work with elemental and aggregated price indexes
+  contents:
+  - price_indexes
+ 
+- title: Utilities
+  desc: Helpful functions for working with prices and price indexes
+  contents:
+  - chain
+  - contrib
+  - impute_prices
+  - price_relative
+  
+- title: Sample data
+  contents:
+  - price_data

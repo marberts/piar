@@ -2,7 +2,7 @@
 title: "Making price indexes"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{making_price_indexes}
+  %\VignetteIndexEntry{Making price indexes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
