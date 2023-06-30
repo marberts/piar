@@ -9,7 +9,6 @@
 \alias{rebase.default}
 \alias{rebase.ind}
 \alias{is_chainable_index}
-\alias{is_chain_index}
 
 \title{
 Chain and rebase a price index
@@ -39,8 +38,6 @@ rebase(x, ...)
 \method{rebase}{ind}(x, base = rep(1, nlevels(x)), ...)
 
 is_chainable_index(x)
-
-is_chain_index(x) # deprecated
 }
 
 \arguments{

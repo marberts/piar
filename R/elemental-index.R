@@ -7,26 +7,27 @@ elemental_index.default <- function(rel, ...) {
   elemental_index(as.numeric(rel), ...)
 }
 
-elemental_index.numeric <- function(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)),
-                                    w, contrib = FALSE, chainable = TRUE, na.rm = FALSE, r = 0, ...) {
+elemental_index.numeric <- 
+  function(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)),
+           w, contrib = FALSE, chainable = TRUE, na.rm = FALSE, r = 0, ...) {
   if (missing(w)) {
     if (different_length(rel, period, ea)) {
-      stop(gettext("'rel', 'period', and 'ea' must be the same length"))
+      stop("'rel', 'period', and 'ea' must be the same length")
     }
   } else {
     if (different_length(rel, period, ea, w)) {
-      stop(gettext("'rel', 'period', 'ea', 'w', must be the same length"))
+      stop("'rel', 'period', 'ea', 'w', must be the same length")
     }
   }
   if (any_negative(rel, if (!missing(w)) w)) {
-    warning(gettext("some elements of 'rel or 'w' are less than or equal to 0"))
+    warning("some elements of 'rel or 'w' are less than or equal to 0")
   }
   period <- as.factor(period)
   ea <- as.factor(ea) # ensures elemental aggregates are balanced
   periods <- levels(period)
   eas <- levels(ea)
-  if (!(nlevels(period) && nlevels(ea))) {
-    stop(gettext("cannot make an index with no periods or elemental aggregates"))
+  if (nlevels(period) == 0L || nlevels(ea) == 0L) {
+    stop("cannot make an index with no periods or elemental aggregates")
   }
   if (contrib && is.null(names(rel))) {
     names(rel) <- sequential_names(ea, period)

@@ -1,3 +1,13 @@
+# Version 0.5.0
+
+## Significant changes
+
+- `is_chain_index()` has been removed; use `is_chainable_index()` instead.
+
+## Improvements
+
+- The `levels()` replacement function now gives an error for indexes and aggregation structures, rather than adding a levels attribute that does nothing. 
+
 # Version 0.4.0
 
 ## Significant changes

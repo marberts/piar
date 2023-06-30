@@ -11,7 +11,7 @@ chain.ind <- function(x, link = rep(1, nlevels(x)), ...) {
   if (x$chainable) {
     link <- as.numeric(link)
     if (length(link) != length(x$levels)) {
-      stop(gettext("'link' must have a value for each level of 'x'"))
+      stop("'link' must have a value for each level of 'x'")
     }
     x$chainable <- FALSE
     x$index[[1L]] <- x$index[[1L]] * link
@@ -58,7 +58,7 @@ rebase.ind <- function(x, base = rep(1, nlevels(x)), ...) {
   if (!x$chainable) {
     base <- as.numeric(base)
     if (length(base) != length(x$levels)) {
-      stop(gettext("'base' must have a value for each level of 'x'"))
+      stop("'base' must have a value for each level of 'x'")
     }
     x$index[] <- Map(`/`, x$index, list(base))
     # contributions are difficult to rebase, so remove them
@@ -72,9 +72,4 @@ rebase.ind <- function(x, base = rep(1, nlevels(x)), ...) {
 #---- Test ----
 is_chainable_index <- function(x) {
   is_index(x) && x$chainable
-}
-
-is_chain_index <- function(x) {
-  warning(gettext("'is_chain_index()' is deprecated; use 'is_chainable_index()' instead"))
-  is_chainable_index(x)
 }

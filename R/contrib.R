@@ -4,7 +4,9 @@ contrib <- function(x, ...) {
 }
 
 contrib.ind <- function(x, level = levels(x), ...) {
-  if (!x$has_contrib) return(NULL)
+  if (!x$has_contrib) {
+    return(NULL)
+  }
   level <- as.character(level)
   con <- lapply(x$contrib, `[[`, match.arg(level))
   products <- unique(nested_names(con))

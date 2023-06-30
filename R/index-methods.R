@@ -2,7 +2,9 @@
 as.data.frame.ind <- function(x, ..., stringsAsFactors = FALSE) {
   value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))
-  data.frame(period, level = x$levels, value, stringsAsFactors = stringsAsFactors)
+  data.frame(
+    period, level = x$levels, value, stringsAsFactors = stringsAsFactors
+  )
 }
 
 as.matrix.ind <- function(x, ...) {
@@ -17,8 +19,8 @@ as.double.ind <- function(x, ...) {
 `[.ind` <- function(x, i, j) {
   # get the row/col names that form the submatrix for extraction
   dnm <- dimnames(as.matrix(x)[i, j, drop = FALSE])
-  if (!all(lengths(dnm))) {
-    stop(gettext("cannot extract no levels/time periods from 'x'"))
+  if (!all(lengths(dnm) > 0L)) {
+    stop("cannot extract no levels/time periods from 'x'")
   }
   levels <- dnm[[1L]]
   periods <- dnm[[2L]]
@@ -77,10 +79,18 @@ head.ind <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {
-    nl <- if (n[1L] < 0L) max(levels + n[1L], 0L) else min(n[1L], levels)
+    nl <- if (n[1L] < 0L) {
+      max(levels + n[1L], 0L)
+    } else {
+      min(n[1L], levels)
+    }
   }
   if (!is.na(n[2L])) {
-    np <- if (n[2L] < 0L) max(periods + n[2L], 0L) else min(n[2L], periods)
+    np <- if (n[2L] < 0L) {
+      max(periods + n[2L], 0L)
+    } else {
+      min(n[2L], periods)
+    }
   }
   x[seq_len(nl), seq_len(np)]
 }
@@ -89,12 +99,22 @@ tail.ind <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {
-    nl <- if (n[1L] < 0L) max(levels + n[1L], 0L) else min(n[1L], levels)
+    nl <- if (n[1L] < 0L) {
+      max(levels + n[1L], 0L)
+    } else {
+      min(n[1L], levels)
+    }
   }
   if (!is.na(n[2L])) {
-    np <- if (n[2L] < 0L) max(periods + n[2L], 0L) else min(n[2L], periods)
+    np <- if (n[2L] < 0L) {
+      max(periods + n[2L], 0L)
+    } else {
+      min(n[2L], periods)
+    }
   }
-  x[seq.int(to = levels, length.out = nl), seq.int(to = periods, length.out = np)]
+  i <- seq.int(to = levels, length.out = nl)
+  j <- seq.int(to = periods, length.out = np)
+  x[i, j]
 }
 
 #---- Merge ----
@@ -109,13 +129,13 @@ merge.ind <- function(x, y, ...) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
   if (!identical(x$time, y$time)) {
-    stop(gettext("'x' and 'y' must be indexes for the same time periods"))
+    stop("'x' and 'y' must be indexes for the same time periods")
   }
   if (any(x$levels %in% y$levels)) {
-    stop(gettext("the same levels appear in both 'x' and 'y'"))
+    stop("the same levels appear in both 'x' and 'y'")
   }
   if (x$chainable != y$chainable) {
-    stop(gettext("cannot merge a fixed-base and period-over-period index"))
+    stop("cannot merge a fixed-base and period-over-period index")
   }
   # loop over time periods and combine index values/contributions
   x$index <- Map(c, x$index, y$index)
@@ -130,10 +150,10 @@ merge.ind <- function(x, y, ...) {
 stack.agg_ind <- function(x, y, ...) {
   if (is_aggregate_index(y)) {
     if (x$r != y$r) {
-      stop(gettext("cannot stack indexes of different orders"))
+      stop("cannot stack indexes of different orders")
     }
     if (!identical(x$pias, y$pias)) {
-      stop(gettext("'x' and 'y' must be generated from the same aggregation structure"))
+      stop("'x' and 'y' must be generated from the same aggregation structure")
     }
   }
   NextMethod("stack")
@@ -141,20 +161,21 @@ stack.agg_ind <- function(x, y, ...) {
 
 stack.ind <- function(x, y, ...) {
   if (!is_index(y)) {
-    stop(gettext("'y' is not an index; use elemental_index() to make one"))
+    stop("'y' is not an index; use elemental_index() to make one")
   }
   if (!identical(x$levels, y$levels)) {
-    stop(gettext("'x' and 'y' must be indexes for the same levels"))
+    stop("'x' and 'y' must be indexes for the same levels")
   }
   if (any(x$time %in% y$time)) {
-    stop(gettext("the same periods appear in both 'x' and 'y'"))
+    stop("the same periods appear in both 'x' and 'y'")
   }
   if (x$chainable != y$chainable) {
-    stop(gettext("cannot stack a period-over-period and a fixed-base index"))
+    stop("cannot stack a period-over-period and a fixed-base index")
   }
   x$index <- c(x$index, y$index)
   x$contrib <- c(x$contrib, y$contrib)
-  # it's safe to use c() and not union() because there can't be duplicate periods
+  # it's safe to use c() and not union() because there can't be duplicate
+  # periods
   x$time <- c(x$time, y$time)
   x$has_contrib <- x$has_contrib || y$has_contrib
   if (is_aggregate_index(y)) {
@@ -209,17 +230,16 @@ print.ind_summary <- function(x, ...) {
 
 #---- Averaging ----
 mean.ind <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
-  index <- x$index
   if (!missing(w)) {
     if (length(w) != length(x$time) * length(x$levels)) {
-      stop(gettext("'x' and 'w' must be the same length"))
+      stop("'x' and 'w' must be the same length")
     }
     w <- split(w, gl(length(x$time), length(x$levels)))
   }
   gen_mean <- Vectorize(generalized_mean(r))
   len <- length(x$time) %/% window
-  if (!len) {
-    stop(gettext("'x' must have at least 'window' time periods"))
+  if (len == 0L) {
+    stop("'x' must have at least 'window' time periods")
   }
   # get the starting location for each window
   loc <- seq(1L, by = window, length.out = len)
@@ -228,12 +248,12 @@ mean.ind <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
   # loop over each window and calculate the mean for each level
   for (i in seq_along(loc)) {
     j <- seq(loc[i], length.out = window)
+    # structure() is needed because .mapply doesn't keep names
+    index <- structure(.mapply(c, x$index[j], list()), names = x$levels)
     res[[i]] <- if (missing(w)) {
-      # structure() is needed because .mapply doesn't keep names
-      gen_mean(structure(.mapply(c, index[j], list()), names = x$levels), na.rm = na.rm)
+      gen_mean(index, na.rm = na.rm)
     } else {
-      gen_mean(structure(.mapply(c, index[j], list()), names = x$levels), 
-               .mapply(c, w[j], list()), na.rm = na.rm)
+      gen_mean(index, .mapply(c, w[j], list()), na.rm = na.rm)
     }
   }
   contrib[] <- empty_contrib(x$levels)
