@@ -1,23 +1,32 @@
 #---- Make an aggregation structure ----
-aggregation_structure <- function(x, w) {
+aggregation_structure <- function(x, w = NULL) {
   x <- lapply(x, as.character)
   len <- length(x)
-  if (!len || !length(ea <- x[[len]])) {
-    stop(gettext("cannot make an aggregation structure with no elemental aggregates"))
+  ea <- unlist(x[len], use.names = FALSE)
+  if (length(ea) == 0L) {
+    stop("cannot make an aggregation structure with no elemental aggregates")
   }
   if (any(vapply(x, anyNA, logical(1L)))) {
-    stop(gettext("'x' cannot contain NAs"))
+    stop("'x' cannot contain NAs")
   }
-  w <- if (missing(w)) rep(1, length(ea)) else as.numeric(w)
-  # basic argument checking to make sure inputs can make an aggregation structure
+
+  w <- if (is.null(w)) {
+    rep(1, length(ea))
+  } else {
+    as.numeric(w)
+  }
+  # basic argument checking to make sure inputs can make an
+  # aggregation structure
   if (any(lengths(x) != length(w))) {
-    stop(gettext("all arguments must be the same length"))
+    stop("all arguments must be the same length")
   }
   if (anyDuplicated(ea)) {
-    stop(gettext("there are duplicated elemental aggregates; the last vector in 'x' should not have duplicates"))
+    stop("there are duplicated elemental aggregates; the last vector in 'x' ",
+         "should not have duplicates")
   }
   if (anyDuplicated(unlist(lapply(x, unique), use.names = FALSE))) {
-    stop(gettext("there are duplicated nodes in the aggregation structure; the same value cannot appear across multiple levels of 'x'"))
+    stop("there are duplicated nodes in the aggregation structure; the same ",
+         "value cannot appear across multiple levels of 'x'")
   }
   upper <- x[-len] # nodes above eas
   lower <- x[-1L] # nodes below initial nodes
@@ -28,7 +37,9 @@ aggregation_structure <- function(x, w) {
     parent[[i]] <- lapply(split(upper[[len - i]], lower[[len - i]]), unique)
   }
   if (any(lengths(unlist(parent, recursive = FALSE)) > 1L)) {
-    warning(gettext("some nodes in the price index aggregation structure have multiple parent nodes; the aggregation structure does not represent a nested hierarchy"))
+    warning("some nodes in the price index aggregation structure have ",
+            "multiple parent nodes; the aggregation structure does not ",
+            "represent a nested hierarchy")
   }
   parent <- lapply(parent, unlist)
   # positional matching for child nodes is much faster for aggregation
@@ -42,7 +53,7 @@ aggregation_structure <- function(x, w) {
     names(parent[[i]]) <- nm[[i]]
   }
   # return 'pias' object
-  res <- list(child = child, 
+  res <- list(child = child,
               parent = parent,
               levels = c(nested_names(rev(child)), ea),
               eas = ea,
@@ -53,15 +64,17 @@ aggregation_structure <- function(x, w) {
 
 #---- Methods ----
 weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
-  if (ea_only) return(object$weights)
+  if (ea_only) {
+    return(object$weights)
+  }
   res <- vector("list", object$height)
   res[[1L]] <- object$weights
   # 'i' is defined in the loop below for looping over the height of pias
-  add_weights <- function(z) {
+  add_weights <- function(z, i) {
     sum(res[[i - 1L]][z], na.rm = na.rm)
   }
   for (i in seq_along(res)[-1L]) {
-    res[[i]] <- vapply(object$child[[i - 1L]], add_weights, numeric(1L))
+    res[[i]] <- vapply(object$child[[i - 1L]], add_weights, numeric(1L), i)
   }
   rev(res)
 }
@@ -81,11 +94,11 @@ levels.pias <- function(x) {
 
 update.pias <- function(object, index, period = end(index), ...) {
   if (!is_aggregate_index(index)) {
-    stop(gettext("'index' is not an aggregate index; use aggregate() to make one"))
+    stop("'index' is not an aggregate index; use aggregate() to make one")
   }
   price_update <- factor_weights(index$r)
   if (!all(object$levels %in% index$levels)) {
-    warning(gettext("not all weights in 'object' have a corresponding index value"))
+    warning("not all weights in 'object' have a corresponding index value")
   }
   epr <- as.matrix(chain(index))[, period[1L]] # drop dimensions
   object$weights[] <- price_update(epr[object$eas], object$weights)
@@ -103,9 +116,10 @@ as.matrix.pias <- function(x, ...) {
   rows <- vector("list", length(lev))
   # generate the rows for each level of the matrix and rbind together
   for (i in seq_along(rows)) {
-    mat <- matrix(0, nrow = nlevels(lev[[i]]), ncol = nea, 
+    mat <- matrix(0, nrow = nlevels(lev[[i]]), ncol = nea,
                   dimnames = list(levels(lev[[i]]), x$eas))
-    # splitting orders the rows of the matrix the same as the aggregation structure
+    # splitting orders the rows of the matrix the same as the aggregation
+    # structure
     cols <- split(loc, lev[[i]])
     w <- split(x$weights, lev[[i]])
     for (r in seq_len(nrow(mat))) {
@@ -117,9 +131,8 @@ as.matrix.pias <- function(x, ...) {
 }
 
 as.data.frame.pias <- function(x, ..., stringsAsFactors = FALSE) {
-  # could use recycle0 = TRUE in paste0
-  colnames <- c(if (length(x$child)) paste0("level", seq_along(x$child)), "ea")
-  res <- as.data.frame(pias2list(x), 
+  colnames <- c(paste0("level", seq_along(x$child), recycle0 = TRUE), "ea")
+  res <- as.data.frame(pias2list(x),
                        col.names = colnames,
                        stringsAsFactors = stringsAsFactors)
   res$weight <- x$weight
@@ -127,15 +140,19 @@ as.data.frame.pias <- function(x, ..., stringsAsFactors = FALSE) {
 }
 
 #---- Expand classification ----
-expand_classification <- function(class, width) {
+expand_classification <- function(class, width = 1L) {
   class <- as.character(class)
-  width <- if (missing(width)) {
-    rep(1L, max(nchar(class), 0L, na.rm = TRUE))
-  } else {
-    as.numeric(width)
+  width <- as.integer(width)
+  if (any(width <= 0)) {
+    stop("'width' must be strictly positive")
   }
   if (anyNA(width)) {
-    stop(gettext("'width' cannot contain NAs"))
+    stop("'width' cannot contain NAs")
+  }
+
+  if (length(width) == 1L) {
+    longest <- max(nchar(class), 0L, na.rm = TRUE)
+    width <- rep_len(width, ceiling(longest / width))
   }
   w <- cumsum(width)
   class <- strsplit(class, character(0L), fixed = TRUE)

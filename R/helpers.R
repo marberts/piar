@@ -1,5 +1,13 @@
 # None of these functions are exported
 
+as_TorF <- function(x) {
+  x <- as.logical(x)[1L]
+  if (is.na(x)) {
+    stop("cannot coerce NA to TRUE or FALSE")
+  }
+  x
+}
+
 different_length <- function(...) {
   res <- lengths(list(...))
   any(res != res[1L])

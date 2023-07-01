@@ -15,7 +15,7 @@ Create a price index aggregation structure from a hierarchical classification an
 }
 
 \usage{
-aggregation_structure(x, w)
+aggregation_structure(x, w = NULL)
 
 \method{weights}{pias}(object, ea_only = FALSE, na.rm = FALSE, ...)
 
@@ -25,7 +25,7 @@ aggregation_structure(x, w)
 
 \method{as.data.frame}{pias}(x, ..., stringsAsFactors = FALSE)
 
-expand_classification(class, width)
+expand_classification(class, width = 1)
 }
 
 \arguments{
@@ -45,9 +45,9 @@ expand_classification(class, width)
 
 \item{class}{A character vector, or something that can be coerced into one, of codes/labels for a specific level in a classification (e.g., 5-digit COICOP, 5-digit NAICS, 4-digit SIC).}
 
-\item{width}{A numeric vector that gives the width of each digit in \code{x}. This cannot contain NAs. The default assumes each digit has a width of 1, as in the NAICS, NAPCS, and SIC classifications.}
+\item{width}{An integer vector that gives the width of each digit in \code{x}. A single value is recycled to span the longest element in \code{class}. This cannot contain NAs. The default assumes each digit has a width of 1, as in the NAICS, NAPCS, and SIC classifications.}
 
-\item{stringsAsFactors}{See \code{\link{as.data.frame}}}.
+\item{stringsAsFactors}{See \code{\link{as.data.frame}}.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
@@ -121,5 +121,5 @@ expand_classification(c("111", "112", "121"), width = c(2, 1))
 
 # ...if there are delimiters in the classification (like COICOP)
 
-expand_classification(c("01.1.1", "01.1.2", "01.2.1"), width = c(2, 2, 2))
+expand_classification(c("01.1.1", "01.1.2", "01.2.1"), width = 2)
 }

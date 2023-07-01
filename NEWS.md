@@ -8,6 +8,8 @@
 
 - The `levels()` replacement function now gives an error for indexes and aggregation structures, rather than adding a levels attribute that does nothing. 
 
+- The `width` argument for `expand_classification()` now recycles with a single value.
+
 # Version 0.4.0
 
 ## Significant changes

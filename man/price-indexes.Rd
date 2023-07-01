@@ -39,7 +39,7 @@ elemental_index(rel, ...)
 \method{elemental_index}{default}(rel, ...)
 
 \method{elemental_index}{numeric}(rel, period = gl(1, length(rel)), 
-                ea = gl(1, length(rel)), w, contrib = FALSE, 
+                ea = gl(1, length(rel)), w = NULL, contrib = FALSE, 
                 chainable = TRUE, na.rm = FALSE, r = 0, ...)
                             
 # Aggregate

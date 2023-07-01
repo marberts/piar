@@ -7,10 +7,11 @@ elemental_index.default <- function(rel, ...) {
   elemental_index(as.numeric(rel), ...)
 }
 
-elemental_index.numeric <- 
-  function(rel, period = gl(1, length(rel)), ea = gl(1, length(rel)),
-           w, contrib = FALSE, chainable = TRUE, na.rm = FALSE, r = 0, ...) {
-  if (missing(w)) {
+elemental_index.numeric <-
+  function(rel,
+           period = gl(1, length(rel)), ea = gl(1, length(rel)), w = NULL,
+           contrib = FALSE, chainable = TRUE, na.rm = FALSE, r = 0, ...) {
+  if (is.null(w)) {
     if (different_length(rel, period, ea)) {
       stop("'rel', 'period', and 'ea' must be the same length")
     }
@@ -19,13 +20,17 @@ elemental_index.numeric <-
       stop("'rel', 'period', 'ea', 'w', must be the same length")
     }
   }
-  if (any_negative(rel, if (!missing(w)) w)) {
+  if (any_negative(rel, w)) {
     warning("some elements of 'rel or 'w' are less than or equal to 0")
   }
+
+  contrib <- as_TorF(contrib)
+  chainable <- as_TorF(chainable)
   period <- as.factor(period)
   ea <- as.factor(ea) # ensures elemental aggregates are balanced
   periods <- levels(period)
   eas <- levels(ea)
+
   if (nlevels(period) == 0L || nlevels(ea) == 0L) {
     stop("cannot make an index with no periods or elemental aggregates")
   }
@@ -41,19 +46,20 @@ elemental_index.numeric <-
   # nested list of relatives
   index_fun <- Vectorize(generalized_mean(r))
   contrib_fun <- Vectorize(contributions(r), SIMPLIFY = FALSE)
-  # unweighted calculation
-  if (missing(w)) {
-    index <- Map(index_fun, rel, na.rm = na.rm)
-    contributions <- if (contrib) Map(contrib_fun, rel)
-  # weighted calculation
+
+  w <- if (is.null(w)) {
+    list(list(NULL))
   } else {
-    w <- Map(split, split(w, period), ea)
-    index <- Map(index_fun, rel, w, na.rm = na.rm)
-    contributions <- if (contrib) Map(contrib_fun, rel, w)
+    Map(split, split(w, period), ea)
+  }
+
+  index <- Map(index_fun, rel, w, na.rm = na.rm)
+  contributions <- if (contrib) {
+    Map(contrib_fun, rel, w)
   }
   # mimic contributions structure instead of a NULL
   if (!contrib) {
-    contributions <- rep(empty_contrib(eas), nlevels(period))
+    contributions <- rep.int(empty_contrib(eas), nlevels(period))
     names(contributions) <- periods
   }
   # return 'ind' object
