@@ -69,18 +69,17 @@ weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
   }
   res <- vector("list", object$height)
   res[[1L]] <- object$weights
-  # 'i' is defined in the loop below for looping over the height of pias
-  add_weights <- function(z, i) {
-    sum(res[[i - 1L]][z], na.rm = na.rm)
-  }
+
   for (i in seq_along(res)[-1L]) {
-    res[[i]] <- vapply(object$child[[i - 1L]], add_weights, numeric(1L), i)
+    res[[i]] <- vapply(object$child[[i - 1L]], 
+                       \(z) sum(res[[i - 1L]][z], na.rm = na.rm), 
+                       numeric(1L))
   }
   rev(res)
 }
 
 print.pias <- function(x, ...) {
-  print(c(rev(lapply(x$child, names)), if (x$height) list(x$eas)))
+  print(c(rev(lapply(x$child, names)), if (x$height > 0L) list(x$eas)))
   invisible(x)
 }
 

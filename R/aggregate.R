@@ -4,24 +4,13 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     stop("'pias' must be a price index aggregation structure; use ",
          "aggregation_structure() to make one")
   }
+  r <- as.numeric(r)
+
   # helpful functions
   price_update <- factor_weights(r)
   gen_mean <- generalized_mean(r)
   aw <- transmute_weights(r, 1)
-  # functions to aggregate index values and contributions
-  # 'i' is defined in the loop below; it's used to loop over the height of
-  # 'pias'
-  aggregate_index <- function(z, i) {
-    gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm)
-  }
-  aggregate_contrib <- if (x$has_contrib) {
-    function(z, i, con) {
-      unlist(Map("*", con[[i - 1L]][z],
-                 scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))))
-    }
-  } else {
-    function(z, i, con) numeric(0L)
-  }
+
   # put the aggregation weights upside down to line up with pias
   w <- rev(weights(pias, na.rm = na.rm))
   # loop over each time period
@@ -32,15 +21,25 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     rel[[1L]] <- named_extract(x$index[[t]], pias$eas)
     con[[1L]] <- named_extract(x$contrib[[t]], pias$eas)
     # get rid of any NULL contributions
-    con[[1L]][!lengths(con[[1L]])] <- list(numeric(0L))
+    con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     # re-aggregate price-updated weights for all periods after first
     if (t > 1L && x$chainable) {
       w <- rev(weights(pias, na.rm = na.rm))
     }
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
-      rel[[i]] <- vapply(pias$child[[i - 1L]], aggregate_index, numeric(1L), i)
-      con[[i]] <- lapply(pias$child[[i - 1L]], aggregate_contrib, i, con)
+      rel[[i]] <- vapply(
+        pias$child[[i - 1L]],
+        \(z) gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm),
+        numeric(1L)
+      )
+      con[[i]] <- lapply(
+        pias$child[[i - 1L]],
+        \(z) {
+          w <- scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))
+          unlist(Map("*", con[[i - 1L]][z], w))
+        }
+      )
     }
     # parental imputation
     if (na.rm) {
@@ -59,7 +58,7 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     }
   }
   x$levels <- pias$levels
-  x$r <- as.numeric(r)
+  x$r <- r
   x$pias <- pias[c("child", "parent", "eas", "height")]
   structure(x, class = c("agg_ind", "ind"))
 }
