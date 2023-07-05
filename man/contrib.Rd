@@ -1,19 +1,19 @@
 \name{contrib}
 \alias{contrib}
-\alias{contrib.ind}
+\alias{contrib.pindex}
 
 \title{
-Extract quote contributions
+Extract percent-change contributions
 }
 
 \description{
-Extract quote contributions from an index object.
+Extract percent-change contributions from an index object.
 }
 
 \usage{
 contrib(x, ...)
 
-\method{contrib}{ind}(x, level = levels(x), ...)
+\method{contrib}{pindex}(x, level = levels(x), ...)
 
 }
 
@@ -26,9 +26,9 @@ contrib(x, ...)
 }
 
 \value{
-A matrix of quote contributions with a column for each \code{period} and a row for each product in \code{level}. Contributions are padded with 0 to fit into a rectangular array when products differ over time.
+A matrix of percent-change contributions with a column for each \code{period} and a row for each product in \code{level}. Contributions are padded with 0 to fit into a rectangular array when products differ over time.
 
-If \code{x} does not have quote contributions then the result is \code{NULL}.
+If \code{x} does not have contributions then the result is \code{NULL}.
 }
 
 \seealso{
@@ -44,7 +44,7 @@ pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:
 
 index <- aggregate(epr, pias, na.rm = TRUE)
 
-# Quote contributions for the top-level index
+# Percent-change contributions for the top-level index
 contrib(index)
 
 # Calculate EA contributions for the chained index

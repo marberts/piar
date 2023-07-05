@@ -1,8 +1,8 @@
 #---- Make an aggregation structure ----
 aggregation_structure <- function(x, w = NULL) {
-  x <- lapply(x, as.character)
+  x <- lapply(x, as.factor)
   len <- length(x)
-  ea <- unlist(x[len], use.names = FALSE)
+  ea <- as.character(unlist(x[len], use.names = FALSE))
   if (length(ea) == 0L) {
     stop("cannot make an aggregation structure with no elemental aggregates")
   }
@@ -11,10 +11,12 @@ aggregation_structure <- function(x, w = NULL) {
   }
 
   w <- if (is.null(w)) {
-    rep(1, length(ea))
+    rep.int(1, length(ea))
   } else {
     as.numeric(w)
   }
+  names(w) <- ea
+
   # basic argument checking to make sure inputs can make an
   # aggregation structure
   if (any(lengths(x) != length(w))) {
@@ -33,8 +35,8 @@ aggregation_structure <- function(x, w = NULL) {
   child <- parent <- vector("list", len)[-1L]
   # produce a list for each level with all the parent and child nodes
   for (i in seq_along(upper)) {
-    child[[i]] <- lapply(split(lower[[len - i]], upper[[len - i]]), unique)
-    parent[[i]] <- lapply(split(upper[[len - i]], lower[[len - i]]), unique)
+    child[[i]] <- lapply(split(as.character(lower[[len - i]]), upper[[len - i]]), unique)
+    parent[[i]] <- lapply(split(as.character(upper[[len - i]]), lower[[len - i]]), unique)
   }
   if (any(lengths(unlist(parent, recursive = FALSE)) > 1L)) {
     warning("some nodes in the price index aggregation structure have ",
@@ -57,7 +59,7 @@ aggregation_structure <- function(x, w = NULL) {
               parent = parent,
               levels = c(nested_names(rev(child)), ea),
               eas = ea,
-              weights = structure(w, names = ea),
+              weights = w,
               height = len)
   structure(res, class = "pias")
 }
@@ -71,11 +73,20 @@ weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
   res[[1L]] <- object$weights
 
   for (i in seq_along(res)[-1L]) {
-    res[[i]] <- vapply(object$child[[i - 1L]], 
-                       \(z) sum(res[[i - 1L]][z], na.rm = na.rm), 
+    res[[i]] <- vapply(object$child[[i - 1L]],
+                       \(z) sum(res[[i - 1L]][z], na.rm = na.rm),
                        numeric(1L))
   }
   rev(res)
+}
+
+`weights<-` <- function(object, value) {
+  UseMethod("weights<-")
+}
+
+`weights<-.pias` <- function(object, value) {
+  object$weights[] <- as.numeric(value)
+  object
 }
 
 print.pias <- function(x, ...) {
@@ -100,7 +111,7 @@ update.pias <- function(object, index, period = end(index), ...) {
     warning("not all weights in 'object' have a corresponding index value")
   }
   epr <- as.matrix(chain(index))[, period[1L]] # drop dimensions
-  object$weights[] <- price_update(epr[object$eas], object$weights)
+  weights(object) <- price_update(epr[object$eas], object$weights)
   object
 }
 
@@ -136,28 +147,6 @@ as.data.frame.pias <- function(x, ..., stringsAsFactors = FALSE) {
                        stringsAsFactors = stringsAsFactors)
   res$weight <- x$weight
   res
-}
-
-#---- Expand classification ----
-expand_classification <- function(class, width = 1L) {
-  class <- as.character(class)
-  width <- as.integer(width)
-  if (any(width <= 0)) {
-    stop("'width' must be strictly positive")
-  }
-  if (anyNA(width)) {
-    stop("'width' cannot contain NAs")
-  }
-
-  if (length(width) == 1L) {
-    longest <- max(nchar(class), 0L, na.rm = TRUE)
-    width <- rep_len(width, ceiling(longest / width))
-  }
-  w <- cumsum(width)
-  class <- strsplit(class, character(0L), fixed = TRUE)
-  lapply(w, function(i) {
-    vapply(class, paste_until, character(1L), i)
-  })
 }
 
 #---- Test ----

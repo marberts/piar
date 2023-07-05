@@ -2,7 +2,7 @@
 \alias{carry_forward}
 \alias{shadow_price}
 
-\title{Impute prices}
+\title{Impute missing prices}
 
 \description{
 Impute missing prices using the carry forward or shadow price method.

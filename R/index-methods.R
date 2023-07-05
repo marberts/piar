@@ -1,5 +1,5 @@
 #---- Coerce ----
-as.data.frame.ind <- function(x, ..., stringsAsFactors = FALSE) {
+as.data.frame.pindex <- function(x, ..., stringsAsFactors = FALSE) {
   value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))
   data.frame(
@@ -7,16 +7,16 @@ as.data.frame.ind <- function(x, ..., stringsAsFactors = FALSE) {
   )
 }
 
-as.matrix.ind <- function(x, ...) {
+as.matrix.pindex <- function(x, ...) {
   do.call(cbind, x$index)
 }
 
-as.double.ind <- function(x, ...) {
+as.double.pindex <- function(x, ...) {
   as.double(as.matrix(x))
 }
 
 #---- Extract ----
-`[.ind` <- function(x, i, j) {
+`[.pindex` <- function(x, i, j) {
   # get the row/col names that form the submatrix for extraction
   dnm <- dimnames(as.matrix(x)[i, j, drop = FALSE])
   if (!all(lengths(dnm) > 0L)) {
@@ -30,14 +30,14 @@ as.double.ind <- function(x, ...) {
   # remove aggregate components if any rows are dropped
   if (!identical(levels, x$levels)) {
     x$r <- x$pias <- NULL
-    class(x) <- "ind"
+    class(x) <- "pindex"
   }
   x$levels <- levels
   x$time <- periods
   x
 }
 
-`[<-.ind` <- function(x, i, j, value) {
+`[<-.pindex` <- function(x, i, j, value) {
   res <- as.matrix(x)
   res[i, j] <- as.numeric(value)
   periods <- colnames(res[0L, j, drop = FALSE])
@@ -55,27 +55,27 @@ as.double.ind <- function(x, ...) {
   x
 }
 
-levels.ind <- function(x) {
+levels.pindex <- function(x) {
   x$levels
 }
 
-`levels<-.ind` <- function(x, value) {
+`levels<-.pindex` <- function(x, value) {
   stop("cannot replace levels attribute")
 }
 
-time.ind <- function(x, ...) {
+time.pindex <- function(x, ...) {
   x$time
 }
 
-start.ind <- function(x, ...) {
+start.pindex <- function(x, ...) {
   x$time[1L]
 }
 
-end.ind <- function(x, ...) {
+end.pindex <- function(x, ...) {
   x$time[length(x$time)]
 }
 
-head.ind <- function(x, n = 6L, ...) {
+head.pindex <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {
@@ -95,7 +95,7 @@ head.ind <- function(x, n = 6L, ...) {
   x[seq_len(nl), seq_len(np)]
 }
 
-tail.ind <- function(x, n = 6L, ...) {
+tail.pindex <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {
@@ -118,13 +118,13 @@ tail.ind <- function(x, n = 6L, ...) {
 }
 
 #---- Merge ----
-merge.agg_ind <- function(x, y, ...) {
+merge.agg_pindex <- function(x, y, ...) {
   x$r <- x$pias <- NULL
-  class(x) <- "ind"
+  class(x) <- "pindex"
   NextMethod("merge")
 }
 
-merge.ind <- function(x, y, ...) {
+merge.pindex <- function(x, y, ...) {
   if (!is_index(y)) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
@@ -147,7 +147,7 @@ merge.ind <- function(x, y, ...) {
 }
 
 #---- Stack ----
-stack.agg_ind <- function(x, y, ...) {
+stack.agg_pindex <- function(x, y, ...) {
   if (is_aggregate_index(y)) {
     if (x$r != y$r) {
       stop("cannot stack indexes of different orders")
@@ -159,7 +159,7 @@ stack.agg_ind <- function(x, y, ...) {
   NextMethod("stack")
 }
 
-stack.ind <- function(x, y, ...) {
+stack.pindex <- function(x, y, ...) {
   if (!is_index(y)) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
@@ -181,12 +181,12 @@ stack.ind <- function(x, y, ...) {
   if (is_aggregate_index(y)) {
     x$r <- y$r
     x$pias <- y$pias
-    class(x) <- c("agg_ind", "ind")
+    class(x) <- c("agg_pindex", "pindex")
   }
   x
 }
 
-unstack.ind <- function(x, ...) {
+unstack.pindex <- function(x, ...) {
   res <- vector("list", length(x$time))
   for (i in seq_along(res)) {
     res[[i]]$index <- x$index[i]
@@ -203,22 +203,22 @@ unstack.ind <- function(x, ...) {
 }
 
 #---- Printing ----
-print.ind <- function(x, ...) {
+print.pindex <- function(x, ...) {
   print(as.matrix(x), ...)
   invisible(x)
 }
 
 #---- Summary ----
-summary.ind <- function(object, ...) {
+summary.pindex <- function(object, ...) {
   res <- structure(vector("list", 2L), names = c("index", "contrib"))
   res$index <- summary.data.frame(object$index, ...)
   res$contrib <- if (object$has_contrib) {
     summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
   }
-  structure(res, class = "ind_summary")
+  structure(res, class = "pindex_summary")
 }
 
-print.ind_summary <- function(x, ...) {
+print.pindex_summary <- function(x, ...) {
   cat("Indexes\n")
   print(x$index)
   if (!is.null(x$contrib)) {
@@ -229,7 +229,7 @@ print.ind_summary <- function(x, ...) {
 }
 
 #---- Averaging ----
-mean.ind <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
+mean.pindex <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
   if (!missing(w)) {
     if (length(w) != length(x$time) * length(x$levels)) {
       stop("'x' and 'w' must be the same length")

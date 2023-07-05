@@ -1,5 +1,5 @@
 #---- Aggregate an index ----
-aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   if (!is_pias(pias)) {
     stop("'pias' must be a price index aggregation structure; use ",
          "aggregation_structure() to make one")
@@ -33,13 +33,18 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
         \(z) gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm),
         numeric(1L)
       )
-      con[[i]] <- lapply(
-        pias$child[[i - 1L]],
-        \(z) {
-          w <- scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))
-          unlist(Map("*", con[[i - 1L]][z], w))
-        }
-      )
+      if (x$has_contrib) {
+        con[[i]] <- lapply(
+          pias$child[[i - 1L]],
+          \(z) {
+            w <- scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))
+            unlist(Map("*", con[[i - 1L]][z], w))
+          }
+        )  
+      } else {
+        con[[i]] <- lapply(pias$child[[i - 1L]], \(z) numeric(0L))
+      }
+      
     }
     # parental imputation
     if (na.rm) {
@@ -54,32 +59,32 @@ aggregate.ind <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     x$contrib[[t]] <- unlist(rev(con), recursive = FALSE)
     # price update weights for all periods after the first
     if (x$chainable) {
-      pias$weights <- price_update(index[pias$eas], w[[1L]])
+      weights(pias) <- price_update(index[pias$eas], w[[1L]])
     }
   }
   x$levels <- pias$levels
   x$r <- r
   x$pias <- pias[c("child", "parent", "eas", "height")]
-  structure(x, class = c("agg_ind", "ind"))
+  structure(x, class = c("agg_pindex", "pindex"))
 }
 
 #---- Variance calculation ----
-vcov.agg_ind <- function(object, repweights, mse = TRUE, ...) {
+vcov.agg_pindex <- function(object, repweights, mse = TRUE, ...) {
   repweights <- as.matrix(repweights)
   eas <- object$pias$eas
   if (nrow(repweights) != length(eas)) {
-    stop(gettext("'repweights' must have a row for each weight in 'pias'"))
+    stop("'repweights' must have a row for each weight in 'pias'")
   }
   upper <- setdiff(object$levels, eas)
   n <- ncol(repweights)
   r <- object$r
   # template aggregation structure with no weights for each bootstrap replicate
   pias <- aggregate2pias(object, numeric(length(eas)))
-  # matrix aggregation is much faster than aggregate.ind(), but needs to be
+  # matrix aggregation is much faster than aggregate(), but needs to be
   # done with a chained index
   elem <- as.matrix(chain(object[eas, ]))
   repindex <- lapply(seq_len(n), function(i) {
-    pias$weights[] <- repweights[, i]
+    weights(pias) <- repweights[, i]
     res <- (as.matrix(pias) %*% elem^r)^(1 / r)
     # undo chaining for a period-over-period index
     if (object$chainable) res[, -1] <- res[, -1] / res[, -ncol(res)]
@@ -100,4 +105,4 @@ vcov.agg_ind <- function(object, repweights, mse = TRUE, ...) {
 }
 
 #---- Test ----
-is_aggregate_index <- function(x) inherits(x, "agg_ind")
+is_aggregate_index <- function(x) inherits(x, "agg_pindex")

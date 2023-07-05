@@ -7,7 +7,7 @@ chain.default <- function(x, ...) {
   chain(as_index(x), ...)
 }
 
-chain.ind <- function(x, link = rep(1, nlevels(x)), ...) {
+chain.pindex <- function(x, link = rep(1, nlevels(x)), ...) {
   if (x$chainable) {
     link <- as.numeric(link)
     if (length(link) != length(x$levels)) {
@@ -33,7 +33,7 @@ unchain.default <- function(x, ...) {
   unchain(as_index(x, chainable = FALSE), ...)
 }
 
-unchain.ind <- function(x, ...) {
+unchain.pindex <- function(x, ...) {
   if (!x$chainable) {
     x$chainable <- TRUE
     x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
@@ -54,7 +54,7 @@ rebase.default <- function(x, ...) {
   rebase(as_index(x, chainable = FALSE), ...)
 }
 
-rebase.ind <- function(x, base = rep(1, nlevels(x)), ...) {
+rebase.pindex <- function(x, base = rep(1, nlevels(x)), ...) {
   if (!x$chainable) {
     base <- as.numeric(base)
     if (length(base) != length(x$levels)) {

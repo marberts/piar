@@ -2,23 +2,23 @@
 \alias{elemental_index}
 \alias{elemental_index.default}
 \alias{elemental_index.numeric}
-\alias{aggregate.ind}
-\alias{vcov.agg_ind}
-\alias{mean.ind}
-\alias{merge.ind}
-\alias{stack.ind}
-\alias{unstack.ind}
-\alias{[.ind}
-\alias{[<-.ind}
-\alias{levels.ind}
-\alias{time.ind}
-\alias{start.ind}
-\alias{end.ind}
-\alias{head.ind}
-\alias{tail.ind}
-\alias{summary.ind}
-\alias{as.matrix.ind}
-\alias{as.data.frame.ind}
+\alias{aggregate.pindex}
+\alias{vcov.agg_pindex}
+\alias{mean.pindex}
+\alias{merge.pindex}
+\alias{stack.pindex}
+\alias{unstack.pindex}
+\alias{[.pindex}
+\alias{[<-.pindex}
+\alias{levels.pindex}
+\alias{time.pindex}
+\alias{start.pindex}
+\alias{end.pindex}
+\alias{head.pindex}
+\alias{tail.pindex}
+\alias{summary.pindex}
+\alias{as.matrix.pindex}
+\alias{as.data.frame.pindex}
 \alias{as_index}
 \alias{as_index.default}
 \alias{as_index.matrix}
@@ -43,40 +43,40 @@ elemental_index(rel, ...)
                 chainable = TRUE, na.rm = FALSE, r = 0, ...)
                             
 # Aggregate
-\method{aggregate}{ind}(x, pias, na.rm = FALSE, r = 1, ...)
+\method{aggregate}{pindex}(x, pias, na.rm = FALSE, r = 1, ...)
 
-\method{vcov}{agg_ind}(object, repweights, mse = TRUE, ...)
+\method{vcov}{agg_pindex}(object, repweights, mse = TRUE, ...)
 
-\method{mean}{ind}(x, w, window = 3, na.rm = FALSE, r = 1, ...)
+\method{mean}{pindex}(x, w, window = 3, na.rm = FALSE, r = 1, ...)
 
 # Combine
-\method{merge}{ind}(x, y, ...)
+\method{merge}{pindex}(x, y, ...)
 
-\method{stack}{ind}(x, y, ...)
+\method{stack}{pindex}(x, y, ...)
 
-\method{unstack}{ind}(x, ...)
+\method{unstack}{pindex}(x, ...)
 
 # Extract
-\method{[}{ind}(x, i, j)
+\method{[}{pindex}(x, i, j)
 
-\method{[}{ind}(x, i, j) <- value
+\method{[}{pindex}(x, i, j) <- value
 
-\method{levels}{ind}(x)
+\method{levels}{pindex}(x)
 
-\method{time}{ind}(x, ...)
+\method{time}{pindex}(x, ...)
 
-\method{start}{ind}(x, ...)
+\method{start}{pindex}(x, ...)
 
-\method{end}{ind}(x, ...)
+\method{end}{pindex}(x, ...)
 
-\method{head}{ind}(x, n = 6, ...)
+\method{head}{pindex}(x, n = 6, ...)
 
-\method{tail}{ind}(x, n = 6, ...)
+\method{tail}{pindex}(x, n = 6, ...)
 
 # Coerce
-\method{as.matrix}{ind}(x, ...)
+\method{as.matrix}{pindex}(x, ...)
 
-\method{as.data.frame}{ind}(x, ..., stringsAsFactors = FALSE)
+\method{as.data.frame}{pindex}(x, ..., stringsAsFactors = FALSE)
                             
 as_index(x, ...)
 
@@ -173,7 +173,7 @@ The \code{merge()} method combines two index objects with common time periods, m
 
 The \code{stack()} method combines two index objects with common levels, stacking index values and quote contributions for each level in \code{y} after those in \code{x}. The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}. These methods can be used in a map-reduce to make an index with multiple aggregation structures (like a Paasche index).
 
-It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging always returns an index of class \code{ind}. If at least one of \code{x} or \code{y} is an aggregate index then the result of stacking these indexes is also an aggregate index; otherwise, it is the same class as \code{x}.
+It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging always returns an index of class \code{pindex}. If at least one of \code{x} or \code{y} is an aggregate index then the result of stacking these indexes is also an aggregate index; otherwise, it is the same class as \code{x}.
 }
 
 \subsection{Extract}{
@@ -198,7 +198,7 @@ The data frame method for \code{as_index()} is best understood as reversing the 
 }
 
 \value{
-Most of these functions return index objects of class \code{ind}. These often behaves like a matrix with a row for each level of the index and a column for each time period, and have the following components.
+Most of these functions return index objects of class \code{pindex}. These often behaves like a matrix with a row for each level of the index and a column for each time period, and have the following components.
 
 \item{index}{A named list with an entry for each \code{period} that gives a named vector of index values for each level in \code{ea}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}
@@ -207,7 +207,7 @@ Most of these functions return index objects of class \code{ind}. These often be
 \item{has_contrib}{The value of \code{contrib}.}
 \item{chainable}{The value of \code{chainable}, usually \code{TRUE}.}
 
-\code{aggregate()} returns an aggregate index. This is an object of class \code{agg_ind}, inheriting from class \code{ind}, which has the following components.
+\code{aggregate()} returns an aggregate index. This is an object of class \code{agg_pindex}, inheriting from class \code{pindex}, which has the following components.
 
 \item{index}{A named list with an entry for each \code{period} in \code{x} that gives a named vector of index values for each level in \code{pias}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a list with an entry for each level in \code{pias} with a named vector that gives the additive contribution for each price relative.}

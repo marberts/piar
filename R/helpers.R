@@ -58,5 +58,5 @@ pias2list <- function(x) {
 }
 
 empty_contrib <- function(x) {
-  list(structure(rep(list(numeric(0L)), length(x)), names = x))
+  list(structure(rep.int(list(numeric(0L)), length(x)), names = x))
 }

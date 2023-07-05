@@ -2,11 +2,11 @@
 \alias{price_relative}
 
 \title{
-Price relative
+Calculate period-over-period price relatives
 }
 
 \description{
-Construct period-over-period price relatives from information on prices over time.
+Construct period-over-period price relatives from information on prices and products over time.
 }
 
 \usage{

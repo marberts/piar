@@ -13,6 +13,8 @@ reference:
   desc: Functions to make and work with price-index aggregation structures
   contents:
   - aggregation_structure
+  - expand_classification
+  - pias-methods
   
 - title: Price indexes
   desc: Functions to make and work with elemental and aggregated price indexes

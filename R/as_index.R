@@ -24,7 +24,8 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
     stop("'x' cannot have duplicated row or column names")
   }
   res <- list(index = NULL, contrib = NULL, levels = levels,
-              time = periods, has_contrib = FALSE, chainable = chainable)
+              time = periods, has_contrib = FALSE,
+              chainable = as_TorF(chainable))
   res$index <- res$contrib <- structure(
     vector("list", ncol(x)), names = periods
   )
@@ -33,7 +34,7 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
     # EA names are not kept for matrices with 1 row
     res$index[[t]] <- structure(x[, t], names = rownames(x))
   }
-  structure(res, class = "ind")
+  structure(res, class = "pindex")
 }
 
 as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
@@ -48,11 +49,11 @@ as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
   as_index(res, chainable, ...)
 }
 
-as_index.ind <- function(x, ...) {
+as_index.pindex <- function(x, ...) {
   x
 }
 
 #---- Test ----
 is_index <- function(x) {
-  inherits(x, "ind")
+  inherits(x, "pindex")
 }
