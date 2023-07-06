@@ -57,3 +57,11 @@ as_index.pindex <- function(x, ...) {
 is_index <- function(x) {
   inherits(x, "pindex")
 }
+
+is_aggregate_index <- function(x) {
+  inherits(x, "agg_pindex")
+}
+
+is_chainable_index <- function(x) {
+  is_index(x) && x$chainable
+}

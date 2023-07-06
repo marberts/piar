@@ -68,41 +68,38 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   structure(x, class = c("agg_pindex", "pindex"))
 }
 
-#---- Variance calculation ----
-vcov.agg_pindex <- function(object, repweights, mse = TRUE, ...) {
-  repweights <- as.matrix(repweights)
-  eas <- object$pias$eas
-  if (nrow(repweights) != length(eas)) {
-    stop("'repweights' must have a row for each weight in 'pias'")
+#---- Averaging ----
+mean.pindex <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
+  if (!missing(w)) {
+    if (length(w) != length(x$time) * length(x$levels)) {
+      stop("'x' and 'w' must be the same length")
+    }
+    w <- split(w, gl(length(x$time), length(x$levels)))
   }
-  upper <- setdiff(object$levels, eas)
-  n <- ncol(repweights)
-  r <- object$r
-  # template aggregation structure with no weights for each bootstrap replicate
-  pias <- aggregate2pias(object, numeric(length(eas)))
-  # matrix aggregation is much faster than aggregate(), but needs to be
-  # done with a chained index
-  elem <- as.matrix(chain(object[eas, ]))
-  repindex <- lapply(seq_len(n), function(i) {
-    weights(pias) <- repweights[, i]
-    res <- (as.matrix(pias) %*% elem^r)^(1 / r)
-    # undo chaining for a period-over-period index
-    if (object$chainable) res[, -1] <- res[, -1] / res[, -ncol(res)]
-    res
-  })
-  # it's easier to calculate the variance with an array of indexes
-  dimnm <- list(upper, object$time, seq_len(n))
-  repindex <- array(unlist(repindex, use.names = FALSE),
-                    dim = lengths(dimnm), dimnames = dimnm)
-  # mse = TRUE is the default for variance estimation in SAS,
-  # but not the survey package
-  centre <- if (mse) {
-    as.matrix(object)[upper, , drop = FALSE]
-  } else {
-    apply(repindex, 2L, rowMeans)
+  gen_mean <- Vectorize(generalized_mean(r))
+  len <- length(x$time) %/% window
+  if (len == 0L) {
+    stop("'x' must have at least 'window' time periods")
   }
-  apply(sweep(repindex, 1:2, centre), 1:2, crossprod) / n
+  # get the starting location for each window
+  loc <- seq(1L, by = window, length.out = len)
+  periods <- x$time[loc]
+  res <- contrib <- structure(vector("list", len), names = periods)
+  # loop over each window and calculate the mean for each level
+  for (i in seq_along(loc)) {
+    j <- seq(loc[i], length.out = window)
+    # structure() is needed because .mapply doesn't keep names
+    index <- structure(.mapply(c, x$index[j], list()), names = x$levels)
+    res[[i]] <- if (missing(w)) {
+      gen_mean(index, na.rm = na.rm)
+    } else {
+      gen_mean(index, .mapply(c, w[j], list()), na.rm = na.rm)
+    }
+  }
+  contrib[] <- empty_contrib(x$levels)
+  x$index <- res
+  x$contrib <- contrib
+  x$time <- periods
+  x$has_contrib <- FALSE
+  x
 }
-
-#---- Test ----
-is_aggregate_index <- function(x) inherits(x, "agg_pindex")

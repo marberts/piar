@@ -8,7 +8,6 @@
 \alias{rebase}
 \alias{rebase.default}
 \alias{rebase.pindex}
-\alias{is_chainable_index}
 
 \title{
 Chain and rebase a price index
@@ -36,8 +35,6 @@ rebase(x, ...)
 \method{rebase}{default}(x, ...)
 
 \method{rebase}{pindex}(x, base = rep(1, nlevels(x)), ...)
-
-is_chainable_index(x)
 }
 
 \arguments{
@@ -57,11 +54,11 @@ Chaining an index takes the cumulative product of the index values for each leve
 
 Rebasing a fixed-base index divides the values for each level of this index by the corresponding values for each level in the new base period. It's roughly the same as \code{as.matrix(x) / base}. Like unchaining, rebasing a period-over-period index does nothing.
 
-Quote contributions are removed when chaining/unchaining/rebasing an index, as it's not usually possible to update them correctly.
+Percent-change contributions are removed when chaining/unchaining/rebasing an index, as it's not usually possible to update them correctly.
 }
 
 \value{
-Each of these functions returns an index of the same type as \code{x}, except \code{is_chainable_index()} which returns \code{TRUE} when \code{x} is a period-over-period index (so that chaining makes sense).
+Each of these functions returns an index of the same type as \code{x}.
 }
 
 \seealso{

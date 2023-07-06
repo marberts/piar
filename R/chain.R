@@ -68,8 +68,3 @@ rebase.pindex <- function(x, base = rep(1, nlevels(x)), ...) {
   # do nothing for a period-over-period index
   x
 }
-
-#---- Test ----
-is_chainable_index <- function(x) {
-  is_index(x) && x$chainable
-}
