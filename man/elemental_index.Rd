@@ -10,27 +10,27 @@ Compute period-over-period or fixed-base (direct) elemental price indexes, with 
 }
 
 \usage{
-elemental_index(rel, ...)
+elemental_index(x, ...)
 
-\method{elemental_index}{default}(rel, ...)
+\method{elemental_index}{default}(x, ...)
 
-\method{elemental_index}{numeric}(rel, period = gl(1, length(rel)), 
-                ea = gl(1, length(rel)), w = NULL, contrib = FALSE, 
+\method{elemental_index}{numeric}(x, period = gl(1, length(x)), 
+                ea = gl(1, length(x)), w = NULL, contrib = FALSE, 
                 chainable = TRUE, na.rm = FALSE, r = 0, ...)
 }
 
 \arguments{
-\item{rel}{Period-over-period or fixed-base price relatives. Currently there is only a method for numeric vectors; these can be made with \code{\link[=price_relative]{price_relative()}}.}
+\item{x}{Period-over-period or fixed-base price relatives. Currently there is only a method for numeric vectors; these can be made with \code{\link[=price_relative]{price_relative()}}.}
 
-\item{period}{A factor, or something that can be coerced into one, giving the time period associated with each price relative in \code{rel}. The ordering of time periods follows of the levels of \code{period}, to agree with \code{\link[=cut.Date]{cut()}}. The default assumes that all price relatives belong to one time period.}
+\item{period}{A factor, or something that can be coerced into one, giving the time period associated with each price relative in \code{x}. The ordering of time periods follows of the levels of \code{period}, to agree with \code{\link[=cut.Date]{cut()}}. The default assumes that all price relatives belong to one time period.}
 
-\item{ea}{A factor, or something that can be coerced into one, giving the elemental aggregate associated with each price relative in \code{rel}. The default assumes that all price relatives belong to one elemental aggregate.}
+\item{ea}{A factor, or something that can be coerced into one, giving the elemental aggregate associated with each price relative in \code{x}. The default assumes that all price relatives belong to one elemental aggregate.}
 
-\item{w}{A numeric vector of weights for the price relatives in \code{rel}. The default is equal weights.}
+\item{w}{A numeric vector of weights for the price relatives in \code{x}. The default is equal weights.}
 
 \item{contrib}{Should quote contributions be calculated? The default does not calculate contributions.}
 
-\item{chainable}{Are the price relatives in \code{rel} period-over-period relatives for a chained calculation (the default)? This should be \code{FALSE} when \code{rel} are fixed-base relatives.}
+\item{chainable}{Are the price relatives in \code{x} period-over-period relatives for a chained calculation (the default)? This should be \code{FALSE} when \code{x} are fixed-base relatives.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean imputation.}
 
@@ -40,13 +40,13 @@ elemental_index(rel, ...)
 }
 
 \details{
-When supplied with a numeric vector, \code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{rel} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions (using names for \code{rel} as product names). The default (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).
+When supplied with a numeric vector, \code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions (using names for \code{x} as product names). The default (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).
 
-The default method simply coerces \code{rel} to a numeric prior to calling the method above.
+The default method simply coerces \code{x} to a numeric prior to calling the method above.
 
-The interpretation of the index depends on how the price relatives in \code{rel} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base (direct) elemental indexes. For the latter, \code{chainable} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
+The interpretation of the index depends on how the price relatives in \code{x} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base (direct) elemental indexes. For the latter, \code{chainable} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
 
-By default, missing price relatives in \code{rel} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
+By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
 
 Indexes based on nested generalized means, like the Fisher index (and superlative quadratic mean indexes more generally), can be calculated by supplying the appropriate weights with \code{\link[=nested_transmute]{nested_transmute()}}; see the example below. It is important to note that there are several ways to make these weights, and this affects how quote contributions are calculated.
 }

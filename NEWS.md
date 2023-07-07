@@ -6,6 +6,8 @@
 
 - `is_chain_index()` has been removed; use `is_chainable_index()` instead.
 
+- The first argument to `elemental_index()` is now `x`, not `rel`, to be consistent with the rest of the functions.
+
 ## Improvements
 
 - The `levels()` replacement function now gives an error for indexes and aggregation structures, rather than adding a levels attribute that does nothing. 

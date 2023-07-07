@@ -33,11 +33,10 @@ shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
     price <- res[[t]]
     # calculate indexes
     epr <- if (missing(w)) {
-      # rel is named to avoid partial matching with 'r'
-      elemental_index(rel = price / back_price, ea = ea[[t]],
+      elemental_index(price / back_price, ea = ea[[t]],
                       na.rm = TRUE, r = r1)
     } else {
-      elemental_index(rel = price / back_price, ea = ea[[t]],
+      elemental_index(price / back_price, ea = ea[[t]],
                       w = w[[t]], na.rm = TRUE, r = r1)
     }
     if (!missing(pias)) {

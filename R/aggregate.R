@@ -68,7 +68,7 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   structure(x, class = c("agg_pindex", "pindex"))
 }
 
-#---- Averaging ----
+#---- Averaging over subperiods ----
 mean.pindex <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
   if (!missing(w)) {
     if (length(w) != length(x$time) * length(x$levels)) {
