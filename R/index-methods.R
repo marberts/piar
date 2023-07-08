@@ -11,6 +11,7 @@ as.matrix.pindex <- function(x, ...) {
   do.call(cbind, x$index)
 }
 
+# not exported
 as.double.pindex <- function(x, ...) {
   as.double(as.matrix(x))
 }
@@ -27,14 +28,22 @@ as.double.pindex <- function(x, ...) {
   # only loop over periods that have a value extracted
   x$index <- lapply(x$index[periods], `[`, levels)
   x$contrib <- lapply(x$contrib[periods], `[`, levels)
-  # remove aggregate components if any rows are dropped
-  if (!identical(levels, x$levels)) {
-    x$r <- x$pias <- NULL
-    class(x) <- "pindex"
-  }
   x$levels <- levels
   x$time <- periods
   x
+}
+
+`[[.pindex` <- function(x, i, j) {
+  as.matrix(x)[[i, j]]
+}
+
+`[.agg_pindex` <- function(x, i, j) {
+  res <- NextMethod("[")
+  if (!identical(res$levels, x$levels)) {
+    res$r <- res$pias <- NULL
+    class(res) <- class(res)[-1]
+  }
+  res
 }
 
 `[<-.pindex` <- function(x, i, j, value) {
@@ -49,7 +58,28 @@ as.double.pindex <- function(x, ...) {
     x$contrib[[t]][levels] <- list(numeric(0L))
   }
   # remove marker for contributions if all values are replaced
-  if (setequal(levels, x$levels) && setequal(periods, x$time)) {
+  if (x$has_contrib && length(unlist(x$contrib, use.names = FALSE)) == 0L) {
+    x$has_contrib <- FALSE
+  }
+  x
+}
+
+`[[<-.pindex` <- function(x, i, j, value) {
+  dim <- c(length(x$levels), length(x$time))
+  row_slice <- .row(dim)
+  col_slice <- .col(dim)
+  dimnames(row_slice) <- dimnames(col_slice) <- list(x$levels, x$time)
+  
+  i <- row_slice[[i, j]]
+  j <- col_slice[[i, j]]
+  level <- x$levels[[i]]
+  period <- x$time[[j]]
+  
+  x$index[[period]][[level]] <- as.numeric(value)
+  x$contrib[[period]][[level]] <- numeric(0L)
+  
+  # remove marker for contributions if all values are replaced
+  if (x$has_contrib && length(unlist(x$contrib, use.names = FALSE)) == 0L) {
     x$has_contrib <- FALSE
   }
   x
@@ -120,7 +150,7 @@ tail.pindex <- function(x, n = 6L, ...) {
 #---- Merge ----
 merge.agg_pindex <- function(x, y, ...) {
   x$r <- x$pias <- NULL
-  class(x) <- "pindex"
+  class(x) <- class(x)[-1]
   NextMethod("merge")
 }
 
@@ -181,7 +211,7 @@ stack.pindex <- function(x, y, ...) {
   if (is_aggregate_index(y)) {
     x$r <- y$r
     x$pias <- y$pias
-    class(x) <- c("agg_pindex", "pindex")
+    class(x) <- c("agg_pindex", class(x))
   }
   x
 }
