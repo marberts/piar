@@ -1,6 +1,5 @@
 \name{contrib}
 \alias{contrib}
-\alias{contrib.pindex}
 
 \title{
 Extract percent-change contributions

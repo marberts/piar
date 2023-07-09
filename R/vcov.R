@@ -8,7 +8,7 @@ vcov.agg_pindex <- function(object, repweights, mse = TRUE, ...) {
   n <- ncol(repweights)
   r <- object$r
   # template aggregation structure with no weights for each bootstrap replicate
-  pias <- aggregate2pias(object, numeric(length(eas)))
+  pias <- aggregation_structure(object)
   # matrix aggregation is much faster than aggregate(), but needs to be
   # done with a chained index
   elem <- as.matrix(chain(object[eas, ]))

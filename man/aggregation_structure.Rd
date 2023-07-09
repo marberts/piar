@@ -10,13 +10,31 @@ Create a price index aggregation structure from a hierarchical classification an
 }
 
 \usage{
-aggregation_structure(x, w = NULL)
+aggregation_structure(x, w = NULL, ...)
+
+method{aggregation_structure}{default}(x, w = NULL, ...)
+
+method{aggregtion_structure}{data.frame}(x, ...)
+
+method{aggregtion_structure}{matrix}(x, ...)
+
+method{aggregation_structure}{agg_pindex}(x, w = NULL, ...)
 }
 
 \arguments{
-\item{x}{A list of factors (or vectors to be coerced to factors) that give the codes/labels for the aggregation weights for each level of the classification, ordered so that moving down the list goes down the hierarchy. The last vector gives the elemental aggregates, which should have no duplicates. All vectors should be the same length, without \code{NA}s, and there should be no duplicates across different levels of \code{x}. This is usually a collection of columns in a data frame with a row for each aggregation weight.}
+\item{x}{An object representing a hierarchical classification.}
 
 \item{w}{A numeric vector of aggregation weights for the elemental aggregates (i.e., the last vector in \code{x}). The default is to give each elemental aggregate the same weight.}
+
+\item{...}{Further arguments passed to or used by methods.}
+}
+
+\details{
+The default method takes a list of factors (or vectors to be coerced to factors) that give the codes/labels for each level of the classification, ordered so that moving down the list goes down the hierarchy. The last vector gives the elemental aggregates, which should have no duplicates. All vectors should be the same length, without \code{NA}s, and there should be no duplicates across different levels of \code{x}.
+
+The \code{data.frame} and \code{matrix} methods are convenient wrapper around the default method. They assume the input is a table that gives the aggregation weight for each elemental aggregate in the last column, and the labels for each level of the hierarchy in the preceeding columns (one label per column, ordered left to right).
+
+The \code{agg_pindex} method constructs the aggregation structure used to aggregate an index.
 }
 
 \value{
@@ -55,9 +73,15 @@ aggregation_weights <- data.frame(level1 = c("1",   "1",   "1"),
                                   level2 = c("11",  "11",  "12"),
                                   ea     = c("111", "112", "121"),
                                   weight = c(1,     3,     4))
+                                  
+pias <- aggregation_structure(aggregation_weights)
 
-pias <- aggregation_structure(aggregation_weights[1:3],
-                              w = aggregation_weights[[4]])
+# The same as the "old fashioned" way
+all.equal(
+  aggregation_structure(as.list(aggregation_weights[1:3]),
+                        w = aggregation_weights[[4]]),
+  pias
+)
 
 # The aggregation structure can also be made by expanding the
 # elemental aggregates

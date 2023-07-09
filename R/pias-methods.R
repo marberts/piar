@@ -55,7 +55,7 @@ as.matrix.pias <- function(x, ...) {
   }
   loc <- seq_len(nea)
   # don't need the eas
-  lev <- lapply(pias2list(x)[-x$height], as.factor)
+  lev <- lapply(as.list(x)[-x$height], as.factor)
   rows <- vector("list", length(lev))
   # generate the rows for each level of the matrix and rbind together
   for (i in seq_along(rows)) {
@@ -75,12 +75,28 @@ as.matrix.pias <- function(x, ...) {
 
 as.data.frame.pias <- function(x, ..., stringsAsFactors = FALSE) {
   colnames <- c(paste0("level", seq_along(x$child), recycle0 = TRUE), "ea")
-  res <- as.data.frame(pias2list(x),
+  res <- as.data.frame(as.list(x),
                        col.names = colnames,
                        stringsAsFactors = stringsAsFactors)
   res$weight <- x$weight
   res
 }
 
+as.list.pias <- function(x, ...) {
+  if (x$height == 1L) {
+    return(list(x$eas))
+  }
+  res <- vector("list", length(x$parent))
+  res[[1L]] <- x$parent[[1L]]
+  # walk up the parent nodes to reconstruct the inputs that generated 'x'
+  for (i in seq_along(x$parent)[-1L]) {
+    res[[i]] <- x$parent[[i]][res[[i - 1L]]]
+  }
+  top <- names(x$child[[length(x$child)]])[res[[length(res)]]]
+  c(list(top), lapply(rev(res), names))
+}
+
 # not exported
-is_pias <- function(x) inherits(x, "pias")
+is_pias <- function(x) {
+  inherits(x, "pias")
+}

@@ -55,6 +55,11 @@ S3method(rebase, default)
 S3method(rebase, chainable_pindex)
 S3method(rebase, direct_pindex)
 
+S3method(aggregation_structure, default)
+S3method(aggregation_structure, data.frame)
+S3method(aggregation_structure, matrix)
+S3method(aggregation_structure, agg_pindex)
+
 S3method(print, pias)
 S3method(weights, pias)
 S3method("weights<-", pias)
@@ -63,6 +68,7 @@ S3method("levels<-", pias)
 S3method(update, pias)
 S3method(as.matrix, pias)
 S3method(as.data.frame, pias)
+S3method(as.list, pias)
 
 importFrom(stats, aggregate, weights, update, time, start, end)
 

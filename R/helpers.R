@@ -1,13 +1,5 @@
 # None of these functions are exported
 
-as_TorF <- function(x) {
-  x <- as.logical(x)[1L]
-  if (is.na(x)) {
-    stop("cannot coerce NA to TRUE or FALSE")
-  }
-  x
-}
-
 different_length <- function(...) {
   res <- lengths(list(...))
   any(res != res[1L])
@@ -35,30 +27,10 @@ nested_names <- function(x) {
   as.character(unlist(lapply(x, names), use.names = FALSE))
 }
 
-aggregate2pias <- function(x, w) {
-  structure(list(child = x$pias$child,
-                 parent = x$pias$parent,
-                 levels = x$levels,
-                 eas = x$pias$eas,
-                 weights = structure(w, names = x$pias$eas),
-                 height = x$pias$height),
-            class = "pias")
-}
-
-pias2list <- function(x) {
-  if (x$height == 1L) return(list(x$eas))
-  res <- vector("list", length(x$parent))
-  res[[1L]] <- x$parent[[1L]]
-  # walk up the parent nodes to reconstruct the inputs that generated 'x'
-  for (i in seq_along(x$parent)[-1L]) {
-    res[[i]] <- x$parent[[i]][res[[i - 1L]]]
-  }
-  top <- names(x$child[[length(x$child)]])[res[[length(res)]]]
-  c(list(top), lapply(rev(res), names))
-}
-
 empty_contrib <- function(x) {
-  list(structure(rep.int(list(numeric(0L)), length(x)), names = x))
+  res <- rep.int(list(numeric(0L)), length(x))
+  names(res) <- x
+  list(res)
 }
 
 has_contrib <- function(x) {

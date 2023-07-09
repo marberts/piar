@@ -23,7 +23,7 @@ weights <- data.frame(l1 = rep(1, 8),
                       dw = c(1, runif(6, 1, 10), 1))
 
 epr <- with(prices, elemental_index(rel, period, id))
-pias <- with(weights, aggregation_structure(weights[1:4], ew * dw))
+pias <- with(weights, aggregation_structure(as.list(weights[1:4]), ew * dw))
 index <- aggregate(epr, pias)
 
 rw <- matrix(runif(8 * 25), 8)
