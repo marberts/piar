@@ -13,6 +13,7 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
 
   # put the aggregation weights upside down to line up with pias
   w <- rev(weights(pias, na.rm = na.rm))
+  has_contrib <- has_contrib(x)
   # loop over each time period
   for (t in seq_along(x$time)) {
     rel <- con <- vector("list", pias$height)
@@ -33,7 +34,7 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
         \(z) gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm),
         numeric(1L)
       )
-      if (x$has_contrib) {
+      if (has_contrib) {
         con[[i]] <- lapply(
           pias$child[[i - 1L]],
           \(z) {
@@ -100,6 +101,5 @@ mean.pindex <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
   x$index <- res
   x$contrib <- contrib
   x$time <- periods
-  x$has_contrib <- FALSE
   x
 }

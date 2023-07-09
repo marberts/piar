@@ -57,10 +57,6 @@ as.double.pindex <- function(x, ...) {
     # drop contributions for replaced values
     x$contrib[[t]][levels] <- list(numeric(0L))
   }
-  # remove marker for contributions if all values are replaced
-  if (x$has_contrib && length(unlist(x$contrib, use.names = FALSE)) == 0L) {
-    x$has_contrib <- FALSE
-  }
   x
 }
 
@@ -78,10 +74,6 @@ as.double.pindex <- function(x, ...) {
   x$index[[period]][[level]] <- as.numeric(value)
   x$contrib[[period]][[level]] <- numeric(0L)
   
-  # remove marker for contributions if all values are replaced
-  if (x$has_contrib && length(unlist(x$contrib, use.names = FALSE)) == 0L) {
-    x$has_contrib <- FALSE
-  }
   x
 }
 
@@ -172,7 +164,6 @@ merge.pindex <- function(x, y, ...) {
   x$contrib <- Map(c, x$contrib, y$contrib)
   # it's safe to use c() and not union() because there can't be duplicate levels
   x$levels <- c(x$levels, y$levels)
-  x$has_contrib <- x$has_contrib || y$has_contrib
   x
 }
 
@@ -207,7 +198,6 @@ stack.pindex <- function(x, y, ...) {
   # it's safe to use c() and not union() because there can't be duplicate
   # periods
   x$time <- c(x$time, y$time)
-  x$has_contrib <- x$has_contrib || y$has_contrib
   if (is_aggregate_index(y)) {
     x$r <- y$r
     x$pias <- y$pias
@@ -223,7 +213,6 @@ unstack.pindex <- function(x, ...) {
     res[[i]]$contrib <- x$contrib[i]
     res[[i]]$levels <- x$levels
     res[[i]]$time <- x$time[i]
-    res[[i]]$has_contrib <- x$has_contrib
     res[[i]]$chainable <- x$chainable
     res[[i]]$r <- x$r
     res[[i]]$pias <- x$pias
@@ -242,7 +231,7 @@ print.pindex <- function(x, ...) {
 summary.pindex <- function(object, ...) {
   res <- structure(vector("list", 2L), names = c("index", "contrib"))
   res$index <- summary.data.frame(object$index, ...)
-  res$contrib <- if (object$has_contrib) {
+  res$contrib <- if (has_contrib(object)) {
     summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
   }
   structure(res, class = "pindex_summary")

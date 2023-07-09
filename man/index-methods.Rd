@@ -4,7 +4,10 @@
 \alias{stack.pindex}
 \alias{unstack.pindex}
 \alias{[.pindex}
+\alias{[[.pindex}
+\alias{[.agg_pindex]}
 \alias{[<-.pindex}
+\alias{[[<-.pindex}
 \alias{levels.pindex}
 \alias{time.pindex}
 \alias{start.pindex}
@@ -18,7 +21,7 @@
 \title{Methods for price indexes}
 
 \description{
-Methods to combine price indexes together, extract useful information, and coerce into a tabular form.
+Methods to combine price indexes together, extract useful information, replace index values, and coerce into a tabular form.
 }
 
 \usage{
@@ -32,7 +35,13 @@ Methods to combine price indexes together, extract useful information, and coerc
 # Extract
 \method{[}{pindex}(x, i, j)
 
+\method{[}{agg_pindex}(x, i, j)
+
+\method{[[}{pindex}(x, i, j)
+
 \method{[}{pindex}(x, i, j) <- value
+
+\method{[[}{pindex}(x, i, j) <- value
 
 \method{levels}{pindex}(x)
 
@@ -76,9 +85,9 @@ It is not generally possible to merge aggregated indexes, as this would change t
 }
 
 \subsection{Extract}{
-The extraction method treats \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as indexing \code{x} always returns an index object. This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like \code{x[1]} is taken to be the same as \code{x[1, ]}. Note that indexing an aggregated index cannot generally preserve the aggregation structure if any levels are removed, and in this case the resulting index is \emph{not} an aggregated index.
+The extraction methods treat \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as indexing \code{x} always returns an index object (for \code{`[`}) or a single value (for \code{`[[`}). This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like \code{x[1]} is taken to be the same as \code{x[1, ]}. Note that indexing an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is \emph{not} an aggregated index.
 
-The replacement method similarly treats \code{x} as a matrix, and behaves the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding quote contributions (if any).
+The replacement methods similarly treat \code{x} as a matrix, and behaves the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding percent-change contributions (if any).
 
 The \code{levels()} method extracts the levels of an index, and the \code{time()} method extracts the time periods of the index. The \code{start()} and \code{end()} methods extract the first and last time period.
 
@@ -93,13 +102,15 @@ The \code{as.matrix()} method turns an index into a matrix with a row for each l
 }
 
 \value{
-\code{merge()}, \code{stack()}, \code{unstack()}, \code{`[`}, \code{`[<-`}, \code{head()}, and \code{tail()} all return an index object.
+\code{merge()}, \code{stack()}, \code{unstack()}, \code{`[`}, \code{`[<-`}, \code{`[[<-`}, \code{head()}, and \code{tail()} all return an index object.
+
+\code{`[[`]} returns a single value.
 
 \code{levels()}, \code{time()}, \code{start()}, and \code{end()} return a character vector.
 
 \code{as.data.frame()} returns a data frame.
 
-\code{as.matrix} returns a matrix.
+\code{as.matrix()} returns a matrix.
 }
 
 \seealso{

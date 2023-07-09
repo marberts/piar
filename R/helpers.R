@@ -60,3 +60,7 @@ pias2list <- function(x) {
 empty_contrib <- function(x) {
   list(structure(rep.int(list(numeric(0L)), length(x)), names = x))
 }
+
+has_contrib <- function(x) {
+  Position(\(x) any(lengths(x) > 0L), x$contrib, 0L) > 0L
+}

@@ -17,7 +17,6 @@ chain.pindex <- function(x, link = rep(1, nlevels(x)), ...) {
     x$index[[1L]] <- x$index[[1L]] * link
     x$index[] <- Reduce(`*`, x$index, accumulate = TRUE)
     # contributions are difficult to chain, so remove them
-    x$has_contrib <- FALSE
     x$contrib[] <- empty_contrib(x$levels)
   }
   # do nothing for a fixed-based index
@@ -38,7 +37,6 @@ unchain.pindex <- function(x, ...) {
     x$chainable <- TRUE
     x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
     # contributions are difficult to unchain, so remove them
-    x$has_contrib <- FALSE
     x$contrib[] <- empty_contrib(x$levels)
   }
   # do nothing for a chained index
@@ -62,7 +60,6 @@ rebase.pindex <- function(x, base = rep(1, nlevels(x)), ...) {
     }
     x$index[] <- Map(`/`, x$index, list(base))
     # contributions are difficult to rebase, so remove them
-    x$has_contrib <- FALSE
     x$contrib[] <- empty_contrib(x$levels)
   }
   # do nothing for a period-over-period index

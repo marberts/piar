@@ -4,7 +4,7 @@ contrib <- function(x, ...) {
 }
 
 contrib.pindex <- function(x, level = levels(x), ...) {
-  if (!x$has_contrib) {
+  if (!has_contrib(x)) {
     return(NULL)
   }
   level <- as.character(level)

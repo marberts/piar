@@ -23,18 +23,16 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
   if (anyDuplicated(levels) || anyDuplicated(periods)) {
     stop("'x' cannot have duplicated row or column names")
   }
-  res <- list(index = NULL, contrib = NULL, levels = levels,
-              time = periods, has_contrib = FALSE,
-              chainable = as_TorF(chainable))
-  res$index <- res$contrib <- structure(
+
+  index <- contrib <- structure(
     vector("list", ncol(x)), names = periods
   )
-  res$contrib[] <- empty_contrib(levels)
+  contrib[] <- empty_contrib(levels)
   for (t in seq_along(periods)) {
     # EA names are not kept for matrices with 1 row
-    res$index[[t]] <- structure(x[, t], names = rownames(x))
+    index[[t]] <- structure(x[, t], names = rownames(x))
   }
-  structure(res, class = "pindex")
+  pindex(index, contrib, levels, periods, as_TorF(chainable))
 }
 
 as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {

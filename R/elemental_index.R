@@ -1,3 +1,12 @@
+pindex <- function(index, contrib, levels, time, chainable) {
+  res <- list(index = index,
+              contrib = contrib,
+              levels = levels,
+              time = time,
+              chainable = chainable)
+  structure(res, class = "pindex")
+}
+
 #---- Calculate generalized-mean elemental indexes ----
 elemental_index <- function(x, ...) {
   UseMethod("elemental_index")
@@ -29,7 +38,6 @@ elemental_index.numeric <- function(x,
     warning("some elements of 'x or 'w' are less than or equal to 0")
   }
 
-  contrib <- as_TorF(contrib)
   chainable <- as_TorF(chainable)
   period <- as.factor(period)
   ea <- as.factor(ea) # ensures elemental aggregates are balanced
@@ -67,12 +75,5 @@ elemental_index.numeric <- function(x,
     names(contributions) <- periods
   }
 
-  # return 'pindex' object
-  res <- list(index = index,
-              contrib = contributions,
-              levels = eas,
-              time = periods,
-              has_contrib = contrib,
-              chainable = chainable)
-  structure(res, class = "pindex")
+  pindex(index, contributions, eas, periods, chainable)
 }
