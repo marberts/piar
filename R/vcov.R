@@ -8,7 +8,7 @@ vcov.agg_pindex <- function(object, repweights, mse = TRUE, ...) {
   n <- ncol(repweights)
   r <- object$r
   # template aggregation structure with no weights for each bootstrap replicate
-  pias <- aggregation_structure(object)
+  pias <- as_aggregation_structure(object)
   # matrix aggregation is much faster than aggregate(), but needs to be
   # done with a chained index
   elem <- as.matrix(chain(object[eas, ]))
@@ -16,7 +16,9 @@ vcov.agg_pindex <- function(object, repweights, mse = TRUE, ...) {
     weights(pias) <- repweights[, i]
     res <- (as.matrix(pias) %*% elem^r)^(1 / r)
     # undo chaining for a period-over-period index
-    if (is_chainable_index(object)) res[, -1] <- res[, -1] / res[, -ncol(res)]
+    if (is_chainable_index(object)) {
+      res[, -1] <- res[, -1] / res[, -ncol(res)]
+    }
     res
   })
   # it's easier to calculate the variance with an array of indexes

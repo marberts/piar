@@ -8,11 +8,7 @@ pias <- function(child, parent, levels, eas, weights, height) {
   structure(res, class = "pias")
 }
 
-aggregation_structure <- function(x, ...) {
-  UseMethod("aggregation_structure")
-}
-
-aggregation_structure.default <- function(x, w = NULL, ...) {
+aggregation_structure <- function(x, w = NULL) {
   x <- lapply(x, as.factor)
   len <- length(x)
   ea <- as.character(unlist(x[len], use.names = FALSE))
@@ -69,24 +65,4 @@ aggregation_structure.default <- function(x, w = NULL, ...) {
   }
 
   pias(child, parent, c(nested_names(rev(child)), ea), ea, w, len)
-}
-
-aggregation_structure.agg_pindex <- function(x, w = NULL, ...) {
-  eas <- x$pias$eas
-  w <- if (is.null(w)) {
-    rep.int(1, length(eas))
-  } else {
-    as.numeric(w)
-  }
-  names(w) <- eas
-  pias(x$pias$child, x$pias$parent, x$levels, eas, w, x$pias$height)
-}
-
-aggregation_structure.data.frame <- function(x, ...) {
-  x <- as.list(x)
-  aggregation_structure(x[-length(x)], x[[length(x)]])
-}
-
-aggregation_structure.matrix <- function(x, ...) {
-  aggregation_structure(as.data.frame(x))
 }
