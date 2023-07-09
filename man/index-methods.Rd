@@ -5,7 +5,6 @@
 \alias{unstack.pindex}
 \alias{[.pindex}
 \alias{[[.pindex}
-\alias{[.agg_pindex]}
 \alias{[<-.pindex}
 \alias{[[<-.pindex}
 \alias{levels.pindex}
@@ -34,8 +33,6 @@ Methods to combine price indexes together, extract useful information, replace i
 
 # Extract
 \method{[}{pindex}(x, i, j)
-
-\method{[}{agg_pindex}(x, i, j)
 
 \method{[[}{pindex}(x, i, j)
 
@@ -81,7 +78,7 @@ The \code{merge()} method combines two index objects with common time periods, m
 
 The \code{stack()} method combines two index objects with common levels, stacking index values and quote contributions for each level in \code{y} after those in \code{x}. The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}. These methods can be used in a map-reduce to make an index with multiple aggregation structures (like a Paasche index).
 
-It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging always returns an index of class \code{pindex}. If at least one of \code{x} or \code{y} is an aggregate index then the result of stacking these indexes is also an aggregate index; otherwise, it is the same class as \code{x}.
+It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging does not return aggregated index. If at least one of \code{x} or \code{y} is an aggregate index then the result of stacking these indexes is also an aggregate index; otherwise, it is the same class as \code{x}.
 }
 
 \subsection{Extract}{
@@ -93,7 +90,7 @@ The \code{levels()} method extracts the levels of an index, and the \code{time()
 
 The \code{head()} and \code{tail()} methods act as if \code{x} is a matrix of index values, and by default extract the time series for the first/last six levels of \code{x}.
 
-The \code{summary()} method summarizes \code{x} as a matrix of index values (i.e., the five-number summary for each period). If there are quote contributions, then these are also summarized as a matrix.
+The \code{summary()} method summarizes \code{x} as a matrix of index values (i.e., the five-number summary for each period). If there are percent-change contributions, then these are also summarized as a matrix.
 }
 
 \subsection{Coerce}{

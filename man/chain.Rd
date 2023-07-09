@@ -1,13 +1,13 @@
 \name{chain}
 \alias{chain}
 \alias{chain.default}
-\alias{chain.pindex}
+\alias{chain.chainable_pindex}
 \alias{unchain}
 \alias{unchain.default}
-\alias{unchain.pindex}
+\alias{unchain.direct_pindex}
 \alias{rebase}
 \alias{rebase.default}
-\alias{rebase.pindex}
+\alias{rebase.direct_pindex}
 
 \title{
 Chain and rebase a price index
@@ -22,19 +22,19 @@ chain(x, ...)
 
 \method{chain}{default}(x, ...)
 
-\method{chain}{pindex}(x, link = rep(1, nlevels(x)), ...)
+\method{chain}{chainable_pindex}(x, link = rep(1, nlevels(x)), ...)
 
 unchain(x, ...)
 
 \method{unchain}{default}(x, ...)
 
-\method{unchain}{pindex}(x, ...)
+\method{unchain}{direct_pindex}(x, ...)
 
 rebase(x, ...)
 
 \method{rebase}{default}(x, ...)
 
-\method{rebase}{pindex}(x, base = rep(1, nlevels(x)), ...)
+\method{rebase}{direct_pindex}(x, base = rep(1, nlevels(x)), ...)
 }
 
 \arguments{

@@ -16,7 +16,7 @@ vcov.agg_pindex <- function(object, repweights, mse = TRUE, ...) {
     weights(pias) <- repweights[, i]
     res <- (as.matrix(pias) %*% elem^r)^(1 / r)
     # undo chaining for a period-over-period index
-    if (object$chainable) res[, -1] <- res[, -1] / res[, -ncol(res)]
+    if (is_chainable_index(object)) res[, -1] <- res[, -1] / res[, -ncol(res)]
     res
   })
   # it's easier to calculate the variance with an array of indexes

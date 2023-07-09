@@ -1,3 +1,13 @@
+pias <- function(child, parent, levels, eas, weights, height) {
+  res <- list(child = child,
+              parent = parent,
+              levels = levels,
+              eas = eas,
+              weights = weights,
+              height = height)
+  structure(res, class = "pias")
+}
+
 aggregation_structure <- function(x, w = NULL) {
   x <- lapply(x, as.factor)
   len <- length(x)
@@ -53,12 +63,6 @@ aggregation_structure <- function(x, w = NULL) {
     parent[[i]] <- match(parent[[i]][nm[[i]]], nm[-1L][[i]])
     names(parent[[i]]) <- nm[[i]]
   }
-  # return 'pias' object
-  res <- list(child = child,
-              parent = parent,
-              levels = c(nested_names(rev(child)), ea),
-              eas = ea,
-              weights = w,
-              height = len)
-  structure(res, class = "pias")
+
+  pias(child, parent, c(nested_names(rev(child)), ea), ea, w, len)
 }

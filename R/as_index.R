@@ -24,15 +24,13 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
     stop("'x' cannot have duplicated row or column names")
   }
 
-  index <- contrib <- structure(
-    vector("list", ncol(x)), names = periods
-  )
+  index <- contrib <- structure(vector("list", ncol(x)), names = periods)
   contrib[] <- empty_contrib(levels)
   for (t in seq_along(periods)) {
     # EA names are not kept for matrices with 1 row
     index[[t]] <- structure(x[, t], names = rownames(x))
   }
-  pindex(index, contrib, levels, periods, as_TorF(chainable))
+  pindex(index, contrib, levels, periods, chainable)
 }
 
 as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
@@ -61,5 +59,5 @@ is_aggregate_index <- function(x) {
 }
 
 is_chainable_index <- function(x) {
-  is_index(x) && x$chainable
+  inherits(x, "chainable_pindex")
 }

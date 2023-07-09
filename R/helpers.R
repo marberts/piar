@@ -62,5 +62,5 @@ empty_contrib <- function(x) {
 }
 
 has_contrib <- function(x) {
-  Position(\(x) any(lengths(x) > 0L), x$contrib, 0L) > 0L
+  Position(\(x) any(lengths(x) > 0L), x$contrib, nomatch = 0L) > 0L
 }

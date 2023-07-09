@@ -2,9 +2,8 @@
 as.data.frame.pindex <- function(x, ..., stringsAsFactors = FALSE) {
   value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))
-  data.frame(
-    period, level = x$levels, value, stringsAsFactors = stringsAsFactors
-  )
+  data.frame(period, level = x$levels, value,
+             stringsAsFactors = stringsAsFactors)
 }
 
 as.matrix.pindex <- function(x, ...) {
@@ -146,20 +145,33 @@ merge.agg_pindex <- function(x, y, ...) {
   NextMethod("merge")
 }
 
-merge.pindex <- function(x, y, ...) {
+merge.chainable_pindex <- function(x, y, ...) {
   if (!is_index(y)) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
+  if (!is_chainable_index(y)) {
+    stop("cannot merge a fixed-base and period-over-period index")
+  }
+  NextMethod("merge")
+}
+
+merge.direct_pindex <- function(x, y, ...) {
+  if (!is_index(y)) {
+    stop("'y' is not an index; use elemental_index() to make one")
+  }
+  if (is_chainable_index(y)) {
+    stop("cannot merge a fixed-base and period-over-period index")
+  }
+  NextMethod("merge")
+}
+
+merge.pindex <- function(x, y, ...) {
   if (!identical(x$time, y$time)) {
     stop("'x' and 'y' must be indexes for the same time periods")
   }
   if (any(x$levels %in% y$levels)) {
-    stop("the same levels appear in both 'x' and 'y'")
+    stop("the same levels cannot appear in both 'x' and 'y'")
   }
-  if (x$chainable != y$chainable) {
-    stop("cannot merge a fixed-base and period-over-period index")
-  }
-  # loop over time periods and combine index values/contributions
   x$index <- Map(c, x$index, y$index)
   x$contrib <- Map(c, x$contrib, y$contrib)
   # it's safe to use c() and not union() because there can't be duplicate levels
@@ -180,18 +192,32 @@ stack.agg_pindex <- function(x, y, ...) {
   NextMethod("stack")
 }
 
-stack.pindex <- function(x, y, ...) {
+stack.chainable_pindex <- function(x, y, ...) {
   if (!is_index(y)) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
+  if (!is_chainable_index(y)) {
+    stop("cannot stack a period-over-period and a fixed-base index")
+  }
+  NextMethod("stack")
+}
+
+stack.direct_pindex <- function(x, y, ...) {
+  if (!is_index(y)) {
+    stop("'y' is not an index; use elemental_index() to make one")
+  }
+  if (is_chainable_index(y)) {
+    stop("cannot stack a period-over-period and a fixed-base index")
+  }
+  NextMethod("stack")
+}
+
+stack.pindex <- function(x, y, ...) {
   if (!identical(x$levels, y$levels)) {
     stop("'x' and 'y' must be indexes for the same levels")
   }
   if (any(x$time %in% y$time)) {
-    stop("the same periods appear in both 'x' and 'y'")
-  }
-  if (x$chainable != y$chainable) {
-    stop("cannot stack a period-over-period and a fixed-base index")
+    stop("the same time periods cannot appear in both 'x' and 'y'")
   }
   x$index <- c(x$index, y$index)
   x$contrib <- c(x$contrib, y$contrib)
@@ -208,12 +234,12 @@ stack.pindex <- function(x, y, ...) {
 
 unstack.pindex <- function(x, ...) {
   res <- vector("list", length(x$time))
+  names(res) <- x$time
   for (i in seq_along(res)) {
     res[[i]]$index <- x$index[i]
     res[[i]]$contrib <- x$contrib[i]
     res[[i]]$levels <- x$levels
     res[[i]]$time <- x$time[i]
-    res[[i]]$chainable <- x$chainable
     res[[i]]$r <- x$r
     res[[i]]$pias <- x$pias
     class(res[[i]]) <- class(x)

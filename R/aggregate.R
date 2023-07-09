@@ -14,6 +14,7 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   # put the aggregation weights upside down to line up with pias
   w <- rev(weights(pias, na.rm = na.rm))
   has_contrib <- has_contrib(x)
+  chainable <- is_chainable_index(x)
   # loop over each time period
   for (t in seq_along(x$time)) {
     rel <- con <- vector("list", pias$height)
@@ -24,7 +25,7 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     # get rid of any NULL contributions
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     # re-aggregate price-updated weights for all periods after first
-    if (t > 1L && x$chainable) {
+    if (t > 1L && chainable) {
       w <- rev(weights(pias, na.rm = na.rm))
     }
     # loop over each level in the pias from the bottom up and aggregate
@@ -59,14 +60,14 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     x$index[[t]] <- index
     x$contrib[[t]] <- unlist(rev(con), recursive = FALSE)
     # price update weights for all periods after the first
-    if (x$chainable) {
+    if (chainable) {
       weights(pias) <- price_update(index[pias$eas], w[[1L]])
     }
   }
   x$levels <- pias$levels
   x$r <- r
   x$pias <- pias[c("child", "parent", "eas", "height")]
-  structure(x, class = c("agg_pindex", "pindex"))
+  structure(x, class = c("agg_pindex", class(x)))
 }
 
 #---- Averaging over subperiods ----

@@ -16,6 +16,8 @@
 
 - Overhaul of the documentation.
 
+- The object structure used to represent index object has been refined.
+
 # Version 0.4.0
 
 ## Significant changes
