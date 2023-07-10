@@ -30,7 +30,7 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
     # EA names are not kept for matrices with 1 row
     index[[t]] <- structure(x[, t], names = rownames(x))
   }
-  pindex(index, contrib, levels, periods, chainable)
+  new_index(index, contrib, levels, periods, chainable)
 }
 
 as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
@@ -45,19 +45,23 @@ as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
   as_index(res, chainable, ...)
 }
 
-as_index.pindex <- function(x, ...) {
+as_index.index <- function(x, ...) {
   x
 }
 
 #---- Test ----
 is_index <- function(x) {
-  inherits(x, "pindex")
+  inherits(x, "index")
 }
 
 is_aggregate_index <- function(x) {
-  inherits(x, "agg_pindex")
+  inherits(x, "aggregate_index")
 }
 
 is_chainable_index <- function(x) {
-  inherits(x, "chainable_pindex")
+  inherits(x, "chainable_index")
+}
+
+is_direct_index <- function(x) {
+  inherits(x, "direct_index")
 }

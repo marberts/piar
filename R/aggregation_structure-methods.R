@@ -1,4 +1,6 @@
-weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
+weights.aggregation_structure <- function(object,
+                                          ea_only = FALSE,
+                                          na.rm = FALSE, ...) {
   if (ea_only) {
     return(object$weights)
   }
@@ -17,25 +19,28 @@ weights.pias <- function(object, ea_only = FALSE, na.rm = FALSE, ...) {
   UseMethod("weights<-")
 }
 
-`weights<-.pias` <- function(object, value) {
+`weights<-.aggregation_structure` <- function(object, value) {
   object$weights[] <- as.numeric(value)
   object
 }
 
-print.pias <- function(x, ...) {
+print.aggregation_structure <- function(x, ...) {
   print(c(rev(lapply(x$child, names)), if (x$height > 0L) list(x$eas)))
   invisible(x)
 }
 
-levels.pias <- function(x) {
+levels.aggregation_structure <- function(x) {
   x$levels
 }
 
-`levels<-.pias` <- function(x, value) {
+`levels<-.aggregation_structure` <- function(x, value) {
   stop("cannot replace levels attribute")
 }
 
-update.pias <- function(object, index, period = end(index), ...) {
+update.aggregation_structure <- function(object,
+                                         index,
+                                         period = end(index),
+                                         ...) {
   if (!is_aggregate_index(index)) {
     stop("'index' is not an aggregate index; use aggregate() to make one")
   }
@@ -48,7 +53,7 @@ update.pias <- function(object, index, period = end(index), ...) {
   object
 }
 
-as.matrix.pias <- function(x, ...) {
+as.matrix.aggregation_structure <- function(x, ...) {
   nea <- length(x$eas)
   if (x$height == 1L) {
     return(matrix(numeric(0), ncol = nea, dimnames = list(NULL, x$eas)))
@@ -73,7 +78,8 @@ as.matrix.pias <- function(x, ...) {
   do.call(rbind, rows)
 }
 
-as.data.frame.pias <- function(x, ..., stringsAsFactors = FALSE) {
+as.data.frame.aggregation_structure <- function(x, ...,
+                                                stringsAsFactors = FALSE) {
   colnames <- c(paste0("level", seq_along(x$child), recycle0 = TRUE), "ea")
   res <- as.data.frame(as.list(x),
                        col.names = colnames,
@@ -82,7 +88,7 @@ as.data.frame.pias <- function(x, ..., stringsAsFactors = FALSE) {
   res
 }
 
-as.list.pias <- function(x, ...) {
+as.list.aggregation_structure <- function(x, ...) {
   if (x$height == 1L) {
     return(list(x$eas))
   }
@@ -97,6 +103,6 @@ as.list.pias <- function(x, ...) {
 }
 
 # not exported
-is_pias <- function(x) {
-  inherits(x, "pias")
+is_aggregation_structure <- function(x) {
+  inherits(x, "aggregation_structure")
 }

@@ -1,6 +1,6 @@
 #---- Aggregate an index ----
-aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
-  if (!is_pias(pias)) {
+aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+  if (!is_aggregation_structure(pias)) {
     stop("'pias' must be a price index aggregation structure; use ",
          "aggregation_structure() to make one")
   }
@@ -67,11 +67,11 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   x$levels <- pias$levels
   x$r <- r
   x$pias <- pias[c("child", "parent", "eas", "height")]
-  structure(x, class = c("agg_pindex", class(x)))
+  structure(x, class = c("aggregate_index", class(x)))
 }
 
 #---- Averaging over subperiods ----
-mean.pindex <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
+mean.index <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
   if (!missing(w)) {
     if (length(w) != length(x$time) * length(x$levels)) {
       stop("'x' and 'w' must be the same length")

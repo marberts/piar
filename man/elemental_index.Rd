@@ -6,7 +6,7 @@
 \title{Make elemental price indexes}
 
 \description{
-Compute period-over-period or fixed-base (direct) elemental price indexes, with optional quote contributions.
+Compute period-over-period or fixed-base (direct) elemental price indexes, with optional percent-change quote.
 }
 
 \usage{
@@ -52,14 +52,12 @@ Indexes based on nested generalized means, like the Fisher index (and superlativ
 }
 
 \value{
-An index objects of class \code{pindex}. These often behaves like a matrix with a row for each level of the index and a column for each time period, and have the following components.
+An index object of class \code{chainable_index} if \code{chainable == TRUE}, or \code{direct_index} if \code{chainable == FALSE}, inheriting from class \code{index}. These often behaves like a matrix with a row for each level of the index and a column for each time period, and have the following components.
 
 \item{index}{A named list with an entry for each \code{period} that gives a named vector of index values for each level in \code{ea}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}
 \item{levels}{The levels for \code{ea}.}
 \item{time}{The levels for \code{period}.}
-\item{has_contrib}{The value of \code{contrib}.}
-\item{chainable}{The value of \code{chainable}, usually \code{TRUE}.}
 }
 
 \references{
@@ -71,7 +69,7 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 \seealso{
 \code{\link{price_relative}} for making price relatives for the same products over time, and \code{\link{carry_forward}} and \code{\link{shadow_price}} for imputations for missing prices.
 
-\code{\link[=aggregate]{aggregate}} to aggregate elemental indexes accroding to a price index aggregation structure.
+\code{\link[=aggregate.index]{aggregate}} to aggregate elemental indexes accroding to a price index aggregation structure.
 
 \code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
 

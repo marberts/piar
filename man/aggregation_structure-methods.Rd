@@ -1,11 +1,11 @@
-\name{pias-methods}
-\alias{pias-methods}
-\alias{weights.pias}
+\name{aggregation_structure-methods}
+\alias{aggregation_structure-methods}
+\alias{weights.aggregation_structure}
 \alias{weights<-}
-\alias{weights<-.pias}
-\alias{update.pias}
-\alias{as.matrix.pias}
-\alias{as.data.frame.pias}
+\alias{weights<-.aggregation_structure}
+\alias{update.aggregation_structure}
+\alias{as.matrix.aggregation_structure}
+\alias{as.data.frame.aggregation_structure}
 
 \title{
 Methods for price index aggregation structures
@@ -20,15 +20,15 @@ Functions to work with price index aggregation structures.
 }
 
 \usage{
-\method{weights}{pias}(object, ea_only = FALSE, na.rm = FALSE, ...)
+\method{weights}{aggregation_structure}(object, ea_only = FALSE, na.rm = FALSE, ...)
 
-\method{weights}{pias}(object) <- value
+\method{weights}{aggregation_structure}(object) <- value
 
-\method{update}{pias}(object, index, period = end(index), ...)
+\method{update}{aggregation_structure}(object, index, period = end(index), ...)
 
-\method{as.matrix}{pias}(x, ...)
+\method{as.matrix}{aggregation_structure}(x, ...)
 
-\method{as.data.frame}{pias}(x, ..., stringsAsFactors = FALSE)
+\method{as.data.frame}{aggregation_structure}(x, ..., stringsAsFactors = FALSE)
 }
 
 \arguments{
@@ -40,7 +40,7 @@ Functions to work with price index aggregation structures.
 
 \item{value}{A numeric vector of weights for the elemental aggregates of \code{object}.}
 
-\item{index}{An aggregate price index, as made by \code{\link[=aggregate.pindex]{aggregate()}}.}
+\item{index}{An aggregate price index, as made by \code{\link[=aggregate.index]{aggregate()}}.}
 
 \item{period}{The time period used to price update the weights. The default uses the last period in \code{index}.}
 

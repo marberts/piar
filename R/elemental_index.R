@@ -1,11 +1,11 @@
-pindex <- function(index, contrib, levels, time, chainable) {
+new_index <- function(index, contrib, levels, time, chainable) {
   res <- list(index = index, contrib = contrib, levels = levels, time = time)
   type <- if (chainable) {
-    "chainable_pindex"
+    "chainable_index"
   } else {
-    "direct_pindex"
+    "direct_index"
   }
-  structure(res, class = c(type, "pindex"))
+  structure(res, class = c(type, "index"))
 }
 
 #---- Calculate generalized-mean elemental indexes ----
@@ -75,5 +75,5 @@ elemental_index.numeric <- function(x,
     names(contributions) <- periods
   }
 
-  pindex(index, contributions, eas, periods, chainable)
+  new_index(index, contributions, eas, periods, chainable)
 }

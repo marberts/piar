@@ -12,7 +12,7 @@ Most price indexes are made with a two-step procedure, where period-over-period 
 \section{Usage}{
 The vignette \emph{Making price indexes} gives several extended examples of how to use the functions in this package to make different types of price indexes. Run \code{vignette("making_price_indexes", "piar")} to view it. But the basic work flow is fairly simple. 
 
-The starting point is to make period-over-period elemental price indexes with the \code{\link[=elemental_index]{elemental_index()}} function and an aggregation structure with the \code{\link[=aggregation_structure]{aggregation_structure()}} function. The \code{\link[=aggregate.pindex]{aggregate()}} method can then be used to aggregate the elemental indexes according to the aggregation structure. There are a variety of methods to work with these index objects, such as chaining them over time. 
+The starting point is to make period-over-period elemental price indexes with the \code{\link[=elemental_index]{elemental_index()}} function and an aggregation structure with the \code{\link[=aggregation_structure]{aggregation_structure()}} function. The \code{\link[=aggregate.index]{aggregate()}} method can then be used to aggregate the elemental indexes according to the aggregation structure. There are a variety of methods to work with these index objects, such as chaining them over time. 
 
 The two-step workflow is described in chapter 8 of the CPI manual (2020) and chapter 5 of Balk (2008). A practical overview is given by Chiru et al. (2015) for the Canadian CPI, and a detailed discussion of chaining indexes is given by von der Lippe (2001).
 }

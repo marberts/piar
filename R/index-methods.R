@@ -1,22 +1,22 @@
 #---- Coerce ----
-as.data.frame.pindex <- function(x, ..., stringsAsFactors = FALSE) {
+as.data.frame.index <- function(x, ..., stringsAsFactors = FALSE) {
   value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))
   data.frame(period, level = x$levels, value,
              stringsAsFactors = stringsAsFactors)
 }
 
-as.matrix.pindex <- function(x, ...) {
+as.matrix.index <- function(x, ...) {
   do.call(cbind, x$index)
 }
 
 # not exported
-as.double.pindex <- function(x, ...) {
+as.double.index <- function(x, ...) {
   as.double(as.matrix(x))
 }
 
 #---- Extract ----
-`[.pindex` <- function(x, i, j) {
+`[.index` <- function(x, i, j) {
   # get the row/col names that form the submatrix for extraction
   dnm <- dimnames(as.matrix(x)[i, j, drop = FALSE])
   if (!all(lengths(dnm) > 0L)) {
@@ -32,11 +32,11 @@ as.double.pindex <- function(x, ...) {
   x
 }
 
-`[[.pindex` <- function(x, i, j) {
+`[[.index` <- function(x, i, j) {
   as.matrix(x)[[i, j]]
 }
 
-`[.agg_pindex` <- function(x, i, j) {
+`[.aggregate_index` <- function(x, i, j) {
   res <- NextMethod("[")
   if (!identical(res$levels, x$levels)) {
     res$r <- res$pias <- NULL
@@ -45,7 +45,7 @@ as.double.pindex <- function(x, ...) {
   res
 }
 
-`[<-.pindex` <- function(x, i, j, value) {
+`[<-.index` <- function(x, i, j, value) {
   res <- as.matrix(x)
   res[i, j] <- as.numeric(value)
   periods <- colnames(res[0L, j, drop = FALSE])
@@ -59,7 +59,7 @@ as.double.pindex <- function(x, ...) {
   x
 }
 
-`[[<-.pindex` <- function(x, i, j, value) {
+`[[<-.index` <- function(x, i, j, value) {
   dim <- c(length(x$levels), length(x$time))
   row_slice <- .row(dim)
   col_slice <- .col(dim)
@@ -76,27 +76,27 @@ as.double.pindex <- function(x, ...) {
   x
 }
 
-levels.pindex <- function(x) {
+levels.index <- function(x) {
   x$levels
 }
 
-`levels<-.pindex` <- function(x, value) {
+`levels<-.index` <- function(x, value) {
   stop("cannot replace levels attribute")
 }
 
-time.pindex <- function(x, ...) {
+time.index <- function(x, ...) {
   x$time
 }
 
-start.pindex <- function(x, ...) {
+start.index <- function(x, ...) {
   x$time[1L]
 }
 
-end.pindex <- function(x, ...) {
+end.index <- function(x, ...) {
   x$time[length(x$time)]
 }
 
-head.pindex <- function(x, n = 6L, ...) {
+head.index <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {
@@ -116,7 +116,7 @@ head.pindex <- function(x, n = 6L, ...) {
   x[seq_len(nl), seq_len(np)]
 }
 
-tail.pindex <- function(x, n = 6L, ...) {
+tail.index <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {
@@ -139,13 +139,13 @@ tail.pindex <- function(x, n = 6L, ...) {
 }
 
 #---- Merge ----
-merge.agg_pindex <- function(x, y, ...) {
+merge.aggregate_index <- function(x, y, ...) {
   x$r <- x$pias <- NULL
   class(x) <- class(x)[-1]
   NextMethod("merge")
 }
 
-merge.chainable_pindex <- function(x, y, ...) {
+merge.chainable_index <- function(x, y, ...) {
   if (!is_index(y)) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
@@ -155,7 +155,7 @@ merge.chainable_pindex <- function(x, y, ...) {
   NextMethod("merge")
 }
 
-merge.direct_pindex <- function(x, y, ...) {
+merge.direct_index <- function(x, y, ...) {
   if (!is_index(y)) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
@@ -165,7 +165,7 @@ merge.direct_pindex <- function(x, y, ...) {
   NextMethod("merge")
 }
 
-merge.pindex <- function(x, y, ...) {
+merge.index <- function(x, y, ...) {
   if (!identical(x$time, y$time)) {
     stop("'x' and 'y' must be indexes for the same time periods")
   }
@@ -180,7 +180,7 @@ merge.pindex <- function(x, y, ...) {
 }
 
 #---- Stack ----
-stack.agg_pindex <- function(x, y, ...) {
+stack.aggregate_index <- function(x, y, ...) {
   if (is_aggregate_index(y)) {
     if (x$r != y$r) {
       stop("cannot stack indexes of different orders")
@@ -192,7 +192,7 @@ stack.agg_pindex <- function(x, y, ...) {
   NextMethod("stack")
 }
 
-stack.chainable_pindex <- function(x, y, ...) {
+stack.chainable_index <- function(x, y, ...) {
   if (!is_index(y)) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
@@ -202,7 +202,7 @@ stack.chainable_pindex <- function(x, y, ...) {
   NextMethod("stack")
 }
 
-stack.direct_pindex <- function(x, y, ...) {
+stack.direct_index <- function(x, y, ...) {
   if (!is_index(y)) {
     stop("'y' is not an index; use elemental_index() to make one")
   }
@@ -212,7 +212,7 @@ stack.direct_pindex <- function(x, y, ...) {
   NextMethod("stack")
 }
 
-stack.pindex <- function(x, y, ...) {
+stack.index <- function(x, y, ...) {
   if (!identical(x$levels, y$levels)) {
     stop("'x' and 'y' must be indexes for the same levels")
   }
@@ -224,15 +224,15 @@ stack.pindex <- function(x, y, ...) {
   # it's safe to use c() and not union() because there can't be duplicate
   # periods
   x$time <- c(x$time, y$time)
-  if (is_aggregate_index(y)) {
+  if (is_aggregate_index(y) && !is_aggregate_index(x)) {
     x$r <- y$r
     x$pias <- y$pias
-    class(x) <- c("agg_pindex", class(x))
+    class(x) <- c("aggregate_index", class(x))
   }
   x
 }
 
-unstack.pindex <- function(x, ...) {
+unstack.index <- function(x, ...) {
   res <- vector("list", length(x$time))
   names(res) <- x$time
   for (i in seq_along(res)) {
@@ -248,22 +248,22 @@ unstack.pindex <- function(x, ...) {
 }
 
 #---- Printing ----
-print.pindex <- function(x, ...) {
+print.index <- function(x, ...) {
   print(as.matrix(x), ...)
   invisible(x)
 }
 
 #---- Summary ----
-summary.pindex <- function(object, ...) {
+summary.index <- function(object, ...) {
   res <- structure(vector("list", 2L), names = c("index", "contrib"))
   res$index <- summary.data.frame(object$index, ...)
   res$contrib <- if (has_contrib(object)) {
     summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
   }
-  structure(res, class = "pindex_summary")
+  structure(res, class = "index_summary")
 }
 
-print.pindex_summary <- function(x, ...) {
+print.index_summary <- function(x, ...) {
   cat("Indexes\n")
   print(x$index)
   if (!is.null(x$contrib)) {

@@ -1,21 +1,21 @@
 \name{index-methods}
 \alias{index-methods}
-\alias{merge.pindex}
-\alias{stack.pindex}
-\alias{unstack.pindex}
-\alias{[.pindex}
-\alias{[[.pindex}
-\alias{[<-.pindex}
-\alias{[[<-.pindex}
-\alias{levels.pindex}
-\alias{time.pindex}
-\alias{start.pindex}
-\alias{end.pindex}
-\alias{head.pindex}
-\alias{tail.pindex}
-\alias{summary.pindex}
-\alias{as.matrix.pindex}
-\alias{as.data.frame.pindex}
+\alias{merge.index}
+\alias{stack.index}
+\alias{unstack.index}
+\alias{[.index}
+\alias{[[.index}
+\alias{[<-.index}
+\alias{[[<-.index}
+\alias{levels.index}
+\alias{time.index}
+\alias{start.index}
+\alias{end.index}
+\alias{head.index}
+\alias{tail.index}
+\alias{summary.index}
+\alias{as.matrix.index}
+\alias{as.data.frame.index}
 
 \title{Methods for price indexes}
 
@@ -25,37 +25,37 @@ Methods to combine price indexes together, extract useful information, replace i
 
 \usage{
 # Combine
-\method{merge}{pindex}(x, y, ...)
+\method{merge}{index}(x, y, ...)
 
-\method{stack}{pindex}(x, y, ...)
+\method{stack}{index}(x, y, ...)
 
-\method{unstack}{pindex}(x, ...)
+\method{unstack}{index}(x, ...)
 
 # Extract
-\method{[}{pindex}(x, i, j)
+\method{[}{index}(x, i, j)
 
-\method{[[}{pindex}(x, i, j)
+\method{[[}{index}(x, i, j)
 
-\method{[}{pindex}(x, i, j) <- value
+\method{[}{index}(x, i, j) <- value
 
-\method{[[}{pindex}(x, i, j) <- value
+\method{[[}{index}(x, i, j) <- value
 
-\method{levels}{pindex}(x)
+\method{levels}{index}(x)
 
-\method{time}{pindex}(x, ...)
+\method{time}{index}(x, ...)
 
-\method{start}{pindex}(x, ...)
+\method{start}{index}(x, ...)
 
-\method{end}{pindex}(x, ...)
+\method{end}{index}(x, ...)
 
-\method{head}{pindex}(x, n = 6, ...)
+\method{head}{index}(x, n = 6, ...)
 
-\method{tail}{pindex}(x, n = 6, ...)
+\method{tail}{index}(x, n = 6, ...)
 
 # Coerce
-\method{as.matrix}{pindex}(x, ...)
+\method{as.matrix}{index}(x, ...)
 
-\method{as.data.frame}{pindex}(x, ..., stringsAsFactors = FALSE)
+\method{as.data.frame}{index}(x, ..., stringsAsFactors = FALSE)
 }
 
 \arguments{

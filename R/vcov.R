@@ -1,4 +1,4 @@
-vcov.agg_pindex <- function(object, repweights, mse = TRUE, ...) {
+vcov.aggregate_index <- function(object, repweights, mse = TRUE, ...) {
   repweights <- as.matrix(repweights)
   eas <- object$pias$eas
   if (nrow(repweights) != length(eas)) {

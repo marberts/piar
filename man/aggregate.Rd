@@ -1,6 +1,6 @@
 \name{aggregate}
-\alias{aggregate.pindex}
-\alias{mean.pindex}
+\alias{aggregate.index}
+\alias{mean.index}
 
 \title{Aggregate elemental price indexes}
 
@@ -9,9 +9,9 @@ Aggregate elemental price indexes with a price index aggregation structure, or a
 }
 
 \usage{
-\method{aggregate}{pindex}(x, pias, na.rm = FALSE, r = 1, ...)
+\method{aggregate}{index}(x, pias, na.rm = FALSE, r = 1, ...)
 
-\method{mean}{pindex}(x, w, window = 3, na.rm = FALSE, r = 1, ...)
+\method{mean}{index}(x, w, window = 3, na.rm = FALSE, r = 1, ...)
 }
 
 \arguments{
@@ -45,7 +45,7 @@ In most cases aggregation is done with an arithmetic mean (the default), and thi
 
 Aggregating quote contributions uses the method in chapter 9 of the CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic mean. With a non-arithmetic mean, arithmetic weights are constructed using \code{\link[=transmute_weights]{transmute_weights(r, 1)}} in order to apply this method.
 
-There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with \code{\link[=merge.pindex]{merge()}}). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the change in the value of the index. This can also happen when aggregating an already aggregated index in which missing index values have been imputed (i.e., when \code{na.rm = TRUE}).
+There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with \code{\link[=merge.index]{merge()}}). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the change in the value of the index. This can also happen when aggregating an already aggregated index in which missing index values have been imputed (i.e., when \code{na.rm = TRUE}).
 
 Indexes can be aggregated over subperiods by taking the (usually arithmetic) mean of index values for each level over consecutive windows of subperiods. The \code{mean()} method constructs a set of windows of length \code{window}, starting in the first period of the index, and takes the unweighted mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that quote contributions are discarded when aggregating over subperiods. 
 
@@ -53,14 +53,12 @@ An optional vector of weights can be specified when aggregating index values ove
 }
 
 \value{
-\code{aggregate()} returns an aggregate index. This is an object of class \code{agg_pindex}, inheriting from class \code{pindex}, which has the following components.
+\code{aggregate()} returns an aggregate index. This is an object of class \code{aggregate_index}, inheriting from the class of \code{x}, which has the following components.
 
 \item{index}{A named list with an entry for each \code{period} in \code{x} that gives a named vector of index values for each level in \code{pias}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a list with an entry for each level in \code{pias} with a named vector that gives the additive contribution for each price relative.}
 \item{levels}{The levels for \code{pias}.}
 \item{time}{The levels for \code{period} from \code{x}.}
-\item{has_contrib}{The value of \code{has_contrib} from \code{x}.}
-\item{chainable}{The value for \code{chainable} from \code{x}, usually \code{TRUE.}}
 \item{r}{The value for \code{r}, usually \code{1}.}
 \item{pias}{A list containing the \code{child}, \code{parent}, \code{eas}, and \code{height} components of \code{pias}.}
 

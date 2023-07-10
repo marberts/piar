@@ -184,7 +184,7 @@ contrib(s1, "111")
 
 s2 <- ms_index[, 3:4]
 s2$r <- s2$pias <- NULL
-class(s2) <- c("chainable_pindex", "pindex")
+class(s2) <- c("chainable_index", "index")
 
 all.equal(stack(ms_index[, 1:2], s2), ms_index)
 
