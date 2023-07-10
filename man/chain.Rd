@@ -67,7 +67,7 @@ Percent-change contributions are removed when chaining/unchaining/rebasing an in
 }
 
 \value{
-Each of these functions returns an index of the same type as \code{x}.
+\code{chain()} and \code{rebase()} return an index that inherits from \code{direct_index}, and \code{unchain()} returns an index that inherits from \code{chainable_index}.
 }
 
 \seealso{
