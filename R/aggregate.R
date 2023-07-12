@@ -1,4 +1,9 @@
 #---- Aggregate an index ----
+aggregate.aggregate_index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+  class(x) <- class(x)[-1L]
+  NextMethod()
+}
+
 aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   if (!is_aggregation_structure(pias)) {
     stop("'pias' must be a price index aggregation structure; use ",
