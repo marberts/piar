@@ -39,10 +39,11 @@ as.double.index <- function(x, ...) {
 `[.aggregate_index` <- function(x, i, j) {
   res <- NextMethod("[")
   if (!identical(res$levels, x$levels)) {
-    res$r <- res$pias <- NULL
-    class(res) <- class(res)[-1]
+    new_index(res$index, res$contrib, res$levels, res$time,
+              is_chainable_index(res))
+  } else {
+    res  
   }
-  res
 }
 
 `[<-.index` <- function(x, i, j, value) {

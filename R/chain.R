@@ -16,8 +16,12 @@ chain.chainable_index <- function(x, link = rep(1, nlevels(x)), ...) {
   x$index[] <- Reduce(`*`, x$index, accumulate = TRUE)
   # contributions are difficult to chain, so remove them
   x$contrib[] <- empty_contrib(x$levels)
-  class(x)[class(x) == "chainable_index"] <- "direct_index"
-  x
+  if (is_aggregate_index(x)) {
+    new_aggregate_index(x$index, x$contrib, x$levels, x$time, x$r, x$pias,
+                        chainable = FALSE)
+  } else {
+    new_index(x$index, x$contrib, x$levels, x$time, chainable = FALSE)
+  }
 }
 
 chain.direct_index <- function(x, ...) {
@@ -41,8 +45,12 @@ unchain.direct_index <- function(x, ...) {
   x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
   # contributions are difficult to unchain, so remove them
   x$contrib[] <- empty_contrib(x$levels)
-  class(x)[class(x) == "direct_index"] <- "chainable_index"
-  x
+  if (is_aggregate_index(x)) {
+    new_aggregate_index(x$index, x$contrib, x$levels, x$time, x$r, x$pias,
+                        chainable = TRUE)
+  } else {
+    new_index(x$index, x$contrib, x$levels, x$time, chainable = TRUE)
+  }
 }
 
 #---- Rebase ----

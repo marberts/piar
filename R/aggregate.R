@@ -1,9 +1,25 @@
-#---- Aggregate an index ----
-aggregate.aggregate_index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
-  class(x) <- class(x)[-1L]
-  NextMethod()
+new_aggregate_index <- function(index,
+                                contrib,
+                                levels,
+                                time,
+                                r,
+                                pias,
+                                chainable) {
+  res <- list(index = index,
+              contrib = contrib,
+              levels = levels,
+              time = time,
+              r = r,
+              pias = pias)
+  type <- if (chainable) {
+    "chainable_index"
+  } else {
+    "direct_index"
+  }
+  structure(res, class = c("aggregate_index", type, "index"))
 }
 
+#---- Aggregate an index ----
 aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   if (!is_aggregation_structure(pias)) {
     stop("'pias' must be a price index aggregation structure; use ",
@@ -47,11 +63,11 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
             w <- scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))
             unlist(Map("*", con[[i - 1L]][z], w))
           }
-        )  
+        ) 
       } else {
         con[[i]] <- lapply(pias$child[[i - 1L]], \(z) numeric(0L))
       }
-      
+
     }
     # parental imputation
     if (na.rm) {
@@ -69,15 +85,14 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
       weights(pias) <- price_update(index[pias$eas], w[[1L]])
     }
   }
-  x$levels <- pias$levels
-  x$r <- r
-  x$pias <- pias[c("child", "parent", "eas", "height")]
-  structure(x, class = c("aggregate_index", class(x)))
+  new_aggregate_index(x$index, x$contrib, pias$levels, x$time, r,
+                      pias[c("child", "parent", "eas", "height")],
+                      is_chainable_index(x))
 }
 
 #---- Averaging over subperiods ----
-mean.index <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
-  if (!missing(w)) {
+mean.index <- function(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...) {
+  if (!is.null(w)) {
     if (length(w) != length(x$time) * length(x$levels)) {
       stop("'x' and 'w' must be the same length")
     }
@@ -97,11 +112,11 @@ mean.index <- function(x, w, window = 3, na.rm = FALSE, r = 1, ...) {
     j <- seq(loc[i], length.out = window)
     # structure() is needed because .mapply doesn't keep names
     index <- structure(.mapply(c, x$index[j], list()), names = x$levels)
-    res[[i]] <- if (missing(w)) {
-      gen_mean(index, na.rm = na.rm)
-    } else {
-      gen_mean(index, .mapply(c, w[j], list()), na.rm = na.rm)
-    }
+    res[[i]] <- if (is.null(w)) {
+        gen_mean(index, na.rm = na.rm)
+      } else {
+        gen_mean(index, .mapply(c, w[j], list()), na.rm = na.rm)
+      }
   }
   contrib[] <- empty_contrib(x$levels)
   x$index <- res

@@ -1,6 +1,5 @@
 merge.aggregate_index <- function(x, y, ...) {
-  x$r <- x$pias <- NULL
-  class(x) <- class(x)[-1]
+  x <- new_index(x$index, x$contrib, x$levels, x$time, is_chainable_index(x))
   NextMethod("merge")
 }
 

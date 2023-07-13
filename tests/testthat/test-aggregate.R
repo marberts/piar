@@ -14,6 +14,20 @@ test_that("a matched-sample index aggregates correctly", {
   
   ms_index <- aggregate(ms_epr, ms_pias, na.rm = TRUE)
   
+  res <- c(1, 1, 1, 1, 1, 1, 1, 1, 1.30072391107879, 1.30072391107879,
+           1.30072391107879, 0.894909688013136, 1.30072391107879,
+           2.02000360773041, 1.30072391107879, 1.30072391107879,
+           1.06307432720167, 1.06307432720167, 1.06307432720167,
+           0.334293948126801, 1.06307432720167, 1.63533549062897,
+           1.06307432720167, 1.06307432720167, 2.73476132776126,
+           1.57451535678038, 4.57628618296306, 1.57451535678038,
+           2.77045633390764, 0.537995998322608, 4.57628618296306,
+           4.57628618296306)
+  res <- matrix(res, 8, 4,
+                dimnames = list(c("1", "11", "12", paste0("B", 1:5)),
+                                sprintf("2020%02d", 1:4)))
+  expect_equal(as.matrix(ms_index), res)
+  
   # Same as matrix calculation
   expect_equal(
     as.matrix(ms_pias) %*% as.matrix(chain(ms_index[paste0("B", 1:5)])),
@@ -77,124 +91,194 @@ test_that("a matched-sample index aggregates correctly", {
     as.matrix(ms_index)
   )
   
-  # # Aggregated contributions should add up
-  # all.equal(as.matrix(ms_index)[1, ], 
-  #           colSums(contrib(ms_index), na.rm = TRUE) + 1)
-  # 
-  # # Check that weights are getting price updated correctly
-  # apply(as.matrix(chain(ms_index)[4:8, ]), 2, `*`, ms_weights$weight)
-  # 
-  # weights(update(ms_pias, ms_index), ea_only = TRUE)
-  # 
-  # weights(update(ms_pias, ms_index, "202003"), ea_only = TRUE)
+  # Aggregated contributions should add up
+  expect_equal(as.matrix(ms_index)[1, ],
+               colSums(contrib(ms_index), na.rm = TRUE) + 1)
+  expect_equal(as.matrix(ms_index)[2, ],
+               colSums(contrib(ms_index, "11"), na.rm = TRUE) + 1)
+
+  # Check that weights are getting price updated correctly
+  w <- apply(as.matrix(chain(ms_index)[4:8, ]), 2, `*`, ms_weights$weight)
+
+  expect_equal(weights(update(ms_pias, ms_index), ea_only = TRUE), w[s2, 4])
+
+  expect_equal(weights(update(ms_pias, ms_index, "202003"), ea_only = TRUE),
+               w[s2, 3])
 })
 
+test_that("a weird index aggregates correctly", {
+  ms_epr <- with(
+    ms_prices,
+    elemental_index(price_relative(price, period, product),
+                    period, business, contrib = TRUE, r = 0.2)
+  )
+  
+  ms_pias <- with(
+    ms_weights,
+    aggregation_structure(
+      c(expand_classification(classification), list(business)), weight
+    )
+  )
 
+  ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
+  
+  res <- c(1, 1, 1, 1, 1, 1, 1, 1, 3.59790686240372, 3.59790686240372,
+           3.59790686240372, 3.59790686240372, 3.59790686240372,
+           3.59790686240372, 3.59790686240372, 3.59790686240372,
+           1.83344068593548, 1.83344068593548, 1.83344068593548,
+           1.83344068593548, 1.83344068593548, 1.83344068593548,
+           1.83344068593548, 1.83344068593548, 1.31335391535665,
+           1.00564223748248, 5.47029871913538, 1.00564223748248,
+           3.15295124015891, 0.551843416514059, 5.47029871913538,
+           5.47029871913538)
+  res <- matrix(res, 8, 4,
+                dimnames = list(c("1", "11", "12", paste0("B", 1:5)),
+                                sprintf("2020%02d", 1:4)))
+  expect_equal(as.matrix(ms_index), res)
 
-# # Do the same tests but with a weird index
-# ms_epr <- with(
-#   ms_prices,
-#   elemental_index(price_relative(price, period, product), 
-#                   period, business, contrib = TRUE, r = 0.2)
-# )
-# 
-# ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
-# 
-# all.equal(as.matrix(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)), as.matrix(ms_index))
-# 
-# all.equal(aggregate(chain(ms_index), ms_pias, r = -1.7), chain(ms_index))
-# 
-# all.equal(as.matrix(ms_index)[1, ], 
-#           colSums(contrib(ms_index), na.rm = TRUE) + 1)
-# 
-# all.equal(apply(as.matrix(chain(ms_index)[2:3, ]), 2, gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
-#           as.matrix(chain(ms_index))[1, ])
-# 
-# all.equal((as.matrix(ms_pias) %*% as.matrix(chain(ms_index[paste0("B", s)]))^(-1.7))^(1 /-1.7), 
-#           as.matrix(chain(ms_index[1:3, ])))
-# 
-# ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)
-# 
-# all.equal(aggregate(ms_index, ms_pias, r = -1.7), ms_index)
-# 
-# all.equal(as.matrix(ms_index)[1, ], 
-#           colSums(contrib(ms_index)) + 1)
-# 
-# # Tests with a fixed-sample index
-# fs_epr <- with(
-#   fs_prices, 
-#   elemental_index(price_relative(price, period, business),
-#                   period, classification, w = weight, contrib = TRUE)
-# )
-# 
-# fs_pias <- with(
-#   fs_weights,
-#   aggregation_structure(expand_classification(classification), weight)
-# )
-# 
-# (fs_index <- aggregate(fs_epr, fs_pias, na.rm = TRUE))
-# 
-# unclass(fs_index)
-# 
-# # Re-aggregating the index shouldn't do anything
-# all.equal(as.matrix(aggregate(fs_index, fs_pias)), as.matrix(fs_index))
-# 
-# # Contributions should add up
-# all.equal(as.matrix(fs_index)[1, ], 
-#           colSums(contrib(fs_index), na.rm = TRUE) + 1)
-# 
-# # Check adding up of lower level indexes
-# all.equal(apply(as.matrix(chain(fs_index)[5:9, ]), 2, weighted.mean, weights(fs_pias)[[3]]),
-#           as.matrix(chain(fs_index))[1, ])
-# 
-# all.equal(apply(as.matrix(chain(fs_index)[2:4, ]), 2, weighted.mean, weights(fs_pias)[[2]]),
-#           as.matrix(chain(fs_index))[1, ])
-# 
-# # Non-missing indexes should be the same when missing values are not removed
-# fs_index2 <- aggregate(fs_epr, fs_pias)
-# as.matrix(fs_index2) - as.matrix(fs_index)
-# 
-# all.equal(as.matrix(fs_index2)["121", ], 
-#           colSums(contrib(fs_index2, "121"), na.rm = TRUE) + 1)
-# 
-# all.equal(as.matrix(fs_index2)["13", 1:3], 
-#           contrib(fs_index2, "13")[, 1:3] + 1)
-# 
-# # Tests with a fixed-base index
-# prices <- data.frame(price = 1:15, 
-#                      period = letters[1:3], 
-#                      product = rep(1:5, each = 3), 
-#                      ea = rep(c("f1", "f2"), c(6, 9)))
-# prices$pop_rel <- with(prices, price_relative(price, period, product))
-# prices$fx_rel <- with(prices, price / price[gpindex::base_period(period, product)])
-# 
-# pias <- aggregation_structure(list(c("1", "1"), c("f1", "f2")), 1:2)
-# 
-# epr_pop <- with(prices, elemental_index(pop_rel, period, ea))
-# epr_fx <- with(prices, elemental_index(fx_rel, period, ea, chain = FALSE))
-# 
-# index_pop <- aggregate(epr_pop, pias)
-# index_fx <- aggregate(epr_fx, pias)
-# 
-# # Chained calculation and fixed-base calculation should be the same
-# all.equal(index_fx, chain(index_pop))
-# all.equal(chain(index_pop[, -1], as.matrix(index_fx[, 1])), index_fx[, -1])
-# 
-# # Should work for a non-arithmetic index
-# all.equal(chain(aggregate(epr_pop, pias, r = 3)), aggregate(epr_fx, pias, r = 3))
+  expect_equal(as.matrix(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)),
+               as.matrix(ms_index))
 
-# # Test mean.ind()
-# epr4 <- mean(epr1, window = 12)
-# all.equal(levels(epr4), levels(epr1))
-# time(epr4)
-# all.equal(as.matrix(epr4)[, 1], rowMeans(as.matrix(epr1)[, 1:12]))
-# all.equal(as.matrix(epr4)[, 2], rowMeans(as.matrix(epr1)[, 13:24]))
-# is_chainable_index(epr4)
-# is_chainable_index(mean(chain(epr1)))
-# epr4$contrib
-# 
-# w <- matrix(seq_len(5 * 26), 5)
-# all.equal(as.matrix(mean(epr1, w, window = 12))[, 1], 
-#           diag(as.matrix(epr1)[, 1:12] %*% apply(w[, 1:12], 1, scale_weights)), check.attributes = FALSE)
-# all.equal(as.matrix(mean(epr1, w, window = 12))[, 2], 
-#           diag(as.matrix(epr1)[, 13:24] %*% apply(w[, 13:24], 1, scale_weights)), check.attributes = FALSE)
+  expect_equal(aggregate(chain(ms_index), ms_pias, r = -1.7), chain(ms_index))
+
+  expect_equal(as.matrix(ms_index)[1, ],
+               colSums(contrib(ms_index), na.rm = TRUE) + 1)
+
+  expect_equal(
+    apply(as.matrix(chain(ms_index)[2:3, ]), 2,
+          gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
+    as.matrix(chain(ms_index))[1, ]
+  )
+
+  expect_equal(
+    (as.matrix(ms_pias) %*% 
+       as.matrix(chain(ms_index[paste0("B", 1:5)]))^(-1.7))^(1 / -1.7),
+    as.matrix(chain(ms_index[1:3, ]))
+  )
+
+  ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)
+
+  expect_equal(aggregate(ms_index, ms_pias, r = -1.7), ms_index)
+
+  expect_equal(as.matrix(ms_index)[1, ], colSums(contrib(ms_index)) + 1)
+  expect_equal(as.matrix(ms_index)["B2", ],
+               colSums(contrib(ms_index, "B2")) + 1)
+})
+
+test_that("a fixed-sample index aggregates correctly", {
+  fs_epr <- with(
+    fs_prices,
+    elemental_index(price_relative(price, period, business),
+                    period, classification, w = weight, contrib = TRUE)
+  )
+
+  fs_pias <- with(
+    fs_weights,
+    aggregation_structure(expand_classification(classification), weight)
+  )
+
+  fs_index <- aggregate(fs_epr, fs_pias, na.rm = TRUE)
+  
+  res <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, 0.687039919074495, 0.935841069334005,
+           0.612229588412764, 0.611111111111111, 0.935841069334005,
+           0.935841069334005, 0.612229588412764, 0.612229588412764,
+           0.611111111111111, 2.45961303155833, 2.45961303155833,
+           2.48533513976043, 1.68506493506494, 2.45961303155833,
+           2.45961303155833, 2.48533513976043, 2.48533513976043,
+           1.68506493506494, 1.08265987174601, 1.08265987174601,
+           1.08265987174601, 1.08265987174601, 1.08265987174601,
+           1.08265987174601, 1.61372443582219, 0.860786536350297,
+           1.08265987174601)
+  res <- matrix(res, 9, 4, 
+                dimnames = list(c(1, 11:13, 111, 112, 121, 122, 131),
+                                sprintf("2020%02d", 1:4)))
+  expect_equal(as.matrix(fs_index), res)
+
+  # Re-aggregating the index shouldn't do anything
+  expect_equal(as.matrix(aggregate(fs_index, fs_pias)), as.matrix(fs_index))
+
+  # Contributions should add up
+  expect_equal(as.matrix(fs_index)[1, ],
+               colSums(contrib(fs_index), na.rm = TRUE) + 1)
+
+  # Check adding up of lower level indexes
+  expect_equal(
+    apply(as.matrix(chain(fs_index)[5:9, ]), 2,
+          weighted.mean, weights(fs_pias)[[3]]),
+    as.matrix(chain(fs_index))[1, ]
+  )
+
+  expect_equal(
+    apply(as.matrix(chain(fs_index)[2:4, ]), 2,
+          weighted.mean, weights(fs_pias)[[2]]),
+    as.matrix(chain(fs_index))[1, ]
+  )
+
+  # Non-missing indexes should be the same when missing values are not removed
+  fs_index2 <- aggregate(fs_epr, fs_pias)
+  expect_equal(as.matrix(fs_index2)[!is.na(as.matrix(fs_index2))],
+               as.matrix(fs_index)[!is.na(as.matrix(fs_index2))])
+
+  expect_equal(as.matrix(fs_index2)["121", ],
+               colSums(contrib(fs_index2, "121"), na.rm = TRUE) + 1)
+
+  expect_equal(as.matrix(fs_index2)["13", 1:3],
+               contrib(fs_index2, "13")[, 1:3] + 1)
+})
+
+test_that("a fixed-based index aggregates correctly", {
+  prices <- data.frame(price = 1:15,
+                       period = letters[1:3],
+                       product = rep(1:5, each = 3),
+                       ea = rep(c("f1", "f2"), c(6, 9)))
+  prices$pop_rel <- with(prices, price_relative(price, period, product))
+  prices$fx_rel <- with(prices,
+                        price / price[gpindex::base_period(period, product)])
+
+  pias <- aggregation_structure(list(c("1", "1"), c("f1", "f2")), 1:2)
+
+  epr_pop <- with(prices, elemental_index(pop_rel, period, ea))
+  epr_fx <- with(prices, elemental_index(fx_rel, period, ea, chain = FALSE))
+
+  index_pop <- aggregate(epr_pop, pias)
+  index_fx <- aggregate(epr_fx, pias)
+
+  # Chained calculation and fixed-base calculation should be the same
+  expect_equal(index_fx, chain(index_pop))
+  expect_equal(chain(index_pop[, -1], as.matrix(index_fx[, 1])), index_fx[, -1])
+
+  # Should work for a non-arithmetic index
+  expect_equal(chain(aggregate(epr_pop, pias, r = 3)),
+               aggregate(epr_fx, pias, r = 3))
+})
+
+test_that("aggregating over subperiods works", {
+  ms_epr <- with(
+    ms_prices,
+    elemental_index(price_relative(price, period, product),
+                    period, business, contrib = TRUE, na.rm = TRUE)
+  )
+  
+  epr2 <- mean(ms_epr, window = 2)
+  expect_identical(levels(epr2), levels(ms_epr))
+  expect_identical(time(epr2), c("202001", "202003"))
+  
+  expect_equal(as.matrix(epr2)[, 1], rowMeans(as.matrix(ms_epr)[, 1:2]))
+  expect_equal(as.matrix(epr2)[, 2], rowMeans(as.matrix(ms_epr)[, 3:4]))
+  
+  expect_true(is_chainable_index(epr2))
+  expect_false(is_chainable_index(mean(chain(ms_epr))))
+  expect_null(contrib(epr2))
+
+  w <- matrix(seq_len(4 * 4), 4)
+  expect_equal(
+    as.matrix(mean(ms_epr, w, window = 2))[, 1],
+    diag(as.matrix(ms_epr)[, 1:2] %*% apply(w[, 1:2], 1, scale_weights)),
+    ignore_attr = TRUE
+  )
+  expect_equal(
+    as.matrix(mean(ms_epr, w, window = 2))[, 2],
+    diag(as.matrix(ms_epr)[, 3:4] %*% apply(w[, 3:4], 1, scale_weights)),
+    ignore_attr = TRUE
+  )
+})

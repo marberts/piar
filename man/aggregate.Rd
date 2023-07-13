@@ -11,7 +11,7 @@ Aggregate elemental price indexes with a price index aggregation structure, or a
 \usage{
 \method{aggregate}{index}(x, pias, na.rm = FALSE, r = 1, ...)
 
-\method{mean}{index}(x, w, window = 3, na.rm = FALSE, r = 1, ...)
+\method{mean}{index}(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...)
 }
 
 \arguments{
@@ -23,7 +23,7 @@ Aggregate elemental price indexes with a price index aggregation structure, or a
 
 \item{r}{Order of the generalized mean to aggregate index values. 0 for a geometric index (the default for making elemental indexes), 1 for an arithmetic index (the default for aggregating elemental indexes and averaging indexes over subperiods), or -1 for a harmonic index (usually for a Paasche index). Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
-\item{w}{A numeric vector of weights for the price relatives in \code{rel}/index values in \code{x}. The default is equal weights.}
+\item{w}{A numeric vector of weights for the index values in \code{x}. The default is equal weights.}
 
 \item{window}{The size of the window used to average index values across subperiods. The default (3) turns a monthly index into into a quarterly one.}
 

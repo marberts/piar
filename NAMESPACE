@@ -33,7 +33,6 @@ S3method(summary, index)
 S3method(print, index_summary)
 
 S3method(aggregate, index)
-S3method(aggregate, aggregate_index)
 S3method(mean, index)
 S3method(vcov, aggregate_index)
 

@@ -43,11 +43,11 @@ stack.index <- function(x, y, ...) {
   # periods
   x$time <- c(x$time, y$time)
   if (is_aggregate_index(y) && !is_aggregate_index(x)) {
-    x$r <- y$r
-    x$pias <- y$pias
-    class(x) <- c("aggregate_index", class(x))
+    new_aggregate_index(x$index, x$contrib, x$levels, x$time, y$r, y$pias,
+                        is_chainable_index(x))
+  } else {
+    x 
   }
-  x
 }
 
 unstack.index <- function(x, ...) {
