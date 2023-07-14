@@ -14,6 +14,14 @@ test_that("merge returns the correct type of index", {
   expect_error(merge(chain(epr1), epr2))
 })
 
+test_that("merge does work when it shouldn't", {
+  expect_error(merge(epr1, epr1))
+  expect_error(merge(epr1, mtcars))
+  expect_error(merge(epr1, epr1))
+  epr3 <- as_index(matrix(1:8, 4, 2, dimnames = list(letters[5:8], 2:3)))
+  expect_error(merge(epr1, epr3))
+})
+
 test_that("merge returns the correct result", {
   epr3 <- merge(epr1, epr2)
   expect_equal(

@@ -113,5 +113,6 @@ test_that("errors work", {
   expect_error(aggregation_structure(list(x1, x2, x3, x3)))
   expect_error(aggregation_structure(list(x1, x2)))
   expect_error(aggregation_structure(list(1:2, c(11, NA))))
+  expect_error(aggregation_structure(list(1:2, c(11, 11, 12))))
   expect_warning(aggregation_structure(list(1:2, c(3, 3), c(4, 5))))
 })

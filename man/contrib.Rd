@@ -20,7 +20,7 @@ contrib(x, ...)
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
-\item{level}{The level of an index for which quote contributions are desired, defaulting to the first level (usually the top-level for an aggregate index).}
+\item{level}{The level of an index for which percent-change contributions are desired, defaulting to the first level (usually the top-level for an aggregate index).}
 
 \item{...}{Further arguments passed to or used by methods.}
 }

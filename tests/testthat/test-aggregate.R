@@ -4,16 +4,16 @@ test_that("a matched-sample index aggregates correctly", {
     elemental_index(price_relative(price, period, product),
                     period, business, contrib = TRUE, na.rm = TRUE)
   )
-  
+
   ms_pias <- with(
     ms_weights,
     aggregation_structure(
       c(expand_classification(classification), list(business)), weight
     )
   )
-  
+
   ms_index <- aggregate(ms_epr, ms_pias, na.rm = TRUE)
-  
+
   res <- c(1, 1, 1, 1, 1, 1, 1, 1, 1.30072391107879, 1.30072391107879,
            1.30072391107879, 0.894909688013136, 1.30072391107879,
            2.02000360773041, 1.30072391107879, 1.30072391107879,
@@ -27,13 +27,13 @@ test_that("a matched-sample index aggregates correctly", {
                 dimnames = list(c("1", "11", "12", paste0("B", 1:5)),
                                 sprintf("2020%02d", 1:4)))
   expect_equal(as.matrix(ms_index), res)
-  
+
   # Same as matrix calculation
   expect_equal(
     as.matrix(ms_pias) %*% as.matrix(chain(ms_index[paste0("B", 1:5)])),
     as.matrix(chain(ms_index[1:3, ]))
   )
-  
+
   # Lower levels add up
   expect_equal(
     apply(
@@ -47,20 +47,20 @@ test_that("a matched-sample index aggregates correctly", {
     ),
     as.matrix(chain(ms_index))[1, ]
   )
-  
+
   # Re aggregating does nothing to the index values
   expect_equal(as.matrix(aggregate(ms_index, ms_pias)), as.matrix(ms_index))
   expect_equal(aggregate(chain(ms_index), ms_pias), chain(ms_index))
   expect_equal(as.matrix(aggregate(ms_index, ms_pias, na.rm = TRUE)),
                as.matrix(ms_index))
-  
+
   # Re aggregating breaks contributions for imputed indexes
   expect_failure(
     expect_equal(contrib(ms_index), contrib(aggregate(ms_index, ms_pias)))
   )
   expect_equal(contrib(aggregate(ms_index, ms_pias)),
                contrib(aggregate(aggregate(ms_index, ms_pias), ms_pias)))
-  
+
   # Two step aggregation gives the same result
   pias2 <- aggregation_structure(list(c(1, 1), c(11, 12)),
                                  weights(ms_pias)[[2]])
@@ -90,7 +90,7 @@ test_that("a matched-sample index aggregates correctly", {
     as.matrix(aggregate(ms_epr, ms_pias, na.rm = TRUE)[levels(ms_index), ]),
     as.matrix(ms_index)
   )
-  
+
   # Aggregated contributions should add up
   expect_equal(as.matrix(ms_index)[1, ],
                colSums(contrib(ms_index), na.rm = TRUE) + 1)
@@ -112,7 +112,7 @@ test_that("a weird index aggregates correctly", {
     elemental_index(price_relative(price, period, product),
                     period, business, contrib = TRUE, r = 0.2)
   )
-  
+
   ms_pias <- with(
     ms_weights,
     aggregation_structure(
@@ -121,7 +121,7 @@ test_that("a weird index aggregates correctly", {
   )
 
   ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
-  
+
   res <- c(1, 1, 1, 1, 1, 1, 1, 1, 3.59790686240372, 3.59790686240372,
            3.59790686240372, 3.59790686240372, 3.59790686240372,
            3.59790686240372, 3.59790686240372, 3.59790686240372,
@@ -151,7 +151,7 @@ test_that("a weird index aggregates correctly", {
   )
 
   expect_equal(
-    (as.matrix(ms_pias) %*% 
+    (as.matrix(ms_pias) %*%
        as.matrix(chain(ms_index[paste0("B", 1:5)]))^(-1.7))^(1 / -1.7),
     as.matrix(chain(ms_index[1:3, ]))
   )
@@ -178,7 +178,7 @@ test_that("a fixed-sample index aggregates correctly", {
   )
 
   fs_index <- aggregate(fs_epr, fs_pias, na.rm = TRUE)
-  
+
   res <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, 0.687039919074495, 0.935841069334005,
            0.612229588412764, 0.611111111111111, 0.935841069334005,
            0.935841069334005, 0.612229588412764, 0.612229588412764,
@@ -189,7 +189,7 @@ test_that("a fixed-sample index aggregates correctly", {
            1.08265987174601, 1.08265987174601, 1.08265987174601,
            1.08265987174601, 1.61372443582219, 0.860786536350297,
            1.08265987174601)
-  res <- matrix(res, 9, 4, 
+  res <- matrix(res, 9, 4,
                 dimnames = list(c(1, 11:13, 111, 112, 121, 122, 131),
                                 sprintf("2020%02d", 1:4)))
   expect_equal(as.matrix(fs_index), res)
@@ -252,20 +252,24 @@ test_that("a fixed-based index aggregates correctly", {
                aggregate(epr_fx, pias, r = 3))
 })
 
+test_that("cannot aggregate without a pias", {
+  expect_error(aggregate(as_index(1:5), mtcars))
+})
+
 test_that("aggregating over subperiods works", {
   ms_epr <- with(
     ms_prices,
     elemental_index(price_relative(price, period, product),
                     period, business, contrib = TRUE, na.rm = TRUE)
   )
-  
+
   epr2 <- mean(ms_epr, window = 2)
   expect_identical(levels(epr2), levels(ms_epr))
   expect_identical(time(epr2), c("202001", "202003"))
-  
+
   expect_equal(as.matrix(epr2)[, 1], rowMeans(as.matrix(ms_epr)[, 1:2]))
   expect_equal(as.matrix(epr2)[, 2], rowMeans(as.matrix(ms_epr)[, 3:4]))
-  
+
   expect_true(is_chainable_index(epr2))
   expect_false(is_chainable_index(mean(chain(ms_epr))))
   expect_null(contrib(epr2))

@@ -23,7 +23,7 @@ test_that("getter methods work", {
 test_that("coercion methods work", {
   expect_equal(as.matrix(epr), matrix(res, 4, 2, dimnames = list(11:14, 1:2)))
   expect_equal(as.matrix(epr), as.matrix(epr2))
-  
+
   expect_equal(
     as.data.frame(epr),
     data.frame(period = as.character(rep(1:2, each = 4)),
@@ -31,7 +31,7 @@ test_that("coercion methods work", {
                value = res)
   )
   expect_equal(as.data.frame(epr), as.data.frame(epr2))
-  
+
   expect_equal(as_index(as.matrix(epr)), epr2)
   mat <- as.matrix(epr)
   mat[] <- as.character(mat)
@@ -39,6 +39,15 @@ test_that("coercion methods work", {
   expect_equal(as_index(as.data.frame(epr)), epr2)
   expect_equal(as_index(epr), epr)
   expect_equal(chain(epr), as_index(as.matrix(chain(epr)), chain = FALSE))
+})
+
+test_that("as_index makes a valid index", {
+  res <- as_index(matrix(1:6, 2))
+  expect_identical(levels(res), as.character(1:2))
+  expect_identical(time(res), as.character(1:3))
+  expect_error(as_index(numeric(0)))
+  expect_error(as_index(matrix(1:2, 2, dimnames = list(c(1, 1), 2))))
+  expect_error(as_index(matrix(1:2, 1, dimnames = list(1, c(2, 2)))))
 })
 
 test_that("head and tail work", {
@@ -70,7 +79,7 @@ test_that("subscripting methods work", {
   expect_equal(epr[], epr)
   expect_equal(index[], index)
   expect_equal(
-    epr[c(T, F, T, T), 2:1],
+    epr[c(TRUE, FALSE, TRUE, TRUE), 2:1],
     with(
       dat,
       elemental_index(rel, factor(period, 2:1), factor(ea, c(11, 13:14)),
@@ -78,12 +87,12 @@ test_that("subscripting methods work", {
     )
   )
   expect_equal(epr[[4, "2"]], 8)
-  expect_false(is_aggregate_index(index[1:2,]))
+  expect_false(is_aggregate_index(index[1:2, ]))
 })
 
 test_that("replacement methods work", {
   expect_equal(replace(epr, , values = epr), epr2)
-  
+
   epr[, 1] <- 0
   expect_equal(
     as.matrix(epr),
@@ -94,8 +103,8 @@ test_that("replacement methods work", {
     matrix(c(0, 0, 2.5962965079607, 2.88444419044716),
            2, 2, dimnames = list(1:2, 1:2))
   )
-  
-  epr[[T, 2]] <- "0"
+
+  epr[[TRUE, 2]] <- "0"
   expect_equal(
     as.matrix(epr),
     matrix(c(0, 0, 0, 0, 0, res[6:8]), 4, 2, dimnames = list(11:14, 1:2))
@@ -105,4 +114,3 @@ test_that("replacement methods work", {
     matrix(0, 0, 2, dimnames = list(NULL, 1:2))
   )
 })
-

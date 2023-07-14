@@ -75,7 +75,9 @@ Percent-change contributions are removed when chaining/unchaining/rebasing an in
 }
 
 \examples{
-prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
+prices <- data.frame(rel = 1:8,
+                     period = rep(1:2, each = 4),
+                     ea = rep(letters[1:2], 4))
 
 # A simple period-over-period elemental index
 

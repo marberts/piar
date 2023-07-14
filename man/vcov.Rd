@@ -42,86 +42,26 @@ The \code{sps_repweights()} function in the \pkg{sps} package to generate replic
 }
 
 \examples{
-prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
+prices <- data.frame(rel = 1:8,
+                     period = rep(1:2, each = 4),
+                     ea = rep(letters[1:2], 4))
 
 # A two-level aggregation structure
 
-pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:3)
+pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")),
+                              1:3)
+                            
+repweights <- matrix(c(0, 2, 3, 1, 2, 4, 2, 3, 3), 3)
 
 # Calculate Jevons elemental indexes
 
-(epr <- with(prices, elemental_index(rel, period, ea)))
+epr <- with(prices, elemental_index(rel, period, ea))
 
-# Same as using lm() or tapply()
+# Aggregate
 
-exp(coef(lm(log(rel) ~ ea:factor(period) - 1, prices)))
+index <- aggregate(epr, pias, na.rm = TRUE)
 
-with(prices, t(tapply(rel, list(period, ea), gpindex::geometric_mean, na.rm = TRUE)))
+# Calculate variance
 
-# Extract the indexes like a matrix
-
-epr["a", ]
-
-epr[, 2]
-
-epr[1, ] <- 1 # can be useful for doing specific imputations
-
-# Aggregate (note the imputation for elemental index 'c')
-
-(index <- aggregate(epr, pias, na.rm = TRUE))
-
-# Aggregation can equivalently be done as matrix multiplication
-
-as.matrix(pias) \%*\% as.matrix(chain(index[letters[1:3]]))
-
-# Merge two indexes prior to aggregation
-
-prices2 <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[3:4], 4))
-epr2 <- with(prices2, elemental_index(rel, period, ea))
-aggregate(merge(epr, epr2), pias)
-
-# Stack two indexes prior to aggregation
-
-prices3 <- data.frame(rel = 1:8, period = rep(3:4, each = 4), ea = rep(letters[1:2], 4))
-epr3 <- with(prices3, elemental_index(rel, period, ea))
-aggregate(stack(epr, epr3), pias)
-
-# Unstack does the reverse
-
-all.equal(c(unstack(epr), unstack(epr3)), unstack(stack(epr, epr3)))
-
-# Extract useful features of the index
-
-head(index, 1)
-tail(index, 3)
-levels(index)
-time(index)
-start(index)
-end(index)
-
-summary(index)
-
-# Turn the index into a data frame/matrix
-
-as.data.frame(index)
-as.matrix(index)
-
-all.equal(as_index(as.data.frame(epr)), epr)
-all.equal(as_index(as.matrix(epr)), epr)
-
-# Calculate a CSWD index (same as the Jevons in this example) 
-# as an arithmetic index by constructing appropriate weights
-
-library(gpindex)
-
-# A general function to calculate weights to turn the geometric
-# mean of the arithmetic and harmonic mean (i.e., Fisher mean)
-# into an arithmetic mean
-
-fw <- grouped(nested_transmute(0, c(1, -1), 1))
-
-with(
-    prices, 
-    elemental_index(rel, period, ea, fw(rel, group = interaction(period, ea)), r = 1)
-)
+vcov(index, repweights)
 }

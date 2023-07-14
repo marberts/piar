@@ -49,8 +49,12 @@ aggregation_structure <- function(x, w = NULL) {
   child <- parent <- vector("list", len)[-1L]
   # produce a list for each level with all the parent and child nodes
   for (i in seq_along(upper)) {
-    child[[i]] <- lapply(split(as.character(lower[[len - i]]), upper[[len - i]]), unique)
-    parent[[i]] <- lapply(split(as.character(upper[[len - i]]), lower[[len - i]]), unique)
+    child[[i]] <- lapply(
+      split(as.character(lower[[len - i]]), upper[[len - i]]), unique
+    )
+    parent[[i]] <- lapply(
+      split(as.character(upper[[len - i]]), lower[[len - i]]), unique
+    )
   }
   if (any(lengths(unlist(parent, recursive = FALSE)) > 1L)) {
     warning("some nodes in the price index aggregation structure have ",

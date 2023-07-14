@@ -46,7 +46,7 @@ stack.index <- function(x, y, ...) {
     new_aggregate_index(x$index, x$contrib, x$levels, x$time, y$r, y$pias,
                         is_chainable_index(x))
   } else {
-    x 
+    x
   }
 }
 

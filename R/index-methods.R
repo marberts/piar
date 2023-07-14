@@ -42,7 +42,7 @@ as.double.index <- function(x, ...) {
     new_index(res$index, res$contrib, res$levels, res$time,
               is_chainable_index(res))
   } else {
-    res  
+    res 
   }
 }
 
@@ -65,15 +65,15 @@ as.double.index <- function(x, ...) {
   row_slice <- .row(dim)
   col_slice <- .col(dim)
   dimnames(row_slice) <- dimnames(col_slice) <- list(x$levels, x$time)
-  
+
   i <- row_slice[[i, j]]
   j <- col_slice[[i, j]]
   level <- x$levels[[i]]
   period <- x$time[[j]]
-  
+
   x$index[[period]][[level]] <- as.numeric(value)
   x$contrib[[period]][[level]] <- numeric(0L)
-  
+
   x
 }
 

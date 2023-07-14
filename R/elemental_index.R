@@ -1,10 +1,6 @@
 new_index <- function(index, contrib, levels, time, chainable) {
   res <- list(index = index, contrib = contrib, levels = levels, time = time)
-  type <- if (chainable) {
-    "chainable_index"
-  } else {
-    "direct_index"
-  }
+  type <- if (chainable) "chainable_index" else "direct_index"
   structure(res, class = c(type, "index"))
 }
 
@@ -55,11 +51,7 @@ elemental_index.numeric <- function(x,
   # a list
   ea <- split(ea, period)
   x <- Map(split, split(x, period), ea)
-  w <- if (is.null(w)) {
-    list(list(NULL))
-  } else {
-    Map(split, split(w, period), ea)
-  }
+  w <- if (is.null(w)) list(list(NULL)) else Map(split, split(w, period), ea)
 
   # vectorize index and contribution functions to map over the
   # nested list of relatives

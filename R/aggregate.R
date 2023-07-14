@@ -11,11 +11,7 @@ new_aggregate_index <- function(index,
               time = time,
               r = r,
               pias = pias)
-  type <- if (chainable) {
-    "chainable_index"
-  } else {
-    "direct_index"
-  }
+  type <- if (chainable) "chainable_index" else "direct_index"
   structure(res, class = c("aggregate_index", type, "index"))
 }
 
@@ -63,7 +59,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
             w <- scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))
             unlist(Map("*", con[[i - 1L]][z], w))
           }
-        ) 
+        )
       } else {
         con[[i]] <- lapply(pias$child[[i - 1L]], \(z) numeric(0L))
       }
@@ -112,11 +108,8 @@ mean.index <- function(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...) {
     j <- seq(loc[i], length.out = window)
     # structure() is needed because .mapply doesn't keep names
     index <- structure(.mapply(c, x$index[j], list()), names = x$levels)
-    res[[i]] <- if (is.null(w)) {
-        gen_mean(index, na.rm = na.rm)
-      } else {
-        gen_mean(index, .mapply(c, w[j], list()), na.rm = na.rm)
-      }
+    weight <- if (is.null(w)) list(NULL) else .mapply(c, w[j], list())
+    res[[i]] <- gen_mean(index, weight, na.rm = na.rm)
   }
   contrib[] <- empty_contrib(x$levels)
   x$index <- res

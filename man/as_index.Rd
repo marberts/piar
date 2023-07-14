@@ -35,7 +35,7 @@ is_aggregate_index(x)
 \arguments{
 \item{x}{An object to test or coerce into a price index.}
 
-\item{chainable}{Are the index values is in \code{x} period-over-period indexes, suitable for a chained calculation (the default)? This should be \code{FALSE} when \code{x} is a fixed-base index.}
+\item{chainable}{Are the index values in \code{x} period-over-period indexes, suitable for a chained calculation (the default)? This should be \code{FALSE} when \code{x} is a fixed-base index.}
 
 \item{cols}{A vector giving the positions/names of the period, level, and value columns in \code{x}. The default assumes that the first column contains time periods, the second contains levels, and the third contains index values.}
 

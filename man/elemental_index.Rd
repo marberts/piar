@@ -6,7 +6,7 @@
 \title{Make elemental price indexes}
 
 \description{
-Compute period-over-period or fixed-base (direct) elemental price indexes, with optional percent-change quote.
+Compute period-over-period or fixed-base (direct) elemental price indexes, with optional percent-change contributions.
 }
 
 \usage{
@@ -28,7 +28,7 @@ elemental_index(x, ...)
 
 \item{w}{A numeric vector of weights for the price relatives in \code{x}. The default is equal weights.}
 
-\item{contrib}{Should quote contributions be calculated? The default does not calculate contributions.}
+\item{contrib}{Should percent-change contributions be calculated? The default does not calculate contributions.}
 
 \item{chainable}{Are the price relatives in \code{x} period-over-period relatives for a chained calculation (the default)? This should be \code{FALSE} when \code{x} are fixed-base relatives.}
 
@@ -40,7 +40,7 @@ elemental_index(x, ...)
 }
 
 \details{
-When supplied with a numeric vector, \code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, quote contributions (using names for \code{x} as product names). The default (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).
+When supplied with a numeric vector, \code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, percent-change contributions (using names for \code{x} as product names). The default (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).
 
 The default method simply coerces \code{x} to a numeric prior to calling the method above.
 
@@ -48,7 +48,7 @@ The interpretation of the index depends on how the price relatives in \code{x} a
 
 By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
 
-Indexes based on nested generalized means, like the Fisher index (and superlative quadratic mean indexes more generally), can be calculated by supplying the appropriate weights with \code{\link[=nested_transmute]{nested_transmute()}}; see the example below. It is important to note that there are several ways to make these weights, and this affects how quote contributions are calculated.
+Indexes based on nested generalized means, like the Fisher index (and superlative quadratic mean indexes more generally), can be calculated by supplying the appropriate weights with \code{\link[=nested_transmute]{nested_transmute()}}; see the example below. It is important to note that there are several ways to make these weights, and this affects how percent-change contributions are calculated.
 }
 
 \value{
@@ -73,17 +73,20 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 
 \code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
 
-\code{\link{contrib}} for extracting quote contributions.
+\code{\link{contrib}} for extracting percent-change contributions.
 
 \code{\link{index-methods}} for other methods.
 }
 
 \examples{
-prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
+prices <- data.frame(rel = 1:8,
+                     period = rep(1:2, each = 4),
+                     ea = rep(letters[1:2], 4))
 
 # A two-level aggregation structure
 
-pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:3)
+pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")),
+                              1:3)
 
 # Calculate Jevons elemental indexes
 
@@ -93,58 +96,10 @@ pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:
 
 exp(coef(lm(log(rel) ~ ea:factor(period) - 1, prices)))
 
-with(prices, t(tapply(rel, list(period, ea), gpindex::geometric_mean, na.rm = TRUE)))
-
-# Extract the indexes like a matrix
-
-epr["a", ]
-
-epr[, 2]
-
-epr[1, ] <- 1 # can be useful for doing specific imputations
-
-# Aggregate (note the imputation for elemental index 'c')
-
-(index <- aggregate(epr, pias, na.rm = TRUE))
-
-# Aggregation can equivalently be done as matrix multiplication
-
-as.matrix(pias) \%*\% as.matrix(chain(index[letters[1:3]]))
-
-# Merge two indexes prior to aggregation
-
-prices2 <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[3:4], 4))
-epr2 <- with(prices2, elemental_index(rel, period, ea))
-aggregate(merge(epr, epr2), pias)
-
-# Stack two indexes prior to aggregation
-
-prices3 <- data.frame(rel = 1:8, period = rep(3:4, each = 4), ea = rep(letters[1:2], 4))
-epr3 <- with(prices3, elemental_index(rel, period, ea))
-aggregate(stack(epr, epr3), pias)
-
-# Unstack does the reverse
-
-all.equal(c(unstack(epr), unstack(epr3)), unstack(stack(epr, epr3)))
-
-# Extract useful features of the index
-
-head(index, 1)
-tail(index, 3)
-levels(index)
-time(index)
-start(index)
-end(index)
-
-summary(index)
-
-# Turn the index into a data frame/matrix
-
-as.data.frame(index)
-as.matrix(index)
-
-all.equal(as_index(as.data.frame(epr)), epr)
-all.equal(as_index(as.matrix(epr)), epr)
+with(
+  prices,
+  t(tapply(rel, list(period, ea), gpindex::geometric_mean, na.rm = TRUE))
+)
 
 # Calculate a CSWD index (same as the Jevons in this example) 
 # as an arithmetic index by constructing appropriate weights
@@ -158,7 +113,8 @@ library(gpindex)
 fw <- grouped(nested_transmute(0, c(1, -1), 1))
 
 with(
-    prices, 
-    elemental_index(rel, period, ea, fw(rel, group = interaction(period, ea)), r = 1)
+  prices, 
+  elemental_index(rel, period, ea,
+                  fw(rel, group = interaction(period, ea)), r = 1)
 )
 }

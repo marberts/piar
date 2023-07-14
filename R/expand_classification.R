@@ -7,7 +7,7 @@ expand_classification <- function(class, width = 1L) {
   if (anyNA(width)) {
     stop("'width' cannot contain NAs")
   }
-  
+
   if (length(width) == 1L) {
     longest <- max(nchar(class), 0L, na.rm = TRUE)
     width <- rep.int(width, ceiling(longest / width))

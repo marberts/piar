@@ -32,27 +32,27 @@ ms_compare <- '"business","level","period","index","weight"
 "B2",44,202004,49.2372928695834,114.80885226185
 "B3",44,202004,177.720715283958,1030.65568036707
 "B4",45,202004,397.025872658294,539.629915875505
-"B5",45,202004,397.025872658294,286.298829966104' 
+"B5",45,202004,397.025872658294,286.298829966104'
 
 ms_compare <- read.csv(text = ms_compare)
 
 test_that("matched-sample index works", {
   pias <- with(
-    ms_weights, 
+    ms_weights,
     aggregation_structure(
       c(expand_classification(classification), list(business)),
       weight
     )
   )
-  
+
   sp <- with(ms_prices, shadow_price(price, period, product, business, pias))
-  
+
   rel <- with(ms_prices, price_relative(sp, period, product))
-  
+
   epr <- with(ms_prices, elemental_index(rel, period, business, na.rm = TRUE))
-  
+
   index <- aggregate(epr, pias, na.rm = TRUE)
-  
+
   expect_equal(as.numeric(as.matrix(chain(index))), ms_compare$index / 100)
 })
 
@@ -101,25 +101,25 @@ test_that("fixed-sample index works", {
   # Reallocate the weights
   weights <- fs_prices[1:11, c(2:3, 5)]
   weights$weight <- with(
-    weights, 
-    ave(weight, classification, FUN = gpindex::scale_weights) * 
+    weights,
+    ave(weight, classification, FUN = gpindex::scale_weights) *
       fs_weights$weight[match(classification, fs_weights$classification)]
   )
-  
+
   pias <- with(
-    weights, 
+    weights,
     aggregation_structure(
       c(expand_classification(classification), list(business)),
       weight
     )
   )
-  
+
   rel <- with(fs_prices, price_relative(price, period, business))
-  
+
   epr <- with(fs_prices, elemental_index(rel, period, business))
-  
+
   index <- aggregate(epr, pias, na.rm = TRUE)
-  
+
   expect_equal(as.numeric(as.matrix(chain(index)[1:9, ])),
                fs_compare$index / 100)
 })

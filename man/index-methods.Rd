@@ -74,9 +74,9 @@ Methods to combine price indexes together, extract useful information, replace i
 
 \details{
 \subsection{Combine}{
-The \code{merge()} method combines two index objects with common time periods, merging together the index values and quote contributions for each time period in \code{x} and \code{y}. This is useful for building up an index when different elemental aggregates come from different sources of data, or use different index-number formulas. 
+The \code{merge()} method combines two index objects with common time periods, merging together the index values and percent-change contributions for each time period in \code{x} and \code{y}. This is useful for building up an index when different elemental aggregates come from different sources of data, or use different index-number formulas. 
 
-The \code{stack()} method combines two index objects with common levels, stacking index values and quote contributions for each level in \code{y} after those in \code{x}. The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}. These methods can be used in a map-reduce to make an index with multiple aggregation structures (like a Paasche index).
+The \code{stack()} method combines two index objects with common levels, stacking index values and percent-change contributions for each level in \code{y} after those in \code{x}. The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}. These methods can be used in a map-reduce to make an index with multiple aggregation structures (like a Paasche index).
 
 It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging does not return aggregated index. If at least one of \code{x} or \code{y} is an aggregate index then the result of stacking these indexes is also an aggregate index; otherwise, it is the same class as \code{x}.
 }
@@ -117,11 +117,13 @@ The \code{as.matrix()} method turns an index into a matrix with a row for each l
 
 \code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
 
-\code{\link{contrib}} for extracting quote contributions.
+\code{\link{contrib}} for extracting percent-change contributions.
 }
 
 \examples{
-prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
+prices <- data.frame(rel = 1:8,
+                     period = rep(1:2, each = 4),
+                     ea = rep(letters[1:2], 4))
 
 # Calculate Jevons elemental indexes
 
@@ -133,17 +135,23 @@ epr["a", ]
 
 epr[, 2]
 
+epr[["a", 2]]
+
 epr[1, ] <- 1 # can be useful for doing specific imputations
 
-# Merge two indexes prior to aggregation
+# Merge two indexes
 
-prices2 <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[3:4], 4))
+prices2 <- data.frame(rel = 1:8,
+                      period = rep(1:2, each = 4),
+                      ea = rep(letters[3:4], 4))
 epr2 <- with(prices2, elemental_index(rel, period, ea))
 merge(epr, epr2)
 
-# Stack two indexes prior to aggregation
+# Stack two indexes
 
-prices3 <- data.frame(rel = 1:8, period = rep(3:4, each = 4), ea = rep(letters[1:2], 4))
+prices3 <- data.frame(rel = 1:8,
+                      period = rep(3:4, each = 4),
+                      ea = rep(letters[1:2], 4))
 epr3 <- with(prices3, elemental_index(rel, period, ea))
 stack(epr, epr3)
 
