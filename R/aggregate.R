@@ -41,10 +41,6 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     con[[1L]] <- named_extract(x$contrib[[t]], pias$eas)
     # get rid of any NULL contributions
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
-    # re-aggregate price-updated weights for all periods after first
-    if (t > 1L && chainable) {
-      w <- rev(weights(pias, na.rm = na.rm))
-    }
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
       rel[[i]] <- vapply(
@@ -79,6 +75,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     # price update weights for all periods after the first
     if (chainable) {
       weights(pias) <- price_update(index[pias$eas], w[[1L]])
+      w <- rev(weights(pias, na.rm = na.rm))
     }
   }
   new_aggregate_index(x$index, x$contrib, pias$levels, x$time, r,
