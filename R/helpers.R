@@ -1,12 +1,8 @@
 # None of these functions are exported
 
 different_length <- function(...) {
-  res <- lengths(list(...))
+  res <- lengths(Filter(Negate(is.null), list(...)))
   any(res != res[1L])
-}
-
-any_negative <- function(...) {
-  min(..., 1, na.rm = TRUE) <= 0 # the 1 stops the warnings with length-0 inputs
 }
 
 named_extract <- function(x, nm) {
