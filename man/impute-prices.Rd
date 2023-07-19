@@ -11,7 +11,7 @@ Impute missing prices using the carry forward or shadow price method.
 \usage{
 carry_forward(x, period, product)
 
-shadow_price(x, period, product, ea, pias, w, r1 = 0, r2 = 1)
+shadow_price(x, period, product, ea, pias = NULL, w = NULL, r1 = 0, r2 = 1)
 }
 
 \arguments{
@@ -25,7 +25,7 @@ shadow_price(x, period, product, ea, pias, w, r1 = 0, r2 = 1)
 
 \item{pias}{A price index aggregation structure, as made with \code{\link[=aggregation_structure]{aggregation_structure()}}. The default imputes from elemental indexes only (i.e., not recursively).}
 
-\item{w}{A numeric vector of weights for the prices in \code{x} (i.e., quote/product weights). The default is to give each price equal weight.}
+\item{w}{A numeric vector of weights for the prices in \code{x} (i.e., product weights). The default is to give each price equal weight.}
 
 \item{r1}{Order of the price index used to calculate the elemental price indexes: 0 for a geometric index (the default), 1 for an arithmetic index, or -1 for a harmonic index. Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
 
@@ -35,7 +35,7 @@ shadow_price(x, period, product, ea, pias, w, r1 = 0, r2 = 1)
 \details{
 The carry forward method replaces a missing price for a product by the price for the same product in the previous period. It tends to push an index value towards 1, and is usually avoided; see paragraph 6.61 in the CPI manual (2020).
 
-The shadow price method recursively imputes a missing price by the value of the price for the same product in the previous period multiplied by the value of the period-over-period elemental index for the elemental aggregate to which that product belongs. This requires computing and aggregating an index (according to \code{pias}, unless \code{pias} is not supplied) for each \code{period}, and so these imputations can take a while. The index values used to do the imputations are not returned because the index needs to be recalculated to get correct quote contributions.
+The shadow price method recursively imputes a missing price by the value of the price for the same product in the previous period multiplied by the value of the period-over-period elemental index for the elemental aggregate to which that product belongs. This requires computing and aggregating an index (according to \code{pias}, unless \code{pias} is not supplied) for each \code{period}, and so these imputations can take a while. The index values used to do the imputations are not returned because the index needs to be recalculated to get correct percent-change contributions.
 
 Shadow price imputation is referred to as self-correcting overall mean imputation in chapter 6 of the CPI manual (2020). It is identical to simply excluding missing price relatives in the index calculation, except in the period that a missing product returns. For this reason care is needed when using this method. It is sensitive to the assumption that a product does not change over time, and in some cases it is safer to simply omit the missing price relatives instead of imputing the missing prices.
 }

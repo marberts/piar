@@ -1,20 +1,16 @@
 #---- Shadow price imputation ----
-shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
-  if (missing(w)) {
-    if (different_length(x, period, product, ea)) {
-      stop("'x', 'period', 'product, and 'ea' must be the same length")
-    }
-  } else {
-    if (different_length(x, period, product, ea, w)) {
-      stop("'x', 'period', 'product, 'ea', and 'w' must be the same length")
-    }
+shadow_price <- function(x, period, product, ea,
+                         pias = NULL, w = NULL, r1 = 0, r2 = 1) {
+  if (different_length(x, period, product, ea, w)) {
+    stop("input vectors must be the same length")
   }
   # this is mostly a combination of gpindex::back_period() and aggregate()
   # it just does it period-by-period and keeps track of prices to impute
-  if (!length(x)) {
-    return(x[0L])
-  }
   period <- as.factor(period)
+  if (nlevels(period) == 0L) {
+    return(rep.int(NA_integer_, length(period)))
+  }
+  
   res <- split(x, period)
   product <- as.factor(product)
   attributes(product) <- NULL
@@ -23,8 +19,10 @@ shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
     warning("there are duplicated period-product pairs")
   }
   ea <- split(as.factor(ea), period)
-  if (!missing(w)) {
-    w <- split(w, period)
+  if (is.null(w)) {
+    w <- rep.int(list(NULL), nlevels(period))
+  } else {
+    w <- split(as.numeric(w), period)
   }
   for (t in seq_along(res)[-1L]) {
     # calculate relatives
@@ -32,14 +30,9 @@ shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
     back_price <- res[[t - 1L]][matches]
     price <- res[[t]]
     # calculate indexes
-    epr <- if (missing(w)) {
-      elemental_index(price / back_price, ea = ea[[t]],
-                      na.rm = TRUE, r = r1)
-    } else {
-      elemental_index(price / back_price, ea = ea[[t]],
-                      w = w[[t]], na.rm = TRUE, r = r1)
-    }
-    if (!missing(pias)) {
+    epr <- elemental_index(price / back_price, ea = ea[[t]],
+                           w = w[[t]], na.rm = TRUE, r = r1)
+    if (!is.null(pias)) {
       epr <- aggregate(epr, pias, na.rm = TRUE, r = r2)
       pias <- update(pias, epr)
     }
@@ -56,12 +49,13 @@ shadow_price <- function(x, period, product, ea, pias, w, r1 = 0, r2 = 1) {
 #---- Carry forward imputation ----
 carry_forward <- function(x, period, product) {
   if (different_length(x, period, product)) {
-    stop("all arguments must be the same length")
-  }
-  if (length(x) == 0L) {
-    return(x[0L])
+    stop("input vectors must be the same length")
   }
   period <- as.factor(period)
+  if (nlevels(period) == 0L) {
+    return(rep.int(NA_integer_, length(period)))
+  }
+  
   res <- split(x, period)
   product <- as.factor(product)
   attributes(product) <- NULL
