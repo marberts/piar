@@ -26,6 +26,10 @@
 
 - The object structure used to represent index object has been refined.
 
+## Bug fixes
+
+- Fixed a bug where creating elemental indexes with missing product names could produce a contributions matrix with the wrong number of products.
+
 # Version 0.4.0
 
 ## Significant changes

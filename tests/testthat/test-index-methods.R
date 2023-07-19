@@ -73,6 +73,21 @@ test_that("contrib works", {
            1, 2, dimnames = list(1, 1:2))
   )
   expect_null(contrib(epr2))
+  
+  expect_equal(
+    contrib(elemental_index(c(a = 1, b = 2, c = 3, a = 4, a = 5),
+                            c(1, 1, 1, 2, 2), contrib = TRUE, r = 1)),
+    matrix(c(0, 1 / 3, 2 / 3, 0, 1.5, 0, 0, 2), 4, 2,
+           dimnames = list(c("a", "b", "c", "a.1"), 1:2))
+  )
+  
+  w <- setNames(rep(1, 9), letters[1:9])
+  expect_equal(
+    contrib(epr),
+    contrib(
+      with(dat, elemental_index(rel, period, ea, w, contrib = TRUE))
+    )
+  )
 })
 
 test_that("subscripting methods work", {

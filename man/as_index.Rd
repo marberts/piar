@@ -63,7 +63,7 @@ The data frame method for \code{as_index()} is best understood as reversing the 
 }
 
 \seealso{
-\code{\link[=aggregate.index]{aggregate()}} to aggregate a price index.
+\code{\link[=aggregate.index]{aggregate}} to aggregate a price index.
 
 \code{\link{index-methods}} for methods for index objects.
 }

@@ -37,15 +37,23 @@ elemental_index.numeric <- function(x,
   if (length(time) == 0L || length(levels) == 0L) {
     stop("cannot make an index with no periods or elemental aggregates")
   }
-  if (contrib && is.null(names(x))) {
-    names(x) <- sequential_names(ea, period)
+  if (contrib) {
+    if (is.null(names(x))) {
+      names(x) <- sequential_names(ea, period)
+    } else {
+      names(x) <- valid_product_names(names(x), period, ea)
+    }
   }
   # splitting 'x' into a nested list by period then ea is the same as
   # using interaction(), but makes it easier to get the results as
   # a list
   ea <- split(ea, period)
   x <- Map(split, split(x, period), ea)
-  w <- if (is.null(w)) list(list(NULL)) else Map(split, split(w, period), ea)
+  if (is.null(w)) {
+    w <- list(list(NULL)) 
+  } else {
+    w <- Map(split, split(as.numeric(w), period), ea)
+  }
 
   index_fun <- Vectorize(generalized_mean(r))
   contrib_fun <- Vectorize(contributions(r), SIMPLIFY = FALSE)

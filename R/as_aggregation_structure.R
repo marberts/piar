@@ -8,10 +8,10 @@ as_aggregation_structure.default <- function(x, w = NULL, ...) {
 
 as_aggregation_structure.aggregate_index <- function(x, w = NULL, ...) {
   eas <- x$pias$eas
-  w <- if (is.null(w)) {
-    rep.int(1, length(eas))
+  if (is.null(w)) {
+    w <- rep.int(1, length(eas))
   } else {
-    as.numeric(w)
+    w <- as.numeric(w)
   }
   names(w) <- eas
   new_aggregation_structure(x$pias$child,

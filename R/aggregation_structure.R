@@ -24,10 +24,10 @@ aggregation_structure <- function(x, w = NULL) {
     stop("'x' cannot contain NAs")
   }
 
-  w <- if (is.null(w)) {
-    rep.int(1, length(ea))
+  if (is.null(w)) {
+    w <- rep.int(1, length(ea))
   } else {
-    as.numeric(w)
+    w <- as.numeric(w)
   }
   names(w) <- ea
 

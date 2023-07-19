@@ -15,6 +15,15 @@ sequential_names <- function(...) {
   unsplit(Map(seq_len, tabulate(f)), f)
 }
 
+valid_product_names <- function(x, period, ea) {
+  x <- as.character(x)
+  if (anyNA(x) || any(x == "")) {
+    stop("each product must have a non-missing name")
+  }
+  f <- interaction(period, ea)
+  unsplit(lapply(split(x, f), make.unique), f)
+}
+
 paste_until <- function(x, i) {
   paste(x[seq_len(i)], collapse = "")
 }

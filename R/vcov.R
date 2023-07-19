@@ -27,10 +27,10 @@ vcov.aggregate_index <- function(object, repweights, mse = TRUE, ...) {
                     dim = lengths(dimnm), dimnames = dimnm)
   # mse = TRUE is the default for variance estimation in SAS,
   # but not the survey package
-  centre <- if (mse) {
-    as.matrix(object)[upper, , drop = FALSE]
+  if (mse) {
+    centre <- as.matrix(object)[upper, , drop = FALSE]
   } else {
-    apply(repindex, 2L, rowMeans)
+    centre <- apply(repindex, 2L, rowMeans)
   }
   apply(sweep(repindex, 1:2, centre), 1:2, crossprod) / n
 }
