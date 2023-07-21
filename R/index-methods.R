@@ -24,9 +24,13 @@ as.double.index <- function(x, ...) {
   }
   levels <- dnm[[1L]]
   periods <- dnm[[2L]]
+  if (!all(levels %in% x$levels) || !all(periods %in% x$time)) {
+    stop("cannot extract levels/time periods not in 'x'")
+  }
+  m <- match(levels, x$levels)
   # only loop over periods that have a value extracted
-  x$index <- lapply(x$index[periods], `[`, levels)
-  x$contrib <- lapply(x$contrib[periods], `[`, levels)
+  x$index <- lapply(x$index[periods], `[`, m)
+  x$contrib <- lapply(x$contrib[periods], `[`, m)
   x$levels <- levels
   x$time <- periods
   x

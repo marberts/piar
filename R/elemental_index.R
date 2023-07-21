@@ -37,6 +37,9 @@ elemental_index.numeric <- function(x,
   if (length(time) == 0L || length(levels) == 0L) {
     stop("cannot make an index with no periods or elemental aggregates")
   }
+  if (anyNA(time) || anyNA(levels)) {
+    stop("cannot make an index with missing periods or elemental aggregates")
+  }
   if (contrib) {
     if (is.null(names(x))) {
       names(x) <- sequential_names(ea, period)

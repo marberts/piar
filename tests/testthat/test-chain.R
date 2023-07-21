@@ -56,3 +56,8 @@ test_that("chaining returns the correct type of index", {
   expect_true(is_aggregate_index(chain(index1)))
   expect_true(is_aggregate_index(unchain(chain(index1))))
 })
+
+test_that("chaining keeps EA names", {
+  expect_equal(as.matrix(chain(as_index(matrix(1:5, 1)))),
+               matrix(cumprod(1:5), 1, dimnames = list(1, 1:5)))
+})

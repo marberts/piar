@@ -13,13 +13,19 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
   }
   storage.mode(x) <- "numeric"
   if (is.null(rownames(x))) {
-    rownames(x) <- seq_len(nrow(x))
+    levels <- as.character(seq_len(nrow(x)))
+  } else {
+    levels <- as.character(rownames(x))
   }
   if (is.null(colnames(x))) {
-    colnames(x) <- seq_len(ncol(x))
+    periods <- as.character(seq_len(ncol(x)))
+  } else {
+    periods <- as.character(colnames(x))
   }
-  levels <- rownames(x)
-  periods <- colnames(x)
+  
+  if (anyNA(levels) || anyNA(periods)) {
+    stop("cannot make an index with missing levels/time periods")
+  }
   if (anyDuplicated(levels) || anyDuplicated(periods)) {
     stop("'x' cannot have duplicated row or column names")
   }
@@ -28,7 +34,7 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
   contrib[] <- empty_contrib(levels)
   for (t in seq_along(periods)) {
     # EA names are not kept for matrices with 1 row
-    index[[t]] <- structure(x[, t], names = rownames(x))
+    index[[t]] <- structure(x[, t], names = levels)
   }
   new_index(index, contrib, levels, periods, chainable)
 }

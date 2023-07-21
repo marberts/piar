@@ -48,6 +48,7 @@ test_that("as_index makes a valid index", {
   expect_error(as_index(numeric(0)))
   expect_error(as_index(matrix(1:2, 2, dimnames = list(c(1, 1), 2))))
   expect_error(as_index(matrix(1:2, 1, dimnames = list(1, c(2, 2)))))
+  expect_error(as_index(matrix(1:2, 1, dimnames = list(1, c(NA, 2)))))
 })
 
 test_that("head and tail work", {
@@ -103,6 +104,7 @@ test_that("subscripting methods work", {
   )
   expect_equal(epr[[4, "2"]], 8)
   expect_false(is_aggregate_index(index[1:2, ]))
+  expect_error(epr[1, NA])
 })
 
 test_that("replacement methods work", {
