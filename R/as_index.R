@@ -8,27 +8,13 @@ as_index.default <- function(x, ...) {
 }
 
 as_index.matrix <- function(x, chainable = TRUE, ...) {
-  if (nrow(x) == 0L || ncol(x) == 0L) {
-    stop("cannot make an index with no periods or elemental aggregates")
-  }
   storage.mode(x) <- "numeric"
-  if (is.null(rownames(x))) {
-    levels <- as.character(seq_len(nrow(x)))
-  } else {
-    levels <- as.character(rownames(x))
-  }
-  if (is.null(colnames(x))) {
-    periods <- as.character(seq_len(ncol(x)))
-  } else {
-    periods <- as.character(colnames(x))
-  }
-  
-  if (anyNA(levels) || anyNA(periods)) {
-    stop("cannot make an index with missing levels/time periods")
-  }
-  if (anyDuplicated(levels) || anyDuplicated(periods)) {
-    stop("'x' cannot have duplicated row or column names")
-  }
+  levels <- as.character(
+    if (is.null(rownames(x))) seq_len(nrow(x)) else rownames(x)
+  )
+  periods <- as.character(
+    if (is.null(colnames(x))) seq_len(ncol(x)) else colnames(x)
+  )
 
   index <- contrib <- structure(vector("list", ncol(x)), names = periods)
   contrib[] <- empty_contrib(levels)
@@ -36,7 +22,7 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
     # EA names are not kept for matrices with 1 row
     index[[t]] <- structure(x[, t], names = levels)
   }
-  new_index(index, contrib, levels, periods, chainable)
+  validate_index(new_index(index, contrib, levels, periods, chainable))
 }
 
 as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {

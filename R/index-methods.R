@@ -16,24 +16,23 @@ as.double.index <- function(x, ...) {
 }
 
 #---- Extract ----
+row_indices <- function(x, i) {
+  match(rownames(x[i, 0L, drop = FALSE]), rownames(x), incomparables = NA)
+}
+
+col_indices <- function(x, j) {
+  match(colnames(x[0L, j, drop = FALSE]), colnames(x), incomparables = NA)
+}
+
 `[.index` <- function(x, i, j) {
-  # get the row/col names that form the submatrix for extraction
-  dnm <- dimnames(as.matrix(x)[i, j, drop = FALSE])
-  if (!all(lengths(dnm) > 0L)) {
-    stop("cannot extract no levels/time periods from 'x'")
-  }
-  levels <- dnm[[1L]]
-  periods <- dnm[[2L]]
-  if (!all(levels %in% x$levels) || !all(periods %in% x$time)) {
-    stop("cannot extract levels/time periods not in 'x'")
-  }
-  m <- match(levels, x$levels)
-  # only loop over periods that have a value extracted
-  x$index <- lapply(x$index[periods], `[`, m)
-  x$contrib <- lapply(x$contrib[periods], `[`, m)
-  x$levels <- levels
-  x$time <- periods
-  x
+  m <- as.matrix(x)
+  levels <- row_indices(m, i)
+  periods <- col_indices(m, j)
+  x$index <- lapply(x$index[periods], `[`, levels)
+  x$contrib <- lapply(x$contrib[periods], `[`, levels)
+  x$levels <- x$levels[levels]
+  x$time <- x$time[periods]
+  validate_index(x)
 }
 
 `[[.index` <- function(x, i, j) {
@@ -52,9 +51,9 @@ as.double.index <- function(x, ...) {
 
 `[<-.index` <- function(x, i, j, value) {
   res <- as.matrix(x)
-  res[i, j] <- as.numeric(value)
-  periods <- colnames(res[0L, j, drop = FALSE])
-  levels <- rownames(res[i, 0L, drop = FALSE])
+  levels <- row_indices(res, i)
+  periods <- col_indices(res, j)
+  res[levels, periods] <- as.numeric(value)
   # only loop over periods that have a value replaced
   for (t in periods) {
     x$index[[t]][levels] <- res[levels, t]

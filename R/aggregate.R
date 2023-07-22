@@ -5,12 +5,12 @@ new_aggregate_index <- function(index,
                                 r,
                                 pias,
                                 chainable) {
-  res <- list(index = index,
-              contrib = contrib,
-              levels = levels,
-              time = time,
-              r = r,
-              pias = pias)
+  res <- list(index = as.list(index),
+              contrib = as.list(contrib),
+              levels = as.character(levels),
+              time = as.character(time),
+              r = as.numeric(r),
+              pias = as.list(pias))
   type <- if (chainable) "chainable_index" else "direct_index"
   structure(res, class = c("aggregate_index", type, "index"))
 }
@@ -89,7 +89,7 @@ mean.index <- function(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...) {
     if (length(w) != length(x$time) * length(x$levels)) {
       stop("'x' and 'w' must be the same length")
     }
-    w <- split(w, gl(length(x$time), length(x$levels)))
+    w <- split(as.numeric(w), gl(length(x$time), length(x$levels)))
   }
   gen_mean <- Vectorize(generalized_mean(r))
   len <- length(x$time) %/% window
@@ -112,5 +112,5 @@ mean.index <- function(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...) {
   x$index <- res
   x$contrib <- contrib
   x$time <- periods
-  x
+  validate_index(x)
 }

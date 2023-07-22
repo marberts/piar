@@ -86,6 +86,11 @@ test_that("updating works", {
                list(c("1" = NA_real_, "2" = NA),
                     c("11" = NA_real_, "12" = NA, "21" = NA),
                     c("111" = 1, "211" = NA, "121" = NA, "112" = NA)))
+  
+  # This used to not work
+  pias <- aggregation_structure(111)
+  index <- aggregate(epr, pias)
+  expect_equal(update(pias, index), pias)
 })
 
 test_that("reordering works", {
