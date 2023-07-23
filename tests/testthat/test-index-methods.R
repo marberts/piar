@@ -39,6 +39,13 @@ test_that("coercion methods work", {
   expect_equal(as_index(as.data.frame(epr)), epr2)
   expect_equal(as_index(epr), epr)
   expect_equal(chain(epr), as_index(as.matrix(chain(epr)), chain = FALSE))
+  
+  df <- as.data.frame(epr)
+  df[[1]] <- factor(df[[1]], levels = 2:1)
+  expect_equal(
+    as_index(df),
+    with(dat, elemental_index(rel, factor(period, levels = 2:1), ea))
+  )
 })
 
 test_that("as_index makes a valid index", {
@@ -105,6 +112,7 @@ test_that("subscripting methods work", {
   expect_equal(epr[[4, "2"]], 8)
   expect_false(is_aggregate_index(index[1:2, ]))
   expect_error(epr[1, NA])
+  expect_error(epr[1, 3])
 })
 
 test_that("replacement methods work", {

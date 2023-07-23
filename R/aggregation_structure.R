@@ -4,13 +4,49 @@ new_aggregation_structure <- function(child,
                                       eas,
                                       weights,
                                       height) {
-  res <- list(child = child,
-              parent = parent,
-              levels = levels,
-              eas = eas,
-              weights = weights,
-              height = height)
+  res <- list(child = as.list(child),
+              parent = as.list(parent),
+              levels = as.character(levels),
+              eas = as.character(eas),
+              weights = as.numeric(weights),
+              height = as.integer(height))
+  names(res$weights) <- res$eas
   structure(res, class = "aggregation_structure")
+}
+
+validate_pias_levels <- function(x) {
+  if (length(x$w) != length(x$eas)) {
+    stop("cannot make an aggregation structure with a different number of ",
+         "weights and elemental aggregates")
+  }
+  if (anyNA(x$levels) || any(x$levels == "")) {
+    stop("cannot make an aggregation structure with missing levels")
+  }
+  if (anyDuplicated(x$levels)) {
+    stop("cannot make an aggregation structure with duplicated levels")
+  }
+  invisible(x)
+}
+
+validate_pias_structure <- function(x) {
+  eas <- seq.int(to = length(x$levels), length.out = length(x$eas))
+  if (!identical(x$eas, x$levels[eas]) ||
+      x$height != length(x$child) + 1L ||
+      x$height != length(x$parent) + 1L ||
+      anyNA(x$child, recursive = TRUE) ||
+      anyNA(x$parent, recursive = TRUE) ||
+      any(vapply(x$child, \(x) any(lengths(x) == 0L), logical(1L)))
+  ) {
+    stop("invalid aggregation structure; the input is likely not a nested",
+         "hierachy")
+  }
+  invisible(x)
+}
+
+validate_pias <- function(x) {
+  validate_pias_levels(x)
+  validate_pias_structure(x)
+  x
 }
 
 aggregation_structure <- function(x, w = NULL) {
@@ -23,13 +59,13 @@ aggregation_structure <- function(x, w = NULL) {
   if (any(vapply(x, anyNA, logical(1L)))) {
     stop("'x' cannot contain NAs")
   }
+  if (any(vapply(x, \(z) any(tabulate(z, nlevels(z)) == 0L), logical(1L)))) {
+    stop("'x' cannot contain empty branches with no child nodes")
+  }
 
   if (is.null(w)) {
     w <- rep.int(1, length(ea))
-  } else {
-    w <- as.numeric(w)
   }
-  names(w) <- ea
 
   # basic argument checking to make sure inputs can make an
   # aggregation structure
@@ -57,9 +93,9 @@ aggregation_structure <- function(x, w = NULL) {
     )
   }
   if (any(lengths(unlist(parent, recursive = FALSE)) > 1L)) {
-    warning("some nodes in the price index aggregation structure have ",
-            "multiple parent nodes; the aggregation structure does not ",
-            "represent a nested hierarchy")
+    stop("some nodes in the price index aggregation structure have ",
+         "multiple parent nodes; the aggregation structure does not ",
+         "represent a nested hierarchy")
   }
   parent <- lapply(parent, unlist)
   # positional matching for child nodes is much faster for aggregation
@@ -73,5 +109,5 @@ aggregation_structure <- function(x, w = NULL) {
     names(parent[[i]]) <- nm[[i]]
   }
   levels <- c(nested_names(rev(child)), ea)
-  new_aggregation_structure(child, parent, levels, ea, w, len)
+  validate_pias(new_aggregation_structure(child, parent, levels, ea, w, len))
 }

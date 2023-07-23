@@ -102,6 +102,11 @@ test_that("reordering works", {
   index1 <- aggregate(epr, agg1)
   index2 <- aggregate(epr, agg2)
   expect_equal(as.matrix(index1[levels(index2)]), as.matrix(index2))
+  
+  f <- factor(x2, levels = c("11", "21", "12", "99"))
+  expect_error(aggregation_structure(list(x1, f, x3), 1:4))
+  
+  expect_error(aggregation_structure(list(x1, addNA(f), x3), 1:4))
 })
 
 test_that("as_aggregation_structure methods work", {
@@ -119,5 +124,5 @@ test_that("errors work", {
   expect_error(aggregation_structure(list(x1, x2)))
   expect_error(aggregation_structure(list(1:2, c(11, NA))))
   expect_error(aggregation_structure(list(1:2, c(11, 11, 12))))
-  expect_warning(aggregation_structure(list(1:2, c(3, 3), c(4, 5))))
+  expect_error(aggregation_structure(list(1:2, c(3, 3), c(4, 5))))
 })

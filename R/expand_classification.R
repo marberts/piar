@@ -1,5 +1,5 @@
-expand_classification <- function(class, width = 1L) {
-  class <- as.character(class)
+expand_classification <- function(x, width = 1L) {
+  x <- as.character(x)
   width <- as.integer(width)
   if (any(width <= 0)) {
     stop("'width' must be strictly positive")
@@ -9,12 +9,12 @@ expand_classification <- function(class, width = 1L) {
   }
 
   if (length(width) == 1L) {
-    longest <- max(nchar(class), 0L, na.rm = TRUE)
+    longest <- max(nchar(x), 0L, na.rm = TRUE)
     width <- rep.int(width, ceiling(longest / width))
   }
   w <- cumsum(width)
-  class <- strsplit(class, character(0L), fixed = TRUE)
+  x <- strsplit(x, character(0L), fixed = TRUE)
   lapply(w, function(i) {
-    vapply(class, paste_until, character(1L), i)
+    vapply(x, paste_until, character(1L), i)
   })
 }

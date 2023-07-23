@@ -48,7 +48,7 @@ update.aggregation_structure <- function(object,
   if (!all(object$levels %in% index$levels)) {
     warning("not all weights in 'object' have a corresponding index value")
   }
-  epr <- chain(index)$index[[period[1L]]]
+  epr <- chain(index)$index[[period]]
   weights(object) <- price_update(epr[object$eas], object$weights)
   object
 }

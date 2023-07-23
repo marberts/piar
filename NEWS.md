@@ -6,13 +6,13 @@
 
 - `is_chain_index()` has been removed; use `is_chainable_index()` instead.
 
-- The first argument to `elemental_index()` is now `x`, not `rel`, to be consistent with the rest of the functions.
+- The first argument to `elemental_index()` is now `x`, not `rel`, to be consistent with the rest of the functions. Similarly, the first argument for `expand_classification()` is now 'x', not 'class`.
 
 ## New features
 
-- New functions `as_aggregation_structure()` and `is_aggregate_index()` to coerce (usually) tabular data for aggregation weights into an aggregation structure, and test if an object is an aggregation structure.
+- New functions `as_aggregation_structure()` and `is_aggregate_index()` to coerce (usually) tabular data for aggregation weights into an aggregation structure, and test if an object is an aggregate index.
 
-- A method for `[[` for index objects to extract a single index value.
+- A method for `[[` for index objects to extract or replace a single index value.
 
 - The weights for an aggregation structure can be replace with `weights(pias) <- vector`.
 
@@ -20,15 +20,21 @@
 
 - The `levels()` replacement function now gives an error for indexes and aggregation structures, rather than adding a levels attribute that does nothing. 
 
-- The `width` argument for `expand_classification()` now recycles with a single value.
+- The `width` argument for `expand_classification()` now recycles a single value.
 
 - Overhaul of the documentation.
 
 - The object structure used to represent index object has been refined.
 
+- Subscripting an index object is now much faster.
+
 ## Bug fixes
 
 - Fixed a bug where creating elemental indexes with missing product names could produce a contributions matrix with the wrong number of products.
+
+- It is now possible to chain an index with only one level.
+
+- Subscripting an index with `NA`s or duplicate indices is no longer allowed.
 
 # Version 0.4.0
 

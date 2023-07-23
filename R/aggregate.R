@@ -78,9 +78,11 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
       w <- rev(weights(pias, na.rm = na.rm))
     }
   }
-  new_aggregate_index(x$index, x$contrib, pias$levels, x$time, r,
-                      pias[c("child", "parent", "eas", "height")],
-                      is_chainable_index(x))
+  validate_index(
+    new_aggregate_index(x$index, x$contrib, pias$levels, x$time, r,
+                        pias[c("child", "parent", "eas", "height")],
+                        is_chainable_index(x))
+  )
 }
 
 #---- Averaging over subperiods ----
@@ -97,7 +99,7 @@ mean.index <- function(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...) {
     stop("'x' must have at least 'window' time periods")
   }
   # get the starting location for each window
-  loc <- seq(1L, by = window, length.out = len)
+  loc <- seq.int(1L, by = window, length.out = len)
   periods <- x$time[loc]
   res <- contrib <- structure(vector("list", len), names = periods)
   # loop over each window and calculate the mean for each level
