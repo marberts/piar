@@ -11,22 +11,12 @@ stack.aggregate_index <- function(x, y, ...) {
 }
 
 stack.chainable_index <- function(x, y, ...) {
-  if (!is_index(y)) {
-    stop("'y' is not an index; use elemental_index() to make one")
-  }
-  if (!is_chainable_index(y)) {
-    stop("cannot stack a period-over-period and a fixed-base index")
-  }
+  y <- as_index(y, chainable = TRUE)
   NextMethod("stack")
 }
 
 stack.direct_index <- function(x, y, ...) {
-  if (!is_index(y)) {
-    stop("'y' is not an index; use elemental_index() to make one")
-  }
-  if (is_chainable_index(y)) {
-    stop("cannot stack a period-over-period and a fixed-base index")
-  }
+  y <- as_index(y, chainable = FALSE)
   NextMethod("stack")
 }
 

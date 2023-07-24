@@ -15,6 +15,10 @@ as.double.index <- function(x, ...) {
   as.double(as.matrix(x))
 }
 
+as.list.index <- function(x, ...) {
+  unclass(x)
+}
+
 #---- Extract ----
 row_indices <- function(x, i) {
   match(rownames(x[i, 0L, drop = FALSE]), rownames(x), incomparables = NA)

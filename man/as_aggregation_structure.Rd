@@ -4,6 +4,7 @@
 \alias{as_aggregation_structure.data.frame}
 \alias{as_aggregation_structure.matrix}
 \alias{as_aggregation_structure.aggregate_index}
+\alias{as_aggregation_structure.aggregation_structure}
 \alias{is_aggregation_structure}
 
 \title{
@@ -25,6 +26,8 @@ as_aggregation_structure(x, ...)
 \method{as_aggregation_structure}{matrix}(x, ...)
 
 \method{as_aggregation_structure}{aggregate_index}(x, w = NULL, ...)
+
+\method{as_aggregation_structure}{aggregation_structure}(x, ...)
 
 is_aggregation_structure(x)
 }

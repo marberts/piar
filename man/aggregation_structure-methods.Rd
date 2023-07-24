@@ -24,7 +24,7 @@ Functions to work with price index aggregation structures.
 
 \method{weights}{aggregation_structure}(object) <- value
 
-\method{update}{aggregation_structure}(object, index, period = end(index), ...)
+\method{update}{aggregation_structure}(object, index, period = end(index), r = NULL, ...)
 
 \method{as.matrix}{aggregation_structure}(x, ...)
 
@@ -43,6 +43,8 @@ Functions to work with price index aggregation structures.
 \item{index}{An aggregate price index, as made by \code{\link[=aggregate.index]{aggregate()}}.}
 
 \item{period}{The time period used to price update the weights. The default uses the last period in \code{index}.}
+
+\item{r}{Order of the generalized mean to update the weights.}
 
 \item{stringsAsFactors}{See \code{\link{as.data.frame}}.}
 

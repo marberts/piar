@@ -104,14 +104,16 @@ test_that("reordering works", {
   expect_equal(as.matrix(index1[levels(index2)]), as.matrix(index2))
   
   f <- factor(x2, levels = c("11", "21", "12", "99"))
-  expect_error(aggregation_structure(list(x1, f, x3), 1:4))
+  expect_equal(agg2, aggregation_structure(list(x1, f, x3), 1:4))
   
+  f <- factor(replace(x2, 2, NA), levels = c("11", "21", "12"))
   expect_error(aggregation_structure(list(x1, addNA(f), x3), 1:4))
 })
 
 test_that("as_aggregation_structure methods work", {
   expect_equal(agg, as_aggregation_structure(data.frame(x1, x2, x3, 1)))
   expect_equal(agg, as_aggregation_structure(cbind(x1, x2, x3, 1)))
+  expect_equal(agg, as_aggregation_structure(agg))
   epr <- elemental_index(1, ea = "111")
   index <- aggregate(epr, agg)
   expect_equal(agg, as_aggregation_structure(index))

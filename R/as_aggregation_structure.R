@@ -27,3 +27,7 @@ as_aggregation_structure.data.frame <- function(x, ...) {
 as_aggregation_structure.matrix <- function(x, ...) {
   as_aggregation_structure(as.data.frame(x), ...)
 }
+
+as_aggregation_structure.aggregation_structure <- function(x, ...) {
+  x
+}

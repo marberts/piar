@@ -10,7 +10,7 @@
 
 ## New features
 
-- New functions `as_aggregation_structure()` and `is_aggregate_index()` to coerce (usually) tabular data for aggregation weights into an aggregation structure, and test if an object is an aggregate index.
+- New functions `as_aggregation_structure()` and `is_aggregation_structure()` to coerce (usually) tabular data for aggregation weights into an aggregation structure, and test if an object is an aggregation structure.
 
 - A method for `[[` for index objects to extract or replace a single index value.
 

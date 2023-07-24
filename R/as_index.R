@@ -3,8 +3,8 @@ as_index <- function(x, ...) {
   UseMethod("as_index")
 }
 
-as_index.default <- function(x, ...) {
-  as_index(as.matrix(x), ...)
+as_index.default <- function(x, chainable = TRUE, ...) {
+  as_index(as.matrix(x), chainable, ...)
 }
 
 as_index.matrix <- function(x, chainable = TRUE, ...) {
@@ -37,8 +37,20 @@ as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
   as_index(res, chainable, ...)
 }
 
-as_index.index <- function(x, ...) {
-  x
+as_index.chainable_index <- function(x, chainable = TRUE, ...) {
+  if (chainable) {
+    x
+  } else {
+    chain(x)
+  }
+}
+
+as_index.direct_index <- function(x, chainable = TRUE, ...) {
+  if (chainable) {
+    unchain(x)
+  } else {
+    x
+  }
 }
 
 #---- Test ----

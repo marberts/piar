@@ -38,6 +38,7 @@ test_that("coercion methods work", {
   expect_equal(as_index(mat), epr2)
   expect_equal(as_index(as.data.frame(epr)), epr2)
   expect_equal(as_index(epr), epr)
+  expect_equal(as_index(epr, chainable = FALSE), chain(epr))
   expect_equal(chain(epr), as_index(as.matrix(chain(epr)), chain = FALSE))
   
   df <- as.data.frame(epr)

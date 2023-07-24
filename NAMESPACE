@@ -1,6 +1,6 @@
 export(elemental_index, as_index, is_index, is_aggregate_index, is_chainable_index,
        price_relative,
-       aggregation_structure, expand_classification, as_aggregation_structure,
+       aggregation_structure, expand_classification, as_aggregation_structure, is_aggregation_structure,
        carry_forward, shadow_price,
        contrib, chain, unchain, rebase, "weights<-")
 
@@ -42,7 +42,8 @@ S3method(elemental_index, numeric)
 S3method(as_index, default)
 S3method(as_index, matrix)
 S3method(as_index, data.frame)
-S3method(as_index, index)
+S3method(as_index, chainable_index)
+S3method(as_index, direct_index)
 
 S3method(contrib, index)
 
@@ -60,6 +61,7 @@ S3method(as_aggregation_structure, default)
 S3method(as_aggregation_structure, data.frame)
 S3method(as_aggregation_structure, matrix)
 S3method(as_aggregation_structure, aggregate_index)
+S3method(as_aggregation_structure, aggregation_structure)
 
 S3method(print, aggregation_structure)
 S3method(weights, aggregation_structure)

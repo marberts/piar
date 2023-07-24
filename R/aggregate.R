@@ -17,10 +17,7 @@ new_aggregate_index <- function(index,
 
 #---- Aggregate an index ----
 aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
-  if (!is_aggregation_structure(pias)) {
-    stop("'pias' must be a price index aggregation structure; use ",
-         "aggregation_structure() to make one")
-  }
+  pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
 
   # helpful functions

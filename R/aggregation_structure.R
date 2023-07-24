@@ -50,7 +50,7 @@ validate_pias <- function(x) {
 }
 
 aggregation_structure <- function(x, w = NULL) {
-  x <- lapply(x, as.factor)
+  x <- lapply(x, factor)
   len <- length(x)
   ea <- as.character(unlist(x[len], use.names = FALSE))
   if (length(ea) == 0L) {
@@ -58,9 +58,6 @@ aggregation_structure <- function(x, w = NULL) {
   }
   if (any(vapply(x, anyNA, logical(1L)))) {
     stop("'x' cannot contain NAs")
-  }
-  if (any(vapply(x, \(z) any(tabulate(z, nlevels(z)) == 0L), logical(1L)))) {
-    stop("'x' cannot contain empty branches with no child nodes")
   }
 
   if (is.null(w)) {

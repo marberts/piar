@@ -40,11 +40,13 @@ levels.aggregation_structure <- function(x) {
 update.aggregation_structure <- function(object,
                                          index,
                                          period = end(index),
+                                         r = NULL,
                                          ...) {
-  if (!is_aggregate_index(index)) {
-    stop("'index' is not an aggregate index; use aggregate() to make one")
+  index <- as_index(index)
+  if (is.null(r)) {
+    r <- if (is.null(index$r)) 1 else index$r
   }
-  price_update <- factor_weights(index$r)
+  price_update <- factor_weights(r)
   if (!all(object$levels %in% index$levels)) {
     warning("not all weights in 'object' have a corresponding index value")
   }
@@ -102,7 +104,6 @@ as.list.aggregation_structure <- function(x, ...) {
   c(list(top), lapply(rev(res), names))
 }
 
-# not exported
 is_aggregation_structure <- function(x) {
   inherits(x, "aggregation_structure")
 }

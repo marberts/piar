@@ -4,22 +4,12 @@ merge.aggregate_index <- function(x, y, ...) {
 }
 
 merge.chainable_index <- function(x, y, ...) {
-  if (!is_index(y)) {
-    stop("'y' is not an index; use elemental_index() to make one")
-  }
-  if (!is_chainable_index(y)) {
-    stop("cannot merge a fixed-base and period-over-period index")
-  }
+  y <- as_index(y, chainable = TRUE)
   NextMethod("merge")
 }
 
 merge.direct_index <- function(x, y, ...) {
-  if (!is_index(y)) {
-    stop("'y' is not an index; use elemental_index() to make one")
-  }
-  if (is_chainable_index(y)) {
-    stop("cannot merge a fixed-base and period-over-period index")
-  }
+  y <- as_index(y, chainable = FALSE)
   NextMethod("merge")
 }
 

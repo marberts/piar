@@ -10,11 +10,11 @@ test_that("merge returns the correct type of index", {
   expect_true(is_chainable_index(merge(epr1, epr2)))
   expect_true(is_direct_index(merge(chain(epr1), chain(epr2))))
   expect_false(is_aggregate_index(merge(index1, epr2)))
-  expect_error(merge(epr1, chain(epr2)))
-  expect_error(merge(chain(epr1), epr2))
+  expect_true(is_chainable_index(merge(epr1, chain(epr2))))
+  expect_true(is_direct_index(merge(chain(epr1), epr2)))
 })
 
-test_that("merge does work when it shouldn't", {
+test_that("merge doesn't work when it shouldn't", {
   expect_error(merge(epr1, epr1))
   expect_error(merge(epr1, mtcars))
   epr3 <- as_index(matrix(1:8, 4, 2, dimnames = list(letters[5:8], 2:3)))
