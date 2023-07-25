@@ -1,8 +1,5 @@
 \name{index-methods}
 \alias{index-methods}
-\alias{merge.index}
-\alias{stack.index}
-\alias{unstack.index}
 \alias{[.index}
 \alias{[[.index}
 \alias{[<-.index}
@@ -20,17 +17,10 @@
 \title{Methods for price indexes}
 
 \description{
-Methods to combine price indexes together, extract useful information, replace index values, and coerce into a tabular form.
+Methods to extract and replace index values, and coerce into a tabular form.
 }
 
 \usage{
-# Combine
-\method{merge}{index}(x, y, ...)
-
-\method{stack}{index}(x, y, ...)
-
-\method{unstack}{index}(x, ...)
-
 # Extract
 \method{[}{index}(x, i, j)
 
@@ -59,7 +49,7 @@ Methods to combine price indexes together, extract useful information, replace i
 }
 
 \arguments{
-\item{x, y}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
 
 \item{i, j}{Indices for the levels and time periods of a price index. See details.}
 
@@ -73,14 +63,6 @@ Methods to combine price indexes together, extract useful information, replace i
 }
 
 \details{
-\subsection{Combine}{
-The \code{merge()} method combines two index objects with common time periods, merging together the index values and percent-change contributions for each time period in \code{x} and \code{y}. This is useful for building up an index when different elemental aggregates come from different sources of data, or use different index-number formulas. 
-
-The \code{stack()} method combines two index objects with common levels, stacking index values and percent-change contributions for each level in \code{y} after those in \code{x}. The \code{unstack()} method breaks up \code{x} into a list of indexes, one for each period in \code{x}. These methods can be used in a map-reduce to make an index with multiple aggregation structures (like a Paasche index).
-
-It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging does not return aggregated index. If at least one of \code{x} or \code{y} is an aggregate index then the result of stacking these indexes is also an aggregate index; otherwise, it is the same class as \code{x}.
-}
-
 \subsection{Extract}{
 The extraction methods treat \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as indexing \code{x} always returns an index object (for \code{`[`}) or a single value (for \code{`[[`}). This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like \code{x[1]} is taken to be the same as \code{x[1, ]}. Note that indexing an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is \emph{not} an aggregated index.
 
@@ -99,9 +81,9 @@ The \code{as.matrix()} method turns an index into a matrix with a row for each l
 }
 
 \value{
-\code{merge()}, \code{stack()}, \code{unstack()}, \code{`[`}, \code{`[<-`}, \code{`[[<-`}, \code{head()}, and \code{tail()} all return an index object.
+\code{`[`}, \code{`[<-`}, \code{`[[<-`}, \code{head()}, and \code{tail()} all return an index object.
 
-\code{`[[`]} returns a single value.
+\code{`[[`} returns a single value.
 
 \code{levels()}, \code{time()}, \code{start()}, and \code{end()} return a character vector.
 
@@ -118,6 +100,8 @@ The \code{as.matrix()} method turns an index into a matrix with a row for each l
 \code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
 
 \code{\link{contrib}} for extracting percent-change contributions.
+
+\code{\link{combine-indexes}} to merge and stack index values.
 }
 
 \examples{

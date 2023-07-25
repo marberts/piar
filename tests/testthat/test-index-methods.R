@@ -111,6 +111,7 @@ test_that("subscripting methods work", {
     )
   )
   expect_equal(epr[[4, "2"]], 8)
+  expect_equal(epr[[3]], 5)
   expect_false(is_aggregate_index(index[1:2, ]))
   expect_error(epr[1, NA])
   expect_error(epr[1, 3])

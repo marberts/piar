@@ -45,7 +45,7 @@ as_index.chainable_index <- function(x, chainable = TRUE, ...) {
   }
 }
 
-as_index.direct_index <- function(x, chainable = TRUE, ...) {
+as_index.direct_index <- function(x, chainable = FALSE, ...) {
   if (chainable) {
     unchain(x)
   } else {

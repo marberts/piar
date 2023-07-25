@@ -27,7 +27,7 @@ as_index(x, ...)
 
 \method{as_index}{chainable_index}(x, chainable = TRUE, ...)
 
-\method{as_index}{direct_index}(x, chainable = TRUE, ...)
+\method{as_index}{direct_index}(x, chainable = FALSE, ...)
 
 is_index(x)
 
@@ -74,6 +74,8 @@ If \code{x} is a period-over-period index then it is returned unchanged when \co
 \code{\link[=aggregate.index]{aggregate}} to aggregate a price index.
 
 \code{\link{index-methods}} for methods for index objects.
+
+\code{\link{combine-indexes}} to merge and stack index values.
 }
 
 \examples{

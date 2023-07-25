@@ -40,7 +40,11 @@ col_indices <- function(x, j) {
 }
 
 `[[.index` <- function(x, i, j) {
-  as.matrix(x)[[i, j]]
+  if (missing(j)) {
+    as.matrix(x)[[i]]
+  } else {
+    as.matrix(x)[[i, j]]
+  }
 }
 
 `[.aggregate_index` <- function(x, i, j) {

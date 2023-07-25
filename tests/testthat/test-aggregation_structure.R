@@ -80,12 +80,16 @@ test_that("updating works", {
 
   # Updating with an index that doesn't line up with the pias introduces NA
   # weights that should carry up the aggregation structure
-  epr <- elemental_index(1, ea = "111")
+  epr <- elemental_index(1:2, ea = c("111", "121"))
   index <- aggregate(epr, agg)
   expect_equal(weights(update(agg, index)),
                list(c("1" = NA_real_, "2" = NA),
-                    c("11" = NA_real_, "12" = NA, "21" = NA),
-                    c("111" = 1, "211" = NA, "121" = NA, "112" = NA)))
+                    c("11" = NA_real_, "12" = 2, "21" = NA),
+                    c("111" = 1, "211" = NA, "121" = 2, "112" = NA)))
+  expect_equal(weights(update(agg, index, r = 0)),
+               list(c("1" = NA_real_, "2" = NA),
+                    c("11" = NA_real_, "12" = 1, "21" = NA),
+                    c("111" = 1, "211" = NA, "121" = 1, "112" = NA)))
   
   # This used to not work
   pias <- aggregation_structure(111)
