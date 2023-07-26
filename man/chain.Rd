@@ -72,12 +72,16 @@ Percent-change contributions are removed when chaining/unchaining/rebasing an in
 
 \seealso{
 \code{\link{elemental_index}} for making elemental price indexes.
+
+\code{\link{index-methods}} for other methods for index objects.
 }
 
 \examples{
-prices <- data.frame(rel = 1:8,
-                     period = rep(1:2, each = 4),
-                     ea = rep(letters[1:2], 4))
+prices <- data.frame(
+  rel = 1:8,
+  period = rep(1:2, each = 4),
+  ea = rep(letters[1:2], 4)
+)
 
 # A simple period-over-period elemental index
 
@@ -91,7 +95,8 @@ chain(epr)
 
 all.equal(epr, unchain(chain(epr)))
 
-# Change the base period to period 2 (note the loss of information for period 0)
+# Change the base period to period 2 (note the
+# loss of information for period 0)
 
 epr <- chain(epr)
 rebase(epr, epr[, 2])

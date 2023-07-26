@@ -41,7 +41,7 @@ is_aggregate_index(x)
 \arguments{
 \item{x}{An object to test or coerce into a price index.}
 
-\item{chainable}{Are the index values in \code{x} period-over-period indexes, suitable for a chained calculation (the default)? This should be \code{FALSE} when \code{x} is a fixed-base index.}
+\item{chainable}{Are the index values in \code{x} period-over-period indexes, suitable for a chained calculation (the default)? This should be \code{FALSE} when \code{x} is a fixed-base (direct) index.}
 
 \item{cols}{A vector giving the positions/names of the period, level, and value columns in \code{x}. The default assumes that the first column contains time periods, the second contains levels, and the third contains index values.}
 
@@ -79,9 +79,15 @@ If \code{x} is a period-over-period index then it is returned unchanged when \co
 }
 
 \examples{
-prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
+prices <- data.frame(
+  rel = 1:8,
+  period = rep(1:2, each = 4),
+  ea = rep(letters[1:2], 4)
+)
 
-pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:3)
+pias <- aggregation_structure(
+  list(c("top", "top", "top"), c("a", "b", "c")), 1:3
+)
 
 # Calculate period-over-period Jevons elemental indexes
 

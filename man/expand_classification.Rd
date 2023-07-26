@@ -40,7 +40,9 @@ expand_classification(c("111", "112", "121"))
 # Expanding more complex classifications
 # ... if last 'digit' is either TA or TS
 
-expand_classification(c("111TA", "112TA", "121TS"), width = c(1, 1, 1, 2))
+expand_classification(
+  c("111TA", "112TA", "121TS"), width = c(1, 1, 1, 2)
+)
 
 # ... if first 'digit' is either 11 or 12
 

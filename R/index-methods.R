@@ -19,19 +19,19 @@ as.list.index <- function(x, ...) {
   unclass(x)
 }
 
-#---- Extract ----
-row_indices <- function(x, i) {
-  match(rownames(x[i, 0L, drop = FALSE]), rownames(x), incomparables = NA)
+str.index <- function(object, ...) {
+  str(as.list(object))
 }
 
-col_indices <- function(x, j) {
-  match(colnames(x[0L, j, drop = FALSE]), colnames(x), incomparables = NA)
+#---- Extract ----
+dim_indices <- function(x, i) {
+  names(x) <- x
+  match(x[i], x, incomparables = NA)
 }
 
 `[.index` <- function(x, i, j) {
-  m <- as.matrix(x)
-  levels <- row_indices(m, i)
-  periods <- col_indices(m, j)
+  levels <- dim_indices(x$levels, i)
+  periods <- dim_indices(x$time, j)
   x$index <- lapply(x$index[periods], `[`, levels)
   x$contrib <- lapply(x$contrib[periods], `[`, levels)
   x$levels <- x$levels[levels]
@@ -39,12 +39,8 @@ col_indices <- function(x, j) {
   validate_index(x)
 }
 
-`[[.index` <- function(x, i, j) {
-  if (missing(j)) {
-    as.matrix(x)[[i]]
-  } else {
-    as.matrix(x)[[i, j]]
-  }
+`[[.index` <- function(x, i, j, exact = TRUE) {
+  as.matrix(x)[[i, j, exact = exact]]
 }
 
 `[.aggregate_index` <- function(x, i, j) {
@@ -58,9 +54,9 @@ col_indices <- function(x, j) {
 }
 
 `[<-.index` <- function(x, i, j, value) {
+  levels <- dim_indices(x$levels, i)
+  periods <- dim_indices(x$time, j)
   res <- as.matrix(x)
-  levels <- row_indices(res, i)
-  periods <- col_indices(res, j)
   res[levels, periods] <- as.numeric(value)
   # only loop over periods that have a value replaced
   for (t in periods) {

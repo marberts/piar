@@ -24,7 +24,7 @@ Methods to extract and replace index values, and coerce into a tabular form.
 # Extract
 \method{[}{index}(x, i, j)
 
-\method{[[}{index}(x, i, j)
+\method{[[}{index}(x, i, j, exact = TRUE)
 
 \method{[}{index}(x, i, j) <- value
 
@@ -52,6 +52,8 @@ Methods to extract and replace index values, and coerce into a tabular form.
 \item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
 
 \item{i, j}{Indices for the levels and time periods of a price index. See details.}
+
+\item{exact}{Should levels and time periods be matched exactly when indexing with a character vector? Set to \code{FALSE} to allow partial matching.}
 
 \item{value}{A numeric vector.}
 
@@ -105,9 +107,11 @@ The \code{as.matrix()} method turns an index into a matrix with a row for each l
 }
 
 \examples{
-prices <- data.frame(rel = 1:8,
-                     period = rep(1:2, each = 4),
-                     ea = rep(letters[1:2], 4))
+prices <- data.frame(
+  rel = 1:8,
+  period = rep(1:2, each = 4),
+  ea = rep(letters[1:2], 4)
+)
 
 # Calculate Jevons elemental indexes
 
@@ -122,26 +126,6 @@ epr[, 2]
 epr[["a", 2]]
 
 epr[1, ] <- 1 # can be useful for doing specific imputations
-
-# Merge two indexes
-
-prices2 <- data.frame(rel = 1:8,
-                      period = rep(1:2, each = 4),
-                      ea = rep(letters[3:4], 4))
-epr2 <- with(prices2, elemental_index(rel, period, ea))
-merge(epr, epr2)
-
-# Stack two indexes
-
-prices3 <- data.frame(rel = 1:8,
-                      period = rep(3:4, each = 4),
-                      ea = rep(letters[1:2], 4))
-epr3 <- with(prices3, elemental_index(rel, period, ea))
-stack(epr, epr3)
-
-# Unstack does the reverse
-
-all.equal(c(unstack(epr), unstack(epr3)), unstack(stack(epr, epr3)))
 
 # Extract useful features of the index
 

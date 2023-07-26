@@ -110,11 +110,19 @@ test_that("subscripting methods work", {
                       contrib = TRUE)
     )
   )
+  expect_equal(
+    epr[c("14", "12"), TRUE],
+    with(
+      dat,
+      elemental_index(rel, period, factor(ea, c(14, 12)),
+                      contrib = TRUE)
+    )
+  )
   expect_equal(epr[[4, "2"]], 8)
-  expect_equal(epr[[3]], 5)
   expect_false(is_aggregate_index(index[1:2, ]))
   expect_error(epr[1, NA])
   expect_error(epr[1, 3])
+  expect_error(epr[c(1, 2, 1), ])
 })
 
 test_that("replacement methods work", {

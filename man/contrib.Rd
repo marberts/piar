@@ -33,21 +33,38 @@ If \code{x} does not have contributions then the result is \code{NULL}.
 
 \seealso{
 \code{\link{elemental_index}} for making elemental price indexes.
+
+\code{\link{index-methods}} for other methods for index objects.
 }
 
 \examples{
-prices <- data.frame(rel = 1:8, period = rep(1:2, each = 4), ea = rep(letters[1:2], 4))
+prices <- data.frame(
+  rel = 1:8,
+  period = rep(1:2, each = 4),
+  ea = rep(letters[1:2], 4)
+)
 
-epr <- with(prices, elemental_index(rel, period, ea, contrib = TRUE))
+epr <- with(
+  prices,
+  elemental_index(rel, period, ea, contrib = TRUE)
+)
 
-pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")), 1:3)
+pias <- aggregation_structure(
+  list(c("top", "top", "top"), c("a", "b", "c")), 1:3
+)
 
 index <- aggregate(epr, pias, na.rm = TRUE)
 
 # Percent-change contributions for the top-level index
+
 contrib(index)
 
 # Calculate EA contributions for the chained index
-gpindex::arithmetic_contributions(as.matrix(chain(index))[c("a", "b", "c"), 2], 
-                                  weights(pias, ea_only = TRUE))
+
+library(gpindex)
+
+arithmetic_contributions(
+  as.matrix(chain(index))[c("a", "b", "c"), 2], 
+  weights(pias, ea_only = TRUE)
+)
 }

@@ -6,7 +6,7 @@
 \title{Make elemental price indexes}
 
 \description{
-Compute period-over-period or fixed-base (direct) elemental price indexes, with optional percent-change contributions.
+Compute period-over-period (chainable) or fixed-base (direct) elemental price indexes, with optional percent-change contributions.
 }
 
 \usage{
@@ -14,9 +14,18 @@ elemental_index(x, ...)
 
 \method{elemental_index}{default}(x, ...)
 
-\method{elemental_index}{numeric}(x, period = gl(1, length(x)), 
-                ea = gl(1, length(x)), w = NULL, contrib = FALSE, 
-                chainable = TRUE, na.rm = FALSE, r = 0, ...)
+\method{elemental_index}{numeric}(
+  x,
+  period = gl(1, length(x)), 
+  ea = gl(1, length(x)),
+  w = NULL,
+  contrib = FALSE, 
+  chainable = TRUE, 
+  na.rm = FALSE, 
+  r = 0, 
+  ...
+)
+  
 }
 
 \arguments{
@@ -42,11 +51,11 @@ elemental_index(x, ...)
 \details{
 When supplied with a numeric vector, \code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, percent-change contributions (using names for \code{x} as product names). The default (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).
 
-The default method simply coerces \code{x} to a numeric prior to calling the method above.
+The default method simply coerces \code{x} to a numeric vector prior to calling the method above.
 
-The interpretation of the index depends on how the price relatives in \code{x} are made. If these are period-over-period relatives, then the result is a collection of period-over-period elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base (direct) elemental indexes. For the latter, \code{chainable} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
+The interpretation of the index depends on how the price relatives in \code{x} are made. If these are period-over-period relatives, then the result is a collection of period-over-period (chainable) elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base (direct) elemental indexes. For the latter, \code{chainable} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
 
-By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as parental (or overall mean) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
+By default, missing price relatives in \code{x} will propagate throughout the index calculation. Ignoring missing values with \code{na.rm = TRUE} is the same as overall mean (parental) imputation, and needs to be explicitly set in the call to \code{elemental_index()}. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling \code{elemental_index()}.
 
 Indexes based on nested generalized means, like the Fisher index (and superlative quadratic mean indexes more generally), can be calculated by supplying the appropriate weights with \code{\link[=nested_transmute]{nested_transmute()}}; see the example below. It is important to note that there are several ways to make these weights, and this affects how percent-change contributions are calculated.
 }
@@ -67,7 +76,7 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 }
 
 \seealso{
-\code{\link{price_relative}} for making price relatives for the same products over time, and \code{\link{carry_forward}} and \code{\link{shadow_price}} for imputations for missing prices.
+\code{\link{price_relative}} for making price relatives for the same products over time, and \code{\link{carry_forward}} and \code{\link{shadow_price}} for imputation of missing prices.
 
 \code{\link[=aggregate.index]{aggregate}} to aggregate elemental indexes accroding to a price index aggregation structure.
 
@@ -83,14 +92,19 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 }
 
 \examples{
-prices <- data.frame(rel = 1:8,
-                     period = rep(1:2, each = 4),
-                     ea = rep(letters[1:2], 4))
+library(gpindex)
+
+prices <- data.frame(
+  rel = 1:8,
+  period = rep(1:2, each = 4),
+  ea = rep(letters[1:2], 4)
+)
 
 # A two-level aggregation structure
 
-pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")),
-                              1:3)
+pias <- aggregation_structure(
+  list(c("top", "top", "top"), c("a", "b", "c")), 1:3
+)
 
 # Calculate Jevons elemental indexes
 
@@ -102,13 +116,8 @@ exp(coef(lm(log(rel) ~ ea:factor(period) - 1, prices)))
 
 with(
   prices,
-  t(tapply(rel, list(period, ea), gpindex::geometric_mean, na.rm = TRUE))
+  t(tapply(rel, list(period, ea), geometric_mean, na.rm = TRUE))
 )
-
-# Calculate a CSWD index (same as the Jevons in this example) 
-# as an arithmetic index by constructing appropriate weights
-
-library(gpindex)
 
 # A general function to calculate weights to turn the geometric
 # mean of the arithmetic and harmonic mean (i.e., Fisher mean)
@@ -116,9 +125,14 @@ library(gpindex)
 
 fw <- grouped(nested_transmute(0, c(1, -1), 1))
 
+# Calculate a CSWD index (same as the Jevons in this example) 
+# as an arithmetic index by using the appropriate weights
+
 with(
   prices, 
-  elemental_index(rel, period, ea,
-                  fw(rel, group = interaction(period, ea)), r = 1)
+  elemental_index(
+    rel, period, ea,
+    fw(rel, group = interaction(period, ea)), r = 1
+  )
 )
 }

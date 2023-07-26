@@ -11,7 +11,16 @@ Impute missing prices using the carry forward or shadow price method.
 \usage{
 carry_forward(x, period, product)
 
-shadow_price(x, period, product, ea, pias = NULL, w = NULL, r1 = 0, r2 = 1)
+shadow_price(
+  x,
+  period,
+  product,
+  ea, 
+  pias = NULL,
+  w = NULL,
+  r1 = 0, 
+  r2 = 1
+)
 }
 
 \arguments{
@@ -55,8 +64,12 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 }
 
 \examples{
-prices <- data.frame(price = c(1:7, NA), period = rep(1:2, each = 4), 
-                     product = 1:4, ea = rep(letters[1:2], 4))
+prices <- data.frame(
+  price = c(1:7, NA),
+  period = rep(1:2, each = 4), 
+  product = 1:4,
+  ea = rep(letters[1:2], 4)
+)
                      
 with(prices, carry_forward(price, period, product))
 

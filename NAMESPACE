@@ -32,6 +32,7 @@ S3method(unstack, index)
 S3method(print, index)
 S3method(summary, index)
 S3method(print, index_summary)
+S3method(str, index)
 
 S3method(aggregate, index)
 S3method(mean, index)
@@ -76,7 +77,7 @@ S3method(as.list, aggregation_structure)
 
 importFrom(stats, aggregate, weights, update, time, start, end)
 
-importFrom(utils, stack, unstack, head, tail)
+importFrom(utils, stack, unstack, head, tail, str)
 
 importFrom(gpindex, generalized_mean, factor_weights, contributions, 
            transmute_weights, scale_weights, back_period)
