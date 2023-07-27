@@ -77,8 +77,6 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 \code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
 
 \code{\link{contrib}} for extracting percent-change contributions.
-
-\code{\link{index-methods}} for other methods.
 }
 
 \examples{

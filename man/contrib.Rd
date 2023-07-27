@@ -33,8 +33,6 @@ If \code{x} does not have contributions then the result is \code{NULL}.
 
 \seealso{
 \code{\link{elemental_index}} for making elemental price indexes.
-
-\code{\link{index-methods}} for other methods for index objects.
 }
 
 \examples{

@@ -54,8 +54,6 @@ A price index aggregation structure, except for \code{is_aggregate_index()} that
 
 \seealso{
 \code{\link[=aggregate.index]{aggregate}} to aggregate price indexes made with \code{\link[=elemental_index]{elemental_index()}}.
-
-\code{\link{aggregation_structure-methods}} for methods for \code{aggregation_structure} objects.
 }
 
 \examples{

@@ -1,29 +1,3 @@
-#---- Coerce ----
-as.data.frame.index <- function(x, ..., stringsAsFactors = FALSE) {
-  value <- unlist(x$index, use.names = FALSE)
-  period <- rep(x$time, each = length(x$levels))
-  data.frame(period, level = x$levels, value,
-             stringsAsFactors = stringsAsFactors)
-}
-
-as.matrix.index <- function(x, ...) {
-  do.call(cbind, x$index)
-}
-
-# not exported
-as.double.index <- function(x, ...) {
-  as.double(as.matrix(x))
-}
-
-as.list.index <- function(x, ...) {
-  unclass(x)
-}
-
-str.index <- function(object, ...) {
-  str(as.list(object))
-}
-
-#---- Extract ----
 dim_indices <- function(x, i) {
   names(x) <- x
   match(x[i], x, incomparables = NA)
@@ -78,31 +52,11 @@ dim_indices <- function(x, i) {
   
   level <- x$levels[[i]]
   period <- x$time[[j]]
-
+  
   x$index[[period]][[level]] <- as.numeric(value)
   x$contrib[[period]][[level]] <- numeric(0L)
-
+  
   x
-}
-
-levels.index <- function(x) {
-  x$levels
-}
-
-`levels<-.index` <- function(x, value) {
-  stop("cannot replace levels attribute")
-}
-
-time.index <- function(x, ...) {
-  x$time
-}
-
-start.index <- function(x, ...) {
-  x$time[1L]
-}
-
-end.index <- function(x, ...) {
-  x$time[length(x$time)]
 }
 
 head.index <- function(x, n = 6L, ...) {
@@ -147,28 +101,3 @@ tail.index <- function(x, n = 6L, ...) {
   x[i, j]
 }
 
-#---- Printing ----
-print.index <- function(x, ...) {
-  print(as.matrix(x), ...)
-  invisible(x)
-}
-
-#---- Summary ----
-summary.index <- function(object, ...) {
-  res <- structure(vector("list", 2L), names = c("index", "contrib"))
-  res$index <- summary.data.frame(object$index, ...)
-  res$contrib <- if (has_contrib(object)) {
-    summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
-  }
-  structure(res, class = "index_summary")
-}
-
-print.index_summary <- function(x, ...) {
-  cat("Indexes\n")
-  print(x$index)
-  if (!is.null(x$contrib)) {
-    cat("\nContributions\n")
-    print(x$contrib)
-  }
-  invisible(x)
-}

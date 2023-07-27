@@ -108,3 +108,9 @@ aggregation_structure <- function(x, w = NULL) {
   levels <- c(nested_names(rev(child)), ea)
   validate_pias(new_aggregation_structure(child, parent, levels, ea, w, len))
 }
+
+print.aggregation_structure <- function(x, ...) {
+  print(c(rev(lapply(x$child, names)), if (x$height > 0L) list(x$eas)))
+  invisible(x)
+}
+

@@ -72,8 +72,6 @@ Percent-change contributions are removed when chaining/unchaining/rebasing an in
 
 \seealso{
 \code{\link{elemental_index}} for making elemental price indexes.
-
-\code{\link{index-methods}} for other methods for index objects.
 }
 
 \examples{

@@ -73,8 +73,6 @@ If \code{x} is a period-over-period index then it is returned unchanged when \co
 \seealso{
 \code{\link[=aggregate.index]{aggregate}} to aggregate a price index.
 
-\code{\link{index-methods}} for methods for index objects.
-
 \code{\link{combine-indexes}} to merge and stack index values.
 }
 

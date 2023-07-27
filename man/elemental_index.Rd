@@ -84,8 +84,6 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 
 \code{\link{contrib}} for extracting percent-change contributions.
 
-\code{\link{index-methods}} for other methods.
-
 \code{\link{as_index}} to turn pre-computed index values into an index object.
 
 \code{\link{combine-indexes}} to merge and stack index values.
