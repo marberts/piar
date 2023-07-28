@@ -47,21 +47,9 @@ The replacement methods similarly treat \code{x} as a matrix, and behaves the sa
 }
 
 \value{
-\code{`[`}, \code{`[<-`}, \code{`[[<-`}, \code{head()}, and \code{tail()} all return an index object.
+\code{[}, \code{[<-}, \code{[[<-}, \code{head()}, and \code{tail()} all return an index object.
 
-\code{`[[`} returns a single value.
-}
-
-\seealso{
-\code{\link{elemental_index}} to make an elemental index.
-
-\code{\link{as_index}} to coerce into an index object.
-
-\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
-
-\code{\link{contrib}} for extracting percent-change contributions.
-
-\code{\link{combine-indexes}} to merge and stack index values.
+\code{[[} returns a single value.
 }
 
 \examples{

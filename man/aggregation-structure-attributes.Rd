@@ -38,10 +38,6 @@ Get and set the weights for a price index aggregation structure, or get the leve
 \code{levels()} returns a character vector with the levels for the aggregation structure.
 }
 
-\seealso{
-\code{\link{aggregation_structure}} to make a price index aggregation structure.
-}
-
 \examples{
 # A simple aggregation structure
 #            1

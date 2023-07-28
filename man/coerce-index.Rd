@@ -28,18 +28,6 @@ Turn an index into a matrix with a row for each level and a column for each peri
 \code{as.matrix()} returns a matrix.
 }
 
-\seealso{
-\code{\link{elemental_index}} to make an elemental index.
-
-\code{\link{as_index}} to coerce into an index object.
-
-\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
-
-\code{\link{contrib}} for extracting percent-change contributions.
-
-\code{\link{combine-indexes}} to merge and stack index values.
-}
-
 \examples{
 prices <- data.frame(
   rel = 1:8,

@@ -18,7 +18,7 @@ contrib(x, ...)
 }
 
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
 
 \item{level}{The level of an index for which percent-change contributions are desired, defaulting to the first level (usually the top-level for an aggregate index).}
 
@@ -29,10 +29,6 @@ contrib(x, ...)
 A matrix of percent-change contributions with a column for each \code{period} and a row for each product in \code{level}. Contributions are padded with 0 to fit into a rectangular array when products differ over time.
 
 If \code{x} does not have contributions then the result is \code{NULL}.
-}
-
-\seealso{
-\code{\link{elemental_index}} for making elemental price indexes.
 }
 
 \examples{

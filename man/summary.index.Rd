@@ -21,18 +21,6 @@ Summarize an index as a matrix of index values (i.e., the five-number summary fo
 A list of five-number summaries.
 }
 
-\seealso{
-\code{\link{elemental_index}} to make an elemental index.
-
-\code{\link{as_index}} to coerce into an index object.
-
-\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
-
-\code{\link{contrib}} for extracting percent-change contributions.
-
-\code{\link{combine-indexes}} to merge and stack index values.
-}
-
 \examples{
 prices <- data.frame(
   rel = 1:8,

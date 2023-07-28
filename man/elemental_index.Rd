@@ -80,13 +80,17 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 
 \code{\link[=aggregate.index]{aggregate}} to aggregate elemental indexes accroding to a price index aggregation structure.
 
-\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
-
-\code{\link{contrib}} for extracting percent-change contributions.
-
 \code{\link{as_index}} to turn pre-computed index values into an index object.
 
-\code{\link{combine-indexes}} to merge and stack index values.
+\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
+
+\code{\link{contrib}} for getting the percent-change contributions of an index, \code{\link[=levels.index]{levels}} for getting the levels, and \code{\link[=time.index]{time}} for getting the time periods.
+
+\code{\link[=merge.index]{merge}} and \code{\link[=stack.index]{stack}} to combine index values.
+
+\code{\link[=[.index]{[}} and \code{\link[=[<-.index]{[<-}} to extract and replace index values.
+
+\code{\link[=as.matrix.index]{as.matrix}} and \code{\link[=as.data.frame.index]{as.data.frame}} for coercing an index into a tabular form.
 }
 
 \examples{
@@ -96,12 +100,6 @@ prices <- data.frame(
   rel = 1:8,
   period = rep(1:2, each = 4),
   ea = rep(letters[1:2], 4)
-)
-
-# A two-level aggregation structure
-
-pias <- aggregation_structure(
-  list(c("top", "top", "top"), c("a", "b", "c")), 1:3
 )
 
 # Calculate Jevons elemental indexes

@@ -36,20 +36,12 @@ It is not generally possible to merge aggregated indexes, as this would change t
 \code{merge()} and \code{stack()} return an index object. \code{unstack()} returns a list of index objects.
 }
 
-\seealso{
-\code{\link{elemental_index}} to make an elemental index.
-
-\code{\link{as_index}} to coerce into an index object.
-
-\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
-
-\code{\link{contrib}} for extracting percent-change contributions.
-}
-
 \examples{
-prices <- data.frame(rel = 1:8,
-                     period = rep(1:2, each = 4),
-                     ea = rep(letters[1:2], 4))
+prices <- data.frame(
+  rel = 1:8,
+  period = rep(1:2, each = 4),
+  ea = rep(letters[1:2], 4)
+)
 
 # Calculate Jevons elemental indexes
 
@@ -57,21 +49,28 @@ epr <- with(prices, elemental_index(rel, period, ea))
 
 # Merge two indexes
 
-prices2 <- data.frame(rel = 1:8,
-                      period = rep(1:2, each = 4),
-                      ea = rep(letters[3:4], 4))
+prices2 <- data.frame(
+  rel = 1:8,
+  period = rep(1:2, each = 4),
+  ea = rep(letters[3:4], 4)
+)
+
 epr2 <- with(prices2, elemental_index(rel, period, ea))
 merge(epr, epr2)
 
 # Stack two indexes
 
-prices3 <- data.frame(rel = 1:8,
-                      period = rep(3:4, each = 4),
-                      ea = rep(letters[1:2], 4))
+prices3 <- data.frame(
+  rel = 1:8,
+  period = rep(3:4, each = 4),
+  ea = rep(letters[1:2], 4)
+)
+
 epr3 <- with(prices3, elemental_index(rel, period, ea))
 stack(epr, epr3)
 
 # Unstack does the reverse
 
-all.equal(c(unstack(epr), unstack(epr3)), unstack(stack(epr, epr3)))
+all.equal(c(unstack(epr), unstack(epr3)),
+          unstack(stack(epr, epr3)))
 }

@@ -42,14 +42,17 @@ The \code{sps_repweights()} function in the \pkg{sps} package to generate replic
 }
 
 \examples{
-prices <- data.frame(rel = 1:8,
-                     period = rep(1:2, each = 4),
-                     ea = rep(letters[1:2], 4))
+prices <- data.frame(
+  rel = 1:8,
+  period = rep(1:2, each = 4),
+  ea = rep(letters[1:2], 4)
+)
 
 # A two-level aggregation structure
 
-pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")),
-                              1:3)
+pias <- aggregation_structure(
+  list(c("top", "top", "top"), c("a", "b", "c")), 1:3
+)
                             
 repweights <- matrix(c(0, 2, 3, 1, 2, 4, 2, 3, 3), 3)
 

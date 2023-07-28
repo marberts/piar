@@ -71,9 +71,17 @@ If \code{x} is a period-over-period index then it is returned unchanged when \co
 }
 
 \seealso{
-\code{\link[=aggregate.index]{aggregate}} to aggregate a price index.
+\code{\link[=aggregate.index]{aggregate}} to aggregate elemental indexes accroding to a price index aggregation structure.
 
-\code{\link{combine-indexes}} to merge and stack index values.
+\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
+
+\code{\link{contrib}} for getting the percent-change contributions of an index, \code{\link[=levels.index]{levels}} for getting the levels, and \code{\link[=time.index]{time}} for getting the time periods.
+
+\code{\link[=merge.index]{merge}} and \code{\link[=stack.index]{stack}} to combine index values.
+
+\code{\link[=[.index]{[}} and \code{\link[=[<-.index]{[<-}} to extract and replace index values.
+
+\code{\link[=as.matrix.index]{as.matrix}} and \code{\link[=as.data.frame.index]{as.data.frame}} for coercing an index into a tabular form.
 }
 
 \examples{

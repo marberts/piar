@@ -38,6 +38,14 @@ The \code{aggregation_structure()} function does its best to check its arguments
 \code{\link[=aggregate.index]{aggregate}} to aggregate price indexes made with \code{\link[=elemental_index]{elemental_index()}}.
 
 \code{\link{expand_classification}} to make \code{x} from a character representation of a hierarchical aggregation structure.
+
+\code{\link{as_aggregation_structure}} to coerce tabular data into an aggregation structure.
+
+\code{\link[=as.data.frame.aggregation_structure]{as.data.frame}} and \code{\link[=as.matrix.aggregation_structure]{as.matrix}} to coerce an aggregation structure into a tabular form.
+
+\code{\link[=weights.aggregation_structure]{weights}} to get the weights for an aggregation structure.
+
+\code{\link[=update.aggregation_structure]{update}} for updating a price index aggregation structure with an aggregated index.
 }
 
 \examples{
@@ -49,13 +57,16 @@ The \code{aggregation_structure()} function does its best to check its arguments
 #  111     112     121
 #  (1)     (3)     (4)
 
-aggregation_weights <- data.frame(level1 = c("1",   "1",   "1"),
-                                  level2 = c("11",  "11",  "12"),
-                                  ea     = c("111", "112", "121"),
-                                  weight = c(1,     3,     4))
+aggregation_weights <- data.frame(
+  level1 = c("1",   "1",   "1"),
+  level2 = c("11",  "11",  "12"),
+  ea     = c("111", "112", "121"),
+  weight = c(1,     3,     4)
+)
                                   
-pias <- aggregation_structure(aggregation_weights[1:3],
-                              w = aggregation_weights[[4]])
+pias <- aggregation_structure(
+  aggregation_weights[1:3], w = aggregation_weights[[4]]
+)
 
 # The aggregation structure can also be made by expanding the
 # elemental aggregates

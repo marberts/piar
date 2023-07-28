@@ -72,22 +72,23 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 }
 
 \seealso{
+\code{\link{elemental_index}} for making elemental price indexes.
+
 \code{\link{aggregation_structure}} for making a price index aggregation structure.
-
-\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
-
-\code{\link{contrib}} for extracting percent-change contributions.
 }
 
 \examples{
-prices <- data.frame(rel = 1:8,
-                     period = rep(1:2, each = 4),
-                     ea = rep(letters[1:2], 4))
+prices <- data.frame(
+  rel = 1:8,
+  period = rep(1:2, each = 4),
+  ea = rep(letters[1:2], 4)
+)
 
 # A two-level aggregation structure
 
-pias <- aggregation_structure(list(c("top", "top", "top"), c("a", "b", "c")),
-                              1:3)
+pias <- aggregation_structure(
+  list(c("top", "top", "top"), c("a", "b", "c")), 1:3
+)
 
 # Calculate Jevons elemental indexes
 

@@ -59,8 +59,6 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 
 \seealso{
 \code{\link{price_relative}} for making price relatives for the same products over time.
-
-\code{\link{elemental_index}} for making elemental price indexes.
 }
 
 \examples{

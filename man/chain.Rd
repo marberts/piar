@@ -70,10 +70,6 @@ Percent-change contributions are removed when chaining/unchaining/rebasing an in
 \code{chain()} and \code{rebase()} return an index that inherits from \code{direct_index}, and \code{unchain()} returns an index that inherits from \code{chainable_index}.
 }
 
-\seealso{
-\code{\link{elemental_index}} for making elemental price indexes.
-}
-
 \examples{
 prices <- data.frame(
   rel = 1:8,

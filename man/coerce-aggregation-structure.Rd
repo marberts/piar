@@ -30,10 +30,6 @@ Coerce a price index aggregation structure into an aggregation matrix, or a data
 \code{as.data.frame()} takes an aggregation structure and returns a data frame that could have generated it, with columns \code{level1}, \code{level2}, ..., \code{ea}, and \code{weight}.
 }
 
-\seealso{
-\code{\link{aggregation_structure}} to make a price index aggregation structure.
-}
-
 \examples{
 # A simple aggregation structure
 #            1

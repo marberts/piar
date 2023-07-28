@@ -4,7 +4,7 @@
 \alias{start.index}
 \alias{end.index}
 
-\title{Get the attributes for a price indexes}
+\title{Get the attributes for a price index}
 
 \description{
 Methods to get the levels and time periods for a price index.
@@ -28,18 +28,6 @@ Methods to get the levels and time periods for a price index.
 
 \value{
 \code{levels()} and \code{time()} return a character vector with the levels and time periods for a price index. \code{start()} and \code{end()} return the first and last time period.
-}
-
-\seealso{
-\code{\link{elemental_index}} to make an elemental index.
-
-\code{\link{as_index}} to coerce into an index object.
-
-\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
-
-\code{\link{contrib}} for extracting percent-change contributions.
-
-\code{\link{combine-indexes}} to merge and stack index values.
 }
 
 \examples{

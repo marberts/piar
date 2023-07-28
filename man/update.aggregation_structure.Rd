@@ -36,7 +36,7 @@ A copy of \code{object} with price-updated weights using the index values in \co
 }
 
 \seealso{
-\code{\link{aggregation_structure}} to make a price index aggregation structure.
+\code{\link[=aggregate.index]{aggregate}} to make an aggregated price index.
 }
 
 \examples{
