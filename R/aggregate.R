@@ -34,8 +34,9 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     rel <- con <- vector("list", pias$height)
     # align epr with weights so that positional indexing works
     # preserve names if epr and pias weights don't agree
-    rel[[1L]] <- named_extract(x$index[[t]], pias$eas)
-    con[[1L]] <- named_extract(x$contrib[[t]], pias$eas)
+    rel[[1L]] <- x$index[[t]][pias$eas]
+    con[[1L]] <- x$contrib[[t]][pias$eas]
+    names(rel[[1L]]) <- names(con[[1L]]) <- pias$eas
     # get rid of any NULL contributions
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     # loop over each level in the pias from the bottom up and aggregate

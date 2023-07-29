@@ -5,11 +5,6 @@ different_length <- function(...) {
   any(res != res[1L])
 }
 
-named_extract <- function(x, nm) {
-  nm <- as.character(nm)
-  structure(x[nm], names = nm)
-}
-
 sequential_names <- function(...) {
   f <- interaction(...)
   unsplit(Map(seq_len, tabulate(f)), f)
