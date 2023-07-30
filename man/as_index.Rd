@@ -51,11 +51,9 @@ is_aggregate_index(x)
 \details{
 Numeric matrices are coerced into an index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). This essentially reverses calling \code{\link[=as.matrix.index]{as.matrix()}} on an index object. If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces \code{x} to a matrix prior to using the matrix method.
 
-The data frame method for \code{as_index()} is best understood as reversing the effect of \code{\link[=as.data.frame.index]{as.data.frame()}} on an index object. It constructs a matrix by taking the unique values of \code{x[[cols[1]]]} as columns and the unique values of \code{x[[cols[2]]]} as rows (in the order they appear). It then populates this matrix with the corresponding values in \code{x[[cols[3]]]}, and uses the matrix method for \code{as_index()}. Note that the resulting index is therefore sensitive to the ordering of \code{x}.
+The data frame method for \code{as_index()} is best understood as reversing the effect of \code{\link[=as.data.frame.index]{as.data.frame()}} on an index object. It constructs a matrix by taking the levels of \code{x[[cols[1]]]} as columns and the levels of \code{x[[cols[2]]]} as rows (coercing to a factor if necessary). It then populates this matrix with the corresponding values in \code{x[[cols[3]]]}, and uses the matrix method for \code{as_index()}.
 
-If \code{x} is a period-over-period index then it is returned unchanged when \code{chainable == TRUE} and chained otherwise. Similarly, if \code{x} is a fixed-base index then it is returned unchainged when \code{chainable == FALSE} and unchain otherwise.
-
-\code{is_index()} tests if an object is a price index, whereas \code{is_aggregate_index()} tests if its an aggregate index. \code{is_chainable_index()} tests if an object is a period-over-period index (so that it can be chained over time).
+If \code{x} is a period-over-period index then it is returned unchanged when \code{chainable == TRUE} and chained otherwise. Similarly, if \code{x} is a fixed-base index then it is returned unchanged when \code{chainable == FALSE} and unchain otherwise.
 }
 
 \value{
@@ -71,16 +69,6 @@ If \code{x} is a period-over-period index then it is returned unchanged when \co
 }
 
 \seealso{
-\code{\link[=aggregate.index]{aggregate}} to aggregate elemental indexes accroding to a price index aggregation structure.
-
-\code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
-
-\code{\link{contrib}} for getting the percent-change contributions of an index, \code{\link[=levels.index]{levels}} for getting the levels, and \code{\link[=time.index]{time}} for getting the time periods.
-
-\code{\link[=merge.index]{merge}} and \code{\link[=stack.index]{stack}} to combine index values.
-
-\code{\link[=[.index]{[}} and \code{\link[=[<-.index]{[<-}} to extract and replace index values.
-
 \code{\link[=as.matrix.index]{as.matrix}} and \code{\link[=as.data.frame.index]{as.data.frame}} for coercing an index into a tabular form.
 }
 

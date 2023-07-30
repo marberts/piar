@@ -39,6 +39,11 @@ test_that("unchaining/rebasing a chainable index does nothing", {
   expect_equal(rebase(index1), index1)
 })
 
+test_that("chaining a fixed-base index does nothing", {
+  expect_equal(chain(epr1), chain(chain(epr1)))
+  expect_equal(chain(index1), chain(chain(index1)))
+})
+
 test_that("rebase should be the same as division", {
   expect_equal(as.matrix(rebase(chain(epr2), 1:4)),
                as.matrix(chain(epr2)) / 1:4)

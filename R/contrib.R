@@ -10,7 +10,8 @@ contrib.index <- function(x, level = levels(x), ...) {
   level <- as.character(level)
   con <- lapply(x$contrib, `[[`, match.arg(level))
   products <- unique(nested_names(con))
-  out <- structure(vector("list", length(con)), names = x$time)
+  out <- vector("list", length(con))
+  names(out) <- x$time
   # initialize 0 contributions for all products in all time periods
   out[] <- list(structure(numeric(length(products)), names = products))
   # then replace with the actual values, so products that didn't sell

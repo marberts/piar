@@ -9,7 +9,7 @@ as.matrix.index <- function(x, ...) {
   do.call(cbind, x$index)
 }
 
-# not exported
+# not documented
 as.double.index <- function(x, ...) {
   as.double(as.matrix(x))
 }

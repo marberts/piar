@@ -75,7 +75,7 @@ rebase.direct_index <- function(x, base = rep(1, nlevels(x)), ...) {
   if (length(base) != length(x$levels)) {
     stop("'base' must have a value for each level of 'x'")
   }
-  x$index[] <- Map(`/`, x$index, list(base))
+  x$index <- Map(`/`, x$index, list(base))
   # contributions are difficult to rebase, so remove them
   x$contrib[] <- empty_contrib(x$levels)
   x

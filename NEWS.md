@@ -6,7 +6,7 @@
 
 - `is_chain_index()` has been removed; use `is_chainable_index()` instead.
 
-- The first argument to `elemental_index()` is now `x`, not `rel`, to be consistent with the rest of the functions. Similarly, the first argument for `expand_classification()` is now 'x', not 'class`.
+- The first argument to `elemental_index()` is now `x`, not `rel`, to be consistent with the rest of the functions. Similarly, the first argument for `expand_classification()` is now `x`, not `class`.
 
 ## New features
 

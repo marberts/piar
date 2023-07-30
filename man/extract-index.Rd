@@ -27,7 +27,7 @@ Methods to extract and replace index values like a matrix.
 }
 
 \arguments{
-\item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
 \item{i, j}{Indices for the levels and time periods of a price index. See details.}
 

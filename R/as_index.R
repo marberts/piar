@@ -16,11 +16,14 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
     if (is.null(colnames(x))) seq_len(ncol(x)) else colnames(x)
   )
 
-  index <- contrib <- structure(vector("list", ncol(x)), names = periods)
+  index <- contrib <- vector("list", length(periods))
+  names(index) <- names(contrib) <- periods
+  
   contrib[] <- empty_contrib(levels)
   for (t in seq_along(periods)) {
     # EA names are not kept for matrices with 1 row
-    index[[t]] <- structure(x[, t], names = levels)
+    index[[t]] <- x[, t]
+    names(index[[t]]) <- levels
   }
   validate_index(new_index(index, contrib, levels, periods, chainable))
 }

@@ -15,7 +15,7 @@ Turn an index into a matrix with a row for each level and a column for each peri
 }
 
 \arguments{
-\item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
 \item{stringsAsFactors}{See \code{\link{as.data.frame}}.}
 
