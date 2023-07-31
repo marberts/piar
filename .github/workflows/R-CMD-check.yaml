@@ -43,7 +43,7 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
           
-      - names: install gpindex
+      - name: install gpindex
         run: |
           install.packages("remotes")
           remotes::install_github("marberts/gpindex")

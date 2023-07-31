@@ -33,7 +33,7 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
           
-      - names: install gpindex
+      - name: install gpindex
         run: |
           install.packages("remotes")
           remotes::install_github("marberts/gpindex")
