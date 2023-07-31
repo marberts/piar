@@ -52,7 +52,7 @@ A price index aggregation structure, except for \code{is_aggregate_index()} that
 }
 
 \seealso{
-\code{\link[=aggregate.index]{aggregate}} to aggregate price indexes made with \code{\link[=elemental_index]{elemental_index()}}.
+\code{\link[=as.matrix.aggregation_structure]{as.matrix}} and \code{\link[=as.data.frame.aggregation_structure]{as.data.frame}} for coercing an aggregation structure into a tabular form.
 }
 
 \examples{

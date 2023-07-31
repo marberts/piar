@@ -22,11 +22,13 @@
 
 - The `width` argument for `expand_classification()` now recycles a single value.
 
-- Overhaul of the documentation.
+- Major overhaul of the documentation should make it easier to use.
 
 - The object structure used to represent index object has been refined.
 
 - Subscripting an index object is now much faster.
+
+- It is now possible to update an aggregation structure with a non-aggregated index.
 
 ## Bug fixes
 

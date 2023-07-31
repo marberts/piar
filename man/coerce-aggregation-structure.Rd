@@ -30,6 +30,10 @@ Coerce a price index aggregation structure into an aggregation matrix, or a data
 \code{as.data.frame()} takes an aggregation structure and returns a data frame that could have generated it, with columns \code{level1}, \code{level2}, ..., \code{ea}, and \code{weight}.
 }
 
+\seealso{
+\code{\link{as_aggregation_structure}} for coercing into an aggregation structure.
+}
+
 \examples{
 # A simple aggregation structure
 #            1
@@ -48,6 +52,7 @@ aggregation_weights <- data.frame(
 
 pias <- as_aggregation_structure(aggregation_weights)
 
-as.data.frame(pias)
 as.matrix(pias)
+
+all.equal(as.data.frame(pias), aggregation_weights)
 }

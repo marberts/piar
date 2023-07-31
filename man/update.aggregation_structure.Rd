@@ -6,7 +6,7 @@ Update a price index aggregation structure
 }
 
 \description{
-Price update the weights in a price index aggregation structure
+Price update the weights in a price index aggregation structure.
 }
 
 \usage{
@@ -22,11 +22,11 @@ Price update the weights in a price index aggregation structure
 \arguments{
 \item{object}{A price index aggregation structure, as made by \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{index}{An aggregate price index, as made by \code{\link[=aggregate.index]{aggregate()}}.}
+\item{index}{A price index, usually an aggregate price index as made by \code{\link[=aggregate.index]{aggregate()}}.}
 
 \item{period}{The time period used to price update the weights. The default uses the last period in \code{index}.}
 
-\item{r}{Order of the generalized mean to update the weights.}
+\item{r}{Order of the generalized mean to update the weights. The default uses the order used to aggregate \code{index} if it's an aggregate index; otherwise, the default is 1 for an arithmetic index.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }

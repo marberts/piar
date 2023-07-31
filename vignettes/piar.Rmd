@@ -29,8 +29,6 @@ The `ms_prices` dataset has price data for five businesses over four quarters, a
 ```{r}
 library(piar)
 
-options(stringsAsFactors = FALSE)
-
 head(ms_prices)
 
 ms_weights
@@ -193,21 +191,21 @@ As `elemental_index()` makes a geometric index by default, all that is needed to
 with(ms_prices2, elemental_index(price / back_price, period, business, weight))
 ```
 
-## Quote contributions
+## Percent-change contributions
 
-It's often convenient to decompose an index into the (additive) contribution of each price relative, also known as the quote contributions. This can be done with the same work flow as in the previous examples, specifying `contrib = TRUE` when calling `elemental_index()`.
+It's often convenient to decompose an index into the (additive) contribution of each price relative, also known as the Percent-change contributions. This can be done with the same work flow as in the previous examples, specifying `contrib = TRUE` when calling `elemental_index()`.
 
 ```{r}
 ms_epr <- with(ms_prices, elemental_index(relative, period, business, contrib = TRUE, na.rm = TRUE))
 ```
 
-As with index values, quote contributions for a given level of the index can be extracted as a matrix.
+As with index values, Percent-change contributions for a given level of the index can be extracted as a matrix.
 
 ```{r}
 contrib(ms_epr)
 ```
 
-Aggregating the elemental indexes automatically aggregates quote contributions, so no extra steps are needed after the elemental indexes are made.
+Aggregating the elemental indexes automatically aggregates Percent-change contributions, so no extra steps are needed after the elemental indexes are made.
 
 ## Updating a basket
 

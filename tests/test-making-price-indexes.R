@@ -1,6 +1,4 @@
 ## -----------------------------------------------------------------------------
-options(stringsAsFactors = FALSE)
-
 library(piar)
 
 head(ms_prices)

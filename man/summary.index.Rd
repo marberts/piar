@@ -12,13 +12,17 @@ Summarize an index as a matrix of index values (i.e., the five-number summary fo
 }
 
 \arguments{
-\item{object}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
+\item{object}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
 
 \value{
 A list of five-number summaries.
+}
+
+\note{
+This function is still experimental and may change in the future.
 }
 
 \examples{

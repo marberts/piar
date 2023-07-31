@@ -33,9 +33,9 @@ Aggregate elemental price indexes with a price index aggregation structure, or a
 \details{
 The \code{aggregate()} method aggregates elemental indexes by looping over each time period in \code{x} and
 \enumerate{
-\item aggregates the elemental indexes with \code{\link[=generalized_mean]{generalized_mean(r)}} for each level of \code{pias};
-\item aggregates percent-change contributions for each level of \code{pias} (if there are any);
-\item price updates the weights in \code{pias} with \code{\link[=factor_weights]{factor_weights(r)}} (only for period-over-period elemental indexes, i.e., \code{is_chainable_index(x) == TRUE}).
+\item aggregating the elemental indexes with \code{\link[=generalized_mean]{generalized_mean(r)}} for each level of \code{pias};
+\item aggregating percent-change contributions for each level of \code{pias} (if there are any);
+\item price updating the weights in \code{pias} with \code{\link[=factor_weights]{factor_weights(r)}} (only for period-over-period elemental indexes, i.e., \code{is_chainable_index(x) == TRUE}).
 }
 The result is a collection of aggregated period-over-period indexes that can be chained together to get a fixed-base index when \code{x} are period-over-period elemental indexes. Otherwise, when \code{x} are fixed-base elemental indexes, the result is a collection of aggregated fixed-base (direct) indexes.
 

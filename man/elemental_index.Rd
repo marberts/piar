@@ -78,7 +78,7 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 \seealso{
 \code{\link{price_relative}} for making price relatives for the same products over time, and \code{\link{carry_forward}} and \code{\link{shadow_price}} for imputation of missing prices.
 
-\code{\link[=aggregate.index]{aggregate}} to aggregate elemental indexes accroding to a price index aggregation structure.
+\code{\link[=aggregate.index]{aggregate}} to aggregate elemental indexes according to a price index aggregation structure.
 
 \code{\link{as_index}} to turn pre-computed index values into an index object.
 

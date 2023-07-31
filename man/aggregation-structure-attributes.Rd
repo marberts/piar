@@ -63,4 +63,5 @@ weights(pias)
 # ... or update them
 
 weights(pias) <- 1:3
+weights(pias)
 }

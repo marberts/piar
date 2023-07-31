@@ -73,7 +73,7 @@ pias <- aggregation_structure(
 
 all.equal(
   with(aggregation_weights,
-       aggregation_structure(expand_classification(ea)), weight),
+       aggregation_structure(expand_classification(ea), weight)),
   pias
 )
 }

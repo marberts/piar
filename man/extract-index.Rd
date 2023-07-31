@@ -35,7 +35,7 @@ Methods to extract and replace index values like a matrix.
 
 \item{value}{A numeric vector.}
 
-\item{n}{See \code{\link{head}}.}
+\item{n}{See \code{\link{head}}/\code{\link{tail}}.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
@@ -72,6 +72,5 @@ epr[, 2]
 epr[["a", 2]]
 
 epr[1, ] <- 1 # can be useful for doing specific imputations
-
 epr
 }

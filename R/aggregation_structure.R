@@ -114,3 +114,6 @@ print.aggregation_structure <- function(x, ...) {
   invisible(x)
 }
 
+str.aggregation_structure <- function(object, ...) {
+  str(unclass(object), ...)
+}

@@ -26,6 +26,7 @@ S3method(merge, aggregate_index)
 S3method(merge, chainable_index)
 S3method(merge, direct_index)
 S3method(merge, index)
+
 S3method(stack, aggregate_index)
 S3method(stack, chainable_index)
 S3method(stack, direct_index)
@@ -70,11 +71,15 @@ S3method(as_aggregation_structure, aggregate_index)
 S3method(as_aggregation_structure, aggregation_structure)
 
 S3method(print, aggregation_structure)
+S3method(str, aggregation_structure)
+
 S3method(weights, aggregation_structure)
 S3method("weights<-", aggregation_structure)
 S3method(levels, aggregation_structure)
 S3method("levels<-", aggregation_structure)
+
 S3method(update, aggregation_structure)
+
 S3method(as.matrix, aggregation_structure)
 S3method(as.data.frame, aggregation_structure)
 S3method(as.list, aggregation_structure)

@@ -102,3 +102,4 @@ is_aggregate_index(index)
 all.equal(as_index(as.data.frame(epr)), epr)
 all.equal(as_index(as.matrix(epr)), epr)
 }
+

@@ -18,7 +18,7 @@ print.index_summary <- function(x, ...) {
 }
 
 str.index <- function(object, ...) {
-  str(as.list(object))
+  str(as.list(object), ...)
 }
 
 print.index <- function(x, ...) {

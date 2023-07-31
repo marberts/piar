@@ -9,25 +9,41 @@ reference:
   contents:
   - piar-package
   
+- title: Calculate price indexes
+  desc: Functions to make elemental and aggregated price indexes
+  contents:
+  - elemental_index
+  - as_index
+  - aggregate
+  - summary.index
+  - vcov.aggregate_index
+  
+- title: Manipulate price indexes
+  desc: Helpful functions for working with price indexes
+  contents:
+  - chain
+  - merge.index
+  - stack.index
+  - extract-index
+  - contrib
+  - index-attributes
+  - coerce-index
+ 
+- title: Manipulate prices
+  desc: Helpful functions for working with prices
+  contents:
+  - impute_prices
+  - price_relative
+
 - title: Aggregation structure
   desc: Functions to make and work with price-index aggregation structures
   contents:
   - aggregation_structure
   - expand_classification
-  - pias-methods
-  
-- title: Price indexes
-  desc: Functions to make and work with elemental and aggregated price indexes
-  contents:
-  - price_indexes
- 
-- title: Utilities
-  desc: Helpful functions for working with prices and price indexes
-  contents:
-  - chain
-  - contrib
-  - impute_prices
-  - price_relative
+  - as_aggregation_structure
+  - coerce-aggregation-structure
+  - aggregation-structure-attributes
+  - update.aggregation_structure
   
 - title: Sample data
   contents:
