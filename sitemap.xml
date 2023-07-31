@@ -25,7 +25,7 @@
     <loc>https://marberts/github.io/piar/news/index.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/aggregate.html</loc>
+    <loc>https://marberts/github.io/piar/reference/aggregate.index.html</loc>
   </url>
   <url>
     <loc>https://marberts/github.io/piar/reference/aggregation-structure-attributes.html</loc>
@@ -70,6 +70,9 @@
     <loc>https://marberts/github.io/piar/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://marberts/github.io/piar/reference/mean.index.html</loc>
+  </url>
+  <url>
     <loc>https://marberts/github.io/piar/reference/merge.index.html</loc>
   </url>
   <url>
@@ -91,6 +94,6 @@
     <loc>https://marberts/github.io/piar/reference/update.aggregation_structure.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/vcov.html</loc>
+    <loc>https://marberts/github.io/piar/reference/vcov.aggregate_index.html</loc>
   </url>
 </urlset>
