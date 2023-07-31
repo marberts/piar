@@ -14,7 +14,8 @@ reference:
   contents:
   - elemental_index
   - as_index
-  - aggregate
+  - aggregate.index
+  - mean.index
   - summary.index
   - vcov.aggregate_index
   
@@ -32,7 +33,7 @@ reference:
 - title: Manipulate prices
   desc: Helpful functions for working with prices
   contents:
-  - impute_prices
+  - impute-prices
   - price_relative
 
 - title: Aggregation structure

@@ -1,4 +1,4 @@
-\name{vcov}
+\name{vcov.aggregate_index}
 \alias{vcov.aggregate_index}
 
 \title{Bootstrap variance for a price index with replicate weights}

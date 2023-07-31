@@ -1,4 +1,4 @@
-\name{impute_prices}
+\name{impute-prices}
 \alias{carry_forward}
 \alias{shadow_price}
 

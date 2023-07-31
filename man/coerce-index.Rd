@@ -28,6 +28,10 @@ Turn an index into a matrix with a row for each level and a column for each peri
 \code{as.matrix()} returns a matrix.
 }
 
+\seealso{
+\code{\link{as_index}} to coerce a matrix/data frame of index values into an index object.
+}
+
 \examples{
 prices <- data.frame(
   rel = 1:8,

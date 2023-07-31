@@ -21,7 +21,7 @@ Methods to get the levels and time periods for a price index.
 }
 
 \arguments{
-\item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
