@@ -25,19 +25,52 @@
     <loc>https://marberts/github.io/piar/news/index.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/aggregation-structure.html</loc>
+    <loc>https://marberts/github.io/piar/reference/aggregate.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/aggregation-structure-attributes.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/aggregation_structure.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/as_aggregation_structure.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/as_index.html</loc>
   </url>
   <url>
     <loc>https://marberts/github.io/piar/reference/chain.html</loc>
   </url>
   <url>
+    <loc>https://marberts/github.io/piar/reference/coerce-aggregation-structure.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/coerce-index.html</loc>
+  </url>
+  <url>
     <loc>https://marberts/github.io/piar/reference/contrib.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/elemental_index.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/expand_classification.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/extract-index.html</loc>
   </url>
   <url>
     <loc>https://marberts/github.io/piar/reference/impute-prices.html</loc>
   </url>
   <url>
+    <loc>https://marberts/github.io/piar/reference/index-attributes.html</loc>
+  </url>
+  <url>
     <loc>https://marberts/github.io/piar/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/merge.index.html</loc>
   </url>
   <url>
     <loc>https://marberts/github.io/piar/reference/piar-package.html</loc>
@@ -46,9 +79,18 @@
     <loc>https://marberts/github.io/piar/reference/price-data.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/price-indexes.html</loc>
+    <loc>https://marberts/github.io/piar/reference/price_relative.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/price-relative.html</loc>
+    <loc>https://marberts/github.io/piar/reference/stack.index.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/summary.index.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/update.aggregation_structure.html</loc>
+  </url>
+  <url>
+    <loc>https://marberts/github.io/piar/reference/vcov.html</loc>
   </url>
 </urlset>

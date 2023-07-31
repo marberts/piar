@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,109 @@
         </dt>
         <dd>Price Index Aggregation</dd>
       </dl></div><div class="section level2">
+      <h2 id="calculate-price-indexes">Calculate price indexes<a class="anchor" aria-label="anchor" href="#calculate-price-indexes"></a></h2>
+      
+      <p class="section-desc"></p><p>Functions to make elemental and aggregated price indexes</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="elemental_index.html">elemental_index()</a></code> 
+        </dt>
+        <dd>Make elemental price indexes</dd>
+      </dl><dl><dt>
+          
+          <code><a href="as_index.html">as_index()</a></code> <code><a href="as_index.html">is_index()</a></code> <code><a href="as_index.html">is_chainable_index()</a></code> <code><a href="as_index.html">is_direct_index()</a></code> <code><a href="as_index.html">is_aggregate_index()</a></code> 
+        </dt>
+        <dd>Coerce to a price index</dd>
+      </dl><dl><dt>
+          
+          <code><a href="aggregate.html">aggregate(<i>&lt;index&gt;</i>)</a></code> <code><a href="aggregate.html">mean(<i>&lt;index&gt;</i>)</a></code> 
+        </dt>
+        <dd>Aggregate elemental price indexes</dd>
+      </dl><dl><dt>
+          
+          <code><a href="summary.index.html">summary(<i>&lt;index&gt;</i>)</a></code> 
+        </dt>
+        <dd>Summarize a price index</dd>
+      </dl><dl><dt>
+          
+          <code><a href="vcov.html">vcov(<i>&lt;aggregate_index&gt;</i>)</a></code> 
+        </dt>
+        <dd>Bootstrap variance for a price index with replicate weights</dd>
+      </dl></div><div class="section level2">
+      <h2 id="manipulate-price-indexes">Manipulate price indexes<a class="anchor" aria-label="anchor" href="#manipulate-price-indexes"></a></h2>
+      
+      <p class="section-desc"></p><p>Helpful functions for working with price indexes</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="chain.html">chain()</a></code> <code><a href="chain.html">unchain()</a></code> <code><a href="chain.html">rebase()</a></code> 
+        </dt>
+        <dd>Chain and rebase a price index</dd>
+      </dl><dl><dt>
+          
+          <code><a href="merge.index.html">merge(<i>&lt;index&gt;</i>)</a></code> 
+        </dt>
+        <dd>Merge price indexes</dd>
+      </dl><dl><dt>
+          
+          <code><a href="stack.index.html">stack(<i>&lt;index&gt;</i>)</a></code> <code><a href="stack.index.html">unstack(<i>&lt;index&gt;</i>)</a></code> 
+        </dt>
+        <dd>Stack price indexes</dd>
+      </dl><dl><dt>
+          
+          <code><a href="extract-index.html">`[`(<i>&lt;index&gt;</i>)</a></code> <code><a href="extract-index.html">`[[`(<i>&lt;index&gt;</i>)</a></code> <code><a href="extract-index.html">`[&lt;-`(<i>&lt;index&gt;</i>)</a></code> <code><a href="extract-index.html">`[[&lt;-`(<i>&lt;index&gt;</i>)</a></code> <code><a href="extract-index.html">head(<i>&lt;index&gt;</i>)</a></code> <code><a href="extract-index.html">tail(<i>&lt;index&gt;</i>)</a></code> 
+        </dt>
+        <dd>Extract and replace index values</dd>
+      </dl><dl><dt>
+          
+          <code><a href="contrib.html">contrib()</a></code> 
+        </dt>
+        <dd>Extract percent-change contributions</dd>
+      </dl><dl><dt>
+          
+          <code><a href="index-attributes.html">levels(<i>&lt;index&gt;</i>)</a></code> <code><a href="index-attributes.html">time(<i>&lt;index&gt;</i>)</a></code> <code><a href="index-attributes.html">start(<i>&lt;index&gt;</i>)</a></code> <code><a href="index-attributes.html">end(<i>&lt;index&gt;</i>)</a></code> 
+        </dt>
+        <dd>Get the attributes for a price index</dd>
+      </dl><dl><dt>
+          
+          <code><a href="coerce-index.html">as.matrix(<i>&lt;index&gt;</i>)</a></code> <code><a href="coerce-index.html">as.data.frame(<i>&lt;index&gt;</i>)</a></code> 
+        </dt>
+        <dd>Coerce an index into a tabular form</dd>
+      </dl></div><div class="section level2">
+      <h2 id="manipulate-prices">Manipulate prices<a class="anchor" aria-label="anchor" href="#manipulate-prices"></a></h2>
+      
+      <p class="section-desc"></p><p>Helpful functions for working with prices</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="impute-prices.html">carry_forward()</a></code> <code><a href="impute-prices.html">shadow_price()</a></code> 
+        </dt>
+        <dd>Impute missing prices</dd>
+      </dl><dl><dt>
+          
+          <code><a href="price_relative.html">price_relative()</a></code> 
+        </dt>
+        <dd>Calculate period-over-period price relatives</dd>
+      </dl></div><div class="section level2">
       <h2 id="aggregation-structure">Aggregation structure<a class="anchor" aria-label="anchor" href="#aggregation-structure"></a></h2>
       
       <p class="section-desc"></p><p>Functions to make and work with price-index aggregation structures</p>
@@ -75,56 +178,34 @@
 
       <dl><dt>
           
-          <code><a href="aggregation-structure.html">aggregation_structure()</a></code> <code><a href="aggregation-structure.html">weights(<i>&lt;pias&gt;</i>)</a></code> <code><a href="aggregation-structure.html">update(<i>&lt;pias&gt;</i>)</a></code> <code><a href="aggregation-structure.html">as.matrix(<i>&lt;pias&gt;</i>)</a></code> <code><a href="aggregation-structure.html">as.data.frame(<i>&lt;pias&gt;</i>)</a></code> <code><a href="aggregation-structure.html">expand_classification()</a></code> 
+          <code><a href="aggregation_structure.html">aggregation_structure()</a></code> 
         </dt>
-        <dd>Aggregation structure</dd>
-      </dl></div><div class="section level2">
-      <h2 id="price-indexes">Price indexes<a class="anchor" aria-label="anchor" href="#price-indexes"></a></h2>
-      
-      <p class="section-desc"></p><p>Functions to make and work with elemental and aggregated price indexes</p>
-
-      
-    </div><div id="" class="section level2">
-      
-      
-      
-
-      <dl><dt>
-          
-          <code><a href="price-indexes.html">elemental_index()</a></code> <code><a href="price-indexes.html">aggregate(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">vcov(<i>&lt;agg_ind&gt;</i>)</a></code> <code><a href="price-indexes.html">mean(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">merge(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">stack(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">unstack(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">`[`(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">`[&lt;-`(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">levels(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">time(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">start(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">end(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">head(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">tail(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">as.matrix(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">as.data.frame(<i>&lt;ind&gt;</i>)</a></code> <code><a href="price-indexes.html">as_index()</a></code> <code><a href="price-indexes.html">is_index()</a></code> <code><a href="price-indexes.html">is_aggregate_index()</a></code> 
-        </dt>
-        <dd>Price indexes</dd>
-      </dl></div><div class="section level2">
-      <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a></h2>
-      
-      <p class="section-desc"></p><p>Helpful functions for working with prices and price indexes</p>
-
-      
-    </div><div id="" class="section level2">
-      
-      
-      
-
-      <dl><dt>
-          
-          <code><a href="chain.html">chain()</a></code> <code><a href="chain.html">unchain()</a></code> <code><a href="chain.html">rebase()</a></code> <code><a href="chain.html">is_chainable_index()</a></code> <code><a href="chain.html">is_chain_index()</a></code> 
-        </dt>
-        <dd>Chain and rebase a price index</dd>
+        <dd>Make a price index aggregation structure</dd>
       </dl><dl><dt>
           
-          <code><a href="contrib.html">contrib()</a></code> 
+          <code><a href="expand_classification.html">expand_classification()</a></code> 
         </dt>
-        <dd>Extract quote contributions</dd>
+        <dd>Expand a hierarchical classification</dd>
       </dl><dl><dt>
           
-          <code><a href="impute-prices.html">carry_forward()</a></code> <code><a href="impute-prices.html">shadow_price()</a></code> 
+          <code><a href="as_aggregation_structure.html">as_aggregation_structure()</a></code> <code><a href="as_aggregation_structure.html">is_aggregation_structure()</a></code> 
         </dt>
-        <dd>Impute prices</dd>
+        <dd>Coerce to an aggregation structure</dd>
       </dl><dl><dt>
           
-          <code><a href="price-relative.html">price_relative()</a></code> 
+          <code><a href="coerce-aggregation-structure.html">as.matrix(<i>&lt;aggregation_structure&gt;</i>)</a></code> <code><a href="coerce-aggregation-structure.html">as.data.frame(<i>&lt;aggregation_structure&gt;</i>)</a></code> 
         </dt>
-        <dd>Price relative</dd>
+        <dd>Coerce a price index aggregation structure into a tabular form</dd>
+      </dl><dl><dt>
+          
+          <code><a href="aggregation-structure-attributes.html">weights(<i>&lt;aggregation_structure&gt;</i>)</a></code> <code><a href="aggregation-structure-attributes.html">`weights&lt;-`(<i>&lt;aggregation_structure&gt;</i>)</a></code> <code><a href="aggregation-structure-attributes.html">levels(<i>&lt;aggregation_structure&gt;</i>)</a></code> 
+        </dt>
+        <dd>Methods to get the weights and levels for a price index aggregation structure.</dd>
+      </dl><dl><dt>
+          
+          <code><a href="update.aggregation_structure.html">update(<i>&lt;aggregation_structure&gt;</i>)</a></code> 
+        </dt>
+        <dd>Update a price index aggregation structure</dd>
       </dl></div><div class="section level2">
       <h2 id="sample-data">Sample data<a class="anchor" aria-label="anchor" href="#sample-data"></a></h2>
       

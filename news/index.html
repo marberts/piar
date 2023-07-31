@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +48,36 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.5.0" id="version-050">Version 0.5.0<a class="anchor" aria-label="anchor" href="#version-050"></a></h2>
+<div class="section level3">
+<h3 id="significant-changes-0-5-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-5-0"></a></h3>
+<ul><li><p>Requires <strong>R</strong> &gt;= 4.0.</p></li>
+<li><p><code>is_chain_index()</code> has been removed; use <code><a href="../reference/as_index.html">is_chainable_index()</a></code> instead.</p></li>
+<li><p>The first argument to <code><a href="../reference/elemental_index.html">elemental_index()</a></code> is now <code>x</code>, not <code>rel</code>, to be consistent with the rest of the functions. Similarly, the first argument for <code><a href="../reference/expand_classification.html">expand_classification()</a></code> is now <code>x</code>, not <code>class</code>.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="new-features-0-5-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-5-0"></a></h3>
+<ul><li><p>New functions <code><a href="../reference/as_aggregation_structure.html">as_aggregation_structure()</a></code> and <code><a href="../reference/as_aggregation_structure.html">is_aggregation_structure()</a></code> to coerce (usually) tabular data for aggregation weights into an aggregation structure, and test if an object is an aggregation structure.</p></li>
+<li><p>A method for <code>[[</code> for index objects to extract or replace a single index value.</p></li>
+<li><p>The weights for an aggregation structure can be replace with <code>weights(pias) &lt;- vector</code>.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-0-5-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-5-0"></a></h3>
+<ul><li><p>The <code><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels()</a></code> replacement function now gives an error for indexes and aggregation structures, rather than adding a levels attribute that does nothing.</p></li>
+<li><p>The <code>width</code> argument for <code><a href="../reference/expand_classification.html">expand_classification()</a></code> now recycles a single value.</p></li>
+<li><p>Major overhaul of the documentation should make it easier to use.</p></li>
+<li><p>The object structure used to represent index object has been refined.</p></li>
+<li><p>Subscripting an index object is now much faster.</p></li>
+<li><p>It is now possible to update an aggregation structure with a non-aggregated index.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-5-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-5-0"></a></h3>
+<ul><li><p>Fixed a bug where creating elemental indexes with missing product names could produce a contributions matrix with the wrong number of products.</p></li>
+<li><p>It is now possible to chain an index with only one level.</p></li>
+<li><p>Subscripting an index with <code>NA</code>s or duplicate indices is no longer allowed.</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.0" id="version-040">Version 0.4.0<a class="anchor" aria-label="anchor" href="#version-040"></a></h2><p class="text-muted">CRAN release: 2022-04-30</p>
 <div class="section level3">
 <h3 id="significant-changes-0-4-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-4-0"></a></h3>
@@ -59,16 +89,16 @@
 <h3 id="new-features-0-4-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-4-0"></a></h3>
 <ul><li><p>Added an <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> method for pias objects. This makes it easy to aggregate a price index as a matrix operation; just matrix multiply the aggregation matrix with the elemental indexes.</p></li>
 <li><p>Added an <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> method for pias objects. This is useful for writing price-updated weights with, e.g., <code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv()</a></code>.</p></li>
-<li><p>Added an <code><a href="../reference/price-indexes.html">as_index()</a></code> method for data frames. This is faster and simpler than turning a data frame into an index with <code>elemental_index(df$value, df$period, df$level)</code>.</p></li>
+<li><p>Added an <code><a href="../reference/as_index.html">as_index()</a></code> method for data frames. This is faster and simpler than turning a data frame into an index with <code>elemental_index(df$value, df$period, df$level)</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-0-4-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-4-0"></a></h3>
-<ul><li><p>The <code>chain</code> argument found in some of the methods for <code><a href="../reference/price-indexes.html">elemental_index()</a></code> and <code><a href="../reference/price-indexes.html">as_index()</a></code> to mark an index as chainable has been replaced by the more descriptive <code>chainable</code> argument. Partial matching of argument names means this is backwards compatible.</p></li>
-<li><p>The <code><a href="../reference/price-relative.html">price_relative()</a></code> function no longer uses <code><a href="https://rdrr.io/pkg/gpindex/man/offset-prices.html" class="external-link">gpindex::back_price()</a></code>, as this function is deprecated. This change will remove the harmless deprecation warning when using an older version of piar with a newer version of gpindex.</p></li>
+<ul><li><p>The <code>chain</code> argument found in some of the methods for <code><a href="../reference/elemental_index.html">elemental_index()</a></code> and <code><a href="../reference/as_index.html">as_index()</a></code> to mark an index as chainable has been replaced by the more descriptive <code>chainable</code> argument. Partial matching of argument names means this is backwards compatible.</p></li>
+<li><p>The <code><a href="../reference/price_relative.html">price_relative()</a></code> function no longer uses <code>gpindex::back_price()</code>, as this function is deprecated. This change will remove the harmless deprecation warning when using an older version of piar with a newer version of gpindex.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="deprecated-functions-0-4-0">Deprecated functions<a class="anchor" aria-label="anchor" href="#deprecated-functions-0-4-0"></a></h3>
-<ul><li>The <code><a href="../reference/chain.html">is_chain_index()</a></code> function is now deprecated, and replaced with the <code><a href="../reference/chain.html">is_chainable_index()</a></code> function.</li>
+<ul><li>The <code>is_chain_index()</code> function is now deprecated, and replaced with the <code><a href="../reference/as_index.html">is_chainable_index()</a></code> function.</li>
 </ul></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

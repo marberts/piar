@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,15 +59,21 @@
 <span><span class="co"># S3 method for default</span></span>
 <span><span class="fu">chain</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for ind</span></span>
+<span><span class="co"># S3 method for chainable_index</span></span>
 <span><span class="fu">chain</span><span class="op">(</span><span class="va">x</span>, link <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nlevels.html" class="external-link">nlevels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># S3 method for direct_index</span></span>
+<span><span class="fu">chain</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">unchain</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for default</span></span>
 <span><span class="fu">unchain</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for ind</span></span>
+<span><span class="co"># S3 method for direct_index</span></span>
+<span><span class="fu">unchain</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for chainable_index</span></span>
 <span><span class="fu">unchain</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">rebase</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -75,18 +81,17 @@
 <span><span class="co"># S3 method for default</span></span>
 <span><span class="fu">rebase</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for ind</span></span>
+<span><span class="co"># S3 method for direct_index</span></span>
 <span><span class="fu">rebase</span><span class="op">(</span><span class="va">x</span>, base <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nlevels.html" class="external-link">nlevels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">is_chainable_index</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">is_chain_index</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="co"># deprecated</span></span></code></pre></div>
+<span><span class="co"># S3 method for chainable_index</span></span>
+<span><span class="fu">rebase</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>A price index, as made by, e.g., <code><a href="price-indexes.html">elemental_index()</a></code>.</p></dd>
+<dd><p>A price index, as made by, e.g., <code><a href="elemental_index.html">elemental_index()</a></code>.</p></dd>
 
 
 <dt>link</dt>
@@ -103,29 +108,29 @@
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The default methods attempts to coerce <code>x</code> into an index with <code><a href="price-indexes.html">as_index()</a></code> prior to chaining/unchaining/rebasing.</p>
+    <p>The default methods attempts to coerce <code>x</code> into an index with <code><a href="as_index.html">as_index()</a></code> prior to chaining/unchaining/rebasing.</p>
 <p>Chaining an index takes the cumulative product of the index values for each level; this is roughly the same as <code>t(apply(as.matrix(x), 1, cumprod)) * link</code>. Unchaining does the opposite, so these are inverse operations. Note that unchaining a period-over-period index (i.e., when <code>is_chainable_index(x) == TRUE</code>) does nothing, as does chaining a fixed-base index (i.e., when <code>is_chainable_index(x) == FALSE</code>).</p>
 <p>Rebasing a fixed-base index divides the values for each level of this index by the corresponding values for each level in the new base period. It's roughly the same as <code>as.matrix(x) / base</code>. Like unchaining, rebasing a period-over-period index does nothing.</p>
-<p>Quote contributions are removed when chaining/unchaining/rebasing an index, as it's not usually possible to update them correctly.</p>
+<p>Percent-change contributions are removed when chaining/unchaining/rebasing an index, as it's not usually possible to update them correctly.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>Each of these functions returns an index of the same type as <code>x</code>, except <code>is_chainable_index()</code> which returns <code>TRUE</code> when <code>x</code> is a period-over-period index (so that chaining makes sense).</p>
-    </div>
-    <div class="section level2">
-    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="price-indexes.html">elemental_index</a></code> for making elemental price indexes.</p></div>
+<p><code>chain()</code> and <code>rebase()</code> return an index that inherits from <code>direct_index</code>, and <code>unchain()</code> returns an index that inherits from <code>chainable_index</code>.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">prices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>rel <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, ea <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">prices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  rel <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>,</span></span>
+<span class="r-in"><span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  ea <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># A simple period-over-period elemental index</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">(</span><span class="va">epr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">prices</span>, <span class="fu"><a href="price-indexes.html">elemental_index</a></span><span class="op">(</span><span class="va">rel</span>, <span class="va">period</span>, <span class="va">ea</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">epr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">prices</span>, <span class="fu"><a href="elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">rel</span>, <span class="va">period</span>, <span class="va">ea</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          1        2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a 1.732051 5.916080</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> b 2.828427 6.928203</span>
@@ -142,7 +147,8 @@
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">epr</span>, <span class="fu">unchain</span><span class="op">(</span><span class="fu">chain</span><span class="op">(</span><span class="va">epr</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Change the base period to period 2 (note the loss of information for period 0)</span></span></span>
+<span class="r-in"><span><span class="co"># Change the base period to period 2 (note the</span></span></span>
+<span class="r-in"><span><span class="co"># loss of information for period 0)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">epr</span> <span class="op">&lt;-</span> <span class="fu">chain</span><span class="op">(</span><span class="va">epr</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">rebase</span><span class="op">(</span><span class="va">epr</span>, <span class="va">epr</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
