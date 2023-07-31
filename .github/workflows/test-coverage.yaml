@@ -25,6 +25,12 @@ jobs:
         with:
           extra-packages: any::covr
           needs: coverage
+          
+      - names: install gpindex
+        run: |
+          install.packages("remotes")
+          remotes::install_github("marberts/gpindex")
+        shell: Rscript {0}
 
       - name: Test coverage
         run: |
