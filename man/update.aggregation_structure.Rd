@@ -22,7 +22,7 @@ Price update the weights in a price index aggregation structure.
 \arguments{
 \item{object}{A price index aggregation structure, as made by \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{index}{A price index, usually an aggregate price index as made by \code{\link[=aggregate.index]{aggregate()}}.}
+\item{index}{A price index, or something that can be coerced into one. Usually an aggregate price index as made by \code{\link[=aggregate.index]{aggregate()}}.}
 
 \item{period}{The time period used to price update the weights. The default uses the last period in \code{index}.}
 

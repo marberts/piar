@@ -70,7 +70,7 @@ test_that("Fisher calculation agrees with manual calculation", {
 
 test_that("contributions add up", {
   sum_contrib <- \(x, ...) sum(x, ...) / (sum(!is.na(x)) > 0)
-  expect_equal(epr1$index, 
+  expect_equal(epr1$index,
                lapply(epr1$contrib, \(x) sapply(x, sum_contrib) + 1))
 
   expect_equal(

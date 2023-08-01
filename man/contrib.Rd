@@ -7,7 +7,7 @@ Extract percent-change contributions
 }
 
 \description{
-Extract percent-change contributions from an index object.
+Extract percent-change contributions from a price index.
 }
 
 \usage{

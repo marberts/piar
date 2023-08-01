@@ -6,7 +6,7 @@ weights.aggregation_structure <- function(object,
   }
   res <- vector("list", object$height)
   res[[1L]] <- object$weights
-  
+
   for (i in seq_along(res)[-1L]) {
     res[[i]] <- vapply(object$child[[i - 1L]],
                        \(z) sum(res[[i - 1L]][z], na.rm = na.rm),

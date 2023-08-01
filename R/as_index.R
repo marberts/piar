@@ -18,7 +18,7 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
 
   index <- contrib <- vector("list", length(periods))
   names(index) <- names(contrib) <- periods
-  
+
   contrib[] <- empty_contrib(levels)
   for (t in seq_along(periods)) {
     # EA names are not kept for matrices with 1 row

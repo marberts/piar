@@ -40,3 +40,8 @@ test_that("merge returns the correct result", {
           matrix(1:8, 4, 2, dimnames = list(letters[1:4], 1:2)))
   )
 })
+
+test_that("coercion works as expected", {
+  expect_equal(merge(epr1, epr2), merge(epr1, chain(epr2)))
+  expect_equal(merge(chain(epr1), epr2), merge(chain(epr1), chain(epr2)))
+})

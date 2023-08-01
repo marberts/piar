@@ -1,11 +1,11 @@
 epr1 <- with(
-  ms_prices, 
+  ms_prices,
   elemental_index(price_relative(price, period, product),
                   period, business, contrib = TRUE, na.rm = TRUE)
 )
 
 epr2 <- with(
-  ms_prices, 
+  ms_prices,
   elemental_index(price_relative(price, period, product),
                   period, business, na.rm = TRUE)
 )

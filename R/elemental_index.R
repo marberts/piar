@@ -47,7 +47,8 @@ validate_contrib <- function(x) {
   if (!identical(x$time, names(x$contrib))) {
     stop("missing contributions for each time period")
   }
-  if (any(vapply(x$contrib, \(z) !identical(x$levels, names(z)), logical(1L)))) {
+  if (any(vapply(x$contrib,
+                 \(z) !identical(x$levels, names(z)), logical(1L)))) {
     stop("missing contributions for each level")
   }
   invisible(x)
@@ -104,7 +105,7 @@ elemental_index.numeric <- function(x,
   ea <- split(ea, period)
   x <- Map(split, split(x, period), ea)
   if (is.null(w)) {
-    w <- list(list(NULL)) 
+    w <- list(list(NULL))
   } else {
     w <- Map(split, split(as.numeric(w), period), ea)
   }

@@ -10,7 +10,7 @@ shadow_price <- function(x, period, product, ea,
   if (nlevels(period) == 0L) {
     return(rep.int(NA_integer_, length(period)))
   }
-  
+
   res <- split(x, period)
   product <- as.factor(product)
   attributes(product) <- NULL
@@ -23,6 +23,9 @@ shadow_price <- function(x, period, product, ea,
     w <- rep.int(list(NULL), nlevels(period))
   } else {
     w <- split(as.numeric(w), period)
+  }
+  if (!is.null(pias)) {
+    pias <- as_aggregation_structure(pias)
   }
   for (t in seq_along(res)[-1L]) {
     # calculate relatives
@@ -55,7 +58,7 @@ carry_forward <- function(x, period, product) {
   if (nlevels(period) == 0L) {
     return(rep.int(NA_integer_, length(period)))
   }
-  
+
   res <- split(x, period)
   product <- as.factor(product)
   attributes(product) <- NULL

@@ -5,9 +5,9 @@
 \title{Stack price indexes}
 
 \description{
-\code{stack()} combines two index objects with common levels, stacking index values and percent-change contributions for one index after the other.
+\code{stack()} combines two price indexes with common levels, stacking index values and percent-change contributions for one index after the other.
 
-\code{unstack()} breaks up an index into a list of indexes for each time period. 
+\code{unstack()} breaks up a price index into a list of indexes for each time period. 
 
 These methods can be used in a map-reduce to make an index with multiple aggregation structures (like a Paasche index).
 }
@@ -19,15 +19,17 @@ These methods can be used in a map-reduce to make an index with multiple aggrega
 }
 
 \arguments{
-\item{x, y}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+
+\item{y}{A price index, or something that can coerced into one. If \code{x} is a period-over-period index then \code{y} is coerce into a chainable index; otherwise, \code{y} is coerced into a direct index.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
 
 \value{
-\code{stack()} returns an index object. If at least one of \code{x} or \code{y} is an aggregate index then the result of stacking these indexes is also an aggregate index; otherwise, it is the same class as \code{x}.
+\code{stack()} returns a price index with the same class as \code{x}. If \code{y} is an aggregate index then the result will also inherit from \code{aggregate_index}.
 
-\code{unstack()} returns a list of index objects.
+\code{unstack()} returns a list of price indexes with the same class as \code{x}.
 }
 
 \seealso{

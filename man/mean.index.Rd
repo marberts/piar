@@ -32,7 +32,7 @@ An optional vector of weights can be specified when aggregating index values ove
 }
 
 \value{
-An index of the same type as \code{x}.
+A price index with the same class as \code{x}.
 }
 
 \references{

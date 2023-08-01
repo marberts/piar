@@ -710,7 +710,7 @@ b 2.828427 6.928203
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: mean.index
-> ### Title: Aggregate a price indexe over subperiods
+> ### Title: Aggregate a price index over subperiods
 > ### Aliases: mean.index
 > 
 > ### ** Examples

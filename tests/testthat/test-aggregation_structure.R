@@ -11,10 +11,10 @@ test_that("reordering works", {
   index1 <- aggregate(epr, agg1)
   index2 <- aggregate(epr, agg2)
   expect_equal(as.matrix(index1[levels(index2)]), as.matrix(index2))
-  
+
   f <- factor(x2, levels = c("11", "21", "12", "99"))
   expect_equal(agg2, aggregation_structure(list(x1, f, x3), 1:4))
-  
+
   f <- factor(replace(x2, 2, NA), levels = c("11", "21", "12"))
   expect_error(aggregation_structure(list(x1, addNA(f), x3), 1:4))
 })

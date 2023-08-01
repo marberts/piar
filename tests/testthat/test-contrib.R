@@ -38,7 +38,7 @@ test_that("product names are correct", {
     matrix(c(0, 1 / 3, 2 / 3, 0, 1.5, 0, 0, 2), 4, 2,
            dimnames = list(c("a", "b", "c", "a.1"), 1:2))
   )
-  
+
   w <- setNames(rep(1, 9), letters[1:9])
   expect_equal(
     contrib(epr),

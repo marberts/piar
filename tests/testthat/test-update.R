@@ -7,7 +7,7 @@ test_that("updating with a length-0 index makes the weights NA", {
   epr <- elemental_index(integer(0))
   index <- aggregate(epr, agg)
   expect_equal(update(agg, index)[-5], agg[-5])
-  
+
   expect_equal(weights(update(agg, index)),
                list(c("1" = NA_real_, "2" = NA),
                     c("11" = NA_real_, "12" = NA, "21" = NA),
@@ -26,7 +26,7 @@ test_that("an index that doesn't line up with the pias introduces NA", {
                     c("11" = NA_real_, "12" = 1, "21" = NA),
                     c("111" = 1, "211" = NA, "121" = 1, "112" = NA)))
 })
-  
+
 test_that("updating works with only EAs", {
   # This used to not work
   epr <- elemental_index(1:2, ea = c("111", "121"))

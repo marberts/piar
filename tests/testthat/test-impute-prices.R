@@ -1,6 +1,7 @@
 pias <- with(
-  ms_weights, 
-  aggregation_structure(c(expand_classification(classification), list(business)),
+  ms_weights,
+  aggregation_structure(c(expand_classification(classification),
+                          list(business)),
                         weight)
 )
 
@@ -16,40 +17,40 @@ test_that("a length 0 inputs returns a length 0 output", {
 
 test_that("imputing shadow prices does noting", {
   expect_equal(
-    sp, 
+    sp,
     with(ms_prices, shadow_price(sp, period, product, business, pias))
   )
 })
 
 test_that("sp imputation is the same are regular parental in periods 1, 2", {
   epr <- with(
-    ms_prices, 
+    ms_prices,
     elemental_index(price_relative(price, period, product), period, business,
                     na.rm = TRUE)
   )
-  
+
   epr2 <- with(
-    ms_prices, 
+    ms_prices,
     elemental_index(price_relative(sp, period, product), period, business,
                     na.rm = TRUE)
   )
-  
+
   # B2 is imputed from above the EA level
-  expect_equal(epr[c(1, 3:4), 1:3], epr2[c(1, 3:4), 1:3]) 
-  
-  expect_equal(aggregate(epr, pias, na.rm = TRUE)[, 1:2], 
+  expect_equal(epr[c(1, 3:4), 1:3], epr2[c(1, 3:4), 1:3])
+
+  expect_equal(aggregate(epr, pias, na.rm = TRUE)[, 1:2],
                aggregate(epr2, pias, na.rm = TRUE)[, 1:2])
 })
 
 test_that("imputing with an improper pias does nothing", {
   # Append a '1' to each business label to make a garbage pias
   pias2 <- with(
-    ms_weights, 
+    ms_weights,
     aggregation_structure(c(expand_classification(classification),
-                            list(paste0(business, 1))), 
+                            list(paste0(business, 1))),
                           weight)
   )
-  
+
   expect_equal(
     ms_prices$price,
     with(ms_prices, shadow_price(price, period, product, business, pias2))

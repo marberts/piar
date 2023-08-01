@@ -61,12 +61,15 @@ Indexes based on nested generalized means, like the Fisher index (and superlativ
 }
 
 \value{
-An index object of class \code{chainable_index} if \code{chainable == TRUE}, or \code{direct_index} if \code{chainable == FALSE}, inheriting from class \code{index}. These often behaves like a matrix with a row for each level of the index and a column for each time period, and have the following components.
+A price index. This is an object that inherits from \code{index} with the following components.
 
 \item{index}{A named list with an entry for each \code{period} that gives a named vector of index values for each level in \code{ea}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}
 \item{levels}{The levels for \code{ea}.}
 \item{time}{The levels for \code{period}.}
+
+
+If \code{chainable == TRUE} then this is a period-over-period index that also inherits from \code{chainable_index}; otherwise, it is a fixed-based index that inherits from \code{direct_index}.
 }
 
 \references{

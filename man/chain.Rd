@@ -67,7 +67,9 @@ Percent-change contributions are removed when chaining/unchaining/rebasing an in
 }
 
 \value{
-\code{chain()} and \code{rebase()} return an index that inherits from \code{direct_index}, and \code{unchain()} returns an index that inherits from \code{chainable_index}.
+\code{chain()} and \code{rebase()} return a fixed-base index (i.e., inherits from \code{direct_index}).
+
+\code{unchain()} returns a period-over-period index (i.e., inherits from \code{chainable_index}).
 }
 
 \examples{

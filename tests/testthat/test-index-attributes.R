@@ -14,10 +14,10 @@ res <- c(1.41421356237309, 3.46410161513775, 5, NaN,
          6.48074069840786, NaN, NaN, 8)
 
 test_that("getter methods work", {
-  expect_equal(levels(epr), as.character(11:14))
-  expect_equal(time(epr), as.character(1:2))
-  expect_equal(start(epr), "1")
-  expect_equal(end(epr), "2")
+  expect_identical(levels(epr), as.character(11:14))
+  expect_identical(time(epr), as.character(1:2))
+  expect_identical(start(epr), "1")
+  expect_identical(end(epr), "2")
 })
 
 test_that("levels can't be replaced", {

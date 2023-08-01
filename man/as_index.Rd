@@ -57,7 +57,7 @@ If \code{x} is a period-over-period index then it is returned unchanged when \co
 }
 
 \value{
-\code{as_index()} returns an object of class \code{chainable_index} if \code{chainable == TRUE}, or \code{direct_index} if \code{chainable == FALSE}, inheriting from class \code{index}.
+\code{as_index()} returns a price index that inherits from \code{index}. If \code{chainable == TRUE} then this is a period-over-period price index that also inherits from \code{chainable_index}; otherwise, it is a fixed-base index that inherits from \code{direct_index}.
 
 \code{is_index()} returns \code{TRUE} if \code{x} inherits from \code{index}.
 

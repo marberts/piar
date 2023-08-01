@@ -20,7 +20,9 @@ test_that("stack returns the correct type of index", {
 
 test_that("stacking and unstacking are opposite operations", {
   expect_equal(epr1, Reduce(stack, unstack(epr1)))
+  expect_equal(chain(epr1), Reduce(stack, unstack(chain(epr1))))
   expect_equal(index2, Reduce(stack, unstack(index2)))
+  expect_equal(chain(index2), Reduce(stack, unstack(chain(index2))))
 })
 
 test_that("stacking returns the correct result", {
@@ -33,4 +35,9 @@ test_that("stacking returns the correct result", {
                matrix(c(0, 4, 0, 0), 1, 4, dimnames = list(1, 1:4)))
   expect_equal(as.matrix(stack(epr2, epr1)),
                matrix(1:8, 4, 4, dimnames = list(letters[1:4], c(3:4, 1:2))))
+})
+
+test_that("coercion works as expected", {
+  expect_equal(stack(epr1, epr2), stack(epr1, chain(epr2)))
+  expect_equal(stack(chain(epr1), chain(epr2)), stack(chain(epr1), chain(epr2)))
 })

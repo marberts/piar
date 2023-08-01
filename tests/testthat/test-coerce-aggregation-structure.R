@@ -20,14 +20,14 @@ test_that("coercion methods works", {
   )
   expect_equal(agg, as_aggregation_structure(as.data.frame(agg)))
   expect_equal(as.list(agg), list(x1, x2, x3))
-  
+
   expect_equal(as.matrix(aggregation_structure(1:3, 2)),
                matrix(c(1, 1), 2, 1, dimnames = list(c("1", "2"), "3")))
   expect_equal(as.data.frame(aggregation_structure(1:3, 2)),
                data.frame(level1 = "1", level2 = "2", ea = "3", weight = 2))
   expect_equal(as.list(aggregation_structure(1:3, 2)),
                as.list(as.character(1:3)))
-  
+
   expect_equal(
     as.matrix(aggregation_structure(list(letters[c(2, 1, 3)]), 1:3)),
     matrix(numeric(0), 0, 3, dimnames = list(character(0), c("b", "a", "c")))

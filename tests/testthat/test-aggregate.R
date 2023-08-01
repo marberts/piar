@@ -252,6 +252,9 @@ test_that("a fixed-based index aggregates correctly", {
                aggregate(epr_fx, pias, r = 3))
 })
 
-test_that("cannot aggregate without a pias", {
-  expect_error(aggregate(as_index(1:5), mtcars))
+test_that("corner cases work", {
+  expect_equal(as.matrix(aggregate(as_index(1:5), list(1:5))),
+               matrix(1:5, 5, dimnames = list(1:5, 1)))
+  expect_equal(as.matrix(aggregate(as_index(1:5), 6)),
+               matrix(NA_real_, dimnames = list(6, 1)))
 })

@@ -32,7 +32,7 @@ shadow_price(
 
 \item{ea}{A factor, or something that can be coerced into one, giving the elemental aggregate associated with each price in \code{x}.}
 
-\item{pias}{A price index aggregation structure, as made with \code{\link[=aggregation_structure]{aggregation_structure()}}. The default imputes from elemental indexes only (i.e., not recursively).}
+\item{pias}{A price index aggregation structure, or something that can be coerced into one, as made with \code{\link[=aggregation_structure]{aggregation_structure()}}. The default imputes from elemental indexes only (i.e., not recursively).}
 
 \item{w}{A numeric vector of weights for the prices in \code{x} (i.e., product weights). The default is to give each price equal weight.}
 

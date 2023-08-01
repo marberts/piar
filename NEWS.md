@@ -2,7 +2,7 @@
 
 ## Significant changes
 
-- Requires **R** >= 4.0.
+- `piar` now requires **R** >= 4.0.
 
 - `is_chain_index()` has been removed; use `is_chainable_index()` instead.
 
@@ -29,6 +29,8 @@
 - Subscripting an index object is now much faster.
 
 - It is now possible to update an aggregation structure with a non-aggregated index.
+
+- Functions that accept a price index or an aggregation structure as an argument now attempt to coerce these arguments into an index object or aggregation structure object instead of throwing an error.
 
 ## Bug fixes
 

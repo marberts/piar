@@ -20,12 +20,12 @@ test_that("as_index makes a valid index", {
   expect_error(as_index(matrix(1:2, 1, dimnames = list(1, c(NA, 2)))))
 })
 
-test_that("as_index works work matrices", {
+test_that("as_index works with matrices", {
   expect_equal(as_index(as.matrix(epr)), epr2)
   mat <- as.matrix(epr)
   mat[] <- as.character(mat)
   expect_equal(as_index(mat), epr2)
-  expect_equal(as_index(as.matrix(chain(epr)), chain = FALSE), chain(epr))
+  expect_equal(as_index(as.matrix(chain(epr)), chainable = FALSE), chain(epr))
 })
 
 test_that("as_index works for data frames", {

@@ -14,7 +14,7 @@ Aggregate elemental price indexes with a price index aggregation structure.
 \arguments{
 \item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
 
-\item{pias}{A price index aggregation structure. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
+\item{pias}{A price index aggregation structure or something that can be coerced into one. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean imputation.}
 
@@ -42,13 +42,13 @@ There may not be contributions for all prices relatives in an elemental aggregat
 }
 
 \value{
-An aggregate index. This is an object of class \code{aggregate_index}, inheriting from the class of \code{x}, which has the following components.
+An aggregate price index. This is an object that inherits from \code{aggregate_index} and the class of \code{x}, with the following components.
 
 \item{index}{A named list with an entry for each \code{period} in \code{x} that gives a named vector of index values for each level in \code{pias}.}
 \item{contrib}{A named list with an entry for each \code{period}, which itself contains a list with an entry for each level in \code{pias} with a named vector that gives the additive contribution for each price relative.}
 \item{levels}{The levels for \code{pias}.}
 \item{time}{The levels for \code{period} from \code{x}.}
-\item{r}{The value for \code{r}, usually \code{1}.}
+\item{r}{The value for \code{r}.}
 \item{pias}{A list containing the \code{child}, \code{parent}, \code{eas}, and \code{height} components of \code{pias}.}
 }
 
