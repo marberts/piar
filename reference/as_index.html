@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9014</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,7 +108,7 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p><code>as_index()</code> returns an object of class <code>chainable_index</code> if <code>chainable == TRUE</code>, or <code>direct_index</code> if <code>chainable == FALSE</code>, inheriting from class <code>index</code>.</p>
+<p><code>as_index()</code> returns a price index that inherits from <code>index</code>. If <code>chainable == TRUE</code> then this is a period-over-period price index that also inherits from <code>chainable_index</code>; otherwise, it is a fixed-base index that inherits from <code>direct_index</code>.</p>
 
 
 <p><code>is_index()</code> returns <code>TRUE</code> if <code>x</code> inherits from <code>index</code>.</p>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9014</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,7 +123,7 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>An index object of class <code>chainable_index</code> if <code>chainable == TRUE</code>, or <code>direct_index</code> if <code>chainable == FALSE</code>, inheriting from class <code>index</code>. These often behaves like a matrix with a row for each level of the index and a column for each time period, and have the following components.</p>
+<p>A price index. This is an object that inherits from <code>index</code> with the following components.</p>
 <dl><dt>index</dt>
 <dd><p>A named list with an entry for each <code>period</code> that gives a named vector of index values for each level in <code>ea</code>.</p></dd>
 
@@ -136,7 +136,10 @@
 <dt>time</dt>
 <dd><p>The levels for <code>period</code>.</p></dd>
 
-</dl></div>
+
+
+</dl><p>If <code>chainable == TRUE</code> then this is a period-over-period index that also inherits from <code>chainable_index</code>; otherwise, it is a fixed-based index that inherits from <code>direct_index</code>.</p>
+    </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Balk, B. M. (2008). <em>Price and Quantity Index Numbers</em>. Cambridge University Press.</p>

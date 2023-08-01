@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9014</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,7 @@
 
 
 <dt>pias</dt>
-<dd><p>A price index aggregation structure. This can be made with <code><a href="aggregation_structure.html">aggregation_structure()</a></code>.</p></dd>
+<dd><p>A price index aggregation structure or something that can be coerced into one. This can be made with <code><a href="aggregation_structure.html">aggregation_structure()</a></code>.</p></dd>
 
 
 <dt>na.rm</dt>
@@ -95,7 +95,7 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>An aggregate index. This is an object of class <code>aggregate_index</code>, inheriting from the class of <code>x</code>, which has the following components.</p>
+<p>An aggregate price index. This is an object that inherits from <code>aggregate_index</code> and the class of <code>x</code>, with the following components.</p>
 <dl><dt>index</dt>
 <dd><p>A named list with an entry for each <code>period</code> in <code>x</code> that gives a named vector of index values for each level in <code>pias</code>.</p></dd>
 
@@ -109,7 +109,7 @@
 <dd><p>The levels for <code>period</code> from <code>x</code>.</p></dd>
 
 <dt>r</dt>
-<dd><p>The value for <code>r</code>, usually <code>1</code>.</p></dd>
+<dd><p>The value for <code>r</code>.</p></dd>
 
 <dt>pias</dt>
 <dd><p>A list containing the <code>child</code>, <code>parent</code>, <code>eas</code>, and <code>height</code> components of <code>pias</code>.</p></dd>

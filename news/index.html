@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9014</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,7 @@
 <h2 class="pkg-version" data-toc-text="0.5.0" id="version-050">Version 0.5.0<a class="anchor" aria-label="anchor" href="#version-050"></a></h2>
 <div class="section level3">
 <h3 id="significant-changes-0-5-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-5-0"></a></h3>
-<ul><li><p>Requires <strong>R</strong> &gt;= 4.0.</p></li>
+<ul><li><p><code>piar</code> now requires <strong>R</strong> &gt;= 4.0.</p></li>
 <li><p><code>is_chain_index()</code> has been removed; use <code><a href="../reference/as_index.html">is_chainable_index()</a></code> instead.</p></li>
 <li><p>The first argument to <code><a href="../reference/elemental_index.html">elemental_index()</a></code> is now <code>x</code>, not <code>rel</code>, to be consistent with the rest of the functions. Similarly, the first argument for <code><a href="../reference/expand_classification.html">expand_classification()</a></code> is now <code>x</code>, not <code>class</code>.</p></li>
 </ul></div>
@@ -69,6 +69,7 @@
 <li><p>The object structure used to represent index object has been refined.</p></li>
 <li><p>Subscripting an index object is now much faster.</p></li>
 <li><p>It is now possible to update an aggregation structure with a non-aggregated index.</p></li>
+<li><p>Functions that accept a price index or an aggregation structure as an argument now attempt to coerce these arguments into an index object or aggregation structure object instead of throwing an error.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-5-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-5-0"></a></h3>
