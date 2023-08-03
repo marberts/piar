@@ -14,7 +14,7 @@ Suggests:
     testthat (>= 3.0.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
-URL: https://marberts.github.io/piar, https://github.com/marberts/piar
+URL: https://marberts.github.io/piar/, https://github.com/marberts/piar
 BugReports: https://github.com/marberts/piar/issues
 LazyData: true
 VignetteBuilder: knitr

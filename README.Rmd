@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/piar)](https://cran.r-project.org/package=piar)
+[![piar status badge](https://marberts.r-universe.dev/badges/piar)](https://marberts.r-universe.dev)
 [![R-CMD-check](https://github.com/marberts/piar/workflows/R-CMD-check/badge.svg)](https://github.com/marberts/piar/actions)
 [![codecov](https://codecov.io/gh/marberts/piar/branch/master/graph/badge.svg?token=lHDHsGHsLd)](https://app.codecov.io/gh/marberts/piar)
 <!-- badges: end -->

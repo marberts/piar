@@ -1,5 +1,6 @@
 summary.index <- function(object, ...) {
-  res <- structure(vector("list", 2L), names = c("index", "contrib"))
+  res <- vector("list", 2L)
+  names(res) <- c("index", "contrib")
   res$index <- summary.data.frame(object$index, ...)
   res$contrib <- if (has_contrib(object)) {
     summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)

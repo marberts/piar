@@ -13,12 +13,14 @@ mean.index <- function(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...) {
   # get the starting location for each window
   loc <- seq.int(1L, by = window, length.out = len)
   periods <- x$time[loc]
-  res <- contrib <- structure(vector("list", len), names = periods)
+  res <- contrib <- vector("list", len)
+  names(res) <- names(contrib) <- periods
   # loop over each window and calculate the mean for each level
   for (i in seq_along(loc)) {
     j <- seq(loc[i], length.out = window)
-    # structure() is needed because .mapply doesn't keep names
-    index <- structure(.mapply(c, x$index[j], list()), names = x$levels)
+    index <- .mapply(c, x$index[j], list())
+    # .mapply doesn't keep names
+    names(index) <- x$levels
     weight <- if (is.null(w)) list(NULL) else .mapply(c, w[j], list())
     res[[i]] <- gen_mean(index, weight, na.rm = na.rm)
   }
