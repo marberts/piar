@@ -36,7 +36,9 @@ dim_indices <- function(x, i) {
   for (t in periods) {
     x$index[[t]][levels] <- res[levels, t]
     # drop contributions for replaced values
-    x$contrib[[t]][levels] <- list(numeric(0L))
+    x$contrib[[t]][levels] <- list(
+      structure(numeric(0L), names = character(0L))
+    )
   }
   x
 }
@@ -54,7 +56,7 @@ dim_indices <- function(x, i) {
   period <- x$time[[j]]
 
   x$index[[period]][[level]] <- as.numeric(value)
-  x$contrib[[period]][[level]] <- numeric(0L)
+  x$contrib[[period]][[level]] <- structure(numeric(0L), names = character(0L))
 
   x
 }

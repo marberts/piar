@@ -28,7 +28,7 @@ nested_names <- function(x) {
 }
 
 empty_contrib <- function(x) {
-  res <- rep.int(list(numeric(0L)), length(x))
+  res <- rep.int(list(structure(numeric(0L), names = character(0L))), length(x))
   names(res) <- x
   list(res)
 }
