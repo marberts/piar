@@ -28,11 +28,25 @@ nested_names <- function(x) {
 }
 
 empty_contrib <- function(x) {
-  res <- rep.int(list(structure(numeric(0L), names = character(0L))), length(x))
+  res <- rep.int(list(numeric(0L)), length(x))
   names(res) <- x
   list(res)
 }
 
 has_contrib <- function(x) {
   Position(\(x) any(lengths(x) > 0L), x$contrib, nomatch = 0L) > 0L
+}
+
+index_skeleton <- function(levels, time) {
+  index <- rep.int(NA_real_, length(levels))
+  names(index) <- levels
+  res <- rep.int(list(index), length(time))
+  names(res) <- time
+  res
+}
+
+contrib_skeleton <- function(levels, time) {
+  res <- rep.int(empty_contrib(levels), length(time))
+  names(res) <- time
+  res
 }

@@ -37,9 +37,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
     con[[1L]] <- x$contrib[[t]][pias$eas]
     names(rel[[1L]]) <- names(con[[1L]]) <- pias$eas
     # get rid of any NULL contributions
-    con[[1L]][lengths(con[[1L]]) == 0L] <- list(
-      structure(numeric(0L), names = character(0L))
-    )
+    con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
       rel[[i]] <- vapply(
@@ -56,9 +54,7 @@ aggregate.index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
           }
         )
       } else {
-        con[[i]] <- lapply(pias$child[[i - 1L]], \(z) {
-          structure(numeric(0L), names = character(0L))
-        })
+        con[[i]] <- lapply(pias$child[[i - 1L]], \(z) numeric(0L))
       }
 
     }
