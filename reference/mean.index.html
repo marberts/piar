@@ -86,7 +86,7 @@
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> method constructs a set of windows of length <code>window</code>, starting in the first period of the index, and takes the mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over <code>window</code> periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that percent-change contributions are discarded when aggregating over subperiods.</p>
+    <p>The <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> method constructs a set of non-overlapping windows of length <code>window</code>, starting in the first period of the index, and takes the mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over <code>window</code> periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that percent-change contributions are discarded when aggregating over subperiods.</p>
 <p>An optional vector of weights can be specified when aggregating index values over subperiods, which is often useful when aggregating a Paasche index; see section 4.3 of Balk (2008) for details.</p>
     </div>
     <div class="section level2">
