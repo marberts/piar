@@ -15,7 +15,10 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
   periods <- as.character(
     if (is.null(colnames(x))) seq_len(ncol(x)) else colnames(x)
   )
-
+  if (any(x <= 0, na.rm = TRUE)) {
+    warning("some elements of 'x' are less than or equal to 0")
+  }
+  
   index <- index_skeleton(levels, periods)
   for (t in seq_along(periods)) {
     index[[t]][] <- x[, t]

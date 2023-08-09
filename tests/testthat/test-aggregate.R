@@ -258,3 +258,33 @@ test_that("corner cases work", {
   expect_equal(as.matrix(aggregate(as_index(1:5), 6)),
                matrix(NA_real_, dimnames = list(6, 1)))
 })
+
+test_that("partial contributions are correct", {
+  prices <- data.frame(
+    rel = 1:8,
+    period = rep(1:2, each = 4),
+    ea = rep(letters[1:2], 4)
+  )
+
+  epr <- with(prices, elemental_index(rel, period, ea, contrib = TRUE))
+
+  epr <- merge(epr, matrix(9:10, 1, dimnames = list("c", 1:2)))
+
+  pias <- aggregation_structure(
+    list(c("top", "top", "top"), c("a", "b", "c")), 1:3
+  )
+
+  index <- aggregate(epr, pias)
+  expect_equal(
+    sum(contrib(index[, 1])),
+    sum(gpindex::arithmetic_contributions(as.numeric(index[letters[1:3], 1]),
+                                          weights(pias, ea_only = TRUE))[1:2])
+  )
+
+  pias2 <- update(pias, index[, 1])
+  expect_equal(
+    sum(contrib(index[, 2])),
+    sum(gpindex::arithmetic_contributions(as.numeric(index[letters[1:3], 2]),
+                                          weights(pias2, ea_only = TRUE))[1:2])
+  )
+})

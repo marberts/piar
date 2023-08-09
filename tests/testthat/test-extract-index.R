@@ -74,4 +74,8 @@ test_that("replacement methods work", {
     contrib(epr),
     matrix(0, 0, 2, dimnames = list(NULL, 1:2))
   )
+  
+  # recycling should still happen
+  epr[1, c(1, 2, 1)] <- 1:3
+  expect_equal(epr[1, ], as_index(matrix(3:2, 1, dimnames = list("11", 1:2))))
 })

@@ -26,7 +26,7 @@ Aggregate an index over subperiods by taking the (usually arithmetic) mean of in
 }
 
 \details{
-The \code{mean()} method constructs a set of windows of length \code{window}, starting in the first period of the index, and takes the mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that percent-change contributions are discarded when aggregating over subperiods. 
+The \code{mean()} method constructs a set of non-overlapping windows of length \code{window}, starting in the first period of the index, and takes the mean of each index value in these windows for each level of the index. The last window is discarded if it is incomplete, so that index values are always averaged over \code{window} periods. The names for the first time period in each window form the new names for the aggregated time periods. Note that percent-change contributions are discarded when aggregating over subperiods. 
 
 An optional vector of weights can be specified when aggregating index values over subperiods, which is often useful when aggregating a Paasche index; see section 4.3 of Balk (2008) for details.
 }

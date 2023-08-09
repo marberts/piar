@@ -5,7 +5,7 @@
 \alias{levels.aggregation_structure}
 
 \title{
-Methods to get the weights and levels for a price index aggregation structure.
+Methods to get the weights and levels for a price index aggregation structure
 }
 
 \description{
