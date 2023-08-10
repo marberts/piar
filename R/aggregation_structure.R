@@ -50,7 +50,7 @@ validate_pias <- function(x) {
 }
 
 aggregation_structure <- function(x, w = NULL) {
-  x <- lapply(x, factor)
+  x <- lapply(x, as.character)
   len <- length(x)
   ea <- as.character(unlist(x[len], use.names = FALSE))
   if (length(ea) == 0L) {
@@ -82,12 +82,8 @@ aggregation_structure <- function(x, w = NULL) {
   child <- parent <- vector("list", len)[-1L]
   # produce a list for each level with all the parent and child nodes
   for (i in seq_along(upper)) {
-    child[[i]] <- lapply(
-      split(as.character(lower[[len - i]]), upper[[len - i]]), unique
-    )
-    parent[[i]] <- lapply(
-      split(as.character(upper[[len - i]]), lower[[len - i]]), unique
-    )
+    child[[i]] <- lapply(split(lower[[len - i]], upper[[len - i]]), unique)
+    parent[[i]] <- lapply(split(upper[[len - i]], lower[[len - i]]), unique)
   }
   if (any(lengths(unlist(parent, recursive = FALSE)) > 1L)) {
     stop("some nodes in the price index aggregation structure have ",

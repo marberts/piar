@@ -80,7 +80,7 @@ top 2.462968 16.4796
 > 
 > ### Name: aggregation-structure-attributes
 > ### Title: Methods to get the weights and levels for a price index
-> ###   aggregation structure.
+> ###   aggregation structure
 > ### Aliases: weights.aggregation_structure weights<-
 > ###   weights<-.aggregation_structure levels.aggregation_structure
 > 

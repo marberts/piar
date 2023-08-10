@@ -90,6 +90,10 @@ test_that("a matched-sample index aggregates correctly", {
     as.matrix(aggregate(ms_epr, ms_pias, na.rm = TRUE)[levels(ms_index), ]),
     as.matrix(ms_index)
   )
+  expect_equal(
+    as.matrix(aggregate(ms_epr, ms_pias, na.rm = TRUE)[1:3, ]),
+    as.matrix(ms_index)[1:3, ]
+  )
 
   # Aggregated contributions should add up
   expect_equal(as.matrix(ms_index)[1, ],

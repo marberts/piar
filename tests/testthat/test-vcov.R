@@ -128,3 +128,13 @@ test_that("vcov works for chained index", {
     covar[1, 2] # 0.004125957 according to svymean
   )
 })
+
+test_that("vcov doesn't depend on order", {
+  covar <- vcov(index, rw * weights$ew, mse = FALSE)
+  ord <- c(1, 3:4, 8, 2, 5:7)
+  weights <- weights[ord, ]
+  pias <- with(weights, aggregation_structure(as.list(weights[1:4]), ew * dw))
+  index <- aggregate(epr, pias)
+  rw <- rw[ord, ]
+  expect_equal(vcov(index, rw * weights$ew, mse = FALSE), covar)
+})
