@@ -84,6 +84,9 @@ S3method(as.matrix, aggregation_structure)
 S3method(as.data.frame, aggregation_structure)
 S3method(as.list, aggregation_structure)
 
+S3method(View, default)
+S3method(View, index)
+
 importFrom(stats, aggregate, weights, update, time, start, end)
 
 importFrom(utils, stack, unstack, head, tail, str)
