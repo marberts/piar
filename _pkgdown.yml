@@ -14,17 +14,17 @@ reference:
   contents:
   - elemental_index
   - as_index
-  - aggregate.index
-  - mean.index
-  - summary.index
-  - vcov.aggregate_index
+  - aggregate.pindex
+  - mean.pindex
+  - summary.pindex
+  - vcov.aggregate_pindex
   
 - title: Manipulate price indexes
   desc: Helpful functions for working with price indexes
   contents:
   - chain
-  - merge.index
-  - stack.index
+  - merge.pindex
+  - stack.pindex
   - extract-index
   - contrib
   - index-attributes
