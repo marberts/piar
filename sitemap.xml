@@ -25,7 +25,7 @@
     <loc>https://marberts/github.io/piar/news/index.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/aggregate.index.html</loc>
+    <loc>https://marberts/github.io/piar/reference/aggregate.pindex.html</loc>
   </url>
   <url>
     <loc>https://marberts/github.io/piar/reference/aggregation-structure-attributes.html</loc>
@@ -70,10 +70,10 @@
     <loc>https://marberts/github.io/piar/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/mean.index.html</loc>
+    <loc>https://marberts/github.io/piar/reference/mean.pindex.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/merge.index.html</loc>
+    <loc>https://marberts/github.io/piar/reference/merge.pindex.html</loc>
   </url>
   <url>
     <loc>https://marberts/github.io/piar/reference/piar-package.html</loc>
@@ -85,15 +85,15 @@
     <loc>https://marberts/github.io/piar/reference/price_relative.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/stack.index.html</loc>
+    <loc>https://marberts/github.io/piar/reference/stack.pindex.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/summary.index.html</loc>
+    <loc>https://marberts/github.io/piar/reference/summary.pindex.html</loc>
   </url>
   <url>
     <loc>https://marberts/github.io/piar/reference/update.aggregation_structure.html</loc>
   </url>
   <url>
-    <loc>https://marberts/github.io/piar/reference/vcov.aggregate_index.html</loc>
+    <loc>https://marberts/github.io/piar/reference/vcov.aggregate_pindex.html</loc>
   </url>
 </urlset>

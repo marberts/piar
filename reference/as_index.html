@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,10 +65,10 @@
 <span><span class="co"># S3 method for data.frame</span></span>
 <span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, cols <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for chainable_index</span></span>
+<span><span class="co"># S3 method for chainable_pindex</span></span>
 <span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for direct_index</span></span>
+<span><span class="co"># S3 method for direct_pindex</span></span>
 <span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, chainable <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">is_index</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
@@ -108,19 +108,19 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p><code>as_index()</code> returns a price index that inherits from <code>index</code>. If <code>chainable == TRUE</code> then this is a period-over-period price index that also inherits from <code>chainable_index</code>; otherwise, it is a fixed-base index that inherits from <code>direct_index</code>.</p>
+<p><code>as_index()</code> returns a price index that inherits from <code>pindex</code>. If <code>chainable == TRUE</code> then this is a period-over-period price index that also inherits from <code>chainable_pindex</code>; otherwise, it is a fixed-base index that inherits from <code>direct_pindex</code>.</p>
 
 
-<p><code>is_index()</code> returns <code>TRUE</code> if <code>x</code> inherits from <code>index</code>.</p>
+<p><code>is_index()</code> returns <code>TRUE</code> if <code>x</code> inherits from <code>pindex</code>.</p>
 
 
-<p><code>is_chainable_index()</code> returns <code>TRUE</code> if <code>x</code> inherits from <code>chainable_index</code>.</p>
+<p><code>is_chainable_index()</code> returns <code>TRUE</code> if <code>x</code> inherits from <code>chainable_pindex</code>.</p>
 
 
-<p><code>is_direct_index()</code> returns <code>TRUE</code> if <code>x</code> inherits from <code>direct_index</code>.</p>
+<p><code>is_direct_index()</code> returns <code>TRUE</code> if <code>x</code> inherits from <code>direct_pindex</code>.</p>
 
 
-<p><code>is_aggregate_index()</code> returns <code>TRUE</code> if <code>x</code> inherits from <code>aggregate_index</code>.</p>
+<p><code>is_aggregate_index()</code> returns <code>TRUE</code> if <code>x</code> inherits from <code>aggregate_pindex</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

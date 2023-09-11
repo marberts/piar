@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,22 +54,22 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre><code># S3 method for index
+    <div class="sourceCode"><pre><code># S3 method for pindex
 [(x, i, j)
 
-# S3 method for index
+# S3 method for pindex
 [[(x, i, j, exact = TRUE)
 
-# S3 method for index
+# S3 method for pindex
 [(x, i, j) &lt;- value
 
-# S3 method for index
+# S3 method for pindex
 [[(x, i, j) &lt;- value
 
-# S3 method for index
+# S3 method for pindex
 head(x, n = 6, ...)
 
-# S3 method for index
+# S3 method for pindex
 tail(x, n = 6, ...)</code></pre></div>
     </div>
 
@@ -101,8 +101,8 @@ tail(x, n = 6, ...)</code></pre></div>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The extraction methods treat <code>x</code> as a matrix of index values with (named) rows for each <code>level</code> and columns for each <code>period</code> in <code>x</code>. Unlike a matrix, dimensions are never dropped as indexing <code>x</code> always returns an index object (for <code>`[`</code>) or a single value (for <code>`[[`</code>). This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As <code>x</code> is not an atomic vector, indexing with a single index like <code>x[1]</code> is taken to be the same as <code>x[1, ]</code>. Note that indexing an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is <em>not</em> an aggregated index.</p>
-<p>The replacement methods similarly treat <code>x</code> as a matrix, and behaves the same as replacing values in a matrix (except that <code>value</code> is coerced to numeric). Note that replacing the values of an index will remove the corresponding percent-change contributions (if any).</p>
+    <p>The extraction methods treat <code>x</code> as a matrix of index values with (named) rows for each <code>level</code> and columns for each <code>period</code> in <code>x</code>. Unlike a matrix, dimensions are never dropped as indexing <code>x</code> always returns an index object (for <code>`[`</code>) or a single value (for <code>`[[`</code>). This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As <code>x</code> is not an atomic vector, indexing with a single index like <code>x[1]</code> or <code>x[[1]]</code> extracts all time periods for that level. Note that indexing an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is <em>not</em> an aggregated index.</p>
+<p>The replacement methods similarly treat <code>x</code> as a matrix, and behave the same as replacing values in a matrix (except that <code>value</code> is coerced to numeric). Note that replacing the values of an index will remove the corresponding percent-change contributions (if any).</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -111,7 +111,7 @@ tail(x, n = 6, ...)</code></pre></div>
 <p><code>[</code>, <code>[&lt;-</code>, <code>[[&lt;-</code>, <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code>, and <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail()</a></code> all return an index object.</p>
 
 
-<p><code>[[</code> returns a single value.</p>
+<p><code>[[</code> returns a numeric vector.</p>
     </div>
 
     <div class="section level2">
