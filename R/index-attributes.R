@@ -1,19 +1,19 @@
-levels.index <- function(x) {
+levels.pindex <- function(x) {
   x$levels
 }
 
-`levels<-.index` <- function(x, value) {
+`levels<-.pindex` <- function(x, value) {
   stop("cannot replace levels attribute")
 }
 
-time.index <- function(x, ...) {
+time.pindex <- function(x, ...) {
   x$time
 }
 
-start.index <- function(x, ...) {
+start.pindex <- function(x, ...) {
   x$time[1L]
 }
 
-end.index <- function(x, ...) {
+end.pindex <- function(x, ...) {
   x$time[length(x$time)]
 }

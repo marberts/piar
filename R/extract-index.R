@@ -1,9 +1,19 @@
 dim_indices <- function(x, i) {
   names(x) <- x
-  match(x[i], x, incomparables = NA)
+  res <- match(x[i], x, incomparables = NA)
+  if (anyNA(res) || length(res) == 0L) {
+    stop("subscript out of bounds")
+  }
+  res
 }
 
-`[.index` <- function(x, i, j) {
+dim_index <- function(x, i, exact) {
+  names(x) <- x
+  res <- match(x[[i, exact = exact]], x, incomparables = NA)
+  res
+}
+
+`[.pindex` <- function(x, i, j) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
   x$index <- lapply(x$index[periods], `[`, levels)
@@ -13,21 +23,27 @@ dim_indices <- function(x, i) {
   validate_index(x)
 }
 
-`[[.index` <- function(x, i, j, exact = TRUE) {
-  as.matrix(x)[[i, j, exact = exact]]
+`[[.pindex` <- function(x, i, j, exact = TRUE) {
+  level <- dim_index(x$levels, i, exact = exact)
+  if (missing(j)) {
+    vapply(x$index, `[[`, numeric(1L), level, USE.NAMES = FALSE)
+  } else {
+    period <- dim_index(x$time, j, exact = exact)
+    x$index[[period]][[level]]
+  }
 }
 
-`[.aggregate_index` <- function(x, i, j) {
+`[.aggregate_pindex` <- function(x, i, j) {
   res <- NextMethod("[")
   if (!identical(res$levels, x$levels)) {
-    new_index(res$index, res$contrib, res$levels, res$time,
-              is_chainable_index(res))
+    new_pindex(res$index, res$contrib, res$levels, res$time,
+               is_chainable_index(res))
   } else {
     res
   }
 }
 
-`[<-.index` <- function(x, i, j, value) {
+`[<-.pindex` <- function(x, i, j, value) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
   res <- as.matrix(x)
@@ -38,28 +54,28 @@ dim_indices <- function(x, i) {
     # drop contributions for replaced values
     x$contrib[[t]][levels] <- list(numeric(0L))
   }
-  x
+  validate_index(x)
 }
 
-`[[<-.index` <- function(x, i, j, value) {
-  # make a slice matrix that indexes the same as if 'x' were a matrix
-  dim <- c(length(x$levels), length(x$time))
-  row_slice <- .row(dim)
-  col_slice <- .col(dim)
-  dimnames(row_slice) <- dimnames(col_slice) <- list(x$levels, x$time)
-  i <- row_slice[[i, j]]
-  j <- col_slice[[i, j]]
-
-  level <- x$levels[[i]]
-  period <- x$time[[j]]
-
-  x$index[[period]][[level]] <- as.numeric(value)
-  x$contrib[[period]][[level]] <- numeric(0L)
-
-  x
+`[[<-.pindex` <- function(x, i, j, value) {
+  level <- dim_index(x$levels, i, exact = TRUE)
+  if (!missing(j)) {
+    period <- dim_index(x$time, j, exact = TRUE)
+  } else {
+    period <- x$time
+  }
+  res <- as.matrix(x)
+  res[level, period] <- as.numeric(value)
+  # only loop over periods that have a value replaced
+  for (t in period) {
+    x$index[[t]][[level]] <- res[[level, t]]
+    # drop contributions for replaced values
+    x$contrib[[t]][[level]] <- numeric(0L)
+  }
+  validate_index(x)
 }
 
-head.index <- function(x, n = 6L, ...) {
+head.pindex <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {
@@ -79,7 +95,7 @@ head.index <- function(x, n = 6L, ...) {
   x[seq_len(nl), seq_len(np)]
 }
 
-tail.index <- function(x, n = 6L, ...) {
+tail.pindex <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {

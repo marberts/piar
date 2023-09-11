@@ -1,8 +1,8 @@
 \name{index-attributes}
-\alias{levels.index}
-\alias{time.index}
-\alias{start.index}
-\alias{end.index}
+\alias{levels.pindex}
+\alias{time.pindex}
+\alias{start.pindex}
+\alias{end.pindex}
 
 \title{Get the attributes for a price index}
 
@@ -11,13 +11,13 @@ Methods to get the levels and time periods for a price index.
 }
 
 \usage{
-\method{levels}{index}(x)
+\method{levels}{pindex}(x)
 
-\method{time}{index}(x, ...)
+\method{time}{pindex}(x, ...)
 
-\method{start}{index}(x, ...)
+\method{start}{pindex}(x, ...)
 
-\method{end}{index}(x, ...)
+\method{end}{pindex}(x, ...)
 }
 
 \arguments{

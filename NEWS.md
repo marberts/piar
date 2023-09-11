@@ -1,3 +1,16 @@
+# Version 0.5.1
+
+## Improvements
+
+- Using `[[` to subscript an index object with a single index now returns the numeric vector of index values for a level, analogous to `[`.
+
+## Bug fixes
+
+- Fixed the name conflict with `Matrix`. This means that `piar` can now be used
+with `rsmatrix`.
+
+- Viewing index objects in the RStudio viewer longer gives an error.
+
 # Version 0.5.0
 
 ## Significant changes

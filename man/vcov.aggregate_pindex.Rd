@@ -1,5 +1,5 @@
-\name{vcov.aggregate_index}
-\alias{vcov.aggregate_index}
+\name{vcov.aggregate_pindex}
+\alias{vcov.aggregate_pindex}
 
 \title{Bootstrap variance for a price index with replicate weights}
 
@@ -8,11 +8,11 @@ Calculate the sampling variance for an aggregate price index when using a sample
 }
 
 \usage{
-\method{vcov}{aggregate_index}(object, repweights, mse = TRUE, ...)
+\method{vcov}{aggregate_pindex}(object, repweights, mse = TRUE, ...)
 }
 
 \arguments{
-\item{object}{An aggregate price index, as made by \code{\link[=aggregate.index]{aggregate()}}.}
+\item{object}{An aggregate price index, as made by \code{\link[=aggregate.pindex]{aggregate()}}.}
 
 \item{repweights}{A matrix, or something that can be coerced into one, of bootstrap replicate weights with a row for each elemental aggregate and a column for each replicate.}
 

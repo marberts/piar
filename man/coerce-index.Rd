@@ -1,6 +1,6 @@
 \name{coerce-index}
-\alias{as.matrix.index}
-\alias{as.data.frame.index}
+\alias{as.matrix.pindex}
+\alias{as.data.frame.pindex}
 
 \title{Coerce an index into a tabular form}
 
@@ -9,9 +9,9 @@ Turn an index into a matrix with a row for each level and a column for each peri
 }
 
 \usage{
-\method{as.matrix}{index}(x, ...)
+\method{as.matrix}{pindex}(x, ...)
 
-\method{as.data.frame}{index}(x, ..., stringsAsFactors = FALSE)
+\method{as.data.frame}{pindex}(x, ..., stringsAsFactors = FALSE)
 }
 
 \arguments{

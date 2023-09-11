@@ -1,19 +1,19 @@
-merge.aggregate_index <- function(x, y, ...) {
-  x <- new_index(x$index, x$contrib, x$levels, x$time, is_chainable_index(x))
+merge.aggregate_pindex <- function(x, y, ...) {
+  x <- new_pindex(x$index, x$contrib, x$levels, x$time, is_chainable_index(x))
   NextMethod("merge")
 }
 
-merge.chainable_index <- function(x, y, ...) {
+merge.chainable_pindex <- function(x, y, ...) {
   y <- as_index(y, chainable = TRUE)
   NextMethod("merge")
 }
 
-merge.direct_index <- function(x, y, ...) {
+merge.direct_pindex <- function(x, y, ...) {
   y <- as_index(y, chainable = FALSE)
   NextMethod("merge")
 }
 
-merge.index <- function(x, y, ...) {
+merge.pindex <- function(x, y, ...) {
   if (!identical(x$time, y$time)) {
     stop("'x' and 'y' must be indexes for the same time periods")
   }

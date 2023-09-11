@@ -1,5 +1,5 @@
-\name{mean.index}
-\alias{mean.index}
+\name{mean.pindex}
+\alias{mean.pindex}
 
 \title{Aggregate a price index over subperiods}
 
@@ -8,7 +8,7 @@ Aggregate an index over subperiods by taking the (usually arithmetic) mean of in
 }
 
 \usage{
-\method{mean}{index}(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...)
+\method{mean}{pindex}(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...)
 }
 
 \arguments{

@@ -1,10 +1,10 @@
-new_index <- function(index, contrib, levels, time, chainable) {
+new_pindex <- function(index, contrib, levels, time, chainable) {
   res <- list(index = as.list(index),
               contrib = as.list(contrib),
               levels = as.character(levels),
               time = as.character(time))
-  type <- if (chainable) "chainable_index" else "direct_index"
-  structure(res, class = c(type, "index"))
+  type <- if (chainable) "chainable_pindex" else "direct_pindex"
+  structure(res, class = c(type, "pindex"))
 }
 
 validate_levels <- function(x) {
@@ -118,9 +118,8 @@ elemental_index.numeric <- function(x,
     contributions <- Map(contrib_fun, x, w)
   } else {
     # mimic contributions structure instead of a NULL
-    contributions <- rep.int(empty_contrib(levels), length(time))
-    names(contributions) <- time
+    contributions <- contrib_skeleton(levels, time)
   }
 
-  validate_index(new_index(index, contributions, levels, time, chainable))
+  validate_index(new_pindex(index, contributions, levels, time, chainable))
 }

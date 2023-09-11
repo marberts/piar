@@ -7,9 +7,9 @@ View.default <- function(...) {
   get("View", "package:utils")(...)
 }
 
-View.index <- function(x, title) {
+View.pindex <- function(x, title) {
   if (missing(title)) {
     title <- deparse(substitute(x))[1]
   }
-  View(as.matrix(x), title)
+  View(unclass(x), title)
 }

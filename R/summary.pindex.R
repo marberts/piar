@@ -1,14 +1,14 @@
-summary.index <- function(object, ...) {
+summary.pindex <- function(object, ...) {
   res <- vector("list", 2L)
   names(res) <- c("index", "contrib")
   res$index <- summary.data.frame(object$index, ...)
   res$contrib <- if (has_contrib(object)) {
     summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
   }
-  structure(res, class = "index_summary")
+  structure(res, class = "pindex_summary")
 }
 
-print.index_summary <- function(x, ...) {
+print.pindex_summary <- function(x, ...) {
   cat("Indexes\n")
   print(x$index)
   if (!is.null(x$contrib)) {
@@ -18,11 +18,11 @@ print.index_summary <- function(x, ...) {
   invisible(x)
 }
 
-str.index <- function(object, ...) {
+str.pindex <- function(object, ...) {
   str(unclass(object), ...)
 }
 
-print.index <- function(x, ...) {
+print.pindex <- function(x, ...) {
   print(as.matrix(x), ...)
   invisible(x)
 }

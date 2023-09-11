@@ -35,7 +35,7 @@ The \code{aggregation_structure()} function does its best to check its arguments
 }
 
 \seealso{
-\code{\link[=aggregate.index]{aggregate}} to aggregate price indexes made with \code{\link[=elemental_index]{elemental_index()}}.
+\code{\link[=aggregate.pindex]{aggregate}} to aggregate price indexes made with \code{\link[=elemental_index]{elemental_index()}}.
 
 \code{\link{expand_classification}} to make \code{x} from a character representation of a hierarchical aggregation structure.
 

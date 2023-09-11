@@ -1,5 +1,5 @@
-\name{summary.index}
-\alias{summary.index}
+\name{summary.pindex}
+\alias{summary.pindex}
 
 \title{Summarize a price index}
 
@@ -8,7 +8,7 @@ Summarize an index as a matrix of index values (i.e., the five-number summary fo
 }
 
 \usage{
-\method{summary}{index}(object, ...)
+\method{summary}{pindex}(object, ...)
 }
 
 \arguments{

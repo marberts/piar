@@ -7,7 +7,7 @@ chain.default <- function(x, ...) {
   chain(as_index(x), ...)
 }
 
-chain.chainable_index <- function(x, link = rep(1, nlevels(x)), ...) {
+chain.chainable_pindex <- function(x, link = rep(1, nlevels(x)), ...) {
   link <- as.numeric(link)
   if (length(link) != length(x$levels)) {
     stop("'link' must have a value for each level of 'x'")
@@ -21,14 +21,14 @@ chain.chainable_index <- function(x, link = rep(1, nlevels(x)), ...) {
   # contributions are difficult to chain, so remove them
   x$contrib[] <- empty_contrib(x$levels)
   if (is_aggregate_index(x)) {
-    new_aggregate_index(x$index, x$contrib, x$levels, x$time, x$r, x$pias,
+    new_aggregate_pindex(x$index, x$contrib, x$levels, x$time, x$r, x$pias,
                         chainable = FALSE)
   } else {
-    new_index(x$index, x$contrib, x$levels, x$time, chainable = FALSE)
+    new_pindex(x$index, x$contrib, x$levels, x$time, chainable = FALSE)
   }
 }
 
-chain.direct_index <- function(x, ...) {
+chain.direct_pindex <- function(x, ...) {
   x
 }
 
@@ -41,19 +41,19 @@ unchain.default <- function(x, ...) {
   unchain(as_index(x, chainable = FALSE), ...)
 }
 
-unchain.chainable_index <- function(x, ...) {
+unchain.chainable_pindex <- function(x, ...) {
   x
 }
 
-unchain.direct_index <- function(x, ...) {
+unchain.direct_pindex <- function(x, ...) {
   x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
   # contributions are difficult to unchain, so remove them
   x$contrib[] <- empty_contrib(x$levels)
   if (is_aggregate_index(x)) {
-    new_aggregate_index(x$index, x$contrib, x$levels, x$time, x$r, x$pias,
+    new_aggregate_pindex(x$index, x$contrib, x$levels, x$time, x$r, x$pias,
                         chainable = TRUE)
   } else {
-    new_index(x$index, x$contrib, x$levels, x$time, chainable = TRUE)
+    new_pindex(x$index, x$contrib, x$levels, x$time, chainable = TRUE)
   }
 }
 
@@ -66,11 +66,11 @@ rebase.default <- function(x, ...) {
   rebase(as_index(x, chainable = FALSE), ...)
 }
 
-rebase.chainable_index <- function(x, ...) {
+rebase.chainable_pindex <- function(x, ...) {
   x
 }
 
-rebase.direct_index <- function(x, base = rep(1, nlevels(x)), ...) {
+rebase.direct_pindex <- function(x, base = rep(1, nlevels(x)), ...) {
   base <- as.numeric(base)
   if (length(base) != length(x$levels)) {
     stop("'base' must have a value for each level of 'x'")

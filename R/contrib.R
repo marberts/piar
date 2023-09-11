@@ -3,7 +3,7 @@ contrib <- function(x, ...) {
   UseMethod("contrib")
 }
 
-contrib.index <- function(x, level = levels(x), ...) {
+contrib.pindex <- function(x, level = levels(x), ...) {
   if (!has_contrib(x)) {
     return(NULL)
   }

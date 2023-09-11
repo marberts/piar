@@ -6,7 +6,7 @@ as_aggregation_structure.default <- function(x, w = NULL, ...) {
   aggregation_structure(as.list(x), w)
 }
 
-as_aggregation_structure.aggregate_index <- function(x, w = NULL, ...) {
+as_aggregation_structure.aggregate_pindex <- function(x, w = NULL, ...) {
   if (is.null(w)) {
     w <- rep.int(1, length(x$pias$eas))
   }

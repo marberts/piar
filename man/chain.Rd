@@ -1,16 +1,16 @@
 \name{chain}
 \alias{chain}
 \alias{chain.default}
-\alias{chain.chainable_index}
-\alias{chain.direct_index}
+\alias{chain.chainable_pindex}
+\alias{chain.direct_pindex}
 \alias{unchain}
 \alias{unchain.default}
-\alias{unchain.direct_index}
-\alias{unchain.chainable_index}
+\alias{unchain.direct_pindex}
+\alias{unchain.chainable_pindex}
 \alias{rebase}
 \alias{rebase.default}
-\alias{rebase.direct_index}
-\alias{rebase.chainable_index}
+\alias{rebase.direct_pindex}
+\alias{rebase.chainable_pindex}
 
 \title{
 Chain and rebase a price index
@@ -25,25 +25,25 @@ chain(x, ...)
 
 \method{chain}{default}(x, ...)
 
-\method{chain}{chainable_index}(x, link = rep(1, nlevels(x)), ...)
+\method{chain}{chainable_pindex}(x, link = rep(1, nlevels(x)), ...)
 
-\method{chain}{direct_index}(x, ...)
+\method{chain}{direct_pindex}(x, ...)
 
 unchain(x, ...)
 
 \method{unchain}{default}(x, ...)
 
-\method{unchain}{direct_index}(x, ...)
+\method{unchain}{direct_pindex}(x, ...)
 
-\method{unchain}{chainable_index}(x, ...)
+\method{unchain}{chainable_pindex}(x, ...)
 
 rebase(x, ...)
 
 \method{rebase}{default}(x, ...)
 
-\method{rebase}{direct_index}(x, base = rep(1, nlevels(x)), ...)
+\method{rebase}{direct_pindex}(x, base = rep(1, nlevels(x)), ...)
 
-\method{rebase}{chainable_index}(x, ...)
+\method{rebase}{chainable_pindex}(x, ...)
 }
 
 \arguments{
@@ -67,9 +67,9 @@ Percent-change contributions are removed when chaining/unchaining/rebasing an in
 }
 
 \value{
-\code{chain()} and \code{rebase()} return a fixed-base index (i.e., inherits from \code{direct_index}).
+\code{chain()} and \code{rebase()} return a fixed-base index (i.e., inherits from \code{direct_pindex}).
 
-\code{unchain()} returns a period-over-period index (i.e., inherits from \code{chainable_index}).
+\code{unchain()} returns a period-over-period index (i.e., inherits from \code{chainable_pindex}).
 }
 
 \examples{

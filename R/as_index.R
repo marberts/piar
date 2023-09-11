@@ -18,13 +18,13 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
   if (any(x <= 0, na.rm = TRUE)) {
     warning("some elements of 'x' are less than or equal to 0")
   }
-  
+
   index <- index_skeleton(levels, periods)
   for (t in seq_along(periods)) {
     index[[t]][] <- x[, t]
   }
   contrib <- contrib_skeleton(levels, periods)
-  validate_index(new_index(index, contrib, levels, periods, chainable))
+  validate_index(new_pindex(index, contrib, levels, periods, chainable))
 }
 
 as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
@@ -39,7 +39,7 @@ as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
   as_index(res, chainable, ...)
 }
 
-as_index.chainable_index <- function(x, chainable = TRUE, ...) {
+as_index.chainable_pindex <- function(x, chainable = TRUE, ...) {
   if (chainable) {
     x
   } else {
@@ -47,7 +47,7 @@ as_index.chainable_index <- function(x, chainable = TRUE, ...) {
   }
 }
 
-as_index.direct_index <- function(x, chainable = FALSE, ...) {
+as_index.direct_pindex <- function(x, chainable = FALSE, ...) {
   if (chainable) {
     unchain(x)
   } else {
@@ -57,17 +57,17 @@ as_index.direct_index <- function(x, chainable = FALSE, ...) {
 
 #---- Test ----
 is_index <- function(x) {
-  inherits(x, "index")
+  inherits(x, "pindex")
 }
 
 is_aggregate_index <- function(x) {
-  inherits(x, "aggregate_index")
+  inherits(x, "aggregate_pindex")
 }
 
 is_chainable_index <- function(x) {
-  inherits(x, "chainable_index")
+  inherits(x, "chainable_pindex")
 }
 
 is_direct_index <- function(x) {
-  inherits(x, "direct_index")
+  inherits(x, "direct_pindex")
 }

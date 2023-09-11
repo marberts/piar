@@ -1,6 +1,6 @@
 \name{contrib}
 \alias{contrib}
-\alias{contrib.index}
+\alias{contrib.pindex}
 
 \title{
 Extract percent-change contributions
@@ -13,7 +13,7 @@ Extract percent-change contributions from a price index.
 \usage{
 contrib(x, ...)
 
-\method{contrib}{index}(x, level = levels(x), ...)
+\method{contrib}{pindex}(x, level = levels(x), ...)
 
 }
 

@@ -1,5 +1,5 @@
-\name{merge.index}
-\alias{merge.index}
+\name{merge.pindex}
+\alias{merge.pindex}
 
 \title{Merge price indexes}
 
@@ -10,7 +10,7 @@ This is useful for building up an index when different elemental aggregates come
 }
 
 \usage{
-\method{merge}{index}(x, y, ...)
+\method{merge}{pindex}(x, y, ...)
 }
 
 \arguments{
@@ -22,11 +22,11 @@ This is useful for building up an index when different elemental aggregates come
 }
 
 \value{
-A price index that inherits from \code{chainable_index} if \code{x} is a period-over-period index, or \code{direct_index} if \code{x} is a fixed-base index. It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging does not return an aggregated index. 
+A price index that inherits from \code{chainable_pindex} if \code{x} is a period-over-period index, or \code{direct_pindex} if \code{x} is a fixed-base index. It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging does not return an aggregated index. 
 }
 
 \seealso{
-\code{\link[=stack.index]{stack}} to combine indexes for the same levels over different time periods.
+\code{\link[=stack.pindex]{stack}} to combine indexes for the same levels over different time periods.
 }
 
 \examples{

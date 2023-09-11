@@ -1,10 +1,10 @@
 \name{extract-index}
-\alias{[.index}
-\alias{[[.index}
-\alias{[<-.index}
-\alias{[[<-.index}
-\alias{head.index}
-\alias{tail.index}
+\alias{[.pindex}
+\alias{[[.pindex}
+\alias{[<-.pindex}
+\alias{[[<-.pindex}
+\alias{head.pindex}
+\alias{tail.pindex}
 
 \title{Extract and replace index values}
 
@@ -13,17 +13,17 @@ Methods to extract and replace index values like a matrix.
 }
 
 \usage{
-\method{[}{index}(x, i, j)
+\method{[}{pindex}(x, i, j)
 
-\method{[[}{index}(x, i, j, exact = TRUE)
+\method{[[}{pindex}(x, i, j, exact = TRUE)
 
-\method{[}{index}(x, i, j) <- value
+\method{[}{pindex}(x, i, j) <- value
 
-\method{[[}{index}(x, i, j) <- value
+\method{[[}{pindex}(x, i, j) <- value
 
-\method{head}{index}(x, n = 6, ...)
+\method{head}{pindex}(x, n = 6, ...)
 
-\method{tail}{index}(x, n = 6, ...)
+\method{tail}{pindex}(x, n = 6, ...)
 }
 
 \arguments{
@@ -41,15 +41,15 @@ Methods to extract and replace index values like a matrix.
 }
 
 \details{
-The extraction methods treat \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as indexing \code{x} always returns an index object (for \code{`[`}) or a single value (for \code{`[[`}). This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like \code{x[1]} is taken to be the same as \code{x[1, ]}. Note that indexing an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is \emph{not} an aggregated index.
+The extraction methods treat \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as indexing \code{x} always returns an index object (for \code{`[`}) or a single value (for \code{`[[`}). This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like \code{x[1]} or \code{x[[1]]} extracts all time periods for that level. Note that indexing an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is \emph{not} an aggregated index.
 
-The replacement methods similarly treat \code{x} as a matrix, and behaves the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding percent-change contributions (if any).
+The replacement methods similarly treat \code{x} as a matrix, and behave the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding percent-change contributions (if any).
 }
 
 \value{
 \code{[}, \code{[<-}, \code{[[<-}, \code{head()}, and \code{tail()} all return an index object.
 
-\code{[[} returns a single value.
+\code{[[} returns a numeric vector.
 }
 
 \examples{
