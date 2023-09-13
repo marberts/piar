@@ -93,10 +93,12 @@ index <- aggregate(epr, pias, na.rm = TRUE)
 
 is_index(epr)
 is_chainable_index(epr)
+is_direct_index(epr)
 is_aggregate_index(epr)
 
 is_index(index)
 is_chainable_index(index)
+is_direct_index(index)
 is_aggregate_index(index)
 
 all.equal(as_index(as.data.frame(epr)), epr)

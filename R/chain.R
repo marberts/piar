@@ -7,6 +7,12 @@ chain.default <- function(x, ...) {
   chain(as_index(x), ...)
 }
 
+chain.aggregate_pindex <- function(x, ...) {
+  res <- NextMethod("chain")
+  new_aggregate_pindex(res$index, res$contrib, res$levels,
+                       res$time, x$r, x$pias, is_chainable_index(res))
+}
+
 chain.chainable_pindex <- function(x, link = rep(1, nlevels(x)), ...) {
   link <- as.numeric(link)
   if (length(link) != length(x$levels)) {
@@ -15,17 +21,13 @@ chain.chainable_pindex <- function(x, link = rep(1, nlevels(x)), ...) {
   x$index[[1L]] <- x$index[[1L]] * link
   # x$index[] <- Reduce(`*`, x$index, accumulate = TRUE) simplifies results
   # with one level
+  # TODO: use Reduce once my patch is in a released version of R
   for (t in seq_along(x$time)[-1L]) {
     x$index[[t]] <- x$index[[t]] * x$index[[t - 1L]]
   }
   # contributions are difficult to chain, so remove them
   x$contrib[] <- empty_contrib(x$levels)
-  if (is_aggregate_index(x)) {
-    new_aggregate_pindex(x$index, x$contrib, x$levels, x$time, x$r, x$pias,
-                        chainable = FALSE)
-  } else {
-    new_pindex(x$index, x$contrib, x$levels, x$time, chainable = FALSE)
-  }
+  new_pindex(x$index, x$contrib, x$levels, x$time, chainable = FALSE)
 }
 
 chain.direct_pindex <- function(x, ...) {
@@ -41,6 +43,12 @@ unchain.default <- function(x, ...) {
   unchain(as_index(x, chainable = FALSE), ...)
 }
 
+unchain.aggregate_pindex <- function(x, ...) {
+  res <- NextMethod("unchain")
+  new_aggregate_pindex(res$index, res$contrib, res$levels,
+                       res$time, x$r, x$pias, is_chainable_index(res))
+}
+
 unchain.chainable_pindex <- function(x, ...) {
   x
 }
@@ -49,12 +57,7 @@ unchain.direct_pindex <- function(x, ...) {
   x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
   # contributions are difficult to unchain, so remove them
   x$contrib[] <- empty_contrib(x$levels)
-  if (is_aggregate_index(x)) {
-    new_aggregate_pindex(x$index, x$contrib, x$levels, x$time, x$r, x$pias,
-                        chainable = TRUE)
-  } else {
-    new_pindex(x$index, x$contrib, x$levels, x$time, chainable = TRUE)
-  }
+  new_pindex(x$index, x$contrib, x$levels, x$time, chainable = TRUE)
 }
 
 #---- Rebase ----

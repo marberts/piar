@@ -1,10 +1,12 @@
 \name{chain}
 \alias{chain}
 \alias{chain.default}
+\alias{chain.aggregate_pindex}
 \alias{chain.chainable_pindex}
 \alias{chain.direct_pindex}
 \alias{unchain}
 \alias{unchain.default}
+\alias{unchain.aggregate_pindex}
 \alias{unchain.direct_pindex}
 \alias{unchain.chainable_pindex}
 \alias{rebase}
@@ -25,6 +27,8 @@ chain(x, ...)
 
 \method{chain}{default}(x, ...)
 
+\method{chain}{aggregate_pindex}(x, ...)
+
 \method{chain}{chainable_pindex}(x, link = rep(1, nlevels(x)), ...)
 
 \method{chain}{direct_pindex}(x, ...)
@@ -32,6 +36,8 @@ chain(x, ...)
 unchain(x, ...)
 
 \method{unchain}{default}(x, ...)
+
+\method{unchain}{aggregate_pindex}(x, ...)
 
 \method{unchain}{direct_pindex}(x, ...)
 

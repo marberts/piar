@@ -11,6 +11,8 @@ with `rsmatrix`.
 
 - Viewing index objects in the RStudio viewer longer gives an error.
 
+- `is_direct_index()` is now exported.
+
 # Version 0.5.0
 
 ## Significant changes

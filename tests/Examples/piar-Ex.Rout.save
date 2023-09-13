@@ -265,6 +265,8 @@ top 2.462968 16.4796
 [1] TRUE
 > is_chainable_index(epr)
 [1] TRUE
+> is_direct_index(epr)
+[1] FALSE
 > is_aggregate_index(epr)
 [1] FALSE
 > 
@@ -272,6 +274,8 @@ top 2.462968 16.4796
 [1] TRUE
 > is_chainable_index(index)
 [1] TRUE
+> is_direct_index(index)
+[1] FALSE
 > is_aggregate_index(index)
 [1] TRUE
 > 
@@ -290,8 +294,9 @@ top 2.462968 16.4796
 > 
 > ### Name: chain
 > ### Title: Chain and rebase a price index
-> ### Aliases: chain chain.default chain.chainable_pindex chain.direct_pindex
-> ###   unchain unchain.default unchain.direct_pindex 
+> ### Aliases: chain chain.default chain.aggregate_pindex 
+> ###   chain.chainable_pindex chain.direct_pindex unchain unchain.default 
+> ###   unchain.aggregate_pindex unchain.direct_pindex 
 > ###   unchain.chainable_pindex rebase rebase.default rebase.direct_pindex
 > ###   rebase.chainable_pindex
 > 
