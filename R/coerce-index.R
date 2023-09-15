@@ -11,5 +11,5 @@ as.matrix.pindex <- function(x, ...) {
 
 # not documented
 as.double.pindex <- function(x, ...) {
-  as.double(as.matrix(x))
+  as.double(as.matrix(x), ...)
 }

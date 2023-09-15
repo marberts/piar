@@ -1,5 +1,6 @@
 \name{extract-index}
 \alias{[.pindex}
+\alias{[.aggregate_pindex}
 \alias{[[.pindex}
 \alias{[<-.pindex}
 \alias{[[<-.pindex}
@@ -14,6 +15,8 @@ Methods to extract and replace index values like a matrix.
 
 \usage{
 \method{[}{pindex}(x, i, j)
+
+\method{[}{aggregate_pindex}(x, i, j)
 
 \method{[[}{pindex}(x, i, j, exact = TRUE)
 

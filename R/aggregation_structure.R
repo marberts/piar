@@ -106,7 +106,7 @@ aggregation_structure <- function(x, w = NULL) {
 }
 
 print.aggregation_structure <- function(x, ...) {
-  print(c(rev(lapply(x$child, names)), if (x$height > 0L) list(x$eas)))
+  print(c(rev(lapply(x$child, names)), if (x$height > 0L) list(x$eas)), ...)
   invisible(x)
 }
 

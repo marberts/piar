@@ -615,8 +615,8 @@ detaching ‘package:gpindex’
 > 
 > ### Name: extract-index
 > ### Title: Extract and replace index values
-> ### Aliases: [.pindex [[.pindex [<-.pindex [[<-.pindex head.pindex 
-> ###   tail.pindex
+> ### Aliases: [.pindex [.aggregate_pindex [[.pindex [<-.pindex [[<-.pindex
+> ###   head.pindex tail.pindex
 > 
 > ### ** Examples
 > 
@@ -745,7 +745,8 @@ b 4.878315
 > 
 > ### Name: merge.pindex
 > ### Title: Merge price indexes
-> ### Aliases: merge.pindex
+> ### Aliases: merge.pindex merge.aggregate_pindex merge.chainable_pindex
+> ###   merge.direct_pindex
 > 
 > ### ** Examples
 > 
@@ -800,7 +801,8 @@ d 2.828427 6.928203
 > 
 > ### Name: stack.pindex
 > ### Title: Stack price indexes
-> ### Aliases: stack.pindex unstack.pindex
+> ### Aliases: stack.pindex stack.aggregate_pindex stack.chainable_pindex
+> ###   stack.direct_pindex unstack.pindex
 > 
 > ### ** Examples
 > 
