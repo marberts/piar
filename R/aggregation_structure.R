@@ -106,7 +106,8 @@ aggregation_structure <- function(x, w = NULL) {
 }
 
 print.aggregation_structure <- function(x, ...) {
-  print(c(rev(lapply(x$child, names)), if (x$height > 0L) list(x$eas)), ...)
+  cat("Aggregation structure for", length(x$eas), "elemental aggregates with",
+      x$height - 1L, "levels above the elemental aggregates", "\n")
   invisible(x)
 }
 

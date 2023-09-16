@@ -1,13 +1,16 @@
-# Version 0.5.1
+# Version 0.6.0
+
+## Significant changes
+
+- The `[[` method for index objects has been removed as it created unexpected problems for little gain. A more explicit and flexible way to get the same behavior as `index[[1, 1]]` is `as.matrix(index)[[1, 1]]`.
+
+- The class names for index objects have changed to fix a name conflict with `Matrix`.
 
 ## Improvements
 
-- Using `[[` to subscript an index object with a single index now returns the numeric vector of index values for a level, analogous to `[`.
+- Printing an index gives a textual description in addition to the matrix of index values. Printing an aggregation structure now just gives a description instead of a list.
 
 ## Bug fixes
-
-- Fixed the name conflict with `Matrix`. This means that `piar` can now be used
-with `rsmatrix`.
 
 - Viewing index objects in the RStudio viewer longer gives an error.
 

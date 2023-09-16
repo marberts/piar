@@ -10,10 +10,10 @@ summary.pindex <- function(object, ...) {
 
 print.pindex_summary <- function(x, ...) {
   cat("Indexes\n")
-  print(x$index)
+  print(x$index, ...)
   if (!is.null(x$contrib)) {
     cat("\nContributions\n")
-    print(x$contrib)
+    print(x$contrib, ...)
   }
   invisible(x)
 }
@@ -22,7 +22,19 @@ str.pindex <- function(object, ...) {
   str(unclass(object), ...)
 }
 
+pindex_string <- function(x) {
+  res <- c(aggregate_pindex = "aggregate",
+           chainable_pindex = "period-over-period",
+           direct_pindex = "fixed-base",
+           pindex = "price index")[class(x)]
+  res <- paste(res, collapse = " ")
+  substr(res, 1, 1) <- toupper(substr(res, 1, 1))
+  res
+}
+
 print.pindex <- function(x, ...) {
+  cat(pindex_string(x), "for", length(x$levels), "levels over", length(x$time), 
+      "time periods", "\n")
   print(as.matrix(x), ...)
   invisible(x)
 }

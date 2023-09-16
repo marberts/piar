@@ -51,6 +51,7 @@ Type 'q()' to quit R.
 > # Calculate Jevons elemental indexes
 > 
 > (epr <- with(prices, elemental_index(rel, period, ea)))
+Period-over-period price index for 2 levels over 2 time periods 
          1        2
 a 1.732051 5.916080
 b 2.828427 6.928203
@@ -58,6 +59,7 @@ b 2.828427 6.928203
 > # Aggregate (note the imputation for elemental index 'c')
 > 
 > (index <- aggregate(epr, pias, na.rm = TRUE))
+Aggregate period-over-period price index for 4 levels over 2 time periods 
            1        2
 top 2.462968 6.690949
 a   1.732051 5.916080
@@ -294,9 +296,9 @@ top 2.462968 16.4796
 > 
 > ### Name: chain
 > ### Title: Chain and rebase a price index
-> ### Aliases: chain chain.default chain.aggregate_pindex 
-> ###   chain.chainable_pindex chain.direct_pindex unchain unchain.default 
-> ###   unchain.aggregate_pindex unchain.direct_pindex 
+> ### Aliases: chain chain.default chain.aggregate_pindex
+> ###   chain.chainable_pindex chain.direct_pindex unchain unchain.default
+> ###   unchain.aggregate_pindex unchain.direct_pindex
 > ###   unchain.chainable_pindex rebase rebase.default rebase.direct_pindex
 > ###   rebase.chainable_pindex
 > 
@@ -311,6 +313,7 @@ top 2.462968 16.4796
 > # A simple period-over-period elemental index
 > 
 > (epr <- with(prices, elemental_index(rel, period, ea)))
+Period-over-period price index for 2 levels over 2 time periods 
          1        2
 a 1.732051 5.916080
 b 2.828427 6.928203
@@ -318,6 +321,7 @@ b 2.828427 6.928203
 > # Make period 0 the fixed base period
 > 
 > chain(epr)
+Fixed-base price index for 2 levels over 2 time periods 
          1        2
 a 1.732051 10.24695
 b 2.828427 19.59592
@@ -332,6 +336,7 @@ b 2.828427 19.59592
 > 
 > epr <- chain(epr)
 > rebase(epr, epr[, 2])
+Fixed-base price index for 2 levels over 2 time periods 
           1 2
 a 0.1690309 1
 b 0.1443376 1
@@ -490,6 +495,7 @@ detaching ‘package:gpindex’
 > # Calculate Jevons elemental indexes
 > 
 > (epr <- with(prices, elemental_index(rel, period, ea)))
+Period-over-period price index for 2 levels over 2 time periods 
          1        2
 a 1.732051 5.916080
 b 2.828427 6.928203
@@ -524,6 +530,7 @@ b 2.828427 6.928203
 +     fw(rel, group = interaction(period, ea)), r = 1
 +   )
 + )
+Period-over-period price index for 2 levels over 2 time periods 
          1        2
 a 1.732051 5.916080
 b 2.828427 6.928203
@@ -615,8 +622,7 @@ detaching ‘package:gpindex’
 > 
 > ### Name: extract-index
 > ### Title: Extract and replace index values
-> ### Aliases: [.pindex [.aggregate_pindex [[.pindex [<-.pindex [[<-.pindex
-> ###   head.pindex tail.pindex
+> ### Aliases: [.pindex [.aggregate_pindex [<-.pindex head.pindex tail.pindex
 > 
 > ### ** Examples
 > 
@@ -633,19 +639,19 @@ detaching ‘package:gpindex’
 > # Extract the indexes like a matrix
 > 
 > epr["a", ]
+Period-over-period price index for 1 levels over 2 time periods 
          1       2
 a 1.732051 5.91608
 > 
 > epr[, 2]
+Period-over-period price index for 2 levels over 1 time periods 
          2
 a 5.916080
 b 6.928203
 > 
-> epr[["a", 2]]
-[1] 5.91608
-> 
 > epr[1, ] <- 1 # can be useful for doing specific imputations
 > epr
+Period-over-period price index for 2 levels over 2 time periods 
          1        2
 a 1.000000 1.000000
 b 2.828427 6.928203
@@ -731,6 +737,7 @@ b 2.828427 6.928203
 > epr <- with(prices, elemental_index(rel, period, ea))
 > 
 > mean(epr, window = 2)
+Period-over-period price index for 2 levels over 1 time periods 
          1
 a 3.824065
 b 4.878315
@@ -767,6 +774,7 @@ b 4.878315
 > epr2 <- with(prices2, elemental_index(rel, period, ea))
 > 
 > merge(epr, epr2)
+Period-over-period price index for 4 levels over 2 time periods 
          1        2
 a 1.732051 5.916080
 b 2.828427 6.928203
@@ -823,6 +831,7 @@ d 2.828427 6.928203
 > epr2 <- with(prices2, elemental_index(rel, period, ea))
 > 
 > stack(epr, epr2)
+Period-over-period price index for 2 levels over 4 time periods 
          1        2        3        4
 a 1.732051 5.916080 1.732051 5.916080
 b 2.828427 6.928203 2.828427 6.928203
@@ -977,7 +986,7 @@ top 0.007818832 0.003929299
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.322 0.028 0.351 0 0 
+Time elapsed:  0.495 0.048 1.023 0 0 
 > grDevices::dev.off()
 null device 
           1 

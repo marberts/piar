@@ -7,12 +7,6 @@ dim_indices <- function(x, i) {
   res
 }
 
-dim_index <- function(x, i, exact) {
-  names(x) <- x
-  res <- match(x[[i, exact = exact]], x, incomparables = NA)
-  res
-}
-
 `[.pindex` <- function(x, i, j) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
@@ -21,16 +15,6 @@ dim_index <- function(x, i, exact) {
   x$levels <- x$levels[levels]
   x$time <- x$time[periods]
   validate_index(x)
-}
-
-`[[.pindex` <- function(x, i, j, exact = TRUE) {
-  level <- dim_index(x$levels, i, exact = exact)
-  if (missing(j)) {
-    vapply(x$index, `[[`, numeric(1L), level, USE.NAMES = FALSE)
-  } else {
-    period <- dim_index(x$time, j, exact = exact)
-    x$index[[period]][[level]]
-  }
 }
 
 `[.aggregate_pindex` <- function(x, i, j) {
@@ -53,24 +37,6 @@ dim_index <- function(x, i, exact) {
     x$index[[t]][levels] <- res[levels, t]
     # drop contributions for replaced values
     x$contrib[[t]][levels] <- list(numeric(0L))
-  }
-  validate_index(x)
-}
-
-`[[<-.pindex` <- function(x, i, j, value) {
-  level <- dim_index(x$levels, i, exact = TRUE)
-  if (!missing(j)) {
-    period <- dim_index(x$time, j, exact = TRUE)
-  } else {
-    period <- x$time
-  }
-  res <- as.matrix(x)
-  res[level, period] <- as.numeric(value)
-  # only loop over periods that have a value replaced
-  for (t in period) {
-    x$index[[t]][[level]] <- res[[level, t]]
-    # drop contributions for replaced values
-    x$contrib[[t]][[level]] <- numeric(0L)
   }
   validate_index(x)
 }

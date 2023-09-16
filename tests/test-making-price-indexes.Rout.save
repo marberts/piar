@@ -1,6 +1,6 @@
 
-R version 4.1.2 (2021-11-01) -- "Bird Hippie"
-Copyright (C) 2021 The R Foundation for Statistical Computing
+R version 4.3.1 (2023-06-16) -- "Beagle Scouts"
+Copyright (C) 2023 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -39,6 +39,7 @@ Type 'q()' to quit R.
 > relative <- with(ms_prices, price_relative(price, period, product))
 > 
 > (ms_epr <- with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE)))
+Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003   202004
 B1      1 0.8949097 0.3342939      NaN
 B2      1       NaN       NaN 2.770456
@@ -47,12 +48,14 @@ B4    NaN       NaN       NaN 4.576286
 > 
 > ## -----------------------------------------------------------------------------
 > ms_epr[, "202004"]
+Period-over-period price index for 4 levels over 1 time periods 
      202004
 B1      NaN
 B2 2.770456
 B3 0.537996
 B4 4.576286
 > ms_epr["B1", ]
+Period-over-period price index for 1 levels over 4 time periods 
    202001    202002    202003 202004
 B1      1 0.8949097 0.3342939    NaN
 > 
@@ -63,6 +66,7 @@ B1      1 0.8949097 0.3342939    NaN
 > 
 > ## -----------------------------------------------------------------------------
 > (ms_index <- aggregate(ms_epr, pias, na.rm = TRUE))
+Aggregate period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003   202004
 1       1 1.3007239 1.0630743 2.734761
 11      1 1.3007239 1.0630743 1.574515
@@ -75,6 +79,7 @@ B5      1 1.3007239 1.0630743 4.576286
 > 
 > ## -----------------------------------------------------------------------------
 > (ms_index_chained <- chain(ms_index))
+Aggregate fixed-base price index for 8 levels over 4 time periods 
    202001    202002    202003    202004
 1       1 1.3007239 1.3827662 3.7815355
 11      1 1.3007239 1.3827662 2.1771866
@@ -99,6 +104,7 @@ B5      1 1.3007239 1.3827662 6.3279338
 > 
 > ## -----------------------------------------------------------------------------
 > rebase(ms_index_chained, ms_index_chained[, "202004"])
+Aggregate fixed-base price index for 8 levels over 4 time periods 
       202001    202002    202003 202004
 1  0.2644428 0.3439671 0.3656626      1
 11 0.4593084 0.5974334 0.6351161      1
@@ -111,6 +117,7 @@ B5 0.1580295 0.2055527 0.2185178      1
 > 
 > ## -----------------------------------------------------------------------------
 > rebase(ms_index_chained, rowMeans(as.matrix(ms_index_chained)[, c("202003", "202004")]))
+Aggregate fixed-base price index for 8 levels over 4 time periods 
       202001    202002    202003    202004
 1  0.3872740 0.5037366 0.5355095 1.4644905
 11 0.5618052 0.7307535 0.7768452 1.2231548
@@ -152,6 +159,7 @@ B5 0.2593798 0.3373815 0.3586616 1.6413384
 > 
 > ## -----------------------------------------------------------------------------
 > aggregate(ms_epr, pias_sps, na.rm = TRUE)
+Aggregate period-over-period price index for 11 levels over 4 time periods 
      202001    202002    202003   202004
 1         1 1.3007239 1.0630743 2.684412
 11        1 1.3007239 1.0630743 1.492443
@@ -169,6 +177,7 @@ B5        1 1.3007239 1.0630743 4.576286
 > ms_epr2 <- ms_epr
 > ms_epr2["B2", 2:3] <- 1
 > ms_epr2
+Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003   202004
 B1      1 0.8949097 0.3342939      NaN
 B2      1 1.0000000 1.0000000 2.770456
@@ -177,6 +186,7 @@ B4    NaN       NaN       NaN 4.576286
 > 
 > ## -----------------------------------------------------------------------------
 > aggregate(ms_epr2, pias, na.rm = TRUE)
+Aggregate period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003   202004
 1       1 1.1721550 1.0400686 2.626560
 11      1 1.1721550 1.0400686 1.398142
@@ -189,6 +199,7 @@ B5      1 1.1721550 1.0400686 4.576286
 > 
 > ## -----------------------------------------------------------------------------
 > with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE, r = 1))
+Period-over-period price index for 4 levels over 4 time periods 
    202001     202002    202003   202004
 B1      1  0.8949097 0.3342939      NaN
 B2      1        NaN       NaN 5.155942
@@ -197,6 +208,7 @@ B4    NaN        NaN       NaN 9.368610
 > 
 > ## -----------------------------------------------------------------------------
 > with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE, r = -1))
+Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003    202004
 B1      1 0.8949097 0.3342939       NaN
 B2      1       NaN       NaN 1.7205750
@@ -223,6 +235,7 @@ B4    NaN       NaN       NaN 2.2353790
 > 
 > ## -----------------------------------------------------------------------------
 > with(ms_prices2, elemental_index(price / back_price, period, business, weight))
+Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003   202004
 B1      1 0.8949097 0.3342939      NaN
 B2      1       NaN       NaN 2.165152
@@ -250,6 +263,7 @@ B4    NaN       NaN       NaN 5.904237
 + )
 > 
 > (ms_index1 <- aggregate(ms_epr1, pias, na.rm = TRUE))
+Aggregate period-over-period price index for 8 levels over 3 time periods 
    202001    202002    202003
 1       1 1.3007239 1.0630743
 11      1 1.3007239 1.0630743
@@ -268,6 +282,7 @@ B5      1 1.3007239 1.0630743
 > 
 > ## -----------------------------------------------------------------------------
 > (ms_index2 <- aggregate(ms_epr2, update(pias, ms_index1), na.rm = TRUE))
+Aggregate period-over-period price index for 8 levels over 1 time periods 
      202004
 1  2.734761
 11 1.574515
@@ -280,6 +295,7 @@ B5 4.576286
 > 
 > ## -----------------------------------------------------------------------------
 > chain(stack(ms_index1, ms_index2))
+Aggregate fixed-base price index for 8 levels over 4 time periods 
    202001    202002    202003    202004
 1       1 1.3007239 1.3827662 3.7815355
 11      1 1.3007239 1.3827662 2.1771866
@@ -297,6 +313,7 @@ B5      1 1.3007239 1.3827662 6.3279338
 +                   period, business, na.rm = TRUE)
 + )
 + )
+Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003   202004
 B1      1 0.8949097 0.5781816 1.000000
 B2      1 1.0000000 0.1777227 2.770456
@@ -305,6 +322,7 @@ B4    NaN       NaN       NaN 4.576286
 > 
 > ## -----------------------------------------------------------------------------
 > (ms_index <- aggregate(ms_epr2, pias, na.rm = TRUE))
+Aggregate period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003    202004
 1       1 1.1721550 0.8082981 2.2653614
 11      1 1.1721550 0.8082981 0.8093718
@@ -325,6 +343,7 @@ B5      1 1.1721550 0.8082981 4.5762862
 +   elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
 + )
 > ms_epr1
+Period-over-period price index for 3 levels over 4 time periods 
    202001    202002    202003   202004
 B1      1 0.8949097 0.3342939      NaN
 B2      1       NaN       NaN 2.770456
@@ -334,11 +353,13 @@ B3      1 2.0200036 1.6353355 0.537996
 +   elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
 + )
 > ms_epr2
+Period-over-period price index for 1 levels over 4 time periods 
    202001 202002 202003   202004
 B4    NaN    NaN    NaN 4.576286
 > 
 > ## -----------------------------------------------------------------------------
 > aggregate(merge(ms_epr1, ms_epr2), pias, na.rm = TRUE)
+Aggregate period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003   202004
 1       1 1.3007239 1.0630743 2.734761
 11      1 1.3007239 1.0630743 1.574515
@@ -368,6 +389,7 @@ B5      1 1.3007239 1.0630743 4.576286
 > ## -----------------------------------------------------------------------------
 > ms_epr2 <- with(ms_prices2, elemental_index(value, period, level))
 > aggregate(merge(ms_epr1, ms_epr2), pias, na.rm = TRUE)
+Aggregate period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003   202004
 1       1 1.3007239 1.0630743 2.734761
 11      1 1.3007239 1.0630743 1.574515
@@ -394,6 +416,7 @@ B5      1 1.3007239 1.0630743 4.576286
 > ## -----------------------------------------------------------------------------
 > (ms_epr <- unstack(ms_epr))
 $`202001`
+Period-over-period price index for 4 levels over 1 time periods 
    202001
 B1      1
 B2      1
@@ -401,6 +424,7 @@ B3      1
 B4    NaN
 
 $`202002`
+Period-over-period price index for 4 levels over 1 time periods 
       202002
 B1 0.8949097
 B2       NaN
@@ -408,6 +432,7 @@ B3 2.0200036
 B4       NaN
 
 $`202003`
+Period-over-period price index for 4 levels over 1 time periods 
       202003
 B1 0.3342939
 B2       NaN
@@ -415,6 +440,7 @@ B3 1.6353355
 B4       NaN
 
 $`202004`
+Period-over-period price index for 4 levels over 1 time periods 
      202004
 B1      NaN
 B2 2.770456
@@ -432,6 +458,7 @@ B4 4.576286
 > 
 > ## -----------------------------------------------------------------------------
 > (paasche <- Reduce(stack, Map(aggregate, ms_epr, pias, na.rm = TRUE, r = -1)))
+Aggregate period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003    202004
 1       1 1.3127080 0.5874490 1.3591916
 11      1 1.3127080 0.5874490 0.8839797
@@ -458,4 +485,4 @@ B5      1 1.5107763 0.7956890 4.576286
 > 
 > proc.time()
    user  system elapsed 
-  0.151   0.024   0.170 
+  0.583   0.207   1.278 

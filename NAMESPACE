@@ -5,10 +5,8 @@ export(elemental_index, as_index, is_index, is_aggregate_index, is_chainable_ind
        contrib, chain, unchain, rebase, "weights<-")
 
 S3method("[", pindex)
-S3method("[[", pindex)
 S3method("[", aggregate_pindex)
 S3method("[<-", pindex)
-S3method("[[<-", pindex)
 S3method(head, pindex)
 S3method(tail, pindex)
 
@@ -85,9 +83,6 @@ S3method(update, aggregation_structure)
 S3method(as.matrix, aggregation_structure)
 S3method(as.data.frame, aggregation_structure)
 S3method(as.list, aggregation_structure)
-
-S3method(View, default)
-S3method(View, pindex)
 
 importFrom(stats, aggregate, weights, update, time, start, end)
 

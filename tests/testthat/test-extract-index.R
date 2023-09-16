@@ -44,9 +44,6 @@ test_that("subscripting methods work", {
                       contrib = TRUE)
     )
   )
-  expect_equal(epr[[4]], as.numeric(as.matrix(epr)[4, ]))
-  expect_equal(epr[[4, "2"]], 8)
-  expect_equal(epr[[4, -1]], 8)
 
   expect_false(is_aggregate_index(index[1:2, ]))
 })
@@ -55,13 +52,8 @@ test_that("subscripting methods give errors where expeected", {
   expect_error(epr[1, NA])
   expect_error(epr[1, 3])
   expect_error(epr[c(1, 2, 1), ])
-  expect_error(epr[[]])
-  expect_error(epr[[1:2]])
-  expect_error(epr[[1, 1:2]])
-  expect_error(epr[[NA]])
-  expect_error(epr[[1, NA]])
-  expect_error(epr[[1, 3]])
-  expect_error(epr[[c(1, 2, 1)]])
+  expect_error(epr[NULL])
+  expect_error(epr[integer(0)])
 })
 
 test_that("replacement methods work", {
@@ -78,7 +70,7 @@ test_that("replacement methods work", {
            2, 2, dimnames = list(1:2, 1:2))
   )
 
-  epr[[TRUE, 2]] <- "0"
+  epr[1, c(FALSE, TRUE)] <- "0"
   expect_equal(
     as.matrix(epr),
     matrix(c(0, 0, 0, 0, 0, res[6:8]), 4, 2, dimnames = list(11:14, 1:2))
@@ -92,7 +84,7 @@ test_that("replacement methods work", {
   epr[1, c(1, 2, 1)] <- 1:3
   expect_equal(epr[1, ], as_index(matrix(3:2, 1, dimnames = list("11", 1:2))))
 
-  epr[["14"]] <- 1
+  epr["14"] <- 1
   expect_equal(
     as.matrix(epr),
     matrix(c(3, 0, 0, 1, 2, res[6:7], 1), 4, 2, dimnames = list(11:14, 1:2))
@@ -104,18 +96,13 @@ test_that("replacement methods work", {
 })
 
 test_that("replacement methods give errors where expected", {
+  expect_error(epr[NULL] <- 1)
   expect_error(epr[NA] <- 1)
-  expect_error(epr[[NA]] <- 1)
+  expect_error(epr[integer(0)] <- 1)
   expect_error(epr[0] <- 1)
-  expect_error(epr[[0]] <- 1)
   expect_error(epr[1, 0] <- 1)
-  expect_error(epr[[1, 0]] <- 1)
   expect_error(epr[1] <- 1:3)
-  expect_error(epr[[1]] <- 1:3)
   expect_error(epr[1, NA] <- 1)
-  expect_error(epr[[1, NA]] <- 1)
   expect_error(epr[1, 3] <- 1)
-  expect_error(epr[[1, 3]] <- 1)
   expect_error(epr[5, 1] <- 1)
-  expect_error(epr[[5, 1]] <- 1)
 })
