@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,13 +61,7 @@
 [(x, i, j)
 
 # S3 method for pindex
-[[(x, i, j, exact = TRUE)
-
-# S3 method for pindex
 [(x, i, j) &lt;- value
-
-# S3 method for pindex
-[[(x, i, j) &lt;- value
 
 # S3 method for pindex
 head(x, n = 6, ...)
@@ -86,10 +80,6 @@ tail(x, n = 6, ...)</code></pre></div>
 <dd><p>Indices for the levels and time periods of a price index. See details.</p></dd>
 
 
-<dt>exact</dt>
-<dd><p>Should levels and time periods be matched exactly when indexing with a character vector? Set to <code>FALSE</code> to allow partial matching.</p></dd>
-
-
 <dt>value</dt>
 <dd><p>A numeric vector.</p></dd>
 
@@ -104,17 +94,14 @@ tail(x, n = 6, ...)</code></pre></div>
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The extraction methods treat <code>x</code> as a matrix of index values with (named) rows for each <code>level</code> and columns for each <code>period</code> in <code>x</code>. Unlike a matrix, dimensions are never dropped as indexing <code>x</code> always returns an index object (for <code>`[`</code>) or a single value (for <code>`[[`</code>). This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As <code>x</code> is not an atomic vector, indexing with a single index like <code>x[1]</code> or <code>x[[1]]</code> extracts all time periods for that level. Note that indexing an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is <em>not</em> an aggregated index.</p>
+    <p>The extraction methods treat <code>x</code> as a matrix of index values with (named) rows for each <code>level</code> and columns for each <code>period</code> in <code>x</code>. Unlike a matrix, dimensions are never dropped as subscripting <code>x</code> always returns an index object. This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As <code>x</code> is not an atomic vector, indexing with a single index like <code>x[1]</code> extracts all time periods for that level. Note that subscripting an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is <em>not</em> an aggregated index.</p>
 <p>The replacement methods similarly treat <code>x</code> as a matrix, and behave the same as replacing values in a matrix (except that <code>value</code> is coerced to numeric). Note that replacing the values of an index will remove the corresponding percent-change contributions (if any).</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p><code>[</code>, <code>[&lt;-</code>, <code>[[&lt;-</code>, <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code>, and <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail()</a></code> all return an index object.</p>
-
-
-<p><code>[[</code> returns a numeric vector.</p>
+<p>An index object.</p>
     </div>
 
     <div class="section level2">
@@ -132,19 +119,19 @@ tail(x, n = 6, ...)</code></pre></div>
 <span class="r-in"><span><span class="co"># Extract the indexes like a matrix</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">epr</span><span class="op">[</span><span class="st">"a"</span>, <span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Period-over-period price index for 1 levels over 2 time periods </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          1       2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a 1.732051 5.91608</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">epr</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Period-over-period price index for 2 levels over 1 time periods </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a 5.916080</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> b 6.928203</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">epr</span><span class="op">[[</span><span class="st">"a"</span>, <span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5.91608</span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">epr</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="co"># can be useful for doing specific imputations</span></span></span>
 <span class="r-in"><span><span class="va">epr</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Period-over-period price index for 2 levels over 2 time periods </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          1        2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a 1.000000 1.000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> b 2.828427 6.928203</span>
