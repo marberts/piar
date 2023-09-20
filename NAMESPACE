@@ -36,6 +36,8 @@ S3method(summary, pindex)
 S3method(print, pindex_summary)
 S3method(str, pindex)
 
+S3method(aggregate, chainable_pindex)
+S3method(aggregate, direct_pindex)
 S3method(aggregate, pindex)
 S3method(mean, pindex)
 

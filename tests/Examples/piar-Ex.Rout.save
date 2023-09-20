@@ -32,7 +32,8 @@ Type 'q()' to quit R.
 > 
 > ### Name: aggregate.pindex
 > ### Title: Aggregate elemental price indexes
-> ### Aliases: aggregate.pindex
+> ### Aliases: aggregate.chainable_pindex aggregate.direct_pindex
+> ###   aggregate.pindex
 > 
 > ### ** Examples
 > 
@@ -752,8 +753,8 @@ b 4.878315
 > 
 > ### Name: merge.pindex
 > ### Title: Merge price indexes
-> ### Aliases: merge.pindex merge.aggregate_pindex merge.chainable_pindex
-> ###   merge.direct_pindex
+> ### Aliases: merge.aggregate_pindex merge.chainable_pindex
+> ###   merge.direct_pindex merge.pindex
 > 
 > ### ** Examples
 > 
@@ -809,8 +810,8 @@ d 2.828427 6.928203
 > 
 > ### Name: stack.pindex
 > ### Title: Stack price indexes
-> ### Aliases: stack.pindex stack.aggregate_pindex stack.chainable_pindex
-> ###   stack.direct_pindex unstack.pindex
+> ### Aliases: stack.aggregate_pindex stack.chainable_pindex
+> ###   stack.direct_pindex stack.pindex unstack.pindex
 > 
 > ### ** Examples
 > 

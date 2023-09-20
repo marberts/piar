@@ -15,7 +15,7 @@ new_aggregate_pindex <- function(index,
   structure(res, class = c("aggregate_pindex", type, "pindex"))
 }
 
-aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ..., chainable) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
 
@@ -27,7 +27,6 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   # put the aggregation weights upside down to line up with pias
   w <- rev(weights(pias, na.rm = na.rm))
   has_contrib <- has_contrib(x)
-  chainable <- is_chainable_index(x)
   # loop over each time period
   for (t in seq_along(x$time)) {
     rel <- con <- vector("list", pias$height)
@@ -80,4 +79,12 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
                          pias[c("child", "parent", "eas", "height")],
                          is_chainable_index(x))
   )
+}
+
+aggregate.chainable_pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+  NextMethod("aggregate", chainable = TRUE)
+}
+
+aggregate.direct_pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+  NextMethod("aggregate", chainable = FALSE)
 }

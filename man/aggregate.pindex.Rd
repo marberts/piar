@@ -1,4 +1,6 @@
 \name{aggregate.pindex}
+\alias{aggregate.chainable_pindex}
+\alias{aggregate.direct_pindex}
 \alias{aggregate.pindex}
 
 \title{Aggregate elemental price indexes}
@@ -8,7 +10,9 @@ Aggregate elemental price indexes with a price index aggregation structure.
 }
 
 \usage{
-\method{aggregate}{pindex}(x, pias, na.rm = FALSE, r = 1, ...)
+\method{aggregate}{chainable_pindex}(x, pias, na.rm = FALSE, r = 1, ...)
+
+\method{aggregate}{direct_pindex}(x, pias, na.rm = FALSE, r = 1, ...)
 }
 
 \arguments{

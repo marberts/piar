@@ -1,8 +1,8 @@
 \name{merge.pindex}
-\alias{merge.pindex}
 \alias{merge.aggregate_pindex}
 \alias{merge.chainable_pindex}
 \alias{merge.direct_pindex}
+\alias{merge.pindex}
 
 \title{Merge price indexes}
 
@@ -13,8 +13,6 @@ This is useful for building up an index when different elemental aggregates come
 }
 
 \usage{
-\method{merge}{pindex}(x, y, ...)
-
 \method{merge}{aggregate_pindex}(x, y, ...)
 
 \method{merge}{chainable_pindex}(x, y, ...)

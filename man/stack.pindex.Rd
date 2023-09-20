@@ -1,8 +1,8 @@
 \name{stack.pindex}
-\alias{stack.pindex}
 \alias{stack.aggregate_pindex}
 \alias{stack.chainable_pindex}
 \alias{stack.direct_pindex}
+\alias{stack.pindex}
 \alias{unstack.pindex}
 
 \title{Stack price indexes}
@@ -16,8 +16,6 @@ These methods can be used in a map-reduce to make an index with multiple aggrega
 }
 
 \usage{
-\method{stack}{pindex}(x, y, ...)
-
 \method{stack}{aggregate_pindex}(x, y, ...)
 
 \method{stack}{chainable_pindex}(x, y, ...)
