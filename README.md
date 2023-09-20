@@ -96,6 +96,7 @@ index <- aggregate(elementals, pias, na.rm = TRUE)
 # Chain them to get a time series
 
 chain(index)
+#> Aggregate fixed-base price index for 8 levels over 4 time periods 
 #>    202001    202002    202003    202004
 #> 1       1 1.3007239 1.3827662 3.7815355
 #> 11      1 1.3007239 1.3827662 2.1771866
