@@ -14,18 +14,18 @@ reference:
   contents:
   - elemental_index
   - as_index
-  - aggregate.pindex
-  - mean.pindex
-  - summary.pindex
-  - vcov.aggregate_pindex
+  - aggregate.abstract_index
+  - mean.abstract_index
+  - summary.abstract_index
+  - vcov.aggregate_index
   
 - title: Manipulate price indexes
   desc: Helpful functions for working with price indexes
   contents:
   - chain
-  - merge.pindex
-  - stack.pindex
-  - extract-index
+  - merge.abstract_index
+  - stack.abstract_index
+  - extract.abstract_index
   - contrib
   - index-attributes
   - coerce-index
@@ -42,8 +42,8 @@ reference:
   - aggregation_structure
   - expand_classification
   - as_aggregation_structure
-  - coerce-aggregation-structure
-  - aggregation-structure-attributes
+  - coerce-aggregation_structure
+  - aggregation_structure-attributes
   - update.aggregation_structure
   
 - title: Sample data

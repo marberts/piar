@@ -1,67 +1,3 @@
-new_pindex <- function(index, contrib, levels, time, chainable) {
-  res <- list(index = as.list(index),
-              contrib = as.list(contrib),
-              levels = as.character(levels),
-              time = as.character(time))
-  type <- if (chainable) "chainable_pindex" else "direct_pindex"
-  structure(res, class = c(type, "pindex"))
-}
-
-validate_levels <- function(x) {
-  if (length(x) == 0L) {
-    stop("cannot make an index with no levels")
-  }
-  if (anyNA(x) || any(x == "")) {
-    stop("cannot make an index with missing levels")
-  }
-  if (anyDuplicated(x)) {
-    stop("cannot make an index with duplicate levels")
-  }
-  invisible(x)
-}
-
-validate_time <- function(x) {
-  if (length(x) == 0L) {
-    stop("cannot make an index with no time periods")
-  }
-  if (anyNA(x) || any(x == "")) {
-    stop("cannot make an index with missing time periods")
-  }
-  if (anyDuplicated(x)) {
-    stop("cannot make an index with duplicate time periods")
-  }
-  invisible(x)
-}
-
-validate_index_values <- function(x) {
-  if (!identical(x$time, names(x$index))) {
-    stop("missing index values for each time period")
-  }
-  if (any(vapply(x$index, \(z) !identical(x$levels, names(z)), logical(1L)))) {
-    stop("missing index values for each level")
-  }
-  invisible(x)
-}
-
-validate_contrib <- function(x) {
-  if (!identical(x$time, names(x$contrib))) {
-    stop("missing contributions for each time period")
-  }
-  if (any(vapply(x$contrib,
-                 \(z) !identical(x$levels, names(z)), logical(1L)))) {
-    stop("missing contributions for each level")
-  }
-  invisible(x)
-}
-
-validate_index <- function(x) {
-  validate_levels(x$levels)
-  validate_time(x$time)
-  validate_index_values(x$index)
-  validate_contrib(x$contrib)
-  x
-}
-
 #---- Calculate generalized-mean elemental indexes ----
 elemental_index <- function(x, ...) {
   UseMethod("elemental_index")
@@ -121,5 +57,5 @@ elemental_index.numeric <- function(x,
     contributions <- contrib_skeleton(levels, time)
   }
 
-  validate_index(new_pindex(index, contributions, levels, time, chainable))
+  validate_index(new_index(index, contributions, levels, time, chainable))
 }

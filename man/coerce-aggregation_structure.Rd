@@ -1,4 +1,4 @@
-\name{coerce-aggregation-structure}
+\name{coerce-aggregation_structure}
 \alias{as.matrix.aggregation_structure}
 \alias{as.data.frame.aggregation_structure}
 

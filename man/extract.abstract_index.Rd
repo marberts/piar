@@ -1,9 +1,9 @@
-\name{extract-index}
-\alias{[.pindex}
-\alias{[.aggregate_pindex}
-\alias{[<-.pindex}
-\alias{head.pindex}
-\alias{tail.pindex}
+\name{extract.abstract_index}
+\alias{[.abstract_index}
+\alias{[.aggregate_index}
+\alias{[<-.abstract_index}
+\alias{head.abstract_index}
+\alias{tail.abstract_index}
 
 \title{Extract and replace index values}
 
@@ -12,15 +12,15 @@ Methods to extract and replace index values like a matrix.
 }
 
 \usage{
-\method{[}{pindex}(x, i, j)
+\method{[}{abstract_index}(x, i, j)
 
-\method{[}{aggregate_pindex}(x, i, j)
+\method{[}{aggregate_index}(x, i, j)
 
-\method{[}{pindex}(x, i, j) <- value
+\method{[}{abstract_index}(x, i, j) <- value
 
-\method{head}{pindex}(x, n = 6, ...)
+\method{head}{abstract_index}(x, n = 6, ...)
 
-\method{tail}{pindex}(x, n = 6, ...)
+\method{tail}{abstract_index}(x, n = 6, ...)
 }
 
 \arguments{

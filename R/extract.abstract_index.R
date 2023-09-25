@@ -7,7 +7,7 @@ dim_indices <- function(x, i) {
   res
 }
 
-`[.pindex` <- function(x, i, j) {
+`[.abstract_index` <- function(x, i, j) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
   x$index <- lapply(x$index[periods], `[`, levels)
@@ -17,17 +17,17 @@ dim_indices <- function(x, i) {
   validate_index(x)
 }
 
-`[.aggregate_pindex` <- function(x, i, j) {
+`[.aggregate_index` <- function(x, i, j) {
   res <- NextMethod("[")
   if (!identical(res$levels, x$levels)) {
-    new_pindex(res$index, res$contrib, res$levels, res$time,
-               is_chainable_index(res))
+    new_index(res$index, res$contrib, res$levels, res$time,
+              is_chainable_index(res))
   } else {
     res
   }
 }
 
-`[<-.pindex` <- function(x, i, j, value) {
+`[<-.abstract_index` <- function(x, i, j, value) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
   res <- as.matrix(x)
@@ -41,7 +41,7 @@ dim_indices <- function(x, i) {
   validate_index(x)
 }
 
-head.pindex <- function(x, n = 6L, ...) {
+head.abstract_index <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {
@@ -61,7 +61,7 @@ head.pindex <- function(x, n = 6L, ...) {
   x[seq_len(nl), seq_len(np)]
 }
 
-tail.pindex <- function(x, n = 6L, ...) {
+tail.abstract_index <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {

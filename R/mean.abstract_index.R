@@ -1,4 +1,8 @@
-mean.pindex <- function(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...) {
+mean.abstract_index <- function(x,
+                                w = NULL,
+                                window = 3,
+                                na.rm = FALSE,
+                                r = 1, ...) {
   if (!is.null(w)) {
     if (length(w) != length(x$time) * length(x$levels)) {
       stop("'x' and 'w' must be the same length")

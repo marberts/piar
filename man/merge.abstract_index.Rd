@@ -1,8 +1,8 @@
-\name{merge.pindex}
-\alias{merge.aggregate_pindex}
-\alias{merge.chainable_pindex}
-\alias{merge.direct_pindex}
-\alias{merge.pindex}
+\name{merge.abstract_index}
+\alias{merge.aggregate_index}
+\alias{merge.chainable_index}
+\alias{merge.direct_index}
+\alias{merge.abstract_index}
 
 \title{Merge price indexes}
 
@@ -13,11 +13,11 @@ This is useful for building up an index when different elemental aggregates come
 }
 
 \usage{
-\method{merge}{aggregate_pindex}(x, y, ...)
+\method{merge}{aggregate_index}(x, y, ...)
 
-\method{merge}{chainable_pindex}(x, y, ...)
+\method{merge}{chainable_index}(x, y, ...)
 
-\method{merge}{direct_pindex}(x, y, ...)
+\method{merge}{direct_index}(x, y, ...)
 }
 
 \arguments{
@@ -29,11 +29,11 @@ This is useful for building up an index when different elemental aggregates come
 }
 
 \value{
-A price index that inherits from \code{chainable_pindex} if \code{x} is a period-over-period index, or \code{direct_pindex} if \code{x} is a fixed-base index. It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging does not return an aggregated index. 
+A price index that inherits from \code{chainable_index} if \code{x} is a period-over-period index, or \code{direct_index} if \code{x} is a fixed-base index. It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging does not return an aggregated index. 
 }
 
 \seealso{
-\code{\link[=stack.pindex]{stack}} to combine indexes for the same levels over different time periods.
+\code{\link[=stack.abstract_index]{stack}} to combine indexes for the same levels over different time periods.
 }
 
 \examples{

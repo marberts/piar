@@ -1,4 +1,4 @@
-stack.aggregate_pindex <- function(x, y, ...) {
+stack.aggregate_index <- function(x, y, ...) {
   if (is_aggregate_index(y)) {
     if (x$r != y$r) {
       stop("cannot stack indexes of different orders")
@@ -10,17 +10,17 @@ stack.aggregate_pindex <- function(x, y, ...) {
   NextMethod("stack")
 }
 
-stack.chainable_pindex <- function(x, y, ...) {
+stack.chainable_index <- function(x, y, ...) {
   y <- as_index(y, chainable = TRUE)
   NextMethod("stack")
 }
 
-stack.direct_pindex <- function(x, y, ...) {
+stack.direct_index <- function(x, y, ...) {
   y <- as_index(y, chainable = FALSE)
   NextMethod("stack")
 }
 
-stack.pindex <- function(x, y, ...) {
+stack.abstract_index <- function(x, y, ...) {
   if (!identical(x$levels, y$levels)) {
     stop("'x' and 'y' must be indexes for the same levels")
   }
@@ -33,14 +33,14 @@ stack.pindex <- function(x, y, ...) {
   # periods
   x$time <- c(x$time, y$time)
   if (is_aggregate_index(y) && !is_aggregate_index(x)) {
-    new_aggregate_pindex(x$index, x$contrib, x$levels, x$time, y$r, y$pias,
+    new_aggregate_index(x$index, x$contrib, x$levels, x$time, y$r, y$pias,
                         is_chainable_index(x))
   } else {
     x
   }
 }
 
-unstack.pindex <- function(x, ...) {
+unstack.abstract_index <- function(x, ...) {
   res <- vector("list", length(x$time))
   names(res) <- x$time
   for (t in seq_along(res)) {

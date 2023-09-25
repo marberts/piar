@@ -1,9 +1,9 @@
-\name{stack.pindex}
-\alias{stack.aggregate_pindex}
-\alias{stack.chainable_pindex}
-\alias{stack.direct_pindex}
-\alias{stack.pindex}
-\alias{unstack.pindex}
+\name{stack.abstract_index}
+\alias{stack.aggregate_index}
+\alias{stack.chainable_index}
+\alias{stack.direct_index}
+\alias{stack.abstract_index}
+\alias{unstack.abstract_index}
 
 \title{Stack price indexes}
 
@@ -16,13 +16,13 @@ These methods can be used in a map-reduce to make an index with multiple aggrega
 }
 
 \usage{
-\method{stack}{aggregate_pindex}(x, y, ...)
+\method{stack}{aggregate_index}(x, y, ...)
 
-\method{stack}{chainable_pindex}(x, y, ...)
+\method{stack}{chainable_index}(x, y, ...)
 
-\method{stack}{direct_pindex}(x, y, ...)
+\method{stack}{direct_index}(x, y, ...)
 
-\method{unstack}{pindex}(x, ...)
+\method{unstack}{abstract_index}(x, ...)
 }
 
 \arguments{
@@ -34,13 +34,13 @@ These methods can be used in a map-reduce to make an index with multiple aggrega
 }
 
 \value{
-\code{stack()} returns a price index with the same class as \code{x}. If \code{y} is an aggregate index then the result will also inherit from \code{aggregate_pindex}.
+\code{stack()} returns a price index with the same class as \code{x}. If \code{y} is an aggregate index then the result will also inherit from \code{aggregate_index}.
 
 \code{unstack()} returns a list of price indexes with the same class as \code{x}.
 }
 
 \seealso{
-\code{\link[=merge.pindex]{merge}} to combine indexes for different levels over the same time periods.
+\code{\link[=merge.abstract_index]{merge}} to combine indexes for different levels over the same time periods.
 }
 
 \examples{

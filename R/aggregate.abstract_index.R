@@ -1,21 +1,9 @@
-new_aggregate_pindex <- function(index,
-                                 contrib,
-                                 levels,
-                                 time,
-                                 r,
-                                 pias,
-                                 chainable) {
-  res <- list(index = as.list(index),
-              contrib = as.list(contrib),
-              levels = as.character(levels),
-              time = as.character(time),
-              r = as.numeric(r),
-              pias = as.list(pias))
-  type <- if (chainable) "chainable_pindex" else "direct_pindex"
-  structure(res, class = c("aggregate_pindex", type, "pindex"))
-}
-
-aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ..., chainable) {
+aggregate.abstract_index <- function(x,
+                                     pias,
+                                     na.rm = FALSE,
+                                     r = 1,
+                                     ...,
+                                     chainable) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
 
@@ -75,16 +63,16 @@ aggregate.pindex <- function(x, pias, na.rm = FALSE, r = 1, ..., chainable) {
     }
   }
   validate_index(
-    new_aggregate_pindex(x$index, x$contrib, pias$levels, x$time, r,
-                         pias[c("child", "parent", "eas", "height")],
-                         is_chainable_index(x))
+    new_aggregate_index(x$index, x$contrib, pias$levels, x$time, r,
+                        pias[c("child", "parent", "eas", "height")],
+                        chainable)
   )
 }
 
-aggregate.chainable_pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+aggregate.chainable_index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   NextMethod("aggregate", chainable = TRUE)
 }
 
-aggregate.direct_pindex <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+aggregate.direct_index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   NextMethod("aggregate", chainable = FALSE)
 }

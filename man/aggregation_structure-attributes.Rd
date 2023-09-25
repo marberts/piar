@@ -1,4 +1,4 @@
-\name{aggregation-structure-attributes}
+\name{aggregation_structure-attributes}
 \alias{weights.aggregation_structure}
 \alias{weights<-}
 \alias{weights<-.aggregation_structure}

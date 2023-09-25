@@ -25,15 +25,15 @@ Type 'q()' to quit R.
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
-> nameEx("aggregate.pindex")
-> ### * aggregate.pindex
+> nameEx("aggregate.abstract_index")
+> ### * aggregate.abstract_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: aggregate.pindex
+> ### Name: aggregate.abstract_index
 > ### Title: Aggregate elemental price indexes
-> ### Aliases: aggregate.chainable_pindex aggregate.direct_pindex
-> ###   aggregate.pindex
+> ### Aliases: aggregate.chainable_index aggregate.direct_index
+> ###   aggregate.abstract_index
 > 
 > ### ** Examples
 > 
@@ -76,12 +76,12 @@ top 2.462968 16.4796
 > 
 > 
 > cleanEx()
-> nameEx("aggregation-structure-attributes")
-> ### * aggregation-structure-attributes
+> nameEx("aggregation_structure-attributes")
+> ### * aggregation_structure-attributes
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: aggregation-structure-attributes
+> ### Name: aggregation_structure-attributes
 > ### Title: Methods to get the weights and levels for a price index
 > ###   aggregation structure
 > ### Aliases: weights.aggregation_structure weights<-
@@ -194,7 +194,7 @@ top 2.462968 16.4796
 > ### Title: Coerce to an aggregation structure
 > ### Aliases: as_aggregation_structure as_aggregation_structure.default
 > ###   as_aggregation_structure.data.frame as_aggregation_structure.matrix
-> ###   as_aggregation_structure.aggregate_pindex
+> ###   as_aggregation_structure.aggregate_index
 > ###   as_aggregation_structure.aggregation_structure
 > ###   is_aggregation_structure
 > 
@@ -241,7 +241,7 @@ top 2.462968 16.4796
 > ### Name: as_index
 > ### Title: Coerce to a price index
 > ### Aliases: as_index as_index.default as_index.matrix as_index.data.frame
-> ###   as_index.chainable_pindex as_index.direct_pindex is_index
+> ###   as_index.chainable_index as_index.direct_index is_index
 > ###   is_aggregate_index is_chainable_index is_direct_index
 > 
 > ### ** Examples
@@ -297,11 +297,10 @@ top 2.462968 16.4796
 > 
 > ### Name: chain
 > ### Title: Chain and rebase a price index
-> ### Aliases: chain chain.default chain.aggregate_pindex
-> ###   chain.chainable_pindex chain.direct_pindex unchain unchain.default
-> ###   unchain.aggregate_pindex unchain.direct_pindex
-> ###   unchain.chainable_pindex rebase rebase.default rebase.direct_pindex
-> ###   rebase.chainable_pindex
+> ### Aliases: chain chain.default chain.aggregate_index
+> ###   chain.chainable_index chain.direct_index unchain unchain.default
+> ###   unchain.aggregate_index unchain.direct_index unchain.chainable_index
+> ###   rebase rebase.default rebase.direct_index rebase.chainable_index
 > 
 > ### ** Examples
 > 
@@ -345,12 +344,12 @@ b 0.1443376 1
 > 
 > 
 > cleanEx()
-> nameEx("coerce-aggregation-structure")
-> ### * coerce-aggregation-structure
+> nameEx("coerce-aggregation_structure")
+> ### * coerce-aggregation_structure
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: coerce-aggregation-structure
+> ### Name: coerce-aggregation_structure
 > ### Title: Coerce a price index aggregation structure into a tabular form
 > ### Aliases: as.matrix.aggregation_structure
 > ###   as.data.frame.aggregation_structure
@@ -393,7 +392,7 @@ b 0.1443376 1
 > 
 > ### Name: coerce-index
 > ### Title: Coerce an index into a tabular form
-> ### Aliases: as.matrix.pindex as.data.frame.pindex
+> ### Aliases: as.matrix.abstract_index as.data.frame.abstract_index
 > 
 > ### ** Examples
 > 
@@ -426,7 +425,7 @@ b 2.828427 6.928203
 > 
 > ### Name: contrib
 > ### Title: Extract percent-change contributions
-> ### Aliases: contrib contrib.pindex
+> ### Aliases: contrib contrib.abstract_index
 > 
 > ### ** Examples
 > 
@@ -616,14 +615,15 @@ detaching ‘package:gpindex’
 > 
 > 
 > cleanEx()
-> nameEx("extract-index")
-> ### * extract-index
+> nameEx("extract.abstract_index")
+> ### * extract.abstract_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: extract-index
+> ### Name: extract.abstract_index
 > ### Title: Extract and replace index values
-> ### Aliases: [.pindex [.aggregate_pindex [<-.pindex head.pindex tail.pindex
+> ### Aliases: [.abstract_index [.aggregate_index [<-.abstract_index
+> ###   head.abstract_index tail.abstract_index
 > 
 > ### ** Examples
 > 
@@ -694,7 +694,8 @@ b 2.828427 6.928203
 > 
 > ### Name: index-attributes
 > ### Title: Get the attributes for a price index
-> ### Aliases: levels.pindex time.pindex start.pindex end.pindex
+> ### Aliases: levels.abstract_index time.abstract_index start.abstract_index
+> ###   end.abstract_index
 > 
 > ### ** Examples
 > 
@@ -718,14 +719,14 @@ b 2.828427 6.928203
 > 
 > 
 > cleanEx()
-> nameEx("mean.pindex")
-> ### * mean.pindex
+> nameEx("mean.abstract_index")
+> ### * mean.abstract_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: mean.pindex
+> ### Name: mean.abstract_index
 > ### Title: Aggregate a price index over subperiods
-> ### Aliases: mean.pindex
+> ### Aliases: mean.abstract_index
 > 
 > ### ** Examples
 > 
@@ -746,15 +747,15 @@ b 4.878315
 > 
 > 
 > cleanEx()
-> nameEx("merge.pindex")
-> ### * merge.pindex
+> nameEx("merge.abstract_index")
+> ### * merge.abstract_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: merge.pindex
+> ### Name: merge.abstract_index
 > ### Title: Merge price indexes
-> ### Aliases: merge.aggregate_pindex merge.chainable_pindex
-> ###   merge.direct_pindex merge.pindex
+> ### Aliases: merge.aggregate_index merge.chainable_index merge.direct_index
+> ###   merge.abstract_index
 > 
 > ### ** Examples
 > 
@@ -803,15 +804,15 @@ d 2.828427 6.928203
 > 
 > 
 > cleanEx()
-> nameEx("stack.pindex")
-> ### * stack.pindex
+> nameEx("stack.abstract_index")
+> ### * stack.abstract_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: stack.pindex
+> ### Name: stack.abstract_index
 > ### Title: Stack price indexes
-> ### Aliases: stack.aggregate_pindex stack.chainable_pindex
-> ###   stack.direct_pindex stack.pindex unstack.pindex
+> ### Aliases: stack.aggregate_index stack.chainable_index stack.direct_index
+> ###   stack.abstract_index unstack.abstract_index
 > 
 > ### ** Examples
 > 
@@ -846,14 +847,14 @@ b 2.828427 6.928203 2.828427 6.928203
 > 
 > 
 > cleanEx()
-> nameEx("summary.pindex")
-> ### * summary.pindex
+> nameEx("summary.abstract_index")
+> ### * summary.abstract_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: summary.pindex
+> ### Name: summary.abstract_index
 > ### Title: Summarize a price index
-> ### Aliases: summary.pindex
+> ### Aliases: summary.abstract_index
 > 
 > ### ** Examples
 > 
@@ -941,14 +942,14 @@ Indexes
 > 
 > 
 > cleanEx()
-> nameEx("vcov.aggregate_pindex")
-> ### * vcov.aggregate_pindex
+> nameEx("vcov.aggregate_index")
+> ### * vcov.aggregate_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: vcov.aggregate_pindex
+> ### Name: vcov.aggregate_index
 > ### Title: Bootstrap variance for a price index with replicate weights
-> ### Aliases: vcov.aggregate_pindex
+> ### Aliases: vcov.aggregate_index
 > 
 > ### ** Examples
 > 
@@ -987,7 +988,7 @@ top 0.007818832 0.003929299
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.495 0.048 1.023 0 0 
+Time elapsed:  0.373 0.043 0.745 0 0 
 > grDevices::dev.off()
 null device 
           1 
