@@ -1,18 +1,27 @@
 #---- Class generator ----
-new_aggregation_structure <- function(child,
-                                      parent,
-                                      levels,
-                                      eas,
-                                      weights,
-                                      height) {
-  res <- list(child = as.list(child),
-              parent = as.list(parent),
-              levels = as.character(levels),
-              eas = as.character(eas),
-              weights = as.numeric(weights),
-              height = as.integer(height))
-  names(res$weights) <- res$eas
-  structure(res, class = "aggregation_structure")
+new_piar_aggregation_structure <- function(child, parent, levels, eas,
+                                           weights, height) {
+  stopifnot(is.list(child))
+  stopifnot(is.list(parent))
+  stopifnot(is.character(levels))
+  stopifnot(is.character(eas))
+  stopifnot(is.double(weights))
+  stopifnot(is.integer(height))
+  res <- list(child = child, parent = parent, levels = levels,
+              eas = eas, weights = weights, height = height)
+  structure(res, class = "piar_aggregation_structure")
+}
+
+piar_aggregation_structure <- function(child, parent, levels, eas,
+                                       weights, height) {
+  levels <- as.character(levels)
+  eas <- as.character(eas)
+  weights <- as.numeric(weights)
+  names(weights) <- eas
+  height <- as.integer(height)
+  validate_piar_aggregation_structure(
+    new_piar_aggregation_structure(child, parent, levels, eas, weights, height)
+  )
 }
 
 #---- Validator ----
@@ -45,27 +54,26 @@ validate_pias_structure <- function(x) {
   invisible(x)
 }
 
-validate_pias <- function(x) {
+validate_piar_aggregation_structure <- function(x) {
   validate_pias_levels(x)
   validate_pias_structure(x)
   x
 }
 
 #---- Printing ----
-print.aggregation_structure <- function(x, ...) {
+print.piar_aggregation_structure <- function(x, ...) {
   cat("Aggregation structure for", length(x$eas), "elemental aggregates with",
       x$height - 1L, "levels above the elemental aggregates", "\n")
   invisible(x)
 }
 
-str.aggregation_structure <- function(object, ...) {
+str.piar_aggregation_structure <- function(object, ...) {
   str(unclass(object), ...)
 }
 
 #---- Getters and setters ----
-weights.aggregation_structure <- function(object,
-                                          ea_only = FALSE,
-                                          na.rm = FALSE, ...) {
+weights.piar_aggregation_structure <- function(object, ea_only = FALSE,
+                                               na.rm = FALSE, ...) {
   if (ea_only) {
     return(object$weights)
   }
@@ -84,15 +92,15 @@ weights.aggregation_structure <- function(object,
   UseMethod("weights<-")
 }
 
-`weights<-.aggregation_structure` <- function(object, value) {
+`weights<-.piar_aggregation_structure` <- function(object, value) {
   object$weights[] <- as.numeric(value)
   object
 }
 
-levels.aggregation_structure <- function(x) {
+levels.piar_aggregation_structure <- function(x) {
   x$levels
 }
 
-`levels<-.aggregation_structure` <- function(x, value) {
+`levels<-.piar_aggregation_structure` <- function(x, value) {
   stop("cannot replace levels attribute")
 }

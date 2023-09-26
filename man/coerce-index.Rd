@@ -1,6 +1,6 @@
 \name{coerce-index}
-\alias{as.matrix.abstract_index}
-\alias{as.data.frame.abstract_index}
+\alias{as.matrix.piar_index}
+\alias{as.data.frame.piar_index}
 
 \title{Coerce an index into a tabular form}
 
@@ -9,9 +9,9 @@ Turn an index into a matrix with a row for each level and a column for each peri
 }
 
 \usage{
-\method{as.matrix}{abstract_index}(x, ...)
+\method{as.matrix}{piar_index}(x, ...)
 
-\method{as.data.frame}{abstract_index}(x, ..., stringsAsFactors = FALSE)
+\method{as.data.frame}{piar_index}(x, ..., stringsAsFactors = FALSE)
 }
 
 \arguments{

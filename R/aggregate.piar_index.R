@@ -1,9 +1,5 @@
-aggregate.abstract_index <- function(x,
-                                     pias,
-                                     na.rm = FALSE,
-                                     r = 1,
-                                     ...,
-                                     chainable) {
+aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1,
+                                 ..., chainable) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
 
@@ -62,17 +58,15 @@ aggregate.abstract_index <- function(x,
       w <- rev(weights(pias, na.rm = na.rm))
     }
   }
-  validate_index(
-    new_aggregate_index(x$index, x$contrib, pias$levels, x$time, r,
-                        pias[c("child", "parent", "eas", "height")],
-                        chainable)
-  )
+  aggregate_piar_index(x$index, x$contrib, pias$levels, x$time, r,
+                       pias[c("child", "parent", "eas", "height")],
+                       chainable)
 }
 
-aggregate.chainable_index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+aggregate.chainable_piar_index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   NextMethod("aggregate", chainable = TRUE)
 }
 
-aggregate.direct_index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+aggregate.direct_piar_index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
   NextMethod("aggregate", chainable = FALSE)
 }

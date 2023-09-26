@@ -1,7 +1,7 @@
-\name{aggregate.abstract_index}
-\alias{aggregate.chainable_index}
-\alias{aggregate.direct_index}
-\alias{aggregate.abstract_index}
+\name{aggregate.piar_index}
+\alias{aggregate.chainable_piar_index}
+\alias{aggregate.direct_piar_index}
+\alias{aggregate.piar_index}
 
 \title{Aggregate elemental price indexes}
 
@@ -10,9 +10,9 @@ Aggregate elemental price indexes with a price index aggregation structure.
 }
 
 \usage{
-\method{aggregate}{chainable_index}(x, pias, na.rm = FALSE, r = 1, ...)
+\method{aggregate}{chainable_piar_index}(x, pias, na.rm = FALSE, r = 1, ...)
 
-\method{aggregate}{direct_index}(x, pias, na.rm = FALSE, r = 1, ...)
+\method{aggregate}{direct_piar_index}(x, pias, na.rm = FALSE, r = 1, ...)
 }
 
 \arguments{
@@ -42,18 +42,11 @@ In most cases aggregation is done with an arithmetic mean (the default), and thi
 
 Aggregating percent-change contributions uses the method in chapter 9 of the CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic mean. With a non-arithmetic mean, arithmetic weights are constructed using \code{\link[=transmute_weights]{transmute_weights(r, 1)}} in order to apply this method.
 
-There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with \code{\link[=merge.abstract_index]{merge()}}). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the change in the value of the index. This can also happen when aggregating an already aggregated index in which missing index values have been imputed (i.e., when \code{na.rm = TRUE}).
+There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with \code{\link[=merge.piar_index]{merge()}}). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the change in the value of the index. This can also happen when aggregating an already aggregated index in which missing index values have been imputed (i.e., when \code{na.rm = TRUE}).
 }
 
 \value{
-An aggregate price index. This is an object that inherits from \code{aggregate_index} and the class of \code{x}, with the following components.
-
-\item{index}{A named list with an entry for each \code{period} in \code{x} that gives a named vector of index values for each level in \code{pias}.}
-\item{contrib}{A named list with an entry for each \code{period}, which itself contains a list with an entry for each level in \code{pias} with a named vector that gives the additive contribution for each price relative.}
-\item{levels}{The levels for \code{pias}.}
-\item{time}{The levels for \code{period} from \code{x}.}
-\item{r}{The value for \code{r}.}
-\item{pias}{A list containing the \code{child}, \code{parent}, \code{eas}, and \code{height} components of \code{pias}.}
+An aggregate price index that inherits from \code{\link{aggregate_piar_index}} and the class of \code{x}, with the following components.
 }
 
 \references{
@@ -67,7 +60,7 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 
 \code{\link{aggregation_structure}} for making a price index aggregation structure.
 
-\code{\link[=mean.abstract_index]{mean}} for aggregating over subperiods.
+\code{\link[=mean.piar_index]{mean}} for aggregating over subperiods.
 }
 
 \examples{

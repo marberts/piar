@@ -1,8 +1,6 @@
-update.aggregation_structure <- function(object,
-                                         index,
-                                         period = end(index),
-                                         r = NULL,
-                                         ...) {
+update.piar_aggregation_structure <- function(object, index,
+                                              period = end(index), r = NULL,
+                                              ...) {
   index <- as_index(index)
   if (is.null(r)) {
     r <- if (is.null(index$r)) 1 else index$r

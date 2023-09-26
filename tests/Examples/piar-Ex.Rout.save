@@ -25,15 +25,15 @@ Type 'q()' to quit R.
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
-> nameEx("aggregate.abstract_index")
-> ### * aggregate.abstract_index
+> nameEx("aggregate.piar_index")
+> ### * aggregate.piar_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: aggregate.abstract_index
+> ### Name: aggregate.piar_index
 > ### Title: Aggregate elemental price indexes
-> ### Aliases: aggregate.chainable_index aggregate.direct_index
-> ###   aggregate.abstract_index
+> ### Aliases: aggregate.chainable_piar_index aggregate.direct_piar_index
+> ###   aggregate.piar_index
 > 
 > ### ** Examples
 > 
@@ -84,8 +84,9 @@ top 2.462968 16.4796
 > ### Name: aggregation_structure-attributes
 > ### Title: Methods to get the weights and levels for a price index
 > ###   aggregation structure
-> ### Aliases: weights.aggregation_structure weights<-
-> ###   weights<-.aggregation_structure levels.aggregation_structure
+> ### Aliases: weights.piar_aggregation_structure weights<-
+> ###   weights<-.piar_aggregation_structure
+> ###   levels.piar_aggregation_structure
 > 
 > ### ** Examples
 > 
@@ -194,8 +195,8 @@ top 2.462968 16.4796
 > ### Title: Coerce to an aggregation structure
 > ### Aliases: as_aggregation_structure as_aggregation_structure.default
 > ###   as_aggregation_structure.data.frame as_aggregation_structure.matrix
-> ###   as_aggregation_structure.aggregate_index
-> ###   as_aggregation_structure.aggregation_structure
+> ###   as_aggregation_structure.aggregate_piar_index
+> ###   as_aggregation_structure.piar_aggregation_structure
 > ###   is_aggregation_structure
 > 
 > ### ** Examples
@@ -241,8 +242,7 @@ top 2.462968 16.4796
 > ### Name: as_index
 > ### Title: Coerce to a price index
 > ### Aliases: as_index as_index.default as_index.matrix as_index.data.frame
-> ###   as_index.chainable_index as_index.direct_index is_index
-> ###   is_aggregate_index is_chainable_index is_direct_index
+> ###   as_index.chainable_piar_index as_index.direct_piar_index
 > 
 > ### ** Examples
 > 
@@ -252,35 +252,9 @@ top 2.462968 16.4796
 +   ea = rep(letters[1:2], 4)
 + )
 > 
-> pias <- aggregation_structure(
-+   list(c("top", "top", "top"), c("a", "b", "c")), 1:3
-+ )
-> 
 > # Calculate period-over-period Jevons elemental indexes
 > 
 > epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> # Aggregate as an arithmetic index
-> 
-> index <- aggregate(epr, pias, na.rm = TRUE)
-> 
-> is_index(epr)
-[1] TRUE
-> is_chainable_index(epr)
-[1] TRUE
-> is_direct_index(epr)
-[1] FALSE
-> is_aggregate_index(epr)
-[1] FALSE
-> 
-> is_index(index)
-[1] TRUE
-> is_chainable_index(index)
-[1] TRUE
-> is_direct_index(index)
-[1] FALSE
-> is_aggregate_index(index)
-[1] TRUE
 > 
 > all.equal(as_index(as.data.frame(epr)), epr)
 [1] TRUE
@@ -297,10 +271,11 @@ top 2.462968 16.4796
 > 
 > ### Name: chain
 > ### Title: Chain and rebase a price index
-> ### Aliases: chain chain.default chain.aggregate_index
-> ###   chain.chainable_index chain.direct_index unchain unchain.default
-> ###   unchain.aggregate_index unchain.direct_index unchain.chainable_index
-> ###   rebase rebase.default rebase.direct_index rebase.chainable_index
+> ### Aliases: chain chain.default chain.aggregate_piar_index
+> ###   chain.chainable_piar_index chain.direct_piar_index unchain
+> ###   unchain.default unchain.aggregate_piar_index
+> ###   unchain.direct_piar_index unchain.chainable_piar_index rebase
+> ###   rebase.default rebase.direct_piar_index rebase.chainable_piar_index
 > 
 > ### ** Examples
 > 
@@ -351,8 +326,8 @@ b 0.1443376 1
 > 
 > ### Name: coerce-aggregation_structure
 > ### Title: Coerce a price index aggregation structure into a tabular form
-> ### Aliases: as.matrix.aggregation_structure
-> ###   as.data.frame.aggregation_structure
+> ### Aliases: as.matrix.piar_aggregation_structure
+> ###   as.data.frame.piar_aggregation_structure
 > 
 > ### ** Examples
 > 
@@ -392,7 +367,7 @@ b 0.1443376 1
 > 
 > ### Name: coerce-index
 > ### Title: Coerce an index into a tabular form
-> ### Aliases: as.matrix.abstract_index as.data.frame.abstract_index
+> ### Aliases: as.matrix.piar_index as.data.frame.piar_index
 > 
 > ### ** Examples
 > 
@@ -425,7 +400,7 @@ b 2.828427 6.928203
 > 
 > ### Name: contrib
 > ### Title: Extract percent-change contributions
-> ### Aliases: contrib contrib.abstract_index
+> ### Aliases: contrib contrib.piar_index
 > 
 > ### ** Examples
 > 
@@ -615,15 +590,15 @@ detaching ‘package:gpindex’
 > 
 > 
 > cleanEx()
-> nameEx("extract.abstract_index")
-> ### * extract.abstract_index
+> nameEx("extract.piar_index")
+> ### * extract.piar_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: extract.abstract_index
+> ### Name: extract.piar_index
 > ### Title: Extract and replace index values
-> ### Aliases: [.abstract_index [.aggregate_index [<-.abstract_index
-> ###   head.abstract_index tail.abstract_index
+> ### Aliases: [.piar_index [.aggregate_piar_index [<-.piar_index
+> ###   head.piar_index tail.piar_index
 > 
 > ### ** Examples
 > 
@@ -694,8 +669,8 @@ b 2.828427 6.928203
 > 
 > ### Name: index-attributes
 > ### Title: Get the attributes for a price index
-> ### Aliases: levels.abstract_index time.abstract_index start.abstract_index
-> ###   end.abstract_index
+> ### Aliases: levels.piar_index time.piar_index start.piar_index
+> ###   end.piar_index
 > 
 > ### ** Examples
 > 
@@ -719,14 +694,14 @@ b 2.828427 6.928203
 > 
 > 
 > cleanEx()
-> nameEx("mean.abstract_index")
-> ### * mean.abstract_index
+> nameEx("mean.piar_index")
+> ### * mean.piar_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: mean.abstract_index
+> ### Name: mean.piar_index
 > ### Title: Aggregate a price index over subperiods
-> ### Aliases: mean.abstract_index
+> ### Aliases: mean.piar_index
 > 
 > ### ** Examples
 > 
@@ -747,15 +722,15 @@ b 4.878315
 > 
 > 
 > cleanEx()
-> nameEx("merge.abstract_index")
-> ### * merge.abstract_index
+> nameEx("merge.piar_index")
+> ### * merge.piar_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: merge.abstract_index
+> ### Name: merge.piar_index
 > ### Title: Merge price indexes
-> ### Aliases: merge.aggregate_index merge.chainable_index merge.direct_index
-> ###   merge.abstract_index
+> ### Aliases: merge.aggregate_piar_index merge.chainable_piar_index
+> ###   merge.direct_piar_index merge.piar_index
 > 
 > ### ** Examples
 > 
@@ -786,6 +761,58 @@ d 2.828427 6.928203
 > 
 > 
 > cleanEx()
+> nameEx("piar_index")
+> ### * piar_index
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: piar_index
+> ### Title: Price index objects
+> ### Aliases: piar_index chainable_piar_index direct_piar_index
+> ###   aggregate_piar_index is_index is_aggregate_index is_chainable_index
+> ###   is_direct_index
+> 
+> ### ** Examples
+> 
+> prices <- data.frame(
++   rel = 1:8,
++   period = rep(1:2, each = 4),
++   ea = rep(letters[1:2], 4)
++ )
+> 
+> pias <- aggregation_structure(
++   list(c("top", "top", "top"), c("a", "b", "c")), 1:3
++ )
+> 
+> # Calculate period-over-period Jevons elemental indexes
+> 
+> epr <- with(prices, elemental_index(rel, period, ea))
+> 
+> # Aggregate as an arithmetic index
+> 
+> index <- aggregate(epr, pias, na.rm = TRUE)
+> 
+> is_index(epr)
+[1] TRUE
+> is_chainable_index(epr)
+[1] TRUE
+> is_direct_index(epr)
+[1] FALSE
+> is_aggregate_index(epr)
+[1] FALSE
+> 
+> is_index(index)
+[1] TRUE
+> is_chainable_index(index)
+[1] TRUE
+> is_direct_index(index)
+[1] FALSE
+> is_aggregate_index(index)
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
 > nameEx("price_relative")
 > ### * price_relative
 > 
@@ -804,15 +831,15 @@ d 2.828427 6.928203
 > 
 > 
 > cleanEx()
-> nameEx("stack.abstract_index")
-> ### * stack.abstract_index
+> nameEx("stack.piar_index")
+> ### * stack.piar_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: stack.abstract_index
+> ### Name: stack.piar_index
 > ### Title: Stack price indexes
-> ### Aliases: stack.aggregate_index stack.chainable_index stack.direct_index
-> ###   stack.abstract_index unstack.abstract_index
+> ### Aliases: stack.aggregate_piar_index stack.chainable_piar_index
+> ###   stack.direct_piar_index stack.piar_index unstack.piar_index
 > 
 > ### ** Examples
 > 
@@ -847,14 +874,14 @@ b 2.828427 6.928203 2.828427 6.928203
 > 
 > 
 > cleanEx()
-> nameEx("summary.abstract_index")
-> ### * summary.abstract_index
+> nameEx("summary.piar_index")
+> ### * summary.piar_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: summary.abstract_index
+> ### Name: summary.piar_index
 > ### Title: Summarize a price index
-> ### Aliases: summary.abstract_index
+> ### Aliases: summary.piar_index
 > 
 > ### ** Examples
 > 
@@ -884,9 +911,9 @@ Indexes
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: update.aggregation_structure
+> ### Name: update.piar_aggregation_structure
 > ### Title: Update a price index aggregation structure
-> ### Aliases: update.aggregation_structure
+> ### Aliases: update.piar_aggregation_structure
 > 
 > ### ** Examples
 > 
@@ -942,14 +969,14 @@ Indexes
 > 
 > 
 > cleanEx()
-> nameEx("vcov.aggregate_index")
-> ### * vcov.aggregate_index
+> nameEx("vcov.aggregate_piar_index")
+> ### * vcov.aggregate_piar_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: vcov.aggregate_index
+> ### Name: vcov.aggregate_piar_index
 > ### Title: Bootstrap variance for a price index with replicate weights
-> ### Aliases: vcov.aggregate_index
+> ### Aliases: vcov.aggregate_piar_index
 > 
 > ### ** Examples
 > 
@@ -988,7 +1015,7 @@ top 0.007818832 0.003929299
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.373 0.043 0.745 0 0 
+Time elapsed:  0.531 0.043 1.244 0 0 
 > grDevices::dev.off()
 null device 
           1 

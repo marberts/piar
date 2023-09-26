@@ -1,8 +1,8 @@
 \name{index-attributes}
-\alias{levels.abstract_index}
-\alias{time.abstract_index}
-\alias{start.abstract_index}
-\alias{end.abstract_index}
+\alias{levels.piar_index}
+\alias{time.piar_index}
+\alias{start.piar_index}
+\alias{end.piar_index}
 
 \title{Get the attributes for a price index}
 
@@ -11,13 +11,13 @@ Methods to get the levels and time periods for a price index.
 }
 
 \usage{
-\method{levels}{abstract_index}(x)
+\method{levels}{piar_index}(x)
 
-\method{time}{abstract_index}(x, ...)
+\method{time}{piar_index}(x, ...)
 
-\method{start}{abstract_index}(x, ...)
+\method{start}{piar_index}(x, ...)
 
-\method{end}{abstract_index}(x, ...)
+\method{end}{piar_index}(x, ...)
 }
 
 \arguments{

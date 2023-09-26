@@ -1,9 +1,9 @@
-\name{extract.abstract_index}
-\alias{[.abstract_index}
-\alias{[.aggregate_index}
-\alias{[<-.abstract_index}
-\alias{head.abstract_index}
-\alias{tail.abstract_index}
+\name{extract.piar_index}
+\alias{[.piar_index}
+\alias{[.aggregate_piar_index}
+\alias{[<-.piar_index}
+\alias{head.piar_index}
+\alias{tail.piar_index}
 
 \title{Extract and replace index values}
 
@@ -12,15 +12,15 @@ Methods to extract and replace index values like a matrix.
 }
 
 \usage{
-\method{[}{abstract_index}(x, i, j)
+\method{[}{piar_index}(x, i, j)
 
-\method{[}{aggregate_index}(x, i, j)
+\method{[}{aggregate_piar_index}(x, i, j)
 
-\method{[}{abstract_index}(x, i, j) <- value
+\method{[}{piar_index}(x, i, j) <- value
 
-\method{head}{abstract_index}(x, n = 6, ...)
+\method{head}{piar_index}(x, n = 6, ...)
 
-\method{tail}{abstract_index}(x, n = 6, ...)
+\method{tail}{piar_index}(x, n = 6, ...)
 }
 
 \arguments{

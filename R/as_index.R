@@ -24,7 +24,7 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
     index[[t]][] <- x[, t]
   }
   contrib <- contrib_skeleton(levels, periods)
-  validate_index(new_index(index, contrib, levels, periods, chainable))
+  piar_index(index, contrib, levels, periods, chainable)
 }
 
 as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
@@ -39,35 +39,27 @@ as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
   as_index(res, chainable, ...)
 }
 
-as_index.chainable_index <- function(x, chainable = TRUE, ...) {
-  if (chainable) {
-    x
-  } else {
-    chain(x)
-  }
+as_index.chainable_piar_index <- function(x, chainable = TRUE, ...) {
+  if (chainable) x else chain(x)
 }
 
-as_index.direct_index <- function(x, chainable = FALSE, ...) {
-  if (chainable) {
-    unchain(x)
-  } else {
-    x
-  }
+as_index.direct_piar_index <- function(x, chainable = FALSE, ...) {
+  if (chainable) unchain(x) else x
 }
 
 #---- Test ----
 is_index <- function(x) {
-  inherits(x, "abstract_index")
+  inherits(x, "piar_index")
 }
 
 is_aggregate_index <- function(x) {
-  inherits(x, "aggregate_index")
+  inherits(x, "aggregate_piar_index")
 }
 
 is_chainable_index <- function(x) {
-  inherits(x, "chainable_index")
+  inherits(x, "chainable_piar_index")
 }
 
 is_direct_index <- function(x) {
-  inherits(x, "direct_index")
+  inherits(x, "direct_piar_index")
 }

@@ -1,8 +1,5 @@
-mean.abstract_index <- function(x,
-                                w = NULL,
-                                window = 3,
-                                na.rm = FALSE,
-                                r = 1, ...) {
+mean.piar_index <- function(x, w = NULL, window = 3, na.rm = FALSE,
+                            r = 1, ...) {
   if (!is.null(w)) {
     if (length(w) != length(x$time) * length(x$levels)) {
       stop("'x' and 'w' must be the same length")
@@ -28,5 +25,5 @@ mean.abstract_index <- function(x,
   x$index <- res
   x$contrib <- contrib_skeleton(x$levels, periods)
   x$time <- periods
-  validate_index(x)
+  validate_piar_index(x)
 }

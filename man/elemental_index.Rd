@@ -61,15 +61,7 @@ Indexes based on nested generalized means, like the Fisher index (and superlativ
 }
 
 \value{
-A price index. This is an object that inherits from \code{abstract_index} with the following components.
-
-\item{index}{A named list with an entry for each \code{period} that gives a named vector of index values for each level in \code{ea}.}
-\item{contrib}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}
-\item{levels}{The levels for \code{ea}.}
-\item{time}{The levels for \code{period}.}
-
-
-If \code{chainable == TRUE} then this is a period-over-period index that also inherits from \code{chainable_index}; otherwise, it is a fixed-based index that inherits from \code{direct_index}.
+A price index that inherits from \code{\link{piar_index}}. If \code{chainable == TRUE} then this is a period-over-period index that also inherits from \code{\link{chainable_piar_index}}; otherwise, it is a fixed-based index that inherits from \code{\link{direct_piar_index}}.
 }
 
 \references{
@@ -81,19 +73,19 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 \seealso{
 \code{\link{price_relative}} for making price relatives for the same products over time, and \code{\link{carry_forward}} and \code{\link{shadow_price}} for imputation of missing prices.
 
-\code{\link[=aggregate.abstract_index]{aggregate}} to aggregate elemental indexes according to a price index aggregation structure.
+\code{\link[=aggregate.piar_index]{aggregate}} to aggregate elemental indexes according to a price index aggregation structure.
 
 \code{\link{as_index}} to turn pre-computed index values into an index object.
 
 \code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
 
-\code{\link{contrib}} for getting the percent-change contributions of an index, \code{\link[=levels.abstract_index]{levels}} for getting the levels, and \code{\link[=time.abstract_index]{time}} for getting the time periods.
+\code{\link{contrib}} for getting the percent-change contributions of an index, \code{\link[=levels.piar_index]{levels}} for getting the levels, and \code{\link[=time.piar_index]{time}} for getting the time periods.
 
-\code{\link[=merge.abstract_index]{merge}} and \code{\link[=stack.abstract_index]{stack}} to combine index values.
+\code{\link[=merge.piar_index]{merge}} and \code{\link[=stack.piar_index]{stack}} to combine index values.
 
-\code{\link[=[.abstract_index]{[}} and \code{\link[=[<-.abstract_index]{[<-}} to extract and replace index values.
+\code{\link[=[.piar_index]{[}} and \code{\link[=[<-.piar_index]{[<-}} to extract and replace index values.
 
-\code{\link[=as.matrix.abstract_index]{as.matrix}} and \code{\link[=as.data.frame.abstract_index]{as.data.frame}} for coercing an index into a tabular form.
+\code{\link[=as.matrix.piar_index]{as.matrix}} and \code{\link[=as.data.frame.piar_index]{as.data.frame}} for coercing an index into a tabular form.
 }
 
 \examples{

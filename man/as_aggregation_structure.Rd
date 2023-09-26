@@ -3,8 +3,8 @@
 \alias{as_aggregation_structure.default}
 \alias{as_aggregation_structure.data.frame}
 \alias{as_aggregation_structure.matrix}
-\alias{as_aggregation_structure.aggregate_index}
-\alias{as_aggregation_structure.aggregation_structure}
+\alias{as_aggregation_structure.aggregate_piar_index}
+\alias{as_aggregation_structure.piar_aggregation_structure}
 \alias{is_aggregation_structure}
 
 \title{
@@ -24,9 +24,9 @@ as_aggregation_structure(x, ...)
 
 \method{as_aggregation_structure}{matrix}(x, ...)
 
-\method{as_aggregation_structure}{aggregate_index}(x, w = NULL, ...)
+\method{as_aggregation_structure}{aggregate_piar_index}(x, w = NULL, ...)
 
-\method{as_aggregation_structure}{aggregation_structure}(x, ...)
+\method{as_aggregation_structure}{piar_aggregation_structure}(x, ...)
 
 is_aggregation_structure(x)
 }
@@ -48,11 +48,11 @@ The method for aggregate indexes reconstructs the aggregation structure used to 
 }
 
 \value{
-A price index aggregation structure, except for \code{is_aggregate_index()} that returns \code{TRUE} if \code{x} inherits from \code{aggregation_structure}.
+A price index aggregation structure that inherits from \code{piar_aggregation_structure}, except for \code{is_aggregate_index()} that returns \code{TRUE} if \code{x} inherits from \code{piar_aggregation_structure}.
 }
 
 \seealso{
-\code{\link[=as.matrix.aggregation_structure]{as.matrix}} and \code{\link[=as.data.frame.aggregation_structure]{as.data.frame}} for coercing an aggregation structure into a tabular form.
+\code{\link[=as.matrix.piar_aggregation_structure]{as.matrix}} and \code{\link[=as.data.frame.piar_aggregation_structure]{as.data.frame}} for coercing an aggregation structure into a tabular form.
 }
 
 \examples{

@@ -20,7 +20,7 @@ aggregation_structure(x, w = NULL)
 }
 
 \value{
-A price index aggregation structure. This is an object of class \code{aggregation_structure}, which has the following components.
+A price index aggregation structure. This is an object of class \code{piar_aggregation_structure}, which has the following components.
 
 \item{child}{A nested list that gives the positions of the immediate children for each node in each level of the aggregation structure above the terminal nodes.}
 \item{parent}{A list that gives the position of the immediate parent for each node of the aggregation structure below the initial nodes.}
@@ -35,17 +35,17 @@ The \code{aggregation_structure()} function does its best to check its arguments
 }
 
 \seealso{
-\code{\link[=aggregate.abstract_index]{aggregate}} to aggregate price indexes made with \code{\link[=elemental_index]{elemental_index()}}.
+\code{\link[=aggregate.piar_index]{aggregate}} to aggregate price indexes made with \code{\link[=elemental_index]{elemental_index()}}.
 
 \code{\link{expand_classification}} to make \code{x} from a character representation of a hierarchical aggregation structure.
 
 \code{\link{as_aggregation_structure}} to coerce tabular data into an aggregation structure.
 
-\code{\link[=as.data.frame.aggregation_structure]{as.data.frame}} and \code{\link[=as.matrix.aggregation_structure]{as.matrix}} to coerce an aggregation structure into a tabular form.
+\code{\link[=as.data.frame.piar_aggregation_structure]{as.data.frame}} and \code{\link[=as.matrix.piar_aggregation_structure]{as.matrix}} to coerce an aggregation structure into a tabular form.
 
-\code{\link[=weights.aggregation_structure]{weights}} to get the weights for an aggregation structure.
+\code{\link[=weights.piar_aggregation_structure]{weights}} to get the weights for an aggregation structure.
 
-\code{\link[=update.aggregation_structure]{update}} for updating a price index aggregation structure with an aggregated index.
+\code{\link[=update.piar_aggregation_structure]{update}} for updating a price index aggregation structure with an aggregated index.
 }
 
 \examples{

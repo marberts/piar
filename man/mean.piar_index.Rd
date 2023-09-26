@@ -1,5 +1,5 @@
-\name{mean.abstract_index}
-\alias{mean.abstract_index}
+\name{mean.piar_index}
+\alias{mean.piar_index}
 
 \title{Aggregate a price index over subperiods}
 
@@ -8,7 +8,7 @@ Aggregate an index over subperiods by taking the (usually arithmetic) mean of in
 }
 
 \usage{
-\method{mean}{abstract_index}(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...)
+\method{mean}{piar_index}(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...)
 }
 
 \arguments{

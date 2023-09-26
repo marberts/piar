@@ -7,27 +7,27 @@ dim_indices <- function(x, i) {
   res
 }
 
-`[.abstract_index` <- function(x, i, j) {
+`[.piar_index` <- function(x, i, j) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
   x$index <- lapply(x$index[periods], `[`, levels)
   x$contrib <- lapply(x$contrib[periods], `[`, levels)
   x$levels <- x$levels[levels]
   x$time <- x$time[periods]
-  validate_index(x)
+  validate_piar_index(x)
 }
 
-`[.aggregate_index` <- function(x, i, j) {
+`[.aggregate_piar_index` <- function(x, i, j) {
   res <- NextMethod("[")
   if (!identical(res$levels, x$levels)) {
-    new_index(res$index, res$contrib, res$levels, res$time,
-              is_chainable_index(res))
+    new_piar_index(res$index, res$contrib, res$levels, res$time,
+                   is_chainable_index(res))
   } else {
     res
   }
 }
 
-`[<-.abstract_index` <- function(x, i, j, value) {
+`[<-.piar_index` <- function(x, i, j, value) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
   res <- as.matrix(x)
@@ -38,10 +38,10 @@ dim_indices <- function(x, i) {
     # drop contributions for replaced values
     x$contrib[[t]][levels] <- list(numeric(0L))
   }
-  validate_index(x)
+  validate_piar_index(x)
 }
 
-head.abstract_index <- function(x, n = 6L, ...) {
+head.piar_index <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {
@@ -61,7 +61,7 @@ head.abstract_index <- function(x, n = 6L, ...) {
   x[seq_len(nl), seq_len(np)]
 }
 
-tail.abstract_index <- function(x, n = 6L, ...) {
+tail.piar_index <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {

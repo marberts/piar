@@ -1,6 +1,6 @@
 \name{coerce-aggregation_structure}
-\alias{as.matrix.aggregation_structure}
-\alias{as.data.frame.aggregation_structure}
+\alias{as.matrix.piar_aggregation_structure}
+\alias{as.data.frame.piar_aggregation_structure}
 
 \title{
 Coerce a price index aggregation structure into a tabular form
@@ -11,9 +11,9 @@ Coerce a price index aggregation structure into an aggregation matrix, or a data
 }
 
 \usage{
-\method{as.matrix}{aggregation_structure}(x, ...)
+\method{as.matrix}{piar_aggregation_structure}(x, ...)
 
-\method{as.data.frame}{aggregation_structure}(x, ..., stringsAsFactors = FALSE)
+\method{as.data.frame}{piar_aggregation_structure}(x, ..., stringsAsFactors = FALSE)
 }
 
 \arguments{

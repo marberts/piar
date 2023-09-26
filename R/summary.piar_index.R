@@ -1,14 +1,14 @@
-summary.abstract_index <- function(object, ...) {
+summary.piar_index <- function(object, ...) {
   res <- vector("list", 2L)
   names(res) <- c("index", "contrib")
   res$index <- summary.data.frame(object$index, ...)
   res$contrib <- if (has_contrib(object)) {
     summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
   }
-  structure(res, class = "index_summary")
+  structure(res, class = "piar_index_summary")
 }
 
-print.index_summary <- function(x, ...) {
+print.piar_index_summary <- function(x, ...) {
   cat("Indexes\n")
   print(x$index, ...)
   if (!is.null(x$contrib)) {

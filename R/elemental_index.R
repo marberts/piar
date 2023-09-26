@@ -57,5 +57,5 @@ elemental_index.numeric <- function(x,
     contributions <- contrib_skeleton(levels, time)
   }
 
-  validate_index(new_index(index, contributions, levels, time, chainable))
+  piar_index(index, contributions, levels, time, chainable)
 }

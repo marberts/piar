@@ -1,5 +1,5 @@
-\name{summary.abstract_index}
-\alias{summary.abstract_index}
+\name{summary.piar_index}
+\alias{summary.piar_index}
 
 \title{Summarize a price index}
 
@@ -8,7 +8,7 @@ Summarize an index as a matrix of index values (i.e., the five-number summary fo
 }
 
 \usage{
-\method{summary}{abstract_index}(object, ...)
+\method{summary}{piar_index}(object, ...)
 }
 
 \arguments{

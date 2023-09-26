@@ -14,18 +14,19 @@ reference:
   contents:
   - elemental_index
   - as_index
-  - aggregate.abstract_index
-  - mean.abstract_index
-  - summary.abstract_index
-  - vcov.aggregate_index
+  - aggregate.piar_index
+  - mean.piar_index
+  - summary.piar_index
+  - vcov.aggregate_piar_index
+  - piar_index
   
 - title: Manipulate price indexes
   desc: Helpful functions for working with price indexes
   contents:
   - chain
-  - merge.abstract_index
-  - stack.abstract_index
-  - extract.abstract_index
+  - merge.piar_index
+  - stack.piar_index
+  - extract.piar_index
   - contrib
   - index-attributes
   - coerce-index
@@ -44,7 +45,7 @@ reference:
   - as_aggregation_structure
   - coerce-aggregation_structure
   - aggregation_structure-attributes
-  - update.aggregation_structure
+  - update.piar_aggregation_structure
   
 - title: Sample data
   contents:

@@ -1,6 +1,6 @@
 \name{contrib}
 \alias{contrib}
-\alias{contrib.abstract_index}
+\alias{contrib.piar_index}
 
 \title{
 Extract percent-change contributions
@@ -13,7 +13,7 @@ Extract percent-change contributions from a price index.
 \usage{
 contrib(x, ...)
 
-\method{contrib}{abstract_index}(x, level = levels(x), ...)
+\method{contrib}{piar_index}(x, level = levels(x), ...)
 }
 
 \arguments{

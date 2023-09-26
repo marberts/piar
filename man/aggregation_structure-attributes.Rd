@@ -1,8 +1,8 @@
 \name{aggregation_structure-attributes}
-\alias{weights.aggregation_structure}
+\alias{weights.piar_aggregation_structure}
 \alias{weights<-}
-\alias{weights<-.aggregation_structure}
-\alias{levels.aggregation_structure}
+\alias{weights<-.piar_aggregation_structure}
+\alias{levels.piar_aggregation_structure}
 
 \title{
 Methods to get the weights and levels for a price index aggregation structure
@@ -13,11 +13,11 @@ Get and set the weights for a price index aggregation structure, or get the leve
 }
 
 \usage{
-\method{weights}{aggregation_structure}(object, ea_only = FALSE, na.rm = FALSE, ...)
+\method{weights}{piar_aggregation_structure}(object, ea_only = FALSE, na.rm = FALSE, ...)
 
-\method{weights}{aggregation_structure}(object) <- value
+\method{weights}{piar_aggregation_structure}(object) <- value
 
-\method{levels}{aggregation_structure}(x)
+\method{levels}{piar_aggregation_structure}(x)
 }
 
 \arguments{

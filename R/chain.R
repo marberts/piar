@@ -7,13 +7,13 @@ chain.default <- function(x, ...) {
   chain(as_index(x), ...)
 }
 
-chain.aggregate_index <- function(x, ...) {
+chain.aggregate_piar_index <- function(x, ...) {
   res <- NextMethod("chain")
-  new_aggregate_index(res$index, res$contrib, res$levels,
-                      res$time, x$r, x$pias, is_chainable_index(res))
+  new_aggregate_piar_index(res$index, res$contrib, res$levels,
+                           res$time, x$r, x$pias, is_chainable_index(res))
 }
 
-chain.chainable_index <- function(x, link = rep(1, nlevels(x)), ...) {
+chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
   link <- as.numeric(link)
   if (length(link) != length(x$levels)) {
     stop("'link' must have a value for each level of 'x'")
@@ -27,10 +27,10 @@ chain.chainable_index <- function(x, link = rep(1, nlevels(x)), ...) {
   }
   # contributions are difficult to chain, so remove them
   x$contrib[] <- empty_contrib(x$levels)
-  new_index(x$index, x$contrib, x$levels, x$time, chainable = FALSE)
+  new_piar_index(x$index, x$contrib, x$levels, x$time, chainable = FALSE)
 }
 
-chain.direct_index <- function(x, ...) {
+chain.direct_piar_index <- function(x, ...) {
   x
 }
 
@@ -43,21 +43,21 @@ unchain.default <- function(x, ...) {
   unchain(as_index(x, chainable = FALSE), ...)
 }
 
-unchain.aggregate_index <- function(x, ...) {
+unchain.aggregate_piar_index <- function(x, ...) {
   res <- NextMethod("unchain")
-  new_aggregate_index(res$index, res$contrib, res$levels,
-                      res$time, x$r, x$pias, is_chainable_index(res))
+  new_aggregate_piar_index(res$index, res$contrib, res$levels,
+                           res$time, x$r, x$pias, is_chainable_index(res))
 }
 
-unchain.chainable_index <- function(x, ...) {
+unchain.chainable_piar_index <- function(x, ...) {
   x
 }
 
-unchain.direct_index <- function(x, ...) {
+unchain.direct_piar_index <- function(x, ...) {
   x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
   # contributions are difficult to unchain, so remove them
   x$contrib[] <- empty_contrib(x$levels)
-  new_index(x$index, x$contrib, x$levels, x$time, chainable = TRUE)
+  new_piar_index(x$index, x$contrib, x$levels, x$time, chainable = TRUE)
 }
 
 #---- Rebase ----
@@ -69,11 +69,11 @@ rebase.default <- function(x, ...) {
   rebase(as_index(x, chainable = FALSE), ...)
 }
 
-rebase.chainable_index <- function(x, ...) {
+rebase.chainable_piar_index <- function(x, ...) {
   x
 }
 
-rebase.direct_index <- function(x, base = rep(1, nlevels(x)), ...) {
+rebase.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   base <- as.numeric(base)
   if (length(base) != length(x$levels)) {
     stop("'base' must have a value for each level of 'x'")

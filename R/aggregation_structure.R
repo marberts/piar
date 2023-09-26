@@ -51,5 +51,5 @@ aggregation_structure <- function(x, w = NULL) {
     names(parent[[i]]) <- nm[[i]]
   }
   levels <- c(nested_names(rev(child)), ea)
-  validate_pias(new_aggregation_structure(child, parent, levels, ea, w, len))
+  piar_aggregation_structure(child, parent, levels, ea, w, len)
 }

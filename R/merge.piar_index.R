@@ -1,19 +1,20 @@
-merge.aggregate_index <- function(x, y, ...) {
-  x <- new_index(x$index, x$contrib, x$levels, x$time, is_chainable_index(x))
+merge.aggregate_piar_index <- function(x, y, ...) {
+  x <- new_piar_index(x$index, x$contrib, x$levels, x$time,
+                      is_chainable_index(x))
   NextMethod("merge")
 }
 
-merge.chainable_index <- function(x, y, ...) {
+merge.chainable_piar_index <- function(x, y, ...) {
   y <- as_index(y, chainable = TRUE)
   NextMethod("merge")
 }
 
-merge.direct_index <- function(x, y, ...) {
+merge.direct_piar_index <- function(x, y, ...) {
   y <- as_index(y, chainable = FALSE)
   NextMethod("merge")
 }
 
-merge.abstract_index <- function(x, y, ...) {
+merge.piar_index <- function(x, y, ...) {
   if (!identical(x$time, y$time)) {
     stop("'x' and 'y' must be indexes for the same time periods")
   }

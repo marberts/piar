@@ -1,4 +1,4 @@
-as.matrix.aggregation_structure <- function(x, ...) {
+as.matrix.piar_aggregation_structure <- function(x, ...) {
   nea <- length(x$eas)
   if (x$height == 1L) {
     return(matrix(numeric(0), ncol = nea, dimnames = list(NULL, x$eas)))
@@ -23,8 +23,8 @@ as.matrix.aggregation_structure <- function(x, ...) {
   do.call(rbind, rows)
 }
 
-as.data.frame.aggregation_structure <- function(x, ...,
-                                                stringsAsFactors = FALSE) {
+as.data.frame.piar_aggregation_structure <- function(x, ...,
+                                                     stringsAsFactors = FALSE) {
   colnames <- c(paste0("level", seq_along(x$child), recycle0 = TRUE), "ea")
   res <- as.data.frame(as.list(x),
                        col.names = colnames,
@@ -33,7 +33,7 @@ as.data.frame.aggregation_structure <- function(x, ...,
   res
 }
 
-as.list.aggregation_structure <- function(x, ...) {
+as.list.piar_aggregation_structure <- function(x, ...) {
   if (x$height == 1L) {
     return(list(x$eas))
   }
@@ -48,5 +48,5 @@ as.list.aggregation_structure <- function(x, ...) {
 }
 
 is_aggregation_structure <- function(x) {
-  inherits(x, "aggregation_structure")
+  inherits(x, "piar_aggregation_structure")
 }
