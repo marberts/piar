@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,22 +123,7 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A price index. This is an object that inherits from <code>abstract_index</code> with the following components.</p>
-<dl><dt>index</dt>
-<dd><p>A named list with an entry for each <code>period</code> that gives a named vector of index values for each level in <code>ea</code>.</p></dd>
-
-<dt>contrib</dt>
-<dd><p>A named list with an entry for each <code>period</code>, which itself contains a named list with an entry for each level in <code>ea</code> with a named vector that gives the additive contribution for each price relative. If <code>contrib = FALSE</code>, then each of these vectors is of length 0.</p></dd>
-
-<dt>levels</dt>
-<dd><p>The levels for <code>ea</code>.</p></dd>
-
-<dt>time</dt>
-<dd><p>The levels for <code>period</code>.</p></dd>
-
-
-
-</dl><p>If <code>chainable == TRUE</code> then this is a period-over-period index that also inherits from <code>chainable_index</code>; otherwise, it is a fixed-based index that inherits from <code>direct_index</code>.</p>
+<p>A price index that inherits from <code><a href="piar_index.html">piar_index</a></code>. If <code>chainable == TRUE</code> then this is a period-over-period index that also inherits from <code><a href="piar_index.html">chainable_piar_index</a></code>; otherwise, it is a fixed-based index that inherits from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -148,12 +133,12 @@
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="price_relative.html">price_relative</a></code> for making price relatives for the same products over time, and <code><a href="impute-prices.html">carry_forward</a></code> and <code><a href="impute-prices.html">shadow_price</a></code> for imputation of missing prices.</p>
-<p><code><a href="aggregate.abstract_index.html">aggregate</a></code> to aggregate elemental indexes according to a price index aggregation structure.</p>
+<p><code><a href="aggregate.piar_index.html">aggregate</a></code> to aggregate elemental indexes according to a price index aggregation structure.</p>
 <p><code><a href="as_index.html">as_index</a></code> to turn pre-computed index values into an index object.</p>
 <p><code><a href="chain.html">chain</a></code> for chaining period-over-period indexes, and <code><a href="chain.html">rebase</a></code> for rebasing an index.</p>
 <p><code><a href="contrib.html">contrib</a></code> for getting the percent-change contributions of an index, <code><a href="index-attributes.html">levels</a></code> for getting the levels, and <code><a href="index-attributes.html">time</a></code> for getting the time periods.</p>
-<p><code><a href="merge.abstract_index.html">merge</a></code> and <code><a href="stack.abstract_index.html">stack</a></code> to combine index values.</p>
-<p><code><a href="extract.abstract_index.html">[</a></code> and <code><a href="extract.abstract_index.html">[&lt;-</a></code> to extract and replace index values.</p>
+<p><code><a href="merge.piar_index.html">merge</a></code> and <code><a href="stack.piar_index.html">stack</a></code> to combine index values.</p>
+<p><code><a href="extract.piar_index.html">[</a></code> and <code><a href="extract.piar_index.html">[&lt;-</a></code> to extract and replace index values.</p>
 <p><code><a href="coerce-index.html">as.matrix</a></code> and <code><a href="coerce-index.html">as.data.frame</a></code> for coercing an index into a tabular form.</p></div>
     </div>
 
