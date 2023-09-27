@@ -94,13 +94,13 @@
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Numeric matrices are coerced into an index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). This essentially reverses calling <code><a href="coerce-index.html">as.matrix()</a></code> on an index object. If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces <code>x</code> to a matrix prior to using the matrix method.</p>
 <p>The data frame method for <code>as_index()</code> is best understood as reversing the effect of <code><a href="coerce-index.html">as.data.frame()</a></code> on an index object. It constructs a matrix by taking the levels of <code>x[[cols[1]]]</code> as columns and the levels of <code>x[[cols[2]]]</code> as rows (coercing to a factor if necessary). It then populates this matrix with the corresponding values in <code>x[[cols[3]]]</code>, and uses the matrix method for <code>as_index()</code>.</p>
-<p>If <code>x</code> is a period-over-period index then it is returned unchanged when <code>chainable == TRUE</code> and chained otherwise. Similarly, if <code>x</code> is a fixed-base index then it is returned unchanged when <code>chainable == FALSE</code> and unchain otherwise.</p>
+<p>If <code>x</code> is a period-over-period index then it is returned unchanged when <code>chainable = TRUE</code> and chained otherwise. Similarly, if <code>x</code> is a fixed-base index then it is returned unchanged when <code>chainable == FALSE</code> and unchain otherwise.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p><code>as_index()</code> returns a price index that inherits from <code><a href="piar_index.html">piar_index</a></code>. If <code>chainable == TRUE</code> then this is a period-over-period price index that also inherits from <code><a href="piar_index.html">chainable_piar_index</a></code>; otherwise, it is a fixed-base index that inherits from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
+<p><code>as_index()</code> returns a price index that inherits from <code><a href="piar_index.html">piar_index</a></code>. If <code>chainable = TRUE</code> then this is a period-over-period price index that also inherits from <code><a href="piar_index.html">chainable_piar_index</a></code>; otherwise, it is a fixed-base index that inherits from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

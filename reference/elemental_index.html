@@ -96,7 +96,7 @@
 
 
 <dt>chainable</dt>
-<dd><p>Are the price relatives in <code>x</code> period-over-period relatives for a chained calculation (the default)? This should be <code>FALSE</code> when <code>x</code> are fixed-base relatives.</p></dd>
+<dd><p>Are the price relatives in <code>x</code> period-over-period relatives for a chained calculation (the default)? This should be <code>FALSE</code> when <code>x</code> contains fixed-base relatives.</p></dd>
 
 
 <dt>na.rm</dt>
@@ -123,7 +123,7 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A price index that inherits from <code><a href="piar_index.html">piar_index</a></code>. If <code>chainable == TRUE</code> then this is a period-over-period index that also inherits from <code><a href="piar_index.html">chainable_piar_index</a></code>; otherwise, it is a fixed-based index that inherits from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
+<p>A price index that inherits from <code><a href="piar_index.html">piar_index</a></code>. If <code>chainable = TRUE</code> then this is a period-over-period index that also inherits from <code><a href="piar_index.html">chainable_piar_index</a></code>; otherwise, it is a fixed-based index that inherits from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -134,7 +134,7 @@
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="price_relative.html">price_relative</a></code> for making price relatives for the same products over time, and <code><a href="impute-prices.html">carry_forward</a></code> and <code><a href="impute-prices.html">shadow_price</a></code> for imputation of missing prices.</p>
 <p><code><a href="aggregate.piar_index.html">aggregate</a></code> to aggregate elemental indexes according to a price index aggregation structure.</p>
-<p><code><a href="as_index.html">as_index</a></code> to turn pre-computed index values into an index object.</p>
+<p><code><a href="as_index.html">as_index</a></code> to turn pre-computed (elemental) index values into an index object.</p>
 <p><code><a href="chain.html">chain</a></code> for chaining period-over-period indexes, and <code><a href="chain.html">rebase</a></code> for rebasing an index.</p>
 <p><code><a href="contrib.html">contrib</a></code> for getting the percent-change contributions of an index, <code><a href="index-attributes.html">levels</a></code> for getting the levels, and <code><a href="index-attributes.html">time</a></code> for getting the time periods.</p>
 <p><code><a href="merge.piar_index.html">merge</a></code> and <code><a href="stack.piar_index.html">stack</a></code> to combine index values.</p>
