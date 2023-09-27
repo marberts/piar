@@ -39,7 +39,7 @@ elemental_index(x, ...)
 
 \item{contrib}{Should percent-change contributions be calculated? The default does not calculate contributions.}
 
-\item{chainable}{Are the price relatives in \code{x} period-over-period relatives for a chained calculation (the default)? This should be \code{FALSE} when \code{x} are fixed-base relatives.}
+\item{chainable}{Are the price relatives in \code{x} period-over-period relatives for a chained calculation (the default)? This should be \code{FALSE} when \code{x} contains fixed-base relatives.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean imputation.}
 
@@ -61,7 +61,7 @@ Indexes based on nested generalized means, like the Fisher index (and superlativ
 }
 
 \value{
-A price index that inherits from \code{\link{piar_index}}. If \code{chainable == TRUE} then this is a period-over-period index that also inherits from \code{\link{chainable_piar_index}}; otherwise, it is a fixed-based index that inherits from \code{\link{direct_piar_index}}.
+A price index that inherits from \code{\link{piar_index}}. If \code{chainable = TRUE} then this is a period-over-period index that also inherits from \code{\link{chainable_piar_index}}; otherwise, it is a fixed-based index that inherits from \code{\link{direct_piar_index}}.
 }
 
 \references{
@@ -75,7 +75,7 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 
 \code{\link[=aggregate.piar_index]{aggregate}} to aggregate elemental indexes according to a price index aggregation structure.
 
-\code{\link{as_index}} to turn pre-computed index values into an index object.
+\code{\link{as_index}} to turn pre-computed (elemental) index values into an index object.
 
 \code{\link{chain}} for chaining period-over-period indexes, and \code{\link{rebase}} for rebasing an index.
 

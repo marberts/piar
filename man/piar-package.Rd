@@ -17,10 +17,6 @@ The starting point is to make period-over-period elemental price indexes with th
 The two-step workflow is described in chapter 8 of the CPI manual (2020) and chapter 5 of Balk (2008). A practical overview is given by Chiru et al. (2015) for the Canadian CPI, and a detailed discussion of chaining indexes is given by von der Lippe (2001).
 }
 
-\note{
-This package is designed to work with \emph{bilateral} price indexes. The \pkg{IndexNumR} package on the CRAN has support for making \emph{multilateral} price indexes.
-}
-
 \references{
 Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}. Cambridge University Press.
 

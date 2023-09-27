@@ -32,7 +32,7 @@ install.packages("piar")
 The development version is available on Github.
 
 ```r
-devtools::install_github("marberts/piar")
+pak::pkg_install("marberts/piar")
 ```
 
 ## Usage

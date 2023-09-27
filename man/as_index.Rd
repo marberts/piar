@@ -41,11 +41,11 @@ Numeric matrices are coerced into an index object by treating each column as a s
 
 The data frame method for \code{as_index()} is best understood as reversing the effect of \code{\link[=as.data.frame.piar_index]{as.data.frame()}} on an index object. It constructs a matrix by taking the levels of \code{x[[cols[1]]]} as columns and the levels of \code{x[[cols[2]]]} as rows (coercing to a factor if necessary). It then populates this matrix with the corresponding values in \code{x[[cols[3]]]}, and uses the matrix method for \code{as_index()}.
 
-If \code{x} is a period-over-period index then it is returned unchanged when \code{chainable == TRUE} and chained otherwise. Similarly, if \code{x} is a fixed-base index then it is returned unchanged when \code{chainable == FALSE} and unchain otherwise.
+If \code{x} is a period-over-period index then it is returned unchanged when \code{chainable = TRUE} and chained otherwise. Similarly, if \code{x} is a fixed-base index then it is returned unchanged when \code{chainable == FALSE} and unchain otherwise.
 }
 
 \value{
-\code{as_index()} returns a price index that inherits from \code{\link{piar_index}}. If \code{chainable == TRUE} then this is a period-over-period price index that also inherits from \code{\link{chainable_piar_index}}; otherwise, it is a fixed-base index that inherits from \code{\link{direct_piar_index}}.
+\code{as_index()} returns a price index that inherits from \code{\link{piar_index}}. If \code{chainable = TRUE} then this is a period-over-period price index that also inherits from \code{\link{chainable_piar_index}}; otherwise, it is a fixed-base index that inherits from \code{\link{direct_piar_index}}.
 }
 
 \seealso{
