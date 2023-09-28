@@ -271,11 +271,10 @@ top 2.462968 16.4796
 > 
 > ### Name: chain
 > ### Title: Chain and rebase a price index
-> ### Aliases: chain chain.default chain.aggregate_piar_index
-> ###   chain.chainable_piar_index chain.direct_piar_index unchain
-> ###   unchain.default unchain.aggregate_piar_index
-> ###   unchain.direct_piar_index unchain.chainable_piar_index rebase
-> ###   rebase.default rebase.direct_piar_index rebase.chainable_piar_index
+> ### Aliases: chain chain.default chain.chainable_piar_index
+> ###   chain.direct_piar_index unchain unchain.default
+> ###   unchain.chainable_piar_index unchain.direct_piar_index rebase
+> ###   rebase.default rebase.chainable_piar_index rebase.direct_piar_index
 > 
 > ### ** Examples
 > 
@@ -1015,7 +1014,7 @@ top 0.007818832 0.003929299
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.531 0.043 1.244 0 0 
+Time elapsed:  0.455 0.023 0.605 0 0 
 > grDevices::dev.off()
 null device 
           1 

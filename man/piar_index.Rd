@@ -11,7 +11,7 @@
 \title{Price index objects}
 
 \description{
-Classes to represent price indexes.
+There are several classes to represent price indexes.
 \itemize{
 \item All indexes inherit from the \code{piar_index} virtual class.
 \item Period-over-period indexes that can be chained over time inherit from \code{chainable_piar_index}.
@@ -37,16 +37,18 @@ is_aggregate_index(x)
 \details{
 The \code{piar_index} object is a list-S3 class with the following components:
 \describe{
-\item{index}{A named list with an entry for each \code{period} that gives a named vector of index values for each level in \code{ea}.}
-\item{contrib}{A named list with an entry for each \code{period}, which itself contains a named list with an entry for each level in \code{ea} with a named vector that gives the additive contribution for each price relative. If \code{contrib = FALSE}, then each of these vectors is of length 0.}
-\item{levels}{The levels for \code{ea}.}
-\item{time}{The levels for \code{period}.}
+\item{index}{A named list with an entry for each period in \code{time} that gives a named vector of index values for each level in \code{levels}.}
+\item{contrib}{A named list with an entry for each period in \code{time}, which itself contains a named list with an entry for each level in \code{levels} with a named vector that gives the additive contribution for each price relative.}
+\item{levels}{A character vector giving the levels of the index.}
+\item{time}{A character vector giving the time periods for the index.}
 }
 
-The \code{aggregate_piar_index} subclass adds:
+The \code{chainable_piar_index} and \code{direct_piar_index} subclasses have the same structure as the \code{piar_index} class, but differ in the methods used to manipulate the indexes.
+
+The \code{aggregate_piar_index} class further subclasses either \code{chainable_piar_index} or \code{direct_piar_index}, and adds the following components:
 \describe{
-\item{r}{The value for \code{r}.}
-\item{pias}{A list containing the \code{child}, \code{parent}, \code{eas}, and \code{height} components of \code{pias}.}
+\item{r}{The order of the generalized mean used to aggregated the index (usually 1).}
+\item{pias}{A list containing the \code{child}, \code{parent}, \code{eas}, and \code{height} components of the aggregation structured used to aggregate the index.}
 }
 }
 

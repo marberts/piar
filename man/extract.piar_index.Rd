@@ -36,7 +36,7 @@ Methods to extract and replace index values like a matrix.
 }
 
 \details{
-The extraction methods treat \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as subscripting \code{x} always returns an index object. This means that indexing with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, indexing with a single index like \code{x[1]} extracts all time periods for that level. Note that subscripting an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is \emph{not} an aggregated index.
+The extraction methods treat \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as subscripting \code{x} always returns an index object. This means that subscripting with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, subscripting with a single index like \code{x[1]} extracts all time periods for that level. Note that subscripting an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is \emph{not} an aggregated index.
 
 The replacement methods similarly treat \code{x} as a matrix, and behave the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding percent-change contributions (if any).
 }

@@ -1,18 +1,16 @@
 \name{chain}
 \alias{chain}
 \alias{chain.default}
-\alias{chain.aggregate_piar_index}
 \alias{chain.chainable_piar_index}
 \alias{chain.direct_piar_index}
 \alias{unchain}
 \alias{unchain.default}
-\alias{unchain.aggregate_piar_index}
-\alias{unchain.direct_piar_index}
 \alias{unchain.chainable_piar_index}
+\alias{unchain.direct_piar_index}
 \alias{rebase}
 \alias{rebase.default}
-\alias{rebase.direct_piar_index}
 \alias{rebase.chainable_piar_index}
+\alias{rebase.direct_piar_index}
 
 \title{
 Chain and rebase a price index
@@ -27,8 +25,6 @@ chain(x, ...)
 
 \method{chain}{default}(x, ...)
 
-\method{chain}{aggregate_piar_index}(x, ...)
-
 \method{chain}{chainable_piar_index}(x, link = rep(1, nlevels(x)), ...)
 
 \method{chain}{direct_piar_index}(x, ...)
@@ -37,19 +33,17 @@ unchain(x, ...)
 
 \method{unchain}{default}(x, ...)
 
-\method{unchain}{aggregate_piar_index}(x, ...)
+\method{unchain}{chainable_piar_index}(x, ...)
 
 \method{unchain}{direct_piar_index}(x, ...)
-
-\method{unchain}{chainable_piar_index}(x, ...)
 
 rebase(x, ...)
 
 \method{rebase}{default}(x, ...)
 
-\method{rebase}{direct_piar_index}(x, base = rep(1, nlevels(x)), ...)
-
 \method{rebase}{chainable_piar_index}(x, ...)
+
+\method{rebase}{direct_piar_index}(x, base = rep(1, nlevels(x)), ...)
 }
 
 \arguments{

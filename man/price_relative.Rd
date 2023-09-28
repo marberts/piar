@@ -28,7 +28,9 @@ A numeric vector of price relatives, with \code{product} as names.
 
 \code{\link[=base_period]{base_period}} for making fixed-base price relatives.
 
-\code{\link{carry_forward}} and \code{\link{shadow_price}} for imputations for missing prices.
+\code{\link{carry_forward}} and \code{\link{shadow_price}} to impute missing prices.
+
+\code{\link[=outliers]{outliers}} for methods to identify outliers with price relatives.
 }
 
 \examples{
