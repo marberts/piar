@@ -67,7 +67,7 @@ test_that("replacement methods work", {
   expect_equal(
     contrib(epr),
     matrix(c(0, 0, 2.5962965079607, 2.88444419044716),
-           2, 2, dimnames = list(1:2, 1:2))
+           2, 2, dimnames = list(c("11.1", "11.2"), 1:2))
   )
 
   epr[1, c(FALSE, TRUE)] <- "0"

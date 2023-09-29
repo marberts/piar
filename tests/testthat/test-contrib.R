@@ -14,12 +14,12 @@ test_that("contrib works", {
   expect_equal(
     contrib(epr),
     matrix(c(0, 0.414213562373095, 2.5962965079607, 2.88444419044716),
-           2, 2, dimnames = list(1:2, 1:2))
+           2, 2, dimnames = list(c("11.1", "11.2"), 1:2))
   )
   expect_equal(
     contrib(epr, "14"),
     matrix(c(0, 7),
-           1, 2, dimnames = list(1, 1:2))
+           1, 2, dimnames = list("14.1", 1:2))
   )
   expect_null(contrib(epr2))
 })

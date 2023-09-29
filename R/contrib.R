@@ -8,7 +8,7 @@ contrib.piar_index <- function(x, level = levels(x), ...) {
     return(NULL)
   }
   level <- as.character(level)
-  con <- lapply(x$contrib, `[[`, match.arg(level))
+  con <- lapply(x$contrib, `[[`, match(match.arg(level), x$levels))
   products <- unique(nested_names(con))
   out <- vector("list", length(con))
   names(out) <- x$time

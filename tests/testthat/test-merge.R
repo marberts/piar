@@ -31,7 +31,7 @@ test_that("merge returns the correct result", {
   expect_identical(levels(epr3), letters[1:8])
   expect_identical(time(epr3), time(epr1))
   expect_equal(contrib(epr3, "a"),
-               matrix(c(0, 4), 1, 2, dimnames = list(1, 1:2)))
+               matrix(c(0, 4), 1, 2, dimnames = list("a.1", 1:2)))
   expect_equal(contrib(epr3, "e"),
                matrix(numeric(0), 0, 2, dimnames = list(NULL, 1:2)))
   expect_equal(

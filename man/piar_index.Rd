@@ -37,8 +37,8 @@ is_aggregate_index(x)
 \details{
 The \code{piar_index} object is a list-S3 class with the following components:
 \describe{
-\item{index}{A named list with an entry for each period in \code{time} that gives a named vector of index values for each level in \code{levels}.}
-\item{contrib}{A named list with an entry for each period in \code{time}, which itself contains a named list with an entry for each level in \code{levels} with a named vector that gives the additive contribution for each price relative.}
+\item{index}{A list with an entry for each period in \code{time} that gives a vector of index values for each level in \code{levels}.}
+\item{contrib}{A list with an entry for each period in \code{time}, which itself contains a list with an entry for each level in \code{levels} with a named vector that gives the additive contribution for each price relative.}
 \item{levels}{A character vector giving the levels of the index.}
 \item{time}{A character vector giving the time periods for the index.}
 }

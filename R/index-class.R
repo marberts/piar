@@ -69,21 +69,20 @@ validate_time <- function(x) {
 }
 
 validate_index_values <- function(x) {
-  if (!identical(x$time, names(x$index))) {
+  if (length(x$index) != length(x$time)) {
     stop("missing index values for each time period")
   }
-  if (any(vapply(x$index, \(z) !identical(x$levels, names(z)), logical(1L)))) {
+  if (any(lengths(x$index) != length(x$levels))) {
     stop("missing index values for each level")
   }
   invisible(x)
 }
 
 validate_contrib <- function(x) {
-  if (!identical(x$time, names(x$contrib))) {
+  if (length(x$contrib) != length(x$time)) {
     stop("missing contributions for each time period")
   }
-  if (any(vapply(x$contrib,
-                 \(z) !identical(x$levels, names(z)), logical(1L)))) {
+  if (any(lengths(x$contrib) != length(x$levels))) {
     stop("missing contributions for each level")
   }
   invisible(x)

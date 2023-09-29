@@ -10,13 +10,13 @@ sequential_names <- function(...) {
   unsplit(Map(seq_len, tabulate(f)), f)
 }
 
-valid_product_names <- function(x, period, ea) {
+valid_product_names <- function(x, period) {
   x <- as.character(x)
+  period <- as.factor(period)
   if (anyNA(x) || any(x == "")) {
     stop("each product must have a non-missing name")
   }
-  f <- interaction(period, ea)
-  unsplit(lapply(split(x, f), make.unique), f)
+  unsplit(lapply(split(x, period), make.unique), period)
 }
 
 paste_until <- function(x, i) {
@@ -27,26 +27,20 @@ nested_names <- function(x) {
   as.character(unlist(lapply(x, names), use.names = FALSE))
 }
 
-empty_contrib <- function(x) {
-  res <- rep.int(list(numeric(0L)), length(x))
-  names(res) <- x
-  list(res)
-}
-
 has_contrib <- function(x) {
   Position(\(x) any(lengths(x) > 0L), x$contrib, nomatch = 0L) > 0L
 }
 
 index_skeleton <- function(levels, time) {
   index <- rep.int(NA_real_, length(levels))
-  names(index) <- levels
-  res <- rep.int(list(index), length(time))
-  names(res) <- time
-  res
+  rep.int(list(index), length(time))
+}
+
+empty_contrib <- function(x) {
+  res <- rep.int(list(numeric(0L)), length(x))
+  list(res)
 }
 
 contrib_skeleton <- function(levels, time) {
-  res <- rep.int(empty_contrib(levels), length(time))
-  names(res) <- time
-  res
+  rep.int(empty_contrib(levels), length(time))
 }

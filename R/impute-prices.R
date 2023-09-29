@@ -41,8 +41,8 @@ shadow_price <- function(x, period, product, ea,
     }
     # add shadow prices to 'x'
     impute <- is.na(price)
-    res[[t]][impute] <- epr$index[[1L]][as.character(ea[[t]][impute])] *
-      back_price[impute]
+    eas <- match(as.character(ea[[t]][impute]), epr$levels)
+    res[[t]][impute] <- epr$index[[1L]][eas] * back_price[impute]
   }
   res <- unsplit(res, period)
   attributes(res) <- attributes(x)

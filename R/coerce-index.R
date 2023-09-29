@@ -6,7 +6,9 @@ as.data.frame.piar_index <- function(x, ..., stringsAsFactors = FALSE) {
 }
 
 as.matrix.piar_index <- function(x, ...) {
-  do.call(cbind, x$index)
+  res <- do.call(cbind, x$index)
+  dimnames(res) <- list(x$levels, x$time)
+  res
 }
 
 # not documented

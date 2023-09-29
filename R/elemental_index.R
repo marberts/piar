@@ -30,9 +30,9 @@ elemental_index.numeric <- function(x,
 
   if (contrib) {
     if (is.null(names(x))) {
-      names(x) <- sequential_names(ea, period)
+      names(x) <- paste(ea, sequential_names(period, ea), sep = ".")
     } else {
-      names(x) <- valid_product_names(names(x), period, ea)
+      names(x) <- valid_product_names(names(x), period)
     }
   }
   # splitting 'x' into a nested list by period then ea is the same as
@@ -46,12 +46,13 @@ elemental_index.numeric <- function(x,
     w <- Map(split, split(as.numeric(w), period), ea)
   }
 
-  index_fun <- Vectorize(generalized_mean(r))
-  contrib_fun <- Vectorize(contributions(r), SIMPLIFY = FALSE)
+  index_fun <- Vectorize(generalized_mean(r), USE.NAMES = FALSE)
+  contrib_fun <- Vectorize(contributions(r),
+                           SIMPLIFY = FALSE, USE.NAMES = FALSE)
 
-  index <- Map(index_fun, x, w, na.rm = na.rm)
+  index <- Map(index_fun, x, w, na.rm = na.rm, USE.NAMES = FALSE)
   if (contrib) {
-    contributions <- Map(contrib_fun, x, w)
+    contributions <- Map(contrib_fun, x, w, USE.NAMES = FALSE)
   } else {
     # mimic contributions structure instead of a NULL
     contributions <- contrib_skeleton(levels, time)
