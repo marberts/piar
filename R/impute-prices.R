@@ -15,7 +15,7 @@ shadow_price <- function(x, period, product, ea,
   product <- as.factor(product)
   attributes(product) <- NULL
   product <- split(product, period)
-  if (max(vapply(product, anyDuplicated, numeric(1L), incomparables = NA))) {
+  if (duplicate_products(product)) {
     warning("there are duplicated period-product pairs")
   }
   ea <- split(as.factor(ea), period)
@@ -63,7 +63,7 @@ carry_forward <- function(x, period, product) {
   product <- as.factor(product)
   attributes(product) <- NULL
   product <- split(product, period)
-  if (max(vapply(product, anyDuplicated, numeric(1L), incomparables = NA))) {
+  if (duplicate_products(product)) {
     warning("there are duplicated period-product pairs")
   }
   for (t in seq_along(res)[-1L]) {

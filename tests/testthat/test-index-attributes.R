@@ -20,6 +20,27 @@ test_that("getter methods work", {
   expect_identical(end(epr), "2")
 })
 
-test_that("levels can't be replaced", {
-  expect_error(levels(epr) <- 1:4)
+test_that("setter methods work", {
+  epr3 <- epr
+  levels(epr3) <- 1:4
+  expect_identical(levels(epr3), as.character(1:4))
+  levels(epr3) <- levels(epr)
+  expect_identical(epr, epr3)
+  
+  levels(index) <- levels(index)
+  expect_true(is_aggregate_index(index))
+  
+  levels(index) <- 1:5
+  expect_false(is_aggregate_index(index))
+  
+  time(epr3) <- 2:1
+  expect_identical(time(epr3), as.character(2:1))
+  time(epr3) <- time(epr)
+  expect_identical(epr, epr3)
+  
+  expect_error(levels(epr3) <- NULL)
+  expect_error(time(epr3) <- NULL)
+  expect_error(levels(epr3) <- c(1, 2, 3, 1))
+  expect_error(levels(index) <- c(1, 2, 3, 1, 1))
+  expect_error(time(epr3) <- c(1, 1))
 })

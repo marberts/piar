@@ -49,9 +49,11 @@ elemental_index(x, ...)
 }
 
 \details{
-When supplied with a numeric vector, \code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, percent-change contributions (using names for \code{x} as product names). The default (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).
+When supplied with a numeric vector, \code{elemental_index()} is a simple wrapper that applies \code{\link[=generalized_mean]{generalized_mean(r)}} and \code{\link[=contributions]{contributions(r)}} (if \code{contrib = TRUE}) to \code{x} and \code{w} grouped by \code{ea} and \code{period}. That is, for every combination of elemental aggregate and time period, \code{elemental_index()} calculates an index based on a generalized mean of order \code{r} and, optionally, percent-change contributions. The default (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).
 
 The default method simply coerces \code{x} to a numeric vector prior to calling the method above.
+
+Names for \code{x} are used as product names when calculating percent-change contributions. Product names should be unique within each time period, and, if not, are passed to \code{\link[=make.unique]{make.unique()}}. If \code{x} has no names then elements of \code{x} are given sequential names within each elemental aggregate.
 
 The interpretation of the index depends on how the price relatives in \code{x} are made. If these are period-over-period relatives, then the result is a collection of period-over-period (chainable) elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base (direct) elemental indexes. For the latter, \code{chainable} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
 

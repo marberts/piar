@@ -91,8 +91,8 @@ validate_contrib <- function(x) {
 validate_piar_index <- function(x) {
   validate_levels(x$levels)
   validate_time(x$time)
-  validate_index_values(x$index)
-  validate_contrib(x$contrib)
+  validate_index_values(x)
+  validate_contrib(x)
   x
 }
 
@@ -133,11 +133,29 @@ levels.piar_index <- function(x) {
 }
 
 `levels<-.piar_index` <- function(x, value) {
-  stop("cannot replace levels attribute")
+  x$levels <- as.character(value)
+  validate_piar_index(x)
+}
+
+`levels<-.aggregate_piar_index` <- function(x, value) {
+  value <- as.character(value)
+  if (identical(value, x$levels)) {
+    return(x)
+  }
+  piar_index(x$index, x$contrib, value, x$time, is_chainable_index(x))
 }
 
 time.piar_index <- function(x, ...) {
   x$time
+}
+
+`time<-` <- function(x, value) {
+  UseMethod("time<-")
+}
+
+`time<-.piar_index` <- function(x, value) {
+  x$time <- as.character(value)
+  validate_piar_index(x)
 }
 
 start.piar_index <- function(x, ...) {

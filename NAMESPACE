@@ -4,7 +4,8 @@ export(elemental_index,
        aggregation_structure, expand_classification,
        as_aggregation_structure, is_aggregation_structure,
        carry_forward, shadow_price,
-       contrib, chain, unchain, rebase, "weights<-")
+       contrib, chain, unchain, rebase, 
+       "weights<-", "time<-")
 
 S3method("[", aggregate_piar_index)
 S3method("[", piar_index)
@@ -14,7 +15,9 @@ S3method(tail, piar_index)
 
 S3method(levels, piar_index)
 S3method("levels<-", piar_index)
+S3method("levels<-", aggregate_piar_index)
 S3method(time, piar_index)
+S3method("time<-", piar_index)
 S3method(start, piar_index)
 S3method(end, piar_index)
 

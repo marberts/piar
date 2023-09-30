@@ -44,3 +44,7 @@ empty_contrib <- function(x) {
 contrib_skeleton <- function(levels, time) {
   rep.int(empty_contrib(levels), length(time))
 }
+
+duplicate_products <- function(x) {
+  any(vapply(x, anyDuplicated, integer(1L), incomparables = NA) > 0L)
+}

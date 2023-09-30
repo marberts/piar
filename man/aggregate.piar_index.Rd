@@ -10,9 +10,23 @@ Aggregate elemental price indexes with a price index aggregation structure.
 }
 
 \usage{
-\method{aggregate}{chainable_piar_index}(x, pias, na.rm = FALSE, r = 1, ...)
+\method{aggregate}{chainable_piar_index}(
+  x,
+  pias,
+  na.rm = FALSE,
+  r = 1,
+  contrib = TRUE,
+  ...
+)
 
-\method{aggregate}{direct_piar_index}(x, pias, na.rm = FALSE, r = 1, ...)
+\method{aggregate}{direct_piar_index}(
+  x,
+  pias,
+  na.rm = FALSE,
+  r = 1,
+  contrib = TRUE,
+  ...
+)
 }
 
 \arguments{
@@ -23,6 +37,8 @@ Aggregate elemental price indexes with a price index aggregation structure.
 \item{na.rm}{Should missing values be removed? By default, missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean imputation.}
 
 \item{r}{Order of the generalized mean to aggregate index values. 0 for a geometric index (the default for making elemental indexes), 1 for an arithmetic index (the default for aggregating elemental indexes and averaging indexes over subperiods), or -1 for a harmonic index (usually for a Paasche index). Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}} for details.}
+
+\item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
@@ -47,6 +63,10 @@ There may not be contributions for all prices relatives in an elemental aggregat
 
 \value{
 An aggregate price index that inherits from \code{\link{aggregate_piar_index}} and the class of \code{x}, with the following components.
+}
+
+\note{
+For large indexes it can be much faster to aggregate elemental indexes as a matrix operation when there are no missing values---see the examples for details.
 }
 
 \references{

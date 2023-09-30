@@ -4,11 +4,21 @@
 
 - The `[[` method for index objects has been removed as it created unexpected problems for little gain. A more explicit and flexible way to get the same behavior as `index[[1, 1]]` is `as.matrix(index)[[1, 1]]`.
 
-- The class names for index objects have changed to fix a name conflict with `Matrix`.
+- The class names for index objects have changed to fix a name conflict with `Matrix`. This means it's now possible to use `rsmatrix` with `piar`.
+
+- Names for price relatives now need to be unique within a time period for `elemental_index()`. The previous (undocumented) behavior was to only require names be unique within a time period *and* elemental aggregate. This change has two non-backward compatible implications.
+
+   - The default product names for `elemental_index()` now include the name of the elemental aggregate to conform to the above requirement.
+
+   - Percent-change contributions from `contrib()` have simplified row names, as there is now no need to include index-level names to make product names unique.
 
 ## Improvements
 
 - Printing an index gives a textual description in addition to the matrix of index values. Printing an aggregation structure now just gives a description instead of a list.
+
+- There are now methods to set the levels and time periods of an index.
+
+- Methods for index objects are now faster for larger indexes.
 
 ## Bug fixes
 

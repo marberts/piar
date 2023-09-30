@@ -668,8 +668,9 @@ b 2.828427 6.928203
 > 
 > ### Name: index-attributes
 > ### Title: Get the attributes for a price index
-> ### Aliases: levels.piar_index time.piar_index start.piar_index
-> ###   end.piar_index
+> ### Aliases: levels.piar_index levels<-.piar_index
+> ###   levels<-.aggregate_piar_index time.piar_index time<-
+> ###   time<-.piar_index start.piar_index end.piar_index
 > 
 > ### ** Examples
 > 
@@ -1014,7 +1015,7 @@ top 0.007818832 0.003929299
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.455 0.023 0.605 0 0 
+Time elapsed:  0.495 0.048 1.072 0 0 
 > grDevices::dev.off()
 null device 
           1 

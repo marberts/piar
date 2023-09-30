@@ -1,9 +1,11 @@
 summary.piar_index <- function(object, ...) {
   res <- vector("list", 2L)
   names(res) <- c("index", "contrib")
-  res$index <- summary.data.frame(object$index, ...)
+  res$index <- summary(as.matrix(object), ...)
   res$contrib <- if (has_contrib(object)) {
-    summary.data.frame(lapply(object$contrib, unlist, use.names = FALSE), ...)
+    contrib <- lapply(object$contrib, unlist, use.names = FALSE)
+    names(contrib) <- object$time
+    summary(do.call(cbind, contrib, ...))
   }
   structure(res, class = "piar_index_summary")
 }

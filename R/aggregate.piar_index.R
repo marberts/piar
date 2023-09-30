@@ -1,4 +1,4 @@
-aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1,
+aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
                                  ..., chainable) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
@@ -10,7 +10,7 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1,
 
   # put the aggregation weights upside down to line up with pias
   w <- rev(weights(pias, na.rm = na.rm))
-  has_contrib <- has_contrib(x)
+  has_contrib <- has_contrib(x) && contrib
   pias_eas <- match(pias$eas, pias$levels) 
   # loop over each time period
   for (t in seq_along(x$time)) {
@@ -20,7 +20,6 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1,
     eas <- match(pias$eas, x$levels)
     rel[[1L]] <- x$index[[t]][eas]
     con[[1L]] <- x$contrib[[t]][eas]
-    #names(rel[[1L]]) <- names(con[[1L]]) <- pias$eas
     # get rid of any NULL contributions
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     # loop over each level in the pias from the bottom up and aggregate
@@ -65,10 +64,12 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1,
                        chainable)
 }
 
-aggregate.chainable_piar_index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+aggregate.chainable_piar_index <- function(x, pias, na.rm = FALSE, r = 1, 
+                                           contrib = TRUE, ...) {
   NextMethod("aggregate", chainable = TRUE)
 }
 
-aggregate.direct_piar_index <- function(x, pias, na.rm = FALSE, r = 1, ...) {
+aggregate.direct_piar_index <- function(x, pias, na.rm = FALSE, r = 1,
+                                        contrib = TRUE, ...) {
   NextMethod("aggregate", chainable = FALSE)
 }
