@@ -22,7 +22,7 @@ Aggregate price indexes that are the result of aggregating elemental indexes wit
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,10 +87,10 @@ Aggregate price indexes that are the result of aggregating elemental indexes wit
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The <code>piar_index</code> object is a list-S3 class with the following components:</p><dl><dt>index</dt>
-<dd><p>A named list with an entry for each period in <code>time</code> that gives a named vector of index values for each level in <code>levels</code>.</p></dd>
+<dd><p>A list with an entry for each period in <code>time</code> that gives a vector of index values for each level in <code>levels</code>.</p></dd>
 
 <dt>contrib</dt>
-<dd><p>A named list with an entry for each period in <code>time</code>, which itself contains a named list with an entry for each level in <code>levels</code> with a named vector that gives the additive contribution for each price relative.</p></dd>
+<dd><p>A list with an entry for each period in <code>time</code>, which itself contains a list with an entry for each level in <code>levels</code> with a named vector that gives the additive contribution for each price relative.</p></dd>
 
 <dt>levels</dt>
 <dd><p>A character vector giving the levels of the index.</p></dd>
