@@ -46,5 +46,5 @@ contrib_skeleton <- function(levels, time) {
 }
 
 duplicate_products <- function(x) {
-  any(vapply(x, anyDuplicated, integer(1L), incomparables = NA) > 0L)
+  any(vapply(x, anyDuplicated, numeric(1L), incomparables = NA) > 0)
 }
