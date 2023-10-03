@@ -23,10 +23,6 @@ paste_until <- function(x, i) {
   paste(x[seq_len(i)], collapse = "")
 }
 
-nested_names <- function(x) {
-  as.character(unlist(lapply(x, names), use.names = FALSE))
-}
-
 has_contrib <- function(x) {
   Position(\(x) any(lengths(x) > 0L), x$contrib, nomatch = 0L) > 0L
 }

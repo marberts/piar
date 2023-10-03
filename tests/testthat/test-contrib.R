@@ -21,7 +21,10 @@ test_that("contrib works", {
     matrix(c(0, 7),
            1, 2, dimnames = list("14.1", 1:2))
   )
-  expect_null(contrib(epr2))
+  expect_equal(
+    contrib(epr2),
+    matrix(numeric(0), 0, 2, dimnames = list(NULL, 1:2))
+  )
 })
 
 test_that("aggregate contributions have the right form", {

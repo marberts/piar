@@ -50,6 +50,6 @@ aggregation_structure <- function(x, w = NULL) {
     parent[[i]] <- match(parent[[i]][nm[[i]]], nm[-1L][[i]])
     names(parent[[i]]) <- nm[[i]]
   }
-  levels <- c(nested_names(rev(child)), ea)
-  piar_aggregation_structure(child, parent, levels, ea, w, len)
+  levels <- unlist(lapply(rev(child), names), use.names = FALSE)
+  piar_aggregation_structure(child, parent, c(levels, ea), ea, w, len)
 }

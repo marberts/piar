@@ -7,7 +7,7 @@ Extract percent-change contributions
 }
 
 \description{
-Extract percent-change contributions from a price index.
+Extract a matrix of percent-change contributions from a price index.
 }
 
 \usage{
@@ -25,9 +25,7 @@ contrib(x, ...)
 }
 
 \value{
-A matrix of percent-change contributions with a column for each \code{period} and a row for each product in \code{level}. Contributions are padded with 0 to fit into a rectangular array when products differ over time.
-
-If \code{x} does not have contributions then the result is \code{NULL}.
+A matrix of percent-change contributions with a column for each \code{period} and a row for each product for which there are contributions in \code{level}. Contributions are padded with 0 to fit into a rectangular array when products differ over time.
 }
 
 \examples{

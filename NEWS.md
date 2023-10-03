@@ -11,6 +11,8 @@
    - The default product names for `elemental_index()` now include the name of the elemental aggregate to conform to the above requirement.
 
    - Percent-change contributions from `contrib()` have simplified row names, as there is now no need to include index-level names to make product names unique.
+   
+- `contrib()` now always returns a matrix. Previously it would return `NULL` if there were no contributions for each level of the index.
 
 ## Improvements
 
@@ -19,6 +21,8 @@
 - There are now methods to set the levels and time periods of an index.
 
 - Methods for index objects are now faster for larger indexes.
+
+- `aggregate()` gains a new argument `contrib` that controls if percent-change contributions for elemental indexes are aggregated. The default maintains the current behavior of aggregating contributions if there are any.
 
 ## Bug fixes
 
