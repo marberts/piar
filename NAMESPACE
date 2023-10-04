@@ -9,6 +9,7 @@ export(elemental_index,
 
 S3method("[", aggregate_piar_index)
 S3method("[", piar_index)
+S3method("[<-", aggregate_piar_index)
 S3method("[<-", piar_index)
 S3method(head, piar_index)
 S3method(tail, piar_index)

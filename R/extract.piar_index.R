@@ -7,7 +7,7 @@ dim_indices <- function(x, i) {
   res
 }
 
-`[.piar_index` <- function(x, i, j) {
+`[.piar_index` <- function(x, i, j, ...) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
   x$index <- lapply(x$index[periods], `[`, levels)
@@ -17,7 +17,7 @@ dim_indices <- function(x, i) {
   validate_piar_index(x)
 }
 
-`[.aggregate_piar_index` <- function(x, i, j) {
+`[.aggregate_piar_index` <- function(x, i, j, ...) {
   res <- NextMethod("[")
   if (!identical(res$levels, x$levels)) {
     new_piar_index(res$index, res$contrib, res$levels, res$time,
@@ -27,7 +27,7 @@ dim_indices <- function(x, i) {
   }
 }
 
-`[<-.piar_index` <- function(x, i, j, value) {
+`[<-.piar_index` <- function(x, i, j, ..., value) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
   res <- as.matrix(x)
@@ -41,44 +41,8 @@ dim_indices <- function(x, i) {
   validate_piar_index(x)
 }
 
-head.piar_index <- function(x, n = 6L, ...) {
-  nl <- levels <- length(x$levels)
-  np <- periods <- length(x$time)
-  if (!is.na(n[1L])) {
-    if (n[1L] < 0L) {
-      nl <- max(levels + n[1L], 0L)
-    } else {
-      nl <- min(n[1L], levels)
-    }
-  }
-  if (!is.na(n[2L])) {
-    if (n[2L] < 0L) {
-      np <- max(periods + n[2L], 0L)
-    } else {
-      np <- min(n[2L], periods)
-    }
-  }
-  x[seq_len(nl), seq_len(np)]
-}
-
-tail.piar_index <- function(x, n = 6L, ...) {
-  nl <- levels <- length(x$levels)
-  np <- periods <- length(x$time)
-  if (!is.na(n[1L])) {
-    if (n[1L] < 0L) {
-      nl <- max(levels + n[1L], 0L)
-    } else {
-      nl <- min(n[1L], levels)
-    }
-  }
-  if (!is.na(n[2L])) {
-    if (n[2L] < 0L) {
-      np <- max(periods + n[2L], 0L)
-    } else {
-      np <- min(n[2L], periods)
-    }
-  }
-  i <- seq.int(to = levels, length.out = nl)
-  j <- seq.int(to = periods, length.out = np)
-  x[i, j]
+`[<-.aggregate_piar_index` <- function(x, i, j, ..., value) {
+  x <- new_piar_index(x$index, x$contrib, x$levels, x$time,
+                      is_chainable_index(x))
+  NextMethod("[<-")
 }

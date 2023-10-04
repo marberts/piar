@@ -596,8 +596,8 @@ detaching ‘package:gpindex’
 > 
 > ### Name: extract.piar_index
 > ### Title: Extract and replace index values
-> ### Aliases: [.piar_index [.aggregate_piar_index [<-.piar_index
-> ###   head.piar_index tail.piar_index
+> ### Aliases: [.aggregate_piar_index [.piar_index [<-.aggregate_piar_index
+> ###   [<-.piar_index
 > 
 > ### ** Examples
 > 
@@ -629,6 +629,42 @@ b 6.928203
 Period-over-period price index for 2 levels over 2 time periods 
          1        2
 a 1.000000 1.000000
+b 2.828427 6.928203
+> 
+> 
+> 
+> cleanEx()
+> nameEx("head.piar_index")
+> ### * head.piar_index
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: head.piar_index
+> ### Title: Return the first/last parts of an index
+> ### Aliases: head.piar_index tail.piar_index
+> 
+> ### ** Examples
+> 
+> prices <- data.frame(
++   rel = 1:8,
++   period = rep(1:2, each = 4),
++   ea = rep(letters[1:2], 4)
++ )
+> 
+> # Calculate Jevons elemental indexes
+> 
+> epr <- with(prices, elemental_index(rel, period, ea))
+> 
+> # Get the first/last time series
+> 
+> head(epr, 1)
+Period-over-period price index for 1 levels over 2 time periods 
+         1       2
+a 1.732051 5.91608
+> 
+> tail(epr, 1)
+Period-over-period price index for 1 levels over 2 time periods 
+         1        2
 b 2.828427 6.928203
 > 
 > 
@@ -1015,7 +1051,7 @@ top 0.007818832 0.003929299
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.495 0.048 1.072 0 0 
+Time elapsed:  0.449 0.034 0.621 0 0 
 > grDevices::dev.off()
 null device 
           1 

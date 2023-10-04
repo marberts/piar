@@ -88,4 +88,5 @@ test_that("argument checking works", {
   expect_error(elemental_index(1:3, 1:3, 1:3, w = 1:2))
   expect_error(elemental_index(1:3, factor(1:3, levels = numeric(0))))
   expect_error(elemental_index(1:3, ea = factor(1:3, levels = numeric(0))))
+  expect_warning(elemental_index(setNames(1:3, rep(1, 3)), contrib = TRUE))
 })

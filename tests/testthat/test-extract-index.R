@@ -93,6 +93,9 @@ test_that("replacement methods work", {
     contrib(epr, "14"),
     matrix(0, 0, 2, dimnames = list(NULL, 1:2))
   )
+  
+  index[1] <- 0
+  expect_false(is_aggregate_index(index))
 })
 
 test_that("replacement methods give errors where expected", {

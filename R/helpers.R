@@ -16,7 +16,11 @@ valid_product_names <- function(x, period) {
   if (anyNA(x) || any(x == "")) {
     stop("each product must have a non-missing name")
   }
-  unsplit(lapply(split(x, period), make.unique), period)
+  x <- split(x, period)
+  if (duplicate_products(x)) {
+    warning("product names are not unique in each time period")
+  }
+  unsplit(lapply(x, make.unique), period)
 }
 
 paste_until <- function(x, i) {

@@ -27,6 +27,7 @@ reference:
   - merge.piar_index
   - stack.piar_index
   - extract.piar_index
+  - head.piar_index
   - contrib
   - index-attributes
   - coerce-index

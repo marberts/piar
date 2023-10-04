@@ -2,11 +2,11 @@
 
 ## Significant changes
 
-- The `[[` method for index objects has been removed as it created unexpected problems for little gain. A more explicit and flexible way to get the same behavior as `index[[1, 1]]` is `as.matrix(index)[[1, 1]]`.
+- The `[[` method for index objects has been removed as it created unexpected problems for little gain. `as.matrix(index)[[1, 1]]` is a more explicit and flexible way to get the same behavior as `index[[1, 1]]`.
 
 - The class names for index objects have changed to fix a name conflict with `Matrix`. This means it's now possible to use `rsmatrix` with `piar`.
 
-- Names for price relatives now need to be unique within a time period for `elemental_index()`. The previous (undocumented) behavior was to only require names be unique within a time period *and* elemental aggregate. This change has two non-backward compatible implications.
+- Names for price relatives now need to be unique within a time period for `elemental_index()`. The previous (undocumented) behavior was to only require names be unique within a time period *and* elemental aggregate. This implies two non-backward compatible changes.
 
    - The default product names for `elemental_index()` now include the name of the elemental aggregate to conform to the above requirement.
 
@@ -29,6 +29,8 @@
 - Viewing index objects in the RStudio viewer longer gives an error.
 
 - `is_direct_index()` is now exported.
+
+- Replacing index values for an aggregate index no longer returns an aggregate index, as it may not be consistent in aggregation.
 
 # Version 0.5.0
 

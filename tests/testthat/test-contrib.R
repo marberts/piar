@@ -36,8 +36,10 @@ test_that("aggregate contributions have the right form", {
 
 test_that("product names are correct", {
   expect_equal(
-    contrib(elemental_index(c(a = 1, b = 2, c = 3, a = 4, a = 5),
-                            c(1, 1, 1, 2, 2), contrib = TRUE, r = 1)),
+    suppressWarnings(
+      contrib(elemental_index(c(a = 1, b = 2, c = 3, a = 4, a = 5),
+                              c(1, 1, 1, 2, 2), contrib = TRUE, r = 1))
+    ),
     matrix(c(0, 1 / 3, 2 / 3, 0, 1.5, 0, 0, 2), 4, 2,
            dimnames = list(c("a", "b", "c", "a.1"), 1:2))
   )

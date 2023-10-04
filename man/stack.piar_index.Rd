@@ -28,13 +28,13 @@ These methods can be used in a map-reduce to make an index with multiple aggrega
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
-\item{y}{A price index, or something that can coerced into one. If \code{x} is a period-over-period index then \code{y} is coerce into a chainable index; otherwise, \code{y} is coerced into a direct index.}
+\item{y}{A price index, or something that can coerced into one. If \code{x} is a period-over-period index then \code{y} is coerced into a chainable index; otherwise, \code{y} is coerced into a direct index.}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
 
 \value{
-\code{stack()} returns a price index with the same class as \code{x}. If \code{y} is an aggregate index then the result will also inherit from \code{aggregate_piar_index}.
+\code{stack()} returns a price index with the same class as \code{x}. If \code{y} is an aggregate index then the result will also inherit from \code{\link[=piar_index]{aggregate_piar_index}}.
 
 \code{unstack()} returns a list of price indexes with the same class as \code{x}.
 }

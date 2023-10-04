@@ -1,9 +1,8 @@
 \name{extract.piar_index}
-\alias{[.piar_index}
 \alias{[.aggregate_piar_index}
+\alias{[.piar_index}
+\alias{[<-.aggregate_piar_index}
 \alias{[<-.piar_index}
-\alias{head.piar_index}
-\alias{tail.piar_index}
 
 \title{Extract and replace index values}
 
@@ -12,15 +11,13 @@ Methods to extract and replace index values like a matrix.
 }
 
 \usage{
-\method{[}{piar_index}(x, i, j)
+\method{[}{aggregate_piar_index}(x, i, j, ...)
 
-\method{[}{aggregate_piar_index}(x, i, j)
+\method{[}{piar_index}(x, i, j, ...)
 
-\method{[}{piar_index}(x, i, j) <- value
+\method{[}{aggregate_piar_index}(x, i, j, ...) <- value
 
-\method{head}{piar_index}(x, n = 6, ...)
-
-\method{tail}{piar_index}(x, n = 6, ...)
+\method{[}{piar_index}(x, i, j, ...) <- value
 }
 
 \arguments{
@@ -30,19 +27,19 @@ Methods to extract and replace index values like a matrix.
 
 \item{value}{A numeric vector.}
 
-\item{n}{See \code{\link{head}}/\code{\link{tail}}.}
-
-\item{...}{Further arguments passed to or used by methods.}
+\item{...}{Ignored.}
 }
 
 \details{
-The extraction methods treat \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as subscripting \code{x} always returns an index object. This means that subscripting with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, subscripting with a single index like \code{x[1]} extracts all time periods for that level. Note that subscripting an aggregated index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is \emph{not} an aggregated index.
+The extraction methods treat \code{x} as a matrix of index values with (named) rows for each \code{level} and columns for each \code{period} in \code{x}. Unlike a matrix, dimensions are never dropped as subscripting \code{x} always returns an index object. This means that subscripting with a matrix is not possible, and only a submatrix can be extracted. As \code{x} is not an atomic vector, subscripting with a single index like \code{x[1]} extracts all time periods for that level.
 
 The replacement methods similarly treat \code{x} as a matrix, and behave the same as replacing values in a matrix (except that \code{value} is coerced to numeric). Note that replacing the values of an index will remove the corresponding percent-change contributions (if any).
+
+Subscripting an aggregate index cannot generally preserve the aggregation structure if any levels are removed or rearranged, and in this case the resulting index is \emph{not} an aggregate index. Similarly, replacing the values for an aggregate index generally breaks consistency in aggregation, and therefore the result is \emph{not} an aggregate index.
 }
 
 \value{
-An index object.
+An index object that inherits form \code{x}.
 }
 
 \examples{
