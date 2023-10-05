@@ -65,7 +65,7 @@ test_that("Fisher calculation agrees with manual calculation", {
 
   l <- with(ms_prices2, elemental_index(rel, period, business, r = 1.5))
   p <- with(ms_prices2, elemental_index(rel, period, business, w2, r = -1.5))
-  all.equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
+  expect_equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 })
 
 test_that("contributions add up", {
@@ -88,5 +88,6 @@ test_that("argument checking works", {
   expect_error(elemental_index(1:3, 1:3, 1:3, w = 1:2))
   expect_error(elemental_index(1:3, factor(1:3, levels = numeric(0))))
   expect_error(elemental_index(1:3, ea = factor(1:3, levels = numeric(0))))
+  expect_warning(elemental_index(-1:1, r = 1))
   expect_warning(elemental_index(setNames(1:3, rep(1, 3)), contrib = TRUE))
 })
