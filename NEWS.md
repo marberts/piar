@@ -32,6 +32,8 @@
 
 - Replacing index values for an aggregate index no longer returns an aggregate index, as it may not be consistent in aggregation.
 
+- Stacking two indexes now only returns an aggregate index if both indexes are themselves aggregate indexes. Previously it was possible to stack an aggregate index with a non-aggregate index to produce an aggregate index that is not consistent in aggregation.
+
 # Version 0.5.0
 
 ## Significant changes

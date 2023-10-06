@@ -23,7 +23,7 @@ Extract the first/last parts of an index as if it were a matrix.
 }
 
 \value{
-An index object that inherits form \code{x}.
+A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a period-over-period index, or \code{\link{direct_piar_index}} if \code{x} is a fixed-base index.
 }
 
 \examples{

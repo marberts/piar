@@ -67,9 +67,9 @@ Percent-change contributions are removed when chaining/unchaining/rebasing an in
 }
 
 \value{
-\code{chain()} and \code{rebase()} return a fixed-base index (i.e., inherits from \code{direct_piar_index}).
+\code{chain()} and \code{rebase()} return a fixed-base index (i.e., inherits from \code{\link{direct_piar_index}}).
 
-\code{unchain()} returns a period-over-period index (i.e., inherits from \code{chainable_piar_index}).
+\code{unchain()} returns a period-over-period index (i.e., inherits from \code{\link{chainable_piar_index}}).
 }
 
 \examples{

@@ -6,6 +6,9 @@ stack.aggregate_piar_index <- function(x, y, ...) {
     if (!identical(x$pias, y$pias)) {
       stop("'x' and 'y' must be generated from the same aggregation structure")
     }
+  } else {
+    x <- new_piar_index(x$index, x$contrib, x$levels, x$time,
+                        is_chainable_index(x))
   }
   NextMethod("stack")
 }
@@ -32,12 +35,7 @@ stack.piar_index <- function(x, y, ...) {
   # it's safe to use c() and not union() because there can't be duplicate
   # periods
   x$time <- c(x$time, y$time)
-  if (is_aggregate_index(y) && !is_aggregate_index(x)) {
-    new_aggregate_piar_index(x$index, x$contrib, x$levels, x$time, y$r, y$pias,
-                             is_chainable_index(x))
-  } else {
-    x
-  }
+  x
 }
 
 unstack.piar_index <- function(x, ...) {

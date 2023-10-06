@@ -9,12 +9,8 @@ as_index.default <- function(x, chainable = TRUE, ...) {
 
 as_index.matrix <- function(x, chainable = TRUE, ...) {
   storage.mode(x) <- "numeric"
-  levels <- as.character(
-    if (is.null(rownames(x))) seq_len(nrow(x)) else rownames(x)
-  )
-  periods <- as.character(
-    if (is.null(colnames(x))) seq_len(ncol(x)) else colnames(x)
-  )
+  levels <- if (is.null(rownames(x))) seq_len(nrow(x)) else rownames(x)
+  periods <- if (is.null(colnames(x))) seq_len(ncol(x)) else colnames(x)
   if (any(x <= 0, na.rm = TRUE)) {
     warning("some elements of 'x' are less than or equal to 0")
   }

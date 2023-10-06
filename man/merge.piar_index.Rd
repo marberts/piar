@@ -29,7 +29,7 @@ This is useful for building up an index when different elemental aggregates come
 }
 
 \value{
-A price index that inherits from \code{chainable_piar_index} if \code{x} is a period-over-period index, or \code{direct_piar_index} if \code{x} is a fixed-base index. It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging does not return an aggregated index. 
+A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a period-over-period index, or \code{\link{direct_piar_index}} if \code{x} is a fixed-base index. It is not generally possible to merge aggregated indexes, as this would change the aggregation structure, so merging does not return an aggregated index. 
 }
 
 \seealso{

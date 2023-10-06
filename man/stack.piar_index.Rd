@@ -34,7 +34,7 @@ These methods can be used in a map-reduce to make an index with multiple aggrega
 }
 
 \value{
-\code{stack()} returns a price index with the same class as \code{x}. If \code{y} is an aggregate index then the result will also inherit from \code{\link[=piar_index]{aggregate_piar_index}}.
+A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a period-over-period index, or \code{\link{direct_piar_index}} if \code{x} is a fixed-base index. If both \code{x} and \code{y} are aggregate indexes then the result will also inherit from \code{\link[=piar_index]{aggregate_piar_index}}.
 
 \code{unstack()} returns a list of price indexes with the same class as \code{x}.
 }

@@ -53,7 +53,7 @@ When supplied with a numeric vector, \code{elemental_index()} is a simple wrappe
 
 The default method simply coerces \code{x} to a numeric vector prior to calling the method above.
 
-Names for \code{x} are used as product names when calculating percent-change contributions. Product names should be unique within each time period, and, if not, are passed to \code{\link[=make.unique]{make.unique()}}. If \code{x} has no names then elements of \code{x} are given sequential names within each elemental aggregate.
+Names for \code{x} are used as product names when calculating percent-change contributions. Product names should be unique within each time period, and, if not, are passed to \code{\link[=make.unique]{make.unique()}} with a warning. If \code{x} has no names then elements of \code{x} are given sequential names within each elemental aggregate.
 
 The interpretation of the index depends on how the price relatives in \code{x} are made. If these are period-over-period relatives, then the result is a collection of period-over-period (chainable) elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base (direct) elemental indexes. For the latter, \code{chainable} should be set to \code{FALSE} so that no subsequent methods assume that a chained calculation should be used.
 

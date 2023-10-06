@@ -39,7 +39,7 @@ Subscripting an aggregate index cannot generally preserve the aggregation struct
 }
 
 \value{
-An index object that inherits form \code{x}.
+A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a period-over-period index, or \code{\link{direct_piar_index}} if \code{x} is a fixed-base index. If \code{x} inherits from \code{\link{aggregate_piar_index}} then \code{`[`} returns an aggregate index if the levels are unchanged.
 }
 
 \examples{
