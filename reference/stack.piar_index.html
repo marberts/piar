@@ -14,7 +14,7 @@ These methods can be used in a map-reduce to make an index with multiple aggrega
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@ These methods can be used in a map-reduce to make an index with multiple aggrega
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p><code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack()</a></code> returns a price index with the same class as <code>x</code>. If <code>y</code> is an aggregate index then the result will also inherit from <code><a href="piar_index.html">aggregate_piar_index</a></code>.</p>
+<p>A price index that inherits from <code><a href="piar_index.html">chainable_piar_index</a></code> if <code>x</code> is a period-over-period index, or <code><a href="piar_index.html">direct_piar_index</a></code> if <code>x</code> is a fixed-base index. If both <code>x</code> and <code>y</code> are aggregate indexes then the result will also inherit from <code><a href="piar_index.html">aggregate_piar_index</a></code>.</p>
 
 
 <p><code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">unstack()</a></code> returns a list of price indexes with the same class as <code>x</code>.</p>
