@@ -17,7 +17,11 @@ Chain and rebase a price index
 }
 
 \description{
-Chain a period-over-period index by taking the cumulative product of its values to turn it into a fixed-base (direct) index. Unchain a fixed-base index by dividing its values for successive periods to get a period-over-period index. Rebase a fixed-base index by dividing its values by the value of the index in the new base period.
+Chain a period-over-period index by taking the cumulative product of its values to turn it into a fixed-base (direct) index. 
+
+Unchain a fixed-base index by dividing its values for successive periods to get a period-over-period index. 
+
+Rebase a fixed-base index by dividing its values with the value of the index in the new base period.
 }
 
 \usage{

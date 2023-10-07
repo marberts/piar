@@ -37,6 +37,8 @@ A copy of \code{object} with price-updated weights using the index values in \co
 
 \seealso{
 \code{\link[=aggregate.piar_index]{aggregate}} to make an aggregated price index.
+
+\code{\link[=weights<-.piar_aggregation_structure]{weights<-}} to update the weights directly.
 }
 
 \examples{

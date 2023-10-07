@@ -37,6 +37,12 @@ test_that("stacking returns the correct result", {
                matrix(1:8, 4, 4, dimnames = list(letters[1:4], c(3:4, 1:2))))
 })
 
+test_that("stack works with [", {
+  epr3 <- stack(epr1, epr2)
+  expect_equal(epr3[, 1:2], epr1)
+  expect_equal(epr3[, 3:4], epr2)
+})
+
 test_that("coercion works as expected", {
   expect_equal(stack(epr1, epr2), stack(epr1, chain(epr2)))
   expect_equal(stack(chain(epr1), chain(epr2)), stack(chain(epr1), chain(epr2)))

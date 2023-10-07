@@ -41,6 +41,12 @@ test_that("merge returns the correct result", {
   )
 })
 
+test_that("merge works with [", {
+  epr3 <- merge(epr1, epr2)
+  expect_equal(epr3[1:4], epr1)
+  expect_equal(epr3[5:8], epr2)
+})
+
 test_that("coercion works as expected", {
   expect_equal(merge(epr1, epr2), merge(epr1, chain(epr2)))
   expect_equal(merge(chain(epr1), epr2), merge(chain(epr1), chain(epr2)))

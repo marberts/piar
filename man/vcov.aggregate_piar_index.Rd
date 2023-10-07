@@ -4,7 +4,7 @@
 \title{Bootstrap variance for a price index with replicate weights}
 
 \description{
-Calculate the sampling variance for an aggregate price index when using a sample of elemental aggregates.
+Estimate the sampling variance for an aggregate price index when using a sample of elemental aggregates.
 }
 
 \usage{
@@ -16,17 +16,21 @@ Calculate the sampling variance for an aggregate price index when using a sample
 
 \item{repweights}{A matrix, or something that can be coerced into one, of bootstrap replicate weights with a row for each elemental aggregate and a column for each replicate.}
 
-\item{mse}{Should covariances be centered off the value of the index in \code{object} (the default), or the mean of the replicates?}
+\item{mse}{Should variance be centered off the value of the index in \code{object} (the default), or the mean of the replicates?}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
 
 \details{
-This function is a simple wrapper to calculate the variance matrix for an aggregated index when bootstrap replicate weights are available for the elemental aggregates. This approach is usually applicable when elemental aggregates are sampled, and provides an estimator of the sampling variance of the price index. It ignores any sampling variance from the elemental indexes (which often use judgmental sampling), and ultimately depends on the method of generating replicate weights. It returns a matrix of variances with a row for each upper-level index and a column for each time period. (Chapters 3 and 4 of Selvanathan and Rao (1994), especially section 4.7, provide analytic variance estimators for some common price indexes that are applicable with simple random sampling.) Note that any missing elemental indexes need to be explicitly imputed prior to using this method, otherwise they will propagate throughout the variance calculation.
+This function is a simple wrapper that reaggregates the elemental indexes in \code{object} using the bootstrap replicate weights in \code{repweights} to get a collection of aggregate indexes from which the variance is calculated.
+
+This approach is usually applicable when elemental aggregates are sampled with a stratified design that follows the aggregation structure, so that there is no correlation between the index values for different levels of the index. It ignores any variation from the elemental indexes (which often use judgmental sampling), and ultimately depends on the method of generating replicate weights. (Chapters 3 and 4 of Selvanathan and Rao (1994), especially section 4.7, provide analytic variance estimators for some common price indexes that are applicable with simple random sampling.)
+
+Note that any missing elemental indexes need to be explicitly imputed prior to using this method, otherwise they will propagate throughout the variance calculation.
 }
 
 \value{
-A matrix of variances.
+A matrix of variances with a row for each upper-level index and a column for each time period. 
 }
 
 \references{

@@ -254,6 +254,12 @@ test_that("a fixed-based index aggregates correctly", {
   # Should work for a non-arithmetic index
   expect_equal(chain(aggregate(epr_pop, pias, r = 3)),
                aggregate(epr_fx, pias, r = 3))
+  
+  # Consistency in aggregation holds with a change in base period
+  expect_equal(
+    rebase(index_fx, index_fx[, 2]),
+    aggregate(rebase(index_fx, index_fx[, 2]), update(pias, index_fx, "b"))
+  )
 })
 
 test_that("corner cases work", {

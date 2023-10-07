@@ -100,8 +100,8 @@ validate_aggregate_piar_index <- function(x) {
   if (length(x$r) != 1) {
     stop("'r' must be of length 1")
   }
-  # TODO: Should there be validation for the pias component?
   validate_piar_index(x)
+  validate_pias_structure(c(x$pias, levels = list(x$levels)))
   x
 }
 
