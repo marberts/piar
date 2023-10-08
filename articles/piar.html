@@ -667,11 +667,11 @@ inputs.</p>
 <span><span class="co">#&gt; 31 202004    B4 4.576286</span></span>
 <span><span class="co">#&gt; 32 202004    B5 4.576286</span></span></code></pre></div>
 <p>All that is required is to pass the pre-existing indexes to
-<code><a href="../reference/elemental_index.html">elemental_index()</a></code> to cast it into the correct form. This
-won’t affect their values, but will allow them to be merged with the
-other elemental indexes, and aggregated.</p>
+<code><a href="../reference/as_index.html">as_index()</a></code> to cast them into the correct form. This won’t
+affect their values, but will allow them to be merged with the other
+elemental indexes, and aggregated.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ms_epr2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">ms_prices2</span>, <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">value</span>, <span class="va">period</span>, <span class="va">level</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ms_epr2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_index.html">as_index</a></span><span class="op">(</span><span class="va">ms_prices2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">ms_epr1</span>, <span class="va">ms_epr2</span><span class="op">)</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Aggregate period-over-period price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003   202004</span></span>
@@ -685,11 +685,11 @@ other elemental indexes, and aggregated.</p>
 <span><span class="co">#&gt; B5      1 1.3007239 1.0630743 4.576286</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="paasche-index">Paasche index<a class="anchor" aria-label="anchor" href="#paasche-index"></a>
+<h2 id="aggregating-a-paasche-index">Aggregating a Paasche index<a class="anchor" aria-label="anchor" href="#aggregating-a-paasche-index"></a>
 </h2>
 <p>All of the examples so far have used a single set of weights to
 aggregate an index. Although this is by far the most common case, there
-are situations where the weights to aggregate change every period. The
+are situations where the aggregation weights change every period. The
 Paasche index is the notable example, as the weights for aggregation are
 the current-period revenue shares in each period.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
