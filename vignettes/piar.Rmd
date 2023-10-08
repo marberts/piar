@@ -327,16 +327,16 @@ ms_prices2 <- subset(
 ms_prices2
 ```
 
-All that is required is to pass the pre-existing indexes to `elemental_index()` to cast it into the correct form. This won't affect their values, but will allow them to be merged with the other elemental indexes, and aggregated.
+All that is required is to pass the pre-existing indexes to `as_index()` to cast them into the correct form. This won't affect their values, but will allow them to be merged with the other elemental indexes, and aggregated.
 
 ```{r}
-ms_epr2 <- with(ms_prices2, elemental_index(value, period, level))
+ms_epr2 <- as_index(ms_prices2)
 aggregate(merge(ms_epr1, ms_epr2), pias, na.rm = TRUE)
 ```
 
-## Paasche index
+## Aggregating a Paasche index
 
-All of the examples so far have used a single set of weights to aggregate an index. Although this is by far the most common case, there are situations where the weights to aggregate change every period. The Paasche index is the notable example, as the weights for aggregation are the current-period revenue shares in each period.
+All of the examples so far have used a single set of weights to aggregate an index. Although this is by far the most common case, there are situations where the aggregation weights change every period. The Paasche index is the notable example, as the weights for aggregation are the current-period revenue shares in each period.
 
 ```{r}
 weights <- data.frame(

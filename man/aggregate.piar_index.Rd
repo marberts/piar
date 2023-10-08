@@ -54,7 +54,7 @@ The result is a collection of aggregated period-over-period indexes that can be 
 
 By default, missing elemental indexes will propagate when aggregating the index. Missing elemental indexes can be due to both missingness of these values in \code{x}, and the presence of elemental aggregates in \code{pias} that are not part of \code{x}. Setting \code{na.rm = TRUE} ignores missing values, and is equivalent to parental (or overall mean) imputation. As an aggregated price index generally cannot have missing values (for otherwise it can't be chained over time), any missing values for a level of \code{pias} are removed and recursively replaced by the value of its immediate parent.
 
-In most cases aggregation is done with an arithmetic mean (the default), and this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020). Aggregating with a non-arithmetic mean follows the same steps, except that the elemental indexes are aggregated with a mean of a different order (e.g., harmonic for a Paasche index), and the method for price updating the weights is slightly different.
+In most cases aggregation is done with an arithmetic mean (the default), and this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020). Aggregating with a non-arithmetic mean follows the same steps, except that the elemental indexes are aggregated with a mean of a different order (e.g., harmonic for a Paasche index), and the method for price updating the weights is slightly different. Note that, because aggregation is done with a generalized mean, the resulting index is consistent-in-aggregation at east point in time.
 
 Aggregating percent-change contributions uses the method in chapter 9 of the CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic mean. With a non-arithmetic mean, arithmetic weights are constructed using \code{\link[=transmute_weights]{transmute_weights(r, 1)}} in order to apply this method.
 
@@ -62,7 +62,7 @@ There may not be contributions for all prices relatives in an elemental aggregat
 }
 
 \value{
-An aggregate price index that inherits from \code{\link{aggregate_piar_index}} and the class of \code{x}, with the following components.
+An aggregate price index that inherits from \code{\link{aggregate_piar_index}} and the class of \code{x}.
 }
 
 \note{
@@ -81,6 +81,8 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). \emph{Consumer Price Index
 \code{\link{aggregation_structure}} for making a price index aggregation structure.
 
 \code{\link[=mean.piar_index]{mean}} for aggregating over subperiods.
+
+\code{\link[=stack.piar_index]{stack}} for combining aggregate indexes with time-varying aggregation weights.
 }
 
 \examples{

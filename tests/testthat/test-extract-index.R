@@ -17,8 +17,10 @@ res <- c(1.41421356237309, 3.46410161513775, 5, NaN,
 test_that("head and tail work", {
   expect_equal(head(epr, 1), epr[1])
   expect_equal(head(epr, 5), epr)
+  expect_equal(head(epr, -1), epr[1:3])
   expect_equal(tail(epr, 1), epr[4])
   expect_equal(tail(epr, 5), epr)
+  expect_equal(tail(epr, -1), epr[2:4])
   expect_equal(head(epr, 2:1), epr[1:2, 1])
   expect_equal(tail(epr, 2:1), epr[3:4, 2])
   expect_equal(head(epr, c(NA, -1)), epr[, 1])
@@ -54,6 +56,7 @@ test_that("subscripting methods give errors where expeected", {
   expect_error(epr[c(1, 2, 1), ])
   expect_error(epr[NULL])
   expect_error(epr[integer(0)])
+  expect_error(epr[NA])
 })
 
 test_that("replacement methods work", {

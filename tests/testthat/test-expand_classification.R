@@ -11,3 +11,8 @@ test_that("expand classification works", {
                     c("1.1.1NA", "1.1.2NA", "1.2.1NA")))
   expect_equal(expand_classification(character(0)), list())
 })
+
+test_that("expand classification fails when expected", {
+  expect_error(expand_classification("123", width = c(1, 0, 1)))
+  expect_error(expand_classification("123", width = c(1, NA, 1)))
+})
