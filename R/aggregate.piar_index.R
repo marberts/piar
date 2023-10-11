@@ -24,21 +24,22 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     # loop over each level in the pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
+      nodes <- unname(pias$child[[i - 1L]])
       rel[[i]] <- vapply(
-        pias$child[[i - 1L]],
+        nodes,
         \(z) gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm),
         numeric(1L)
       )
       if (has_contrib) {
         con[[i]] <- lapply(
-          pias$child[[i - 1L]],
+          nodes,
           \(z) {
             w <- scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))
             unlist(Map("*", con[[i - 1L]][z], w))
           }
         )
       } else {
-        con[[i]] <- lapply(pias$child[[i - 1L]], \(z) numeric(0L))
+        con[[i]] <- lapply(nodes, \(z) numeric(0L))
       }
 
     }
