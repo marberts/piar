@@ -23,6 +23,11 @@ as.matrix.piar_aggregation_structure <- function(x, ...) {
   do.call(rbind, rows)
 }
 
+as.matrix.super_piar_aggregation_structure <- function(x, ...) {
+  stop("cannot coerce a superlative aggregation structure into an",
+       " aggregation matrix")
+}
+
 as.data.frame.piar_aggregation_structure <- function(x, ...,
                                                      stringsAsFactors = FALSE) {
   colnames <- c(paste0("level", seq_along(x$child), recycle0 = TRUE), "ea")
@@ -30,6 +35,18 @@ as.data.frame.piar_aggregation_structure <- function(x, ...,
                        col.names = colnames,
                        stringsAsFactors = stringsAsFactors)
   res$weight <- x$weight
+  res
+}
+
+as.data.frame.super_piar_aggregation_structure <- function(
+    x, ..., stringsAsFactors = FALSE
+) {
+  colnames <- c(paste0("level", seq_along(x$child), recycle0 = TRUE), "ea")
+  res <- as.data.frame(as.list(x),
+                       col.names = colnames,
+                       stringsAsFactors = stringsAsFactors)
+  res$weight1 <- x$weight1
+  res$weight2 <- x$weight2
   res
 }
 
@@ -49,4 +66,8 @@ as.list.piar_aggregation_structure <- function(x, ...) {
 
 is_aggregation_structure <- function(x) {
   inherits(x, "piar_aggregation_structure")
+}
+
+is_super_aggregation_structure <- function(x) {
+  inherits(x, "super_piar_aggregation_structure")
 }

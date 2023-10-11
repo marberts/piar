@@ -1,4 +1,4 @@
-aggregation_structure <- function(x, w = NULL) {
+vec2agg <- function(x) {
   x <- lapply(x, as.character)
   len <- length(x)
   ea <- as.character(unlist(x[len], use.names = FALSE))
@@ -8,14 +8,10 @@ aggregation_structure <- function(x, w = NULL) {
   if (any(vapply(x, anyNA, logical(1L)))) {
     stop("'x' cannot contain NAs")
   }
-
-  if (is.null(w)) {
-    w <- rep.int(1, length(ea))
-  }
-
+  
   # basic argument checking to make sure inputs can make an
   # aggregation structure
-  if (any(lengths(x) != length(w))) {
+  if (any(lengths(x) != length(x[[len]]))) {
     stop("all arguments must be the same length")
   }
   if (anyDuplicated(ea)) {
@@ -51,5 +47,26 @@ aggregation_structure <- function(x, w = NULL) {
     names(parent[[i]]) <- nm[[i]]
   }
   levels <- unlist(lapply(rev(child), names), use.names = FALSE)
-  piar_aggregation_structure(child, parent, c(levels, ea), ea, w, len)
+  list(parent = parent, child = child, levels = c(levels, ea),
+       eas = ea, height = len)
+}
+
+aggregation_structure <- function(x, w = NULL) {
+  x <- vec2agg(x)
+  if (is.null(w)) {
+    w <- rep.int(1, length(x$eas))
+  }
+  piar_aggregation_structure(x$child, x$parent, x$levels, x$eas, w, x$height)
+}
+
+super_aggregation_structure <- function(x, w1 = NULL, w2 = NULL) {
+  x <- vec2agg(x)
+  if (is.null(w1)) {
+    w1 <- rep.int(1, length(x$eas))
+  }
+  if (is.null(w2)) {
+    w2 <- rep.int(1, length(x$eas))
+  }
+  super_piar_aggregation_structure(x$child, x$parent, x$levels, x$eas, w1, w2,
+                                   x$height)
 }
