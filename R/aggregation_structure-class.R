@@ -26,10 +26,6 @@ piar_aggregation_structure <- function(child, parent, levels, eas,
 
 #---- Validator ----
 validate_pias_levels <- function(x) {
-  if (length(x$w) != length(x$eas)) {
-    stop("cannot make an aggregation structure with a different number of ",
-         "weights and elemental aggregates")
-  }
   if (anyNA(x$levels) || any(x$levels == "")) {
     stop("cannot make an aggregation structure with missing levels")
   }
@@ -54,9 +50,18 @@ validate_pias_structure <- function(x) {
   invisible(x)
 }
 
+validate_pias_weights <- function(x) {
+  if (length(x$weights) != length(x$eas)) {
+    stop("cannot make an aggregation structure with a different number of ",
+         "weights and elemental aggregates")
+  }
+  invisible(x)
+}
+
 validate_piar_aggregation_structure <- function(x) {
   validate_pias_levels(x)
   validate_pias_structure(x)
+  validate_pias_weights(x)
   x
 }
 

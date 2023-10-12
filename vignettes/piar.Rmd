@@ -371,10 +371,42 @@ Making the Paasche index for each period is now just a case of mapping the `aggr
 (paasche <- Reduce(stack, Map(aggregate, ms_epr, pias, na.rm = TRUE, r = -1)))
 ```
 
-With a Paasche index in hand, it is now trivial to make a Fisher index by first making the chained Laspeyres index, and then doing a simple matrix operation.
+## Making a Fisher index
+
+With a Paasche index in hand, it is now trivial to make a Fisher index by first making the period-over-period Laspeyres index, and then doing a simple matrix operation.
 
 ```{r}
 laspeyres <- Reduce(stack,
                     Map(aggregate, ms_epr, pias[c(1, 1, 2, 3)], na.rm = TRUE))
-sqrt(as.matrix(laspeyres) * as.matrix(paasche))
+
+(fisher <- sqrt(as.matrix(laspeyres) * as.matrix(paasche)))
+```
+
+Percent-change contributions can similarly be computed with a matrix operation.
+
+```{r}
+geometric_weights <- transmute_weights(0, 1)
+w <- mapply(\(x, y) scale_weights(geometric_weights(c(x, y))),
+            as.numeric(laspeyres[1]),
+            as.numeric(paasche[1]))
+
+laspeyres_contrib <- contrib(laspeyres)
+paasche_contrib <- contrib(paasche)
+
+fisher_contrib <- w[1, col(laspeyres_contrib)] * laspeyres_contrib +
+  w[2, col(paasche_contrib)] * paasche_contrib
+
+fisher_contrib
+```
+
+The despite being a matrix, the resulting Fisher index can be chained just like any other index.
+
+```{r}
+chain(fisher)
+```
+
+A chained Fisher index can also be made by first chaining the Laspyeres and Paasche indexes, then taking the geometric mean.
+
+```{r}
+sqrt(as.matrix(chain(laspeyres)) * as.matrix(chain(paasche)))
 ```

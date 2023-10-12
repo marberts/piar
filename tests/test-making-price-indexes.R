@@ -1,3 +1,9 @@
+## ---- include = FALSE---------------------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
 ## -----------------------------------------------------------------------------
 library(piar)
 
@@ -8,14 +14,16 @@ ms_weights
 ## -----------------------------------------------------------------------------
 relative <- with(ms_prices, price_relative(price, period, product))
 
-(ms_epr <- with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE)))
+(ms_epr <- with(ms_prices,
+                elemental_index(relative, period, business, na.rm = TRUE)))
 
 ## -----------------------------------------------------------------------------
 ms_epr[, "202004"]
 ms_epr["B1", ]
 
 ## -----------------------------------------------------------------------------
-hierarchy <- with(ms_weights, c(expand_classification(classification), list(business)))
+hierarchy <- with(ms_weights, 
+                  c(expand_classification(classification), list(business)))
 
 pias <- aggregation_structure(hierarchy, ms_weights$weight)
 
@@ -32,7 +40,8 @@ t(apply(as.matrix(ms_index), 1, cumprod))
 rebase(ms_index_chained, ms_index_chained[, "202004"])
 
 ## -----------------------------------------------------------------------------
-rebase(ms_index_chained, rowMeans(as.matrix(ms_index_chained)[, c("202003", "202004")]))
+rebase(ms_index_chained,
+       rowMeans(as.matrix(ms_index_chained)[, c("202003", "202004")]))
 
 ## -----------------------------------------------------------------------------
 (ms_weights <- transform(ms_weights, stratum = c("TS", "TA", "TS", "TS", "TS")))
@@ -41,7 +50,8 @@ rebase(ms_index_chained, rowMeans(as.matrix(ms_index_chained)[, c("202003", "202
 (classification_sps <- with(ms_weights, paste0(classification, stratum)))
 
 ## -----------------------------------------------------------------------------
-(classification_sps <- expand_classification(classification_sps, width = c(1, 1, 2)))
+(classification_sps <- expand_classification(classification_sps,
+                                             width = c(1, 1, 2)))
 pias_sps <- with(
   ms_weights, 
   aggregation_structure(c(classification_sps, list(business)), weight)
@@ -59,10 +69,12 @@ ms_epr2
 aggregate(ms_epr2, pias, na.rm = TRUE)
 
 ## -----------------------------------------------------------------------------
-with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE, r = 1))
+with(ms_prices, 
+     elemental_index(relative, period, business, na.rm = TRUE, r = 1))
 
 ## -----------------------------------------------------------------------------
-with(ms_prices, elemental_index(relative, period, business, na.rm = TRUE, r = -1))
+with(ms_prices,
+     elemental_index(relative, period, business, na.rm = TRUE, r = -1))
 
 ## -----------------------------------------------------------------------------
 ms_prices2 <- transform(ms_prices, quantity = 10 - price)
@@ -73,20 +85,25 @@ library(gpindex)
 tw <- grouped(index_weights("Tornqvist"))
 
 ms_prices2[c("back_price", "back_quantity")] <- 
-  ms_prices2[back_period(ms_prices2$period, ms_prices2$product), c("price", "quantity")]
+  ms_prices2[back_period(ms_prices2$period, ms_prices2$product),
+             c("price", "quantity")]
 
 ms_prices2 <- na.omit(ms_prices2) # can't have NAs for Tornqvist weights
 
 ms_prices2$weight <- with(
   ms_prices2,
-  tw(price, back_price, quantity, back_quantity, group = interaction(period, business))
+  tw(price, back_price, quantity, back_quantity,
+     group = interaction(period, business))
 )
 
 ## -----------------------------------------------------------------------------
 with(ms_prices2, elemental_index(price / back_price, period, business, weight))
 
 ## -----------------------------------------------------------------------------
-ms_epr <- with(ms_prices, elemental_index(relative, period, business, contrib = TRUE, na.rm = TRUE))
+ms_epr <- with(
+  ms_prices,
+  elemental_index(relative, period, business, contrib = TRUE, na.rm = TRUE)
+)
 
 ## -----------------------------------------------------------------------------
 contrib(ms_epr)
@@ -98,14 +115,16 @@ ms_prices2 <- subset(ms_prices, period >= "202003")
 ## -----------------------------------------------------------------------------
 ms_epr1 <- with(
   ms_prices1, 
-  elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
+  elemental_index(price_relative(price, period, product), period, business,
+                  na.rm = TRUE)
 )
 
 (ms_index1 <- aggregate(ms_epr1, pias, na.rm = TRUE))
 
 ## -----------------------------------------------------------------------------
 ms_epr2 <- with(
-  subset(transform(ms_prices2, rel = price_relative(price, period, product)), period > "202003"),
+  subset(transform(ms_prices2, rel = price_relative(price, period, product)),
+         period > "202003"),
   elemental_index(rel, period, business, na.rm = TRUE)
 )
 
@@ -118,10 +137,11 @@ chain(stack(ms_index1, ms_index2))
 ## -----------------------------------------------------------------------------
 (ms_epr2 <- with(
   ms_prices, 
-  elemental_index(price_relative(carry_forward(price, period, product), period, product), 
-                  period, business, na.rm = TRUE)
-)
-)
+  elemental_index(
+    price_relative(carry_forward(price, period, product),period, product),
+    period, business, na.rm = TRUE
+  )
+))
 
 ## -----------------------------------------------------------------------------
 (ms_index <- aggregate(ms_epr2, pias, na.rm = TRUE))
@@ -133,12 +153,14 @@ ms_prices2 <- subset(ms_prices, business == "B4")
 ## -----------------------------------------------------------------------------
 ms_epr1 <- with(
   ms_prices1, 
-  elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
+  elemental_index(price_relative(price, period, product),
+                  period, business, na.rm = TRUE)
 )
 ms_epr1
 ms_epr2 <- with(
   transform(ms_prices2, period = factor(period, levels = time(ms_epr1))), 
-  elemental_index(price_relative(price, period, product), period, business, na.rm = TRUE)
+  elemental_index(price_relative(price, period, product),
+                  period, business, na.rm = TRUE)
 )
 ms_epr2
 
@@ -153,30 +175,52 @@ ms_prices2 <- subset(
 ms_prices2
 
 ## -----------------------------------------------------------------------------
-ms_epr2 <- with(ms_prices2, elemental_index(value, period, level))
+ms_epr2 <- as_index(ms_prices2)
 aggregate(merge(ms_epr1, ms_epr2), pias, na.rm = TRUE)
 
 ## -----------------------------------------------------------------------------
-weights <- data.frame(period = rep(c("202001", "202002", "202003", "202004"), each = 5),
-                      classification = ms_weights$classification,
-                      weight = 1:20)
+weights <- data.frame(
+  period = rep(c("202001", "202002", "202003", "202004"), each = 5),
+  classification = ms_weights$classification,
+  weight = 1:20
+)
 head(weights)
 
 ## -----------------------------------------------------------------------------
 (ms_epr <- unstack(ms_epr))
 
 ## -----------------------------------------------------------------------------
-pias <- with(
-  weights, 
-  Map(aggregation_structure, 
-      list(hierarchy), 
-      split(weight, period))
+pias <- with(weights, 
+             Map(aggregation_structure, 
+                 list(hierarchy), 
+                 split(weight, period))
 )
 
 ## -----------------------------------------------------------------------------
 (paasche <- Reduce(stack, Map(aggregate, ms_epr, pias, na.rm = TRUE, r = -1)))
 
 ## -----------------------------------------------------------------------------
-laspeyres <- Reduce(stack, Map(aggregate, ms_epr, pias[c(1, 1, 2, 3)], na.rm = TRUE))
-sqrt(as.matrix(laspeyres) * as.matrix(paasche))
+laspeyres <- Reduce(stack,
+                    Map(aggregate, ms_epr, pias[c(1, 1, 2, 3)], na.rm = TRUE))
 
+(fisher <- sqrt(as.matrix(laspeyres) * as.matrix(paasche)))
+
+## -----------------------------------------------------------------------------
+geometric_weights <- transmute_weights(0, 1)
+w <- mapply(\(x, y) scale_weights(geometric_weights(c(x, y))),
+            as.numeric(laspeyres[1]),
+            as.numeric(paasche[1]))
+
+laspeyres_contrib <- contrib(laspeyres)
+paasche_contrib <- contrib(paasche)
+
+fisher_contrib <- w[1, col(laspeyres_contrib)] * laspeyres_contrib +
+  w[2, col(paasche_contrib)] * paasche_contrib
+
+fisher_contrib
+
+## -----------------------------------------------------------------------------
+chain(fisher)
+
+## -----------------------------------------------------------------------------
+sqrt(as.matrix(chain(laspeyres)) * as.matrix(chain(paasche)))
