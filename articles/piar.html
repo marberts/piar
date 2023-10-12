@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -772,13 +772,18 @@ and aggregation structure, and then reducing the result with the
 <span><span class="co">#&gt; B3      1 2.0200036 1.6353355 0.5379960</span></span>
 <span><span class="co">#&gt; B4      1 1.3127080 0.5874490 4.5762862</span></span>
 <span><span class="co">#&gt; B5      1 1.3127080 0.5874490 4.5762862</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="making-a-fisher-index">Making a Fisher index<a class="anchor" aria-label="anchor" href="#making-a-fisher-index"></a>
+</h2>
 <p>With a Paasche index in hand, it is now trivial to make a Fisher
-index by first making the chained Laspeyres index, and then doing a
-simple matrix operation.</p>
+index by first making the period-over-period Laspeyres index, and then
+doing a simple matrix operation.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">laspeyres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">stack</span>,</span>
 <span>                    <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span><span class="va">aggregate</span>, <span class="va">ms_epr</span>, <span class="va">pias</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">laspeyres</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">paasche</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="op">(</span><span class="va">fisher</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">laspeyres</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">paasche</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    202001    202002    202003   202004</span></span>
 <span><span class="co">#&gt; 1       1 1.5107763 0.7956890 1.996688</span></span>
 <span><span class="co">#&gt; 11      1 1.5107763 0.7956890 1.192826</span></span>
@@ -788,6 +793,61 @@ simple matrix operation.</p>
 <span><span class="co">#&gt; B3      1 2.0200036 1.6353355 0.537996</span></span>
 <span><span class="co">#&gt; B4      1 1.5107763 0.7956890 4.576286</span></span>
 <span><span class="co">#&gt; B5      1 1.5107763 0.7956890 4.576286</span></span></code></pre></div>
+<p>Percent-change contributions can similarly be computed with a matrix
+operation.</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">geometric_weights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/transform-weights.html" class="external-link">transmute_weights</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/transform-weights.html" class="external-link">scale_weights</a></span><span class="op">(</span><span class="fu">geometric_weights</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">laspeyres</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">paasche</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">laspeyres_contrib</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="va">laspeyres</span><span class="op">)</span></span>
+<span><span class="va">paasche_contrib</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="va">paasche</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fisher_contrib</span> <span class="op">&lt;-</span> <span class="va">w</span><span class="op">[</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/col.html" class="external-link">col</a></span><span class="op">(</span><span class="va">laspeyres_contrib</span><span class="op">)</span><span class="op">]</span> <span class="op">*</span> <span class="va">laspeyres_contrib</span> <span class="op">+</span></span>
+<span>  <span class="va">w</span><span class="op">[</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/col.html" class="external-link">col</a></span><span class="op">(</span><span class="va">paasche_contrib</span><span class="op">)</span><span class="op">]</span> <span class="op">*</span> <span class="va">paasche_contrib</span></span>
+<span></span>
+<span><span class="va">fisher_contrib</span></span>
+<span><span class="co">#&gt;    202001      202002      202003       202004</span></span>
+<span><span class="co">#&gt; 1       0  0.00000000  0.00000000  0.000000000</span></span>
+<span><span class="co">#&gt; 2      NA          NA -0.42962331  0.000000000</span></span>
+<span><span class="co">#&gt; 3       0 -0.04756479          NA           NA</span></span>
+<span><span class="co">#&gt; 4       0          NA          NA -0.012019870</span></span>
+<span><span class="co">#&gt; 5       0          NA          NA  0.062419211</span></span>
+<span><span class="co">#&gt; 6       0          NA          NA  0.282471798</span></span>
+<span><span class="co">#&gt; 7       0  0.78379264 -0.13008203 -0.018866231</span></span>
+<span><span class="co">#&gt; 8       0  0.02893842  0.11116498 -0.006388331</span></span>
+<span><span class="co">#&gt; 9       0 -0.12111255  0.07126804 -0.099076370</span></span>
+<span><span class="co">#&gt; 10      0 -0.13327742  0.17296129 -0.131946938</span></span>
+<span><span class="co">#&gt; 11      0  0.00000000          NA  0.039533034</span></span>
+<span><span class="co">#&gt; 12      0  0.00000000          NA  0.880561300</span></span></code></pre></div>
+<p>The despite being a matrix, the resulting Fisher index can be chained
+just like any other index.</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="va">fisher</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Fixed-base price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt;    202001    202002    202003    202004</span></span>
+<span><span class="co">#&gt; 1       1 1.5107763 1.2021080 2.4002342</span></span>
+<span><span class="co">#&gt; 11      1 1.5107763 1.2021080 1.4339054</span></span>
+<span><span class="co">#&gt; 12      1 1.5107763 1.2021080 5.5011904</span></span>
+<span><span class="co">#&gt; B1      1 0.8949097 0.2991629 0.3568492</span></span>
+<span><span class="co">#&gt; B2      1 1.5107763 1.2021080 3.3303878</span></span>
+<span><span class="co">#&gt; B3      1 2.0200036 3.3033836 1.7772072</span></span>
+<span><span class="co">#&gt; B4      1 1.5107763 1.2021080 5.5011904</span></span>
+<span><span class="co">#&gt; B5      1 1.5107763 1.2021080 5.5011904</span></span></code></pre></div>
+<p>A chained Fisher index can also be made by first chaining the
+Laspyeres and Paasche indexes, then taking the geometric mean.</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="va">laspeyres</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="va">paasche</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    202001    202002    202003    202004</span></span>
+<span><span class="co">#&gt; 1       1 1.5107763 1.2021080 2.4002342</span></span>
+<span><span class="co">#&gt; 11      1 1.5107763 1.2021080 1.4339054</span></span>
+<span><span class="co">#&gt; 12      1 1.5107763 1.2021080 5.5011904</span></span>
+<span><span class="co">#&gt; B1      1 0.8949097 0.2991629 0.3568492</span></span>
+<span><span class="co">#&gt; B2      1 1.5107763 1.2021080 3.3303878</span></span>
+<span><span class="co">#&gt; B3      1 2.0200036 3.3033836 1.7772072</span></span>
+<span><span class="co">#&gt; B4      1 1.5107763 1.2021080 5.5011904</span></span>
+<span><span class="co">#&gt; B5      1 1.5107763 1.2021080 5.5011904</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
