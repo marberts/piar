@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,12 +56,8 @@
     <div class="section level2">
     <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h2>
     <p>The vignette <em>Making price indexes</em> gives several extended examples of how to use the functions in this package to make different types of price indexes. Run <code>vignette("making_price_indexes", "piar")</code> to view it. But the basic work flow is fairly simple.</p>
-<p>The starting point is to make period-over-period elemental price indexes with the <code><a href="elemental_index.html">elemental_index()</a></code> function and an aggregation structure with the <code><a href="aggregation_structure.html">aggregation_structure()</a></code> function. The <code><a href="aggregate.index.html">aggregate()</a></code> method can then be used to aggregate the elemental indexes according to the aggregation structure. There are a variety of methods to work with these index objects, such as chaining them over time.</p>
+<p>The starting point is to make period-over-period elemental price indexes with the <code><a href="elemental_index.html">elemental_index()</a></code> function and an aggregation structure with the <code><a href="aggregation_structure.html">aggregation_structure()</a></code> function. The <code><a href="aggregate.piar_index.html">aggregate()</a></code> method can then be used to aggregate the elemental indexes according to the aggregation structure. There are a variety of methods to work with these index objects, such as chaining them over time.</p>
 <p>The two-step workflow is described in chapter 8 of the CPI manual (2020) and chapter 5 of Balk (2008). A practical overview is given by Chiru et al. (2015) for the Canadian CPI, and a detailed discussion of chaining indexes is given by von der Lippe (2001).</p>
-    </div>
-    <div class="section level2">
-    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>This package is designed to work with <em>bilateral</em> price indexes. The <span class="pkg">IndexNumR</span> package on the CRAN has support for making <em>multilateral</em> price indexes.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>

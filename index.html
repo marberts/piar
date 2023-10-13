@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,7 +76,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"piar"</span><span class="op">)</span></span></code></pre></div>
 <p>The development version is available on Github.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"marberts/piar"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"marberts/piar"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -131,6 +131,7 @@
 <span><span class="co"># Chain them to get a time series</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/chain.html">chain</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Aggregate fixed-base price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003    202004</span></span>
 <span><span class="co">#&gt; 1       1 1.3007239 1.3827662 3.7815355</span></span>
 <span><span class="co">#&gt; 11      1 1.3007239 1.3827662 2.1771866</span></span>

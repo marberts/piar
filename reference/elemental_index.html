@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9015</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +96,7 @@
 
 
 <dt>chainable</dt>
-<dd><p>Are the price relatives in <code>x</code> period-over-period relatives for a chained calculation (the default)? This should be <code>FALSE</code> when <code>x</code> are fixed-base relatives.</p></dd>
+<dd><p>Are the price relatives in <code>x</code> period-over-period relatives for a chained calculation (the default)? This should be <code>FALSE</code> when <code>x</code> contains fixed-base relatives.</p></dd>
 
 
 <dt>na.rm</dt>
@@ -113,8 +113,9 @@
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>When supplied with a numeric vector, <code>elemental_index()</code> is a simple wrapper that applies <code><a href="https://marberts.github.io/gpindex/reference/generalized-mean.html" class="external-link">generalized_mean(r)</a></code> and <code><a href="https://marberts.github.io/gpindex/reference/contributions.html" class="external-link">contributions(r)</a></code> (if <code>contrib = TRUE</code>) to <code>x</code> and <code>w</code> grouped by <code>ea</code> and <code>period</code>. That is, for every combination of elemental aggregate and time period, <code>elemental_index()</code> calculates an index based on a generalized mean of order <code>r</code> and, optionally, percent-change contributions (using names for <code>x</code> as product names). The default (<code>r = 0</code> and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).</p>
+    <p>When supplied with a numeric vector, <code>elemental_index()</code> is a simple wrapper that applies <code><a href="https://marberts.github.io/gpindex/reference/generalized-mean.html" class="external-link">generalized_mean(r)</a></code> and <code><a href="https://marberts.github.io/gpindex/reference/contributions.html" class="external-link">contributions(r)</a></code> (if <code>contrib = TRUE</code>) to <code>x</code> and <code>w</code> grouped by <code>ea</code> and <code>period</code>. That is, for every combination of elemental aggregate and time period, <code>elemental_index()</code> calculates an index based on a generalized mean of order <code>r</code> and, optionally, percent-change contributions. The default (<code>r = 0</code> and no weights) makes Jevons elemental indexes. See chapter 8 (pp. 175--190) of the CPI manual (2020) for more detail about making elemental indexes, and chapter 5 of Balk (2008).</p>
 <p>The default method simply coerces <code>x</code> to a numeric vector prior to calling the method above.</p>
+<p>Names for <code>x</code> are used as product names when calculating percent-change contributions. Product names should be unique within each time period, and, if not, are passed to <code><a href="https://rdrr.io/r/base/make.unique.html" class="external-link">make.unique()</a></code> with a warning. If <code>x</code> has no names then elements of <code>x</code> are given sequential names within each elemental aggregate.</p>
 <p>The interpretation of the index depends on how the price relatives in <code>x</code> are made. If these are period-over-period relatives, then the result is a collection of period-over-period (chainable) elemental indexes; if these are fixed-base relatives, then the result is a collection of fixed-base (direct) elemental indexes. For the latter, <code>chainable</code> should be set to <code>FALSE</code> so that no subsequent methods assume that a chained calculation should be used.</p>
 <p>By default, missing price relatives in <code>x</code> will propagate throughout the index calculation. Ignoring missing values with <code>na.rm = TRUE</code> is the same as overall mean (parental) imputation, and needs to be explicitly set in the call to <code>elemental_index()</code>. Explicit imputation of missing relatives, and especially imputation of missing prices, should be done prior to calling <code>elemental_index()</code>.</p>
 <p>Indexes based on nested generalized means, like the Fisher index (and superlative quadratic mean indexes more generally), can be calculated by supplying the appropriate weights with <code><a href="https://marberts.github.io/gpindex/reference/transform-weights.html" class="external-link">nested_transmute()</a></code>; see the example below. It is important to note that there are several ways to make these weights, and this affects how percent-change contributions are calculated.</p>
@@ -123,22 +124,7 @@
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A price index. This is an object that inherits from <code>index</code> with the following components.</p>
-<dl><dt>index</dt>
-<dd><p>A named list with an entry for each <code>period</code> that gives a named vector of index values for each level in <code>ea</code>.</p></dd>
-
-<dt>contrib</dt>
-<dd><p>A named list with an entry for each <code>period</code>, which itself contains a named list with an entry for each level in <code>ea</code> with a named vector that gives the additive contribution for each price relative. If <code>contrib = FALSE</code>, then each of these vectors is of length 0.</p></dd>
-
-<dt>levels</dt>
-<dd><p>The levels for <code>ea</code>.</p></dd>
-
-<dt>time</dt>
-<dd><p>The levels for <code>period</code>.</p></dd>
-
-
-
-</dl><p>If <code>chainable == TRUE</code> then this is a period-over-period index that also inherits from <code>chainable_index</code>; otherwise, it is a fixed-based index that inherits from <code>direct_index</code>.</p>
+<p>A price index that inherits from <code><a href="piar_index.html">piar_index</a></code>. If <code>chainable = TRUE</code> then this is a period-over-period index that also inherits from <code><a href="piar_index.html">chainable_piar_index</a></code>; otherwise, it is a fixed-based index that inherits from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -148,12 +134,12 @@
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="price_relative.html">price_relative</a></code> for making price relatives for the same products over time, and <code><a href="impute-prices.html">carry_forward</a></code> and <code><a href="impute-prices.html">shadow_price</a></code> for imputation of missing prices.</p>
-<p><code><a href="aggregate.index.html">aggregate</a></code> to aggregate elemental indexes according to a price index aggregation structure.</p>
-<p><code><a href="as_index.html">as_index</a></code> to turn pre-computed index values into an index object.</p>
+<p><code><a href="aggregate.piar_index.html">aggregate</a></code> to aggregate elemental indexes according to a price index aggregation structure.</p>
+<p><code><a href="as_index.html">as_index</a></code> to turn pre-computed (elemental) index values into an index object.</p>
 <p><code><a href="chain.html">chain</a></code> for chaining period-over-period indexes, and <code><a href="chain.html">rebase</a></code> for rebasing an index.</p>
 <p><code><a href="contrib.html">contrib</a></code> for getting the percent-change contributions of an index, <code><a href="index-attributes.html">levels</a></code> for getting the levels, and <code><a href="index-attributes.html">time</a></code> for getting the time periods.</p>
-<p><code><a href="merge.index.html">merge</a></code> and <code><a href="stack.index.html">stack</a></code> to combine index values.</p>
-<p><code><a href="extract-index.html">[</a></code> and <code><a href="extract-index.html">[&lt;-</a></code> to extract and replace index values.</p>
+<p><code><a href="merge.piar_index.html">merge</a></code> and <code><a href="stack.piar_index.html">stack</a></code> to combine index values.</p>
+<p><code><a href="extract.piar_index.html">[</a></code> and <code><a href="extract.piar_index.html">[&lt;-</a></code> to extract and replace index values.</p>
 <p><code><a href="coerce-index.html">as.matrix</a></code> and <code><a href="coerce-index.html">as.data.frame</a></code> for coercing an index into a tabular form.</p></div>
     </div>
 
@@ -170,6 +156,7 @@
 <span class="r-in"><span><span class="co"># Calculate Jevons elemental indexes</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="va">epr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">prices</span>, <span class="fu">elemental_index</span><span class="op">(</span><span class="va">rel</span>, <span class="va">period</span>, <span class="va">ea</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Period-over-period price index for 2 levels over 2 time periods </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          1        2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a 1.732051 5.916080</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> b 2.828427 6.928203</span>
@@ -204,6 +191,7 @@
 <span class="r-in"><span>    <span class="fu">fw</span><span class="op">(</span><span class="va">rel</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">period</span>, <span class="va">ea</span><span class="op">)</span><span class="op">)</span>, r <span class="op">=</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Period-over-period price index for 2 levels over 2 time periods </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          1        2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a 1.732051 5.916080</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> b 2.828427 6.928203</span>
