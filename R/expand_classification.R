@@ -1,3 +1,7 @@
+paste_until <- function(x, i) {
+  paste(x[seq_len(i)], collapse = "")
+}
+
 expand_classification <- function(x, width = 1L) {
   x <- as.character(x)
   width <- as.integer(width)

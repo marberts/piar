@@ -25,5 +25,5 @@ merge.piar_index <- function(x, y, ...) {
   x$contrib <- Map(c, x$contrib, y$contrib)
   # it's safe to use c() and not union() because there can't be duplicate levels
   x$levels <- c(x$levels, y$levels)
-  x
+  validate_piar_index(x)
 }

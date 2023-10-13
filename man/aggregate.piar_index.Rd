@@ -48,13 +48,13 @@ The \code{aggregate()} method loops over each time period in \code{x} and
 \enumerate{
 \item aggregates the elemental indexes with \code{\link[=generalized_mean]{generalized_mean(r)}} for each level of \code{pias};
 \item aggregates percent-change contributions for each level of \code{pias} (if there are any);
-\item price updates the weights in \code{pias} with \code{\link[=factor_weights]{factor_weights(r)}} (only for period-over-period elemental indexes, i.e., \code{is_chainable_index(x) == TRUE}).
+\item price updates the weights in \code{pias} with \code{\link[=factor_weights]{factor_weights(r)}} (only for period-over-period elemental indexes).
 }
 The result is a collection of aggregated period-over-period indexes that can be chained together to get a fixed-base index when \code{x} are period-over-period elemental indexes. Otherwise, when \code{x} are fixed-base elemental indexes, the result is a collection of aggregated fixed-base (direct) indexes.
 
 By default, missing elemental indexes will propagate when aggregating the index. Missing elemental indexes can be due to both missingness of these values in \code{x}, and the presence of elemental aggregates in \code{pias} that are not part of \code{x}. Setting \code{na.rm = TRUE} ignores missing values, and is equivalent to parental (or overall mean) imputation. As an aggregated price index generally cannot have missing values (for otherwise it can't be chained over time), any missing values for a level of \code{pias} are removed and recursively replaced by the value of its immediate parent.
 
-In most cases aggregation is done with an arithmetic mean (the default), and this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020). Aggregating with a non-arithmetic mean follows the same steps, except that the elemental indexes are aggregated with a mean of a different order (e.g., harmonic for a Paasche index), and the method for price updating the weights is slightly different. Note that, because aggregation is done with a generalized mean, the resulting index is consistent-in-aggregation at east point in time.
+In most cases aggregation is done with an arithmetic mean (the default), and this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020). Aggregating with a non-arithmetic mean follows the same steps, except that the elemental indexes are aggregated with a mean of a different order (e.g., harmonic for a Paasche index), and the method for price updating the weights is slightly different. Note that, because aggregation is done with a generalized mean, the resulting index is consistent-in-aggregation at each point in time.
 
 Aggregating percent-change contributions uses the method in chapter 9 of the CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic mean. With a non-arithmetic mean, arithmetic weights are constructed using \code{\link[=transmute_weights]{transmute_weights(r, 1)}} in order to apply this method.
 

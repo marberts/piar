@@ -1,3 +1,31 @@
+#--- Helpers ----
+duplicate_products <- function(x) {
+  any(vapply(x, anyDuplicated, numeric(1L), incomparables = NA) > 0)
+}
+
+sequential_names <- function(...) {
+  f <- interaction(...)
+  unsplit(Map(seq_len, tabulate(f)), f)
+}
+
+valid_product_names <- function(x, period) {
+  x <- as.character(x)
+  period <- as.factor(period)
+  if (anyNA(x) || any(x == "")) {
+    stop("each product must have a non-missing name")
+  }
+  x <- split(x, period)
+  if (duplicate_products(x)) {
+    warning("product names are not unique in each time period")
+  }
+  unsplit(lapply(x, make.unique), period)
+}
+
+different_length <- function(...) {
+  res <- lengths(Filter(Negate(is.null), list(...)))
+  any(res != res[1L])
+}
+
 #---- Calculate generalized-mean elemental indexes ----
 elemental_index <- function(x, ...) {
   UseMethod("elemental_index")

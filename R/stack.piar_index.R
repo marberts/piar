@@ -35,7 +35,7 @@ stack.piar_index <- function(x, y, ...) {
   # it's safe to use c() and not union() because there can't be duplicate
   # periods
   x$time <- c(x$time, y$time)
-  x
+  validate_piar_index(x)
 }
 
 unstack.piar_index <- function(x, ...) {

@@ -35,7 +35,9 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
           nodes,
           \(z) {
             w <- scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))
-            unlist(Map("*", con[[i - 1L]][z], w))
+            res <- unlist(Map("*", con[[i - 1L]][z], w))
+            names(res) <- make.unique(as.character(names(res)))
+            res
           }
         )
       } else {

@@ -298,3 +298,15 @@ test_that("partial contributions are correct", {
                                           weights(pias2, ea_only = TRUE))[1:2])
   )
 })
+
+test_that("duplicate products get unique names during aggregation", {
+  epr1 <- elemental_index(setNames(1:4, 1:4), ea = gl(2, 2), contrib = TRUE, r = 1)
+  epr2 <- epr1
+  levels(epr2) <- 3:4
+  index <- aggregate(merge(epr1, epr2), list(c(0, 0, 0, 0), 1:4))
+  expect_equal(
+    contrib(index),
+    matrix(rep(c(0, 0.125, 0.25, 0.375), 2), 8,
+           dimnames = list(c(1:4, "1.1", "2.1", "3.1", "4.1"), 1))
+  )
+})

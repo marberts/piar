@@ -99,7 +99,7 @@ weights.piar_aggregation_structure <- function(object, ea_only = FALSE,
 
 `weights<-.piar_aggregation_structure` <- function(object, value) {
   object$weights[] <- as.numeric(value)
-  object
+  validate_piar_aggregation_structure(object)
 }
 
 levels.piar_aggregation_structure <- function(x) {

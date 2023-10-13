@@ -1,3 +1,22 @@
+#---- Helpers ----
+index_skeleton <- function(levels, time) {
+  index <- rep.int(NA_real_, length(levels))
+  rep.int(list(index), length(time))
+}
+
+empty_contrib <- function(x) {
+  res <- rep.int(list(numeric(0L)), length(x))
+  list(res)
+}
+
+contrib_skeleton <- function(levels, time) {
+  rep.int(empty_contrib(levels), length(time))
+}
+
+has_contrib <- function(x) {
+  Position(\(x) any(lengths(x) > 0L), x$contrib, nomatch = 0L) > 0L
+}
+
 #---- Class generator ----
 new_aggregate_piar_index <- function(index, contrib, levels, time,
                                      r, pias, chainable) {
@@ -139,9 +158,6 @@ levels.piar_index <- function(x) {
 
 `levels<-.aggregate_piar_index` <- function(x, value) {
   value <- as.character(value)
-  if (identical(value, x$levels)) {
-    return(x)
-  }
   piar_index(x$index, x$contrib, value, x$time, is_chainable_index(x))
 }
 
