@@ -1,3 +1,35 @@
+#' Return the first/last parts of an index
+#' 
+#' Extract the first/last parts of an index as if it were a matrix.
+#' 
+#' 
+#' @aliases head.piar_index tail.piar_index
+#' @param x A price index, as made by, e.g.,
+#' [`elemental_index()`][elemental_index].
+#' @param n See [head()]/[tail()]. The default takes the
+#' first/last 6 levels of `x`.
+#' @param ... Further arguments passed to or used by methods.
+#' @return A price index that inherits from [chainable_piar_index()]
+#' if `x` is a period-over-period index, or
+#' [direct_piar_index()] if `x` is a fixed-base index.
+#' @examples
+#' 
+#' prices <- data.frame(
+#'   rel = 1:8,
+#'   period = rep(1:2, each = 4),
+#'   ea = rep(letters[1:2], 4)
+#' )
+#' 
+#' # Calculate Jevons elemental indexes
+#' 
+#' epr <- with(prices, elemental_index(rel, period, ea))
+#' 
+#' # Get the first/last time series
+#' 
+#' head(epr, 1)
+#' 
+#' tail(epr, 1)
+#' 
 head.piar_index <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)

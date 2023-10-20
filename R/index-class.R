@@ -52,6 +52,84 @@ new_piar_index <- function(index, contrib, levels, time, chainable) {
   structure(res, class = c(type, "piar_index"))
 }
 
+
+
+#' Price index objects
+#' 
+#' There are several classes to represent price indexes. \itemize{ \item All
+#' indexes inherit from the `piar_index` virtual class. \item
+#' Period-over-period indexes that can be chained over time inherit from
+#' `chainable_piar_index`. \item Fixed-base indexes inherit from
+#' `direct_piar_index`.  \item Aggregate price indexes that are the result
+#' of aggregating elemental indexes with an aggregation structure further
+#' inherit from `aggregate_piar_index`. }
+#' 
+#' The `piar_index` object is a list-S3 class with the following
+#' components: \describe{ \item{index}{A list with an entry for each period in
+#' `time` that gives a vector of index values for each level in
+#' `levels`.} \item{contrib}{A list with an entry for each period in
+#' `time`, which itself contains a list with an entry for each level in
+#' `levels` with a named vector that gives the additive contribution for
+#' each price relative.} \item{levels}{A character vector giving the levels of
+#' the index.} \item{time}{A character vector giving the time periods for the
+#' index.} }
+#' 
+#' The `chainable_piar_index` and `direct_piar_index` subclasses have
+#' the same structure as the `piar_index` class, but differ in the methods
+#' used to manipulate the indexes.
+#' 
+#' The `aggregate_piar_index` class further subclasses either
+#' `chainable_piar_index` or `direct_piar_index`, and adds the
+#' following components: \describe{ \item{r}{The order of the generalized mean
+#' used to aggregated the index (usually 1).} \item{pias}{A list containing the
+#' `child`, `parent`, `eas`, and `height` components of the
+#' aggregation structured used to aggregate the index.} }
+#' 
+#' @aliases piar_index chainable_piar_index direct_piar_index
+#' aggregate_piar_index is_index is_aggregate_index is_chainable_index
+#' is_direct_index
+#' @param x An object to test.
+#' @return `is_index()` returns `TRUE` if `x` inherits from
+#' `piar_index`.
+#' 
+#' `is_chainable_index()` returns `TRUE` if `x` inherits from
+#' `chainable_piar_index`.
+#' 
+#' `is_direct_index()` returns `TRUE` if `x` inherits from
+#' `direct_piar_index`.
+#' 
+#' `is_aggregate_index()` returns `TRUE` if `x` inherits from
+#' `aggregate_piar_index`.
+#' @examples
+#' 
+#' prices <- data.frame(
+#'   rel = 1:8,
+#'   period = rep(1:2, each = 4),
+#'   ea = rep(letters[1:2], 4)
+#' )
+#' 
+#' pias <- aggregation_structure(
+#'   list(c("top", "top", "top"), c("a", "b", "c")), 1:3
+#' )
+#' 
+#' # Calculate period-over-period Jevons elemental indexes
+#' 
+#' epr <- with(prices, elemental_index(rel, period, ea))
+#' 
+#' # Aggregate as an arithmetic index
+#' 
+#' index <- aggregate(epr, pias, na.rm = TRUE)
+#' 
+#' is_index(epr)
+#' is_chainable_index(epr)
+#' is_direct_index(epr)
+#' is_aggregate_index(epr)
+#' 
+#' is_index(index)
+#' is_chainable_index(index)
+#' is_direct_index(index)
+#' is_aggregate_index(index)
+#' 
 piar_index <- function(index, contrib, levels, time, chainable) {
   levels <- as.character(levels)
   time <- as.character(time)
