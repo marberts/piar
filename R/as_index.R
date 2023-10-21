@@ -24,8 +24,6 @@
 #' fixed-base index then it is returned unchanged when `chainable ==
 #' FALSE` and unchain otherwise.
 #' 
-#' @aliases as_index as_index.default as_index.matrix as_index.data.frame
-#' as_index.chainable_piar_index as_index.direct_piar_index
 #' @param x An object to coerce into a price index.
 #' @param chainable Are the index values in `x` period-over-period
 #' indexes, suitable for a chained calculation (the default)? This should be
@@ -35,16 +33,20 @@
 #' contains time periods, the second contains levels, and the third contains
 #' index values.
 #' @param ... Further arguments passed to or used by methods.
-#' @return `as_index()` returns a price index that inherits from
-#' [piar_index()]. If `chainable = TRUE` then this is a
+#' 
+#' @returns
+#' `as_index()` returns a price index that inherits from
+#' [`piar_index`]. If `chainable = TRUE` then this is a
 #' period-over-period price index that also inherits from
-#' [chainable_piar_index()]; otherwise, it is a fixed-base index that
-#' inherits from [direct_piar_index()].
-#' @seealso [`as.matrix()`][as.matrix.piar_index] and
+#' [`chainable_piar_index`]; otherwise, it is a fixed-base index that
+#' inherits from [`direct_piar_index`].
+#' 
+#' @seealso
+#' [`as.matrix()`][as.matrix.piar_index] and
 #' [`as.data.frame()`][as.data.frame.piar_index] for coercing an index
 #' into a tabular form.
-#' @examples
 #' 
+#' @examples
 #' prices <- data.frame(
 #'   rel = 1:8,
 #'   period = rep(1:2, each = 4),
@@ -58,15 +60,19 @@
 #' all.equal(as_index(as.data.frame(epr)), epr)
 #' all.equal(as_index(as.matrix(epr)), epr)
 #' 
-#' @export as_index
+#' @export
 as_index <- function(x, ...) {
   UseMethod("as_index")
 }
 
+#' @rdname as_index
+#' @export
 as_index.default <- function(x, chainable = TRUE, ...) {
   as_index(as.matrix(x), chainable, ...)
 }
 
+#' @rdname as_index
+#' @export
 as_index.matrix <- function(x, chainable = TRUE, ...) {
   storage.mode(x) <- "numeric"
   levels <- if (is.null(rownames(x))) seq_len(nrow(x)) else rownames(x)
@@ -83,6 +89,8 @@ as_index.matrix <- function(x, chainable = TRUE, ...) {
   piar_index(index, contrib, levels, periods, chainable)
 }
 
+#' @rdname as_index
+#' @export
 as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
   x <- x[cols]
   x[1:2] <- lapply(x[1:2], as.factor)
@@ -95,17 +103,21 @@ as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
   as_index(res, chainable, ...)
 }
 
+#' @rdname as_index
+#' @export
 as_index.chainable_piar_index <- function(x, chainable = TRUE, ...) {
   if (chainable) x else chain(x)
 }
 
+#' @rdname as_index
+#' @export
 as_index.direct_piar_index <- function(x, chainable = FALSE, ...) {
   if (chainable) unchain(x) else x
 }
 
 #' Test if an object is a price index
 #' 
-#' Test if an object is a index object, or a subclass.
+#' Test if an object is a index object, or a subclass of an index object.
 #' 
 #' @param x An object to test.
 #' 

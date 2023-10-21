@@ -1,8 +1,8 @@
 #' Aggregate a price index over subperiods
-#' 
+#'
 #' Aggregate an index over subperiods by taking the (usually arithmetic) mean
 #' of index values over consecutive windows of subperiods.
-#' 
+#'
 #' The `mean()` method constructs a set of non-overlapping windows of
 #' length `window`, starting in the first period of the index, and takes
 #' the mean of each index value in these windows for each level of the index.
@@ -11,13 +11,12 @@
 #' period in each window form the new names for the aggregated time periods.
 #' Note that percent-change contributions are discarded when aggregating over
 #' subperiods.
-#' 
+#'
 #' An optional vector of weights can be specified when aggregating index values
 #' over subperiods, which is often useful when aggregating a Paasche index; see
 #' section 4.3 of Balk (2008) for details.
-#' 
-#' @param x A price index, as made by, e.g.,
-#' [`elemental_index()`][elemental_index].
+#'
+#' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param w A numeric vector of weights for the index values in `x`. The
 #' default is equal weights. It is usually easiest to specify these weights as
 #' a matrix with a row for each index value in `x` and a column for each
@@ -32,23 +31,28 @@
 #' arithmetic index (the default for aggregating elemental indexes and
 #' averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #' a Paasche index). Other values are possible; see
-#' [`generalized_mean()`][generalized_mean] for details.
+#' [gpindex::generalized_mean()] for details.
 #' @param ... Further arguments passed to or used by methods.
-#' @return A price index with the same class as `x`.
+#' 
+#' @returns
+#' A price index with the same class as `x`.
+#'
 #' @references Balk, B. M. (2008). *Price and Quantity Index Numbers*.
 #' Cambridge University Press.
+#'
 #' @examples
-#' 
 #' prices <- data.frame(
 #'   rel = 1:8,
 #'   period = rep(1:2, each = 4),
 #'   ea = rep(letters[1:2], 4)
 #' )
-#' 
+#'
 #' epr <- with(prices, elemental_index(rel, period, ea))
-#' 
+#'
 #' mean(epr, window = 2)
-#' 
+#'
+#' @family index methods
+#' @export
 mean.piar_index <- function(x, w = NULL, window = 3, na.rm = FALSE,
                             r = 1, ...) {
   if (!is.null(w)) {

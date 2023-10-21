@@ -16,7 +16,7 @@
 #'
 #' @returns
 #' A price index aggregation structure. This is an object of class
-#' `piar_aggregation_structure`, which has the following components.
+#' [`piar_aggregation_structure`], which has the following components.
 #'
 #' \item{child}{A nested list that gives the positions of the immediate
 #' children for each node in each level of the aggregation structure above the

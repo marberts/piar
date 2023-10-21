@@ -76,7 +76,61 @@ str.piar_aggregation_structure <- function(object, ...) {
   str(unclass(object), ...)
 }
 
-#---- Getters and setters ----
+#' Methods to get the weights and levels for a price index aggregation
+#' structure
+#' 
+#' Get and set the weights for a price index aggregation structure, or get the
+#' levels.
+#' 
+#' @param object,x A price index aggregation structure, as made by
+#' [`aggregation_structure()`][aggregation_structure].
+#' @param ea_only Should weights be returned for only the elemental aggregates?
+#' The default gives the weights for the entire aggregation structure.
+#' @param na.rm Should missing values be removed from when aggregating the
+#' weights (i.e., when `ea_only = FALSE`)? By default, missing values are
+#' not removed.
+#' @param value A numeric vector of weights for the elemental aggregates of
+#' `object`.
+#' @param ... Further arguments passed to or used by methods.
+#' 
+#' @returns
+#' `weights()` returns a list with a named vector of weights for
+#' each level in the aggregation structure. If `ea_only = TRUE` then the
+#' return value is just a named vector of weights for the elemental aggregates.
+#' The replacement method replaces these values without changing the
+#' aggregation structure.
+#' 
+#' `levels()` returns a character vector with the levels for the
+#' aggregation structure.
+#' 
+#' @examples
+#' # A simple aggregation structure
+#' #            1
+#' #      |-----+-----|
+#' #      11          12
+#' #  |---+---|       |
+#' #  111     112     121
+#' #  (1)     (3)     (4)
+#' 
+#' aggregation_weights <- data.frame(
+#'   level1 = c("1",   "1",   "1"),
+#'   level2 = c("11",  "11",  "12"),
+#'   ea     = c("111", "112", "121"),
+#'   weight = c(1,     3,     4)
+#' )
+#' 
+#' pias <- as_aggregation_structure(aggregation_weights)
+#' 
+#' # Extract the weights
+#' 
+#' weights(pias)
+#' 
+#' # ... or update them
+#' 
+#' weights(pias) <- 1:3
+#' weights(pias)
+#' 
+#' @export
 weights.piar_aggregation_structure <- function(object, ea_only = FALSE,
                                                na.rm = FALSE, ...) {
   if (ea_only) {
@@ -93,19 +147,27 @@ weights.piar_aggregation_structure <- function(object, ea_only = FALSE,
   rev(res)
 }
 
+#' @rdname weights.piar_aggregation_structure
+#' @export
 `weights<-` <- function(object, value) {
   UseMethod("weights<-")
 }
 
+#' @rdname weights.piar_aggregation_structure
+#' @export
 `weights<-.piar_aggregation_structure` <- function(object, value) {
   object$weights[] <- as.numeric(value)
   validate_piar_aggregation_structure(object)
 }
 
+#' @rdname weights.piar_aggregation_structure
+#' @export
 levels.piar_aggregation_structure <- function(x) {
   x$levels
 }
 
+#' @rdname weights.piar_aggregation_structure
+#' @export
 `levels<-.piar_aggregation_structure` <- function(x, value) {
   stop("cannot replace levels attribute for aggregation structure")
 }

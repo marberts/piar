@@ -27,13 +27,13 @@ different_length <- function(...) {
 }
 
 #' Make elemental price indexes
-#' 
+#'
 #' Compute period-over-period (chainable) or fixed-base (direct) elemental
 #' price indexes, with optional percent-change contributions.
-#' 
+#'
 #' When supplied with a numeric vector, `elemental_index()` is a simple
-#' wrapper that applies [generalized_mean(r)()][generalized_mean]
-#' and [contributions(r)()][contributions] (if `contrib = TRUE`) to
+#' wrapper that applies [generalized_mean(r)()][gpindex::generalized_mean]
+#' and [contributions(r)()][gpindex::contributions] (if `contrib = TRUE`) to
 #' `x` and `w` grouped by `ea` and `period`. That
 #' is, for every combination of elemental aggregate and time period,
 #' `elemental_index()` calculates an index based on a generalized mean of
@@ -41,16 +41,16 @@ different_length <- function(...) {
 #' (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8
 #' (pp. 175--190) of the CPI manual (2020) for more detail about making
 #' elemental indexes, and chapter 5 of Balk (2008).
-#' 
+#'
 #' The default method simply coerces `x` to a numeric vector prior to
 #' calling the method above.
-#' 
+#'
 #' Names for `x` are used as product names when calculating percent-change
 #' contributions. Product names should be unique within each time period, and,
 #' if not, are passed to [make.unique()] with a
 #' warning. If `x` has no names then elements of `x` are given
 #' sequential names within each elemental aggregate.
-#' 
+#'
 #' The interpretation of the index depends on how the price relatives in
 #' `x` are made. If these are period-over-period relatives, then the
 #' result is a collection of period-over-period (chainable) elemental indexes;
@@ -58,21 +58,21 @@ different_length <- function(...) {
 #' fixed-base (direct) elemental indexes. For the latter, `chainable`
 #' should be set to `FALSE` so that no subsequent methods assume that a
 #' chained calculation should be used.
-#' 
+#'
 #' By default, missing price relatives in `x` will propagate throughout
 #' the index calculation. Ignoring missing values with `na.rm = TRUE` is
 #' the same as overall mean (parental) imputation, and needs to be explicitly
 #' set in the call to `elemental_index()`. Explicit imputation of missing
 #' relatives, and especially imputation of missing prices, should be done prior
 #' to calling `elemental_index()`.
-#' 
+#'
 #' Indexes based on nested generalized means, like the Fisher index (and
 #' superlative quadratic mean indexes more generally), can be calculated by
-#' supplying the appropriate weights with [nested_transmute()]; see the
+#' supplying the appropriate weights with [gpindex::nested_transmute()]; see the
 #' example below. It is important to note that there are several ways to
 #' make these weights, and this affects how percent-change contributions
 #' are calculated.
-#' 
+#'
 #' @param x Period-over-period or fixed-base price relatives. Currently there
 #' is only a method for numeric vectors; these can be made with
 #' [price_relative()].
@@ -101,97 +101,102 @@ different_length <- function(...) {
 #' a Paasche index). Other values are possible; see
 #' [generalized_mean()] for details.
 #' @param ... Further arguments passed to or used by methods.
-#' 
-#' @returns A price index that inherits from [piar_index]. If
+#'
+#' @returns
+#' A price index that inherits from [`piar_index`]. If
 #' `chainable = TRUE` then this is a period-over-period index that also
-#' inherits from [chainable_piar_index]; otherwise, it is a
-#' fixed-based index that inherits from [direct_piar_index].
-#' 
+#' inherits from [`chainable_piar_index`]; otherwise, it is a
+#' fixed-based index that inherits from [`direct_piar_index`].
+#'
 #' @seealso
 #' [price_relative()] for making price relatives for the same products over
-#' time, and [carry_forward()] and [shadow_price()] for imputation of
-#' missing prices.
-#' 
+#' time, and [carry_forward()] and [shadow_price()] for
+#' imputation of missing prices.
+#'
 #' [aggregate()][aggregate.piar_index] to aggregate elemental
 #' indexes according to a price index aggregation structure.
-#' 
+#'
 #' [as_index()] to turn pre-computed (elemental) index values into an
 #' index object.
-#' 
+#'
 #' [chain()] for chaining period-over-period indexes, and
 #' [rebase()] for rebasing an index.
-#' 
+#'
 #' [contrib()] for getting the percent-change contributions of an
 #' index, [levels()][levels.piar_index] for getting the levels, and
 #' [time()][time.piar_index] for getting the time periods.
-#' 
+#'
 #' [merge()][merge.piar_index] and
 #' [stack()][stack.piar_index] to combine index values.
-#' 
+#'
 #' \code{\link[=[.piar_index]{[}} and \code{\link[=[<-.piar_index]{[<-}} to
 #' extract and replace index values.
-#' 
+#'
 #' [as.matrix()][as.matrix.piar_index] and
 #' [as.data.frame()][as.data.frame.piar_index] for coercing an index
 #' into a tabular form.
-#' 
+#'
 #' @references
 #' Balk, B. M. (2008). *Price and Quantity Index Numbers*.
 #' Cambridge University Press.
-#' 
+#'
 #' ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020).
 #' *Consumer Price Index Manual: Theory and Practice*.
 #' International Monetary Fund.
-#' 
+#'
 #' @examples
 #' library(gpindex)
-#' 
+#'
 #' prices <- data.frame(
 #'   rel = 1:8,
 #'   period = rep(1:2, each = 4),
 #'   ea = rep(letters[1:2], 4)
 #' )
-#' 
+#'
 #' # Calculate Jevons elemental indexes
-#' 
+#'
 #' (epr <- with(prices, elemental_index(rel, period, ea)))
-#' 
+#'
 #' # Same as using lm() or tapply()
-#' 
+#'
 #' exp(coef(lm(log(rel) ~ ea:factor(period) - 1, prices)))
-#' 
+#'
 #' with(
 #'   prices,
 #'   t(tapply(rel, list(period, ea), geometric_mean, na.rm = TRUE))
 #' )
-#' 
+#'
 #' # A general function to calculate weights to turn the geometric
 #' # mean of the arithmetic and harmonic mean (i.e., Fisher mean)
 #' # into an arithmetic mean
-#' 
+#'
 #' fw <- grouped(nested_transmute(0, c(1, -1), 1))
-#' 
-#' # Calculate a CSWD index (same as the Jevons in this example) 
+#'
+#' # Calculate a CSWD index (same as the Jevons in this example)
 #' # as an arithmetic index by using the appropriate weights
-#' 
+#'
 #' with(
-#'   prices, 
+#'   prices,
 #'   elemental_index(
 #'     rel, period, ea,
-#'     fw(rel, group = interaction(period, ea)), r = 1
+#'     fw(rel, group = interaction(period, ea)),
+#'     r = 1
 #'   )
 #' )
-#' 
+#'
 #' @export
 elemental_index <- function(x, ...) {
   UseMethod("elemental_index")
 }
 
 #' @rdname elemental_index
+#' @export
 elemental_index.default <- function(x, ...) {
   elemental_index(as.numeric(x), ...)
 }
 
+#' @rdname elemental_index
+#' @export
 elemental_index.numeric <- function(x,
                                     period = gl(1, length(x)),
                                     ea = gl(1, length(x)),
@@ -233,7 +238,8 @@ elemental_index.numeric <- function(x,
 
   index_fun <- Vectorize(generalized_mean(r), USE.NAMES = FALSE)
   contrib_fun <- Vectorize(contributions(r),
-                           SIMPLIFY = FALSE, USE.NAMES = FALSE)
+    SIMPLIFY = FALSE, USE.NAMES = FALSE
+  )
 
   index <- Map(index_fun, x, w, na.rm = na.rm, USE.NAMES = FALSE)
   if (contrib) {
