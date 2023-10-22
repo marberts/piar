@@ -6,7 +6,7 @@
 #' [aggregation_structure()].
 #' @param index A price index, or something that can be coerced into one.
 #' Usually an aggregate price index as made by
-#' [aggregate()][aggregate.piar_index].
+#' [`aggregate()`][aggregate.piar_index].
 #' @param period The time period used to price update the weights. The default
 #' uses the last period in `index`.
 #' @param r Order of the generalized mean to update the weights. The default
@@ -19,7 +19,7 @@
 #' values in `index`.
 #'
 #' @seealso
-#' [aggregate()][aggregate.piar_index] to make an aggregated price index.
+#' [`aggregate()`][aggregate.piar_index] to make an aggregated price index.
 #'
 #' [`weights<-()`][weights<-.piar_aggregation_structure] to update the
 #' weights directly.
@@ -50,6 +50,8 @@
 #'
 #' weights(update(pias, index))
 #'
+#' @importFrom stats update
+#' @family aggregation structure methods
 #' @export
 update.piar_aggregation_structure <- function(object, index,
                                               period = end(index), r = NULL,
@@ -60,7 +62,7 @@ update.piar_aggregation_structure <- function(object, index,
   if (is.null(r)) {
     r <- if (is.null(index$r)) 1 else index$r
   }
-  price_update <- factor_weights(r)
+  price_update <- gpindex::factor_weights(r)
   eas <- match(object$eas, index$levels)
   if (anyNA(eas)) {
     warning("not all weights in 'object' have a corresponding index value")

@@ -14,11 +14,11 @@
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
-#' A price index that inherits from [`chainable_piar_index`]
-#' if `x` is a period-over-period index, or
-#' [`direct_piar_index`] if `x` is a fixed-base index. It is not
-#' generally possible to merge aggregated indexes, as this would change the
-#' aggregation structure, so merging does not return an aggregated index.
+#' A price index that inherits from [`chainable_piar_index`] if `x` is a
+#' period-over-period index, or [`direct_piar_index`] if `x` is a fixed-base
+#' index. It is not generally possible to merge aggregated indexes, as this
+#' would change the aggregation structure, so merging does not return an
+#' aggregated index.
 #'
 #' @examples
 #' prices <- data.frame(

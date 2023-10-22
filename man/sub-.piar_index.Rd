@@ -20,11 +20,10 @@ details.}
 \item{value}{A numeric vector.}
 }
 \value{
-A price index that inherits from \code{\link{chainable_piar_index}}
-if \code{x} is a period-over-period index, or
-\code{\link{direct_piar_index}} if \code{x} is a fixed-base index. If
-\code{x} inherits from \code{\link{aggregate_piar_index}} then \code{[}
-returns an aggregate index if the levels are unchanged.
+A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a
+period-over-period index, or \code{\link{direct_piar_index}} if \code{x} is a
+fixed-base index. If \code{x} inherits from \code{\link{aggregate_piar_index}} then
+\code{[} returns an aggregate index if the levels are unchanged.
 }
 \description{
 Methods to extract and replace index values like a matrix.
@@ -72,11 +71,16 @@ epr
 }
 \seealso{
 Other index methods: 
+\code{\link{aggregate.piar_index}()},
+\code{\link{as.data.frame.piar_index}()},
 \code{\link{contrib}()},
+\code{\link{elemental_index}()},
 \code{\link{head.piar_index}()},
+\code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
 \code{\link{merge.piar_index}()},
 \code{\link{stack.piar_index}()},
+\code{\link{time.piar_index}()},
 \code{\link{vcov.aggregate_piar_index}()}
 }
 \concept{index methods}

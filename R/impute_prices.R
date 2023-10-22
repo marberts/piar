@@ -38,7 +38,7 @@
 #' @param pias A price index aggregation structure, or something that can be
 #' coerced into one, as made with [aggregation_structure()]. The default
 #' imputes from elemental indexes only (i.e., not recursively).
-#' @param w A numeric vector of weights for the prices in `x` (i.e.,
+#' @param weights A numeric vector of weights for the prices in `x` (i.e.,
 #' product weights). The default is to give each price equal weight.
 #' @param r1 Order of the price index used to calculate the elemental price
 #' indexes: 0 for a geometric index (the default), 1 for an arithmetic index,
@@ -75,8 +75,8 @@
 #'
 #' @export
 shadow_price <- function(x, period, product, ea,
-                         pias = NULL, w = NULL, r1 = 0, r2 = 1) {
-  if (different_length(x, period, product, ea, w)) {
+                         pias = NULL, weights = NULL, r1 = 0, r2 = 1) {
+  if (different_length(x, period, product, ea, weights)) {
     stop("input vectors must be the same length")
   }
   # this is mostly a combination of gpindex::back_period() and aggregate()
@@ -94,10 +94,10 @@ shadow_price <- function(x, period, product, ea,
     warning("there are duplicated period-product pairs")
   }
   ea <- split(as.factor(ea), period)
-  if (is.null(w)) {
+  if (is.null(weights)) {
     w <- rep.int(list(NULL), nlevels(period))
   } else {
-    w <- split(as.numeric(w), period)
+    w <- split(as.numeric(weights), period)
   }
   if (!is.null(pias)) {
     pias <- as_aggregation_structure(pias)
@@ -110,7 +110,7 @@ shadow_price <- function(x, period, product, ea,
     # calculate indexes
     epr <- elemental_index(price / back_price,
       ea = ea[[t]],
-      w = w[[t]], na.rm = TRUE, r = r1
+      weights = w[[t]], na.rm = TRUE, r = r1
     )
     if (!is.null(pias)) {
       epr <- aggregate(epr, pias, na.rm = TRUE, r = r2)

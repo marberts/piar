@@ -12,7 +12,7 @@ price_relative(x, period, product)
 \item{period}{A factor, or something that can be coerced into one, that
 gives the corresponding time period for each element in \code{x}. The
 ordering of time periods follows the levels of \code{period} to agree with
-\link[=cut.Date]{cut()}.}
+\code{\link[=cut.Date]{cut()}}.}
 
 \item{product}{A factor, or something that can be coerced into one, that
 gives the corresponding product identifier for each element in \code{x}.}
@@ -35,5 +35,5 @@ price_relative(1:6, rep(1:2, each = 3), rep(letters[1:3], 2))
 
 \code{\link[=carry_forward]{carry_forward()}} and \code{\link[=shadow_price]{shadow_price()}} to impute missing prices.
 
-\link[gpindex:outliers]{gpindex::outliers} for methods to identify outliers with price relatives.
+\code{\link[gpindex:outliers]{gpindex::outliers}} for methods to identify outliers with price relatives.
 }

@@ -2,9 +2,13 @@
 % Please edit documentation in R/aggregate.piar_index.R
 \name{aggregate.piar_index}
 \alias{aggregate.piar_index}
+\alias{aggregate.chainable_piar_index}
+\alias{aggregate.direct_piar_index}
 \title{Aggregate elemental price indexes}
 \usage{
-\method{aggregate}{piar_index}(x, pias, na.rm = FALSE, r = 1, contrib = TRUE, ..., chainable)
+\method{aggregate}{chainable_piar_index}(x, pias, na.rm = FALSE, r = 1, contrib = TRUE, ...)
+
+\method{aggregate}{direct_piar_index}(x, pias, na.rm = FALSE, r = 1, contrib = TRUE, ...)
 }
 \arguments{
 \item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
@@ -20,15 +24,15 @@ imputation.}
 geometric index (the default for making elemental indexes), 1 for an
 arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
-a Paasche index). Other values are possible; see \code{\link[=generalized_mean]{generalized_mean()}}
-for details.}
+a Paasche index). Other values are possible; see
+\code{\link[gpindex:generalized-mean]{gpindex::generalized_mean()}} for details.}
 
 \item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
 
 \item{...}{Further arguments passed to or used by methods.}
 }
 \value{
-An aggregate price index that inherits from \code{\link[=aggregate_piar_index]{aggregate_piar_index()}} and
+An aggregate price index that inherits from \code{\link{aggregate_piar_index}} and
 the class of \code{x}.
 }
 \description{
@@ -38,12 +42,12 @@ Aggregate elemental price indexes with a price index aggregation structure.
 The \code{aggregate()} method loops over each time period in \code{x} and
 \enumerate{
 \item aggregates the elemental indexes with
-\link[=generalized_mean]{generalized_mean(r)()} for each level of
+\code{\link[gpindex:generalized-mean]{generalized_mean(r)()}} for each level of
 \code{pias};
 \item aggregates percent-change contributions for each level of
 \code{pias} (if there are any);
 \item price updates the weights in \code{pias} with
-\link[=factor_weights]{factor_weights(r)()} (only for period-over-period
+\code{\link[gpindex:transform-weights]{factor_weights(r)()}} (only for period-over-period
 elemental indexes).
 }
 
@@ -75,12 +79,12 @@ point in time.
 Aggregating percent-change contributions uses the method in chapter 9 of the
 CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic
 mean. With a non-arithmetic mean, arithmetic weights are constructed using
-\link[=transmute_weights]{transmute_weights(r, 1)()} in order to apply
+\code{\link[=gpindex""transmute_weights]{transmute_weights(r, 1)()}} in order to apply
 this method.
 
 There may not be contributions for all prices relatives in an elemental
 aggregate if the elemental indexes are built from several sources (as with
-\link[=merge.piar_index]{merge()}). In this case the contribution for
+\code{\link[=merge.piar_index]{merge()}}). In this case the contribution for
 a price relative in the aggregated index will be correct, but the sum of all
 contributions will not equal the change in the value of the index. This can
 also happen when aggregating an already aggregated index in which missing
@@ -126,13 +130,17 @@ ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020).
 International Monetary Fund.
 }
 \seealso{
-\code{\link[=elemental_index]{elemental_index()}} for making elemental price indexes.
-
-\code{\link[=aggregation_structure]{aggregation_structure()}} for making a price index aggregation
-structure.
-
-\link[=mean.piar_index]{mean()} for aggregating over subperiods.
-
-\link[=stack.piar_index]{stack()} for combining aggregate indexes with
-time-varying aggregation weights.
+Other index methods: 
+\code{\link{[.piar_index}()},
+\code{\link{as.data.frame.piar_index}()},
+\code{\link{contrib}()},
+\code{\link{elemental_index}()},
+\code{\link{head.piar_index}()},
+\code{\link{levels.piar_index}()},
+\code{\link{mean.piar_index}()},
+\code{\link{merge.piar_index}()},
+\code{\link{stack.piar_index}()},
+\code{\link{time.piar_index}()},
+\code{\link{vcov.aggregate_piar_index}()}
 }
+\concept{index methods}

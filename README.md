@@ -113,6 +113,10 @@ chain(index)
 Balk, B. M. (2008). *Price and Quantity Index Numbers*. Cambridge
 University Press.
 
+Chiru, R., Huang, N., Lequain, M. Smith, P., and Wright, A. (2015). *The
+Canadian Consumer Price Index Reference Paper*, Statistics Canada
+catalogue 62-553-X. Statistics Canada.
+
 ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). *Consumer Price
 Index Manual: Theory and Practice*. International Monetary Fund.
 

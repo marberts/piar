@@ -4,19 +4,20 @@
 #' classification and aggregation weights that can be used to aggregate
 #' elemental indexes.
 #'
+#' @aliases piar_aggregation_structure
 #' @param x A list of character vectors that give the codes/labels for each
 #' level of the classification, ordered so that moving down the list goes down
 #' the hierarchy. The last vector gives the elemental aggregates, which should
 #' have no duplicates. All vectors should be the same length, without
 #' `NA`s, and there should be no duplicates across different levels of
 #' `x`.
-#' @param w A numeric vector of aggregation weights for the elemental
+#' @param weights A numeric vector of aggregation weights for the elemental
 #' aggregates (i.e., the last vector in `x`). The default is to give each
 #' elemental aggregate the same weight.
 #'
 #' @returns
 #' A price index aggregation structure. This is an object of class
-#' [`piar_aggregation_structure`], which has the following components.
+#' `piar_aggregation_structure`, which has the following components.
 #'
 #' \item{child}{A nested list that gives the positions of the immediate
 #' children for each node in each level of the aggregation structure above the
@@ -37,7 +38,7 @@
 #' represent a nested hierarchy.
 #'
 #' @seealso
-#' [aggregate()][aggregate.piar_index] to aggregate price indexes made
+#' [`aggregate()`][aggregate.piar_index] to aggregate price indexes made
 #' with [`elemental_index()`][elemental_index].
 #'
 #' [expand_classification()] to make `x` from a character
@@ -46,14 +47,14 @@
 #' [as_aggregation_structure()] to coerce tabular data into an
 #' aggregation structure.
 #'
-#' [as.data.frame()][as.data.frame.piar_aggregation_structure] and
-#' [as.matrix()][as.matrix.piar_aggregation_structure] to coerce an
+#' [`as.data.frame()`][as.data.frame.piar_aggregation_structure] and
+#' [`as.matrix()`][as.matrix.piar_aggregation_structure] to coerce an
 #' aggregation structure into a tabular form.
 #'
-#' [weights()][weights.piar_aggregation_structure] to get the
+#' [`weights()`][weights.piar_aggregation_structure] to get the
 #' weights for an aggregation structure.
 #'
-#' [update()][update.piar_aggregation_structure] for updating a
+#' [`update()`][update.piar_aggregation_structure] for updating a
 #' price index aggregation structure with an aggregated index.
 #'
 #' @examples
@@ -74,7 +75,7 @@
 #'
 #' pias <- aggregation_structure(
 #'   aggregation_weights[1:3],
-#'   w = aggregation_weights[[4]]
+#'   weights = aggregation_weights[[4]]
 #' )
 #'
 #' # The aggregation structure can also be made by expanding the
@@ -89,7 +90,7 @@
 #' )
 #'
 #' @export
-aggregation_structure <- function(x, w = NULL) {
+aggregation_structure <- function(x, weights = NULL) {
   x <- lapply(x, as.character)
   len <- length(x)
   ea <- as.character(unlist(x[len], use.names = FALSE))
@@ -100,13 +101,13 @@ aggregation_structure <- function(x, w = NULL) {
     stop("'x' cannot contain NAs")
   }
 
-  if (is.null(w)) {
-    w <- rep.int(1, length(ea))
+  if (is.null(weights)) {
+    weights <- rep.int(1, length(ea))
   }
 
   # basic argument checking to make sure inputs can make an
   # aggregation structure
-  if (any(lengths(x) != length(w))) {
+  if (any(lengths(x) != length(weights))) {
     stop("all arguments must be the same length")
   }
   if (anyDuplicated(ea)) {
@@ -148,5 +149,5 @@ aggregation_structure <- function(x, w = NULL) {
     names(parent[[i]]) <- nm[[i]]
   }
   levels <- unlist(lapply(rev(child), names), use.names = FALSE)
-  piar_aggregation_structure(child, parent, c(levels, ea), ea, w, len)
+  piar_aggregation_structure(child, parent, c(levels, ea), ea, weights, len)
 }

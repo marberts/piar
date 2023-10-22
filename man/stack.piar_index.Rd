@@ -2,9 +2,12 @@
 % Please edit documentation in R/stack.piar_index.R
 \name{stack.piar_index}
 \alias{stack.piar_index}
+\alias{unstack.piar_index}
 \title{Stack price indexes}
 \usage{
 \method{stack}{piar_index}(x, y, ...)
+
+\method{unstack}{piar_index}(x, ...)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
@@ -16,14 +19,12 @@ index; otherwise, \code{y} is coerced into a direct index.}
 \item{...}{Further arguments passed to or used by methods.}
 }
 \value{
-A price index that inherits from \code{\link{chainable_piar_index}}
-if \code{x} is a period-over-period index, or
-\code{\link{direct_piar_index}} if \code{x} is a fixed-base index. If both
-\code{x} and \code{y} are aggregate indexes then the result will also
+A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a
+period-over-period index, or \code{\link{direct_piar_index}} if \code{x} is a fixed-base
+index. If both \code{x} and \code{y} are aggregate indexes then the result will also
 inherit from \code{\link{aggregate_piar_index}}.
 
-\code{unstack()} returns a list of price indexes with the same class as
-\code{x}.
+\code{unstack()} returns a list of price indexes with the same class as \code{x}.
 }
 \description{
 \code{stack()} combines two price indexes with common levels, stacking index
@@ -65,10 +66,15 @@ all.equal(
 \seealso{
 Other index methods: 
 \code{\link{[.piar_index}()},
+\code{\link{aggregate.piar_index}()},
+\code{\link{as.data.frame.piar_index}()},
 \code{\link{contrib}()},
+\code{\link{elemental_index}()},
 \code{\link{head.piar_index}()},
+\code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
 \code{\link{merge.piar_index}()},
+\code{\link{time.piar_index}()},
 \code{\link{vcov.aggregate_piar_index}()}
 }
 \concept{index methods}

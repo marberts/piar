@@ -13,14 +13,12 @@
 #' @inheritParams merge.piar_index
 #'
 #' @returns
-#' A price index that inherits from [`chainable_piar_index`]
-#' if `x` is a period-over-period index, or
-#' [`direct_piar_index`] if `x` is a fixed-base index. If both
-#' `x` and `y` are aggregate indexes then the result will also
+#' A price index that inherits from [`chainable_piar_index`] if `x` is a
+#' period-over-period index, or [`direct_piar_index`] if `x` is a fixed-base
+#' index. If both `x` and `y` are aggregate indexes then the result will also
 #' inherit from [`aggregate_piar_index`].
 #'
-#' `unstack()` returns a list of price indexes with the same class as
-#' `x`.
+#' `unstack()` returns a list of price indexes with the same class as `x`.
 #'
 #' @examples
 #' prices <- data.frame(
@@ -49,6 +47,7 @@
 #' )
 #'
 #' @family index methods
+#' @importFrom utils stack
 #' @export
 stack.piar_index <- function(x, y, ...) {
   if (!identical(x$levels, y$levels)) {
@@ -95,6 +94,8 @@ stack.direct_piar_index <- function(x, y, ...) {
   NextMethod("stack")
 }
 
+#' @rdname stack.piar_index
+#' @importFrom utils unstack
 #' @export
 unstack.piar_index <- function(x, ...) {
   res <- vector("list", length(x$time))

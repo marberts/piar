@@ -32,9 +32,9 @@ different_length <- function(...) {
 #' price indexes, with optional percent-change contributions.
 #'
 #' When supplied with a numeric vector, `elemental_index()` is a simple
-#' wrapper that applies [generalized_mean(r)()][gpindex::generalized_mean]
-#' and [contributions(r)()][gpindex::contributions] (if `contrib = TRUE`) to
-#' `x` and `w` grouped by `ea` and `period`. That
+#' wrapper that applies [`generalized_mean(r)()`][gpindex::generalized_mean]
+#' and [`contributions(r)()`][gpindex::contributions] (if `contrib = TRUE`) to
+#' `x` and `weights` grouped by `ea` and `period`. That
 #' is, for every combination of elemental aggregate and time period,
 #' `elemental_index()` calculates an index based on a generalized mean of
 #' order `r` and, optionally, percent-change contributions. The default
@@ -79,12 +79,12 @@ different_length <- function(...) {
 #' @param period A factor, or something that can be coerced into one, giving
 #' the time period associated with each price relative in `x`. The
 #' ordering of time periods follows of the levels of `period`, to agree
-#' with [cut()][cut.Date]. The default assumes that all price
+#' with [`cut()`][cut.Date]. The default assumes that all price
 #' relatives belong to one time period.
 #' @param ea A factor, or something that can be coerced into one, giving the
 #' elemental aggregate associated with each price relative in `x`. The
 #' default assumes that all price relatives belong to one elemental aggregate.
-#' @param w A numeric vector of weights for the price relatives in `x`.
+#' @param weights A numeric vector of weights for the price relatives in `x`.
 #' The default is equal weights.
 #' @param contrib Should percent-change contributions be calculated? The
 #' default does not calculate contributions.
@@ -99,7 +99,7 @@ different_length <- function(...) {
 #' arithmetic index (the default for aggregating elemental indexes and
 #' averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #' a Paasche index). Other values are possible; see
-#' [generalized_mean()] for details.
+#' [gpindex::generalized_mean()] for details.
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
@@ -113,27 +113,14 @@ different_length <- function(...) {
 #' time, and [carry_forward()] and [shadow_price()] for
 #' imputation of missing prices.
 #'
-#' [aggregate()][aggregate.piar_index] to aggregate elemental
-#' indexes according to a price index aggregation structure.
-#'
 #' [as_index()] to turn pre-computed (elemental) index values into an
 #' index object.
 #'
 #' [chain()] for chaining period-over-period indexes, and
 #' [rebase()] for rebasing an index.
 #'
-#' [contrib()] for getting the percent-change contributions of an
-#' index, [levels()][levels.piar_index] for getting the levels, and
-#' [time()][time.piar_index] for getting the time periods.
-#'
-#' [merge()][merge.piar_index] and
-#' [stack()][stack.piar_index] to combine index values.
-#'
-#' \code{\link[=[.piar_index]{[}} and \code{\link[=[<-.piar_index]{[<-}} to
-#' extract and replace index values.
-#'
-#' [as.matrix()][as.matrix.piar_index] and
-#' [as.data.frame()][as.data.frame.piar_index] for coercing an index
+#' [`as.matrix()`][as.matrix.piar_index] and
+#' [`as.data.frame()`][as.data.frame.piar_index] for coercing an index
 #' into a tabular form.
 #'
 #' @references
@@ -184,6 +171,7 @@ different_length <- function(...) {
 #'   )
 #' )
 #'
+#' @family index methods
 #' @export
 elemental_index <- function(x, ...) {
   UseMethod("elemental_index")
@@ -200,17 +188,17 @@ elemental_index.default <- function(x, ...) {
 elemental_index.numeric <- function(x,
                                     period = gl(1, length(x)),
                                     ea = gl(1, length(x)),
-                                    w = NULL,
+                                    weights = NULL,
                                     contrib = FALSE,
                                     chainable = TRUE,
                                     na.rm = FALSE,
                                     r = 0,
                                     ...) {
-  if (different_length(x, period, ea, w)) {
+  if (different_length(x, period, ea, weights)) {
     stop("input vectors must be the same length")
   }
-  if (any(x <= 0, na.rm = TRUE) || any(w <= 0, na.rm = TRUE)) {
-    warning("some elements of 'x or 'w' are less than or equal to 0")
+  if (any(x <= 0, na.rm = TRUE) || any(weights <= 0, na.rm = TRUE)) {
+    warning("some elements of 'x or 'weights' are less than or equal to 0")
   }
 
   period <- as.factor(period)
@@ -230,20 +218,20 @@ elemental_index.numeric <- function(x,
   # a list
   ea <- split(ea, period)
   x <- Map(split, split(x, period), ea)
-  if (is.null(w)) {
-    w <- list(list(NULL))
+  if (is.null(weights)) {
+    weights <- list(list(NULL))
   } else {
-    w <- Map(split, split(as.numeric(w), period), ea)
+    weights <- Map(split, split(as.numeric(weights), period), ea)
   }
 
-  index_fun <- Vectorize(generalized_mean(r), USE.NAMES = FALSE)
-  contrib_fun <- Vectorize(contributions(r),
+  index_fun <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
+  contrib_fun <- Vectorize(gpindex::contributions(r),
     SIMPLIFY = FALSE, USE.NAMES = FALSE
   )
 
-  index <- Map(index_fun, x, w, na.rm = na.rm, USE.NAMES = FALSE)
+  index <- Map(index_fun, x, weights, na.rm = na.rm, USE.NAMES = FALSE)
   if (contrib) {
-    contributions <- Map(contrib_fun, x, w, USE.NAMES = FALSE)
+    contributions <- Map(contrib_fun, x, weights, USE.NAMES = FALSE)
   } else {
     # mimic contributions structure instead of a NULL
     contributions <- contrib_skeleton(levels, time)

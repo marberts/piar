@@ -65,7 +65,8 @@ corresponding values in \code{x[[cols[3]]]}, and uses the matrix method for
 
 If \code{x} is a period-over-period index then it is returned unchanged when
 \code{chainable = TRUE} and chained otherwise. Similarly, if \code{x} is a
-fixed-base index then it is returned unchanged when \code{chainable == FALSE} and unchain otherwise.
+fixed-base index then it is returned unchanged when
+\code{chainable == FALSE} and unchain otherwise.
 }
 \examples{
 prices <- data.frame(

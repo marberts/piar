@@ -40,10 +40,10 @@ data frame.
 #  (1)     (3)     (4)
 
 aggregation_weights <- data.frame(
-  level1 = c("1",   "1",   "1"),
-  level2 = c("11",  "11",  "12"),
+  level1 = c("1", "1", "1"),
+  level2 = c("11", "11", "12"),
   ea     = c("111", "112", "121"),
-  weight = c(1,     3,     4)
+  weight = c(1, 3, 4)
 )
 
 pias <- as_aggregation_structure(aggregation_weights)

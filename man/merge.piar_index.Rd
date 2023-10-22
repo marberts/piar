@@ -16,11 +16,11 @@ index; otherwise, \code{y} is coerced into a direct index.}
 \item{...}{Further arguments passed to or used by methods.}
 }
 \value{
-A price index that inherits from \code{\link{chainable_piar_index}}
-if \code{x} is a period-over-period index, or
-\code{\link{direct_piar_index}} if \code{x} is a fixed-base index. It is not
-generally possible to merge aggregated indexes, as this would change the
-aggregation structure, so merging does not return an aggregated index.
+A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a
+period-over-period index, or \code{\link{direct_piar_index}} if \code{x} is a fixed-base
+index. It is not generally possible to merge aggregated indexes, as this
+would change the aggregation structure, so merging does not return an
+aggregated index.
 }
 \description{
 Combine two price indexes with common time periods, merging together the
@@ -52,10 +52,15 @@ merge(epr, epr2)
 \seealso{
 Other index methods: 
 \code{\link{[.piar_index}()},
+\code{\link{aggregate.piar_index}()},
+\code{\link{as.data.frame.piar_index}()},
 \code{\link{contrib}()},
+\code{\link{elemental_index}()},
 \code{\link{head.piar_index}()},
+\code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
 \code{\link{stack.piar_index}()},
+\code{\link{time.piar_index}()},
 \code{\link{vcov.aggregate_piar_index}()}
 }
 \concept{index methods}

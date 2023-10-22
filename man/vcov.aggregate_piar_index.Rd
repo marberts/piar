@@ -13,7 +13,7 @@ rewritten by Steve Martin.
 }
 \arguments{
 \item{object}{An aggregate price index, as made by
-\link[=aggregate.piar_index]{aggregate()}.}
+\code{\link[=aggregate.piar_index]{aggregate()}}.}
 
 \item{repweights}{A matrix, or something that can be coerced into one, of
 bootstrap replicate weights with a row for each elemental aggregate and a
@@ -89,10 +89,15 @@ sequential Poisson sampling.
 
 Other index methods: 
 \code{\link{[.piar_index}()},
+\code{\link{aggregate.piar_index}()},
+\code{\link{as.data.frame.piar_index}()},
 \code{\link{contrib}()},
+\code{\link{elemental_index}()},
 \code{\link{head.piar_index}()},
+\code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
 \code{\link{merge.piar_index}()},
-\code{\link{stack.piar_index}()}
+\code{\link{stack.piar_index}()},
+\code{\link{time.piar_index}()}
 }
 \concept{index methods}

@@ -28,6 +28,7 @@
 #' as.data.frame(epr)
 #' as.matrix(epr)
 #'
+#' @family index methods
 #' @export
 as.data.frame.piar_index <- function(x, ..., stringsAsFactors = FALSE) {
   value <- unlist(x$index, use.names = FALSE)

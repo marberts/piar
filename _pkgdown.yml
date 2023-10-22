@@ -5,10 +5,6 @@ template:
   bootswatch: united
   
 reference:
-- title: Package overview
-  contents:
-  - piar-package
-  
 - title: Calculate price indexes
   desc: Functions to make elemental and aggregated price indexes
   contents:
@@ -16,9 +12,7 @@ reference:
   - as_index
   - aggregate.piar_index
   - mean.piar_index
-  - summary.piar_index
   - vcov.aggregate_piar_index
-  - piar_index
   
 - title: Manipulate price indexes
   desc: Helpful functions for working with price indexes
@@ -26,16 +20,17 @@ reference:
   - chain
   - merge.piar_index
   - stack.piar_index
-  - extract.piar_index
+  - "[.piar_index"
   - head.piar_index
   - contrib
-  - index-attributes
-  - coerce-index
- 
+  - levels.piar_index
+  - time.piar_index
+  - as.matrix.piar_index
+  
 - title: Manipulate prices
   desc: Helpful functions for working with prices
   contents:
-  - impute-prices
+  - impute_prices
   - price_relative
 
 - title: Aggregation structure
@@ -44,9 +39,17 @@ reference:
   - aggregation_structure
   - expand_classification
   - as_aggregation_structure
-  - coerce-aggregation_structure
-  - aggregation_structure-attributes
+  - as.matrix.piar_aggregation_structure
+  - weights.piar_aggregation_structure
   - update.piar_aggregation_structure
+  - is_aggregation_structure
+  
+- title: Index objects
+  desc: The model used to represent price indexes
+  contents:
+  - piar_index
+  - is_index
+  - summary.piar_index
   
 - title: Sample data
   contents:

@@ -6,7 +6,16 @@
 \alias{carry_forward}
 \title{Impute missing prices}
 \usage{
-shadow_price(x, period, product, ea, pias = NULL, w = NULL, r1 = 0, r2 = 1)
+shadow_price(
+  x,
+  period,
+  product,
+  ea,
+  pias = NULL,
+  weights = NULL,
+  r1 = 0,
+  r2 = 1
+)
 
 carry_forward(x, period, product)
 }
@@ -28,7 +37,7 @@ elemental aggregate associated with each price in \code{x}.}
 coerced into one, as made with \code{\link[=aggregation_structure]{aggregation_structure()}}. The default
 imputes from elemental indexes only (i.e., not recursively).}
 
-\item{w}{A numeric vector of weights for the prices in \code{x} (i.e.,
+\item{weights}{A numeric vector of weights for the prices in \code{x} (i.e.,
 product weights). The default is to give each price equal weight.}
 
 \item{r1}{Order of the price index used to calculate the elemental price

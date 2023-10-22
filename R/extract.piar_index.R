@@ -37,11 +37,10 @@ dim_indices <- function(x, i) {
 #' @param ... Ignored.
 #'
 #' @returns
-#' A price index that inherits from [`chainable_piar_index`]
-#' if `x` is a period-over-period index, or
-#' [`direct_piar_index`] if `x` is a fixed-base index. If
-#' `x` inherits from [`aggregate_piar_index`] then ``[``
-#' returns an aggregate index if the levels are unchanged.
+#' A price index that inherits from [`chainable_piar_index`] if `x` is a
+#' period-over-period index, or [`direct_piar_index`] if `x` is a
+#' fixed-base index. If `x` inherits from [`aggregate_piar_index`] then
+#' `[` returns an aggregate index if the levels are unchanged.
 #'
 #' @examples
 #' prices <- data.frame(

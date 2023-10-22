@@ -37,6 +37,7 @@ summary.piar_index <- function(object, ...) {
   structure(res, class = "piar_index_summary")
 }
 
+#' @export
 print.piar_index_summary <- function(x, ...) {
   cat("Indexes\n")
   print(x$index, ...)

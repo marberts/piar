@@ -21,7 +21,7 @@
 #' calculation.
 #'
 #' @param object An aggregate price index, as made by
-#' [aggregate()][aggregate.piar_index].
+#' [`aggregate()`][aggregate.piar_index].
 #' @param repweights A matrix, or something that can be coerced into one, of
 #' bootstrap replicate weights with a row for each elemental aggregate and a
 #' column for each replicate.
@@ -75,6 +75,7 @@
 #' vcov(index, repweights)
 #'
 #' @family index methods
+#' @importFrom stats vcov
 #' @export
 vcov.aggregate_piar_index <- function(object, repweights, mse = TRUE, ...) {
   repweights <- as.matrix(repweights)

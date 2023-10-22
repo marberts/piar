@@ -1,80 +1,44 @@
 #' Price index objects
-#' 
-#' There are several classes to represent price indexes. \itemize{ \item All
-#' indexes inherit from the `piar_index` virtual class. \item
-#' Period-over-period indexes that can be chained over time inherit from
-#' `chainable_piar_index`. \item Fixed-base indexes inherit from
-#' `direct_piar_index`.  \item Aggregate price indexes that are the result
-#' of aggregating elemental indexes with an aggregation structure further
-#' inherit from `aggregate_piar_index`. }
-#' 
+#'
+#' There are several classes to represent price indexes.
+#' - All indexes inherit from the `piar_index` virtual class.
+#' - Period-over-period indexes that can be chained over time inherit from
+#' `chainable_piar_index`.
+#' - Fixed-base indexes inherit from `direct_piar_index`.
+#' - Aggregate price indexes that are the result of aggregating elemental
+#' indexes with an aggregation structure further inherit from
+#' `aggregate_piar_index`.
+#'
 #' The `piar_index` object is a list-S3 class with the following
-#' components: \describe{ \item{index}{A list with an entry for each period in
-#' `time` that gives a vector of index values for each level in
-#' `levels`.} \item{contrib}{A list with an entry for each period in
-#' `time`, which itself contains a list with an entry for each level in
-#' `levels` with a named vector that gives the additive contribution for
-#' each price relative.} \item{levels}{A character vector giving the levels of
-#' the index.} \item{time}{A character vector giving the time periods for the
-#' index.} }
-#' 
+#' components:
+#' \describe{
+#' \item{index}{A list with an entry for each period in `time` that gives
+#' a vector of index values for each level in `levels`.}
+#' \item{contrib}{A list with an entry for each period in `time`, which
+#' itself contains a list with an entry for each level in `levels` with
+#' a named vector that gives the additive contribution for each price relative.}
+#' \item{levels}{A character vector giving the levels of the index.}
+#' \item{time}{A character vector giving the time periods for the index.}
+#' }
+#'
 #' The `chainable_piar_index` and `direct_piar_index` subclasses have
 #' the same structure as the `piar_index` class, but differ in the methods
 #' used to manipulate the indexes.
-#' 
+#'
 #' The `aggregate_piar_index` class further subclasses either
 #' `chainable_piar_index` or `direct_piar_index`, and adds the
-#' following components: \describe{ \item{r}{The order of the generalized mean
-#' used to aggregated the index (usually 1).} \item{pias}{A list containing the
-#' `child`, `parent`, `eas`, and `height` components of the
-#' aggregation structured used to aggregate the index.} }
-#' 
+#' following components:
+#' \describe{
+#' \item{r}{The order of the generalized mean used to aggregated the
+#' index (usually 1).}
+#' \item{pias}{A list containing the `child`, `parent`, `eas`, and `height`
+#' components of the aggregation structured used to aggregate the index.}
+#' }
+#'
 #' @name piar_index
 #' @aliases piar_index chainable_piar_index direct_piar_index
-#' aggregate_piar_index is_index is_aggregate_index is_chainable_index
-#' is_direct_index
-#' @param x An object to test.
-#' @return `is_index()` returns `TRUE` if `x` inherits from
-#' `piar_index`.
-#' 
-#' `is_chainable_index()` returns `TRUE` if `x` inherits from
-#' `chainable_piar_index`.
-#' 
-#' `is_direct_index()` returns `TRUE` if `x` inherits from
-#' `direct_piar_index`.
-#' 
-#' `is_aggregate_index()` returns `TRUE` if `x` inherits from
-#' `aggregate_piar_index`.
-#' @examples
-#' 
-#' prices <- data.frame(
-#'   rel = 1:8,
-#'   period = rep(1:2, each = 4),
-#'   ea = rep(letters[1:2], 4)
-#' )
-#' 
-#' pias <- aggregation_structure(
-#'   list(c("top", "top", "top"), c("a", "b", "c")), 1:3
-#' )
-#' 
-#' # Calculate period-over-period Jevons elemental indexes
-#' 
-#' epr <- with(prices, elemental_index(rel, period, ea))
-#' 
-#' # Aggregate as an arithmetic index
-#' 
-#' index <- aggregate(epr, pias, na.rm = TRUE)
-#' 
-#' is_index(epr)
-#' is_chainable_index(epr)
-#' is_direct_index(epr)
-#' is_aggregate_index(epr)
-#' 
-#' is_index(index)
-#' is_chainable_index(index)
-#' is_direct_index(index)
-#' is_aggregate_index(index)
-#' 
+#' aggregate_piar_index
+#'
 NULL
 
 #---- Helpers ----
@@ -105,8 +69,10 @@ new_aggregate_piar_index <- function(index, contrib, levels, time,
   stopifnot(is.character(time))
   stopifnot(is.double(r))
   stopifnot(is.list(pias))
-  res <- list(index = index, contrib = contrib, levels = levels,
-              time = time, r = r, pias = pias)
+  res <- list(
+    index = index, contrib = contrib, levels = levels,
+    time = time, r = r, pias = pias
+  )
   type <- if (chainable) "chainable_piar_index" else "direct_piar_index"
   structure(res, class = c("aggregate_piar_index", type, "piar_index"))
 }
@@ -203,61 +169,52 @@ validate_aggregate_piar_index <- function(x) {
   x
 }
 
-#---- Printing ----
+#' @importFrom utils str
+#' @export
 str.piar_index <- function(object, ...) {
   str(unclass(object), ...)
 }
 
 index_string <- function(x) {
-  res <- c(aggregate_piar_index = "aggregate",
-           chainable_piar_index = "period-over-period",
-           direct_piar_index = "fixed-base",
-           piar_index = "price index")[class(x)]
+  res <- c(
+    aggregate_piar_index = "aggregate",
+    chainable_piar_index = "period-over-period",
+    direct_piar_index = "fixed-base",
+    piar_index = "price index"
+  )[class(x)]
   res <- paste(res, collapse = " ")
   substr(res, 1, 1) <- toupper(substr(res, 1, 1))
   res
 }
 
+#' @export
 print.piar_index <- function(x, ...) {
-  cat(index_string(x), "for", length(x$levels), "levels over", length(x$time), 
-      "time periods", "\n")
+  cat(
+    index_string(x), "for", length(x$levels), "levels over", length(x$time),
+    "time periods", "\n"
+  )
   print(as.matrix(x), ...)
   invisible(x)
 }
 
-#' Get the attributes for a price index
-#' 
-#' Methods to get and set the levels and time periods for a price index.
-#' 
-#' @param x A price index, as made by, e.g., [elemental_index()`].
+#' Get the levels for a price index
+#'
+#' Methods to get and set the levels for a price index.
+#'
+#' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param value A character vector, or something that can be coerced into one,
-#' giving the replacement levels/time periods for `x`.
-#' @param ... Further arguments passed to or used by methods.
-#' 
+#' giving the replacement levels for `x`.
+#'
 #' @returns
-#' `levels()` and `time()` return a character vector with the
-#' levels and time periods for a price index. `start()` and `end()`
-#' return the first and last time period.
-#' 
-#' The replacement methods return a copy of `x` with the levels/time
-#' periods in `value`. It's not generally possible to change the levels of
-#' an aggregate price index, and in this case replacing the levels does not
-#' return an aggregate index.
-#' 
-#' @examples
-#' prices <- data.frame(
-#'   rel = 1:8,
-#'   period = rep(1:2, each = 4),
-#'   ea = rep(letters[1:2], 4)
-#' )
-#' 
-#' epr <- with(prices, elemental_index(rel, period, ea))
-#' 
-#' levels(epr)
-#' time(epr)
-#' start(epr)
-#' end(epr)
-#' 
+#' `levels()` returns a character vector with the levels for a price index.
+#'
+#' The replacement method returns a copy of `x` with the levels in `value`.
+#'
+#' It's not generally possible to change the levels of an aggregate price
+#' index, and in this case replacing the levels does not return an aggregate
+#' index.
+#'
+#' @family index methods
 #' @export
 levels.piar_index <- function(x) {
   x$levels
@@ -276,33 +233,93 @@ levels.piar_index <- function(x) {
   piar_index(x$index, x$contrib, value, x$time, is_chainable_index(x))
 }
 
-#' @rdname levels.piar_index
+#' Get the time periods for a price index
+#'
+#' Methods to get and set the time periods for a price index.
+#'
+#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param value A character vector, or something that can be coerced into one,
+#' giving the replacement time periods for `x`.
+#' @param ... Further arguments passed to or used by methods.
+#'
+#' @returns
+#' `time()` return a character vector with the time periods for a price index.
+#' `start()` and `end()` return the first and last time period.
+#'
+#' The replacement method returns a copy of `x` with the time periods in
+#' `value`.
+#'
+#' @importFrom stats time
+#' @family index methods
 #' @export
 time.piar_index <- function(x, ...) {
   x$time
 }
 
-#' @rdname levels.piar_index
+#' @rdname time.piar_index
 #' @export
 `time<-` <- function(x, value) {
   UseMethod("time<-")
 }
 
-#' @rdname levels.piar_index
+#' @rdname time.piar_index
 #' @export
 `time<-.piar_index` <- function(x, value) {
   x$time <- as.character(value)
   validate_piar_index(x)
 }
 
-#' @rdname levels.piar_index
+#' @rdname time.piar_index
+#' @importFrom stats start
 #' @export
 start.piar_index <- function(x, ...) {
   x$time[1L]
 }
 
-#' @rdname levels.piar_index
+#' @rdname time.piar_index
+#' @importFrom stats end
 #' @export
 end.piar_index <- function(x, ...) {
   x$time[length(x$time)]
+}
+
+#' Test if an object is a price index
+#'
+#' Test if an object is a index object, or a subclass of an index object.
+#'
+#' @param x An object to test.
+#'
+#' @returns
+#' `is_index()` returns `TRUE` if `x` inherits from [`piar_index`].
+#'
+#' `is_chainable_index()` returns `TRUE` if `x` inherits from
+#' [`chainable_piar_index`].
+#'
+#' `is_direct_index()` returns `TRUE` if `x` inherits from
+#' [`direct_piar_index`].
+#'
+#' `is_aggregate_index()` returns `TRUE` if `x` inherits from
+#' [`aggregate_piar_index`].
+#'
+#' @export
+is_index <- function(x) {
+  inherits(x, "piar_index")
+}
+
+#' @rdname is_index
+#' @export
+is_aggregate_index <- function(x) {
+  inherits(x, "aggregate_piar_index")
+}
+
+#' @rdname is_index
+#' @export
+is_chainable_index <- function(x) {
+  inherits(x, "chainable_piar_index")
+}
+
+#' @rdname is_index
+#' @export
+is_direct_index <- function(x) {
+  inherits(x, "direct_piar_index")
 }

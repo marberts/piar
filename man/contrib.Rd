@@ -62,10 +62,15 @@ arithmetic_contributions(
 \seealso{
 Other index methods: 
 \code{\link{[.piar_index}()},
+\code{\link{aggregate.piar_index}()},
+\code{\link{as.data.frame.piar_index}()},
+\code{\link{elemental_index}()},
 \code{\link{head.piar_index}()},
+\code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
 \code{\link{merge.piar_index}()},
 \code{\link{stack.piar_index}()},
+\code{\link{time.piar_index}()},
 \code{\link{vcov.aggregate_piar_index}()}
 }
 \concept{index methods}

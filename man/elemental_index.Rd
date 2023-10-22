@@ -14,7 +14,7 @@ elemental_index(x, ...)
   x,
   period = gl(1, length(x)),
   ea = gl(1, length(x)),
-  w = NULL,
+  weights = NULL,
   contrib = FALSE,
   chainable = TRUE,
   na.rm = FALSE,
@@ -32,14 +32,14 @@ is only a method for numeric vectors; these can be made with
 \item{period}{A factor, or something that can be coerced into one, giving
 the time period associated with each price relative in \code{x}. The
 ordering of time periods follows of the levels of \code{period}, to agree
-with \link[=cut.Date]{cut()}. The default assumes that all price
+with \code{\link[=cut.Date]{cut()}}. The default assumes that all price
 relatives belong to one time period.}
 
 \item{ea}{A factor, or something that can be coerced into one, giving the
 elemental aggregate associated with each price relative in \code{x}. The
 default assumes that all price relatives belong to one elemental aggregate.}
 
-\item{w}{A numeric vector of weights for the price relatives in \code{x}.
+\item{weights}{A numeric vector of weights for the price relatives in \code{x}.
 The default is equal weights.}
 
 \item{contrib}{Should percent-change contributions be calculated? The
@@ -58,7 +58,7 @@ geometric index (the default for making elemental indexes), 1 for an
 arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
-\code{\link[=generalized_mean]{generalized_mean()}} for details.}
+\code{\link[gpindex:generalized-mean]{gpindex::generalized_mean()}} for details.}
 }
 \value{
 A price index that inherits from \code{\link{piar_index}}. If
@@ -72,9 +72,9 @@ price indexes, with optional percent-change contributions.
 }
 \details{
 When supplied with a numeric vector, \code{elemental_index()} is a simple
-wrapper that applies \link[gpindex:generalized-mean]{generalized_mean(r)()}
-and \link[gpindex:contributions]{contributions(r)()} (if \code{contrib = TRUE}) to
-\code{x} and \code{w} grouped by \code{ea} and \code{period}. That
+wrapper that applies \code{\link[gpindex:generalized-mean]{generalized_mean(r)()}}
+and \code{\link[gpindex:contributions]{contributions(r)()}} (if \code{contrib = TRUE}) to
+\code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
 is, for every combination of elemental aggregate and time period,
 \code{elemental_index()} calculates an index based on a generalized mean of
 order \code{r} and, optionally, percent-change contributions. The default
@@ -167,26 +167,27 @@ International Monetary Fund.
 time, and \code{\link[=carry_forward]{carry_forward()}} and \code{\link[=shadow_price]{shadow_price()}} for
 imputation of missing prices.
 
-\link[=aggregate.piar_index]{aggregate()} to aggregate elemental
-indexes according to a price index aggregation structure.
-
 \code{\link[=as_index]{as_index()}} to turn pre-computed (elemental) index values into an
 index object.
 
 \code{\link[=chain]{chain()}} for chaining period-over-period indexes, and
 \code{\link[=rebase]{rebase()}} for rebasing an index.
 
-\code{\link[=contrib]{contrib()}} for getting the percent-change contributions of an
-index, \link[=levels.piar_index]{levels()} for getting the levels, and
-\link[=time.piar_index]{time()} for getting the time periods.
-
-\link[=merge.piar_index]{merge()} and
-\link[=stack.piar_index]{stack()} to combine index values.
-
-\code{\link[=[.piar_index]{[}} and \code{\link[=[<-.piar_index]{[<-}} to
-extract and replace index values.
-
-\link[=as.matrix.piar_index]{as.matrix()} and
-\link[=as.data.frame.piar_index]{as.data.frame()} for coercing an index
+\code{\link[=as.matrix.piar_index]{as.matrix()}} and
+\code{\link[=as.data.frame.piar_index]{as.data.frame()}} for coercing an index
 into a tabular form.
+
+Other index methods: 
+\code{\link{[.piar_index}()},
+\code{\link{aggregate.piar_index}()},
+\code{\link{as.data.frame.piar_index}()},
+\code{\link{contrib}()},
+\code{\link{head.piar_index}()},
+\code{\link{levels.piar_index}()},
+\code{\link{mean.piar_index}()},
+\code{\link{merge.piar_index}()},
+\code{\link{stack.piar_index}()},
+\code{\link{time.piar_index}()},
+\code{\link{vcov.aggregate_piar_index}()}
 }
+\concept{index methods}

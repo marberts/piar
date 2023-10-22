@@ -1,7 +1,7 @@
 #' Coerce to a price index
-#' 
+#'
 #' Coerce pre-computed index values into an index object.
-#' 
+#'
 #' Numeric matrices are coerced into an index object by treating each column as
 #' a separate time period, and each row as an elemental aggregate. Column names
 #' are used to denote time periods, and row names are used to denote elemental
@@ -10,7 +10,7 @@
 #' dimension is unnamed, then it is given a sequential label from 1 to the size
 #' of that dimension. The default method coerces `x` to a matrix prior to
 #' using the matrix method.
-#' 
+#'
 #' The data frame method for `as_index()` is best understood as reversing
 #' the effect of [`as.data.frame()`][as.data.frame.piar_index] on an
 #' index object. It constructs a matrix by taking the levels of
@@ -18,12 +18,12 @@
 #' (coercing to a factor if necessary). It then populates this matrix with the
 #' corresponding values in `x[[cols[3]]]`, and uses the matrix method for
 #' `as_index()`.
-#' 
+#'
 #' If `x` is a period-over-period index then it is returned unchanged when
 #' `chainable = TRUE` and chained otherwise. Similarly, if `x` is a
-#' fixed-base index then it is returned unchanged when `chainable ==
-#' FALSE` and unchain otherwise.
-#' 
+#' fixed-base index then it is returned unchanged when
+#' `chainable == FALSE` and unchain otherwise.
+#'
 #' @param x An object to coerce into a price index.
 #' @param chainable Are the index values in `x` period-over-period
 #' indexes, suitable for a chained calculation (the default)? This should be
@@ -33,33 +33,33 @@
 #' contains time periods, the second contains levels, and the third contains
 #' index values.
 #' @param ... Further arguments passed to or used by methods.
-#' 
+#'
 #' @returns
 #' `as_index()` returns a price index that inherits from
 #' [`piar_index`]. If `chainable = TRUE` then this is a
 #' period-over-period price index that also inherits from
 #' [`chainable_piar_index`]; otherwise, it is a fixed-base index that
 #' inherits from [`direct_piar_index`].
-#' 
+#'
 #' @seealso
 #' [`as.matrix()`][as.matrix.piar_index] and
 #' [`as.data.frame()`][as.data.frame.piar_index] for coercing an index
 #' into a tabular form.
-#' 
+#'
 #' @examples
 #' prices <- data.frame(
 #'   rel = 1:8,
 #'   period = rep(1:2, each = 4),
 #'   ea = rep(letters[1:2], 4)
 #' )
-#' 
+#'
 #' # Calculate period-over-period Jevons elemental indexes
-#' 
+#'
 #' epr <- with(prices, elemental_index(rel, period, ea))
-#' 
+#'
 #' all.equal(as_index(as.data.frame(epr)), epr)
 #' all.equal(as_index(as.matrix(epr)), epr)
-#' 
+#'
 #' @export
 as_index <- function(x, ...) {
   UseMethod("as_index")
@@ -97,8 +97,10 @@ as_index.data.frame <- function(x, cols = 1:3, chainable = TRUE, ...) {
   time <- levels(x[[1L]])
   levels <- levels(x[[2L]])
   # elemental_index() usually gives NaN for missing cells
-  res <- matrix(NA_real_, nrow = length(levels), ncol = length(time),
-                dimnames = list(levels, time))
+  res <- matrix(NA_real_,
+    nrow = length(levels), ncol = length(time),
+    dimnames = list(levels, time)
+  )
   res[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
   as_index(res, chainable, ...)
 }
@@ -113,45 +115,4 @@ as_index.chainable_piar_index <- function(x, chainable = TRUE, ...) {
 #' @export
 as_index.direct_piar_index <- function(x, chainable = FALSE, ...) {
   if (chainable) unchain(x) else x
-}
-
-#' Test if an object is a price index
-#' 
-#' Test if an object is a index object, or a subclass of an index object.
-#' 
-#' @param x An object to test.
-#' 
-#' @returns
-#' `is_index()` returns `TRUE` if `x` inherits from `piar_index`.
-#' 
-#' `is_chainable_index()` returns `TRUE` if `x` inherits from
-#' `chainable_piar_index`.
-#'
-#' `is_direct_index()` returns `TRUE` if `x` inherits from
-#' `direct_piar_index`.
-#'
-#' `is_aggregate_index()` returns `TRUE` if `x` inherits from
-#' `aggregate_piar_index`.
-#'
-#' @export
-is_index <- function(x) {
-  inherits(x, "piar_index")
-}
-
-#' @rdname is_index
-#' @export
-is_aggregate_index <- function(x) {
-  inherits(x, "aggregate_piar_index")
-}
-
-#' @rdname is_index
-#' @export
-is_chainable_index <- function(x) {
-  inherits(x, "chainable_piar_index")
-}
-
-#' @rdname is_index
-#' @export
-is_direct_index <- function(x) {
-  inherits(x, "direct_piar_index")
 }

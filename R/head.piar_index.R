@@ -8,9 +8,9 @@
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
-#' A price index that inherits from [`chainable_piar_index`]
-#' if `x` is a period-over-period index, or
-#' `direct_piar_index()` if `x` is a fixed-base index.
+#' A price index that inherits from [`chainable_piar_index`] if `x` is a
+#' period-over-period index, or `direct_piar_index()` if `x` is a
+#' fixed-base index.
 #'
 #' @examples
 #' prices <- data.frame(
@@ -30,6 +30,7 @@
 #' tail(epr, 1)
 #'
 #' @family index methods
+#' @importFrom utils head
 #' @export
 head.piar_index <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)
@@ -52,6 +53,7 @@ head.piar_index <- function(x, n = 6L, ...) {
 }
 
 #' @rdname head.piar_index
+#' @importFrom utils tail
 #' @export
 tail.piar_index <- function(x, n = 6L, ...) {
   nl <- levels <- length(x$levels)

@@ -4,12 +4,12 @@
 \alias{mean.piar_index}
 \title{Aggregate a price index over subperiods}
 \usage{
-\method{mean}{piar_index}(x, w = NULL, window = 3, na.rm = FALSE, r = 1, ...)
+\method{mean}{piar_index}(x, weights = NULL, window = 3, na.rm = FALSE, r = 1, ...)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
-\item{w}{A numeric vector of weights for the index values in \code{x}. The
+\item{weights}{A numeric vector of weights for the index values in \code{x}. The
 default is equal weights. It is usually easiest to specify these weights as
 a matrix with a row for each index value in \code{x} and a column for each
 time period.}
@@ -70,10 +70,15 @@ Cambridge University Press.
 \seealso{
 Other index methods: 
 \code{\link{[.piar_index}()},
+\code{\link{aggregate.piar_index}()},
+\code{\link{as.data.frame.piar_index}()},
 \code{\link{contrib}()},
+\code{\link{elemental_index}()},
 \code{\link{head.piar_index}()},
+\code{\link{levels.piar_index}()},
 \code{\link{merge.piar_index}()},
 \code{\link{stack.piar_index}()},
+\code{\link{time.piar_index}()},
 \code{\link{vcov.aggregate_piar_index}()}
 }
 \concept{index methods}

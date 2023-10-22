@@ -80,10 +80,11 @@ The default methods attempts to coerce \code{x} into an index with
 \code{\link[=as_index]{as_index()}} prior to chaining/unchaining/rebasing.
 
 Chaining an index takes the cumulative product of the index values for each
-level; this is roughly the same as `t(apply(as.matrix(x), 1, cumprod))
-\itemize{
-\item link\verb{. Unchaining does the opposite, so these are inverse operations. Note that unchaining a period-over-period index (i.e., when }is_chainable_index(x) == TRUE\verb{) does nothing, as does chaining a fixed-base index (i.e., when }is_chainable_index(x) == FALSE`).
-}
+level; this is roughly the same as
+\code{t(apply(as.matrix(x), 1, cumprod)) * link}. Unchaining does the opposite,
+so these are inverse operations. Note that unchaining a period-over-period
+index (i.e., when \code{is_chainable_index(x) == TRUE}) does nothing, as does
+chaining a fixed-base index (i.e., when \code{is_chainable_index(x) == FALSE}).
 
 Rebasing a fixed-base index divides the values for each level of this index
 by the corresponding values for each level in the new base period. It's

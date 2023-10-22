@@ -12,7 +12,7 @@
 
 \item{index}{A price index, or something that can be coerced into one.
 Usually an aggregate price index as made by
-\link[=aggregate.piar_index]{aggregate()}.}
+\code{\link[=aggregate.piar_index]{aggregate()}}.}
 
 \item{period}{The time period used to price update the weights. The default
 uses the last period in \code{index}.}
@@ -58,8 +58,13 @@ weights(update(pias, index))
 
 }
 \seealso{
-\link[=aggregate.piar_index]{aggregate()} to make an aggregated price index.
+\code{\link[=aggregate.piar_index]{aggregate()}} to make an aggregated price index.
 
 \code{\link[=weights<-.piar_aggregation_structure]{weights<-()}} to update the
 weights directly.
+
+Other aggregation structure methods: 
+\code{\link{is_aggregation_structure}()},
+\code{\link{weights.piar_aggregation_structure}()}
 }
+\concept{aggregation structure methods}

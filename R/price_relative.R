@@ -25,7 +25,7 @@
 #' @param period A factor, or something that can be coerced into one, that
 #' gives the corresponding time period for each element in `x`. The
 #' ordering of time periods follows the levels of `period` to agree with
-#' [cut()][cut.Date].
+#' [`cut()`][cut.Date].
 #' @param product A factor, or something that can be coerced into one, that
 #' gives the corresponding product identifier for each element in `x`.
 #'
@@ -39,7 +39,7 @@
 #'
 #' [carry_forward()] and [shadow_price()] to impute missing prices.
 #'
-#' [gpindex::outliers] for methods to identify outliers with price relatives.
+#' [`gpindex::outliers`] for methods to identify outliers with price relatives.
 #'
 #' @examples
 #' price_relative(1:6, rep(1:2, each = 3), rep(letters[1:3], 2))
@@ -47,7 +47,7 @@
 #' @export
 price_relative <- function(x, period, product) {
   x <- as.numeric(x)
-  res <- x / x[back_period(period, product)]
+  res <- x / x[gpindex::back_period(period, product)]
   names(res) <- product
   res
 }

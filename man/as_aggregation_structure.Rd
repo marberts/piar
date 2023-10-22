@@ -5,46 +5,45 @@
 \alias{as_aggregation_structure.default}
 \alias{as_aggregation_structure.data.frame}
 \alias{as_aggregation_structure.matrix}
+\alias{as_aggregation_structure.aggregate_piar_index}
 \title{Coerce to an aggregation structure}
 \usage{
 as_aggregation_structure(x, ...)
 
-\method{as_aggregation_structure}{default}(x, w = NULL, ...)
+\method{as_aggregation_structure}{default}(x, weights = NULL, ...)
 
 \method{as_aggregation_structure}{data.frame}(x, ...)
 
 \method{as_aggregation_structure}{matrix}(x, ...)
+
+\method{as_aggregation_structure}{aggregate_piar_index}(x, weights = NULL, ...)
 }
 \arguments{
-\item{x}{An object to test or coerce into an aggregation structure.}
+\item{x}{An object to coerce into an aggregation structure.}
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{w}{A numeric vector of aggregation weights for the elemental
+\item{weights}{A numeric vector of aggregation weights for the elemental
 aggregates. The default is to give each elemental aggregate the same weight.}
 }
 \value{
 A price index aggregation structure that inherits from
-\code{piar_aggregation_structure}, except for \code{is_aggregate_index()}
-that returns \code{TRUE} if \code{x} inherits from
-\code{piar_aggregation_structure}.
+\code{\link{piar_aggregation_structure}}..
 }
 \description{
-Coerce an object into an aggregation structure object, and test if an object
-is an aggregation structure.
+Coerce an object into an aggregation structure object.
 }
-\section{Methods (by class)}{
-\itemize{
-\item \code{as_aggregation_structure(default)}: The default method attempts to coerce \code{x} into a list prior to calling
+\details{
+The default method attempts to coerce \code{x} into a list prior to calling
 \code{\link[=aggregation_structure]{aggregation_structure()}}.
 
-\item \code{as_aggregation_structure(data.frame)}: The data frame methods treat \code{x} as a table with a row for
+The data frame and matrix methods treat \code{x} as a table with a row for
 each elemental aggregate, a column of labels for each level in the
 aggregation structure, and a column of weights for the elemental aggregates.
 
-\item \code{as_aggregation_structure(matrix)}: Same as data frame method.
-
-}}
+The method for aggregate indexes reconstructs the aggregation structure used
+to generate the index (with optional weights).
+}
 \examples{
 # A simple aggregation structure
 #            1
@@ -55,15 +54,16 @@ aggregation structure, and a column of weights for the elemental aggregates.
 #  (1)     (3)     (4)
 
 aggregation_weights <- data.frame(
-  level1 = c("1",   "1",   "1"),
-  level2 = c("11",  "11",  "12"),
+  level1 = c("1", "1", "1"),
+  level2 = c("11", "11", "12"),
   ea     = c("111", "112", "121"),
-  weight = c(1,     3,     4)
+  weight = c(1, 3, 4)
 )
-                                  
+
 pias <- aggregation_structure(aggregation_weights[1:3],
-                              w = aggregation_weights[[4]])
-                              
+  weights = aggregation_weights[[4]]
+)
+
 all.equal(
   pias,
   as_aggregation_structure(aggregation_weights)
@@ -76,7 +76,7 @@ all.equal(
 
 }
 \seealso{
-\link[=as.matrix.piar_aggregation_structure]{as.matrix()} and
-\link[=as.data.frame.piar_aggregation_structure]{as.data.frame()} for
+\code{\link[=as.matrix.piar_aggregation_structure]{as.matrix()}} and
+\code{\link[=as.data.frame.piar_aggregation_structure]{as.data.frame()}} for
 coercing an aggregation structure into a tabular form.
 }

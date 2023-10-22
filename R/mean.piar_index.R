@@ -17,7 +17,7 @@
 #' section 4.3 of Balk (2008) for details.
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
-#' @param w A numeric vector of weights for the index values in `x`. The
+#' @param weights A numeric vector of weights for the index values in `x`. The
 #' default is equal weights. It is usually easiest to specify these weights as
 #' a matrix with a row for each index value in `x` and a column for each
 #' time period.
@@ -33,7 +33,7 @@
 #' a Paasche index). Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
 #' @param ... Further arguments passed to or used by methods.
-#' 
+#'
 #' @returns
 #' A price index with the same class as `x`.
 #'
@@ -53,15 +53,15 @@
 #'
 #' @family index methods
 #' @export
-mean.piar_index <- function(x, w = NULL, window = 3, na.rm = FALSE,
+mean.piar_index <- function(x, weights = NULL, window = 3, na.rm = FALSE,
                             r = 1, ...) {
-  if (!is.null(w)) {
-    if (length(w) != length(x$time) * length(x$levels)) {
-      stop("'x' and 'w' must be the same length")
+  if (!is.null(weights)) {
+    if (length(weights) != length(x$time) * length(x$levels)) {
+      stop("'x' and 'weights' must be the same length")
     }
-    w <- split(as.numeric(w), gl(length(x$time), length(x$levels)))
+    w <- split(as.numeric(weights), gl(length(x$time), length(x$levels)))
   }
-  gen_mean <- Vectorize(generalized_mean(r))
+  gen_mean <- Vectorize(gpindex::generalized_mean(r))
   len <- length(x$time) %/% window
   if (len == 0L) {
     stop("'x' must have at least 'window' time periods")
@@ -74,7 +74,7 @@ mean.piar_index <- function(x, w = NULL, window = 3, na.rm = FALSE,
   for (i in seq_along(loc)) {
     j <- seq(loc[i], length.out = window)
     index <- .mapply(c, x$index[j], list())
-    weight <- if (is.null(w)) list(NULL) else .mapply(c, w[j], list())
+    weight <- if (is.null(weights)) list(NULL) else .mapply(c, w[j], list())
     res[[i]][] <- gen_mean(index, weight, na.rm = na.rm)
   }
   x$index <- res

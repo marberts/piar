@@ -7,8 +7,10 @@ new_piar_aggregation_structure <- function(child, parent, levels, eas,
   stopifnot(is.character(eas))
   stopifnot(is.double(weights))
   stopifnot(is.integer(height))
-  res <- list(child = child, parent = parent, levels = levels,
-              eas = eas, weights = weights, height = height)
+  res <- list(
+    child = child, parent = parent, levels = levels,
+    eas = eas, weights = weights, height = height
+  )
   structure(res, class = "piar_aggregation_structure")
 }
 
@@ -38,22 +40,26 @@ validate_pias_levels <- function(x) {
 validate_pias_structure <- function(x) {
   eas <- seq.int(to = length(x$levels), length.out = length(x$eas))
   if (!identical(x$eas, x$levels[eas]) ||
-      x$height != length(x$child) + 1L ||
-      x$height != length(x$parent) + 1L ||
-      anyNA(x$child, recursive = TRUE) ||
-      anyNA(x$parent, recursive = TRUE) ||
-      any(vapply(x$child, \(x) any(lengths(x) == 0L), logical(1L)))
+    x$height != length(x$child) + 1L ||
+    x$height != length(x$parent) + 1L ||
+    anyNA(x$child, recursive = TRUE) ||
+    anyNA(x$parent, recursive = TRUE) ||
+    any(vapply(x$child, \(x) any(lengths(x) == 0L), logical(1L)))
   ) {
-    stop("invalid aggregation structure; the input is likely not a nested",
-         "hierachy")
+    stop(
+      "invalid aggregation structure; the input is likely not a nested",
+      "hierachy"
+    )
   }
   invisible(x)
 }
 
 validate_pias_weights <- function(x) {
   if (length(x$weights) != length(x$eas)) {
-    stop("cannot make an aggregation structure with a different number of ",
-         "weights and elemental aggregates")
+    stop(
+      "cannot make an aggregation structure with a different number of ",
+      "weights and elemental aggregates"
+    )
   }
   invisible(x)
 }
@@ -65,25 +71,41 @@ validate_piar_aggregation_structure <- function(x) {
   x
 }
 
-#---- Printing ----
+#' @export
 print.piar_aggregation_structure <- function(x, ...) {
-  cat("Aggregation structure for", length(x$eas), "elemental aggregates with",
-      x$height - 1L, "levels above the elemental aggregates", "\n")
+  cat(
+    "Aggregation structure for", length(x$eas), "elemental aggregates with",
+    x$height - 1L, "levels above the elemental aggregates", "\n"
+  )
   invisible(x)
 }
 
+#' @export
 str.piar_aggregation_structure <- function(object, ...) {
   str(unclass(object), ...)
 }
 
-#' Methods to get the weights and levels for a price index aggregation
-#' structure
-#' 
-#' Get and set the weights for a price index aggregation structure, or get the
-#' levels.
-#' 
-#' @param object,x A price index aggregation structure, as made by
-#' [`aggregation_structure()`][aggregation_structure].
+#' Test if an object is a price index aggregation structure
+#'
+#' Test if an object is a price index aggregation structure
+#'
+#' @param x An object to test.
+#'
+#' @returns
+#' Returns `TRUE` if `x` inherits from [`piar_aggregation_structure`]
+#'
+#' @family aggregation structure methods
+#' @export
+is_aggregation_structure <- function(x) {
+  inherits(x, "piar_aggregation_structure")
+}
+
+#' Get the weights for a price index aggregation structure
+#'
+#' Get and set the weights for a price index aggregation structure.
+#'
+#' @param object A price index aggregation structure, as made by
+#' [aggregation_structure()].
 #' @param ea_only Should weights be returned for only the elemental aggregates?
 #' The default gives the weights for the entire aggregation structure.
 #' @param na.rm Should missing values be removed from when aggregating the
@@ -92,17 +114,14 @@ str.piar_aggregation_structure <- function(object, ...) {
 #' @param value A numeric vector of weights for the elemental aggregates of
 #' `object`.
 #' @param ... Further arguments passed to or used by methods.
-#' 
+#'
 #' @returns
 #' `weights()` returns a list with a named vector of weights for
 #' each level in the aggregation structure. If `ea_only = TRUE` then the
 #' return value is just a named vector of weights for the elemental aggregates.
 #' The replacement method replaces these values without changing the
 #' aggregation structure.
-#' 
-#' `levels()` returns a character vector with the levels for the
-#' aggregation structure.
-#' 
+#'
 #' @examples
 #' # A simple aggregation structure
 #' #            1
@@ -111,25 +130,27 @@ str.piar_aggregation_structure <- function(object, ...) {
 #' #  |---+---|       |
 #' #  111     112     121
 #' #  (1)     (3)     (4)
-#' 
+#'
 #' aggregation_weights <- data.frame(
-#'   level1 = c("1",   "1",   "1"),
-#'   level2 = c("11",  "11",  "12"),
+#'   level1 = c("1", "1", "1"),
+#'   level2 = c("11", "11", "12"),
 #'   ea     = c("111", "112", "121"),
-#'   weight = c(1,     3,     4)
+#'   weight = c(1, 3, 4)
 #' )
-#' 
+#'
 #' pias <- as_aggregation_structure(aggregation_weights)
-#' 
+#'
 #' # Extract the weights
-#' 
+#'
 #' weights(pias)
-#' 
+#'
 #' # ... or update them
-#' 
+#'
 #' weights(pias) <- 1:3
 #' weights(pias)
-#' 
+#'
+#' @importFrom stats weights
+#' @family aggregation structure methods
 #' @export
 weights.piar_aggregation_structure <- function(object, ea_only = FALSE,
                                                na.rm = FALSE, ...) {
@@ -138,11 +159,13 @@ weights.piar_aggregation_structure <- function(object, ea_only = FALSE,
   }
   res <- vector("list", object$height)
   res[[1L]] <- object$weights
-  
+
   for (i in seq_along(res)[-1L]) {
-    res[[i]] <- vapply(object$child[[i - 1L]],
-                       \(z) sum(res[[i - 1L]][z], na.rm = na.rm),
-                       numeric(1L))
+    res[[i]] <- vapply(
+      object$child[[i - 1L]],
+      \(z) sum(res[[i - 1L]][z], na.rm = na.rm),
+      numeric(1L)
+    )
   }
   rev(res)
 }
@@ -160,13 +183,11 @@ weights.piar_aggregation_structure <- function(object, ea_only = FALSE,
   validate_piar_aggregation_structure(object)
 }
 
-#' @rdname weights.piar_aggregation_structure
 #' @export
 levels.piar_aggregation_structure <- function(x) {
   x$levels
 }
 
-#' @rdname weights.piar_aggregation_structure
 #' @export
 `levels<-.piar_aggregation_structure` <- function(x, value) {
   stop("cannot replace levels attribute for aggregation structure")
