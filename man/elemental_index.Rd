@@ -173,21 +173,10 @@ index object.
 \code{\link[=chain]{chain()}} for chaining period-over-period indexes, and
 \code{\link[=rebase]{rebase()}} for rebasing an index.
 
+\code{\link[=aggregate.piar_index]{aggregate()}} to aggregate elemental indexes
+according to an aggregation structure.
+
 \code{\link[=as.matrix.piar_index]{as.matrix()}} and
 \code{\link[=as.data.frame.piar_index]{as.data.frame()}} for coercing an index
 into a tabular form.
-
-Other index methods: 
-\code{\link{[.piar_index}()},
-\code{\link{aggregate.piar_index}()},
-\code{\link{as.data.frame.piar_index}()},
-\code{\link{contrib}()},
-\code{\link{head.piar_index}()},
-\code{\link{levels.piar_index}()},
-\code{\link{mean.piar_index}()},
-\code{\link{merge.piar_index}()},
-\code{\link{stack.piar_index}()},
-\code{\link{time.piar_index}()},
-\code{\link{vcov.aggregate_piar_index}()}
 }
-\concept{index methods}

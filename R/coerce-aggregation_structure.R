@@ -42,6 +42,7 @@
 #'
 #' all.equal(as.data.frame(pias), aggregation_weights)
 #'
+#' @family aggregation structure methods
 #' @export
 as.matrix.piar_aggregation_structure <- function(x, ...) {
   nea <- length(x$eas)

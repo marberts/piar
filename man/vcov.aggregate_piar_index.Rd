@@ -92,7 +92,6 @@ Other index methods:
 \code{\link{aggregate.piar_index}()},
 \code{\link{as.data.frame.piar_index}()},
 \code{\link{contrib}()},
-\code{\link{elemental_index}()},
 \code{\link{head.piar_index}()},
 \code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},

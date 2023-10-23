@@ -94,7 +94,6 @@ str.piar_aggregation_structure <- function(object, ...) {
 #' @returns
 #' Returns `TRUE` if `x` inherits from [`piar_aggregation_structure`]
 #'
-#' @family aggregation structure methods
 #' @export
 is_aggregation_structure <- function(x) {
   inherits(x, "piar_aggregation_structure")

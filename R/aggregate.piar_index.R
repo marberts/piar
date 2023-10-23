@@ -1,74 +1,3 @@
-#' @export
-aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
-                                 ..., chainable) {
-  pias <- as_aggregation_structure(pias)
-  r <- as.numeric(r)
-
-  # helpful functions
-  price_update <- gpindex::factor_weights(r)
-  gen_mean <- gpindex::generalized_mean(r)
-  aw <- gpindex::transmute_weights(r, 1)
-
-  # put the aggregation weights upside down to line up with pias
-  w <- rev(weights(pias, na.rm = na.rm))
-  has_contrib <- has_contrib(x) && contrib
-  pias_eas <- match(pias$eas, pias$levels)
-  # loop over each time period
-  for (t in seq_along(x$time)) {
-    rel <- con <- vector("list", pias$height)
-    # align epr with weights so that positional indexing works
-    # preserve names if epr and pias weights don't agree
-    eas <- match(pias$eas, x$levels)
-    rel[[1L]] <- x$index[[t]][eas]
-    con[[1L]] <- x$contrib[[t]][eas]
-    # get rid of any NULL contributions
-    con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
-    # loop over each level in the pias from the bottom up and aggregate
-    for (i in seq_along(rel)[-1L]) {
-      nodes <- unname(pias$child[[i - 1L]])
-      rel[[i]] <- vapply(
-        nodes,
-        \(z) gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm),
-        numeric(1L)
-      )
-      if (has_contrib) {
-        con[[i]] <- lapply(
-          nodes,
-          \(z) {
-            w <- gpindex::scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))
-            res <- unlist(Map("*", con[[i - 1L]][z], w))
-            names(res) <- make.unique(as.character(names(res)))
-            res
-          }
-        )
-      } else {
-        con[[i]] <- lapply(nodes, \(z) numeric(0L))
-      }
-    }
-    # parental imputation
-    if (na.rm) {
-      for (i in rev(seq_along(rel))[-1L]) {
-        impute <- is.na(rel[[i]])
-        rel[[i]][impute] <- rel[[i + 1L]][pias$parent[[i]][impute]]
-      }
-    }
-    # return index and contributions
-    index <- unlist(rev(rel), use.names = FALSE)
-    x$index[[t]] <- index
-    x$contrib[[t]] <- unlist(rev(con), recursive = FALSE, use.names = FALSE)
-    # price update weights for all periods after the first
-    if (chainable) {
-      weights(pias) <- price_update(index[pias_eas], w[[1L]])
-      w <- rev(weights(pias, na.rm = na.rm))
-    }
-  }
-  aggregate_piar_index(
-    x$index, x$contrib, pias$levels, x$time, r,
-    pias[c("child", "parent", "eas", "height")],
-    chainable
-  )
-}
-
 #' Aggregate elemental price indexes
 #'
 #' Aggregate elemental price indexes with a price index aggregation structure.
@@ -78,7 +7,7 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
 #' [`generalized_mean(r)()`][gpindex::generalized_mean] for each level of
 #' `pias`;
 #' 2. aggregates percent-change contributions for each level of
-#' `pias` (if there are any);
+#' `pias` (if there are any and `contrib = TRUE`);
 #' 3. price updates the weights in `pias` with
 #' [`factor_weights(r)()`][gpindex::factor_weights] (only for period-over-period
 #' elemental indexes).
@@ -144,9 +73,11 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
 #' the class of `x`.
 #'
 #' @note
-#' For large indexes it can be much faster to aggregate elemental indexes
-#' as a matrix operation when there are no missing values---see the examples
-#' for details.
+#' For large indexes it can be much faster to turn the aggregation structure
+#' into an aggregation matrix with
+#' [`as.matrix()`][as.matrix.piar_aggregation_structure], then aggregate
+#' elemental indexes as a matrix operation when there are no missing
+#' values---see the examples for details.
 #'
 #' @references
 #' Balk, B. M. (2008). *Price and Quantity Index Numbers*.
@@ -194,4 +125,75 @@ aggregate.chainable_piar_index <- function(x, pias, na.rm = FALSE, r = 1,
 aggregate.direct_piar_index <- function(x, pias, na.rm = FALSE, r = 1,
                                         contrib = TRUE, ...) {
   NextMethod("aggregate", chainable = FALSE)
+}
+
+#' @export
+aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
+                                 ..., chainable) {
+  pias <- as_aggregation_structure(pias)
+  r <- as.numeric(r)
+  
+  # helpful functions
+  price_update <- gpindex::factor_weights(r)
+  gen_mean <- gpindex::generalized_mean(r)
+  aw <- gpindex::transmute_weights(r, 1)
+  
+  # put the aggregation weights upside down to line up with pias
+  w <- rev(weights(pias, na.rm = na.rm))
+  has_contrib <- has_contrib(x) && contrib
+  pias_eas <- match(pias$eas, pias$levels)
+  # loop over each time period
+  for (t in seq_along(x$time)) {
+    rel <- con <- vector("list", pias$height)
+    # align epr with weights so that positional indexing works
+    # preserve names if epr and pias weights don't agree
+    eas <- match(pias$eas, x$levels)
+    rel[[1L]] <- x$index[[t]][eas]
+    con[[1L]] <- x$contrib[[t]][eas]
+    # get rid of any NULL contributions
+    con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
+    # loop over each level in the pias from the bottom up and aggregate
+    for (i in seq_along(rel)[-1L]) {
+      nodes <- unname(pias$child[[i - 1L]])
+      rel[[i]] <- vapply(
+        nodes,
+        \(z) gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm),
+        numeric(1L)
+      )
+      if (has_contrib) {
+        con[[i]] <- lapply(
+          nodes,
+          \(z) {
+            w <- gpindex::scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))
+            res <- unlist(Map("*", con[[i - 1L]][z], w))
+            names(res) <- make.unique(as.character(names(res)))
+            res
+          }
+        )
+      } else {
+        con[[i]] <- lapply(nodes, \(z) numeric(0L))
+      }
+    }
+    # parental imputation
+    if (na.rm) {
+      for (i in rev(seq_along(rel))[-1L]) {
+        impute <- is.na(rel[[i]])
+        rel[[i]][impute] <- rel[[i + 1L]][pias$parent[[i]][impute]]
+      }
+    }
+    # return index and contributions
+    index <- unlist(rev(rel), use.names = FALSE)
+    x$index[[t]] <- index
+    x$contrib[[t]] <- unlist(rev(con), recursive = FALSE, use.names = FALSE)
+    # price update weights for all periods after the first
+    if (chainable) {
+      weights(pias) <- price_update(index[pias_eas], w[[1L]])
+      w <- rev(weights(pias, na.rm = na.rm))
+    }
+  }
+  aggregate_piar_index(
+    x$index, x$contrib, pias$levels, x$time, r,
+    pias[c("child", "parent", "eas", "height")],
+    chainable
+  )
 }

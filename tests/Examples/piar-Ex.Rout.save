@@ -32,8 +32,8 @@ Type 'q()' to quit R.
 > 
 > ### Name: aggregate.piar_index
 > ### Title: Aggregate elemental price indexes
-> ### Aliases: aggregate.chainable_piar_index aggregate.direct_piar_index
-> ###   aggregate.piar_index
+> ### Aliases: aggregate.piar_index aggregate.chainable_piar_index
+> ###   aggregate.direct_piar_index
 > 
 > ### ** Examples
 > 
@@ -75,72 +75,6 @@ top 2.462968 16.4796
 > 
 > 
 > 
-> cleanEx()
-> nameEx("aggregation_structure-attributes")
-> ### * aggregation_structure-attributes
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: aggregation_structure-attributes
-> ### Title: Methods to get the weights and levels for a price index
-> ###   aggregation structure
-> ### Aliases: weights.piar_aggregation_structure weights<-
-> ###   weights<-.piar_aggregation_structure
-> ###   levels.piar_aggregation_structure
-> 
-> ### ** Examples
-> 
-> # A simple aggregation structure
-> #            1
-> #      |-----+-----|
-> #      11          12
-> #  |---+---|       |
-> #  111     112     121
-> #  (1)     (3)     (4)
-> 
-> aggregation_weights <- data.frame(
-+   level1 = c("1",   "1",   "1"),
-+   level2 = c("11",  "11",  "12"),
-+   ea     = c("111", "112", "121"),
-+   weight = c(1,     3,     4)
-+ )
-> 
-> pias <- as_aggregation_structure(aggregation_weights)
-> 
-> # Extract the weights
-> 
-> weights(pias)
-[[1]]
-1 
-8 
-
-[[2]]
-11 12 
- 4  4 
-
-[[3]]
-111 112 121 
-  1   3   4 
-
-> 
-> # ... or update them
-> 
-> weights(pias) <- 1:3
-> weights(pias)
-[[1]]
-1 
-6 
-
-[[2]]
-11 12 
- 3  3 
-
-[[3]]
-111 112 121 
-  1   2   3 
-
-> 
-> 
 > 
 > cleanEx()
 > nameEx("aggregation_structure")
@@ -150,7 +84,7 @@ top 2.462968 16.4796
 > 
 > ### Name: aggregation_structure
 > ### Title: Make a price index aggregation structure
-> ### Aliases: aggregation_structure
+> ### Aliases: aggregation_structure piar_aggregation_structure
 > 
 > ### ** Examples
 > 
@@ -163,25 +97,105 @@ top 2.462968 16.4796
 > #  (1)     (3)     (4)
 > 
 > aggregation_weights <- data.frame(
-+   level1 = c("1",   "1",   "1"),
-+   level2 = c("11",  "11",  "12"),
++   level1 = c("1", "1", "1"),
++   level2 = c("11", "11", "12"),
 +   ea     = c("111", "112", "121"),
-+   weight = c(1,     3,     4)
++   weight = c(1, 3, 4)
 + )
->                                   
+> 
 > pias <- aggregation_structure(
-+   aggregation_weights[1:3], w = aggregation_weights[[4]]
++   aggregation_weights[1:3],
++   weights = aggregation_weights[[4]]
 + )
 > 
 > # The aggregation structure can also be made by expanding the
 > # elemental aggregates
 > 
 > all.equal(
-+   with(aggregation_weights,
-+        aggregation_structure(expand_classification(ea), weight)),
++   with(
++     aggregation_weights,
++     aggregation_structure(expand_classification(ea), weight)
++   ),
 +   pias
 + )
 [1] TRUE
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("as.data.frame.piar_index")
+> ### * as.data.frame.piar_index
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: as.data.frame.piar_index
+> ### Title: Coerce an index into a tabular form
+> ### Aliases: as.data.frame.piar_index as.matrix.piar_index
+> 
+> ### ** Examples
+> 
+> prices <- data.frame(
++   rel = 1:8,
++   period = rep(1:2, each = 4),
++   ea = rep(letters[1:2], 4)
++ )
+> 
+> epr <- with(prices, elemental_index(rel, period, ea))
+> 
+> as.data.frame(epr)
+  period level    value
+1      1     a 1.732051
+2      1     b 2.828427
+3      2     a 5.916080
+4      2     b 6.928203
+> as.matrix(epr)
+         1        2
+a 1.732051 5.916080
+b 2.828427 6.928203
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("as.matrix.piar_aggregation_structure")
+> ### * as.matrix.piar_aggregation_structure
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: as.matrix.piar_aggregation_structure
+> ### Title: Coerce a price index aggregation structure into a tabular form
+> ### Aliases: as.matrix.piar_aggregation_structure
+> ###   as.data.frame.piar_aggregation_structure
+> 
+> ### ** Examples
+> 
+> # A simple aggregation structure
+> #            1
+> #      |-----+-----|
+> #      11          12
+> #  |---+---|       |
+> #  111     112     121
+> #  (1)     (3)     (4)
+> 
+> aggregation_weights <- data.frame(
++   level1 = c("1", "1", "1"),
++   level2 = c("11", "11", "12"),
++   ea     = c("111", "112", "121"),
++   weight = c(1, 3, 4)
++ )
+> 
+> pias <- as_aggregation_structure(aggregation_weights)
+> 
+> as.matrix(pias)
+     111   112 121
+1  0.125 0.375 0.5
+11 0.250 0.750 0.0
+12 0.000 0.000 1.0
+> 
+> all.equal(as.data.frame(pias), aggregation_weights)
+[1] TRUE
+> 
 > 
 > 
 > 
@@ -196,8 +210,6 @@ top 2.462968 16.4796
 > ### Aliases: as_aggregation_structure as_aggregation_structure.default
 > ###   as_aggregation_structure.data.frame as_aggregation_structure.matrix
 > ###   as_aggregation_structure.aggregate_piar_index
-> ###   as_aggregation_structure.piar_aggregation_structure
-> ###   is_aggregation_structure
 > 
 > ### ** Examples
 > 
@@ -210,15 +222,16 @@ top 2.462968 16.4796
 > #  (1)     (3)     (4)
 > 
 > aggregation_weights <- data.frame(
-+   level1 = c("1",   "1",   "1"),
-+   level2 = c("11",  "11",  "12"),
++   level1 = c("1", "1", "1"),
++   level2 = c("11", "11", "12"),
 +   ea     = c("111", "112", "121"),
-+   weight = c(1,     3,     4)
++   weight = c(1, 3, 4)
 + )
->                                   
+> 
 > pias <- aggregation_structure(aggregation_weights[1:3],
-+                               w = aggregation_weights[[4]])
->                               
++   weights = aggregation_weights[[4]]
++ )
+> 
 > all.equal(
 +   pias,
 +   as_aggregation_structure(aggregation_weights)
@@ -230,6 +243,7 @@ top 2.462968 16.4796
 +   as_aggregation_structure(as.matrix(aggregation_weights))
 + )
 [1] TRUE
+> 
 > 
 > 
 > 
@@ -260,6 +274,7 @@ top 2.462968 16.4796
 [1] TRUE
 > all.equal(as_index(as.matrix(epr)), epr)
 [1] TRUE
+> 
 > 
 > 
 > 
@@ -317,79 +332,6 @@ b 0.1443376 1
 > 
 > 
 > 
-> cleanEx()
-> nameEx("coerce-aggregation_structure")
-> ### * coerce-aggregation_structure
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: coerce-aggregation_structure
-> ### Title: Coerce a price index aggregation structure into a tabular form
-> ### Aliases: as.matrix.piar_aggregation_structure
-> ###   as.data.frame.piar_aggregation_structure
-> 
-> ### ** Examples
-> 
-> # A simple aggregation structure
-> #            1
-> #      |-----+-----|
-> #      11          12
-> #  |---+---|       |
-> #  111     112     121
-> #  (1)     (3)     (4)
-> 
-> aggregation_weights <- data.frame(
-+   level1 = c("1",   "1",   "1"),
-+   level2 = c("11",  "11",  "12"),
-+   ea     = c("111", "112", "121"),
-+   weight = c(1,     3,     4)
-+ )
-> 
-> pias <- as_aggregation_structure(aggregation_weights)
-> 
-> as.matrix(pias)
-     111   112 121
-1  0.125 0.375 0.5
-11 0.250 0.750 0.0
-12 0.000 0.000 1.0
-> 
-> all.equal(as.data.frame(pias), aggregation_weights)
-[1] TRUE
-> 
-> 
-> 
-> cleanEx()
-> nameEx("coerce-index")
-> ### * coerce-index
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: coerce-index
-> ### Title: Coerce an index into a tabular form
-> ### Aliases: as.matrix.piar_index as.data.frame.piar_index
-> 
-> ### ** Examples
-> 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
-> 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> as.data.frame(epr)
-  period level    value
-1      1     a 1.732051
-2      1     b 2.828427
-3      2     a 5.916080
-4      2     b 6.928203
-> as.matrix(epr)
-         1        2
-a 1.732051 5.916080
-b 2.828427 6.928203
-> 
-> 
 > 
 > cleanEx()
 > nameEx("contrib")
@@ -434,11 +376,12 @@ b.2 0.8284271 2.4871732
 > library(gpindex)
 > 
 > arithmetic_contributions(
-+   as.matrix(chain(index))[c("a", "b", "c"), 2], 
++   as.matrix(chain(index))[c("a", "b", "c"), 2],
 +   weights(pias, ea_only = TRUE)
 + )
        a        b        c 
 1.541158 6.198639 7.739798 
+> 
 > 
 > 
 > 
@@ -494,20 +437,22 @@ b 2.828427 6.928203
 > 
 > fw <- grouped(nested_transmute(0, c(1, -1), 1))
 > 
-> # Calculate a CSWD index (same as the Jevons in this example) 
+> # Calculate a CSWD index (same as the Jevons in this example)
 > # as an arithmetic index by using the appropriate weights
 > 
 > with(
-+   prices, 
++   prices,
 +   elemental_index(
 +     rel, period, ea,
-+     fw(rel, group = interaction(period, ea)), r = 1
++     fw(rel, group = interaction(period, ea)),
++     r = 1
 +   )
 + )
 Period-over-period price index for 2 levels over 2 time periods 
          1        2
 a 1.732051 5.916080
 b 2.828427 6.928203
+> 
 > 
 > 
 > 
@@ -548,7 +493,8 @@ detaching ‘package:gpindex’
 > # ... if last 'digit' is either TA or TS
 > 
 > expand_classification(
-+   c("111TA", "112TA", "121TS"), width = c(1, 1, 1, 2)
++   c("111TA", "112TA", "121TS"),
++   width = c(1, 1, 1, 2)
 + )
 [[1]]
 [1] "1" "1" "1"
@@ -588,50 +534,6 @@ detaching ‘package:gpindex’
 > 
 > 
 > 
-> cleanEx()
-> nameEx("extract.piar_index")
-> ### * extract.piar_index
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: extract.piar_index
-> ### Title: Extract and replace index values
-> ### Aliases: [.aggregate_piar_index [.piar_index [<-.aggregate_piar_index
-> ###   [<-.piar_index
-> 
-> ### ** Examples
-> 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
-> 
-> # Calculate Jevons elemental indexes
-> 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> # Extract the indexes like a matrix
-> 
-> epr["a", ]
-Period-over-period price index for 1 levels over 2 time periods 
-         1       2
-a 1.732051 5.91608
-> 
-> epr[, 2]
-Period-over-period price index for 2 levels over 1 time periods 
-         2
-a 5.916080
-b 6.928203
-> 
-> epr[1, ] <- 1 # can be useful for doing specific imputations
-> epr
-Period-over-period price index for 2 levels over 2 time periods 
-         1        2
-a 1.000000 1.000000
-b 2.828427 6.928203
-> 
-> 
 > 
 > cleanEx()
 > nameEx("head.piar_index")
@@ -669,63 +571,32 @@ b 2.828427 6.928203
 > 
 > 
 > 
+> 
 > cleanEx()
-> nameEx("impute-prices")
-> ### * impute-prices
+> nameEx("impute_prices")
+> ### * impute_prices
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: impute-prices
+> ### Name: impute_prices
 > ### Title: Impute missing prices
-> ### Aliases: carry_forward shadow_price
+> ### Aliases: impute_prices shadow_price carry_forward
 > 
 > ### ** Examples
 > 
 > prices <- data.frame(
 +   price = c(1:7, NA),
-+   period = rep(1:2, each = 4), 
++   period = rep(1:2, each = 4),
 +   product = 1:4,
 +   ea = rep(letters[1:2], 4)
 + )
->                      
+> 
 > with(prices, carry_forward(price, period, product))
 [1] 1 2 3 4 5 6 7 4
 > 
 > with(prices, shadow_price(price, period, product, ea))
 [1]  1  2  3  4  5  6  7 12
 > 
-> 
-> 
-> cleanEx()
-> nameEx("index-attributes")
-> ### * index-attributes
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: index-attributes
-> ### Title: Get the attributes for a price index
-> ### Aliases: levels.piar_index levels<-.piar_index
-> ###   levels<-.aggregate_piar_index time.piar_index time<-
-> ###   time<-.piar_index start.piar_index end.piar_index
-> 
-> ### ** Examples
-> 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
-> 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> levels(epr)
-[1] "a" "b"
-> time(epr)
-[1] "1" "2"
-> start(epr)
-[1] "1"
-> end(epr)
-[1] "2"
 > 
 > 
 > 
@@ -757,6 +628,7 @@ b 4.878315
 > 
 > 
 > 
+> 
 > cleanEx()
 > nameEx("merge.piar_index")
 > ### * merge.piar_index
@@ -765,8 +637,7 @@ b 4.878315
 > 
 > ### Name: merge.piar_index
 > ### Title: Merge price indexes
-> ### Aliases: merge.aggregate_piar_index merge.chainable_piar_index
-> ###   merge.direct_piar_index merge.piar_index
+> ### Aliases: merge.piar_index
 > 
 > ### ** Examples
 > 
@@ -796,57 +667,6 @@ d 2.828427 6.928203
 > 
 > 
 > 
-> cleanEx()
-> nameEx("piar_index")
-> ### * piar_index
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: piar_index
-> ### Title: Price index objects
-> ### Aliases: piar_index chainable_piar_index direct_piar_index
-> ###   aggregate_piar_index is_index is_aggregate_index is_chainable_index
-> ###   is_direct_index
-> 
-> ### ** Examples
-> 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
-> 
-> pias <- aggregation_structure(
-+   list(c("top", "top", "top"), c("a", "b", "c")), 1:3
-+ )
-> 
-> # Calculate period-over-period Jevons elemental indexes
-> 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> # Aggregate as an arithmetic index
-> 
-> index <- aggregate(epr, pias, na.rm = TRUE)
-> 
-> is_index(epr)
-[1] TRUE
-> is_chainable_index(epr)
-[1] TRUE
-> is_direct_index(epr)
-[1] FALSE
-> is_aggregate_index(epr)
-[1] FALSE
-> 
-> is_index(index)
-[1] TRUE
-> is_chainable_index(index)
-[1] TRUE
-> is_direct_index(index)
-[1] FALSE
-> is_aggregate_index(index)
-[1] TRUE
-> 
-> 
 > 
 > cleanEx()
 > nameEx("price_relative")
@@ -866,6 +686,7 @@ d 2.828427 6.928203
 > 
 > 
 > 
+> 
 > cleanEx()
 > nameEx("stack.piar_index")
 > ### * stack.piar_index
@@ -874,8 +695,7 @@ d 2.828427 6.928203
 > 
 > ### Name: stack.piar_index
 > ### Title: Stack price indexes
-> ### Aliases: stack.aggregate_piar_index stack.chainable_piar_index
-> ###   stack.direct_piar_index stack.piar_index unstack.piar_index
+> ### Aliases: stack.piar_index unstack.piar_index
 > 
 > ### ** Examples
 > 
@@ -903,9 +723,57 @@ b 2.828427 6.928203 2.828427 6.928203
 > 
 > # Unstack does the reverse
 > 
-> all.equal(c(unstack(epr), unstack(epr2)),
-+           unstack(stack(epr, epr2)))
+> all.equal(
++   c(unstack(epr), unstack(epr2)),
++   unstack(stack(epr, epr2))
++ )
 [1] TRUE
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("sub-.piar_index")
+> ### * sub-.piar_index
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: [.piar_index
+> ### Title: Extract and replace index values
+> ### Aliases: [.piar_index [<-.piar_index
+> 
+> ### ** Examples
+> 
+> prices <- data.frame(
++   rel = 1:8,
++   period = rep(1:2, each = 4),
++   ea = rep(letters[1:2], 4)
++ )
+> 
+> # Calculate Jevons elemental indexes
+> 
+> epr <- with(prices, elemental_index(rel, period, ea))
+> 
+> # Extract the indexes like a matrix
+> 
+> epr["a", ]
+Period-over-period price index for 1 levels over 2 time periods 
+         1       2
+a 1.732051 5.91608
+> 
+> epr[, 2]
+Period-over-period price index for 2 levels over 1 time periods 
+         2
+a 5.916080
+b 6.928203
+> 
+> epr[1, ] <- 1 # can be useful for doing specific imputations
+> epr
+Period-over-period price index for 2 levels over 2 time periods 
+         1        2
+a 1.000000 1.000000
+b 2.828427 6.928203
+> 
 > 
 > 
 > 
@@ -941,9 +809,10 @@ Indexes
 > 
 > 
 > 
+> 
 > cleanEx()
-> nameEx("update.aggregation_structure")
-> ### * update.aggregation_structure
+> nameEx("update.piar_aggregation_structure")
+> ### * update.piar_aggregation_structure
 > 
 > flush(stderr()); flush(stdout())
 > 
@@ -962,10 +831,10 @@ Indexes
 > #  (1)     (3)     (4)
 > 
 > aggregation_weights <- data.frame(
-+   level1 = c("1",   "1",   "1"),
-+   level2 = c("11",  "11",  "12"),
++   level1 = c("1", "1", "1"),
++   level2 = c("11", "11", "12"),
 +   ea     = c("111", "112", "121"),
-+   weight = c(1,     3,     4)
++   weight = c(1, 3, 4)
 + )
 > 
 > pias <- as_aggregation_structure(aggregation_weights)
@@ -1004,6 +873,7 @@ Indexes
 > 
 > 
 > 
+> 
 > cleanEx()
 > nameEx("vcov.aggregate_piar_index")
 > ### * vcov.aggregate_piar_index
@@ -1027,7 +897,7 @@ Indexes
 > pias <- aggregation_structure(
 +   list(c("top", "top", "top"), c("a", "b", "c")), 1:3
 + )
->                             
+> 
 > repweights <- matrix(c(0, 2, 3, 1, 2, 4, 2, 3, 3), 3)
 > 
 > # Calculate Jevons elemental indexes
@@ -1046,12 +916,79 @@ top 0.007818832 0.003929299
 > 
 > 
 > 
+> 
+> cleanEx()
+> nameEx("weights.piar_aggregation_structure")
+> ### * weights.piar_aggregation_structure
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: weights.piar_aggregation_structure
+> ### Title: Get the weights for a price index aggregation structure
+> ### Aliases: weights.piar_aggregation_structure weights<-
+> ###   weights<-.piar_aggregation_structure
+> 
+> ### ** Examples
+> 
+> # A simple aggregation structure
+> #            1
+> #      |-----+-----|
+> #      11          12
+> #  |---+---|       |
+> #  111     112     121
+> #  (1)     (3)     (4)
+> 
+> aggregation_weights <- data.frame(
++   level1 = c("1", "1", "1"),
++   level2 = c("11", "11", "12"),
++   ea     = c("111", "112", "121"),
++   weight = c(1, 3, 4)
++ )
+> 
+> pias <- as_aggregation_structure(aggregation_weights)
+> 
+> # Extract the weights
+> 
+> weights(pias)
+[[1]]
+1 
+8 
+
+[[2]]
+11 12 
+ 4  4 
+
+[[3]]
+111 112 121 
+  1   3   4 
+
+> 
+> # ... or update them
+> 
+> weights(pias) <- 1:3
+> weights(pias)
+[[1]]
+1 
+6 
+
+[[2]]
+11 12 
+ 3  3 
+
+[[3]]
+111 112 121 
+  1   2   3 
+
+> 
+> 
+> 
+> 
 > ### * <FOOTER>
 > ###
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.449 0.034 0.621 0 0 
+Time elapsed:  0.378 0.019 0.459 0 0 
 > grDevices::dev.off()
 null device 
           1 

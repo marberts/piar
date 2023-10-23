@@ -81,7 +81,6 @@ chain.default <- function(x, ...) {
   chain(as_index(x), ...)
 }
 
-#' @rdname chain
 #' @export
 chain.aggregate_piar_index <- function(x, ...) {
   res <- NextMethod("chain")
@@ -92,6 +91,7 @@ chain.aggregate_piar_index <- function(x, ...) {
 }
 
 #' @rdname chain
+#' @family index method
 #' @export
 chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
   link <- as.numeric(link)
@@ -111,6 +111,7 @@ chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
 }
 
 #' @rdname chain
+#' @family index method
 #' @export
 chain.direct_piar_index <- function(x, ...) {
   x
@@ -128,7 +129,6 @@ unchain.default <- function(x, ...) {
   unchain(as_index(x, chainable = FALSE), ...)
 }
 
-#' @rdname chain
 #' @export
 unchain.aggregate_piar_index <- function(x, ...) {
   res <- NextMethod("unchain")
@@ -139,12 +139,14 @@ unchain.aggregate_piar_index <- function(x, ...) {
 }
 
 #' @rdname chain
+#' @family index method
 #' @export
 unchain.chainable_piar_index <- function(x, ...) {
   x
 }
 
 #' @rdname chain
+#' @family index method
 #' @export
 unchain.direct_piar_index <- function(x, ...) {
   x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
@@ -166,12 +168,14 @@ rebase.default <- function(x, ...) {
 }
 
 #' @rdname chain
+#' @family index method
 #' @export
 rebase.chainable_piar_index <- function(x, ...) {
   x
 }
 
 #' @rdname chain
+#' @family index method
 #' @export
 rebase.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   base <- as.numeric(base)

@@ -64,7 +64,7 @@ weights(update(pias, index))
 weights directly.
 
 Other aggregation structure methods: 
-\code{\link{is_aggregation_structure}()},
+\code{\link{as.matrix.piar_aggregation_structure}()},
 \code{\link{weights.piar_aggregation_structure}()}
 }
 \concept{aggregation structure methods}

@@ -118,6 +118,9 @@ different_length <- function(...) {
 #'
 #' [chain()] for chaining period-over-period indexes, and
 #' [rebase()] for rebasing an index.
+#' 
+#' [`aggregate()`][aggregate.piar_index] to aggregate elemental indexes
+#' according to an aggregation structure.
 #'
 #' [`as.matrix()`][as.matrix.piar_index] and
 #' [`as.data.frame()`][as.data.frame.piar_index] for coercing an index
@@ -171,7 +174,6 @@ different_length <- function(...) {
 #'   )
 #' )
 #'
-#' @family index methods
 #' @export
 elemental_index <- function(x, ...) {
   UseMethod("elemental_index")

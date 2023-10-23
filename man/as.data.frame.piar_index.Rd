@@ -46,7 +46,6 @@ Other index methods:
 \code{\link{[.piar_index}()},
 \code{\link{aggregate.piar_index}()},
 \code{\link{contrib}()},
-\code{\link{elemental_index}()},
 \code{\link{head.piar_index}()},
 \code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},

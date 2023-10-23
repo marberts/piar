@@ -45,7 +45,7 @@ The \code{aggregate()} method loops over each time period in \code{x} and
 \code{\link[gpindex:generalized-mean]{generalized_mean(r)()}} for each level of
 \code{pias};
 \item aggregates percent-change contributions for each level of
-\code{pias} (if there are any);
+\code{pias} (if there are any and \code{contrib = TRUE});
 \item price updates the weights in \code{pias} with
 \code{\link[gpindex:transform-weights]{factor_weights(r)()}} (only for period-over-period
 elemental indexes).
@@ -79,7 +79,7 @@ point in time.
 Aggregating percent-change contributions uses the method in chapter 9 of the
 CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic
 mean. With a non-arithmetic mean, arithmetic weights are constructed using
-\code{\link[=gpindex""transmute_weights]{transmute_weights(r, 1)()}} in order to apply
+\code{\link[gpindex:transform-weights]{transmute_weights(r, 1)()}} in order to apply
 this method.
 
 There may not be contributions for all prices relatives in an elemental
@@ -91,9 +91,11 @@ also happen when aggregating an already aggregated index in which missing
 index values have been imputed (i.e., when \code{na.rm = TRUE}).
 }
 \note{
-For large indexes it can be much faster to aggregate elemental indexes
-as a matrix operation when there are no missing values---see the examples
-for details.
+For large indexes it can be much faster to turn the aggregation structure
+into an aggregation matrix with
+\code{\link[=as.matrix.piar_aggregation_structure]{as.matrix()}}, then aggregate
+elemental indexes as a matrix operation when there are no missing
+values---see the examples for details.
 }
 \examples{
 prices <- data.frame(
@@ -134,7 +136,6 @@ Other index methods:
 \code{\link{[.piar_index}()},
 \code{\link{as.data.frame.piar_index}()},
 \code{\link{contrib}()},
-\code{\link{elemental_index}()},
 \code{\link{head.piar_index}()},
 \code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
