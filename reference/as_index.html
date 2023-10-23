@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9018</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Coerce to a price index</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/HEAD/R/as_index.R" class="external-link"><code>R/as_index.R</code></a></small>
       <div class="d-none name"><code>as_index.Rd</code></div>
     </div>
 
@@ -78,33 +78,60 @@
 <dd><p>An object to coerce into a price index.</p></dd>
 
 
-<dt>chainable</dt>
-<dd><p>Are the index values in <code>x</code> period-over-period indexes, suitable for a chained calculation (the default)? This should be <code>FALSE</code> when <code>x</code> is a fixed-base (direct) index.</p></dd>
-
-
-<dt>cols</dt>
-<dd><p>A vector giving the positions/names of the period, level, and value columns in <code>x</code>. The default assumes that the first column contains time periods, the second contains levels, and the third contains index values.</p></dd>
-
-
 <dt>...</dt>
 <dd><p>Further arguments passed to or used by methods.</p></dd>
 
+
+<dt>chainable</dt>
+<dd><p>Are the index values in <code>x</code> period-over-period
+indexes, suitable for a chained calculation (the default)? This should be
+<code>FALSE</code> when <code>x</code> is a fixed-base (direct) index.</p></dd>
+
+
+<dt>cols</dt>
+<dd><p>A vector giving the positions/names of the period, level, and
+value columns in <code>x</code>. The default assumes that the first column
+contains time periods, the second contains levels, and the third contains
+index values.</p></dd>
+
 </dl></div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Numeric matrices are coerced into an index object by treating each column as a separate time period, and each row as an elemental aggregate. Column names are used to denote time periods, and row names are used to denote elemental aggregates (so they must be unique). This essentially reverses calling <code><a href="coerce-index.html">as.matrix()</a></code> on an index object. If a dimension is unnamed, then it is given a sequential label from 1 to the size of that dimension. The default method coerces <code>x</code> to a matrix prior to using the matrix method.</p>
-<p>The data frame method for <code>as_index()</code> is best understood as reversing the effect of <code><a href="coerce-index.html">as.data.frame()</a></code> on an index object. It constructs a matrix by taking the levels of <code>x[[cols[1]]]</code> as columns and the levels of <code>x[[cols[2]]]</code> as rows (coercing to a factor if necessary). It then populates this matrix with the corresponding values in <code>x[[cols[3]]]</code>, and uses the matrix method for <code>as_index()</code>.</p>
-<p>If <code>x</code> is a period-over-period index then it is returned unchanged when <code>chainable = TRUE</code> and chained otherwise. Similarly, if <code>x</code> is a fixed-base index then it is returned unchanged when <code>chainable == FALSE</code> and unchain otherwise.</p>
-    </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p><code>as_index()</code> returns a price index that inherits from <code><a href="piar_index.html">piar_index</a></code>. If <code>chainable = TRUE</code> then this is a period-over-period price index that also inherits from <code><a href="piar_index.html">chainable_piar_index</a></code>; otherwise, it is a fixed-base index that inherits from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
+<p><code>as_index()</code> returns a price index that inherits from
+<code><a href="piar_index.html">piar_index</a></code>. If <code>chainable = TRUE</code> then this is a
+period-over-period price index that also inherits from
+<code><a href="piar_index.html">chainable_piar_index</a></code>; otherwise, it is a fixed-base index that
+inherits from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Numeric matrices are coerced into an index object by treating each column as
+a separate time period, and each row as an elemental aggregate. Column names
+are used to denote time periods, and row names are used to denote elemental
+aggregates (so they must be unique). This essentially reverses calling
+<code><a href="as.data.frame.piar_index.html">as.matrix()</a></code> on an index object. If a
+dimension is unnamed, then it is given a sequential label from 1 to the size
+of that dimension. The default method coerces <code>x</code> to a matrix prior to
+using the matrix method.</p>
+<p>The data frame method for <code>as_index()</code> is best understood as reversing
+the effect of <code><a href="as.data.frame.piar_index.html">as.data.frame()</a></code> on an
+index object. It constructs a matrix by taking the levels of
+<code>x[[cols[1]]]</code> as columns and the levels of <code>x[[cols[2]]]</code> as rows
+(coercing to a factor if necessary). It then populates this matrix with the
+corresponding values in <code>x[[cols[3]]]</code>, and uses the matrix method for
+<code>as_index()</code>.</p>
+<p>If <code>x</code> is a period-over-period index then it is returned unchanged when
+<code>chainable = TRUE</code> and chained otherwise. Similarly, if <code>x</code> is a
+fixed-base index then it is returned unchanged when
+<code>chainable == FALSE</code> and unchain otherwise.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="coerce-index.html">as.matrix</a></code> and <code><a href="coerce-index.html">as.data.frame</a></code> for coercing an index into a tabular form.</p></div>
+    <div class="dont-index"><p><code><a href="as.data.frame.piar_index.html">as.matrix()</a></code> and
+<code><a href="as.data.frame.piar_index.html">as.data.frame()</a></code> for coercing an index
+into a tabular form.</p></div>
     </div>
 
     <div class="section level2">
@@ -123,6 +150,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu">as_index</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">epr</span><span class="op">)</span><span class="op">)</span>, <span class="va">epr</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9018</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,22 +47,6 @@
     </div>
 
     <div class="section level2">
-      <h2 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a></h2>
-      
-      
-
-      
-    </div><div id="" class="section level2">
-      
-      
-      
-
-      <dl><dt>
-          
-          <code><a href="piar-package.html">piar-package</a></code> <code><a href="piar-package.html">piar</a></code> 
-        </dt>
-        <dd>Price Index Aggregation</dd>
-      </dl></div><div class="section level2">
       <h2 id="calculate-price-indexes">Calculate price indexes<a class="anchor" aria-label="anchor" href="#calculate-price-indexes"></a></h2>
       
       <p class="section-desc"></p><p>Functions to make elemental and aggregated price indexes</p>
@@ -95,19 +79,9 @@
         <dd>Aggregate a price index over subperiods</dd>
       </dl><dl><dt>
           
-          <code><a href="summary.piar_index.html">summary(<i>&lt;piar_index&gt;</i>)</a></code> 
-        </dt>
-        <dd>Summarize a price index</dd>
-      </dl><dl><dt>
-          
           <code><a href="vcov.aggregate_piar_index.html">vcov(<i>&lt;aggregate_piar_index&gt;</i>)</a></code> 
         </dt>
         <dd>Bootstrap variance for a price index with replicate weights</dd>
-      </dl><dl><dt>
-          
-          <code><a href="piar_index.html">is_index()</a></code> <code><a href="piar_index.html">is_chainable_index()</a></code> <code><a href="piar_index.html">is_direct_index()</a></code> <code><a href="piar_index.html">is_aggregate_index()</a></code> 
-        </dt>
-        <dd>Price index objects</dd>
       </dl></div><div class="section level2">
       <h2 id="manipulate-price-indexes">Manipulate price indexes<a class="anchor" aria-label="anchor" href="#manipulate-price-indexes"></a></h2>
       
@@ -126,17 +100,17 @@
         <dd>Chain and rebase a price index</dd>
       </dl><dl><dt>
           
-          <code><a href="merge.piar_index.html">merge(<i>&lt;aggregate_piar_index&gt;</i>)</a></code> <code><a href="merge.piar_index.html">merge(<i>&lt;chainable_piar_index&gt;</i>)</a></code> <code><a href="merge.piar_index.html">merge(<i>&lt;direct_piar_index&gt;</i>)</a></code> 
+          <code><a href="merge.piar_index.html">merge(<i>&lt;piar_index&gt;</i>)</a></code> 
         </dt>
         <dd>Merge price indexes</dd>
       </dl><dl><dt>
           
-          <code><a href="stack.piar_index.html">stack(<i>&lt;aggregate_piar_index&gt;</i>)</a></code> <code><a href="stack.piar_index.html">stack(<i>&lt;chainable_piar_index&gt;</i>)</a></code> <code><a href="stack.piar_index.html">stack(<i>&lt;direct_piar_index&gt;</i>)</a></code> <code><a href="stack.piar_index.html">unstack(<i>&lt;piar_index&gt;</i>)</a></code> 
+          <code><a href="stack.piar_index.html">stack(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="stack.piar_index.html">unstack(<i>&lt;piar_index&gt;</i>)</a></code> 
         </dt>
         <dd>Stack price indexes</dd>
       </dl><dl><dt>
           
-          <code><a href="extract.piar_index.html">`[`(<i>&lt;aggregate_piar_index&gt;</i>)</a></code> <code><a href="extract.piar_index.html">`[`(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="extract.piar_index.html">`[&lt;-`(<i>&lt;aggregate_piar_index&gt;</i>)</a></code> <code><a href="extract.piar_index.html">`[&lt;-`(<i>&lt;piar_index&gt;</i>)</a></code> 
+          <code><a href="sub-.piar_index.html">`[`(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="sub-.piar_index.html">`[&lt;-`(<i>&lt;piar_index&gt;</i>)</a></code> 
         </dt>
         <dd>Extract and replace index values</dd>
       </dl><dl><dt>
@@ -151,12 +125,17 @@
         <dd>Extract percent-change contributions</dd>
       </dl><dl><dt>
           
-          <code><a href="index-attributes.html">levels(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="index-attributes.html">`levels&lt;-`(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="index-attributes.html">`levels&lt;-`(<i>&lt;aggregate_piar_index&gt;</i>)</a></code> <code><a href="index-attributes.html">time(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="index-attributes.html">`time&lt;-`(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="index-attributes.html">start(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="index-attributes.html">end(<i>&lt;piar_index&gt;</i>)</a></code> 
+          <code><a href="levels.piar_index.html">levels(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="levels.piar_index.html">`levels&lt;-`(<i>&lt;piar_index&gt;</i>)</a></code> 
         </dt>
-        <dd>Get the attributes for a price index</dd>
+        <dd>Get the levels for a price index</dd>
       </dl><dl><dt>
           
-          <code><a href="coerce-index.html">as.matrix(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="coerce-index.html">as.data.frame(<i>&lt;piar_index&gt;</i>)</a></code> 
+          <code><a href="time.piar_index.html">time(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="time.piar_index.html">`time&lt;-`()</a></code> <code><a href="time.piar_index.html">start(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="time.piar_index.html">end(<i>&lt;piar_index&gt;</i>)</a></code> 
+        </dt>
+        <dd>Get the time periods for a price index</dd>
+      </dl><dl><dt>
+          
+          <code><a href="as.data.frame.piar_index.html">as.data.frame(<i>&lt;piar_index&gt;</i>)</a></code> <code><a href="as.data.frame.piar_index.html">as.matrix(<i>&lt;piar_index&gt;</i>)</a></code> 
         </dt>
         <dd>Coerce an index into a tabular form</dd>
       </dl></div><div class="section level2">
@@ -172,7 +151,7 @@
 
       <dl><dt>
           
-          <code><a href="impute-prices.html">carry_forward()</a></code> <code><a href="impute-prices.html">shadow_price()</a></code> 
+          <code><a href="impute_prices.html">shadow_price()</a></code> <code><a href="impute_prices.html">carry_forward()</a></code> 
         </dt>
         <dd>Impute missing prices</dd>
       </dl><dl><dt>
@@ -203,24 +182,55 @@
         <dd>Expand a hierarchical classification</dd>
       </dl><dl><dt>
           
-          <code><a href="as_aggregation_structure.html">as_aggregation_structure()</a></code> <code><a href="as_aggregation_structure.html">is_aggregation_structure()</a></code> 
+          <code><a href="as_aggregation_structure.html">as_aggregation_structure()</a></code> 
         </dt>
         <dd>Coerce to an aggregation structure</dd>
       </dl><dl><dt>
           
-          <code><a href="coerce-aggregation_structure.html">as.matrix(<i>&lt;piar_aggregation_structure&gt;</i>)</a></code> <code><a href="coerce-aggregation_structure.html">as.data.frame(<i>&lt;piar_aggregation_structure&gt;</i>)</a></code> 
+          <code><a href="as.matrix.piar_aggregation_structure.html">as.matrix(<i>&lt;piar_aggregation_structure&gt;</i>)</a></code> <code><a href="as.matrix.piar_aggregation_structure.html">as.data.frame(<i>&lt;piar_aggregation_structure&gt;</i>)</a></code> 
         </dt>
         <dd>Coerce a price index aggregation structure into a tabular form</dd>
       </dl><dl><dt>
           
-          <code><a href="aggregation_structure-attributes.html">weights(<i>&lt;piar_aggregation_structure&gt;</i>)</a></code> <code><a href="aggregation_structure-attributes.html">`weights&lt;-`(<i>&lt;piar_aggregation_structure&gt;</i>)</a></code> <code><a href="aggregation_structure-attributes.html">levels(<i>&lt;piar_aggregation_structure&gt;</i>)</a></code> 
+          <code><a href="weights.piar_aggregation_structure.html">weights(<i>&lt;piar_aggregation_structure&gt;</i>)</a></code> <code><a href="weights.piar_aggregation_structure.html">`weights&lt;-`()</a></code> 
         </dt>
-        <dd>Methods to get the weights and levels for a price index aggregation structure</dd>
+        <dd>Get the weights for a price index aggregation structure</dd>
       </dl><dl><dt>
           
-          <code><a href="update.aggregation_structure.html">update(<i>&lt;piar_aggregation_structure&gt;</i>)</a></code> 
+          <code><a href="update.piar_aggregation_structure.html">update(<i>&lt;piar_aggregation_structure&gt;</i>)</a></code> 
         </dt>
         <dd>Update a price index aggregation structure</dd>
+      </dl><dl><dt>
+          
+          <code><a href="is_aggregation_structure.html">is_aggregation_structure()</a></code> 
+        </dt>
+        <dd>Test if an object is a price index aggregation structure</dd>
+      </dl></div><div class="section level2">
+      <h2 id="index-objects">Index objects<a class="anchor" aria-label="anchor" href="#index-objects"></a></h2>
+      
+      <p class="section-desc"></p><p>The model used to represent price indexes</p>
+
+      
+    </div><div id="" class="section level2">
+      
+      
+      
+
+      <dl><dt>
+          
+          <code><a href="piar_index.html">piar_index</a></code> <code><a href="piar_index.html">chainable_piar_index</a></code> <code><a href="piar_index.html">direct_piar_index</a></code> <code><a href="piar_index.html">aggregate_piar_index</a></code> 
+        </dt>
+        <dd>Price index objects</dd>
+      </dl><dl><dt>
+          
+          <code><a href="is_index.html">is_index()</a></code> <code><a href="is_index.html">is_aggregate_index()</a></code> <code><a href="is_index.html">is_chainable_index()</a></code> <code><a href="is_index.html">is_direct_index()</a></code> 
+        </dt>
+        <dd>Test if an object is a price index</dd>
+      </dl><dl><dt>
+          
+          <code><a href="summary.piar_index.html">summary(<i>&lt;piar_index&gt;</i>)</a></code> 
+        </dt>
+        <dd>Summarize a price index</dd>
       </dl></div><div class="section level2">
       <h2 id="sample-data">Sample data<a class="anchor" aria-label="anchor" href="#sample-data"></a></h2>
       
@@ -234,7 +244,7 @@
 
       <dl><dt>
           
-          <code><a href="price-data.html">ms_prices</a></code> <code><a href="price-data.html">ms_weights</a></code> <code><a href="price-data.html">fs_prices</a></code> <code><a href="price-data.html">fs_weights</a></code> 
+          <code><a href="price_data.html">price_data</a></code> <code><a href="price_data.html">ms_prices</a></code> <code><a href="price_data.html">ms_weights</a></code> <code><a href="price_data.html">fs_prices</a></code> <code><a href="price_data.html">fs_weights</a></code> 
         </dt>
         <dd>Price data</dd>
       </dl></div>

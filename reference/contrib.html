@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9018</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Extract percent-change contributions</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/HEAD/R/contrib.R" class="external-link"><code>R/contrib.R</code></a></small>
       <div class="d-none name"><code>contrib.Rd</code></div>
     </div>
 
@@ -66,19 +66,38 @@
 <dd><p>A price index, as made by, e.g., <code><a href="elemental_index.html">elemental_index()</a></code>.</p></dd>
 
 
-<dt>level</dt>
-<dd><p>The level of an index for which percent-change contributions are desired, defaulting to the first level (usually the top-level for an aggregate index).</p></dd>
-
-
 <dt>...</dt>
 <dd><p>Further arguments passed to or used by methods.</p></dd>
+
+
+<dt>level</dt>
+<dd><p>The level of an index for which percent-change contributions
+are desired, defaulting to the first level (usually the top-level for an
+aggregate index).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A matrix of percent-change contributions with a column for each <code>period</code> and a row for each product for which there are contributions in <code>level</code>. Contributions are padded with 0 to fit into a rectangular array when products differ over time.</p>
+<p>A matrix of percent-change contributions with a column for each
+<code>period</code> and a row for each product for which there are contributions
+in <code>level</code>. Contributions are padded with 0 to fit into a rectangular
+array when products differ over time.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Other index methods: 
+<code><a href="sub-.piar_index.html">[.piar_index</a>()</code>,
+<code><a href="aggregate.piar_index.html">aggregate.piar_index</a>()</code>,
+<code><a href="as.data.frame.piar_index.html">as.data.frame.piar_index</a>()</code>,
+<code><a href="head.piar_index.html">head.piar_index</a>()</code>,
+<code><a href="levels.piar_index.html">levels.piar_index</a>()</code>,
+<code><a href="mean.piar_index.html">mean.piar_index</a>()</code>,
+<code><a href="merge.piar_index.html">merge.piar_index</a>()</code>,
+<code><a href="stack.piar_index.html">stack.piar_index</a>()</code>,
+<code><a href="time.piar_index.html">time.piar_index</a>()</code>,
+<code><a href="vcov.aggregate_piar_index.html">vcov.aggregate_piar_index</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -114,11 +133,12 @@
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://marberts.github.io/gpindex/" class="external-link">gpindex</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://marberts.github.io/gpindex/reference/contributions.html" class="external-link">arithmetic_contributions</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="chain.html">chain</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span>, </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="chain.html">chain</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span>, <span class="fl">2</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/stats/weights.html" class="external-link">weights</a></span><span class="op">(</span><span class="va">pias</span>, ea_only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        a        b        c </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1.541158 6.198639 7.739798 </span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

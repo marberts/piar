@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9018</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Aggregate elemental price indexes</h1>
-      
+      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/HEAD/R/aggregate.piar_index.R" class="external-link"><code>R/aggregate.piar_index.R</code></a></small>
       <div class="d-none name"><code>aggregate.piar_index.Rd</code></div>
     </div>
 
@@ -55,24 +55,10 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for chainable_piar_index</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
-<span>  <span class="va">pias</span>,</span>
-<span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  r <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  contrib <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, r <span class="op">=</span> <span class="fl">1</span>, contrib <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for direct_piar_index</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
-<span>  <span class="va">pias</span>,</span>
-<span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  r <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  contrib <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, r <span class="op">=</span> <span class="fl">1</span>, contrib <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -82,15 +68,23 @@
 
 
 <dt>pias</dt>
-<dd><p>A price index aggregation structure or something that can be coerced into one. This can be made with <code><a href="aggregation_structure.html">aggregation_structure()</a></code>.</p></dd>
+<dd><p>A price index aggregation structure or something that can be
+coerced into one. This can be made with <code><a href="aggregation_structure.html">aggregation_structure()</a></code>.</p></dd>
 
 
 <dt>na.rm</dt>
-<dd><p>Should missing values be removed? By default, missing values are not removed. Setting <code>na.rm = TRUE</code> is equivalent to overall mean imputation.</p></dd>
+<dd><p>Should missing values be removed? By default, missing values
+are not removed. Setting <code>na.rm = TRUE</code> is equivalent to overall mean
+imputation.</p></dd>
 
 
 <dt>r</dt>
-<dd><p>Order of the generalized mean to aggregate index values. 0 for a geometric index (the default for making elemental indexes), 1 for an arithmetic index (the default for aggregating elemental indexes and averaging indexes over subperiods), or -1 for a harmonic index (usually for a Paasche index). Other values are possible; see <code>generalized_mean()</code> for details.</p></dd>
+<dd><p>Order of the generalized mean to aggregate index values. 0 for a
+geometric index (the default for making elemental indexes), 1 for an
+arithmetic index (the default for aggregating elemental indexes and
+averaging indexes over subperiods), or -1 for a harmonic index (usually for
+a Paasche index). Other values are possible; see
+<code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
 
 
 <dt>contrib</dt>
@@ -102,37 +96,86 @@
 
 </dl></div>
     <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> method loops over each time period in <code>x</code> and</p><ol><li><p>aggregates the elemental indexes with <code>generalized_mean(r)</code> for each level of <code>pias</code>;</p></li>
-<li><p>aggregates percent-change contributions for each level of <code>pias</code> (if there are any);</p></li>
-<li><p>price updates the weights in <code>pias</code> with <code>factor_weights(r)</code> (only for period-over-period elemental indexes).</p></li>
-</ol><p>The result is a collection of aggregated period-over-period indexes that can be chained together to get a fixed-base index when <code>x</code> are period-over-period elemental indexes. Otherwise, when <code>x</code> are fixed-base elemental indexes, the result is a collection of aggregated fixed-base (direct) indexes.</p>
-<p>By default, missing elemental indexes will propagate when aggregating the index. Missing elemental indexes can be due to both missingness of these values in <code>x</code>, and the presence of elemental aggregates in <code>pias</code> that are not part of <code>x</code>. Setting <code>na.rm = TRUE</code> ignores missing values, and is equivalent to parental (or overall mean) imputation. As an aggregated price index generally cannot have missing values (for otherwise it can't be chained over time), any missing values for a level of <code>pias</code> are removed and recursively replaced by the value of its immediate parent.</p>
-<p>In most cases aggregation is done with an arithmetic mean (the default), and this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020). Aggregating with a non-arithmetic mean follows the same steps, except that the elemental indexes are aggregated with a mean of a different order (e.g., harmonic for a Paasche index), and the method for price updating the weights is slightly different. Note that, because aggregation is done with a generalized mean, the resulting index is consistent-in-aggregation at each point in time.</p>
-<p>Aggregating percent-change contributions uses the method in chapter 9 of the CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic mean. With a non-arithmetic mean, arithmetic weights are constructed using <code>transmute_weights(r, 1)</code> in order to apply this method.</p>
-<p>There may not be contributions for all prices relatives in an elemental aggregate if the elemental indexes are built from several sources (as with <code><a href="merge.piar_index.html">merge()</a></code>). In this case the contribution for a price relative in the aggregated index will be correct, but the sum of all contributions will not equal the change in the value of the index. This can also happen when aggregating an already aggregated index in which missing index values have been imputed (i.e., when <code>na.rm = TRUE</code>).</p>
-    </div>
-    <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>An aggregate price index that inherits from <code><a href="piar_index.html">aggregate_piar_index</a></code> and the class of <code>x</code>.</p>
+<p>An aggregate price index that inherits from <code><a href="piar_index.html">aggregate_piar_index</a></code> and
+the class of <code>x</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> method loops over each time period in <code>x</code> and</p><ol><li><p>aggregates the elemental indexes with
+<code>generalized_mean(r)()</code> for each level of
+<code>pias</code>;</p></li>
+<li><p>aggregates percent-change contributions for each level of
+<code>pias</code> (if there are any and <code>contrib = TRUE</code>);</p></li>
+<li><p>price updates the weights in <code>pias</code> with
+<code>factor_weights(r)()</code> (only for period-over-period
+elemental indexes).</p></li>
+</ol><p>The result is a collection of aggregated period-over-period indexes that
+can be chained together to get a fixed-base index when <code>x</code> are
+period-over-period elemental indexes. Otherwise, when <code>x</code> are fixed-base
+elemental indexes, the result is a collection of aggregated fixed-base
+(direct) indexes.</p>
+<p>By default, missing elemental indexes will propagate when aggregating the
+index. Missing elemental indexes can be due to both missingness of these
+values in <code>x</code>, and the presence of elemental aggregates in <code>pias</code>
+that are not part of <code>x</code>. Setting <code>na.rm = TRUE</code> ignores missing
+values, and is equivalent to parental (or overall mean) imputation. As an
+aggregated price index generally cannot have missing values (for otherwise
+it can't be chained over time), any missing values for a level of
+<code>pias</code> are removed and recursively replaced by the value of its
+immediate parent.</p>
+<p>In most cases aggregation is done with an arithmetic mean (the default), and
+this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020).
+Aggregating with a non-arithmetic mean follows the same steps, except that
+the elemental indexes are aggregated with a mean of a different order (e.g.,
+harmonic for a Paasche index), and the method for price updating the weights
+is slightly different. Note that, because aggregation is done with a
+generalized mean, the resulting index is consistent-in-aggregation at each
+point in time.</p>
+<p>Aggregating percent-change contributions uses the method in chapter 9 of the
+CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic
+mean. With a non-arithmetic mean, arithmetic weights are constructed using
+<code>transmute_weights(r, 1)()</code> in order to apply
+this method.</p>
+<p>There may not be contributions for all prices relatives in an elemental
+aggregate if the elemental indexes are built from several sources (as with
+<code><a href="merge.piar_index.html">merge()</a></code>). In this case the contribution for
+a price relative in the aggregated index will be correct, but the sum of all
+contributions will not equal the change in the value of the index. This can
+also happen when aggregating an already aggregated index in which missing
+index values have been imputed (i.e., when <code>na.rm = TRUE</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>For large indexes it can be much faster to aggregate elemental indexes as a matrix operation when there are no missing values---see the examples for details.</p>
+    <p>For large indexes it can be much faster to turn the aggregation structure
+into an aggregation matrix with
+<code><a href="as.matrix.piar_aggregation_structure.html">as.matrix()</a></code>, then aggregate
+elemental indexes as a matrix operation when there are no missing
+values---see the examples for details.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Balk, B. M. (2008). <em>Price and Quantity Index Numbers</em>. Cambridge University Press.</p>
-<p>ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020). <em>Consumer Price Index Manual: Theory and Practice</em>. International Monetary Fund.</p>
+    <p>Balk, B. M. (2008). <em>Price and Quantity Index Numbers</em>.
+Cambridge University Press.</p>
+<p>ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020).
+<em>Consumer Price Index Manual: Theory and Practice</em>.
+International Monetary Fund.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="elemental_index.html">elemental_index</a></code> for making elemental price indexes.</p>
-<p><code><a href="aggregation_structure.html">aggregation_structure</a></code> for making a price index aggregation structure.</p>
-<p><code><a href="mean.piar_index.html">mean</a></code> for aggregating over subperiods.</p>
-<p><code><a href="stack.piar_index.html">stack</a></code> for combining aggregate indexes with time-varying aggregation weights.</p></div>
+    <div class="dont-index"><p>Other index methods: 
+<code><a href="sub-.piar_index.html">[.piar_index</a>()</code>,
+<code><a href="as.data.frame.piar_index.html">as.data.frame.piar_index</a>()</code>,
+<code><a href="contrib.html">contrib</a>()</code>,
+<code><a href="head.piar_index.html">head.piar_index</a>()</code>,
+<code><a href="levels.piar_index.html">levels.piar_index</a>()</code>,
+<code><a href="mean.piar_index.html">mean.piar_index</a>()</code>,
+<code><a href="merge.piar_index.html">merge.piar_index</a>()</code>,
+<code><a href="stack.piar_index.html">stack.piar_index</a>()</code>,
+<code><a href="time.piar_index.html">time.piar_index</a>()</code>,
+<code><a href="vcov.aggregate_piar_index.html">vcov.aggregate_piar_index</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -172,6 +215,7 @@
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">pias</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="chain.html">chain</a></span><span class="op">(</span><span class="va">index</span><span class="op">[</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            1       2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> top 2.462968 16.4796</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
