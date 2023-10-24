@@ -29,9 +29,9 @@ price_relative(1:6, rep(1:2, each = 3), rep(letters[1:3], 2))
 
 }
 \seealso{
-\code{\link[gpindex:offset-prices]{gpindex::back_period()}} to get only the back price.
+\code{\link[gpindex:back_period]{gpindex::back_period()}} to get only the back price.
 
-\code{\link[gpindex:offset-prices]{gpindex::base_period()}} for making fixed-base price relatives.
+\code{\link[gpindex:back_period]{gpindex::base_period()}} for making fixed-base price relatives.
 
 \code{\link[=carry_forward]{carry_forward()}} and \code{\link[=shadow_price]{shadow_price()}} to impute missing prices.
 

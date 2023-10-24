@@ -36,6 +36,11 @@ test_that("as_index works for data frames", {
     as_index(df),
     with(dat, elemental_index(rel, factor(period, levels = 2:1), ea))
   )
+  
+  expect_equal(
+    as_index(data.frame(1:5, 1:5, 1:5)),
+    as_index(matrix(replace(NA, c(1, 7, 13, 19, 25), 1:5), 5))
+  )
 })
 
 test_that("as_index works for indexes", {

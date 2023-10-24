@@ -25,7 +25,7 @@ geometric index (the default for making elemental indexes), 1 for an
 arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
-\code{\link[gpindex:generalized-mean]{gpindex::generalized_mean()}} for details.}
+\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
 \item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
 
@@ -42,12 +42,12 @@ Aggregate elemental price indexes with a price index aggregation structure.
 The \code{aggregate()} method loops over each time period in \code{x} and
 \enumerate{
 \item aggregates the elemental indexes with
-\code{\link[gpindex:generalized-mean]{generalized_mean(r)()}} for each level of
+\code{\link[gpindex:generalized_mean]{generalized_mean(r)()}} for each level of
 \code{pias};
 \item aggregates percent-change contributions for each level of
 \code{pias} (if there are any and \code{contrib = TRUE});
 \item price updates the weights in \code{pias} with
-\code{\link[gpindex:transform-weights]{factor_weights(r)()}} (only for period-over-period
+\code{\link[gpindex:factor_weights]{factor_weights(r)()}} (only for period-over-period
 elemental indexes).
 }
 
@@ -79,7 +79,7 @@ point in time.
 Aggregating percent-change contributions uses the method in chapter 9 of the
 CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic
 mean. With a non-arithmetic mean, arithmetic weights are constructed using
-\code{\link[gpindex:transform-weights]{transmute_weights(r, 1)()}} in order to apply
+\code{\link[gpindex:transmute_weights]{transmute_weights(r, 1)()}} in order to apply
 this method.
 
 There may not be contributions for all prices relatives in an elemental

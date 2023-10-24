@@ -43,12 +43,12 @@ product weights). The default is to give each price equal weight.}
 \item{r1}{Order of the price index used to calculate the elemental price
 indexes: 0 for a geometric index (the default), 1 for an arithmetic index,
 or -1 for a harmonic index. Other values are possible; see
-\code{\link[gpindex:generalized-mean]{gpindex::generalized_mean()}} for details.}
+\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
 \item{r2}{Order of the price index used to aggregate the elemental price
 indexes: 0 for a geometric index, 1 for an arithmetic index (the default),
 or -1 for a harmonic index. Other values are possible; see
-\code{\link[gpindex:generalized-mean]{gpindex::generalized_mean()}} for details.}
+\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 }
 \value{
 A copy of \code{x} with missing values replaced (where possible).

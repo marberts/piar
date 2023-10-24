@@ -58,7 +58,7 @@ geometric index (the default for making elemental indexes), 1 for an
 arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
-\code{\link[gpindex:generalized-mean]{gpindex::generalized_mean()}} for details.}
+\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 }
 \value{
 A price index that inherits from \code{\link{piar_index}}. If
@@ -72,7 +72,7 @@ price indexes, with optional percent-change contributions.
 }
 \details{
 When supplied with a numeric vector, \code{elemental_index()} is a simple
-wrapper that applies \code{\link[gpindex:generalized-mean]{generalized_mean(r)()}}
+wrapper that applies \code{\link[gpindex:generalized_mean]{generalized_mean(r)()}}
 and \code{\link[gpindex:contributions]{contributions(r)()}} (if \code{contrib = TRUE}) to
 \code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
 is, for every combination of elemental aggregate and time period,
@@ -108,7 +108,7 @@ to calling \code{elemental_index()}.
 
 Indexes based on nested generalized means, like the Fisher index (and
 superlative quadratic mean indexes more generally), can be calculated by
-supplying the appropriate weights with \code{\link[gpindex:transform-weights]{gpindex::nested_transmute()}}; see the
+supplying the appropriate weights with \code{\link[gpindex:transmute_weights]{gpindex::nested_transmute()}}; see the
 example below. It is important to note that there are several ways to
 make these weights, and this affects how percent-change contributions
 are calculated.
