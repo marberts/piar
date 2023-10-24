@@ -12,7 +12,7 @@ price indexes, with optional percent-change contributions."><!-- mathjax --><scr
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9019</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -145,7 +145,7 @@ fixed-based index that inherits from <code><a href="piar_index.html">direct_piar
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>When supplied with a numeric vector, <code>elemental_index()</code> is a simple
-wrapper that applies <code>generalized_mean(r)()</code>
+wrapper that applies <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">generalized_mean(r)()</a></code>
 and <code><a href="https://marberts.github.io/gpindex/reference/contributions.html" class="external-link">contributions(r)()</a></code> (if <code>contrib = TRUE</code>) to
 <code>x</code> and <code>weights</code> grouped by <code>ea</code> and <code>period</code>. That
 is, for every combination of elemental aggregate and time period,
