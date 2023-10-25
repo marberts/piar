@@ -16,7 +16,7 @@
 
 ## Improvements
 
-- Printing an index gives a textual description in addition to the matrix of index values. Printing an aggregation structure now just gives a description instead of a list.
+- Printing an index gives a textual description in addition to the matrix of index values. Printing an aggregation structure now gives a description and tabular representation instead of a list.
 
 - There are now methods to set the levels and time periods of an index.
 

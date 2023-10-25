@@ -21,9 +21,6 @@
 #' @seealso
 #' [`aggregate()`][aggregate.piar_index] to make an aggregated price index.
 #'
-#' [`weights<-()`][weights<-.piar_aggregation_structure] to update the
-#' weights directly.
-#'
 #' @examples
 #' # A simple aggregation structure
 #' #            1

@@ -19,7 +19,7 @@ weights(object) <- value
 \item{ea_only}{Should weights be returned for only the elemental aggregates?
 The default gives the weights for the entire aggregation structure.}
 
-\item{na.rm}{Should missing values be removed from when aggregating the
+\item{na.rm}{Should missing values be removed when aggregating the
 weights (i.e., when \code{ea_only = FALSE})? By default, missing values are
 not removed.}
 

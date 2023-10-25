@@ -60,9 +60,6 @@ weights(update(pias, index))
 \seealso{
 \code{\link[=aggregate.piar_index]{aggregate()}} to make an aggregated price index.
 
-\code{\link[=weights<-.piar_aggregation_structure]{weights<-()}} to update the
-weights directly.
-
 Other aggregation structure methods: 
 \code{\link{as.matrix.piar_aggregation_structure}()},
 \code{\link{weights.piar_aggregation_structure}()}

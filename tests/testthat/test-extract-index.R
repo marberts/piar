@@ -46,11 +46,14 @@ test_that("subscripting methods work", {
                       contrib = TRUE)
     )
   )
+})
 
+test_that("subscripting returns an aggregate index when appropriate", {
+  expect_true(is_aggregate_index(index[, 1:2]))
   expect_false(is_aggregate_index(index[1:2, ]))
 })
 
-test_that("subscripting methods give errors where expeected", {
+test_that("subscripting methods give errors where expected", {
   expect_error(epr[1, NA])
   expect_error(epr[1, 3])
   expect_error(epr[c(1, 2, 1), ])
@@ -84,7 +87,7 @@ test_that("replacement methods work", {
   )
 
   # recycling should still happen
-  epr[1, c(1, 2, 1)] <- 1:3
+  epr[1, c(1, 2, 1)] <- setNames(1:3, letters[1:3])
   expect_equal(epr[1, ], as_index(matrix(3:2, 1, dimnames = list("11", 1:2))))
 
   epr["14"] <- 1

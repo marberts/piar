@@ -17,13 +17,14 @@
 \item{stringsAsFactors}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
 }
 \value{
-\code{as.data.frame()} returns a data frame.
+\code{as.data.frame()} returns a data frame with three columns: \code{period}, \code{level},
+and \code{value}.
 
-\code{as.matrix()} returns a matrix.
+\code{as.matrix()} returns a matrix with a row for each level and a column
+for each period.
 }
 \description{
-Turn an index into a matrix with a row for each level and a column for each
-period, or a data frame with three columns: period, level, and value.
+Turn an index into a data frame or a matrix.
 }
 \examples{
 prices <- data.frame(
@@ -45,6 +46,7 @@ object.
 Other index methods: 
 \code{\link{[.piar_index}()},
 \code{\link{aggregate.piar_index}()},
+\code{\link{chain}()},
 \code{\link{contrib}()},
 \code{\link{head.piar_index}()},
 \code{\link{levels.piar_index}()},

@@ -91,7 +91,7 @@ chain.aggregate_piar_index <- function(x, ...) {
 }
 
 #' @rdname chain
-#' @family index method
+#' @family index methods
 #' @export
 chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
   link <- as.numeric(link)

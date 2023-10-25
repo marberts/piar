@@ -77,6 +77,7 @@ print.piar_aggregation_structure <- function(x, ...) {
     "Aggregation structure for", length(x$eas), "elemental aggregates with",
     x$height - 1L, "levels above the elemental aggregates", "\n"
   )
+  print(as.data.frame(x), ...)
   invisible(x)
 }
 
@@ -107,7 +108,7 @@ is_aggregation_structure <- function(x) {
 #' [aggregation_structure()].
 #' @param ea_only Should weights be returned for only the elemental aggregates?
 #' The default gives the weights for the entire aggregation structure.
-#' @param na.rm Should missing values be removed from when aggregating the
+#' @param na.rm Should missing values be removed when aggregating the
 #' weights (i.e., when `ea_only = FALSE`)? By default, missing values are
 #' not removed.
 #' @param value A numeric vector of weights for the elemental aggregates of

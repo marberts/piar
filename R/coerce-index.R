@@ -1,16 +1,17 @@
 #' Coerce an index into a tabular form
 #'
-#' Turn an index into a matrix with a row for each level and a column for each
-#' period, or a data frame with three columns: period, level, and value.
+#' Turn an index into a data frame or a matrix.
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param stringsAsFactors See [as.data.frame()].
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
-#' `as.data.frame()` returns a data frame.
+#' `as.data.frame()` returns a data frame with three columns: `period`, `level`,
+#' and `value`.
 #'
-#' `as.matrix()` returns a matrix.
+#' `as.matrix()` returns a matrix with a row for each level and a column
+#' for each period.
 #'
 #' @seealso
 #' [as_index()] to coerce a matrix/data frame of index values into an index
