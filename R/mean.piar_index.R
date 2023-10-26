@@ -21,8 +21,9 @@
 #' default is equal weights. It is usually easiest to specify these weights as
 #' a matrix with a row for each index value in `x` and a column for each
 #' time period.
-#' @param window The size of the window used to average index values across
-#' subperiods. The default (3) turns a monthly index into into a quarterly one.
+#' @param window A positive integer giving the size of the window used to
+#' average index values across subperiods. The default (3) turns a monthly
+#' index into into a quarterly one. Non-integers are truncated towards 0.
 #' @param na.rm Should missing values be removed? By default, missing values
 #' are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #' imputation.
@@ -57,20 +58,24 @@ mean.piar_index <- function(x, weights = NULL, window = 3, na.rm = FALSE,
                             r = 1, ...) {
   if (!is.null(weights)) {
     if (length(weights) != length(x$time) * length(x$levels)) {
-      stop("'x' and 'weights' must be the same length")
+      stop("'weights' must have a value for each index value in 'x'")
     }
     w <- split(as.numeric(weights), gl(length(x$time), length(x$levels)))
   }
-  gen_mean <- Vectorize(gpindex::generalized_mean(r))
-  len <- length(x$time) %/% window
-  if (len == 0L) {
+  window <- as.integer(window)
+  if (length(window) > 1L || window < 1L) {
+    stop("'window' must be a positive length 1 integer")
+  }
+  if (window > length(x$time)) {
     stop("'x' must have at least 'window' time periods")
   }
+  len <- length(x$time) %/% window
   # get the starting location for each window
   loc <- seq.int(1L, by = window, length.out = len)
   periods <- x$time[loc]
   res <- index_skeleton(x$levels, periods)
   # loop over each window and calculate the mean for each level
+  gen_mean <- Vectorize(gpindex::generalized_mean(r))
   for (i in seq_along(loc)) {
     j <- seq(loc[i], length.out = window)
     index <- .mapply(c, x$index[j], list())

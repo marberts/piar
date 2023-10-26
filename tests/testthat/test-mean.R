@@ -42,4 +42,5 @@ test_that("mean requires a suitable window", {
   index <- as_index(matrix(1:9, 3))
   expect_error(mean(index, window = 4))
   expect_error(mean(index, window = 0))
+  expect_error(mean(index, window = 1:3))
 })

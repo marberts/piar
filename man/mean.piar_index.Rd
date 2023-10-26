@@ -14,8 +14,9 @@ default is equal weights. It is usually easiest to specify these weights as
 a matrix with a row for each index value in \code{x} and a column for each
 time period.}
 
-\item{window}{The size of the window used to average index values across
-subperiods. The default (3) turns a monthly index into into a quarterly one.}
+\item{window}{A positive integer giving the size of the window used to
+average index values across subperiods. The default (3) turns a monthly
+index into into a quarterly one. Non-integers are truncated towards 0.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
