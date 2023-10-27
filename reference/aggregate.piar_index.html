@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9022</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,13 +105,13 @@ the class of <code>x</code>.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> method loops over each time period in <code>x</code> and</p><ol><li><p>aggregates the elemental indexes with
-<code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">generalized_mean(r)()</a></code> for each level of
-<code>pias</code>;</p></li>
+<code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean(r)()</a></code> for each level
+of <code>pias</code>;</p></li>
 <li><p>aggregates percent-change contributions for each level of
 <code>pias</code> (if there are any and <code>contrib = TRUE</code>);</p></li>
 <li><p>price updates the weights in <code>pias</code> with
-<code><a href="https://marberts.github.io/gpindex/reference/factor_weights.html" class="external-link">factor_weights(r)()</a></code> (only for period-over-period
-elemental indexes).</p></li>
+<code><a href="https://marberts.github.io/gpindex/reference/factor_weights.html" class="external-link">gpindex::factor_weights(r)()</a></code> (only for
+period-over-period elemental indexes).</p></li>
 </ol><p>The result is a collection of aggregated period-over-period indexes that
 can be chained together to get a fixed-base index when <code>x</code> are
 period-over-period elemental indexes. Otherwise, when <code>x</code> are fixed-base
@@ -137,8 +137,8 @@ point in time.</p>
 <p>Aggregating percent-change contributions uses the method in chapter 9 of the
 CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic
 mean. With a non-arithmetic mean, arithmetic weights are constructed using
-<code><a href="https://marberts.github.io/gpindex/reference/transmute_weights.html" class="external-link">transmute_weights(r, 1)()</a></code> in order to apply
-this method.</p>
+<code><a href="https://marberts.github.io/gpindex/reference/transmute_weights.html" class="external-link">gpindex::transmute_weights(r, 1)()</a></code> in order
+to apply this method.</p>
 <p>There may not be contributions for all prices relatives in an elemental
 aggregate if the elemental indexes are built from several sources (as with
 <code><a href="merge.piar_index.html">merge()</a></code>). In this case the contribution for
