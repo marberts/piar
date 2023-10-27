@@ -42,13 +42,13 @@ Aggregate elemental price indexes with a price index aggregation structure.
 The \code{aggregate()} method loops over each time period in \code{x} and
 \enumerate{
 \item aggregates the elemental indexes with
-\code{\link[gpindex:generalized_mean]{generalized_mean(r)()}} for each level of
-\code{pias};
+\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean(r)()}} for each level
+of \code{pias};
 \item aggregates percent-change contributions for each level of
 \code{pias} (if there are any and \code{contrib = TRUE});
 \item price updates the weights in \code{pias} with
-\code{\link[gpindex:factor_weights]{factor_weights(r)()}} (only for period-over-period
-elemental indexes).
+\code{\link[gpindex:factor_weights]{gpindex::factor_weights(r)()}} (only for
+period-over-period elemental indexes).
 }
 
 The result is a collection of aggregated period-over-period indexes that
@@ -79,8 +79,8 @@ point in time.
 Aggregating percent-change contributions uses the method in chapter 9 of the
 CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic
 mean. With a non-arithmetic mean, arithmetic weights are constructed using
-\code{\link[gpindex:transmute_weights]{transmute_weights(r, 1)()}} in order to apply
-this method.
+\code{\link[gpindex:transmute_weights]{gpindex::transmute_weights(r, 1)()}} in order
+to apply this method.
 
 There may not be contributions for all prices relatives in an elemental
 aggregate if the elemental indexes are built from several sources (as with

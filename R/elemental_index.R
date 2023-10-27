@@ -32,9 +32,10 @@ different_length <- function(...) {
 #' price indexes, with optional percent-change contributions.
 #'
 #' When supplied with a numeric vector, `elemental_index()` is a simple
-#' wrapper that applies [`generalized_mean(r)()`][gpindex::generalized_mean]
-#' and [`contributions(r)()`][gpindex::contributions] (if `contrib = TRUE`) to
-#' `x` and `weights` grouped by `ea` and `period`. That
+#' wrapper that applies
+#' [`gpindex::generalized_mean(r)()`][gpindex::generalized_mean] and
+#' [`gpindex::contributions(r)()`][gpindex::contributions] (if `contrib = TRUE`)
+#' to `x` and `weights` grouped by `ea` and `period`. That
 #' is, for every combination of elemental aggregate and time period,
 #' `elemental_index()` calculates an index based on a generalized mean of
 #' order `r` and, optionally, percent-change contributions. The default

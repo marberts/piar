@@ -4,13 +4,13 @@
 #'
 #' The `aggregate()` method loops over each time period in `x` and
 #' 1. aggregates the elemental indexes with
-#' [`generalized_mean(r)()`][gpindex::generalized_mean] for each level of
-#' `pias`;
+#' [`gpindex::generalized_mean(r)()`][gpindex::generalized_mean] for each level
+#' of `pias`;
 #' 2. aggregates percent-change contributions for each level of
 #' `pias` (if there are any and `contrib = TRUE`);
 #' 3. price updates the weights in `pias` with
-#' [`factor_weights(r)()`][gpindex::factor_weights] (only for period-over-period
-#' elemental indexes).
+#' [`gpindex::factor_weights(r)()`][gpindex::factor_weights] (only for
+#' period-over-period elemental indexes).
 #'
 #' The result is a collection of aggregated period-over-period indexes that
 #' can be chained together to get a fixed-base index when `x` are
@@ -40,8 +40,8 @@
 #' Aggregating percent-change contributions uses the method in chapter 9 of the
 #' CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic
 #' mean. With a non-arithmetic mean, arithmetic weights are constructed using
-#' [`transmute_weights(r, 1)()`][gpindex::transmute_weights] in order to apply
-#' this method.
+#' [`gpindex::transmute_weights(r, 1)()`][gpindex::transmute_weights] in order
+#' to apply this method.
 #'
 #' There may not be contributions for all prices relatives in an elemental
 #' aggregate if the elemental indexes are built from several sources (as with
@@ -152,7 +152,7 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
     con[[1L]] <- x$contrib[[t]][eas]
     # get rid of any NULL contributions
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
-    # loop over each level in the pias from the bottom up and aggregate
+    # loop over each level in pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
       nodes <- unname(pias$child[[i - 1L]])
       rel[[i]] <- vapply(

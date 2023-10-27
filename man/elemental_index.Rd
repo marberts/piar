@@ -72,9 +72,10 @@ price indexes, with optional percent-change contributions.
 }
 \details{
 When supplied with a numeric vector, \code{elemental_index()} is a simple
-wrapper that applies \code{\link[gpindex:generalized_mean]{generalized_mean(r)()}}
-and \code{\link[gpindex:contributions]{contributions(r)()}} (if \code{contrib = TRUE}) to
-\code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
+wrapper that applies
+\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean(r)()}} and
+\code{\link[gpindex:contributions]{gpindex::contributions(r)()}} (if \code{contrib = TRUE})
+to \code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
 is, for every combination of elemental aggregate and time period,
 \code{elemental_index()} calculates an index based on a generalized mean of
 order \code{r} and, optionally, percent-change contributions. The default

@@ -303,10 +303,61 @@ test_that("duplicate products get unique names during aggregation", {
   epr1 <- elemental_index(setNames(1:4, 1:4), ea = gl(2, 2), contrib = TRUE, r = 1)
   epr2 <- epr1
   levels(epr2) <- 3:4
-  index <- aggregate(merge(epr1, epr2), list(c(0, 0, 0, 0), 1:4))
+  index <- aggregate(merge(epr1, epr2),
+                     list(c(0, 0, 0, 0), c("a", "a", "b", "b"), 1:4))
+  expect_equal(
+    contrib(index, "a"),
+    matrix(c(0, 0.25, 0.5, 0.75), 4, dimnames = list(1:4, 1))
+  )
+  expect_equal(
+    contrib(index, "a"),
+    contrib(index, "b")
+  )
   expect_equal(
     contrib(index),
     matrix(rep(c(0, 0.125, 0.25, 0.375), 2), 8,
            dimnames = list(c(1:4, "1.1", "2.1", "3.1", "4.1"), 1))
   )
+})
+
+test_that("aggregating in parallel works", {
+  pias <- aggregation_structure(
+    list(
+      c(1, 1, 1, 2, 2, 2),
+      c(11, 11, 12, 21, 22, 22),
+      c(111, 112, 121, 211, 221, 222)
+    ),
+    c(1, 2, 3, 3, 2, 1)
+  )
+  
+  pias1 <- aggregation_structure(
+    list(
+      c(1, 1, 1),
+      c(11, 11, 12),
+      c(111, 112, 121)
+    ),
+    c(1, 2, 3)
+  )
+  
+  pias2 <- aggregation_structure(
+    list(
+      c(2, 2, 2),
+      c(21, 22, 22),
+      c(211, 221, 222)
+    ),
+    c(3, 2, 1)
+  )
+  
+  epr1 <- elemental_index(1:18, rep(1:2, 9), rep(c(111, 112, 121), each = 6),
+                          contrib = TRUE)
+  epr2 <- elemental_index(18:1, rep(1:2, 9), rep(c(111, 112, 121), each = 6),
+                          contrib = TRUE)
+  levels(epr2) <- c(211, 221, 222)
+  
+  index <- aggregate(merge(epr1, epr2), pias, r = 0.5)
+  index1 <- aggregate(epr1, pias, r = 0.5)
+  index2 <- aggregate(epr2, pias, r = 0.5)
+  
+  expect_equal(index[1], index1[1])
+  expect_equal(index[2], index2[2])
 })
