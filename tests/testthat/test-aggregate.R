@@ -263,8 +263,8 @@ test_that("a fixed-based index aggregates correctly", {
 })
 
 test_that("corner cases work", {
-  expect_equal(as.matrix(aggregate(as_index(1:5), list(1:5))),
-               matrix(1:5, 5, dimnames = list(1:5, 1)))
+  expect_equal(as.matrix(aggregate(as_index(matrix(1:10, 5)), list(1:5))),
+               matrix(1:10, 5, dimnames = list(1:5, 1:2)))
   expect_equal(as.matrix(aggregate(as_index(1:5), 6)),
                matrix(NA_real_, dimnames = list(6, 1)))
 })
@@ -360,4 +360,21 @@ test_that("aggregating in parallel works", {
   
   expect_equal(index[1], index1[1])
   expect_equal(index[2], index2[2])
+})
+
+test_that("aggregating with a dead branch does nothing", {
+  epr <- elemental_index(1:18, rep(1:3, each = 6), rep(1:2, 9), contrib = TRUE)
+  pias <- data.frame(l1 = c(0, 0, 0),
+                     l2 = c("01", "01", "02"),
+                     l3 = c("011", "012", "021"),
+                     ea = 1:3,
+                     weights = 3:1)
+  index1 <- aggregate(epr, pias)
+  index1na <- aggregate(epr, pias, na.rm = TRUE)
+  index2 <- aggregate(epr, pias[1:2, ])
+  
+  expect_equal(index1["01"], index2["01"])
+  expect_equal(index1na["0"], index2["0"])
+  expect_equal(contrib(index1, "01"), contrib(index2, "01"))
+  expect_equal(contrib(index1na), contrib(index2))
 })
