@@ -152,6 +152,9 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
     con[[1L]] <- x$contrib[[t]][eas]
     # get rid of any NULL contributions
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
+    for (i in which(is.na(rel[[1L]]))) {
+      con[[1L]][[i]][] <- NA
+    }
     # loop over each level in pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
       nodes <- unname(pias$child[[i - 1L]])

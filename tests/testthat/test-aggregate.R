@@ -55,8 +55,9 @@ test_that("a matched-sample index aggregates correctly", {
                as.matrix(ms_index))
 
   # Re aggregating breaks contributions for imputed indexes
-  expect_failure(
-    expect_equal(contrib(ms_index), contrib(aggregate(ms_index, ms_pias)))
+  expect_true(
+    all(colSums(contrib(ms_index), na.rm = TRUE)[-1]
+        > colSums(contrib(aggregate(ms_index, ms_pias)), na.rm = TRUE)[-1])
   )
   expect_equal(contrib(aggregate(ms_index, ms_pias)),
                contrib(aggregate(aggregate(ms_index, ms_pias), ms_pias)))
@@ -65,6 +66,10 @@ test_that("a matched-sample index aggregates correctly", {
   pias2 <- aggregation_structure(list(c(1, 1), c(11, 12)),
                                  weights(ms_pias)[[2]])
   expect_equal(as.matrix(aggregate(ms_index, pias2)), as.matrix(ms_index[1:3]))
+  expect_equal(
+    contrib(aggregate(aggregate(ms_index, ms_pias), pias2)),
+    contrib(aggregate(ms_index, ms_pias))
+  )
 
   # Re-arranging the index shouldn't do anything
   s1 <- c(
@@ -377,4 +382,16 @@ test_that("aggregating with a dead branch does nothing", {
   expect_equal(index1na["0"], index2["0"])
   expect_equal(contrib(index1, "01"), contrib(index2, "01"))
   expect_equal(contrib(index1na), contrib(index2))
+})
+
+test_that("reaggregating doesn't introduce incorrect contributions", {
+  epr <- elemental_index(c(1:7, NA), rep(1:2, each = 4), rep(1:2, 4),
+                         contrib = TRUE)
+  pias <- as_aggregation_structure(list(c(0, 0), c(1, 2)))
+  index <- aggregate(epr, pias, na.rm = TRUE)
+  expect_equal(contrib(index)[, 1], contrib(aggregate(index, pias))[, 1])
+  
+  r <- as.numeric(index[2:3, 1])
+  r <- (r / sum(r))[1]
+  expect_equal(contrib(index)[, 2] * r, contrib(aggregate(index, pias))[, 2])
 })
