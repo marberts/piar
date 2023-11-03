@@ -91,20 +91,20 @@
 #'
 #' @export
 aggregation_structure <- function(x, weights = NULL) {
-  x <- lapply(x, as.character)
+  x <- lapply(x, \(z) factor(z, unique(z)))
   len <- length(x)
   ea <- as.character(unlist(x[len], use.names = FALSE))
   if (length(ea) == 0L) {
     stop("cannot make an aggregation structure with no elemental aggregates")
   }
-  if (any(vapply(x, anyNA, logical(1L)))) {
+  if (anyNA(x, recursive = TRUE)) {
     stop("'x' cannot contain NAs")
   }
-
+  
   if (is.null(weights)) {
     weights <- rep.int(1, length(ea))
   }
-
+  
   # basic argument checking to make sure inputs can make an
   # aggregation structure
   if (any(lengths(x) != length(weights))) {
@@ -127,8 +127,12 @@ aggregation_structure <- function(x, weights = NULL) {
   child <- parent <- vector("list", len)[-1L]
   # produce a list for each level with all the parent and child nodes
   for (i in seq_along(upper)) {
-    child[[i]] <- lapply(split(lower[[len - i]], upper[[len - i]]), unique)
-    parent[[i]] <- lapply(split(upper[[len - i]], lower[[len - i]]), unique)
+    child[[i]] <- lapply(
+      split(as.integer(lower[[len - i]]), upper[[len - i]]), unique
+    )
+    parent[[i]] <- lapply(
+      split(as.integer(upper[[len - i]]), lower[[len - i]]), unique
+    )
   }
   if (any(lengths(unlist(parent, recursive = FALSE)) > 1L)) {
     stop(
@@ -138,16 +142,6 @@ aggregation_structure <- function(x, weights = NULL) {
     )
   }
   parent <- lapply(parent, unlist)
-  # positional matching for child nodes is much faster for aggregation
-  nm <- c(list(ea), lapply(child, names))
-  for (i in seq_along(child)) {
-    child[[i]] <- lapply(child[[i]], match, table = nm[[i]])
-  }
-  # same for parent nodes
-  for (i in seq_along(parent)) {
-    parent[[i]] <- match(parent[[i]][nm[[i]]], nm[-1L][[i]])
-    names(parent[[i]]) <- nm[[i]]
-  }
-  levels <- unlist(lapply(rev(child), names), use.names = FALSE)
-  piar_aggregation_structure(child, parent, c(levels, ea), ea, weights, len)
+  levels <- unlist(lapply(x, levels), use.names = FALSE)
+  piar_aggregation_structure(child, parent, levels, ea, weights, len)
 }

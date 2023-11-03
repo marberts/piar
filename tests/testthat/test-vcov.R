@@ -136,5 +136,5 @@ test_that("vcov doesn't depend on order", {
   pias <- with(weights, aggregation_structure(as.list(weights[1:4]), ew * dw))
   index <- aggregate(epr, pias)
   rw <- rw[ord, ]
-  expect_equal(vcov(index, rw * weights$ew, mse = FALSE), covar)
+  expect_equal(vcov(index, rw * weights$ew, mse = FALSE), covar[c(1:5, 7, 6), ])
 })

@@ -10,7 +10,7 @@ test_that("updating with a length-0 index makes the weights NA", {
 
   expect_equal(weights(update(agg, index)),
                list(c("1" = NA_real_, "2" = NA),
-                    c("11" = NA_real_, "12" = NA, "21" = NA),
+                    c("11" = NA_real_, "21" = NA, "12" = NA),
                     c("111" = NA_real_, "211" = NA, "121" = NA, "112" = NA)))
 })
 
@@ -19,11 +19,11 @@ test_that("an index that doesn't line up with the pias introduces NA", {
   index <- aggregate(epr, agg)
   expect_equal(weights(update(agg, index)),
                list(c("1" = NA_real_, "2" = NA),
-                    c("11" = NA_real_, "12" = 2, "21" = NA),
+                    c("11" = NA_real_, "21" = NA, "12" = 2),
                     c("111" = 1, "211" = NA, "121" = 2, "112" = NA)))
   expect_equal(weights(update(agg, index, r = 0)),
                list(c("1" = NA_real_, "2" = NA),
-                    c("11" = NA_real_, "12" = 1, "21" = NA),
+                    c("11" = NA_real_, "21" = NA, "12" = 1),
                     c("111" = 1, "211" = NA, "121" = 1, "112" = NA)))
 })
 

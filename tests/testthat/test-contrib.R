@@ -43,8 +43,8 @@ test_that("product names are correct", {
       contrib(elemental_index(c(a = 1, b = 2, c = 3, a = 4, a = 5),
                               c(1, 1, 1, 2, 2), contrib = TRUE, r = 1))
     ),
-    matrix(c(0, 1 / 3, 2 / 3, 0, 1.5, 0, 0, 2), 4, 2,
-           dimnames = list(c("a", "b", "c", "a.1"), 1:2))
+    matrix(c(0, 0, 1 / 3, 2 / 3, 1.5, 2, 0, 0), 4, 2,
+           dimnames = list(c("a", "a.1", "b", "c"), 1:2))
   )
 
   w <- setNames(rep(1, 9), letters[1:9])

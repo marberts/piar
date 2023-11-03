@@ -2,21 +2,26 @@ x1 <- c("1", "2", "1", "1")
 x2 <- c("11", "21", "12", "11")
 x3 <- c("111", "211", "121", "112")
 
-test_that("reordering does nothing", {
-  epr <- as_index(matrix(1:12, 4, 3,
-                         dimnames = list(c("111", "112", "121", "211"), 1:3)))
+test_that("factors do nothing", {
   agg1 <- aggregation_structure(list(x1, x2, x3), 1:4)
   f <- factor(x2, levels = c("11", "21", "12"))
   agg2 <- aggregation_structure(list(x1, f, x3), 1:4)
-  index1 <- aggregate(epr, agg1)
-  index2 <- aggregate(epr, agg2)
-  expect_equal(index1, index2)
+  expect_identical(agg1, agg2)
 
   f <- factor(x2, levels = c("11", "21", "12", "99"))
-  expect_equal(agg2, aggregation_structure(list(x1, f, x3), 1:4))
+  expect_identical(agg2, aggregation_structure(list(x1, f, x3), 1:4))
 
   f <- factor(replace(x2, 2, NA), levels = c("11", "21", "12"))
   expect_error(aggregation_structure(list(x1, addNA(f), x3), 1:4))
+})
+
+test_that("order is preserved", {
+  agg <- aggregation_structure(list(x1, x2, x3))
+  expect_identical(levels(agg), unique(c(x1, x2, x3)))
+  
+  ord <- c(2, 4, 1, 3)
+  agg <- aggregation_structure(list(x1[ord], x2[ord], x3[ord]))
+  expect_identical(levels(agg), unique(c(x1[ord], x2[ord], x3[ord])))
 })
 
 test_that("errors work", {

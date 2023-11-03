@@ -56,7 +56,7 @@ contrib <- function(x, ...) {
 contrib.piar_index <- function(x, level = levels(x), ...) {
   level <- as.character(level)
   con <- lapply(x$contrib, `[[`, match(match.arg(level), x$levels))
-  products <- unique(unlist(lapply(con, names), use.names = FALSE))
+  products <- sort.int(unique(unlist(lapply(con, names), use.names = FALSE)))
   out <- vector("list", length(con))
   names(out) <- x$time
   # initialize 0 contributions for all products in all time periods, then

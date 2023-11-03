@@ -28,7 +28,7 @@ test_that("setter methods work", {
   expect_identical(epr, epr3)
   
   levels(index) <- levels(index)
-  expect_false(is_aggregate_index(index))
+  expect_true(is_aggregate_index(index))
   
   levels(index) <- 1:5
   expect_false(is_aggregate_index(index))

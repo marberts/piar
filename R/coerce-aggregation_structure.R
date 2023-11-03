@@ -51,7 +51,7 @@ as.matrix.piar_aggregation_structure <- function(x, ...) {
   }
   loc <- seq_len(nea)
   # don't need the eas
-  lev <- lapply(as.list(x)[-x$height], as.factor)
+  lev <- lapply(as.list(x)[-x$height], \(z) factor(z, unique(z)))
   rows <- vector("list", length(lev))
   # generate the rows for each level of the matrix and rbind together
   for (i in seq_along(rows)) {

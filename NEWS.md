@@ -4,7 +4,9 @@
 
 - The `[[` method for index objects has been removed as it created unexpected problems for little gain. `as.matrix(index)[[1, 1]]` is a more explicit and flexible way to get the same behavior as `index[[1, 1]]`.
 
-- The class names for index objects have changed to fix a name conflict with `Matrix`. This means it's now possible to use `rsmatrix` with `piar`.
+- `aggregation_structure()` now orders the levels of an aggregation according to the order they appear in the data. Previously the levels were ordered lexicographically, except for the elemental aggregates.
+
+There are a number of changes to the way product names are handled when making an index and extracting percent-change contributions.
 
 - Names for price relatives now need to be unique within a time period for `elemental_index()`. The previous (undocumented) behavior was to only require that names be unique within a time period *and* elemental aggregate. This implies two non-backward compatible changes.
 
@@ -13,6 +15,8 @@
    - Percent-change contributions from `contrib()` have simplified row names, as there is now no need to include index-level names to make product names unique.
    
 - `contrib()` now always returns a matrix. Previously it would return `NULL` if there were no contributions for each level of the index.
+
+- Rows for the contributions matrix are ordered according to product names so that they have a consistent ordering.
 
 ## Improvements
 
@@ -23,6 +27,8 @@
 - Methods for index objects are now faster for larger indexes.
 
 - `aggregate()` gains a new argument `contrib` that controls if percent-change contributions for elemental indexes are aggregated. The default maintains the current behavior of aggregating contributions if there are any.
+
+- The class names for index objects have changed to fix a name conflict with `Matrix`. This means it's now possible to use `rsmatrix` with `piar`.
 
 ## Bug fixes
 

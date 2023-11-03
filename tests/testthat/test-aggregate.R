@@ -91,13 +91,18 @@ test_that("a matched-sample index aggregates correctly", {
     )
   )
 
+  ms_index2 <- aggregate(ms_epr, ms_pias, na.rm = TRUE)
   expect_equal(
-    as.matrix(aggregate(ms_epr, ms_pias, na.rm = TRUE)[levels(ms_index), ]),
+    as.matrix(ms_index2)[levels(ms_index), ],
     as.matrix(ms_index)
   )
   expect_equal(
-    as.matrix(aggregate(ms_epr, ms_pias, na.rm = TRUE)[1:3, ]),
-    as.matrix(ms_index)[1:3, ]
+    contrib(ms_index),
+    contrib(ms_index2)
+  )
+  expect_equal(
+    as.matrix(ms_pias) %*% as.matrix(chain(ms_index2[paste0("B", s2)])),
+    as.matrix(chain(ms_index[c(1, 3, 2), ]))
   )
 
   # Aggregated contributions should add up
@@ -320,8 +325,8 @@ test_that("duplicate products get unique names during aggregation", {
   )
   expect_equal(
     contrib(index),
-    matrix(rep(c(0, 0.125, 0.25, 0.375), 2), 8,
-           dimnames = list(c(1:4, "1.1", "2.1", "3.1", "4.1"), 1))
+    matrix(rep(c(0, 0.125, 0.25, 0.375), each = 2), 8,
+           dimnames = list(c(1, "1.1", 2, "2.1", 3, "3.1", 4, "4.1"), 1))
   )
 })
 

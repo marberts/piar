@@ -230,7 +230,11 @@ levels.piar_index <- function(x) {
 #' @export
 `levels<-.aggregate_piar_index` <- function(x, value) {
   value <- as.character(value)
-  piar_index(x$index, x$contrib, value, x$time, is_chainable_index(x))
+  if (identical(value, x$levels)) {
+    x
+  } else {
+    piar_index(x$index, x$contrib, value, x$time, is_chainable_index(x))
+  }
 }
 
 #' Get the time periods for a price index

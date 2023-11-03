@@ -6,9 +6,9 @@ agg <- aggregation_structure(list(x1, x2, x3))
 test_that("coercion methods works", {
   expect_equal(
     as.matrix(agg),
-    matrix(c(2, 0, 3, 0, 0, 0, 6, 0, 0, 6, 2, 0, 0, 6, 0, 2, 0, 3, 0, 0) / 6,
+    matrix(c(2, 0, 3, 0, 0, 0, 6, 0, 6, 0, 2, 0, 0, 0, 6, 2, 0, 3, 0, 0) / 6,
            5, 4,
-           dimnames = list(c("1", "2", "11", "12", "21"),
+           dimnames = list(c("1", "2", "11", "21", "12"),
                            c("111", "211", "121", "112")))
   )
   expect_equal(

@@ -47,7 +47,7 @@ validate_pias_structure <- function(x) {
     any(vapply(x$child, \(x) any(lengths(x) == 0L), logical(1L)))
   ) {
     stop(
-      "invalid aggregation structure; the input is likely not a nested",
+      "invalid aggregation structure; the input is likely not a nested ",
       "hierachy"
     )
   }
