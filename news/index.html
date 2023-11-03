@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9024</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9025</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,13 +52,15 @@
 <div class="section level3">
 <h3 id="significant-changes-0-6-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-6-0"></a></h3>
 <ul><li><p>The <code>[[</code> method for index objects has been removed as it created unexpected problems for little gain. <code>as.matrix(index)[[1, 1]]</code> is a more explicit and flexible way to get the same behavior as <code>index[[1, 1]]</code>.</p></li>
-<li><p>The class names for index objects have changed to fix a name conflict with <code>Matrix</code>. This means it’s now possible to use <code>rsmatrix</code> with <code>piar</code>.</p></li>
-<li>
+<li><p><code><a href="../reference/aggregation_structure.html">aggregation_structure()</a></code> now orders the levels of an aggregation according to the order they appear in the data. Previously the levels were ordered lexicographically, except for the elemental aggregates.</p></li>
+</ul><p>There are a number of changes to the way product names are handled when making an index and extracting percent-change contributions.</p>
+<ul><li>
 <p>Names for price relatives now need to be unique within a time period for <code><a href="../reference/elemental_index.html">elemental_index()</a></code>. The previous (undocumented) behavior was to only require that names be unique within a time period <em>and</em> elemental aggregate. This implies two non-backward compatible changes.</p>
 <ul><li><p>The default product names for <code><a href="../reference/elemental_index.html">elemental_index()</a></code> now include the name of the elemental aggregate to conform to the above requirement.</p></li>
 <li><p>Percent-change contributions from <code><a href="../reference/contrib.html">contrib()</a></code> have simplified row names, as there is now no need to include index-level names to make product names unique.</p></li>
 </ul></li>
 <li><p><code><a href="../reference/contrib.html">contrib()</a></code> now always returns a matrix. Previously it would return <code>NULL</code> if there were no contributions for each level of the index.</p></li>
+<li><p>Rows for the contributions matrix are ordered according to product names so that they have a consistent ordering.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-0-6-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-6-0"></a></h3>
@@ -66,6 +68,7 @@
 <li><p>There are now methods to set the levels and time periods of an index.</p></li>
 <li><p>Methods for index objects are now faster for larger indexes.</p></li>
 <li><p><code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> gains a new argument <code>contrib</code> that controls if percent-change contributions for elemental indexes are aggregated. The default maintains the current behavior of aggregating contributions if there are any.</p></li>
+<li><p>The class names for index objects have changed to fix a name conflict with <code>Matrix</code>. This means it’s now possible to use <code>rsmatrix</code> with <code>piar</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-6-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-0"></a></h3>
