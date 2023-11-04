@@ -5,6 +5,9 @@
 #'
 #' @param x A price index aggregation structure, as made by
 #' [aggregation_structure()].
+#' @param sparse Should the result be a sparse matrix from \pkg{Matrix}? This
+#' is faster for large aggregation structures. The default returns an ordinary
+#' dense matrix.
 #' @param stringsAsFactors See [as.data.frame()].
 #' @param ... Further arguments passed to or used by methods.
 #'
@@ -44,31 +47,35 @@
 #'
 #' @family aggregation structure methods
 #' @export
-as.matrix.piar_aggregation_structure <- function(x, ...) {
+as.matrix.piar_aggregation_structure <- function(x, sparse = FALSE, ...) {
   nea <- length(x$eas)
   if (x$height == 1L) {
-    return(matrix(numeric(0), ncol = nea, dimnames = list(NULL, x$eas)))
+    res <- matrix(numeric(0), ncol = nea, dimnames = list(NULL, x$eas))
+    if (sparse) {
+      return(Matrix::Matrix(res, sparse = TRUE))
+    } else {
+      return(res)
+    }
   }
-  loc <- seq_len(nea)
+  cols <- seq_len(nea)
   # don't need the eas
   lev <- lapply(as.list(x)[-x$height], \(z) factor(z, unique(z)))
-  rows <- vector("list", length(lev))
+  res <- vector("list", length(lev))
   # generate the rows for each level of the matrix and rbind together
-  for (i in seq_along(rows)) {
-    mat <- matrix(0,
-      nrow = nlevels(lev[[i]]), ncol = nea,
-      dimnames = list(levels(lev[[i]]), x$eas)
+  for (i in seq_along(res)) {
+    w <- unsplit(
+      lapply(split(x$weights, lev[[i]]), gpindex::scale_weights), lev[[i]]
     )
-    # splitting orders the rows of the matrix the same as the aggregation
-    # structure
-    cols <- split(loc, lev[[i]])
-    w <- split(x$weights, lev[[i]])
-    for (r in seq_len(nrow(mat))) {
-      mat[r, cols[[r]]] <- gpindex::scale_weights(w[[r]])
+    if (sparse) {
+      mat <- Matrix::sparseMatrix(lev[[i]], cols, x = w)
+    } else {
+      mat <- matrix(0, nlevels(lev[[i]]), nea)
+      mat[cbind(lev[[i]], cols)] <- w
     }
-    rows[[i]] <- mat
+    dimnames(mat) <- list(levels(lev[[i]]), x$eas)
+    res[[i]] <- mat
   }
-  do.call(rbind, rows)
+  do.call(rbind, res)
 }
 
 #' @rdname as.matrix.piar_aggregation_structure

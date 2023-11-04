@@ -30,6 +30,8 @@ There are a number of changes to the way product names are handled when making a
 
 - The class names for index objects have changed to fix a name conflict with `Matrix`. This means it's now possible to use `rsmatrix` with `piar`.
 
+- The `as.matrix()` method for aggregation structures gains a new argument `sparse`. If `sparse = TRUE` then the aggregation matrix is a sparse, rather than dense, matrix.
+
 ## Bug fixes
 
 - Viewing index objects in the RStudio viewer longer gives an error.

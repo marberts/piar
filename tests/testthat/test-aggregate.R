@@ -165,7 +165,7 @@ test_that("a weird index aggregates correctly", {
   )
 
   expect_equal(
-    (as.matrix(ms_pias) %*%
+    as.matrix(as.matrix(ms_pias, sparse = TRUE) %*%
        as.matrix(chain(ms_index[paste0("B", 1:5)]))^(-1.7))^(1 / -1.7),
     as.matrix(chain(ms_index[1:3, ]))
   )
