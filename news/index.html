@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9026</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9027</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,14 +69,14 @@
 <li><p>Methods for index objects are now faster for larger indexes.</p></li>
 <li><p><code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> gains a new argument <code>contrib</code> that controls if percent-change contributions for elemental indexes are aggregated. The default maintains the current behavior of aggregating contributions if there are any.</p></li>
 <li><p>The class names for index objects have changed to fix a name conflict with <code>Matrix</code>. This means it’s now possible to use <code>rsmatrix</code> with <code>piar</code>.</p></li>
-<li><p>The <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> method for aggregation structures gains a new argument <code>sparse</code>. If <code>sparse = TRUE</code> then the aggregation matrix is a sparse, rather than dense, matrix.</p></li>
+<li><p>The <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> method for aggregation structures gains a new argument <code>sparse</code>. If <code>sparse = TRUE</code> then the aggregation matrix is a sparse, rather than dense, matrix. This option can also be used in the <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov()</a></code> method for aggregate price indexes to improve performance for large indexes.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-6-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-0"></a></h3>
 <ul><li><p>Viewing index objects in the RStudio viewer longer gives an error.</p></li>
 <li><p><code><a href="../reference/is_index.html">is_direct_index()</a></code> is now exported.</p></li>
 <li><p>Replacing index values for an aggregate index no longer returns an aggregate index, as it may not be consistent in aggregation.</p></li>
-<li><p>Stacking two indexes now only returns an aggregate index if both indexes are themselves aggregate indexes. Previously it was possible to stack an aggregate index with a non-aggregate index to produce an aggregate index that is not consistent in aggregation.</p></li>
+<li><p>Stacking two indexes now only returns an aggregate index if both indexes are themselves aggregate indexes. Previously it was possible to stack an aggregate index with a non-aggregate index to produce an aggregate index that was not consistent in aggregation.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
