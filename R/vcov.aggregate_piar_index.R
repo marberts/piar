@@ -27,6 +27,9 @@
 #' column for each replicate.
 #' @param mse Should variance be centered off the value of the index in
 #' `object` (the default), or the mean of the replicates?
+#' @param sparse Use sparse matrices from \pkg{Matrix} when aggregating the
+#' index. Faster for indexes with large aggregation structures. The default
+#' uses regular dense matrices.
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
@@ -77,7 +80,8 @@
 #' @family index methods
 #' @importFrom stats vcov
 #' @export
-vcov.aggregate_piar_index <- function(object, repweights, mse = TRUE, ...) {
+vcov.aggregate_piar_index <- function(object, repweights,
+                                      mse = TRUE, sparse = FALSE, ...) {
   repweights <- as.matrix(repweights)
   eas <- object$pias$eas
   if (nrow(repweights) != length(eas)) {
@@ -93,12 +97,13 @@ vcov.aggregate_piar_index <- function(object, repweights, mse = TRUE, ...) {
   elem <- as.matrix(chain(object[eas, ]))
   repindex <- lapply(seq_len(n), function(i) {
     weights(pias) <- repweights[, i]
-    res <- (as.matrix(pias) %*% elem^r)^(1 / r)
+    res <- (as.matrix(pias, sparse = sparse) %*% elem^r)^(1 / r)
     # undo chaining for a period-over-period index
     if (is_chainable_index(object)) {
       res[, -1] <- res[, -1] / res[, -ncol(res)]
     }
-    res
+    # use regular matrices, not Matrix ones
+    as.matrix(res)
   })
   # it's easier to calculate the variance with an array of indexes
   dimnm <- list(upper, object$time, seq_len(n))

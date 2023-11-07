@@ -30,7 +30,7 @@ There are a number of changes to the way product names are handled when making a
 
 - The class names for index objects have changed to fix a name conflict with `Matrix`. This means it's now possible to use `rsmatrix` with `piar`.
 
-- The `as.matrix()` method for aggregation structures gains a new argument `sparse`. If `sparse = TRUE` then the aggregation matrix is a sparse, rather than dense, matrix.
+- The `as.matrix()` method for aggregation structures gains a new argument `sparse`. If `sparse = TRUE` then the aggregation matrix is a sparse, rather than dense, matrix. This option can also be used in the `vcov()` method for aggregate price indexes to improve performance for large indexes.
 
 ## Bug fixes
 
@@ -40,7 +40,7 @@ There are a number of changes to the way product names are handled when making a
 
 - Replacing index values for an aggregate index no longer returns an aggregate index, as it may not be consistent in aggregation.
 
-- Stacking two indexes now only returns an aggregate index if both indexes are themselves aggregate indexes. Previously it was possible to stack an aggregate index with a non-aggregate index to produce an aggregate index that is not consistent in aggregation.
+- Stacking two indexes now only returns an aggregate index if both indexes are themselves aggregate indexes. Previously it was possible to stack an aggregate index with a non-aggregate index to produce an aggregate index that was not consistent in aggregation.
 
 # Version 0.5.0
 

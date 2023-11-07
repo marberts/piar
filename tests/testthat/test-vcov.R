@@ -65,7 +65,7 @@ test_that("mse == FALSE works", {
 })
 
 test_that("mse == TRUE case works", {
-  covar <- vcov(index, rw * weights$ew)
+  covar <- vcov(index, rw * weights$ew, sparse = TRUE)
 
   # Variance for higher levels should agree with manual calculation
   # Period 1

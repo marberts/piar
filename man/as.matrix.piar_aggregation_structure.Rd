@@ -13,8 +13,9 @@
 \item{x}{A price index aggregation structure, as made by
 \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{sparse}{Should the result be a sparse matrix from \pkg{Matrix}? The
-default returns an ordinary dense matrix.}
+\item{sparse}{Should the result be a sparse matrix from \pkg{Matrix}? This
+is faster for large aggregation structures. The default returns an ordinary
+dense matrix.}
 
 \item{...}{Further arguments passed to or used by methods.}
 
