@@ -11,6 +11,7 @@ status](https://www.r-pkg.org/badges/version/piar)](https://cran.r-project.org/p
 badge](https://marberts.r-universe.dev/badges/piar)](https://marberts.r-universe.dev)
 [![R-CMD-check](https://github.com/marberts/piar/workflows/R-CMD-check/badge.svg)](https://github.com/marberts/piar/actions)
 [![codecov](https://codecov.io/gh/marberts/piar/branch/master/graph/badge.svg?token=lHDHsGHsLd)](https://app.codecov.io/gh/marberts/piar)
+[![DOI](https://zenodo.org/badge/370889275.svg)](https://zenodo.org/doi/10.5281/zenodo.10110046)
 <!-- badges: end -->
 
 Most price indexes are made with a two-step procedure, where
@@ -26,14 +27,22 @@ manual (2020) for bilateral price indexes.
 
 ## Installation
 
+Get the stable version from CRAN.
+
 ``` r
 install.packages("piar")
 ```
 
-The development version is available on Github.
+The development version can be installed from R-Universe
 
 ``` r
-pak::pkg_install("marberts/piar")
+install.packages("piar", repos = c("https://marberts.r-universe.dev", "https://cloud.r-project.org"))
+```
+
+or directly from Github.
+
+``` r
+pak::pak("marberts/piar")
 ```
 
 ## Usage
