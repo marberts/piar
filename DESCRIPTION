@@ -2,9 +2,23 @@ Package: piar
 Title: Price Index Aggregation
 Version: 0.5.0.9028
 Authors@R: c(
-    person("Steve", "Martin", role = c("aut", "cre", "cph"), email = "stevemartin041@gmail.com", comment = c(ORCID = "0000-0003-2544-9480"))
+    person("Steve", "Martin", role = c("aut", "cre", "cph"),
+           email = "stevemartin041@gmail.com",
+           comment = c(ORCID = "0000-0003-2544-9480"))
     )
-Description: Most price indexes are made with a two-step procedure, where period-over-period elemental indexes are first calculated for a collection of elemental aggregates at each point in time, and then aggregated according to a price index aggregation structure. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. This package contains a collections of functions that revolve around this work flow, making it easy to build standard price indexes, and implement the methods described by Balk (2008, ISBN:978-1-107-40496-0), von der Lippe (2001, ISBN:3-8246-0638-0), and the CPI manual (2020, ISBN:978-1-51354-298-0) for bilateral price indexes.
+Description: Most price indexes are made with a two-step procedure, where
+             period-over-period elemental indexes are first calculated for a
+             collection of elemental aggregates at each point in time, and
+             then aggregated according to a price index aggregation structure.
+             These indexes can then be chained together to form a time series
+             that gives the evolution of prices with respect to a fixed base
+             period. This package contains a collections of functions that
+             revolve around this work flow, making it easy to build standard
+             price indexes, and implement the methods described by
+             Balk (2008, ISBN:978-1-107-40496-0),
+             von der Lippe (2001, ISBN:3-8246-0638-0),
+             and the CPI manual (2020, ISBN:978-1-51354-298-0) for bilateral
+             price indexes.
 Depends: R (>= 4.0)
 Imports: stats, utils, gpindex (>= 0.5.0), Matrix (>= 1.5-0)
 Suggests: 

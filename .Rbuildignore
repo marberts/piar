@@ -9,4 +9,6 @@
 ^docs$
 ^pkgdown$
 ^\.lintr$
-^inst\benchmark\.R$
+^inst/benchmark\.R$
+^inst/logo\.R$
+^man/figures$
