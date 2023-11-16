@@ -11,4 +11,3 @@
 ^\.lintr$
 ^inst/benchmark\.R$
 ^inst/logo\.R$
-^man/figures$

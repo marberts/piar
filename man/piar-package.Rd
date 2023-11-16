@@ -2,9 +2,8 @@
 % Please edit documentation in R/piar-package.R
 \docType{package}
 \name{piar-package}
-\alias{piar-package}
-\alias{_PACKAGE}
 \alias{piar}
+\alias{piar-package}
 \title{piar: Price Index Aggregation}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
