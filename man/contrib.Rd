@@ -20,9 +20,9 @@ aggregate index).}
 }
 \value{
 A matrix of percent-change contributions with a column for each
-\code{period} and a row for each product for which there are contributions
-in \code{level}. Contributions are padded with 0 to fit into a rectangular
-array when products differ over time.
+\code{period} and a row for each product (sorted) for which there are
+contributions in \code{level}. Contributions are padded with 0 to fit into a
+rectangular array when products differ over time.
 }
 \description{
 Extract a matrix of percent-change contributions from a price index.

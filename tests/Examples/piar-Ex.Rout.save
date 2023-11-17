@@ -580,7 +580,7 @@ b 2.828427 6.928203
 > 
 > ### Name: impute_prices
 > ### Title: Impute missing prices
-> ### Aliases: impute_prices shadow_price carry_forward
+> ### Aliases: impute_prices shadow_price carry_forward carry_backwards
 > 
 > ### ** Examples
 > 

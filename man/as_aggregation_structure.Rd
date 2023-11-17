@@ -28,7 +28,7 @@ aggregates. The default is to give each elemental aggregate the same weight.}
 }
 \value{
 A price index aggregation structure that inherits from
-\code{\link{piar_aggregation_structure}}..
+\code{\link{piar_aggregation_structure}}.
 }
 \description{
 Coerce an object into an aggregation structure object.

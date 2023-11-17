@@ -17,8 +17,9 @@
 #' aggregates. The default is to give each elemental aggregate the same weight.
 #' @param ... Further arguments passed to or used by methods.
 #'
-#' @returns A price index aggregation structure that inherits from
-#' [`piar_aggregation_structure`]..
+#' @returns
+#' A price index aggregation structure that inherits from
+#' [`piar_aggregation_structure`].
 #'
 #' @seealso
 #' [`as.matrix()`][as.matrix.piar_aggregation_structure] and

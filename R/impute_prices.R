@@ -5,7 +5,8 @@
 #' The carry forward method replaces a missing price for a product by the price
 #' for the same product in the previous period. It tends to push an index value
 #' towards 1, and is usually avoided; see paragraph 6.61 in the CPI manual
-#' (2020).
+#' (2020). The carry backwards method does the opposite, but this is rarely
+#' used in practice.
 #'
 #' The shadow price method recursively imputes a missing price by the value of
 #' the price for the same product in the previous period multiplied by the
@@ -40,13 +41,13 @@
 #' imputes from elemental indexes only (i.e., not recursively).
 #' @param weights A numeric vector of weights for the prices in `x` (i.e.,
 #' product weights). The default is to give each price equal weight.
-#' @param r1 Order of the price index used to calculate the elemental price
-#' indexes: 0 for a geometric index (the default), 1 for an arithmetic index,
-#' or -1 for a harmonic index. Other values are possible; see
+#' @param r1 Order of the generalized-mean price index used to calculate the
+#' elemental price indexes: 0 for a geometric index (the default), 1 for an
+#' arithmetic index, or -1 for a harmonic index. Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
-#' @param r2 Order of the price index used to aggregate the elemental price
-#' indexes: 0 for a geometric index, 1 for an arithmetic index (the default),
-#' or -1 for a harmonic index. Other values are possible; see
+#' @param r2 Order of the generalized-mean price index used to aggregate the
+#' elemental price indexes: 0 for a geometric index, 1 for an arithmetic index
+#' (the default), or -1 for a harmonic index. Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
 #'
 #' @returns
@@ -109,8 +110,7 @@ shadow_price <- function(x, period, product, ea,
     price <- res[[t]]
     # calculate indexes
     epr <- elemental_index(price / back_price,
-      ea = ea[[t]],
-      weights = w[[t]], na.rm = TRUE, r = r1
+      ea = ea[[t]], weights = w[[t]], na.rm = TRUE, r = r1
     )
     if (!is.null(pias)) {
       epr <- aggregate(epr, pias, na.rm = TRUE, r = r2)
@@ -155,4 +155,11 @@ carry_forward <- function(x, period, product) {
   res <- unsplit(res, period)
   attributes(res) <- attributes(x)
   res
+}
+
+#' @rdname impute_prices
+#' @export
+carry_backwards <- function(x, period, product) {
+  period <- as.factor(period)
+  carry_forward(x, factor(period, rev(levels(period))), product)
 }

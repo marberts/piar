@@ -67,3 +67,10 @@ test_that("jumbling prices does nothing", {
     sp[jumble]
   )
 })
+
+test_that("carrying forward/backwards imputation works", {
+  expect_equal(carry_forward(c(NA, 1, 2, NA, 3), gl(5, 1), gl(1, 5)),
+               c(NA, 1, 2, 2, 3))
+  expect_equal(carry_backwards(c(NA, 1, 2, NA, 3), gl(5, 1), gl(1, 5)),
+               c(1, 1, 2, 3, 3))
+})

@@ -4,7 +4,7 @@
 
 - The `[[` method for index objects has been removed as it created unexpected problems for little gain. `as.matrix(index)[[1, 1]]` is a more explicit and flexible way to get the same behavior as `index[[1, 1]]`.
 
-- `aggregation_structure()` now orders the levels of an aggregation according to the order they appear in the data. Previously the levels were ordered lexicographically, except for the elemental aggregates.
+- `aggregation_structure()` now orders the levels of an aggregation according to the order they appear in the data. Previously the levels were ordered lexicographically, except for the elemental aggregates. This can affect the order in which index values appear for an aggregate index.
 
 There are a number of changes to the way product names are handled when making an index and extracting percent-change contributions.
 
@@ -31,6 +31,8 @@ There are a number of changes to the way product names are handled when making a
 - The class names for index objects have changed to fix a name conflict with `Matrix`. This means it's now possible to use `rsmatrix` with `piar`.
 
 - The `as.matrix()` method for aggregation structures gains a new argument `sparse`. If `sparse = TRUE` then the aggregation matrix is a sparse, rather than dense, matrix. This option can also be used in the `vcov()` method for aggregate price indexes to improve performance for large indexes.
+
+- Added the `carry_backwards()` function to do carry backwards (as opposed to carry forwards) imputation.
 
 ## Bug fixes
 

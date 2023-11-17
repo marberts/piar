@@ -4,6 +4,7 @@
 \alias{impute_prices}
 \alias{shadow_price}
 \alias{carry_forward}
+\alias{carry_backwards}
 \title{Impute missing prices}
 \usage{
 shadow_price(
@@ -18,6 +19,8 @@ shadow_price(
 )
 
 carry_forward(x, period, product)
+
+carry_backwards(x, period, product)
 }
 \arguments{
 \item{x}{A numeric vector of prices.}
@@ -40,14 +43,14 @@ imputes from elemental indexes only (i.e., not recursively).}
 \item{weights}{A numeric vector of weights for the prices in \code{x} (i.e.,
 product weights). The default is to give each price equal weight.}
 
-\item{r1}{Order of the price index used to calculate the elemental price
-indexes: 0 for a geometric index (the default), 1 for an arithmetic index,
-or -1 for a harmonic index. Other values are possible; see
+\item{r1}{Order of the generalized-mean price index used to calculate the
+elemental price indexes: 0 for a geometric index (the default), 1 for an
+arithmetic index, or -1 for a harmonic index. Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
-\item{r2}{Order of the price index used to aggregate the elemental price
-indexes: 0 for a geometric index, 1 for an arithmetic index (the default),
-or -1 for a harmonic index. Other values are possible; see
+\item{r2}{Order of the generalized-mean price index used to aggregate the
+elemental price indexes: 0 for a geometric index, 1 for an arithmetic index
+(the default), or -1 for a harmonic index. Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 }
 \value{
@@ -60,7 +63,8 @@ Impute missing prices using the carry forward or shadow price method.
 The carry forward method replaces a missing price for a product by the price
 for the same product in the previous period. It tends to push an index value
 towards 1, and is usually avoided; see paragraph 6.61 in the CPI manual
-(2020).
+(2020). The carry backwards method does the opposite, but this is rarely
+used in practice.
 
 The shadow price method recursively imputes a missing price by the value of
 the price for the same product in the previous period multiplied by the
