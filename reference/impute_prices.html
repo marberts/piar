@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9029</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9030</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,7 +65,9 @@
 <span>  r2 <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">carry_forward</span><span class="op">(</span><span class="va">x</span>, <span class="va">period</span>, <span class="va">product</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">carry_forward</span><span class="op">(</span><span class="va">x</span>, <span class="va">period</span>, <span class="va">product</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">carry_backwards</span><span class="op">(</span><span class="va">x</span>, <span class="va">period</span>, <span class="va">product</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -103,16 +105,16 @@ product weights). The default is to give each price equal weight.</p></dd>
 
 
 <dt>r1</dt>
-<dd><p>Order of the price index used to calculate the elemental price
-indexes: 0 for a geometric index (the default), 1 for an arithmetic index,
-or -1 for a harmonic index. Other values are possible; see
+<dd><p>Order of the generalized-mean price index used to calculate the
+elemental price indexes: 0 for a geometric index (the default), 1 for an
+arithmetic index, or -1 for a harmonic index. Other values are possible; see
 <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
 
 
 <dt>r2</dt>
-<dd><p>Order of the price index used to aggregate the elemental price
-indexes: 0 for a geometric index, 1 for an arithmetic index (the default),
-or -1 for a harmonic index. Other values are possible; see
+<dd><p>Order of the generalized-mean price index used to aggregate the
+elemental price indexes: 0 for a geometric index, 1 for an arithmetic index
+(the default), or -1 for a harmonic index. Other values are possible; see
 <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
 
 </dl></div>
@@ -127,7 +129,8 @@ or -1 for a harmonic index. Other values are possible; see
     <p>The carry forward method replaces a missing price for a product by the price
 for the same product in the previous period. It tends to push an index value
 towards 1, and is usually avoided; see paragraph 6.61 in the CPI manual
-(2020).</p>
+(2020). The carry backwards method does the opposite, but this is rarely
+used in practice.</p>
 <p>The shadow price method recursively imputes a missing price by the value of
 the price for the same product in the previous period multiplied by the
 value of the period-over-period elemental index for the elemental aggregate

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9029</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9030</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@
 <div class="section level3">
 <h3 id="significant-changes-0-6-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-6-0"></a></h3>
 <ul><li><p>The <code>[[</code> method for index objects has been removed as it created unexpected problems for little gain. <code>as.matrix(index)[[1, 1]]</code> is a more explicit and flexible way to get the same behavior as <code>index[[1, 1]]</code>.</p></li>
-<li><p><code><a href="../reference/aggregation_structure.html">aggregation_structure()</a></code> now orders the levels of an aggregation according to the order they appear in the data. Previously the levels were ordered lexicographically, except for the elemental aggregates.</p></li>
+<li><p><code><a href="../reference/aggregation_structure.html">aggregation_structure()</a></code> now orders the levels of an aggregation according to the order they appear in the data. Previously the levels were ordered lexicographically, except for the elemental aggregates. This can affect the order in which index values appear for an aggregate index.</p></li>
 </ul><p>There are a number of changes to the way product names are handled when making an index and extracting percent-change contributions.</p>
 <ul><li>
 <p>Names for price relatives now need to be unique within a time period for <code><a href="../reference/elemental_index.html">elemental_index()</a></code>. The previous (undocumented) behavior was to only require that names be unique within a time period <em>and</em> elemental aggregate. This implies two non-backward compatible changes.</p>
@@ -70,6 +70,7 @@
 <li><p><code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> gains a new argument <code>contrib</code> that controls if percent-change contributions for elemental indexes are aggregated. The default maintains the current behavior of aggregating contributions if there are any.</p></li>
 <li><p>The class names for index objects have changed to fix a name conflict with <code>Matrix</code>. This means it’s now possible to use <code>rsmatrix</code> with <code>piar</code>.</p></li>
 <li><p>The <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> method for aggregation structures gains a new argument <code>sparse</code>. If <code>sparse = TRUE</code> then the aggregation matrix is a sparse, rather than dense, matrix. This option can also be used in the <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov()</a></code> method for aggregate price indexes to improve performance for large indexes.</p></li>
+<li><p>Added the <code><a href="../reference/impute_prices.html">carry_backwards()</a></code> function to do carry backwards (as opposed to carry forwards) imputation.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-6-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-0"></a></h3>
