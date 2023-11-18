@@ -52,7 +52,7 @@ paste_until <- function(x, i) {
 expand_classification <- function(x, width = 1L) {
   x <- as.character(x)
   width <- as.integer(width)
-  if (any(width <= 0)) {
+  if (any(width <= 0L)) {
     stop("'width' must be strictly positive")
   }
   if (anyNA(width)) {

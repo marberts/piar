@@ -54,7 +54,7 @@
 #'
 #' @family index methods
 #' @export
-mean.piar_index <- function(x, weights = NULL, window = 3, na.rm = FALSE,
+mean.piar_index <- function(x, weights = NULL, window = 3L, na.rm = FALSE,
                             r = 1, ...) {
   if (!is.null(weights)) {
     if (length(weights) != length(x$time) * length(x$levels)) {

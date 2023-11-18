@@ -13,5 +13,5 @@ is_aggregation_structure(x)
 Returns \code{TRUE} if \code{x} inherits from \code{\link{piar_aggregation_structure}}
 }
 \description{
-Test if an object is a price index aggregation structure
+Test if an object is a price index aggregation structure.
 }

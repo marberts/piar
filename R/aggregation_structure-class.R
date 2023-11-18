@@ -88,7 +88,7 @@ str.piar_aggregation_structure <- function(object, ...) {
 
 #' Test if an object is a price index aggregation structure
 #'
-#' Test if an object is a price index aggregation structure
+#' Test if an object is a price index aggregation structure.
 #'
 #' @param x An object to test.
 #'

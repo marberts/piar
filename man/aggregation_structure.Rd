@@ -20,8 +20,8 @@ aggregates (i.e., the last vector in \code{x}). The default is to give each
 elemental aggregate the same weight.}
 }
 \value{
-A price index aggregation structure. This is an object of class
-\code{piar_aggregation_structure}, which has the following components.
+A price index aggregation structure of class \code{piar_aggregation_structure}.
+This is a list-S3 class with the following components.
 
 \item{child}{A nested list that gives the positions of the immediate
 children for each node in each level of the aggregation structure above the
