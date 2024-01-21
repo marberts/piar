@@ -10,7 +10,7 @@ status](https://www.r-pkg.org/badges/version/piar)](https://cran.r-project.org/p
 [![piar status
 badge](https://marberts.r-universe.dev/badges/piar)](https://marberts.r-universe.dev)
 [![R-CMD-check](https://github.com/marberts/piar/workflows/R-CMD-check/badge.svg)](https://github.com/marberts/piar/actions)
-[![codecov](https://codecov.io/gh/marberts/piar/branch/master/graph/badge.svg?token=lHDHsGHsLd)](https://app.codecov.io/gh/marberts/piar)
+[![codecov](https://codecov.io/gh/marberts/piar/graph/badge.svg?token=lHDHsGHsLd)](https://codecov.io/gh/marberts/piar)
 [![DOI](https://zenodo.org/badge/370889275.svg)](https://zenodo.org/doi/10.5281/zenodo.10110046)
 [![Mentioned in Awesome Official
 Statistics](https://awesome.re/mentioned-badge.svg)](http://www.awesomeofficialstatistics.org)
@@ -53,11 +53,7 @@ There is a detailed vignette showing how to use **piar**:
 `browseVignettes("piar")`. But the basic work flow is fairly simple.
 
 The starting point is to make period-over-period elemental price indexes
-with the `elemental_index()` function and an aggregation structure with
-the `aggregation_structure()` function. The `aggregate()` method can
-then be used to aggregate the elemental indexes according to the
-aggregation structure. There are a variety of methods to work with these
-index objects, including chaining them over time.
+with the `elemental_index()` function.
 
 ``` r
 library(piar)
@@ -81,6 +77,19 @@ elementals <- with(
   )
 )
 
+elementals
+#> Period-over-period price index for 4 levels over 4 time periods 
+#>    202001    202002    202003   202004
+#> B1      1 0.8949097 0.3342939      NaN
+#> B2      1       NaN       NaN 2.770456
+#> B3      1 2.0200036 1.6353355 0.537996
+#> B4    NaN       NaN       NaN 4.576286
+```
+
+And an aggregation structure with the `aggregation_structure()`
+function.
+
+``` r
 # Make an aggregation structure from businesses to higher-level
 # industrial classifications
 
@@ -100,6 +109,22 @@ pias <- with(
   )
 )
 
+pias
+#> Aggregation structure for 5 elemental aggregates with 2 levels above the elemental aggregates 
+#>   level1 level2 ea weight
+#> 1      1     11 B1    553
+#> 2      1     11 B2    646
+#> 3      1     11 B3    312
+#> 4      1     12 B4    622
+#> 5      1     12 B5    330
+```
+
+The `aggregate()` method can then be used to aggregate the elemental
+indexes according to the aggregation structure. There are a variety of
+methods to work with these index objects, such as chaining them over
+time.
+
+``` r
 # Aggregate elemental indexes with an arithmetic index
 
 index <- aggregate(elementals, pias, na.rm = TRUE)

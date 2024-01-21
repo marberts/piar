@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/piar)](https://cran.r-project.org/package=piar)
 [![piar status badge](https://marberts.r-universe.dev/badges/piar)](https://marberts.r-universe.dev)
 [![R-CMD-check](https://github.com/marberts/piar/workflows/R-CMD-check/badge.svg)](https://github.com/marberts/piar/actions)
-[![codecov](https://codecov.io/gh/marberts/piar/branch/master/graph/badge.svg?token=lHDHsGHsLd)](https://app.codecov.io/gh/marberts/piar)
+[![codecov](https://codecov.io/gh/marberts/piar/graph/badge.svg?token=lHDHsGHsLd)](https://codecov.io/gh/marberts/piar)
 [![DOI](https://zenodo.org/badge/370889275.svg)](https://zenodo.org/doi/10.5281/zenodo.10110046)
 [![Mentioned in Awesome Official Statistics ](https://awesome.re/mentioned-badge.svg)](http://www.awesomeofficialstatistics.org)
 <!-- badges: end -->
@@ -49,7 +49,7 @@ pak::pak("marberts/piar")
 
 There is a detailed vignette showing how to use **piar**: `browseVignettes("piar")`. But the basic work flow is fairly simple. 
 
-The starting point is to make period-over-period elemental price indexes with the `elemental_index()` function and an aggregation structure with the `aggregation_structure()` function. The `aggregate()` method can then be used to aggregate the elemental indexes according to the aggregation structure. There are a variety of methods to work with these index objects, including chaining them over time.
+The starting point is to make period-over-period elemental price indexes with the `elemental_index()` function.
 
 ```{r}
 library(piar)
@@ -66,6 +66,12 @@ elementals <- with(
   )
 )
 
+elementals
+```
+
+And an aggregation structure with the `aggregation_structure()` function.
+
+```{r}
 # Make an aggregation structure from businesses to higher-level
 # industrial classifications
 
@@ -79,6 +85,12 @@ pias <- with(
   )
 )
 
+pias
+```
+
+The `aggregate()` method can then be used to aggregate the elemental indexes according to the aggregation structure. There are a variety of methods to work with these index objects, such as chaining them over time.
+
+```{r}
 # Aggregate elemental indexes with an arithmetic index
 
 index <- aggregate(elementals, pias, na.rm = TRUE)
