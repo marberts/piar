@@ -2,6 +2,10 @@
 
 - Updated maintainer email.
 
+## Improvements
+
+- Added examples for finding imputed index values to the vignette.
+
 # Version 0.6.0
 
 ## Significant changes

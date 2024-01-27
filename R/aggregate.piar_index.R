@@ -24,9 +24,9 @@
 #' that are not part of `x`. Setting `na.rm = TRUE` ignores missing
 #' values, and is equivalent to parental (or overall mean) imputation. As an
 #' aggregated price index generally cannot have missing values (for otherwise
-#' it can't be chained over time), any missing values for a level of
-#' `pias` are removed and recursively replaced by the value of its
-#' immediate parent.
+#' it can't be chained over time and weights can't be price updated), any
+#' missing values for a level of `pias` are removed and recursively replaced
+#' by the value of its immediate parent.
 #'
 #' In most cases aggregation is done with an arithmetic mean (the default), and
 #' this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020).
@@ -140,21 +140,25 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
   
   # put the aggregation weights upside down to line up with pias
   w <- rev(weights(pias, na.rm = na.rm))
+  
   has_contrib <- has_contrib(x) && contrib
   pias_eas <- match(pias$eas, pias$levels)
+  eas <- match(pias$eas, x$levels)
+  
   # loop over each time period
+  index <- contrib <- vector("list", length(x$time))
   for (t in seq_along(x$time)) {
     rel <- con <- vector("list", pias$height)
     # align epr with weights so that positional indexing works
-    # preserve names if epr and pias weights don't agree
-    eas <- match(pias$eas, x$levels)
     rel[[1L]] <- x$index[[t]][eas]
     con[[1L]] <- x$contrib[[t]][eas]
+    
     # get rid of any NULL contributions
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     for (i in which(is.na(rel[[1L]]))) {
       con[[1L]][[i]][] <- NA
     }
+    
     # loop over each level in pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
       nodes <- unname(pias$child[[i - 1L]])
@@ -177,6 +181,7 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
         con[[i]] <- lapply(nodes, \(z) numeric(0L))
       }
     }
+    
     # parental imputation
     if (na.rm) {
       for (i in rev(seq_along(rel))[-1L]) {
@@ -184,18 +189,19 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
         rel[[i]][impute] <- rel[[i + 1L]][pias$parent[[i]][impute]]
       }
     }
+    
     # return index and contributions
-    index <- unlist(rev(rel), use.names = FALSE)
-    x$index[[t]] <- index
-    x$contrib[[t]] <- unlist(rev(con), recursive = FALSE, use.names = FALSE)
+    index[[t]] <- unlist(rev(rel), use.names = FALSE)
+    contrib[[t]] <- unlist(rev(con), recursive = FALSE, use.names = FALSE)
     # price update weights for all periods after the first
     if (chainable) {
-      weights(pias) <- price_update(index[pias_eas], w[[1L]])
+      weights(pias) <- price_update(index[[t]][pias_eas], w[[1L]])
       w <- rev(weights(pias, na.rm = na.rm))
     }
   }
+  
   aggregate_piar_index(
-    x$index, x$contrib, pias$levels, x$time, r,
+    index, contrib, pias$levels, x$time, r,
     pias[c("child", "parent", "eas", "height")],
     chainable
   )
