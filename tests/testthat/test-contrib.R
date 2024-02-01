@@ -28,6 +28,19 @@ test_that("contrib works", {
     contrib(epr2),
     matrix(numeric(0), 0, 2, dimnames = list(NULL, 1:2))
   )
+  expect_equal(
+    contrib(epr, 12, 2),
+    matrix(NA_real_, 1, 1, dimnames = list(3, 2))
+  )
+})
+
+test_that("padding work", {
+  expect_equal(
+    contrib(epr, 12, pad = -99),
+    matrix(c(1.07179676972449, 1.39230484541326, NA, -99), 2, 2,
+           dimnames = list(3:4, 1:2))
+  )
+  expect_error(contrib(epr, 12, pad = 1:2))
 })
 
 test_that("aggregate contributions have the right form", {

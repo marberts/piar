@@ -178,7 +178,7 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
           }
         )
       } else {
-        con[[i]] <- lapply(nodes, \(z) numeric(0L))
+        con[i] <- empty_contrib(nodes)
       }
     }
     

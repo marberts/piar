@@ -54,8 +54,7 @@ update.piar_aggregation_structure <- function(object, index,
                                               period = end(index), r = NULL,
                                               ...) {
   index <- as_index(index)
-  period <- as.character(period)
-  period <- match.arg(period, index$time)
+  period <- match.arg(as.character(period), index$time)
   if (is.null(r)) {
     r <- if (is.null(index$r)) 1 else index$r
   }

@@ -6,6 +6,12 @@
 
 - Added examples for finding imputed index values to the vignette.
 
+- `contrib()` gets a new argument `period` to control which time periods get
+included in the contributions matrix (as documented).
+
+- `contrib()`gets a new argument `pad` to control how the contribution matrix is
+padded when products differ over time.
+
 # Version 0.6.0
 
 ## Significant changes
