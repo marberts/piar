@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -123,9 +123,9 @@ values in <code>x</code>, and the presence of elemental aggregates in <code>pias
 that are not part of <code>x</code>. Setting <code>na.rm = TRUE</code> ignores missing
 values, and is equivalent to parental (or overall mean) imputation. As an
 aggregated price index generally cannot have missing values (for otherwise
-it can't be chained over time), any missing values for a level of
-<code>pias</code> are removed and recursively replaced by the value of its
-immediate parent.</p>
+it can't be chained over time and weights can't be price updated), any
+missing values for a level of <code>pias</code> are removed and recursively replaced
+by the value of its immediate parent.</p>
 <p>In most cases aggregation is done with an arithmetic mean (the default), and
 this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020).
 Aggregating with a non-arithmetic mean follows the same steps, except that
