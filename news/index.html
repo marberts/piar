@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,14 @@
 <ul><li><p>Added examples for finding imputed index values to the vignette.</p></li>
 <li><p><code><a href="../reference/contrib.html">contrib()</a></code> gets a new argument <code>period</code> to control which time periods get included in the contributions matrix (as documented).</p></li>
 <li><p><code><a href="../reference/contrib.html">contrib()</a></code>gets a new argument <code>pad</code> to control how the contribution matrix is padded when products differ over time.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-6-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-1"></a></h3>
+<ul><li>Setting <code>stringsAsFactors = TRUE</code> in <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> now keeps the correct ordering of the factor levels.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecations-0-6-1">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-0-6-1"></a></h3>
+<ul><li>The <code>cols</code> argument for <code><a href="../reference/as_index.html">as_index()</a></code> is deprecated and will be removed in a future version.</li>
 </ul></div>
 </div>
     <div class="section level2">

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@
 <span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for data.frame</span></span>
-<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, cols <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, cols <span class="op">=</span> <span class="cn">NULL</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for chainable_piar_index</span></span>
 <span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -89,8 +89,8 @@ indexes, suitable for a chained calculation (the default)? This should be
 
 
 <dt>cols</dt>
-<dd><p>A vector giving the positions/names of the period, level, and
-value columns in <code>x</code>. The default assumes that the first column
+<dd><p>Deprecated. A vector giving the positions/names of the period,
+level, and value columns in <code>x</code>. The default assumes that the first column
 contains time periods, the second contains levels, and the third contains
 index values.</p></dd>
 
@@ -118,9 +118,9 @@ using the matrix method.</p>
 <p>The data frame method for <code>as_index()</code> is best understood as reversing
 the effect of <code><a href="as.data.frame.piar_index.html">as.data.frame()</a></code> on an
 index object. It constructs a matrix by taking the levels of
-<code>x[[cols[1]]]</code> as columns and the levels of <code>x[[cols[2]]]</code> as rows
+<code>x[[1]]</code> as columns and the levels of <code>x[[1]]</code> as rows
 (coercing to a factor if necessary). It then populates this matrix with the
-corresponding values in <code>x[[cols[3]]]</code>, and uses the matrix method for
+corresponding values in <code>x[[3]]</code>, and uses the matrix method for
 <code>as_index()</code>.</p>
 <p>If <code>x</code> is a period-over-period index then it is returned unchanged when
 <code>chainable = TRUE</code> and chained otherwise. Similarly, if <code>x</code> is a
