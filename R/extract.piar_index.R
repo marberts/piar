@@ -1,5 +1,7 @@
 dim_indices <- function(x, i) {
-  names(x) <- x
+  if (is.character(x)) {
+    names(x) <- x
+  }
   res <- match(x[i], x, incomparables = NA)
   if (anyNA(res) || length(res) == 0L) {
     stop("subscript out of bounds")

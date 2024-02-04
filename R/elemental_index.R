@@ -1,6 +1,10 @@
 #--- Helpers ----
+which_duplicate_products <- function(x) {
+  vapply(x, anyDuplicated, numeric(1L), incomparables = NA) > 0
+}
+
 duplicate_products <- function(x) {
-  any(vapply(x, anyDuplicated, numeric(1L), incomparables = NA) > 0)
+  any(which_duplicate_products(x))
 }
 
 sequential_names <- function(...) {
@@ -14,11 +18,15 @@ valid_product_names <- function(x, period) {
   if (anyNA(x) || any(x == "")) {
     stop("each product must have a non-missing name")
   }
-  x <- split(x, period)
-  if (duplicate_products(x)) {
+  xs <- split(x, period)
+  dups <- which_duplicate_products(xs)
+  if (any(dups)) {
     warning("product names are not unique in each time period")
+    xs[dups] <- lapply(xs[dups], make.unique)
+    unsplit(xs, period)
+  } else {
+    x
   }
-  unsplit(lapply(x, make.unique), period)
 }
 
 different_length <- function(...) {

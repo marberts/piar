@@ -15,7 +15,7 @@ as_index(x, ...)
 
 \method{as_index}{matrix}(x, chainable = TRUE, ...)
 
-\method{as_index}{data.frame}(x, cols = 1:3, chainable = TRUE, ...)
+\method{as_index}{data.frame}(x, cols = NULL, chainable = TRUE, ...)
 
 \method{as_index}{chainable_piar_index}(x, chainable = TRUE, ...)
 
@@ -30,8 +30,8 @@ as_index(x, ...)
 indexes, suitable for a chained calculation (the default)? This should be
 \code{FALSE} when \code{x} is a fixed-base (direct) index.}
 
-\item{cols}{A vector giving the positions/names of the period, level, and
-value columns in \code{x}. The default assumes that the first column
+\item{cols}{Deprecated. A vector giving the positions/names of the period,
+level, and value columns in \code{x}. The default assumes that the first column
 contains time periods, the second contains levels, and the third contains
 index values.}
 }
@@ -58,9 +58,9 @@ using the matrix method.
 The data frame method for \code{as_index()} is best understood as reversing
 the effect of \code{\link[=as.data.frame.piar_index]{as.data.frame()}} on an
 index object. It constructs a matrix by taking the levels of
-\code{x[[cols[1]]]} as columns and the levels of \code{x[[cols[2]]]} as rows
+\code{x[[1]]} as columns and the levels of \code{x[[1]]} as rows
 (coercing to a factor if necessary). It then populates this matrix with the
-corresponding values in \code{x[[cols[3]]]}, and uses the matrix method for
+corresponding values in \code{x[[3]]}, and uses the matrix method for
 \code{as_index()}.
 
 If \code{x} is a period-over-period index then it is returned unchanged when

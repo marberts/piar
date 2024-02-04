@@ -34,10 +34,16 @@
 as.data.frame.piar_index <- function(x, ..., stringsAsFactors = FALSE) {
   value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))
-  data.frame(period,
-    level = x$levels, value,
-    stringsAsFactors = stringsAsFactors
-  )
+  if (stringsAsFactors) {
+    data.frame(period = factor(period, x$time),
+      level = factor(x$levels, x$levels), value
+    )
+  } else {
+    data.frame(period,
+      level = x$levels, value,
+      stringsAsFactors = FALSE
+    )
+  }
 }
 
 #' @rdname as.data.frame.piar_index

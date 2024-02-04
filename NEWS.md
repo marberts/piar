@@ -12,6 +12,16 @@ included in the contributions matrix (as documented).
 - `contrib()`gets a new argument `pad` to control how the contribution matrix is
 padded when products differ over time.
 
+## Bug fixes
+
+- Setting `stringsAsFactors = TRUE` in `as.data.frame()` now keeps the correct
+ordering of the factor levels.
+
+## Deprecations
+
+- The `cols` argument for `as_index()` is deprecated and will be removed in a
+future version.
+
 # Version 0.6.0
 
 ## Significant changes

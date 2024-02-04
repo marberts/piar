@@ -41,6 +41,8 @@ test_that("as_index works for data frames", {
     as_index(data.frame(1:5, 1:5, 1:5)),
     as_index(matrix(replace(NA, c(1, 7, 13, 19, 25), 1:5), 5))
   )
+  
+  expect_error(as_index(df[1:2]))
 })
 
 test_that("as_index works for indexes", {

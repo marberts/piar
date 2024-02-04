@@ -26,4 +26,18 @@ test_that("as.data.frame works", {
                level = as.character(1:4),
                value = 1:4)
   )
+  # Check that factors are ordered correctly
+  x <- matrix(1:6, 2, dimnames = list(c("b", "a"), c(3, 1, 2)))
+  expect_equal(
+    as.data.frame(as_index(x), stringsAsFactors = TRUE),
+    data.frame(period = factor(rep(c(3, 1, 2), each = 2), c(3, 1, 2)),
+               level = factor(c("b", "a"), c("b", "a")),
+               value = 1:6)
+  )
+  expect_equal(
+    as.data.frame(as_index(x), stringsAsFactors = FALSE),
+    data.frame(period = as.character(rep(c(3, 1, 2), each = 2)),
+               level = c("b", "a"),
+               value = 1:6)
+  )
 })
