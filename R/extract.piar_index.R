@@ -1,5 +1,5 @@
 dim_indices <- function(x, i) {
-  if (is.character(x)) {
+  if (!missing(i) && is.character(i)) {
     names(x) <- x
   }
   res <- match(x[i], x, incomparables = NA)
