@@ -52,9 +52,9 @@ index <- as_index(
   matrix(1:9, 3, dimnames = list(c("111", "112", "121"), NULL))
 )
 
-weights(pias)
+weights(pias, ea_only = FALSE)
 
-weights(update(pias, index))
+weights(update(pias, index), ea_only = FALSE)
 
 }
 \seealso{

@@ -2,6 +2,11 @@
 
 - Updated maintainer email.
 
+## Breaking changes
+
+- The default for `ea_only` has changed to `TRUE` when calling
+`weights(aggregation_structure)` to fix a bug with the replacement method.
+
 ## Improvements
 
 - Added examples for finding imputed index values to the vignette.
@@ -9,13 +14,13 @@
 - `contrib()` gets a new argument `period` to control which time periods get
 included in the contributions matrix (as documented).
 
-- `contrib()`gets a new argument `pad` to control how the contribution matrix is
+- `contrib()` gets a new argument `pad` to control how the contribution matrix is
 padded when products differ over time.
 
 ## Bug fixes
 
-- Setting `stringsAsFactors = TRUE` in `as.data.frame()` now keeps the correct
-ordering of the factor levels.
+- Setting `stringsAsFactors = TRUE` in `as.data.frame(index)` now keeps the
+correct ordering of the factor levels.
 
 ## Deprecations
 

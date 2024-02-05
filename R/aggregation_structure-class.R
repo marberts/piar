@@ -106,8 +106,9 @@ is_aggregation_structure <- function(x) {
 #'
 #' @param object A price index aggregation structure, as made by
 #' [aggregation_structure()].
-#' @param ea_only Should weights be returned for only the elemental aggregates?
-#' The default gives the weights for the entire aggregation structure.
+#' @param ea_only Should weights be returned for only the elemental aggregates
+#' (the default)? Setting to `FALSE` gives the weights for the entire
+#' aggregation structure.
 #' @param na.rm Should missing values be removed when aggregating the
 #' weights (i.e., when `ea_only = FALSE`)? By default, missing values are
 #' not removed.
@@ -116,11 +117,10 @@ is_aggregation_structure <- function(x) {
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
-#' `weights()` returns a list with a named vector of weights for
-#' each level in the aggregation structure. If `ea_only = TRUE` then the
-#' return value is just a named vector of weights for the elemental aggregates.
+#' `weights()` returns a named vector of weights for the elemental aggregates.
 #' The replacement method replaces these values without changing the
-#' aggregation structure.
+#' aggregation structure. If `ea_only = TRUE` then the return value is a list
+#' with a named vector of weights for each level in the aggregation structure.
 #'
 #' @examples
 #' # A simple aggregation structure
@@ -152,7 +152,7 @@ is_aggregation_structure <- function(x) {
 #' @importFrom stats weights
 #' @family aggregation structure methods
 #' @export
-weights.piar_aggregation_structure <- function(object, ea_only = FALSE,
+weights.piar_aggregation_structure <- function(object, ea_only = TRUE,
                                                na.rm = FALSE, ...) {
   if (ea_only) {
     return(object$weights)

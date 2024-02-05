@@ -37,13 +37,15 @@ test_that("a matched-sample index aggregates correctly", {
   # Lower levels add up
   expect_equal(
     apply(
-      as.matrix(chain(ms_index)[4:8, ]), 2, weighted.mean, weights(ms_pias)[[3]]
+      as.matrix(chain(ms_index)[4:8, ]), 2, weighted.mean,
+      weights(ms_pias, ea_only = FALSE)[[3]]
     ),
     as.matrix(chain(ms_index))[1, ]
   )
   expect_equal(
     apply(
-      as.matrix(chain(ms_index)[2:3, ]), 2, weighted.mean, weights(ms_pias)[[2]]
+      as.matrix(chain(ms_index)[2:3, ]), 2, weighted.mean,
+      weights(ms_pias, ea_only = FALSE)[[2]]
     ),
     as.matrix(chain(ms_index))[1, ]
   )
@@ -64,7 +66,7 @@ test_that("a matched-sample index aggregates correctly", {
 
   # Two step aggregation gives the same result
   pias2 <- aggregation_structure(list(c(1, 1), c(11, 12)),
-                                 weights(ms_pias)[[2]])
+                                 weights(ms_pias, ea_only = FALSE)[[2]])
   expect_equal(as.matrix(aggregate(ms_index, pias2)), as.matrix(ms_index[1:3]))
   expect_equal(
     contrib(aggregate(aggregate(ms_index, ms_pias), pias2)),
@@ -160,7 +162,8 @@ test_that("a weird index aggregates correctly", {
 
   expect_equal(
     apply(as.matrix(chain(ms_index)[2:3, ]), 2,
-          gpindex::generalized_mean(-1.7), weights(ms_pias)[[2]]),
+          gpindex::generalized_mean(-1.7),
+          weights(ms_pias, ea_only = FALSE)[[2]]),
     as.matrix(chain(ms_index))[1, ]
   )
 
@@ -218,13 +221,13 @@ test_that("a fixed-sample index aggregates correctly", {
   # Check adding up of lower level indexes
   expect_equal(
     apply(as.matrix(chain(fs_index)[5:9, ]), 2,
-          weighted.mean, weights(fs_pias)[[3]]),
+          weighted.mean, weights(fs_pias, ea_only = FALSE)[[3]]),
     as.matrix(chain(fs_index))[1, ]
   )
 
   expect_equal(
     apply(as.matrix(chain(fs_index)[2:4, ]), 2,
-          weighted.mean, weights(fs_pias)[[2]]),
+          weighted.mean, weights(fs_pias, ea_only = FALSE)[[2]]),
     as.matrix(chain(fs_index))[1, ]
   )
 

@@ -139,7 +139,7 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
   aw <- gpindex::transmute_weights(r, 1)
   
   # put the aggregation weights upside down to line up with pias
-  w <- rev(weights(pias, na.rm = na.rm))
+  w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
   
   has_contrib <- has_contrib(x) && contrib
   pias_eas <- match(pias$eas, pias$levels)
@@ -185,7 +185,7 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
     # parental imputation
     if (na.rm) {
       for (i in rev(seq_along(rel))[-1L]) {
-        impute <- is.na(rel[[i]])
+        impute <- which(is.na(rel[[i]]))
         rel[[i]][impute] <- rel[[i + 1L]][pias$parent[[i]][impute]]
       }
     }
@@ -196,7 +196,7 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
     # price update weights for all periods after the first
     if (chainable) {
       weights(pias) <- price_update(index[[t]][pias_eas], w[[1L]])
-      w <- rev(weights(pias, na.rm = na.rm))
+      w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
     }
   }
   

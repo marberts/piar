@@ -327,3 +327,45 @@ is_chainable_index <- function(x) {
 is_direct_index <- function(x) {
   inherits(x, "direct_piar_index")
 }
+
+#' Missing values in a price index
+#' 
+#' Identify and replace missing values in price index.
+#' 
+#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param recursive Ignored.
+#' @param value A numeric vector of replacement values.
+#' 
+#' @returns
+#' `is.na()` returns a logical matrix, with a row for each level of `x` and a
+#' columns for each time period, that indicates which index values are missing.
+#' The replacement method replaces these values with `value`.
+#' 
+#' `anyNA()` returns `TRUE` if any index values are missing.
+#' 
+#' @examples
+#' index <- as_index(matrix(c(1, 2, 3, NA, 5, NA), 2))
+#' 
+#' anyNA(index)
+#' is.na(index)
+#' is.na(index) <- 1
+#' index
+#' 
+#' @family index methods
+#' @export
+is.na.piar_index <- function(x) {
+  is.na(as.matrix(x))
+}
+
+#' @rdname is.na.piar_index
+#' @export
+anyNA.piar_index <- function(x, recursive = FALSE) {
+  anyNA(as.matrix(x), recursive = recursive)
+}
+
+#' @rdname is.na.piar_index
+#' @export
+`is.na<-.piar_index` <- function(x, value) {
+  x[is.na(x)] <- value
+  x
+}

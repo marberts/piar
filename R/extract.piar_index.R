@@ -1,5 +1,5 @@
 dim_indices <- function(x, i) {
-  if (is.character(x)) {
+  if (!missing(i) && is.character(i)) {
     names(x) <- x
   }
   res <- match(x[i], x, incomparables = NA)
@@ -67,19 +67,23 @@ dim_indices <- function(x, i) {
 #' @family index methods
 #' @export
 `[.piar_index` <- function(x, i, j, ...) {
-  levels <- dim_indices(x$levels, i)
-  periods <- dim_indices(x$time, j)
-  x$index <- lapply(x$index[periods], `[`, levels)
-  x$contrib <- lapply(x$contrib[periods], `[`, levels)
-  x$levels <- x$levels[levels]
-  x$time <- x$time[periods]
-  validate_piar_index(x)
+  if (!missing(i) && is.matrix(i)) {
+    as.matrix(x)[i]
+  } else {
+    levels <- dim_indices(x$levels, i)
+    periods <- dim_indices(x$time, j)
+    x$index <- lapply(x$index[periods], `[`, levels)
+    x$contrib <- lapply(x$contrib[periods], `[`, levels)
+    x$levels <- x$levels[levels]
+    x$time <- x$time[periods]
+    validate_piar_index(x)
+  }
 }
 
 #' @export
 `[.aggregate_piar_index` <- function(x, i, j, ...) {
   res <- NextMethod("[")
-  if (!identical(res$levels, x$levels)) {
+  if (is_index(res) && !identical(res$levels, x$levels)) {
     new_piar_index(
       res$index, res$contrib, res$levels, res$time,
       is_chainable_index(res)
@@ -92,15 +96,44 @@ dim_indices <- function(x, i) {
 #' @rdname sub-.piar_index
 #' @export
 `[<-.piar_index` <- function(x, i, j, ..., value) {
-  levels <- dim_indices(x$levels, i)
-  periods <- dim_indices(x$time, j)
+  # do all the replacements with a matrix of x so that value is recycled
+  # the same way as it would be for a matrix
   res <- as.matrix(x)
-  res[levels, periods] <- as.numeric(value)
-  # only loop over periods that have a value replaced
-  for (t in periods) {
-    x$index[[t]][levels] <- res[levels, t]
-    # drop contributions for replaced values
-    x$contrib[[t]][levels] <- list(numeric(0L))
+  if (!missing(i) && is.matrix(i)) {
+    if (is.logical(i)) {
+      dim <- c(length(x$levels), length(x$time))
+      i <- arrayInd(which(rep_len(i, prod(dim))), dim)
+    }
+    levels <- dim_indices(x$levels, i[, 1])
+    periods <- dim_indices(x$time, i[, 2])
+    res[cbind(levels, periods)] <- as.numeric(value)
+    # only loop over periods that have a value replaced
+    for (i in seq_along(levels)) {
+      x$index[[periods[i]]][levels[i]] <- res[levels[i], periods[i]]
+      # drop contributions for replaced values
+      x$contrib[[periods[i]]][levels[i]] <- list(numeric(0L))
+    }
+  } else {
+    levels <- dim_indices(x$levels, i)
+    periods <- dim_indices(x$time, j)
+    if (is_index(value)) {
+      if (length(value$time) != length(periods)) {
+        stop("'x' and 'value' must have the same number of time periods")
+      }
+      if (length(levels) %% length(value$levels) != 0) {
+        stop("number of items to replace is not a multiple of replacement length")
+      }
+      for (t in seq_along(periods)) {
+        x$index[[periods[t]]][levels] <- value$index[[t]]
+        x$contrib[[periods[t]]][levels] <- value$contrib[[t]]
+      }
+    } else {
+      res[levels, periods] <- as.numeric(value)
+      for (t in periods) {
+        x$index[[t]][levels] <- res[levels, t]
+        x$contrib[[t]][levels] <- list(numeric(0L))
+      }
+    }
   }
   validate_piar_index(x)
 }
@@ -111,5 +144,21 @@ dim_indices <- function(x, i) {
     x$index, x$contrib, x$levels, x$time,
     is_chainable_index(x)
   )
+  NextMethod("[<-")
+}
+
+#' @export
+`[<-.chainable_piar_index` <- function(x, i, j, ..., value) {
+  if (is_index(value) && !is_chainable_index(value)) {
+    stop("'value' must be a period-over-period index")
+  }
+  NextMethod("[<-")
+}
+
+#' @export
+`[<-.direct_piar_index` <- function(x, i, j, ..., value) {
+  if (is_index(value) && !is_direct_index(value)) {
+    stop("'value' must be a fixed-base index")
+  }
   NextMethod("[<-")
 }
