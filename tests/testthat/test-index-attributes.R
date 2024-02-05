@@ -44,3 +44,18 @@ test_that("setter methods work", {
   expect_error(levels(index) <- c(1, 2, 3, 1, 1))
   expect_error(time(epr3) <- c(1, 1))
 })
+
+test_that("is.na works", {
+  expect_equal(
+    is.na(epr),
+    matrix(c(FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE), 4,
+           dimnames = list(levels(epr), time(epr)))
+  )
+  expect_true(anyNA(epr))
+  expect_false(anyNA(epr[1]))
+  epr2 <- epr
+  is.na(epr2) <- 1:3
+  m <- as.matrix(epr)
+  expect_equal(as.matrix(epr2), replace(m, is.na(m), 1:3))
+  expect_equal(contrib(epr, "14"), contrib(epr2, "14"))
+})

@@ -2,11 +2,6 @@
 
 - Updated maintainer email.
 
-## Breaking changes
-
-- The default for `ea_only` has changed to `TRUE` when calling
-`weights(aggregation_structure)` to fix a bug with the replacement method.
-
 ## Improvements
 
 - Added examples for finding imputed index values to the vignette.
@@ -17,7 +12,16 @@ included in the contributions matrix (as documented).
 - `contrib()` gets a new argument `pad` to control how the contribution matrix is
 padded when products differ over time.
 
+- Add `is.na()`, `is.na<-()`, and `anyNA()` methods to find are replace missing
+values in an index object.
+
 ## Bug fixes
+
+- The default for `ea_only` has changed to `TRUE` when calling
+`weights(aggregation_structure)` to fix a bug with the replacement method.
+
+- Replacing an index value with `index[] <- value` when `value` is also an index
+object now works correctly.
 
 - Setting `stringsAsFactors = TRUE` in `as.data.frame(index)` now keeps the
 correct ordering of the factor levels.

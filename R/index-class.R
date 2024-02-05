@@ -366,6 +366,16 @@ anyNA.piar_index <- function(x, recursive = FALSE) {
 #' @rdname is.na.piar_index
 #' @export
 `is.na<-.piar_index` <- function(x, value) {
-  x[is.na(x)] <- value
-  x
+  res <- as.matrix(x)
+  nas <- which(is.na(res), arr.ind = TRUE)
+  levels <- dim_indices(x$levels, nas[, 1])
+  periods <- dim_indices(x$time, nas[, 2])
+  res[cbind(levels, periods)] <- as.numeric(value)
+  # only loop over periods that have a value replaced
+  for (i in seq_along(levels)) {
+    x$index[[periods[i]]][levels[i]] <- res[levels[i], periods[i]]
+    # drop contributions for replaced values
+    x$contrib[[periods[i]]][levels[i]] <- list(numeric(0L))
+  }
+  validate_piar_index(x)
 }

@@ -3,7 +3,7 @@ dim_indices <- function(x, i) {
     names(x) <- x
   }
   res <- match(x[i], x, incomparables = NA)
-  if (anyNA(res) || length(res) == 0L) {
+  if (length(res) == 0L || anyNA(res)) {
     stop("subscript out of bounds")
   }
   res
@@ -13,17 +13,21 @@ dim_indices <- function(x, i) {
 #'
 #' Methods to extract and replace index values like a matrix.
 #'
-#' The extraction methods treat `x` as a matrix of index values with
+#' The extraction methods treat `x` like a matrix of index values with
 #' (named) rows for each `level` and columns for each `period` in
 #' `x`. Unlike a matrix, dimensions are never dropped as subscripting
 #' `x` always returns an index object. This means that subscripting with a
-#' matrix is not possible, and only a submatrix can be extracted. As `x`
+#' matrix is not possible, and only a "submatrix" can be extracted. As `x`
 #' is not an atomic vector, subscripting with a single index like `x[1]`
 #' extracts all time periods for that level.
 #'
-#' The replacement methods similarly treat `x` as a matrix, and behave the
-#' same as replacing values in a matrix (except that `value` is coerced to
-#' numeric). Note that replacing the values of an index will remove the
+#' The replacement method similarly treat `x` like a matrix. If `value` is
+#' an index object with the same number of time periods as `x[i, j]` and
+#' it inherits from the same class as `x`, then the index values and
+#' percent-change contributions of `x[i, j]` are replaced with those for the
+#' corresponding levels of `value`. If `value` is not an index, then it is
+#' coerced to a numeric vector and behaves the same as replacing values in a 
+#' matrix. Note that replacing the values of an index will remove the
 #' corresponding percent-change contributions (if any).
 #'
 #' Subscripting an aggregate index cannot generally preserve the aggregation
@@ -35,7 +39,7 @@ dim_indices <- function(x, i) {
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param i,j Indices for the levels and time periods of a price index. See
 #' details.
-#' @param value A numeric vector.
+#' @param value A numeric vector or price index. See details.
 #' @param ... Ignored.
 #'
 #' @returns
@@ -67,23 +71,19 @@ dim_indices <- function(x, i) {
 #' @family index methods
 #' @export
 `[.piar_index` <- function(x, i, j, ...) {
-  if (!missing(i) && is.matrix(i)) {
-    as.matrix(x)[i]
-  } else {
-    levels <- dim_indices(x$levels, i)
-    periods <- dim_indices(x$time, j)
-    x$index <- lapply(x$index[periods], `[`, levels)
-    x$contrib <- lapply(x$contrib[periods], `[`, levels)
-    x$levels <- x$levels[levels]
-    x$time <- x$time[periods]
-    validate_piar_index(x)
-  }
+  levels <- dim_indices(x$levels, i)
+  periods <- dim_indices(x$time, j)
+  x$index <- lapply(x$index[periods], `[`, levels)
+  x$contrib <- lapply(x$contrib[periods], `[`, levels)
+  x$levels <- x$levels[levels]
+  x$time <- x$time[periods]
+  validate_piar_index(x)
 }
 
 #' @export
 `[.aggregate_piar_index` <- function(x, i, j, ...) {
   res <- NextMethod("[")
-  if (is_index(res) && !identical(res$levels, x$levels)) {
+  if (!identical(res$levels, x$levels)) {
     new_piar_index(
       res$index, res$contrib, res$levels, res$time,
       is_chainable_index(res)
@@ -93,46 +93,31 @@ dim_indices <- function(x, i) {
   }
 }
 
+# FIXME: Does it make sense to bundle the contributions with the index values
+# as a list with a dim?
 #' @rdname sub-.piar_index
 #' @export
 `[<-.piar_index` <- function(x, i, j, ..., value) {
-  # do all the replacements with a matrix of x so that value is recycled
-  # the same way as it would be for a matrix
-  res <- as.matrix(x)
-  if (!missing(i) && is.matrix(i)) {
-    if (is.logical(i)) {
-      dim <- c(length(x$levels), length(x$time))
-      i <- arrayInd(which(rep_len(i, prod(dim))), dim)
+  levels <- dim_indices(x$levels, i)
+  periods <- dim_indices(x$time, j)
+  if (is_index(value)) {
+    if (length(value$time) != length(periods)) {
+      stop("'x' and 'value' must have the same number of time periods")
     }
-    levels <- dim_indices(x$levels, i[, 1])
-    periods <- dim_indices(x$time, i[, 2])
-    res[cbind(levels, periods)] <- as.numeric(value)
-    # only loop over periods that have a value replaced
-    for (i in seq_along(levels)) {
-      x$index[[periods[i]]][levels[i]] <- res[levels[i], periods[i]]
-      # drop contributions for replaced values
-      x$contrib[[periods[i]]][levels[i]] <- list(numeric(0L))
+    if (length(levels) %% length(value$levels) != 0) {
+      stop("number of items to replace is not a multiple of replacement length")
+    }
+    for (t in seq_along(periods)) {
+      x$index[[periods[t]]][levels] <- value$index[[t]]
+      x$contrib[[periods[t]]][levels] <- value$contrib[[t]]
     }
   } else {
-    levels <- dim_indices(x$levels, i)
-    periods <- dim_indices(x$time, j)
-    if (is_index(value)) {
-      if (length(value$time) != length(periods)) {
-        stop("'x' and 'value' must have the same number of time periods")
-      }
-      if (length(levels) %% length(value$levels) != 0) {
-        stop("number of items to replace is not a multiple of replacement length")
-      }
-      for (t in seq_along(periods)) {
-        x$index[[periods[t]]][levels] <- value$index[[t]]
-        x$contrib[[periods[t]]][levels] <- value$contrib[[t]]
-      }
-    } else {
-      res[levels, periods] <- as.numeric(value)
-      for (t in periods) {
-        x$index[[t]][levels] <- res[levels, t]
-        x$contrib[[t]][levels] <- list(numeric(0L))
-      }
+    # do all the replacements with a matrix of x so that value is recycled
+    res <- as.matrix(x)
+    res[levels, periods] <- as.numeric(value)
+    for (t in periods) {
+      x$index[[t]][levels] <- res[levels, t]
+      x$contrib[[t]][levels] <- list(numeric(0L))
     }
   }
   validate_piar_index(x)
