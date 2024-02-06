@@ -62,9 +62,43 @@ test_that("subscripting methods give errors where expected", {
   expect_error(epr[NA])
 })
 
-test_that("replacement methods work", {
-  expect_equal(replace(epr, , values = epr), epr2)
+test_that("replacement methods work with an index", {
+  # No op
+  expect_equal(replace(epr, 1:4, epr), epr)
+  # Adds contributions
+  expect_equal(replace(epr2, 1:4, epr), epr)
+  # Removes contributions
+  expect_equal(replace(epr, 1:4, epr2), epr2)
+  
+  epr3 <- epr2
+  epr3[c(T, F), 2] <- epr[1, 1]
+  expect_equal(
+    as.matrix(epr3),
+    replace(as.matrix(epr), matrix(c(1, 3, 2, 2), 2), as.numeric(epr[1, 1]))
+  )
+  expect_equal(contrib(epr3, "13")[, 2], contrib(epr)[, 1])
+  
+  # Index doesn't recycle like a matrix
+  m <- as.matrix(epr3)
+  epr3[c(1, 1, 2, 2)] <- epr[1:2]
+  m[1, ] <- as.matrix(epr)[2, ]
+  expect_equal(as.matrix(epr3), m)
+  expect_equal(contrib(epr3), contrib(epr, "12"))
+  epr3[c(1, 1, 2, 2)] <- as.matrix(epr[1:2])
+  expect_error(expect_equal(as.matrix(epr3), m))
+  
+  # Errors
+  expect_error(epr[1:2] <- epr[, 1])
+  expect_error(epr[1:3]<- epr[1:2])
+  expect_error(epr[NA] <- epr[1])
+  expect_error(epr[, NA] <- epr[1])
+  expect_error(epr[inteeger(0)] <- epr[1])
+  expect_error(epr[1] <- chain(epr[1]))
+  epr <- chain(epr)
+  expect_error(epr[1] <- epr2[1])
+})
 
+test_that("replacement methods work with a vector", {
   epr[, 1] <- 0
   expect_equal(
     as.matrix(epr),
@@ -102,16 +136,13 @@ test_that("replacement methods work", {
   
   index[1] <- 0
   expect_false(is_aggregate_index(index))
+  
+  # Errors
+  expect_error(epr[0] <- 1:3)
+  expect_error(epr[1] <- 1:3)
+  expect_error(epr[1:2] <- 1:3)
+  expect_error(epr[NA] <- 1)
+  expect_error(epr[1, NA] <- 1)
+  expect_error(epr[5] <- 1)
 })
 
-test_that("replacement methods give errors where expected", {
-  expect_error(epr[NULL] <- 1)
-  expect_error(epr[NA] <- 1)
-  expect_error(epr[integer(0)] <- 1)
-  expect_error(epr[0] <- 1)
-  expect_error(epr[1, 0] <- 1)
-  expect_error(epr[1] <- 1:3)
-  expect_error(epr[1, NA] <- 1)
-  expect_error(epr[1, 3] <- 1)
-  expect_error(epr[5, 1] <- 1)
-})

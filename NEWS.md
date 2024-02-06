@@ -1,6 +1,7 @@
 # Version 0.6.1
 
-- Updated maintainer email.
+There are several bug fixed in this version that make non-backwards compatible
+changes.
 
 ## Improvements
 
@@ -9,13 +10,22 @@
 - `contrib()` gets a new argument `period` to control which time periods get
 included in the contributions matrix (as documented).
 
-- `contrib()`gets a new argument `pad` to control how the contribution matrix is
-padded when products differ over time.
+- `contrib()` gets a new argument `pad` to control how the contribution matrix
+is padded when products differ over time.
+
+- Added `is.na()`, `is.na<-()`, and `anyNA()` methods to find and replace
+missing values in an index object.
 
 ## Bug fixes
 
-- Setting `stringsAsFactors = TRUE` in `as.data.frame()` now keeps the correct
-ordering of the factor levels.
+- The default for `ea_only` has changed to `TRUE` when calling
+`weights(aggregation_structure)` to fix a bug with the replacement method.
+
+- Replacing an index value with `index[] <- value` when `value` is also an index
+object now works correctly when `value` is recycled.
+
+- Setting `stringsAsFactors = TRUE` in `as.data.frame(index)` now keeps the
+correct ordering of the factor levels.
 
 ## Deprecations
 

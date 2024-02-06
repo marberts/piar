@@ -17,7 +17,7 @@ details.}
 
 \item{...}{Ignored.}
 
-\item{value}{A numeric vector.}
+\item{value}{A numeric vector or price index. See details.}
 }
 \value{
 A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a
@@ -29,17 +29,21 @@ fixed-base index. If \code{x} inherits from \code{\link{aggregate_piar_index}} t
 Methods to extract and replace index values like a matrix.
 }
 \details{
-The extraction methods treat \code{x} as a matrix of index values with
+The extraction methods treat \code{x} like a matrix of index values with
 (named) rows for each \code{level} and columns for each \code{period} in
 \code{x}. Unlike a matrix, dimensions are never dropped as subscripting
 \code{x} always returns an index object. This means that subscripting with a
-matrix is not possible, and only a submatrix can be extracted. As \code{x}
+matrix is not possible, and only a "submatrix" can be extracted. As \code{x}
 is not an atomic vector, subscripting with a single index like \code{x[1]}
 extracts all time periods for that level.
 
-The replacement methods similarly treat \code{x} as a matrix, and behave the
-same as replacing values in a matrix (except that \code{value} is coerced to
-numeric). Note that replacing the values of an index will remove the
+The replacement method similarly treat \code{x} like a matrix. If \code{value} is
+an index object with the same number of time periods as \code{x[i, j]} and
+it inherits from the same class as \code{x}, then the index values and
+percent-change contributions of \code{x[i, j]} are replaced with those for the
+corresponding levels of \code{value}. If \code{value} is not an index, then it is
+coerced to a numeric vector and behaves the same as replacing values in a
+matrix. Note that replacing the values of an index will remove the
 corresponding percent-change contributions (if any).
 
 Subscripting an aggregate index cannot generally preserve the aggregation
@@ -76,6 +80,7 @@ Other index methods:
 \code{\link{chain}()},
 \code{\link{contrib}()},
 \code{\link{head.piar_index}()},
+\code{\link{is.na.piar_index}()},
 \code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
 \code{\link{merge.piar_index}()},
