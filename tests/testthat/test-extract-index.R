@@ -76,7 +76,7 @@ test_that("replacement methods work with an index", {
     as.matrix(epr3),
     replace(as.matrix(epr), matrix(c(1, 3, 2, 2), 2), as.numeric(epr[1, 1]))
   )
-  expect_equal(contrib(epr3)[, 2], contrib(epr)[, 1])
+  expect_equal(contrib(epr3, "13")[, 2], contrib(epr)[, 1])
   
   # Index doesn't recycle like a matrix
   m <- as.matrix(epr3)
@@ -92,32 +92,13 @@ test_that("replacement methods work with an index", {
   expect_error(epr[1:3]<- epr[1:2])
   expect_error(epr[NA] <- epr[1])
   expect_error(epr[, NA] <- epr[1])
+  expect_error(epr[inteeger(0)] <- epr[1])
   expect_error(epr[1] <- chain(epr[1]))
   epr <- chain(epr)
   expect_error(epr[1] <- epr2[1])
 })
 
-# test_that("replacement methods work with a matrix", {
-#   # No op
-#   expect_equal(replace(epr, matrix(c(0, 0), 1), 1), epr)
-#   
-#   # Integer matrix
-#   epr3 <- epr4 <- epr
-#   epr3[matrix(c(1, 3, 1, 2), 2)] <- 1
-#   epr4[1, 1] <- 1
-#   epr4[3, 2] <- 1
-#   expect_equal(epr3, epr4)
-#   
-#   # Logical matrix
-#   epr3 <- epr4 <- epr
-#   epr3[matrix(c(TRUE, FALSE, FALSE, TRUE), 2)] <- 1
-#   epr4[1] <- 1
-#   epr4[4] <- 1
-#   expect_equal(epr3, epr4)
-# })
-
 test_that("replacement methods work with a vector", {
-  # No op
   epr[, 1] <- 0
   expect_equal(
     as.matrix(epr),

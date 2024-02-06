@@ -49,3 +49,8 @@ test_that("NAs move up the aggregation structure", {
          c("111" = NA, "211" = 2, "121" = 3, "112" = 4))
   )
 })
+
+test_that("replacement method works", {
+  weights(agg)[c(1, 3, 4)] <- 10
+  expect_equal(weights(agg), c("111" = 10, "211" = 1, "121" = 10, "112" = 10))
+})

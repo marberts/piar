@@ -26,6 +26,7 @@ reference:
   - levels.piar_index
   - time.piar_index
   - as.matrix.piar_index
+  - is.na.piar_index
   
 - title: Manipulate prices
   desc: Helpful functions for working with prices
