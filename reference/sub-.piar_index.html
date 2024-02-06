@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,7 +77,7 @@ details.</p></dd>
 
 
 <dt>value</dt>
-<dd><p>A numeric vector.</p></dd>
+<dd><p>A numeric vector or price index. See details.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -91,16 +91,20 @@ fixed-base index. If <code>x</code> inherits from <code><a href="piar_index.html
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The extraction methods treat <code>x</code> as a matrix of index values with
+    <p>The extraction methods treat <code>x</code> like a matrix of index values with
 (named) rows for each <code>level</code> and columns for each <code>period</code> in
 <code>x</code>. Unlike a matrix, dimensions are never dropped as subscripting
 <code>x</code> always returns an index object. This means that subscripting with a
-matrix is not possible, and only a submatrix can be extracted. As <code>x</code>
+matrix is not possible, and only a "submatrix" can be extracted. As <code>x</code>
 is not an atomic vector, subscripting with a single index like <code>x[1]</code>
 extracts all time periods for that level.</p>
-<p>The replacement methods similarly treat <code>x</code> as a matrix, and behave the
-same as replacing values in a matrix (except that <code>value</code> is coerced to
-numeric). Note that replacing the values of an index will remove the
+<p>The replacement method similarly treat <code>x</code> like a matrix. If <code>value</code> is
+an index object with the same number of time periods as <code>x[i, j]</code> and
+it inherits from the same class as <code>x</code>, then the index values and
+percent-change contributions of <code>x[i, j]</code> are replaced with those for the
+corresponding levels of <code>value</code>. If <code>value</code> is not an index, then it is
+coerced to a numeric vector and behaves the same as replacing values in a
+matrix. Note that replacing the values of an index will remove the
 corresponding percent-change contributions (if any).</p>
 <p>Subscripting an aggregate index cannot generally preserve the aggregation
 structure if any levels are removed or rearranged, and in this case the
@@ -116,6 +120,7 @@ and therefore the result is <em>not</em> an aggregate index.</p>
 <code><a href="chain.html">chain</a>()</code>,
 <code><a href="contrib.html">contrib</a>()</code>,
 <code><a href="head.piar_index.html">head.piar_index</a>()</code>,
+<code><a href="is.na.piar_index.html">is.na.piar_index</a>()</code>,
 <code><a href="levels.piar_index.html">levels.piar_index</a>()</code>,
 <code><a href="mean.piar_index.html">mean.piar_index</a>()</code>,
 <code><a href="merge.piar_index.html">merge.piar_index</a>()</code>,
