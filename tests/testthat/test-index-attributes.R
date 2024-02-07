@@ -44,3 +44,12 @@ test_that("setter methods work", {
   expect_error(levels(index) <- c(1, 2, 3, 1, 1))
   expect_error(time(epr3) <- c(1, 1))
 })
+
+test_that("group generics work", {
+  m <- as.matrix(epr)
+  expect_equal(1 > epr, 1 > m)
+  expect_equal(epr > 1, epr > 1)
+  expect_error(epr + 1)
+  expect_error(sum(epr))
+  expect_error(log(epr))
+})

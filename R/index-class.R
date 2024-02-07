@@ -327,3 +327,42 @@ is_chainable_index <- function(x) {
 is_direct_index <- function(x) {
   inherits(x, "direct_piar_index")
 }
+
+#' Group generics
+#' @noRd
+#' @export
+Math.piar_index <- function(x, ...) {
+  stop(gettextf("'%s' not meaningful for index objects", .Generic))
+}
+
+#' @export
+Ops.piar_index <- function(e1, e2) {
+  boolean <- switch(.Generic, `<` = , `>` = , `==` = , `!=` = , 
+                    `<=` = , `>=` = TRUE, FALSE)
+  if (!boolean) {
+    stop(gettextf("'%s' not meaningful for index objects", .Generic))
+  }
+  if (is_index(e1)) {
+    e1 <- as.matrix(e1)
+  }
+  if (is_index(e2)) {
+    e2 <- as.matrix(e2)
+  }
+  NextMethod(.Generic)
+}
+
+#' @export
+Summary.piar_index <- function(..., na.rm) {
+  stop(gettextf("'%s' not meaningful for index objects", .Generic))
+}
+
+# Requires R >= 4.3
+# matrixOps.piar_index <- function(x, y) {
+#   if (is_index(x)) {
+#     x <- as.matrix(x)
+#   }
+#   if (is_index(y)) {
+#     y <- as.matrix(y)
+#   }
+#   NextMethod(.Generic)
+# }
