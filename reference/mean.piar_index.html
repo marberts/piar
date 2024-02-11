@@ -12,7 +12,7 @@ of index values over consecutive windows of subperiods."><meta property="og:imag
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@ of index values over consecutive windows of subperiods.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for piar_index</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, weights <span class="op">=</span> <span class="cn">NULL</span>, window <span class="op">=</span> <span class="fl">3L</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, r <span class="op">=</span> <span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, weights <span class="op">=</span> <span class="cn">NULL</span>, window <span class="op">=</span> <span class="fl">3L</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, r <span class="op">=</span> <span class="fl">1</span>, contrib <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -95,6 +95,10 @@ a Paasche index). Other values are possible; see
 <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
 
 
+<dt>contrib</dt>
+<dd><p>Aggregate percent-change contributions in <code>x</code> (if any)?</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments passed to or used by methods.</p></dd>
 
@@ -112,9 +116,11 @@ length <code>window</code>, starting in the first period of the index, and takes
 the mean of each index value in these windows for each level of the index.
 The last window is discarded if it is incomplete, so that index values are
 always averaged over <code>window</code> periods. The names for the first time
-period in each window form the new names for the aggregated time periods.
-Note that percent-change contributions are discarded when aggregating over
-subperiods.</p>
+period in each window form the new names for the aggregated time periods.</p>
+<p>Percent-change contributions are aggregated if <code>contrib = TRUE</code> by treating
+each product-subperiod pair as a unique product, then following the same
+approach as <code><a href="aggregate.piar_index.html">aggregate()</a></code>. The number of the
+subperiod is appended to product names to make them unique across subperiods.</p>
 <p>An optional vector of weights can be specified when aggregating index values
 over subperiods, which is often useful when aggregating a Paasche index; see
 section 4.3 of Balk (2008) for details.</p>
