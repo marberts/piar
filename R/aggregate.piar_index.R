@@ -1,3 +1,13 @@
+aggregate_contrib <- function(r) {
+  arithmetic_weights <- gpindex::transmute_weights(r, 1)
+  function(x, rel, w) {
+    w <- gpindex::scale_weights(arithmetic_weights(rel, w))
+    res <- unlist(Map("*", x, w))
+    names(res) <- make.unique(as.character(names(res)))
+    res
+  }
+}
+
 #' Aggregate elemental price indexes
 #'
 #' Aggregate elemental price indexes with a price index aggregation structure.
@@ -136,7 +146,7 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
   # helpful functions
   price_update <- gpindex::factor_weights(r)
   gen_mean <- gpindex::generalized_mean(r)
-  aw <- gpindex::transmute_weights(r, 1)
+  agg_contrib <- aggregate_contrib(r)
   
   # put the aggregation weights upside down to line up with pias
   w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
@@ -170,12 +180,7 @@ aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
       if (has_contrib) {
         con[[i]] <- lapply(
           nodes,
-          \(z) {
-            w <- gpindex::scale_weights(aw(rel[[i - 1L]][z], w[[i - 1L]][z]))
-            res <- unlist(Map("*", con[[i - 1L]][z], w))
-            names(res) <- make.unique(as.character(names(res)))
-            res
-          }
+          \(z) agg_contrib(con[[i - 1L]][z], rel[[i - 1L]][z], w[[i - 1L]][z])
         )
       } else {
         con[i] <- empty_contrib(nodes)

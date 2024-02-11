@@ -4,7 +4,7 @@
 \alias{mean.piar_index}
 \title{Aggregate a price index over subperiods}
 \usage{
-\method{mean}{piar_index}(x, weights = NULL, window = 3L, na.rm = FALSE, r = 1, ...)
+\method{mean}{piar_index}(x, weights = NULL, window = 3L, na.rm = FALSE, r = 1, contrib = TRUE, ...)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
@@ -29,6 +29,8 @@ averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
+\item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
+
 \item{...}{Further arguments passed to or used by methods.}
 }
 \value{
@@ -45,8 +47,11 @@ the mean of each index value in these windows for each level of the index.
 The last window is discarded if it is incomplete, so that index values are
 always averaged over \code{window} periods. The names for the first time
 period in each window form the new names for the aggregated time periods.
-Note that percent-change contributions are discarded when aggregating over
-subperiods.
+
+Percent-change contributions are aggregated if \code{contrib = TRUE} by treating
+each product-subperiod pair as a unique product, then following the same
+approach as \code{\link[=aggregate.piar_index]{aggregate()}}. The number of the
+subperiod is appended to product names to make them unique across subperiods.
 
 An optional vector of weights can be specified when aggregating index values
 over subperiods, which is often useful when aggregating a Paasche index; see

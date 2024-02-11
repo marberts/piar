@@ -16,6 +16,9 @@ is padded when products differ over time.
 - Added `is.na()`, `is.na<-()`, and `anyNA()` methods to find and replace
 missing values in an index object.
 
+- `mean()` gets a new argument `contrib` to control if product contributions
+are aggregated over subperiods.
+
 ## Bug fixes
 
 - The default for `ea_only` has changed to `TRUE` when calling

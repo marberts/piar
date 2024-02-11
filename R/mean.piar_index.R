@@ -9,8 +9,11 @@
 #' The last window is discarded if it is incomplete, so that index values are
 #' always averaged over `window` periods. The names for the first time
 #' period in each window form the new names for the aggregated time periods.
-#' Note that percent-change contributions are discarded when aggregating over
-#' subperiods.
+#'
+#' Percent-change contributions are aggregated if `contrib = TRUE` by treating
+#' each product-subperiod pair as a unique product, then following the same
+#' approach as [`aggregate()`][aggregate.piar_index]. The number of the
+#' subperiod is appended to product names to make them unique across subperiods.
 #'
 #' An optional vector of weights can be specified when aggregating index values
 #' over subperiods, which is often useful when aggregating a Paasche index; see
@@ -33,6 +36,7 @@
 #' averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #' a Paasche index). Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
+#' @param contrib Aggregate percent-change contributions in `x` (if any)?
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
@@ -55,13 +59,14 @@
 #' @family index methods
 #' @export
 mean.piar_index <- function(x, weights = NULL, window = 3L, na.rm = FALSE,
-                            r = 1, ...) {
+                            r = 1, contrib = TRUE, ...) {
   if (!is.null(weights)) {
     if (length(weights) != length(x$time) * length(x$levels)) {
       stop("'weights' must have a value for each index value in 'x'")
     }
     w <- split(as.numeric(weights), gl(length(x$time), length(x$levels)))
   }
+
   window <- as.integer(window)
   if (length(window) > 1L || window < 1L) {
     stop("'window' must be a positive length 1 integer")
@@ -69,21 +74,36 @@ mean.piar_index <- function(x, weights = NULL, window = 3L, na.rm = FALSE,
   if (window > length(x$time)) {
     stop("'x' must have at least 'window' time periods")
   }
-  len <- length(x$time) %/% window
+
+  # helpful functions
+  gen_mean <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
+  agg_contrib <- Vectorize(aggregate_contrib(r),
+    SIMPLIFY = FALSE, USE.NAMES = FALSE
+  )
+
   # get the starting location for each window
+  len <- length(x$time) %/% window
   loc <- seq.int(1L, by = window, length.out = len)
   periods <- x$time[loc]
-  res <- index_skeleton(x$levels, periods)
+
+  has_contrib <- has_contrib(x) && contrib
+
   # loop over each window and calculate the mean for each level
-  gen_mean <- Vectorize(gpindex::generalized_mean(r))
+  index <- index_skeleton(x$levels, periods)
+  contrib <- contrib_skeleton(x$levels, periods)
   for (i in seq_along(loc)) {
     j <- seq(loc[i], length.out = window)
-    index <- .mapply(c, x$index[j], list())
+    rel <- .mapply(c, x$index[j], list())
     weight <- if (is.null(weights)) list(NULL) else .mapply(c, w[j], list())
-    res[[i]][] <- gen_mean(index, weight, na.rm = na.rm)
+    index[[i]][] <- gen_mean(rel, weight, na.rm = na.rm)
+    if (has_contrib) {
+      con <- .mapply(\(...) c(list(...)), x$contrib[j], list())
+      contrib[[i]][] <- agg_contrib(con, rel, weight)
+    }
   }
-  x$index <- res
-  x$contrib <- contrib_skeleton(x$levels, periods)
+  
+  x$index <- index
+  x$contrib <- contrib
   x$time <- periods
   validate_piar_index(x)
 }

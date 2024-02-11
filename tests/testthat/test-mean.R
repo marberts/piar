@@ -14,10 +14,6 @@ test_that("aggregating over subperiods works", {
 
   expect_true(is_chainable_index(epr2))
   expect_false(is_chainable_index(mean(chain(ms_epr))))
-  expect_equal(
-    contrib(epr2),
-    matrix(numeric(0), 0, 2, dimnames = list(NULL, c("202001", "202003")))
-  )
 
   w <- matrix(seq_len(4 * 4), 4)
   expect_equal(
@@ -30,6 +26,23 @@ test_that("aggregating over subperiods works", {
     diag(as.matrix(ms_epr)[, 3:4] %*% apply(w[, 3:4], 1, scale_weights)),
     ignore_attr = TRUE
   )
+  
+  # Test contributions
+  con <- matrix(0, 5, 2)
+  rownames(con) <- c("1", "2", "2.1", "3", "3.1")
+  colnames(con) <- c("202001", "202003")
+  con[c(2, 3, 9, 10)] <- NA
+  con[c(5, 7)] <- contrib(ms_epr)[c(6, 8)] / 2:1
+  expect_equal(contrib(epr2), con)
+  
+  expect_equal(as.numeric(t(contrib(ms_epr, "B3")[, 3:4])) / 2,
+               as.numeric(contrib(epr2, "B3")[, 2]))
+  expect_equal(colSums(contrib(epr2, "B3")), as.matrix(epr2)["B3", ] - 1)
+  
+  epr3 <- mean(ms_epr, w, window = 2, r = 2.5, na.rm = TRUE)
+  expect_equal(colSums(contrib(epr3, "B1"), na.rm = TRUE),
+               as.matrix(epr3)["B1", ] - 1)
+  expect_equal(colSums(contrib(epr3, "B3")), as.matrix(epr3)["B3", ] - 1)
 })
 
 test_that("aggregating with a window of 1 does nothing", {
