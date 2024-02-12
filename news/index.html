@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +63,7 @@
 <ul><li><p>The default for <code>ea_only</code> has changed to <code>TRUE</code> when calling <code>weights(aggregation_structure)</code> to fix a bug with the replacement method.</p></li>
 <li><p>Replacing an index value with <code>index[] &lt;- value</code> when <code>value</code> is also an index object now works correctly when <code>value</code> is recycled.</p></li>
 <li><p>Setting <code>stringsAsFactors = TRUE</code> in <code>as.data.frame(index)</code> now keeps the correct ordering of the factor levels.</p></li>
+<li><p><code>mean(index)</code> no longer returns an aggregate index when <code>r</code> differs from that used to make <code>index</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="deprecations-0-6-1">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-0-6-1"></a></h3>
