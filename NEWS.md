@@ -30,6 +30,9 @@ object now works correctly when `value` is recycled.
 - Setting `stringsAsFactors = TRUE` in `as.data.frame(index)` now keeps the
 correct ordering of the factor levels.
 
+- `mean(index)` no longer returns an aggregate index when `r` differs from that
+used to make `index`.
+
 ## Deprecations
 
 - The `cols` argument for `as_index()` is deprecated and will be removed in a

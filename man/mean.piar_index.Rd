@@ -34,7 +34,9 @@ a Paasche index). Other values are possible; see
 \item{...}{Further arguments passed to or used by methods.}
 }
 \value{
-A price index with the same class as \code{x}.
+A price index with the same class as \code{x}. If \code{x} is an aggregate index
+and \code{r} is different than that used to aggregate \code{x}, then the result is
+not an aggregate index (as it is no longer consistent in aggregation).
 }
 \description{
 Aggregate an index over subperiods by taking the (usually arithmetic) mean

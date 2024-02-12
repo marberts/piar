@@ -57,3 +57,23 @@ test_that("mean requires a suitable window", {
   expect_error(mean(index, window = 0))
   expect_error(mean(index, window = 1:3))
 })
+
+test_that("averaging an aggregate index works", {
+  ms_epr <- with(
+    ms_prices,
+    elemental_index(price_relative(price, period, product),
+                    period, business, contrib = TRUE, na.rm = TRUE)
+  )
+  
+  ms_pias <- with(
+    ms_weights,
+    aggregation_structure(
+      c(expand_classification(classification), list(business)), weight
+    )
+  )
+  
+  ms_index <- aggregate(ms_epr, ms_pias, na.rm = TRUE)
+  
+  expect_true(is_aggregate_index(mean(ms_index, window = 2)))
+  expect_false(is_aggregate_index(mean(ms_index, window = 2, r = -1)))
+})
