@@ -19,6 +19,9 @@ missing values in an index object.
 - `mean()` gets a new argument `contrib` to control if product contributions
 are aggregated over subperiods.
 
+- `as.matrix(pias) %*% as.matrix(index)`can now be written as `pias %*% index`
+(with R >= 4.3).
+
 ## Bug fixes
 
 - The default for `ea_only` has changed to `TRUE` when calling

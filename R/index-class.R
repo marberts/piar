@@ -357,12 +357,13 @@ Summary.piar_index <- function(..., na.rm) {
 }
 
 # Requires R >= 4.3
-# matrixOps.piar_index <- function(x, y) {
-#   if (is_index(x)) {
-#     x <- as.matrix(x)
-#   }
-#   if (is_index(y)) {
-#     y <- as.matrix(y)
-#   }
-#   NextMethod(.Generic)
-# }
+#' @export
+`%*%.piar_index` <- function(x, y) {
+  if (is_index(x) || is_aggregation_structure(x)) {
+    x <- as.matrix(x)
+  }
+  if (is_index(y) || is_aggregation_structure(y)) {
+    y <- as.matrix(y)
+  }
+  NextMethod(.Generic)
+}
