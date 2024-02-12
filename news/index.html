@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,7 @@
 <li><p><code><a href="../reference/contrib.html">contrib()</a></code> gets a new argument <code>pad</code> to control how the contribution matrix is padded when products differ over time.</p></li>
 <li><p>Added <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code>, <code>is.na&lt;-()</code>, and <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code> methods to find and replace missing values in an index object.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> gets a new argument <code>contrib</code> to control if product contributions are aggregated over subperiods.</p></li>
+<li><p><code>as.matrix(pias) %*% as.matrix(index)</code>can now be written as <code>pias %*% index</code> (with R &gt;= 4.3).</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-6-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-1"></a></h3>
