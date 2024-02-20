@@ -9,6 +9,8 @@
 status](https://www.r-pkg.org/badges/version/piar)](https://cran.r-project.org/package=piar)
 [![piar status
 badge](https://marberts.r-universe.dev/badges/piar)](https://marberts.r-universe.dev)
+[![Conda
+Version](https://img.shields.io/conda/vn/conda-forge/r-piar.svg)](https://anaconda.org/conda-forge/r-piar)
 [![R-CMD-check](https://github.com/marberts/piar/workflows/R-CMD-check/badge.svg)](https://github.com/marberts/piar/actions)
 [![codecov](https://codecov.io/gh/marberts/piar/graph/badge.svg?token=lHDHsGHsLd)](https://codecov.io/gh/marberts/piar)
 [![DOI](https://zenodo.org/badge/370889275.svg)](https://zenodo.org/doi/10.5281/zenodo.10110046)
