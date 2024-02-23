@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9011</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -276,10 +276,10 @@ by the slice for 202004.</p>
 <span><span class="co">#&gt; B5 0.1580295 0.2055527 0.2185178      1</span></span></code></pre></div>
 <p>In some cases the base period is the average of several periods;
 setting the base period to the second half of 2020 just requires
-dividing by the row-wise mean.</p>
+averaging the index over subperiods before rebasing.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/chain.html">rebase</a></span><span class="op">(</span><span class="va">ms_index_chained</span>,</span>
-<span>       <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">ms_index_chained</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"202003"</span>, <span class="st">"202004"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>       <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">ms_index_chained</span>, window <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">[</span>, <span class="st">"202003"</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Aggregate fixed-base price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;       202001    202002    202003    202004</span></span>
 <span><span class="co">#&gt; 1  0.3872740 0.5037366 0.5355095 1.4644905</span></span>
@@ -368,7 +368,7 @@ matrix that gives the share of missing elemental indexes for each
 higher-level index.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pias_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">pias</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span> </span>
-<span><span class="va">pias_matrix</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">ms_epr2</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">pias_matrix</span><span class="op">)</span></span>
+<span><span class="va">pias_matrix</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">ms_epr2</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">pias_matrix</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    202001    202002    202003    202004</span></span>
 <span><span class="co">#&gt; 1     0.4 0.6000000 0.6000000 0.4000000</span></span>
 <span><span class="co">#&gt; 11    0.0 0.3333333 0.3333333 0.3333333</span></span>
