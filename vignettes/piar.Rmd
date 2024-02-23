@@ -93,11 +93,11 @@ Chained indexes often need be to rebased, and this can be done with the `rebase(
 rebase(ms_index_chained, ms_index_chained[, "202004"])
 ```
 
-In some cases the base period is the average of several periods; setting the base period to the second half of 2020 just requires dividing by the row-wise mean.
+In some cases the base period is the average of several periods; setting the base period to the second half of 2020 just requires averaging the index over subperiods before rebasing.
 
 ```{r}
 rebase(ms_index_chained,
-       rowMeans(as.matrix(ms_index_chained)[, c("202003", "202004")]))
+       mean(ms_index_chained, window = 2)[, "202003"])
 ```
 
 ## Multi-dimensional aggregation structures
@@ -147,7 +147,7 @@ The idea is to simply aggregate an indicator for missingness to get a matrix tha
 
 ```{r}
 pias_matrix <- as.matrix(pias) > 0 
-pias_matrix %*% is.na(as.matrix(ms_epr2)) / rowSums(pias_matrix)
+pias_matrix %*% is.na(ms_epr2) / rowSums(pias_matrix)
 ```
 
 A value of 1 means that there are no non-missing elemental indexes, and that the value for this level of the index is imputed from its parent in the aggregation structure. A value below 1 but above zero means that some but not all elemental indexes are missing, and the index value for this level is based on the non-missing elemental indexes. A value of zero means there's no imputation for this level of the index.

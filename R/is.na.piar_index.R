@@ -45,8 +45,8 @@ anyNA.piar_index <- function(x, recursive) {
   if (length(nas) == 0L) {
     return(x)
   }
-  levels <- dim_indices(x$levels, nas[, 1])
-  periods <- dim_indices(x$time, nas[, 2])
+  levels <- dim_indices(x$levels, nas[, 1L])
+  periods <- dim_indices(x$time, nas[, 2L])
   res[cbind(levels, periods)] <- as.numeric(value)
   # only loop over periods that have a value replaced
   for (i in seq_along(levels)) {

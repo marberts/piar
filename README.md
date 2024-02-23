@@ -12,10 +12,10 @@ badge](https://marberts.r-universe.dev/badges/piar)](https://marberts.r-universe
 [![Conda
 Version](https://img.shields.io/conda/vn/conda-forge/r-piar.svg)](https://anaconda.org/conda-forge/r-piar)
 [![R-CMD-check](https://github.com/marberts/piar/workflows/R-CMD-check/badge.svg)](https://github.com/marberts/piar/actions)
-[![codecov](https://codecov.io/gh/marberts/piar/graph/badge.svg?token=lHDHsGHsLd)](https://codecov.io/gh/marberts/piar)
+[![codecov](https://codecov.io/gh/marberts/piar/graph/badge.svg?token=lHDHsGHsLd)](https://app.codecov.io/gh/marberts/piar)
 [![DOI](https://zenodo.org/badge/370889275.svg)](https://zenodo.org/doi/10.5281/zenodo.10110046)
 [![Mentioned in Awesome Official
-Statistics](https://awesome.re/mentioned-badge.svg)](http://www.awesomeofficialstatistics.org)
+Statistics](https://awesome.re/mentioned-badge.svg)](https://github.com/SNStatComp/awesome-official-statistics-software)
 <!-- badges: end -->
 
 Most price indexes are made with a two-step procedure, where

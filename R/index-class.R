@@ -355,15 +355,3 @@ Ops.piar_index <- function(e1, e2) {
 Summary.piar_index <- function(..., na.rm) {
   stop(gettextf("'%s' not meaningful for index objects", .Generic))
 }
-
-# Requires R >= 4.3
-#' @export
-`%*%.piar_index` <- function(x, y) {
-  if (is_index(x) || is_aggregation_structure(x)) {
-    x <- as.matrix(x)
-  }
-  if (is_index(y) || is_aggregation_structure(y)) {
-    y <- as.matrix(y)
-  }
-  NextMethod(.Generic)
-}

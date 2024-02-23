@@ -53,6 +53,16 @@ test_that("rebase should be the same as division", {
                as.matrix(chain(index2)) / 1:8)
 })
 
+test_that("rebase works with mean", {
+  index2 <- chain(index2)
+  expect_equal(rebase(index2, mean(index2, window = 2)[, 1]),
+               rebase(index2, rowMeans(as.matrix(index2[, 1:2]))))
+  
+  expect_equal(rebase(index2, mean(index2, window = 4)),
+               rebase(index2, rowMeans(as.matrix(index2))))
+})
+
+
 test_that("chaining returns the correct type of index", {
   expect_true(is_chainable_index(epr1))
   expect_true(is_chainable_index(unchain(chain(epr1))))

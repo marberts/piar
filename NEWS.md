@@ -10,7 +10,7 @@ changes.
 - `contrib()` gets a new argument `period` to control which time periods get
 included in the contributions matrix (as documented).
 
-- `contrib()` gets a new argument `pad` to control how the contribution matrix
+- `contrib()` gets a new argument `pad` to control how the contributions matrix
 is padded when products differ over time.
 
 - Added `is.na()`, `is.na<-()`, and `anyNA()` methods to find and replace
@@ -18,9 +18,6 @@ missing values in an index object.
 
 - `mean()` gets a new argument `contrib` to control if product contributions
 are aggregated over subperiods.
-
-- `as.matrix(pias) %*% as.matrix(index)`can now be written as `pias %*% index`
-(with R >= 4.3).
 
 ## Bug fixes
 
