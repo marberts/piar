@@ -80,8 +80,8 @@
 #' @family index methods
 #' @importFrom stats vcov
 #' @export
-vcov.aggregate_piar_index <- function(object, repweights,
-                                      mse = TRUE, sparse = FALSE, ...) {
+vcov.aggregate_piar_index <- function(object, repweights, ...,
+                                      mse = TRUE, sparse = FALSE) {
   repweights <- as.matrix(repweights)
   eas <- object$pias$eas
   if (nrow(repweights) != length(eas)) {

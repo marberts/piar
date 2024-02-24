@@ -4,7 +4,7 @@
 \alias{mean.piar_index}
 \title{Aggregate a price index over subperiods}
 \usage{
-\method{mean}{piar_index}(x, weights = NULL, window = 3L, na.rm = FALSE, r = 1, contrib = TRUE, ...)
+\method{mean}{piar_index}(x, weights = NULL, ..., window = 3L, na.rm = FALSE, contrib = TRUE, r = 1)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
@@ -14,6 +14,8 @@ default is equal weights. It is usually easiest to specify these weights as
 a matrix with a row for each index value in \code{x} and a column for each
 time period.}
 
+\item{...}{Further arguments passed to or used by methods.}
+
 \item{window}{A positive integer giving the size of the window used to
 average index values across subperiods. The default (3) turns a monthly
 index into into a quarterly one. Non-integers are truncated towards 0.}
@@ -22,16 +24,14 @@ index into into a quarterly one. Non-integers are truncated towards 0.}
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
 imputation.}
 
+\item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
+
 \item{r}{Order of the generalized mean to aggregate index values. 0 for a
 geometric index (the default for making elemental indexes), 1 for an
 arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
-
-\item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
-
-\item{...}{Further arguments passed to or used by methods.}
 }
 \value{
 A price index with the same class as \code{x}. If \code{x} is an aggregate index

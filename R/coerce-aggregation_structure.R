@@ -47,7 +47,7 @@
 #'
 #' @family aggregation structure methods
 #' @export
-as.matrix.piar_aggregation_structure <- function(x, sparse = FALSE, ...) {
+as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
   nea <- length(x$eas)
   if (x$height == 1L) {
     res <- matrix(numeric(0), ncol = nea, dimnames = list(NULL, x$eas))

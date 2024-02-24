@@ -9,7 +9,7 @@ Francis that was first ported to R by Ambuj Dewan, and subsequently
 rewritten by Steve Martin.
 }
 \usage{
-\method{vcov}{aggregate_piar_index}(object, repweights, mse = TRUE, sparse = FALSE, ...)
+\method{vcov}{aggregate_piar_index}(object, repweights, ..., mse = TRUE, sparse = FALSE)
 }
 \arguments{
 \item{object}{An aggregate price index, as made by
@@ -19,14 +19,14 @@ rewritten by Steve Martin.
 bootstrap replicate weights with a row for each elemental aggregate and a
 column for each replicate.}
 
+\item{...}{Further arguments passed to or used by methods.}
+
 \item{mse}{Should variance be centered off the value of the index in
 \code{object} (the default), or the mean of the replicates?}
 
 \item{sparse}{Use sparse matrices from \pkg{Matrix} when aggregating the
 index. Faster for indexes with large aggregation structures. The default
 uses regular dense matrices.}
-
-\item{...}{Further arguments passed to or used by methods.}
 }
 \value{
 A matrix of variances with a row for each upper-level index and a

@@ -199,12 +199,11 @@ elemental_index.default <- function(x, ...) {
 elemental_index.numeric <- function(x,
                                     period = gl(1, length(x)),
                                     ea = gl(1, length(x)),
-                                    weights = NULL,
-                                    contrib = FALSE,
+                                    weights = NULL, ...,
                                     chainable = TRUE,
                                     na.rm = FALSE,
-                                    r = 0,
-                                    ...) {
+                                    contrib = FALSE,
+                                    r = 0) {
   if (different_length(x, period, ea, weights)) {
     stop("input vectors must be the same length")
   }

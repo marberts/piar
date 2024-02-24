@@ -7,7 +7,7 @@
 \usage{
 contrib(x, ...)
 
-\method{contrib}{piar_index}(x, level = levels(x)[1L], period = time(x), pad = 0, ...)
+\method{contrib}{piar_index}(x, level = levels(x)[1L], period = time(x), ..., pad = 0)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}

@@ -125,21 +125,28 @@ aggregate_contrib <- function(r) {
 #' @importFrom stats aggregate
 #' @family index methods
 #' @export
-aggregate.chainable_piar_index <- function(x, pias, na.rm = FALSE, r = 1,
-                                           contrib = TRUE, ...) {
+aggregate.chainable_piar_index <- function(x, pias, ...,
+                                           na.rm = FALSE,
+                                           contrib = TRUE,
+                                           r = 1) {
   NextMethod("aggregate", chainable = TRUE)
 }
 
 #' @rdname aggregate.piar_index
 #' @export
-aggregate.direct_piar_index <- function(x, pias, na.rm = FALSE, r = 1,
-                                        contrib = TRUE, ...) {
+aggregate.direct_piar_index <- function(x, pias, ...,
+                                        na.rm = FALSE,
+                                        contrib = TRUE,
+                                        r = 1) {
   NextMethod("aggregate", chainable = FALSE)
 }
 
 #' @export
-aggregate.piar_index <- function(x, pias, na.rm = FALSE, r = 1, contrib = TRUE,
-                                 ..., chainable) {
+aggregate.piar_index <- function(x, pias, ...,
+                                 na.rm = FALSE,
+                                 contrib = TRUE,
+                                 r = 1,
+                                 chainable) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
   

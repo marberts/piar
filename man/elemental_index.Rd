@@ -15,11 +15,11 @@ elemental_index(x, ...)
   period = gl(1, length(x)),
   ea = gl(1, length(x)),
   weights = NULL,
-  contrib = FALSE,
+  ...,
   chainable = TRUE,
   na.rm = FALSE,
-  r = 0,
-  ...
+  contrib = FALSE,
+  r = 0
 )
 }
 \arguments{
@@ -42,9 +42,6 @@ default assumes that all price relatives belong to one elemental aggregate.}
 \item{weights}{A numeric vector of weights for the price relatives in \code{x}.
 The default is equal weights.}
 
-\item{contrib}{Should percent-change contributions be calculated? The
-default does not calculate contributions.}
-
 \item{chainable}{Are the price relatives in \code{x} period-over-period
 relatives for a chained calculation (the default)? This should be
 \code{FALSE} when \code{x} contains fixed-base relatives.}
@@ -52,6 +49,9 @@ relatives for a chained calculation (the default)? This should be
 \item{na.rm}{Should missing values be removed? By default, missing values
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
 imputation.}
+
+\item{contrib}{Should percent-change contributions be calculated? The
+default does not calculate contributions.}
 
 \item{r}{Order of the generalized mean to aggregate price relatives. 0 for a
 geometric index (the default for making elemental indexes), 1 for an

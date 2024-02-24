@@ -1,6 +1,15 @@
-# Version 0.6.1
+# Version 0.7.0
 
-There are several bug fixed in this version that make non-backwards compatible
+## Significant changes
+
+- Some arguments for `elemental_index()`, `as_index()`, `aggregate(index)`,
+`mean(index)`, `vcov(index)`, `update(aggregation_structure)`, and `weights(aggregation_structure)` now need to be named (e.g., `na.rm`, `contrib`).
+This helps to unify the signatures for several functions that had similar
+arguments in different positions. In all cases these are arguments that are
+not near the beginning of the function and should have probably been named
+anyways.
+
+- There are several bug fixed in this version that make non-backwards compatible
 changes.
 
 ## Improvements

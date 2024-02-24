@@ -46,6 +46,9 @@
 #'
 #' @export
 price_relative <- function(x, period, product) {
+  if (different_length(x, period, product)) {
+    stop("'x', 'period', and 'product' must be the same length")
+  }
   x <- as.numeric(x)
   res <- x / x[gpindex::back_period(period, product)]
   names(res) <- product

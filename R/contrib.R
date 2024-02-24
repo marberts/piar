@@ -57,8 +57,8 @@ contrib <- function(x, ...) {
 #' @rdname contrib
 #' @family index methods
 #' @export
-contrib.piar_index <- function(x, level = levels(x)[1L], period = time(x),
-                               pad = 0, ...) {
+contrib.piar_index <- function(x, level = levels(x)[1L], period = time(x), ...,
+                               pad = 0) {
   level <- match.arg(as.character(level), x$levels)
   period <- match.arg(as.character(period), x$time, several.ok = TRUE)
   pad <- as.numeric(pad)

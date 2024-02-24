@@ -6,7 +6,7 @@
 \alias{weights<-.piar_aggregation_structure}
 \title{Get the weights for a price index aggregation structure}
 \usage{
-\method{weights}{piar_aggregation_structure}(object, ea_only = TRUE, na.rm = FALSE, ...)
+\method{weights}{piar_aggregation_structure}(object, ..., ea_only = TRUE, na.rm = FALSE)
 
 weights(object) <- value
 
@@ -16,6 +16,8 @@ weights(object) <- value
 \item{object}{A price index aggregation structure, as made by
 \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
+\item{...}{Further arguments passed to or used by methods.}
+
 \item{ea_only}{Should weights be returned for only the elemental aggregates
 (the default)? Setting to \code{FALSE} gives the weights for the entire
 aggregation structure.}
@@ -23,8 +25,6 @@ aggregation structure.}
 \item{na.rm}{Should missing values be removed when aggregating the
 weights (i.e., when \code{ea_only = FALSE})? By default, missing values are
 not removed.}
-
-\item{...}{Further arguments passed to or used by methods.}
 
 \item{value}{A numeric vector of weights for the elemental aggregates of
 \code{object}.}

@@ -4,7 +4,7 @@
 \alias{update.piar_aggregation_structure}
 \title{Update a price index aggregation structure}
 \usage{
-\method{update}{piar_aggregation_structure}(object, index, period = end(index), r = NULL, ...)
+\method{update}{piar_aggregation_structure}(object, index, period = end(index), ..., r = NULL)
 }
 \arguments{
 \item{object}{A price index aggregation structure, as made by
@@ -17,11 +17,11 @@ Usually an aggregate price index as made by
 \item{period}{The time period used to price update the weights. The default
 uses the last period in \code{index}.}
 
+\item{...}{Further arguments passed to or used by methods.}
+
 \item{r}{Order of the generalized mean to update the weights. The default
 uses the order used to aggregate \code{index} if it's an aggregate index;
 otherwise, the default is 1 for an arithmetic index.}
-
-\item{...}{Further arguments passed to or used by methods.}
 }
 \value{
 A copy of \code{object} with price-updated weights using the index

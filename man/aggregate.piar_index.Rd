@@ -6,9 +6,9 @@
 \alias{aggregate.direct_piar_index}
 \title{Aggregate elemental price indexes}
 \usage{
-\method{aggregate}{chainable_piar_index}(x, pias, na.rm = FALSE, r = 1, contrib = TRUE, ...)
+\method{aggregate}{chainable_piar_index}(x, pias, ..., na.rm = FALSE, contrib = TRUE, r = 1)
 
-\method{aggregate}{direct_piar_index}(x, pias, na.rm = FALSE, r = 1, contrib = TRUE, ...)
+\method{aggregate}{direct_piar_index}(x, pias, ..., na.rm = FALSE, contrib = TRUE, r = 1)
 }
 \arguments{
 \item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
@@ -16,9 +16,13 @@
 \item{pias}{A price index aggregation structure or something that can be
 coerced into one. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
+\item{...}{Further arguments passed to or used by methods.}
+
 \item{na.rm}{Should missing values be removed? By default, missing values
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
 imputation.}
+
+\item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
 
 \item{r}{Order of the generalized mean to aggregate index values. 0 for a
 geometric index (the default for making elemental indexes), 1 for an
@@ -26,10 +30,6 @@ arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
-
-\item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
-
-\item{...}{Further arguments passed to or used by methods.}
 }
 \value{
 An aggregate price index that inherits from \code{\link{aggregate_piar_index}} and

@@ -51,8 +51,8 @@
 #' @family aggregation structure methods
 #' @export
 update.piar_aggregation_structure <- function(object, index,
-                                              period = end(index), r = NULL,
-                                              ...) {
+                                              period = end(index), ...,
+                                              r = NULL) {
   index <- as_index(index)
   period <- match.arg(as.character(period), index$time)
   if (is.null(r)) {

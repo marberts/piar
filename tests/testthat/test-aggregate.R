@@ -255,7 +255,7 @@ test_that("a fixed-based index aggregates correctly", {
   pias <- aggregation_structure(list(c("1", "1"), c("f1", "f2")), 1:2)
 
   epr_pop <- with(prices, elemental_index(pop_rel, period, ea))
-  epr_fx <- with(prices, elemental_index(fx_rel, period, ea, chain = FALSE))
+  epr_fx <- with(prices, elemental_index(fx_rel, period, ea, chainable = FALSE))
 
   index_pop <- aggregate(epr_pop, pias)
   index_fx <- aggregate(epr_fx, pias)

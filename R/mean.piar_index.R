@@ -60,8 +60,11 @@
 #'
 #' @family index methods
 #' @export
-mean.piar_index <- function(x, weights = NULL, window = 3L, na.rm = FALSE,
-                            r = 1, contrib = TRUE, ...) {
+mean.piar_index <- function(x, weights = NULL, ...,
+                            window = 3L, 
+                            na.rm = FALSE,
+                            contrib = TRUE,
+                            r = 1) {
   if (!is.null(weights)) {
     if (length(weights) != length(x$time) * length(x$levels)) {
       stop("'weights' must have a value for each index value in 'x'")
@@ -111,9 +114,8 @@ mean.piar_index <- function(x, weights = NULL, window = 3L, na.rm = FALSE,
 }
 
 #' @export
-mean.aggregate_piar_index <- function(x, weights = NULL, window = 3L,
-                                      na.rm = FALSE, r = 1, contrib = TRUE,
-                                      ...) {
+mean.aggregate_piar_index <- function(x, weights = NULL, ..., window = 3L,
+                                      na.rm = FALSE, r = 1, contrib = TRUE) {
   res <- NextMethod("mean")
   if (r != res$r) {
     res <- new_piar_index(

@@ -11,15 +11,15 @@
 \usage{
 as_index(x, ...)
 
-\method{as_index}{default}(x, chainable = TRUE, ...)
+\method{as_index}{default}(x, ..., chainable = TRUE)
 
-\method{as_index}{matrix}(x, chainable = TRUE, ...)
+\method{as_index}{matrix}(x, ..., chainable = TRUE)
 
-\method{as_index}{data.frame}(x, cols = NULL, chainable = TRUE, ...)
+\method{as_index}{data.frame}(x, cols = NULL, ..., chainable = TRUE)
 
-\method{as_index}{chainable_piar_index}(x, chainable = TRUE, ...)
+\method{as_index}{chainable_piar_index}(x, ..., chainable = TRUE)
 
-\method{as_index}{direct_piar_index}(x, chainable = FALSE, ...)
+\method{as_index}{direct_piar_index}(x, ..., chainable = FALSE)
 }
 \arguments{
 \item{x}{An object to coerce into a price index.}

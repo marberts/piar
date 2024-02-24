@@ -152,8 +152,8 @@ is_aggregation_structure <- function(x) {
 #' @importFrom stats weights
 #' @family aggregation structure methods
 #' @export
-weights.piar_aggregation_structure <- function(object, ea_only = TRUE,
-                                               na.rm = FALSE, ...) {
+weights.piar_aggregation_structure <- function(object, ..., ea_only = TRUE,
+                                               na.rm = FALSE) {
   if (ea_only) {
     return(object$weights)
   }
