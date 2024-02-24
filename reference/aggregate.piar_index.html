@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,10 +55,10 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for chainable_piar_index</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, r <span class="op">=</span> <span class="fl">1</span>, contrib <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">pias</span>, <span class="va">...</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, contrib <span class="op">=</span> <span class="cn">TRUE</span>, r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for direct_piar_index</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, r <span class="op">=</span> <span class="fl">1</span>, contrib <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">pias</span>, <span class="va">...</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, contrib <span class="op">=</span> <span class="cn">TRUE</span>, r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -72,10 +72,18 @@
 coerced into one. This can be made with <code><a href="aggregation_structure.html">aggregation_structure()</a></code>.</p></dd>
 
 
+<dt>...</dt>
+<dd><p>Further arguments passed to or used by methods.</p></dd>
+
+
 <dt>na.rm</dt>
 <dd><p>Should missing values be removed? By default, missing values
 are not removed. Setting <code>na.rm = TRUE</code> is equivalent to overall mean
 imputation.</p></dd>
+
+
+<dt>contrib</dt>
+<dd><p>Aggregate percent-change contributions in <code>x</code> (if any)?</p></dd>
 
 
 <dt>r</dt>
@@ -85,14 +93,6 @@ arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
-
-
-<dt>contrib</dt>
-<dd><p>Aggregate percent-change contributions in <code>x</code> (if any)?</p></dd>
-
-
-<dt>...</dt>
-<dd><p>Further arguments passed to or used by methods.</p></dd>
 
 </dl></div>
     <div class="section level2">

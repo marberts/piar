@@ -12,7 +12,7 @@ data frame."><meta property="og:image" content="https://marberts/github.io/piar/
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@ data frame.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for piar_aggregation_structure</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">x</span>, sparse <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for piar_aggregation_structure</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
@@ -71,14 +71,14 @@ data frame.</p>
 <code><a href="aggregation_structure.html">aggregation_structure()</a></code>.</p></dd>
 
 
+<dt>...</dt>
+<dd><p>Further arguments passed to or used by methods.</p></dd>
+
+
 <dt>sparse</dt>
 <dd><p>Should the result be a sparse matrix from <span class="pkg">Matrix</span>? This
 is faster for large aggregation structures. The default returns an ordinary
 dense matrix.</p></dd>
-
-
-<dt>...</dt>
-<dd><p>Further arguments passed to or used by methods.</p></dd>
 
 
 <dt>stringsAsFactors</dt>

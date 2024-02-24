@@ -12,7 +12,7 @@ price indexes, with optional percent-change contributions."><meta property="og:i
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,11 +68,11 @@ price indexes, with optional percent-change contributions.</p>
 <span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/gl.html" class="external-link">gl</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  ea <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/gl.html" class="external-link">gl</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  contrib <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span>,</span>
 <span>  chainable <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  r <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  <span class="va">...</span></span>
+<span>  contrib <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  r <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -107,11 +107,6 @@ default assumes that all price relatives belong to one elemental aggregate.</p><
 The default is equal weights.</p></dd>
 
 
-<dt>contrib</dt>
-<dd><p>Should percent-change contributions be calculated? The
-default does not calculate contributions.</p></dd>
-
-
 <dt>chainable</dt>
 <dd><p>Are the price relatives in <code>x</code> period-over-period
 relatives for a chained calculation (the default)? This should be
@@ -122,6 +117,11 @@ relatives for a chained calculation (the default)? This should be
 <dd><p>Should missing values be removed? By default, missing values
 are not removed. Setting <code>na.rm = TRUE</code> is equivalent to overall mean
 imputation.</p></dd>
+
+
+<dt>contrib</dt>
+<dd><p>Should percent-change contributions be calculated? The
+default does not calculate contributions.</p></dd>
 
 
 <dt>r</dt>

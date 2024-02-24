@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,10 +48,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.1" id="version-061">Version 0.6.1<a class="anchor" aria-label="anchor" href="#version-061"></a></h2>
-<p>There are several bug fixed in this version that make non-backwards compatible changes.</p>
+<h2 class="pkg-version" data-toc-text="0.7.0" id="version-070">Version 0.7.0<a class="anchor" aria-label="anchor" href="#version-070"></a></h2>
 <div class="section level3">
-<h3 id="improvements-0-6-1">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-6-1"></a></h3>
+<h3 id="significant-changes-0-7-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-7-0"></a></h3>
+<ul><li><p>Some arguments for <code><a href="../reference/elemental_index.html">elemental_index()</a></code>, <code><a href="../reference/as_index.html">as_index()</a></code>, <code>aggregate(index)</code>, <code>mean(index)</code>, <code>vcov(index)</code>, <code>update(aggregation_structure)</code>, and <code>weights(aggregation_structure)</code> now need to be named (e.g., <code>na.rm</code>, <code>contrib</code>). This helps to unify the signatures for several functions that had similar arguments in different positions. In all cases these are arguments that are not near the beginning of the function and should have probably been named anyways.</p></li>
+<li><p>There are several bug fixed in this version that make non-backwards compatible changes.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-0-7-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-7-0"></a></h3>
 <ul><li><p>Added examples for finding imputed index values to the vignette.</p></li>
 <li><p><code><a href="../reference/contrib.html">contrib()</a></code> gets a new argument <code>period</code> to control which time periods get included in the contributions matrix (as documented).</p></li>
 <li><p><code><a href="../reference/contrib.html">contrib()</a></code> gets a new argument <code>pad</code> to control how the contributions matrix is padded when products differ over time.</p></li>
@@ -59,14 +63,14 @@
 <li><p><code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> gets a new argument <code>contrib</code> to control if product contributions are aggregated over subperiods.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-6-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-1"></a></h3>
+<h3 id="bug-fixes-0-7-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0"></a></h3>
 <ul><li><p>The default for <code>ea_only</code> has changed to <code>TRUE</code> when calling <code>weights(aggregation_structure)</code> to fix a bug with the replacement method.</p></li>
 <li><p>Replacing an index value with <code>index[] &lt;- value</code> when <code>value</code> is also an index object now works correctly when <code>value</code> is recycled.</p></li>
 <li><p>Setting <code>stringsAsFactors = TRUE</code> in <code>as.data.frame(index)</code> now keeps the correct ordering of the factor levels.</p></li>
 <li><p><code>mean(index)</code> no longer returns an aggregate index when <code>r</code> differs from that used to make <code>index</code>.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="deprecations-0-6-1">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-0-6-1"></a></h3>
+<h3 id="deprecations-0-7-0">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-0-7-0"></a></h3>
 <ul><li>The <code>cols</code> argument for <code><a href="../reference/as_index.html">as_index()</a></code> is deprecated and will be removed in a future version.</li>
 </ul></div>
 </div>

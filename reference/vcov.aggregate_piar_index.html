@@ -12,7 +12,7 @@ sample of elemental aggregates."><meta property="og:image" content="https://marb
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@ sample of elemental aggregates.</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for aggregate_piar_index</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">repweights</span>, mse <span class="op">=</span> <span class="cn">TRUE</span>, sparse <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">repweights</span>, <span class="va">...</span>, mse <span class="op">=</span> <span class="cn">TRUE</span>, sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,6 +80,10 @@ bootstrap replicate weights with a row for each elemental aggregate and a
 column for each replicate.</p></dd>
 
 
+<dt>...</dt>
+<dd><p>Further arguments passed to or used by methods.</p></dd>
+
+
 <dt>mse</dt>
 <dd><p>Should variance be centered off the value of the index in
 <code>object</code> (the default), or the mean of the replicates?</p></dd>
@@ -89,10 +93,6 @@ column for each replicate.</p></dd>
 <dd><p>Use sparse matrices from <span class="pkg">Matrix</span> when aggregating the
 index. Faster for indexes with large aggregation structures. The default
 uses regular dense matrices.</p></dd>
-
-
-<dt>...</dt>
-<dd><p>Further arguments passed to or used by methods.</p></dd>
 
 </dl></div>
     <div class="section level2">
