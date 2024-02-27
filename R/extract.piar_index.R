@@ -1,8 +1,12 @@
 dim_indices <- function(x, i) {
-  if (!missing(i) && is.character(i)) {
-    names(x) <- x
+  if (missing(i)) {
+    return(seq_along(x))
   }
-  res <- match(x[i], x, incomparables = NA)
+  if (is.character(i)) {
+    res <- match(i, x, incomparables = NA)
+  } else {
+    res <- match(x[i], x, incomparables = NA)
+  }
   if (length(res) == 0L || anyNA(res)) {
     stop("subscript out of bounds")
   }
@@ -71,11 +75,16 @@ dim_indices <- function(x, i) {
 #' @family index methods
 #' @export
 `[.piar_index` <- function(x, i, j, ...) {
-  levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
-  x$index <- lapply(x$index[periods], `[`, levels)
-  x$contrib <- lapply(x$contrib[periods], `[`, levels)
-  x$levels <- x$levels[levels]
+  if (missing(i)) {
+    x$index <- x$index[periods]
+    x$contrib <- x$contrib[periods]
+  } else {
+    levels <- dim_indices(x$levels, i)
+    x$index <- lapply(x$index[periods], `[`, levels)
+    x$contrib <- lapply(x$contrib[periods], `[`, levels)
+    x$levels <- x$levels[levels]
+  }
   x$time <- x$time[periods]
   validate_piar_index(x)
 }
@@ -112,12 +121,16 @@ dim_indices <- function(x, i) {
       x$contrib[[periods[t]]][levels] <- value$contrib[[t]]
     }
   } else {
-    # do all the replacements with a matrix of x so that value is recycled
-    res <- as.matrix(x)
-    res[levels, periods] <- as.numeric(value)
-    for (t in periods) {
-      x$index[[t]][levels] <- res[levels, t]
-      x$contrib[[t]][levels] <- list(numeric(0L))
+    value <- as.numeric(value)
+    n <- length(value)
+    m <- length(levels)
+    if ((m * length(periods)) %% n != 0) {
+      stop("number of items to replace is not a multiple of replacement length")
+    }
+    s <- seq.int(0, m - 1L)
+    for (t in seq_along(periods)) {
+      x$index[[periods[t]]][levels] <- value[(s + (t - 1L) * m) %% n + 1]
+      x$contrib[[periods[t]]][levels] <- list(numeric(0L))
     }
   }
   validate_piar_index(x)

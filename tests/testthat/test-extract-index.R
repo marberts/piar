@@ -121,6 +121,12 @@ test_that("replacement methods work with a vector", {
   )
 
   # recycling should still happen
+  epr2[1:3, ] <- 8:9
+  expect_equal(
+    epr2[1:3, ],
+    as_index(matrix(8:9, 3, 2, dimnames = list(11:13, 1:2)))
+  )
+  
   epr[1, c(1, 2, 1)] <- setNames(1:3, letters[1:3])
   expect_equal(epr[1, ], as_index(matrix(3:2, 1, dimnames = list("11", 1:2))))
 

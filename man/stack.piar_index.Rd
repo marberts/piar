@@ -36,6 +36,10 @@ time period.
 These methods can be used in a map-reduce to make an index with multiple
 aggregation structures (like a Paasche index).
 }
+\note{
+It may be necessary to use \code{rebase()} prior to stacking fixed-based price
+indexes to ensure they have the same base period.
+}
 \examples{
 prices <- data.frame(
   rel = 1:8,
