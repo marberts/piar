@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9014</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,7 +91,7 @@ fixed-base index. If <code>x</code> inherits from <code><a href="piar_index.html
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The extraction methods treat <code>x</code> like a matrix of index values with
+    <p>The extraction method treat <code>x</code> like a matrix of index values with
 (named) rows for each <code>level</code> and columns for each <code>period</code> in
 <code>x</code>. Unlike a matrix, dimensions are never dropped as subscripting
 <code>x</code> always returns an index object. This means that subscripting with a
@@ -105,7 +105,9 @@ percent-change contributions of <code>x[i, j]</code> are replaced with those for
 corresponding levels of <code>value</code>. If <code>value</code> is not an index, then it is
 coerced to a numeric vector and behaves the same as replacing values in a
 matrix. Note that replacing the values of an index will remove the
-corresponding percent-change contributions (if any).</p>
+corresponding percent-change contributions (if any). Unlike extraction, it
+is possible to replace value in <code>x</code> using a logical matrix or a two-column
+matrix of indices.</p>
 <p>Subscripting an aggregate index cannot generally preserve the aggregation
 structure if any levels are removed or rearranged, and in this case the
 resulting index is <em>not</em> an aggregate index. Similarly, replacing the

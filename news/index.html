@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9013</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9014</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,8 @@
 <ul><li><p>Added examples for finding imputed index values to the vignette.</p></li>
 <li><p><code><a href="../reference/contrib.html">contrib()</a></code> gets a new argument <code>period</code> to control which time periods get included in the contributions matrix (as documented).</p></li>
 <li><p><code><a href="../reference/contrib.html">contrib()</a></code> gets a new argument <code>pad</code> to control how the contributions matrix is padded when products differ over time.</p></li>
-<li><p>Added <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code>, <code>is.na&lt;-()</code>, and <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code> methods to find and replace missing values in an index object.</p></li>
+<li><p>Added <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code> and <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code> methods to find missing values in an index object.</p></li>
+<li><p><code>index[i] &lt;- value</code> now works when <code>i</code> is a matrix.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> gets a new argument <code>contrib</code> to control if product contributions are aggregated over subperiods.</p></li>
 </ul></div>
 <div class="section level3">
