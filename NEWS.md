@@ -22,8 +22,10 @@ included in the contributions matrix (as documented).
 - `contrib()` gets a new argument `pad` to control how the contributions matrix
 is padded when products differ over time.
 
-- Added `is.na()`, `is.na<-()`, and `anyNA()` methods to find and replace
-missing values in an index object.
+- Added `is.na()` and `anyNA()` methods to find missing values in an index
+object.
+
+- `index[i] <- value` now works when `i` is a matrix.
 
 - `mean()` gets a new argument `contrib` to control if product contributions
 are aggregated over subperiods.

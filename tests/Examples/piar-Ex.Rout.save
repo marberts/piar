@@ -608,7 +608,7 @@ b 2.828427 6.928203
 > 
 > ### Name: is.na.piar_index
 > ### Title: Missing values in a price index
-> ### Aliases: is.na.piar_index anyNA.piar_index is.na<-.piar_index
+> ### Aliases: is.na.piar_index anyNA.piar_index
 > 
 > ### ** Examples
 > 
@@ -623,7 +623,7 @@ b 2.828427 6.928203
 > 
 > # Carry forward imputation
 > 
-> is.na(index) <- 1
+> index[is.na(index)] <- 1
 > index
 Period-over-period price index for 2 levels over 3 time periods 
   1 2 3

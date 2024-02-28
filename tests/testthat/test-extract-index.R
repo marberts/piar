@@ -92,7 +92,7 @@ test_that("replacement methods work with an index", {
   expect_error(epr[1:3]<- epr[1:2])
   expect_error(epr[NA] <- epr[1])
   expect_error(epr[, NA] <- epr[1])
-  expect_error(epr[inteeger(0)] <- epr[1])
+  expect_error(epr[integer(0)] <- epr[1])
   expect_error(epr[1] <- chain(epr[1]))
   epr <- chain(epr)
   expect_error(epr[1] <- epr2[1])
@@ -150,5 +150,26 @@ test_that("replacement methods work with a vector", {
   expect_error(epr[NA] <- 1)
   expect_error(epr[1, NA] <- 1)
   expect_error(epr[5] <- 1)
+  expect_error(epr[1] <- numeric(0))
+})
+
+test_that("replacement method works with a matrix", {
+  epr3 <- replace(epr, epr > 2, 1:2)
+  expect_equal(
+    as.matrix(epr3),
+    matrix(c(sqrt(2), 1, 2, NA, 1, NA, NA, 2), 4, dimnames = list(11:14, 1:2))
+  )
+  expect_equal(contrib(epr3), replace(contrib(epr), 3:4, 0))
+  
+  epr4 <- replace(
+    epr3, matrix(c("11", "11", "12", "12", "2", "2", "2", "2"), 4), 1:2
+  )
+  expect_equal(as.matrix(epr4), replace(as.matrix(epr3), 5:6, 2))
+  expect_equal(contrib(epr4), contrib(epr3))
+  
+  expect_error(epr[is.na(epr)] <- numeric(0))
+  expect_error(epr[matrix(TRUE, 3, 3)] <- 1)
+  expect_error(epr[matrix(1, nrow = 1, ncol = 3)] <- 1)
+  expect_error(epr[is.na(epr)] <- 1:2)
 })
 

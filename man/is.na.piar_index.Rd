@@ -3,32 +3,25 @@
 \name{is.na.piar_index}
 \alias{is.na.piar_index}
 \alias{anyNA.piar_index}
-\alias{is.na<-.piar_index}
 \title{Missing values in a price index}
 \usage{
 \method{is.na}{piar_index}(x)
 
 \method{anyNA}{piar_index}(x, recursive)
-
-\method{is.na}{piar_index}(x) <- value
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
 \item{recursive}{Ignored.}
-
-\item{value}{A numeric vector, or something that can be coerced to one, of
-replacement values.}
 }
 \value{
 \code{is.na()} returns a logical matrix, with a row for each level of \code{x} and a
 columns for each time period, that indicates which index values are missing.
-The replacement method replaces these values with \code{value}.
 
 \code{anyNA()} returns \code{TRUE} if any index values are missing.
 }
 \description{
-Identify and replace missing values in price index.
+Identify missing values in a price index.
 }
 \examples{
 index <- as_index(matrix(c(1, 2, 3, NA, 5, NA), 2))
@@ -38,7 +31,7 @@ is.na(index)
 
 # Carry forward imputation
 
-is.na(index) <- 1
+index[is.na(index)] <- 1
 index
 
 }

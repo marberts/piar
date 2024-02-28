@@ -16,10 +16,10 @@ test_that("is.na works", {
 
 test_that("replacement method works", {
   epr2 <- epr
-  is.na(epr2) <- 1:3
+  epr2[is.na(epr2)] <- 1:3
   m <- as.matrix(epr)
   expect_equal(as.matrix(epr2), replace(m, is.na(m), 1:3))
   expect_equal(contrib(epr, "14"), contrib(epr2, "14"))
   
-  is.na(epr2) <- 1
+  epr2[is.na(epr2)] <- numeric(0)
 })

@@ -29,7 +29,7 @@ fixed-base index. If \code{x} inherits from \code{\link{aggregate_piar_index}} t
 Methods to extract and replace index values like a matrix.
 }
 \details{
-The extraction methods treat \code{x} like a matrix of index values with
+The extraction method treat \code{x} like a matrix of index values with
 (named) rows for each \code{level} and columns for each \code{period} in
 \code{x}. Unlike a matrix, dimensions are never dropped as subscripting
 \code{x} always returns an index object. This means that subscripting with a
@@ -44,7 +44,9 @@ percent-change contributions of \code{x[i, j]} are replaced with those for the
 corresponding levels of \code{value}. If \code{value} is not an index, then it is
 coerced to a numeric vector and behaves the same as replacing values in a
 matrix. Note that replacing the values of an index will remove the
-corresponding percent-change contributions (if any).
+corresponding percent-change contributions (if any). Unlike extraction, it
+is possible to replace value in \code{x} using a logical matrix or a two-column
+matrix of indices.
 
 Subscripting an aggregate index cannot generally preserve the aggregation
 structure if any levels are removed or rearranged, and in this case the
