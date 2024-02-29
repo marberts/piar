@@ -15,7 +15,7 @@
 \item{n}{See \code{\link[=head]{head()}}/\code{\link[=tail]{tail()}}. The default takes the
 first/last 6 levels of \code{x}.}
 
-\item{...}{Further arguments passed to or used by methods.}
+\item{...}{Not used.}
 }
 \value{
 A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a

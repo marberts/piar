@@ -30,7 +30,7 @@
 #' @param sparse Use sparse matrices from \pkg{Matrix} when aggregating the
 #' index. Faster for indexes with large aggregation structures. The default
 #' uses regular dense matrices.
-#' @param ... Further arguments passed to or used by methods.
+#' @param ... Not used.
 #'
 #' @returns
 #' A matrix of variances with a row for each upper-level index and a

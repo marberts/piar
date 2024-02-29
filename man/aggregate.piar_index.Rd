@@ -16,7 +16,7 @@
 \item{pias}{A price index aggregation structure or something that can be
 coerced into one. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{...}{Further arguments passed to or used by methods.}
+\item{...}{Not used.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
@@ -95,7 +95,7 @@ For large indexes it can be much faster to turn the aggregation structure
 into an aggregation matrix with
 \code{\link[=as.matrix.piar_aggregation_structure]{as.matrix()}}, then aggregate
 elemental indexes as a matrix operation when there are no missing
-values---see the examples for details.
+values. See the examples for details.
 }
 \examples{
 prices <- data.frame(

@@ -5,7 +5,7 @@
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param n See [head()]/[tail()]. The default takes the
 #' first/last 6 levels of `x`.
-#' @param ... Further arguments passed to or used by methods.
+#' @param ... Not used.
 #'
 #' @returns
 #' A price index that inherits from [`chainable_piar_index`] if `x` is a

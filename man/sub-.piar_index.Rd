@@ -15,7 +15,7 @@
 \item{i, j}{Indices for the levels and time periods of a price index. See
 details.}
 
-\item{...}{Ignored.}
+\item{...}{Not used.}
 
 \item{value}{A numeric vector or price index. See details.}
 }

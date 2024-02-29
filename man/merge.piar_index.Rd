@@ -13,7 +13,7 @@
 is a period-over-period index then \code{y} is coerce into a chainable
 index; otherwise, \code{y} is coerced into a direct index.}
 
-\item{...}{Further arguments passed to or used by methods.}
+\item{...}{Not used.}
 }
 \value{
 A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a

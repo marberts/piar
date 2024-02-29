@@ -76,7 +76,7 @@ aggregate_contrib <- function(r) {
 #' a Paasche index). Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
-#' @param ... Further arguments passed to or used by methods.
+#' @param ... Not used.
 #'
 #' @returns
 #' An aggregate price index that inherits from [`aggregate_piar_index`] and
@@ -87,7 +87,7 @@ aggregate_contrib <- function(r) {
 #' into an aggregation matrix with
 #' [`as.matrix()`][as.matrix.piar_aggregation_structure], then aggregate
 #' elemental indexes as a matrix operation when there are no missing
-#' values---see the examples for details.
+#' values. See the examples for details.
 #'
 #' @references
 #' Balk, B. M. (2008). *Price and Quantity Index Numbers*.
@@ -173,7 +173,7 @@ aggregate.piar_index <- function(x, pias, ...,
     # get rid of any NULL contributions
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     for (i in which(is.na(rel[[1L]]))) {
-      con[[1L]][[i]][] <- NA
+      con[[1L]][[i]][] <- NA_real_
     }
     
     # loop over each level in pias from the bottom up and aggregate

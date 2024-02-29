@@ -14,7 +14,7 @@ default is equal weights. It is usually easiest to specify these weights as
 a matrix with a row for each index value in \code{x} and a column for each
 time period.}
 
-\item{...}{Further arguments passed to or used by methods.}
+\item{...}{Not used.}
 
 \item{window}{A positive integer giving the size of the window used to
 average index values across subperiods. The default (3) turns a monthly

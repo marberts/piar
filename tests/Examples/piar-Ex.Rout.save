@@ -286,10 +286,9 @@ b 2.828427 6.928203
 > 
 > ### Name: chain
 > ### Title: Chain and rebase a price index
-> ### Aliases: chain chain.default chain.chainable_piar_index
-> ###   chain.direct_piar_index unchain unchain.default
-> ###   unchain.chainable_piar_index unchain.direct_piar_index rebase
-> ###   rebase.default rebase.chainable_piar_index rebase.direct_piar_index
+> ### Aliases: chain chain.default chain.chainable_piar_index unchain 
+> ###   unchain.default unchain.direct_piar_index rebase rebase.default
+> ###   rebase.direct_piar_index
 > 
 > ### ** Examples
 > 

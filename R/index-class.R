@@ -244,7 +244,7 @@ levels.piar_index <- function(x) {
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param value A character vector, or something that can be coerced into one,
 #' giving the replacement time periods for `x`.
-#' @param ... Further arguments passed to or used by methods.
+#' @param ... Not used.
 #'
 #' @returns
 #' `time()` return a character vector with the time periods for a price index.

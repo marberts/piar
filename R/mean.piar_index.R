@@ -37,7 +37,7 @@
 #' a Paasche index). Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
-#' @param ... Further arguments passed to or used by methods.
+#' @param ... Not used.
 #'
 #' @returns
 #' A price index with the same class as `x`. If `x` is an aggregate index

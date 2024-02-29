@@ -4,7 +4,7 @@
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param stringsAsFactors See [as.data.frame()].
-#' @param ... Further arguments passed to or used by methods.
+#' @param ... Not used.
 #'
 #' @returns
 #' `as.data.frame()` returns a data frame with three columns: `period`, `level`,
@@ -56,5 +56,5 @@ as.matrix.piar_index <- function(x, ...) {
 
 #' @export
 as.double.piar_index <- function(x, ...) {
-  as.double(as.matrix(x), ...)
+  as.double(as.matrix(x))
 }

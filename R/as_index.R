@@ -14,7 +14,7 @@
 #' The data frame method for `as_index()` is best understood as reversing
 #' the effect of [`as.data.frame()`][as.data.frame.piar_index] on an
 #' index object. It constructs a matrix by taking the levels of
-#' `x[[1]]` as columns and the levels of `x[[1]]` as rows
+#' `x[[1]]` as columns and the levels of `x[[2]]` as rows
 #' (coercing to a factor if necessary). It then populates this matrix with the
 #' corresponding values in `x[[3]]`, and uses the matrix method for
 #' `as_index()`.
@@ -68,7 +68,7 @@ as_index <- function(x, ...) {
 #' @rdname as_index
 #' @export
 as_index.default <- function(x, ..., chainable = TRUE) {
-  as_index(as.matrix(x), chainable, ...)
+  as_index(as.matrix(x), ..., chainable = chainable)
 }
 
 #' @rdname as_index
@@ -112,7 +112,7 @@ as_index.data.frame <- function(x, cols = NULL, ..., chainable = TRUE) {
     dimnames = list(levels, time)
   )
   res[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
-  as_index(res, chainable, ...)
+  as_index(res, ..., chainable = chainable)
 }
 
 #' @rdname as_index

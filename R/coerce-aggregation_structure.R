@@ -9,7 +9,7 @@
 #' is faster for large aggregation structures. The default returns an ordinary
 #' dense matrix.
 #' @param stringsAsFactors See [as.data.frame()].
-#' @param ... Further arguments passed to or used by methods.
+#' @param ... Not used.
 #'
 #' @returns
 #' `as.matrix()` represents an aggregation structure as a matrix,
@@ -50,7 +50,7 @@
 as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
   nea <- length(x$eas)
   if (x$height == 1L) {
-    res <- matrix(numeric(0), ncol = nea, dimnames = list(NULL, x$eas))
+    res <- matrix(numeric(0L), ncol = nea, dimnames = list(NULL, x$eas))
     if (sparse) {
       return(Matrix::Matrix(res, sparse = TRUE))
     } else {

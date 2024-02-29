@@ -114,7 +114,7 @@ is_aggregation_structure <- function(x) {
 #' not removed.
 #' @param value A numeric vector of weights for the elemental aggregates of
 #' `object`.
-#' @param ... Further arguments passed to or used by methods.
+#' @param ... Not used.
 #'
 #' @returns
 #' `weights()` returns a named vector of weights for the elemental aggregates.

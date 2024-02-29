@@ -58,7 +58,7 @@ using the matrix method.
 The data frame method for \code{as_index()} is best understood as reversing
 the effect of \code{\link[=as.data.frame.piar_index]{as.data.frame()}} on an
 index object. It constructs a matrix by taking the levels of
-\code{x[[1]]} as columns and the levels of \code{x[[1]]} as rows
+\code{x[[1]]} as columns and the levels of \code{x[[2]]} as rows
 (coercing to a factor if necessary). It then populates this matrix with the
 corresponding values in \code{x[[3]]}, and uses the matrix method for
 \code{as_index()}.

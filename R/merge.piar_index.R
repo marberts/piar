@@ -11,7 +11,7 @@
 #' @param y A price index, or something that can coerced into one. If `x`
 #' is a period-over-period index then `y` is coerce into a chainable
 #' index; otherwise, `y` is coerced into a direct index.
-#' @param ... Further arguments passed to or used by methods.
+#' @param ... Not used.
 #'
 #' @returns
 #' A price index that inherits from [`chainable_piar_index`] if `x` is a

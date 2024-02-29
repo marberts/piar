@@ -12,7 +12,7 @@
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
-\item{...}{Further arguments passed to or used by methods.}
+\item{...}{Not used.}
 
 \item{stringsAsFactors}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
 }

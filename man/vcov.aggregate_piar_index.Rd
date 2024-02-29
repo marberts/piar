@@ -19,7 +19,7 @@ rewritten by Steve Martin.
 bootstrap replicate weights with a row for each elemental aggregate and a
 column for each replicate.}
 
-\item{...}{Further arguments passed to or used by methods.}
+\item{...}{Not used.}
 
 \item{mse}{Should variance be centered off the value of the index in
 \code{object} (the default), or the mean of the replicates?}

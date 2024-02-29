@@ -17,7 +17,7 @@ Usually an aggregate price index as made by
 \item{period}{The time period used to price update the weights. The default
 uses the last period in \code{index}.}
 
-\item{...}{Further arguments passed to or used by methods.}
+\item{...}{Not used.}
 
 \item{r}{Order of the generalized mean to update the weights. The default
 uses the order used to aggregate \code{index} if it's an aggregate index;
