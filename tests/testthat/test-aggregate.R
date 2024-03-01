@@ -186,7 +186,7 @@ test_that("a fixed-sample index aggregates correctly", {
   fs_epr <- with(
     fs_prices,
     elemental_index(price_relative(price, period, business),
-                    period, classification, w = weight, contrib = TRUE)
+                    period, classification, weights = weight, contrib = TRUE)
   )
 
   fs_pias <- with(

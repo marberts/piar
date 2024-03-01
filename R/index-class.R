@@ -355,3 +355,12 @@ Ops.piar_index <- function(e1, e2) {
 Summary.piar_index <- function(..., na.rm) {
   stop(gettextf("'%s' not meaningful for index objects", .Generic))
 }
+
+# These would make split.default work.
+# length.piar_index <- function(x) {
+#   length(x$levels)
+# }
+
+# `length<-.piar_index` <- function(x, value) {
+#   stop("cannot change the length of an index object")
+# }

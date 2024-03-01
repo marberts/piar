@@ -87,7 +87,7 @@ as.data.frame.piar_aggregation_structure <- function(x, ...,
     col.names = colnames,
     stringsAsFactors = stringsAsFactors
   )
-  res$weight <- x$weight
+  res$weight <- x$weights
   res
 }
 
