@@ -13,7 +13,7 @@
 is a period-over-period index then \code{y} is coerce into a chainable
 index; otherwise, \code{y} is coerced into a direct index.}
 
-\item{...}{Not used.}
+\item{...}{Not currently used.}
 }
 \value{
 A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a
@@ -60,6 +60,7 @@ Other index methods:
 \code{\link{is.na.piar_index}()},
 \code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
+\code{\link{split.piar_index}()},
 \code{\link{stack.piar_index}()},
 \code{\link{time.piar_index}()},
 \code{\link{vcov.aggregate_piar_index}()}

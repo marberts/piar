@@ -16,7 +16,7 @@ weights(object) <- value
 \item{object}{A price index aggregation structure, as made by
 \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{...}{Not used.}
+\item{...}{Not currently used.}
 
 \item{ea_only}{Should weights be returned for only the elemental aggregates
 (the default)? Setting to \code{FALSE} gives the weights for the entire

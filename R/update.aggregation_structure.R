@@ -12,7 +12,7 @@
 #' @param r Order of the generalized mean to update the weights. The default
 #' uses the order used to aggregate `index` if it's an aggregate index;
 #' otherwise, the default is 1 for an arithmetic index.
-#' @param ... Not used.
+#' @param ... Not currently used.
 #'
 #' @returns
 #' A copy of `object` with price-updated weights using the index

@@ -76,7 +76,7 @@ aggregate_contrib <- function(r) {
 #' a Paasche index). Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
-#' @param ... Not used.
+#' @param ... Not currently used.
 #'
 #' @returns
 #' An aggregate price index that inherits from [`aggregate_piar_index`] and

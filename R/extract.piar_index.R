@@ -123,7 +123,7 @@ replace_numeric <- function(x, i, j, value) {
 #' @param i,j Indices for the levels and time periods of a price index. See
 #' details.
 #' @param value A numeric vector or price index. See details.
-#' @param ... Not used.
+#' @param ... Not currently used.
 #'
 #' @returns
 #' A price index that inherits from [`chainable_piar_index`] if `x` is a

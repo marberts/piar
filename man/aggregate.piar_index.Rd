@@ -16,7 +16,7 @@
 \item{pias}{A price index aggregation structure or something that can be
 coerced into one. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{...}{Not used.}
+\item{...}{Not currently used.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
@@ -142,6 +142,7 @@ Other index methods:
 \code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
 \code{\link{merge.piar_index}()},
+\code{\link{split.piar_index}()},
 \code{\link{stack.piar_index}()},
 \code{\link{time.piar_index}()},
 \code{\link{vcov.aggregate_piar_index}()}

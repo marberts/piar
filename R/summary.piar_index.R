@@ -5,7 +5,7 @@
 #' these are also summarized as a matrix.
 #'
 #' @param object A price index, as made by, e.g., [elemental_index()].
-#' @param ... Further arguments passed to or used by methods.
+#' @param ... Additional arguments passed to [`summary.matrix()`].
 #'
 #' @returns
 #' A list of five-number summaries.
@@ -32,7 +32,7 @@ summary.piar_index <- function(object, ...) {
   res$contrib <- if (has_contrib(object)) {
     contrib <- lapply(object$contrib, unlist, use.names = FALSE)
     names(contrib) <- object$time
-    summary(do.call(cbind, contrib, ...))
+    summary(do.call(cbind, contrib), ...)
   }
   structure(res, class = "piar_index_summary")
 }

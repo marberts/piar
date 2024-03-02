@@ -4,7 +4,7 @@
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param stringsAsFactors See [as.data.frame()].
-#' @param ... Not used.
+#' @param ... Not currently used.
 #'
 #' @returns
 #' `as.data.frame()` returns a data frame with three columns: `period`, `level`,

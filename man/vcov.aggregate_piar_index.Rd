@@ -19,7 +19,7 @@ rewritten by Steve Martin.
 bootstrap replicate weights with a row for each elemental aggregate and a
 column for each replicate.}
 
-\item{...}{Not used.}
+\item{...}{Not currently used.}
 
 \item{mse}{Should variance be centered off the value of the index in
 \code{object} (the default), or the mean of the replicates?}
@@ -102,6 +102,7 @@ Other index methods:
 \code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
 \code{\link{merge.piar_index}()},
+\code{\link{split.piar_index}()},
 \code{\link{stack.piar_index}()},
 \code{\link{time.piar_index}()}
 }

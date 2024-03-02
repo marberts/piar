@@ -14,7 +14,7 @@ default is equal weights. It is usually easiest to specify these weights as
 a matrix with a row for each index value in \code{x} and a column for each
 time period.}
 
-\item{...}{Not used.}
+\item{...}{Not currently used.}
 
 \item{window}{A positive integer giving the size of the window used to
 average index values across subperiods. The default (3) turns a monthly
@@ -86,6 +86,7 @@ Other index methods:
 \code{\link{is.na.piar_index}()},
 \code{\link{levels.piar_index}()},
 \code{\link{merge.piar_index}()},
+\code{\link{split.piar_index}()},
 \code{\link{stack.piar_index}()},
 \code{\link{time.piar_index}()},
 \code{\link{vcov.aggregate_piar_index}()}

@@ -286,7 +286,7 @@ b 2.828427 6.928203
 > 
 > ### Name: chain
 > ### Title: Chain and rebase a price index
-> ### Aliases: chain chain.default chain.chainable_piar_index unchain 
+> ### Aliases: chain chain.default chain.chainable_piar_index unchain
 > ###   unchain.default unchain.direct_piar_index rebase rebase.default
 > ###   rebase.direct_piar_index
 > 
@@ -720,6 +720,49 @@ d 2.828427 6.928203
 > 
 > 
 > cleanEx()
+> nameEx("split.piar_index")
+> ### * split.piar_index
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: split.piar_index
+> ### Title: Split an index into groups
+> ### Aliases: split.piar_index split<-.piar_index
+> 
+> ### ** Examples
+> 
+> index <- as_index(matrix(1:6, 2))
+> 
+> split(index, 1:2)
+$`1`
+Period-over-period price index for 1 levels over 3 time periods 
+  1 2 3
+1 1 3 5
+
+$`2`
+Period-over-period price index for 1 levels over 3 time periods 
+  1 2 3
+2 2 4 6
+
+> 
+> split(index, c(1, 1, 2), margin = "time")
+$`1`
+Period-over-period price index for 2 levels over 2 time periods 
+  1 2
+1 1 3
+2 2 4
+
+$`2`
+Period-over-period price index for 2 levels over 1 time periods 
+  3
+1 5
+2 6
+
+> 
+> 
+> 
+> 
+> cleanEx()
 > nameEx("stack.piar_index")
 > ### * stack.piar_index
 > 
@@ -1000,7 +1043,7 @@ top 0.007818832 0.003929299
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.111 0.008 0.119 0 0 
+Time elapsed:  0.119 0.004 0.124 0 0 
 > grDevices::dev.off()
 null device 
           1 

@@ -21,7 +21,7 @@ time(x) <- value
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
-\item{...}{Not used.}
+\item{...}{Not currently used.}
 
 \item{value}{A character vector, or something that can be coerced into one,
 giving the replacement time periods for \code{x}.}
@@ -48,6 +48,7 @@ Other index methods:
 \code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
 \code{\link{merge.piar_index}()},
+\code{\link{split.piar_index}()},
 \code{\link{stack.piar_index}()},
 \code{\link{vcov.aggregate_piar_index}()}
 }

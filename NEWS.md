@@ -9,7 +9,7 @@ arguments in different positions. In all cases these are arguments that are
 not near the beginning of the function and should have probably been named
 anyways.
 
-- There are several bug fixed in this version that make non-backwards compatible
+- There are several bug fixes in this version that make non-backwards compatible
 changes.
 
 ## Improvements
@@ -29,6 +29,8 @@ object.
 
 - `mean()` gets a new argument `contrib` to control if product contributions
 are aggregated over subperiods.
+
+- Added a `split()` method for index objects.
 
 ## Bug fixes
 

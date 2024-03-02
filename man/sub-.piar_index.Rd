@@ -15,7 +15,7 @@
 \item{i, j}{Indices for the levels and time periods of a price index. See
 details.}
 
-\item{...}{Not used.}
+\item{...}{Not currently used.}
 
 \item{value}{A numeric vector or price index. See details.}
 }
@@ -86,6 +86,7 @@ Other index methods:
 \code{\link{levels.piar_index}()},
 \code{\link{mean.piar_index}()},
 \code{\link{merge.piar_index}()},
+\code{\link{split.piar_index}()},
 \code{\link{stack.piar_index}()},
 \code{\link{time.piar_index}()},
 \code{\link{vcov.aggregate_piar_index}()}

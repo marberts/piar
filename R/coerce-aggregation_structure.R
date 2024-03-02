@@ -9,7 +9,7 @@
 #' is faster for large aggregation structures. The default returns an ordinary
 #' dense matrix.
 #' @param stringsAsFactors See [as.data.frame()].
-#' @param ... Not used.
+#' @param ... Not currently used.
 #'
 #' @returns
 #' `as.matrix()` represents an aggregation structure as a matrix,
