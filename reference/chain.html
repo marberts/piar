@@ -20,7 +20,7 @@ in the new base period."><meta property="og:image" content="https://marberts/git
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9018</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,8 +135,7 @@ from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
 level; this is roughly the same as
 <code>t(apply(as.matrix(x), 1, cumprod)) * link</code>. Unchaining does the opposite,
 so these are inverse operations. Note that unchaining a period-over-period
-index (i.e., when <code>is_chainable_index(x) == TRUE</code>) does nothing, as does
-chaining a fixed-base index (i.e., when <code>is_chainable_index(x) == FALSE</code>).</p>
+index does nothing, as does chaining a fixed-base index.</p>
 <p>Rebasing a fixed-base index divides the values for each level of this index
 by the corresponding values for each level in the new base period. It's
 roughly the same as <code>as.matrix(x) / base</code>. Like unchaining, rebasing a
@@ -156,6 +155,7 @@ an index, as it's not usually possible to update them correctly.</p>
 <code><a href="levels.piar_index.html">levels.piar_index</a>()</code>,
 <code><a href="mean.piar_index.html">mean.piar_index</a>()</code>,
 <code><a href="merge.piar_index.html">merge.piar_index</a>()</code>,
+<code><a href="split.piar_index.html">split.piar_index</a>()</code>,
 <code><a href="stack.piar_index.html">stack.piar_index</a>()</code>,
 <code><a href="time.piar_index.html">time.piar_index</a>()</code>,
 <code><a href="vcov.aggregate_piar_index.html">vcov.aggregate_piar_index</a>()</code></p></div>
@@ -163,42 +163,32 @@ an index, as it's not usually possible to update them correctly.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">prices</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  rel <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>,</span></span>
-<span class="r-in"><span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, each <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  ea <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># A simple period-over-period elemental index</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">(</span><span class="va">epr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">prices</span>, <span class="fu"><a href="elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">rel</span>, <span class="va">period</span>, <span class="va">ea</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Period-over-period price index for 2 levels over 2 time periods </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          1        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a 1.732051 5.916080</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b 2.828427 6.928203</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="as_index.html">as_index</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Make period 0 the fixed base period</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">chain</span><span class="op">(</span><span class="va">epr</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-base price index for 2 levels over 2 time periods </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          1        2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a 1.732051 10.24695</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b 2.828427 19.59592</span>
+<span class="r-in"><span><span class="fu">chain</span><span class="op">(</span><span class="va">index</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-base price index for 3 levels over 3 time periods </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1  2   3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1  4  28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 2 10  80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 3 18 162</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Chaining and unchaining reverse each other</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">epr</span>, <span class="fu">unchain</span><span class="op">(</span><span class="fu">chain</span><span class="op">(</span><span class="va">epr</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="va">index</span>, <span class="fu">unchain</span><span class="op">(</span><span class="fu">chain</span><span class="op">(</span><span class="va">index</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Change the base period to period 2 (note the</span></span></span>
 <span class="r-in"><span><span class="co"># loss of information for period 0)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">epr</span> <span class="op">&lt;-</span> <span class="fu">chain</span><span class="op">(</span><span class="va">epr</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">rebase</span><span class="op">(</span><span class="va">epr</span>, <span class="va">epr</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-base price index for 2 levels over 2 time periods </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> a 0.1690309 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> b 0.1443376 1</span>
+<span class="r-in"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu">chain</span><span class="op">(</span><span class="va">index</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">rebase</span><span class="op">(</span><span class="va">index</span>, <span class="va">index</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-base price index for 3 levels over 3 time periods </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           1 2 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.2500000 1 7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.2000000 1 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.1666667 1 9</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9018</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@ coerced into one. This can be made with <code><a href="aggregation_structure.htm
 
 
 <dt>...</dt>
-<dd><p>Not used.</p></dd>
+<dd><p>Not currently used.</p></dd>
 
 
 <dt>na.rm</dt>
@@ -175,6 +175,7 @@ International Monetary Fund.</p>
 <code><a href="levels.piar_index.html">levels.piar_index</a>()</code>,
 <code><a href="mean.piar_index.html">mean.piar_index</a>()</code>,
 <code><a href="merge.piar_index.html">merge.piar_index</a>()</code>,
+<code><a href="split.piar_index.html">split.piar_index</a>()</code>,
 <code><a href="stack.piar_index.html">stack.piar_index</a>()</code>,
 <code><a href="time.piar_index.html">time.piar_index</a>()</code>,
 <code><a href="vcov.aggregate_piar_index.html">vcov.aggregate_piar_index</a>()</code></p></div>
@@ -196,7 +197,7 @@ International Monetary Fund.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Calculate Jevons elemental indexes</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">(</span><span class="va">epr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">prices</span>, <span class="fu"><a href="elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">rel</span>, <span class="va">period</span>, <span class="va">ea</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">elemental</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">prices</span>, <span class="fu"><a href="elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">rel</span>, <span class="va">period</span>, <span class="va">ea</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Period-over-period price index for 2 levels over 2 time periods </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          1        2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a 1.732051 5.916080</span>
@@ -204,7 +205,7 @@ International Monetary Fund.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Aggregate (note the imputation for elemental index 'c')</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">(</span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">epr</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">elemental</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Aggregate period-over-period price index for 4 levels over 2 time periods </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            1        2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> top 2.462968 6.690949</span>

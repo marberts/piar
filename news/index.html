@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9018</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@
 <div class="section level3">
 <h3 id="significant-changes-0-7-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-7-0"></a></h3>
 <ul><li><p>Some arguments for <code><a href="../reference/elemental_index.html">elemental_index()</a></code>, <code><a href="../reference/as_index.html">as_index()</a></code>, <code>aggregate(index)</code>, <code>mean(index)</code>, <code>vcov(index)</code>, <code>update(aggregation_structure)</code>, and <code>weights(aggregation_structure)</code> now need to be named (e.g., <code>na.rm</code>, <code>contrib</code>). This helps to unify the signatures for several functions that had similar arguments in different positions. In all cases these are arguments that are not near the beginning of the function and should have probably been named anyways.</p></li>
-<li><p>There are several bug fixed in this version that make non-backwards compatible changes.</p></li>
+<li><p>There are several bug fixes in this version that make non-backwards compatible changes.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-0-7-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-7-0"></a></h3>
@@ -62,6 +62,7 @@
 <li><p>Added <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code> and <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code> methods to find missing values in an index object.</p></li>
 <li><p><code>index[i] &lt;- value</code> now works when <code>i</code> is a matrix.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> gets a new argument <code>contrib</code> to control if product contributions are aggregated over subperiods.</p></li>
+<li><p>Added a <code><a href="https://rdrr.io/r/base/split.html" class="external-link">split()</a></code> method for index objects.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-7-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0"></a></h3>
