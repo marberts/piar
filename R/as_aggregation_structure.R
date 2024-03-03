@@ -42,7 +42,8 @@
 #'   weight = c(1, 3, 4)
 #' )
 #'
-#' pias <- aggregation_structure(aggregation_weights[1:3],
+#' pias <- aggregation_structure(
+#'   aggregation_weights[1:3],
 #'   weights = aggregation_weights[[4]]
 #' )
 #'

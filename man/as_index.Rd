@@ -66,7 +66,7 @@ corresponding values in \code{x[[3]]}, and uses the matrix method for
 If \code{x} is a period-over-period index then it is returned unchanged when
 \code{chainable = TRUE} and chained otherwise. Similarly, if \code{x} is a
 fixed-base index then it is returned unchanged when
-\code{chainable == FALSE} and unchain otherwise.
+\code{chainable = FALSE} and unchain otherwise.
 }
 \examples{
 prices <- data.frame(
@@ -75,12 +75,10 @@ prices <- data.frame(
   ea = rep(letters[1:2], 4)
 )
 
-# Calculate period-over-period Jevons elemental indexes
+index <- with(prices, elemental_index(rel, period, ea))
 
-epr <- with(prices, elemental_index(rel, period, ea))
-
-all.equal(as_index(as.data.frame(epr)), epr)
-all.equal(as_index(as.matrix(epr)), epr)
+all.equal(as_index(as.data.frame(index)), index)
+all.equal(as_index(as.matrix(index)), index)
 
 }
 \seealso{

@@ -41,29 +41,18 @@ It may be necessary to use \code{rebase()} prior to stacking fixed-based price
 indexes to ensure they have the same base period.
 }
 \examples{
-prices <- data.frame(
-  rel = 1:8,
-  period = rep(1:2, each = 4),
-  ea = rep(letters[1:2], 4)
-)
+index1 <- as_index(matrix(1:6, 2))
 
-prices2 <- data.frame(
-  rel = 1:8,
-  period = rep(3:4, each = 4),
-  ea = rep(letters[1:2], 4)
-)
+index2 <- index1
+time(index2) <- 4:6
 
-epr <- with(prices, elemental_index(rel, period, ea))
-
-epr2 <- with(prices2, elemental_index(rel, period, ea))
-
-stack(epr, epr2)
+stack(index1, index2)
 
 # Unstack does the reverse
 
 all.equal(
-  c(unstack(epr), unstack(epr2)),
-  unstack(stack(epr, epr2))
+  c(unstack(index1), unstack(index2)),
+  unstack(stack(index1, index2))
 )
 
 }

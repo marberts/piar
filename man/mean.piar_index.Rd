@@ -60,15 +60,9 @@ over subperiods, which is often useful when aggregating a Paasche index; see
 section 4.3 of Balk (2008) for details.
 }
 \examples{
-prices <- data.frame(
-  rel = 1:8,
-  period = rep(1:2, each = 4),
-  ea = rep(letters[1:2], 4)
-)
+index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE))
 
-epr <- with(prices, elemental_index(rel, period, ea))
-
-mean(epr, window = 2)
+mean(index)
 
 }
 \references{

@@ -8,7 +8,7 @@
 #' @param drop Should levels that do not occur in `f` be dropped. By default
 #' all levels are kept.
 #' @param margin Either 'levels' to split over the levels of `x` (the default),
-#'  or time' to split over the time periods of `x`.
+#'  or 'time' to split over the time periods of `x`.
 #' @param value A list of values compatible with the splitting of `x`, recycled
 #' if necessary.
 #' @param ... Further arguments passed to [`split.default()`].

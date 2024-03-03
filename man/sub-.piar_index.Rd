@@ -29,7 +29,7 @@ fixed-base index. If \code{x} inherits from \code{\link{aggregate_piar_index}} t
 Methods to extract and replace index values like a matrix.
 }
 \details{
-The extraction method treat \code{x} like a matrix of index values with
+The extraction method treats \code{x} like a matrix of index values with
 (named) rows for each \code{level} and columns for each \code{period} in
 \code{x}. Unlike a matrix, dimensions are never dropped as subscripting
 \code{x} always returns an index object. This means that subscripting with a
@@ -55,24 +55,15 @@ values for an aggregate index generally breaks consistency in aggregation,
 and therefore the result is \emph{not} an aggregate index.
 }
 \examples{
-prices <- data.frame(
-  rel = 1:8,
-  period = rep(1:2, each = 4),
-  ea = rep(letters[1:2], 4)
-)
+index <- as_index(matrix(1:6, 2))
 
-# Calculate Jevons elemental indexes
+index["1", ]
 
-epr <- with(prices, elemental_index(rel, period, ea))
+index[, 2]
 
-# Extract the indexes like a matrix
+index[1, ] <- 1 # can be useful for doing specific imputations
 
-epr["a", ]
-
-epr[, 2]
-
-epr[1, ] <- 1 # can be useful for doing specific imputations
-epr
+index
 
 }
 \seealso{

@@ -26,21 +26,11 @@ fixed-base index.
 Extract the first/last parts of an index as if it were a matrix.
 }
 \examples{
-prices <- data.frame(
-  rel = 1:8,
-  period = rep(1:2, each = 4),
-  ea = rep(letters[1:2], 4)
-)
+index <- as_index(matrix(1:9, 3))
 
-# Calculate Jevons elemental indexes
+head(index, 1)
 
-epr <- with(prices, elemental_index(rel, period, ea))
-
-# Get the first/last time series
-
-head(epr, 1)
-
-tail(epr, 1)
+tail(index, 1)
 
 }
 \seealso{

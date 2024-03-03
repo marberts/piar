@@ -32,7 +32,7 @@ not removed.}
 \value{
 \code{weights()} returns a named vector of weights for the elemental aggregates.
 The replacement method replaces these values without changing the
-aggregation structure. If \code{ea_only = TRUE} then the return value is a list
+aggregation structure. If \code{ea_only = FALSE} then the return value is a list
 with a named vector of weights for each level in the aggregation structure.
 }
 \description{

@@ -67,11 +67,11 @@
 #'
 #' # Calculate Jevons elemental indexes
 #'
-#' epr <- with(prices, elemental_index(rel, period, ea))
+#' elemental <- with(prices, elemental_index(rel, period, ea))
 #'
 #' # Aggregate
 #'
-#' index <- aggregate(epr, pias, na.rm = TRUE)
+#' index <- aggregate(elemental, pias, na.rm = TRUE)
 #'
 #' # Calculate variance
 #'

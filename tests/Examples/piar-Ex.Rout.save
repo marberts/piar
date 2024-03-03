@@ -51,7 +51,7 @@ Type 'q()' to quit R.
 > 
 > # Calculate Jevons elemental indexes
 > 
-> (epr <- with(prices, elemental_index(rel, period, ea)))
+> (elemental <- with(prices, elemental_index(rel, period, ea)))
 Period-over-period price index for 2 levels over 2 time periods 
          1        2
 a 1.732051 5.916080
@@ -59,7 +59,7 @@ b 2.828427 6.928203
 > 
 > # Aggregate (note the imputation for elemental index 'c')
 > 
-> (index <- aggregate(epr, pias, na.rm = TRUE))
+> (index <- aggregate(elemental, pias, na.rm = TRUE))
 Aggregate period-over-period price index for 4 levels over 2 time periods 
            1        2
 top 2.462968 6.690949
@@ -135,24 +135,20 @@ top 2.462968 16.4796
 > 
 > ### ** Examples
 > 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
+> index <- as_index(matrix(1:6, 2))
 > 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> as.data.frame(epr)
-  period level    value
-1      1     a 1.732051
-2      1     b 2.828427
-3      2     a 5.916080
-4      2     b 6.928203
-> as.matrix(epr)
-         1        2
-a 1.732051 5.916080
-b 2.828427 6.928203
+> as.data.frame(index)
+  period level value
+1      1     1     1
+2      1     2     2
+3      2     1     3
+4      2     2     4
+5      3     1     5
+6      3     2     6
+> as.matrix(index)
+  1 2 3
+1 1 3 5
+2 2 4 6
 > 
 > 
 > 
@@ -228,7 +224,8 @@ b 2.828427 6.928203
 +   weight = c(1, 3, 4)
 + )
 > 
-> pias <- aggregation_structure(aggregation_weights[1:3],
+> pias <- aggregation_structure(
++   aggregation_weights[1:3],
 +   weights = aggregation_weights[[4]]
 + )
 > 
@@ -266,13 +263,11 @@ b 2.828427 6.928203
 +   ea = rep(letters[1:2], 4)
 + )
 > 
-> # Calculate period-over-period Jevons elemental indexes
+> index <- with(prices, elemental_index(rel, period, ea))
 > 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> all.equal(as_index(as.data.frame(epr)), epr)
+> all.equal(as_index(as.data.frame(index)), index)
 [1] TRUE
-> all.equal(as_index(as.matrix(epr)), epr)
+> all.equal(as_index(as.matrix(index)), index)
 [1] TRUE
 > 
 > 
@@ -292,42 +287,32 @@ b 2.828427 6.928203
 > 
 > ### ** Examples
 > 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
-> 
-> # A simple period-over-period elemental index
-> 
-> (epr <- with(prices, elemental_index(rel, period, ea)))
-Period-over-period price index for 2 levels over 2 time periods 
-         1        2
-a 1.732051 5.916080
-b 2.828427 6.928203
+> index <- as_index(matrix(1:9, 3))
 > 
 > # Make period 0 the fixed base period
 > 
-> chain(epr)
-Fixed-base price index for 2 levels over 2 time periods 
-         1        2
-a 1.732051 10.24695
-b 2.828427 19.59592
+> chain(index)
+Fixed-base price index for 3 levels over 3 time periods 
+  1  2   3
+1 1  4  28
+2 2 10  80
+3 3 18 162
 > 
 > # Chaining and unchaining reverse each other
 > 
-> all.equal(epr, unchain(chain(epr)))
+> all.equal(index, unchain(chain(index)))
 [1] TRUE
 > 
 > # Change the base period to period 2 (note the
 > # loss of information for period 0)
 > 
-> epr <- chain(epr)
-> rebase(epr, epr[, 2])
-Fixed-base price index for 2 levels over 2 time periods 
-          1 2
-a 0.1690309 1
-b 0.1443376 1
+> index <- chain(index)
+> rebase(index, index[, 2])
+Fixed-base price index for 3 levels over 3 time periods 
+          1 2 3
+1 0.2500000 1 7
+2 0.2000000 1 8
+3 0.1666667 1 9
 > 
 > 
 > 
@@ -350,7 +335,7 @@ b 0.1443376 1
 +   ea = rep(letters[1:2], 4)
 + )
 > 
-> epr <- with(
+> index <- with(
 +   prices,
 +   elemental_index(rel, period, ea, contrib = TRUE)
 + )
@@ -359,7 +344,7 @@ b 0.1443376 1
 +   list(c("top", "top", "top"), c("a", "b", "c")), 1:3
 + )
 > 
-> index <- aggregate(epr, pias, na.rm = TRUE)
+> index <- aggregate(index, pias, na.rm = TRUE)
 > 
 > # Percent-change contributions for the top-level index
 > 
@@ -376,7 +361,7 @@ b.2 0.8284271 2.4871732
 > 
 > arithmetic_contributions(
 +   as.matrix(chain(index))[c("a", "b", "c"), 2],
-+   weights(pias, ea_only = TRUE)
++   weights(pias)
 + )
        a        b        c 
 1.541158 6.198639 7.739798 
@@ -410,7 +395,7 @@ detaching ‘package:gpindex’
 > 
 > # Calculate Jevons elemental indexes
 > 
-> (epr <- with(prices, elemental_index(rel, period, ea)))
+> with(prices, elemental_index(rel, period, ea))
 Period-over-period price index for 2 levels over 2 time periods 
          1        2
 a 1.732051 5.916080
@@ -546,27 +531,17 @@ detaching ‘package:gpindex’
 > 
 > ### ** Examples
 > 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
+> index <- as_index(matrix(1:9, 3))
 > 
-> # Calculate Jevons elemental indexes
+> head(index, 1)
+Period-over-period price index for 1 levels over 3 time periods 
+  1 2 3
+1 1 4 7
 > 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> # Get the first/last time series
-> 
-> head(epr, 1)
-Period-over-period price index for 1 levels over 2 time periods 
-         1       2
-a 1.732051 5.91608
-> 
-> tail(epr, 1)
-Period-over-period price index for 1 levels over 2 time periods 
-         1        2
-b 2.828427 6.928203
+> tail(index, 1)
+Period-over-period price index for 1 levels over 3 time periods 
+  1 2 3
+3 3 6 9
 > 
 > 
 > 
@@ -644,19 +619,13 @@ Period-over-period price index for 2 levels over 3 time periods
 > 
 > ### ** Examples
 > 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
+> index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE))
 > 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> mean(epr, window = 2)
-Period-over-period price index for 2 levels over 1 time periods 
-         1
-a 3.824065
-b 4.878315
+> mean(index)
+Period-over-period price index for 2 levels over 4 time periods 
+   1 4 7 10
+1  2 5 8 11
+2 11 8 5  2
 > 
 > 
 > 
@@ -673,29 +642,18 @@ b 4.878315
 > 
 > ### ** Examples
 > 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
+> index1 <- as_index(matrix(1:6, 2))
 > 
-> prices2 <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[3:4], 4)
-+ )
+> index2 <- index1
+> levels(index2) <- 3:4
 > 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> epr2 <- with(prices2, elemental_index(rel, period, ea))
-> 
-> merge(epr, epr2)
-Period-over-period price index for 4 levels over 2 time periods 
-         1        2
-a 1.732051 5.916080
-b 2.828427 6.928203
-c 1.732051 5.916080
-d 2.828427 6.928203
+> merge(index1, index2)
+Period-over-period price index for 4 levels over 3 time periods 
+  1 2 3
+1 1 3 5
+2 2 4 6
+3 1 3 5
+4 2 4 6
 > 
 > 
 > 
@@ -774,33 +732,22 @@ Period-over-period price index for 2 levels over 1 time periods
 > 
 > ### ** Examples
 > 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
+> index1 <- as_index(matrix(1:6, 2))
 > 
-> prices2 <- data.frame(
-+   rel = 1:8,
-+   period = rep(3:4, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
+> index2 <- index1
+> time(index2) <- 4:6
 > 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> epr2 <- with(prices2, elemental_index(rel, period, ea))
-> 
-> stack(epr, epr2)
-Period-over-period price index for 2 levels over 4 time periods 
-         1        2        3        4
-a 1.732051 5.916080 1.732051 5.916080
-b 2.828427 6.928203 2.828427 6.928203
+> stack(index1, index2)
+Period-over-period price index for 2 levels over 6 time periods 
+  1 2 3 4 5 6
+1 1 3 5 1 3 5
+2 2 4 6 2 4 6
 > 
 > # Unstack does the reverse
 > 
 > all.equal(
-+   c(unstack(epr), unstack(epr2)),
-+   unstack(stack(epr, epr2))
++   c(unstack(index1), unstack(index2)),
++   unstack(stack(index1, index2))
 + )
 [1] TRUE
 > 
@@ -819,35 +766,26 @@ b 2.828427 6.928203 2.828427 6.928203
 > 
 > ### ** Examples
 > 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
-+ )
+> index <- as_index(matrix(1:6, 2))
 > 
-> # Calculate Jevons elemental indexes
+> index["1", ]
+Period-over-period price index for 1 levels over 3 time periods 
+  1 2 3
+1 1 3 5
 > 
-> epr <- with(prices, elemental_index(rel, period, ea))
-> 
-> # Extract the indexes like a matrix
-> 
-> epr["a", ]
-Period-over-period price index for 1 levels over 2 time periods 
-         1       2
-a 1.732051 5.91608
-> 
-> epr[, 2]
+> index[, 2]
 Period-over-period price index for 2 levels over 1 time periods 
-         2
-a 5.916080
-b 6.928203
+  2
+1 3
+2 4
 > 
-> epr[1, ] <- 1 # can be useful for doing specific imputations
-> epr
-Period-over-period price index for 2 levels over 2 time periods 
-         1        2
-a 1.000000 1.000000
-b 2.828427 6.928203
+> index[1, ] <- 1 # can be useful for doing specific imputations
+> 
+> index
+Period-over-period price index for 2 levels over 3 time periods 
+  1 2 3
+1 1 1 1
+2 2 4 6
 > 
 > 
 > 
@@ -867,12 +805,13 @@ b 2.828427 6.928203
 > prices <- data.frame(
 +   rel = 1:8,
 +   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4)
++   ea = rep(letters[1:2], 4),
++   contrib = TRUE
 + )
 > 
-> epr <- with(prices, elemental_index(rel, period, ea))
+> elemental <- with(prices, elemental_index(rel, period, ea))
 > 
-> summary(epr)
+> summary(elemental)
 Indexes
        1               2        
  Min.   :1.732   Min.   :5.916  
@@ -977,11 +916,11 @@ Indexes
 > 
 > # Calculate Jevons elemental indexes
 > 
-> epr <- with(prices, elemental_index(rel, period, ea))
+> elemental <- with(prices, elemental_index(rel, period, ea))
 > 
 > # Aggregate
 > 
-> index <- aggregate(epr, pias, na.rm = TRUE)
+> index <- aggregate(elemental, pias, na.rm = TRUE)
 > 
 > # Calculate variance
 > 
@@ -1043,7 +982,7 @@ top 0.007818832 0.003929299
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.119 0.004 0.124 0 0 
+Time elapsed:  0.105 0.01 0.117 0 0 
 > grDevices::dev.off()
 null device 
           1 

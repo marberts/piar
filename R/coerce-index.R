@@ -18,16 +18,10 @@
 #' object.
 #'
 #' @examples
-#' prices <- data.frame(
-#'   rel = 1:8,
-#'   period = rep(1:2, each = 4),
-#'   ea = rep(letters[1:2], 4)
-#' )
+#' index <- as_index(matrix(1:6, 2))
 #'
-#' epr <- with(prices, elemental_index(rel, period, ea))
-#'
-#' as.data.frame(epr)
-#' as.matrix(epr)
+#' as.data.frame(index)
+#' as.matrix(index)
 #'
 #' @family index methods
 #' @export

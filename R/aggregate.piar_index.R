@@ -112,11 +112,11 @@ aggregate_contrib <- function(r) {
 #'
 #' # Calculate Jevons elemental indexes
 #'
-#' (epr <- with(prices, elemental_index(rel, period, ea)))
+#' (elemental <- with(prices, elemental_index(rel, period, ea)))
 #'
 #' # Aggregate (note the imputation for elemental index 'c')
 #'
-#' (index <- aggregate(epr, pias, na.rm = TRUE))
+#' (index <- aggregate(elemental, pias, na.rm = TRUE))
 #'
 #' # Aggregation can equivalently be done as matrix multiplication
 #'

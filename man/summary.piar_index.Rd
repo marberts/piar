@@ -26,11 +26,12 @@ This function is still experimental and may change in the future.
 prices <- data.frame(
   rel = 1:8,
   period = rep(1:2, each = 4),
-  ea = rep(letters[1:2], 4)
+  ea = rep(letters[1:2], 4),
+  contrib = TRUE
 )
 
-epr <- with(prices, elemental_index(rel, period, ea))
+elemental <- with(prices, elemental_index(rel, period, ea))
 
-summary(epr)
+summary(elemental)
 
 }

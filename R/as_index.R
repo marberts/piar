@@ -22,7 +22,7 @@
 #' If `x` is a period-over-period index then it is returned unchanged when
 #' `chainable = TRUE` and chained otherwise. Similarly, if `x` is a
 #' fixed-base index then it is returned unchanged when
-#' `chainable == FALSE` and unchain otherwise.
+#' `chainable = FALSE` and unchain otherwise.
 #'
 #' @param x An object to coerce into a price index.
 #' @param chainable Are the index values in `x` period-over-period
@@ -53,12 +53,10 @@
 #'   ea = rep(letters[1:2], 4)
 #' )
 #'
-#' # Calculate period-over-period Jevons elemental indexes
+#' index <- with(prices, elemental_index(rel, period, ea))
 #'
-#' epr <- with(prices, elemental_index(rel, period, ea))
-#'
-#' all.equal(as_index(as.data.frame(epr)), epr)
-#' all.equal(as_index(as.matrix(epr)), epr)
+#' all.equal(as_index(as.data.frame(index)), index)
+#' all.equal(as_index(as.matrix(index)), index)
 #'
 #' @export
 as_index <- function(x, ...) {

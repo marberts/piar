@@ -40,7 +40,7 @@ prices <- data.frame(
   ea = rep(letters[1:2], 4)
 )
 
-epr <- with(
+index <- with(
   prices,
   elemental_index(rel, period, ea, contrib = TRUE)
 )
@@ -49,7 +49,7 @@ pias <- aggregation_structure(
   list(c("top", "top", "top"), c("a", "b", "c")), 1:3
 )
 
-index <- aggregate(epr, pias, na.rm = TRUE)
+index <- aggregate(index, pias, na.rm = TRUE)
 
 # Percent-change contributions for the top-level index
 
@@ -61,7 +61,7 @@ library(gpindex)
 
 arithmetic_contributions(
   as.matrix(chain(index))[c("a", "b", "c"), 2],
-  weights(pias, ea_only = TRUE)
+  weights(pias)
 )
 
 }

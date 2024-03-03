@@ -94,7 +94,7 @@ replace_numeric <- function(x, i, j, value) {
 #'
 #' Methods to extract and replace index values like a matrix.
 #'
-#' The extraction method treat `x` like a matrix of index values with
+#' The extraction method treats `x` like a matrix of index values with
 #' (named) rows for each `level` and columns for each `period` in
 #' `x`. Unlike a matrix, dimensions are never dropped as subscripting
 #' `x` always returns an index object. This means that subscripting with a
@@ -132,24 +132,15 @@ replace_numeric <- function(x, i, j, value) {
 #' `[` returns an aggregate index if the levels are unchanged.
 #'
 #' @examples
-#' prices <- data.frame(
-#'   rel = 1:8,
-#'   period = rep(1:2, each = 4),
-#'   ea = rep(letters[1:2], 4)
-#' )
+#' index <- as_index(matrix(1:6, 2))
 #'
-#' # Calculate Jevons elemental indexes
+#' index["1", ]
 #'
-#' epr <- with(prices, elemental_index(rel, period, ea))
+#' index[, 2]
 #'
-#' # Extract the indexes like a matrix
-#'
-#' epr["a", ]
-#'
-#' epr[, 2]
-#'
-#' epr[1, ] <- 1 # can be useful for doing specific imputations
-#' epr
+#' index[1, ] <- 1 # can be useful for doing specific imputations
+#' 
+#' index
 #'
 #' @family index methods
 #' @export

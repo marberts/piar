@@ -23,6 +23,7 @@ reference:
   - "[.piar_index"
   - head.piar_index
   - contrib
+  - split.piar_index
   - levels.piar_index
   - time.piar_index
   - as.matrix.piar_index

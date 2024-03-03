@@ -39,8 +39,12 @@ The `elemental_index()` function makes, well, elemental indexes, using informati
 ```{r}
 relative <- with(ms_prices, price_relative(price, period, product))
 
-(ms_epr <- with(ms_prices,
-                elemental_index(relative, period, business, na.rm = TRUE)))
+ms_elemental <- with(
+  ms_prices,
+  elemental_index(relative, period, business, na.rm = TRUE)
+)
+
+ms_elemental
 ```
 
 (Homogeneous elemental aggregates often leads to unit-value elemental indexes that are not based on price relatives. These cases can be dealt with by first aggregating prices for each elemental aggregate, `aggregate(price ~ period + product, ms_prices, mean)`, at each point in time with an arithmetic mean, then forming price relatives to feed into `elemental_index()`.)
@@ -50,15 +54,18 @@ As with most functions in **R**, missing values are contagious by default in **p
 The `elemental_index()` function returns a special index object, and there are a number of methods for working with these objects. Probably the most useful of these methods allows the resulting elemental indexes to be extracted like a matrix, even though it's not a matrix. (Note that there are only indexes for four businesses, not five, because the fifth business never reports any prices; an elemental index can be made for this business with a small change to the call to `elemental_index()`.)
 
 ```{r}
-ms_epr[, "202004"]
-ms_epr["B1", ]
+ms_elemental[, "202004"]
+
+ms_elemental["B1", ]
 ```
 
 With the elemental indexes out of the way, it's time to make a price-index aggregation structure that maps each business to its position in the aggregation hierarchy. The only hiccup is unpacking the digit-wise classification for each businesses that defines the hierarchy. That's the job of the `expand_classification()` function.
 
 ```{r}
-hierarchy <- with(ms_weights, 
-                  c(expand_classification(classification), list(business)))
+hierarchy <- with(
+  ms_weights, 
+  c(expand_classification(classification), list(business))
+)
 
 pias <- aggregation_structure(hierarchy, ms_weights$weight)
 ```
@@ -66,7 +73,9 @@ pias <- aggregation_structure(hierarchy, ms_weights$weight)
 It is now simple to aggregate the elemental indexes according to this aggregation structure with the `aggregate()` function. As with the elemental indexes, missing values are ignored by setting `na.rm = TRUE`, which is equivalent to parentally imputing missing values. Note that, unlike the elemental indexes, missing values are filled in to ensure the index can be chained over time.
 
 ```{r}
-(ms_index <- aggregate(ms_epr, pias, na.rm = TRUE))
+ms_index <- aggregate(ms_elemental, pias, na.rm = TRUE)
+
+ms_index
 ```
 
 Although simple, this example covers the core functionality of **piar**. The remaining examples in the vignette build on this one by adding complexities that often arise in practice.
@@ -78,7 +87,9 @@ The `elemental_index()` function makes period-over-period elemental indexes by d
 The `chain()` function can be used to chain the values in an index object.
 
 ```{r}
-(ms_index_chained <- chain(ms_index))
+ms_index_chained <- chain(ms_index)
+
+ms_index_chained
 ```
 
 This gives almost the same result as directly manipulating the index as a matrix, except that the former returns an index object (not a matrix).
@@ -96,8 +107,10 @@ rebase(ms_index_chained, ms_index_chained[, "202004"])
 In some cases the base period is the average of several periods; setting the base period to the second half of 2020 just requires averaging the index over subperiods before rebasing.
 
 ```{r}
-rebase(ms_index_chained,
-       mean(ms_index_chained, window = 2)[, "202003"])
+rebase(
+  ms_index_chained,
+  mean(ms_index_chained, window = 2)[, "202003"]
+)
 ```
 
 ## Multi-dimensional aggregation structures
@@ -105,20 +118,27 @@ rebase(ms_index_chained,
 Price indexes are often aggregated over multiple dimensions. Matched sample indexes that use sequential Poisson sampling are a good example, as there are usually take-all and take-some strata in addition to, say, an industry classification.
 
 ```{r}
-(ms_weights <- transform(ms_weights, stratum = c("TS", "TA", "TS", "TS", "TS")))
+ms_weights$stratum <- c("TS", "TA", "TS", "TS", "TS")
+
+ms_weights
 ```
 
 The easiest way to deal with multiple digit-wise classifications is to turn them into one classification. In this example the "stratum" dimension comes before the "classification" dimension for the purposes of parental imputation.
 
 ```{r}
-(classification_sps <- with(ms_weights, paste0(classification, stratum)))
+classification_sps <- with(ms_weights, paste0(classification, stratum))
+
+classification_sps
 ```
 
 This classification can be expanded with the `expand_classification()` function as before, just with an extra instruction to say that the last "digit" in the classification is two characters wide, not one.
 
 ```{r}
-(classification_sps <- expand_classification(classification_sps,
-                                             width = c(1, 1, 2)))
+classification_sps <- expand_classification(
+  classification_sps,
+  width = c(1, 1, 2)
+)
+
 pias_sps <- with(
   ms_weights, 
   aggregation_structure(c(classification_sps, list(business)), weight)
@@ -128,7 +148,7 @@ pias_sps <- with(
 The elemental indexes can now be aggregated according to this new aggregation structure.
 
 ```{r}
-aggregate(ms_epr, pias_sps, na.rm = TRUE)
+aggregate(ms_elemental, pias_sps, na.rm = TRUE)
 ```
 
 ## Computing the shadow of an index
@@ -136,10 +156,12 @@ aggregate(ms_epr, pias_sps, na.rm = TRUE)
 It's often useful to determine which higher-level index values are missing, and subsequently get imputed during aggregation (i.e., compute the shadow of an index). This is simple to do if there's an elemental index for each elemental aggregate in the aggregation structure.
 
 ```{r}
-ms_epr2 <- with(
+ms_elemental2 <- with(
   ms_prices,
-  elemental_index(relative, period, factor(business, ms_weights$business),
-                  na.rm = TRUE)
+  elemental_index(
+    relative, period, factor(business, ms_weights$business),
+    na.rm = TRUE
+  )
 )
 ```
 
@@ -147,7 +169,7 @@ The idea is to simply aggregate an indicator for missingness to get a matrix tha
 
 ```{r}
 pias_matrix <- as.matrix(pias) > 0 
-pias_matrix %*% is.na(ms_epr2) / rowSums(pias_matrix)
+pias_matrix %*% is.na(ms_elemental2) / rowSums(pias_matrix)
 ```
 
 A value of 1 means that there are no non-missing elemental indexes, and that the value for this level of the index is imputed from its parent in the aggregation structure. A value below 1 but above zero means that some but not all elemental indexes are missing, and the index value for this level is based on the non-missing elemental indexes. A value of zero means there's no imputation for this level of the index.
@@ -159,15 +181,15 @@ Parental imputation is the usual way to impute missing index values during aggre
 Suppose that missing index values for business B2 should be imputed as 1, rather than the value for group 11. This replacement can be done as if the index was a matrix.
 
 ```{r}
-ms_epr2 <- ms_epr
-ms_epr2["B2", 2:3] <- 1
-ms_epr2
+ms_elemental2 <- ms_elemental
+ms_elemental2["B2", 2:3] <- 1
+ms_elemental2
 ```
 
 The index can now be aggregated as usual.
 
 ```{r}
-aggregate(ms_epr2, pias, na.rm = TRUE)
+aggregate(ms_elemental2, pias, na.rm = TRUE)
 ```
 
 ## Alternate index-number formulas
@@ -175,15 +197,19 @@ aggregate(ms_epr2, pias, na.rm = TRUE)
 By default, the `elemental_index()` function calculates a Jevons index. Although this is the standard index-number formula for making elemental indexes, many other types of index-numbers are possible. The Carli index (equally-weighted arithmetic mean of price relatives) is the main competitor to the Jevons, and requires specifying the order of the index `r` when calling `elemental_index()`. An order of 1 corresponds to an arithmetic mean.
 
 ```{r}
-with(ms_prices, 
-     elemental_index(relative, period, business, na.rm = TRUE, r = 1))
+with(
+  ms_prices, 
+  elemental_index(relative, period, business, na.rm = TRUE, r = 1)
+)
 ```
 
 The Coggeshall index (equally-weighted harmonic mean of price relatives) is another competitor to the Jevons, but is seldom used in practice. Despite it being more exotic, it is just as easy to make by specifying an order `r` of -1.
 
 ```{r}
-with(ms_prices,
-     elemental_index(relative, period, business, na.rm = TRUE, r = -1))
+with(
+  ms_prices,
+  elemental_index(relative, period, business, na.rm = TRUE, r = -1)
+)
 ```
 
 The type of mean used to aggregate elemental indexes can be controlled in the same way in the call to `aggregate()`. The default makes an arithmetic index, but any type of generalized-mean index is possible. 
@@ -209,15 +235,20 @@ ms_prices2 <- na.omit(ms_prices2) # can't have NAs for Tornqvist weights
 
 ms_prices2$weight <- with(
   ms_prices2,
-  tw(price, back_price, quantity, back_quantity,
-     group = interaction(period, business))
+  tw(
+    price, back_price, quantity, back_quantity,
+    group = interaction(period, business)
+  )
 )
 ```
 
 As `elemental_index()` makes a geometric index by default, all that is needed to make a Tornqvist index is to provide the weights.
 
 ```{r}
-with(ms_prices2, elemental_index(price / back_price, period, business, weight))
+with(
+  ms_prices2,
+  elemental_index(price / back_price, period, business, weight)
+)
 ```
 
 ## Percent-change contributions
@@ -225,7 +256,7 @@ with(ms_prices2, elemental_index(price / back_price, period, business, weight))
 It's often convenient to decompose an index into the (additive) contribution of each price relative, also known as the percent-change contributions. This can be done with the same work flow as in the previous examples, specifying `contrib = TRUE` when calling `elemental_index()`.
 
 ```{r}
-ms_epr <- with(
+ms_elemental <- with(
   ms_prices,
   elemental_index(relative, period, business, contrib = TRUE, na.rm = TRUE)
 )
@@ -234,7 +265,7 @@ ms_epr <- with(
 As with index values, percent-change contributions for a given level of the index can be extracted as a matrix.
 
 ```{r}
-contrib(ms_epr)
+contrib(ms_elemental)
 ```
 
 Aggregating the elemental indexes automatically aggregates percent-change contributions, so no extra steps are needed after the elemental indexes are made.
@@ -253,29 +284,34 @@ ms_prices2 <- subset(ms_prices, period >= "202003")
 The index for the first basket can be calculate as usual.
 
 ```{r}
-ms_epr1 <- with(
+ms_elemental1 <- with(
   ms_prices1, 
-  elemental_index(price_relative(price, period, product), period, business,
-                  na.rm = TRUE)
+  elemental_index(
+    price_relative(price, period, product),
+    period, business, na.rm = TRUE
+  )
 )
 
-(ms_index1 <- aggregate(ms_epr1, pias, na.rm = TRUE))
+ms_index1 <- aggregate(ms_elemental1, pias, na.rm = TRUE)
+
+ms_index1
 ```
 
 Nothing special needs to be done to make the elemental indexes for the new basket, but it's easier to remove the index values of 1 for quarter 3 2020.
 
 ```{r}
-ms_epr2 <- with(
-  subset(transform(ms_prices2, rel = price_relative(price, period, product)),
-         period > "202003"),
-  elemental_index(rel, period, business, na.rm = TRUE)
-)
+ms_elemental2 <- ms_prices2 |>
+  transform(rel = price_relative(price, period, product)) |>
+  subset(period > "202003") |>
+  with(elemental_index(rel, period, business, na.rm = TRUE))
 ```
 
 Aggregating these elemental indexes, however, requires an aggregation structure. The results of the first example can be reproduced by simply "price updating" the original weights, then building the aggregation structure as usual.
 
 ```{r}
-(ms_index2 <- aggregate(ms_epr2, update(pias, ms_index1), na.rm = TRUE))
+ms_index2 <- aggregate(ms_elemental2, update(pias, ms_index1), na.rm = TRUE)
+
+ms_index2
 ```
 
 This produces two sets of period-over-period indexes that can be stacked together and then chained.
@@ -289,19 +325,23 @@ chain(stack(ms_index1, ms_index2))
 The previous examples used parental imputation to both impute missing price relatives when calculating the elemental indexes, and to impute missing elemental indexes during aggregation. Another common imputation strategy when making elemental indexes is to carry forward the previous price to impute for missing prices, and parentally impute missing elemental indexes during aggregation. As the `elemental_index()` function accepts price relatives as its input, other types of imputations can be done prior to passing price relatives to this function.
 
 ```{r}
-(ms_epr2 <- with(
+ms_elemental2 <- with(
   ms_prices, 
   elemental_index(
-    price_relative(carry_forward(price, period, product),period, product),
+    price_relative(carry_forward(price, period, product), period, product),
     period, business, na.rm = TRUE
   )
-))
+)
+
+ms_elemental2
 ```
 
 Aggregation follows the same steps as in the previous examples, with missing values set to be ignored in order to parentally impute missing elemental indexes.
 
 ```{r}
-(ms_index <- aggregate(ms_epr2, pias, na.rm = TRUE))
+ms_index <- aggregate(ms_elemental2, pias, na.rm = TRUE)
+ 
+ms_index
 ```
 
 ## Calculating an index from multiple sources
@@ -318,41 +358,51 @@ ms_prices2 <- subset(ms_prices, business == "B4")
 Elemental indexes can be made for both groups separately with the usual recipe. Note that there is no data for business B4 in the first two periods, so the time periods need to be made explicit.
 
 ```{r}
-ms_epr1 <- with(
+ms_elemental1 <- with(
   ms_prices1, 
-  elemental_index(price_relative(price, period, product),
-                  period, business, na.rm = TRUE)
+  elemental_index(
+    price_relative(price, period, product),
+    period, business, na.rm = TRUE
+  )
 )
-ms_epr1
-ms_epr2 <- with(
-  transform(ms_prices2, period = factor(period, levels = time(ms_epr1))), 
-  elemental_index(price_relative(price, period, product),
-                  period, business, na.rm = TRUE)
-)
-ms_epr2
+
+ms_elemental1
+
+ms_elemental2 <- ms_prices2 |>
+  transform(period = factor(period, levels = time(ms_elemental1))) |>
+  with(
+    elemental_index(
+      price_relative(price, period, product),
+      period, business, na.rm = TRUE
+    )
+  )
+
+ms_elemental2
 ```
 
 Once the elemental indexes are made, they can be merged together and then aggregated.
 
 ```{r}
-aggregate(merge(ms_epr1, ms_epr2), pias, na.rm = TRUE)
+aggregate(merge(ms_elemental1, ms_elemental2), pias, na.rm = TRUE)
 ```
 
 A slightly more complex case is when some of the input data are already a price index. For example, suppose the index values for businesses B4 and B5 come from some outside process, and are taken as inputs.
 
 ```{r}
 ms_prices2 <- subset(
-  as.data.frame(aggregate(ms_epr, pias, na.rm = TRUE)),
+  as.data.frame(aggregate(ms_elemental, pias, na.rm = TRUE)),
   level %in% c("B4", "B5")
 )
+
 ms_prices2
 ```
 
 All that is required is to pass the pre-existing indexes to `as_index()` to cast them into the correct form. This won't affect their values, but will allow them to be merged with the other elemental indexes, and aggregated.
 
 ```{r}
-ms_epr2 <- as_index(ms_prices2)
-aggregate(merge(ms_epr1, ms_epr2), pias, na.rm = TRUE)
+ms_elemental2 <- as_index(ms_prices2)
+
+aggregate(merge(ms_elemental1, ms_elemental2), pias, na.rm = TRUE)
 ```
 
 ## Aggregating a Paasche index
@@ -365,6 +415,7 @@ weights <- data.frame(
   classification = ms_weights$classification,
   weight = 1:20
 )
+
 head(weights)
 ```
 
@@ -373,23 +424,29 @@ The only new tools needed to deal with time-varying weights are the `stack()` an
 The first step to making a Paasche index is to unstack the elemental indexes into a list of elemental indexes for each period. (Trying to make the elemental indexes period-by-period can be dangerous when there are missing values.)
 
 ```{r}
-(ms_epr <- unstack(ms_epr))
+ms_elemental <- unstack(ms_elemental)
+
+ms_elemental
 ```
 
 The second step is to make a sequence of aggregation structures for each set of weights.
 
 ```{r}
-pias <- with(weights, 
-             Map(aggregation_structure, 
-                 list(hierarchy), 
-                 split(weight, period))
+pias <- with(
+  weights, 
+  Map(aggregation_structure, list(hierarchy), split(weight, period))
 )
 ```
 
 Making the Paasche index for each period is now just a case of mapping the `aggregate()` function to each elemental index and aggregation structure, and then reducing the result with the `stack()` function.
 
 ```{r}
-(paasche <- Reduce(stack, Map(aggregate, ms_epr, pias, na.rm = TRUE, r = -1)))
+paasche <- Reduce(
+  stack,
+  Map(aggregate, ms_elemental, pias, na.rm = TRUE, r = -1)
+)
+
+paasche
 ```
 
 ## Making a Fisher index
@@ -397,19 +454,26 @@ Making the Paasche index for each period is now just a case of mapping the `aggr
 With a Paasche index in hand, it is now trivial to make a Fisher index by first making the period-over-period Laspeyres index, and then doing a simple matrix operation.
 
 ```{r}
-laspeyres <- Reduce(stack,
-                    Map(aggregate, ms_epr, pias[c(1, 1, 2, 3)], na.rm = TRUE))
+laspeyres <- Reduce(
+  stack,
+  Map(aggregate, ms_elemental, pias[c(1, 1, 2, 3)], na.rm = TRUE)
+)
 
-(fisher <- sqrt(as.matrix(laspeyres) * as.matrix(paasche)))
+fisher <- sqrt(as.matrix(laspeyres) * as.matrix(paasche))
+
+fisher
 ```
 
 Percent-change contributions can similarly be computed with a matrix operation.
 
 ```{r}
 geometric_weights <- transmute_weights(0, 1)
-w <- mapply(\(x, y) scale_weights(geometric_weights(c(x, y))),
-            as.numeric(laspeyres[1]),
-            as.numeric(paasche[1]))
+
+w <- mapply(
+  \(x, y) scale_weights(geometric_weights(c(x, y))),
+  as.numeric(laspeyres[1]),
+  as.numeric(paasche[1])
+)
 
 laspeyres_contrib <- contrib(laspeyres)
 paasche_contrib <- contrib(paasche)

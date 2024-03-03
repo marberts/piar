@@ -20,7 +20,7 @@ all levels are kept.}
 \item{...}{Further arguments passed to \code{\link[=split.default]{split.default()}}.}
 
 \item{margin}{Either 'levels' to split over the levels of \code{x} (the default),
-or time' to split over the time periods of \code{x}.}
+or 'time' to split over the time periods of \code{x}.}
 
 \item{value}{A list of values compatible with the splitting of \code{x}, recycled
 if necessary.}

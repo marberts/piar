@@ -13,21 +13,11 @@
 #' fixed-base index.
 #'
 #' @examples
-#' prices <- data.frame(
-#'   rel = 1:8,
-#'   period = rep(1:2, each = 4),
-#'   ea = rep(letters[1:2], 4)
-#' )
+#' index <- as_index(matrix(1:9, 3))
 #'
-#' # Calculate Jevons elemental indexes
+#' head(index, 1)
 #'
-#' epr <- with(prices, elemental_index(rel, period, ea))
-#'
-#' # Get the first/last time series
-#'
-#' head(epr, 1)
-#'
-#' tail(epr, 1)
+#' tail(index, 1)
 #'
 #' @family index methods
 #' @importFrom utils head
