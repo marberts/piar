@@ -46,7 +46,8 @@ of index values over consecutive windows of subperiods.
 The \code{mean()} method constructs a set of non-overlapping windows of
 length \code{window}, starting in the first period of the index, and takes
 the mean of each index value in these windows for each level of the index.
-The last window is discarded if it is incomplete, so that index values are
+The last window is discarded if it is incomplete (with a warning), so that
+index values are
 always averaged over \code{window} periods. The names for the first time
 period in each window form the new names for the aggregated time periods.
 

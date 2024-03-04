@@ -10,7 +10,7 @@ is_aggregation_structure(x)
 \item{x}{An object to test.}
 }
 \value{
-Returns \code{TRUE} if \code{x} inherits from \code{\link{piar_aggregation_structure}}
+Returns \code{TRUE} if \code{x} inherits from \code{\link{piar_aggregation_structure}}.
 }
 \description{
 Test if an object is a price index aggregation structure.

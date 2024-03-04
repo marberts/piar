@@ -7,18 +7,20 @@
 \usage{
 \method{is.na}{piar_index}(x)
 
-\method{anyNA}{piar_index}(x, recursive)
+\method{anyNA}{piar_index}(x, recursive = FALSE)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
-\item{recursive}{Ignored.}
+\item{recursive}{Check if \code{x} also has missing percent-change
+contributions. By default only index values are checked for missingness.}
 }
 \value{
 \code{is.na()} returns a logical matrix, with a row for each level of \code{x} and a
 columns for each time period, that indicates which index values are missing.
 
-\code{anyNA()} returns \code{TRUE} if any index values are missing.
+\code{anyNA()} returns \code{TRUE} if any index values are missing, or percent-change
+contributions (if \code{recursive = TRUE}).
 }
 \description{
 Identify missing values in a price index.

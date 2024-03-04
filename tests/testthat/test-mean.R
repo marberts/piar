@@ -56,6 +56,7 @@ test_that("mean requires a suitable window", {
   expect_error(mean(index, window = 4))
   expect_error(mean(index, window = 0))
   expect_error(mean(index, window = 1:3))
+  expect_warning(mean(index, window = 2))
 })
 
 test_that("averaging an aggregate index works", {

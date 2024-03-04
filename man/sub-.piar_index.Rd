@@ -30,7 +30,7 @@ Methods to extract and replace index values like a matrix.
 }
 \details{
 The extraction method treats \code{x} like a matrix of index values with
-(named) rows for each \code{level} and columns for each \code{period} in
+(named) rows for each level and columns for each time period in
 \code{x}. Unlike a matrix, dimensions are never dropped as subscripting
 \code{x} always returns an index object. This means that subscripting with a
 matrix is not possible, and only a "submatrix" can be extracted. As \code{x}

@@ -43,8 +43,8 @@ default assumes that all price relatives belong to one elemental aggregate.}
 The default is equal weights.}
 
 \item{chainable}{Are the price relatives in \code{x} period-over-period
-relatives for a chained calculation (the default)? This should be
-\code{FALSE} when \code{x} contains fixed-base relatives.}
+relatives that are suitable for a chained calculation (the default)? This
+should be \code{FALSE} when \code{x} contains fixed-base relatives.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean

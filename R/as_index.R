@@ -3,9 +3,10 @@
 #' Coerce pre-computed index values into an index object.
 #'
 #' Numeric matrices are coerced into an index object by treating each column as
-#' a separate time period, and each row as an elemental aggregate. Column names
-#' are used to denote time periods, and row names are used to denote elemental
-#' aggregates (so they must be unique). This essentially reverses calling
+#' a separate time period, and each row as a separate level of the index (e.g.,
+#' an elemental aggregate). Column names
+#' are used to denote time periods, and row names are used to denote levels
+#' (so they must be unique). This essentially reverses calling
 #' [`as.matrix()`][as.matrix.piar_index] on an index object. If a
 #' dimension is unnamed, then it is given a sequential label from 1 to the size
 #' of that dimension. The default method coerces `x` to a matrix prior to

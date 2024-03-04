@@ -1,8 +1,8 @@
-dat <- data.frame(rel = c(1:6, NA, 7, 8),
+dat <- data.frame(rel = c(1:2, NA, 4:6, NA, 7, 8),
                   period = c(1, 1, 1, 1, 1, 2, 2, 2, 2),
                   ea = c("11", "11", "12", "12", "13", "11", "12", "11", "14"))
 
-epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
+epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE, na.rm = TRUE))
 
 test_that("is.na works", {
   expect_equal(
@@ -11,7 +11,12 @@ test_that("is.na works", {
            dimnames = list(levels(epr), time(epr)))
   )
   expect_true(anyNA(epr))
-  expect_false(anyNA(epr[1]))
+  expect_false(anyNA(epr[1:3, 1]))
+  expect_true(anyNA(epr[1:3, 1], recursive = TRUE))
+  
+  epr <- as_index(as.matrix(epr))
+  expect_false(anyNA(epr[1:3, 1]))
+  expect_false(anyNA(epr[1:3, 1], recursive = TRUE))
 })
 
 test_that("replacement method works", {

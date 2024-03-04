@@ -11,7 +11,7 @@
 #' in the new base period.
 #'
 #' @details
-#' The default methods attempts to coerce `x` into an index with
+#' The default methods attempt to coerce `x` into an index with
 #' [as_index()] prior to chaining/unchaining/rebasing.
 #'
 #' Chaining an index takes the cumulative product of the index values for each

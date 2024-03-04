@@ -61,7 +61,7 @@ Rebase a fixed-base index by dividing its values with the value of the index
 in the new base period.
 }
 \details{
-The default methods attempts to coerce \code{x} into an index with
+The default methods attempt to coerce \code{x} into an index with
 \code{\link[=as_index]{as_index()}} prior to chaining/unchaining/rebasing.
 
 Chaining an index takes the cumulative product of the index values for each

@@ -21,7 +21,7 @@
 and \code{value}.
 
 \code{as.matrix()} returns a matrix with a row for each level and a column
-for each period.
+for each time period.
 }
 \description{
 Turn an index into a data frame or a matrix.

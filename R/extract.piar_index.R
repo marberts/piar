@@ -95,7 +95,7 @@ replace_numeric <- function(x, i, j, value) {
 #' Methods to extract and replace index values like a matrix.
 #'
 #' The extraction method treats `x` like a matrix of index values with
-#' (named) rows for each `level` and columns for each `period` in
+#' (named) rows for each level and columns for each time period in
 #' `x`. Unlike a matrix, dimensions are never dropped as subscripting
 #' `x` always returns an index object. This means that subscripting with a
 #' matrix is not possible, and only a "submatrix" can be extracted. As `x`

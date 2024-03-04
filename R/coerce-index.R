@@ -11,7 +11,7 @@
 #' and `value`.
 #'
 #' `as.matrix()` returns a matrix with a row for each level and a column
-#' for each period.
+#' for each time period.
 #'
 #' @seealso
 #' [as_index()] to coerce a matrix/data frame of index values into an index

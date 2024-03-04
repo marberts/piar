@@ -6,7 +6,8 @@
 #' The `mean()` method constructs a set of non-overlapping windows of
 #' length `window`, starting in the first period of the index, and takes
 #' the mean of each index value in these windows for each level of the index.
-#' The last window is discarded if it is incomplete, so that index values are
+#' The last window is discarded if it is incomplete (with a warning), so that
+#' index values are
 #' always averaged over `window` periods. The names for the first time
 #' period in each window form the new names for the aggregated time periods.
 #'
@@ -81,6 +82,9 @@ mean.piar_index <- function(x, weights = NULL, ...,
   )
 
   # get the starting location for each window
+  if (length(x$time) %% window != 0) {
+    warning("'window' is not a multiple of the number of time periods in 'x'")
+  }
   len <- length(x$time) %/% window
   loc <- seq.int(1L, by = window, length.out = len)
   periods <- x$time[loc]

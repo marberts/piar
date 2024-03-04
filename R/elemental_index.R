@@ -98,8 +98,8 @@ different_length <- function(...) {
 #' @param contrib Should percent-change contributions be calculated? The
 #' default does not calculate contributions.
 #' @param chainable Are the price relatives in `x` period-over-period
-#' relatives for a chained calculation (the default)? This should be
-#' `FALSE` when `x` contains fixed-base relatives.
+#' relatives that are suitable for a chained calculation (the default)? This
+#' should be `FALSE` when `x` contains fixed-base relatives.
 #' @param na.rm Should missing values be removed? By default, missing values
 #' are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #' imputation.
