@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9019</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for piar_index</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">recursive</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA</a></span><span class="op">(</span><span class="va">x</span>, recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,7 +68,8 @@
 
 
 <dt>recursive</dt>
-<dd><p>Ignored.</p></dd>
+<dd><p>Check if <code>x</code> also has missing percent-change
+contributions. By default only index values are checked for missingness.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -79,7 +80,8 @@
 columns for each time period, that indicates which index values are missing.</p>
 
 
-<p><code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code> returns <code>TRUE</code> if any index values are missing.</p>
+<p><code><a href="https://rdrr.io/r/base/NA.html" class="external-link">anyNA()</a></code> returns <code>TRUE</code> if any index values are missing, or percent-change
+contributions (if <code>recursive = TRUE</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

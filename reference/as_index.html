@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9019</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,9 +108,10 @@ inherits from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Numeric matrices are coerced into an index object by treating each column as
-a separate time period, and each row as an elemental aggregate. Column names
-are used to denote time periods, and row names are used to denote elemental
-aggregates (so they must be unique). This essentially reverses calling
+a separate time period, and each row as a separate level of the index (e.g.,
+an elemental aggregate). Column names
+are used to denote time periods, and row names are used to denote levels
+(so they must be unique). This essentially reverses calling
 <code><a href="as.data.frame.piar_index.html">as.matrix()</a></code> on an index object. If a
 dimension is unnamed, then it is given a sequential label from 1 to the size
 of that dimension. The default method coerces <code>x</code> to a matrix prior to

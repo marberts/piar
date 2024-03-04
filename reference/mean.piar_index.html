@@ -12,7 +12,7 @@ of index values over consecutive windows of subperiods."><meta property="og:imag
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9019</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -116,7 +116,8 @@ not an aggregate index (as it is no longer consistent in aggregation).</p>
     <p>The <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> method constructs a set of non-overlapping windows of
 length <code>window</code>, starting in the first period of the index, and takes
 the mean of each index value in these windows for each level of the index.
-The last window is discarded if it is incomplete, so that index values are
+The last window is discarded if it is incomplete (with a warning), so that
+index values are
 always averaged over <code>window</code> periods. The names for the first time
 period in each window form the new names for the aggregated time periods.</p>
 <p>Percent-change contributions are aggregated if <code>contrib = TRUE</code> by treating
