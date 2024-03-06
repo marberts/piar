@@ -100,11 +100,13 @@ aggregation_structure <- function(x, weights = NULL) {
   if (anyNA(x, recursive = TRUE)) {
     stop("'x' cannot contain NAs")
   }
-  
+
   if (is.null(weights)) {
     weights <- rep.int(1, length(ea))
+  } else if (any(weights <= 0, na.rm = TRUE)) {
+    warning("some elements of 'w' are less than or equal to 0")
   }
-  
+
   # basic argument checking to make sure inputs can make an
   # aggregation structure
   if (any(lengths(x) != length(weights))) {

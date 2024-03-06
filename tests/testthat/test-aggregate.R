@@ -403,3 +403,24 @@ test_that("reaggregating doesn't introduce incorrect contributions", {
   r <- (r / sum(r))[1]
   expect_equal(contrib(index)[, 2] * r, contrib(aggregate(index, pias))[, 2])
 })
+
+test_that("skipping time periods works", {
+  ms_epr <- with(
+    ms_prices,
+    elemental_index(price_relative(price, period, product),
+                    period, business, na.rm = TRUE)
+  )
+  
+  ms_pias <- with(
+    ms_weights,
+    aggregation_structure(
+      c(expand_classification(classification), list(business)), weight
+    )
+  )
+  
+  ms_index <- chain(aggregate(ms_epr, ms_pias, na.rm = TRUE, r = 2))
+  
+  ms_index2 <- unchain(ms_index[, -3])
+  
+  expect_equal(chain(aggregate(ms_index2, ms_pias, r = 2))[, 3], ms_index[, 4])
+})

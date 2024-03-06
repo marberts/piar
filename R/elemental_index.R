@@ -127,7 +127,7 @@ different_length <- function(...) {
 #'
 #' [chain()] for chaining period-over-period indexes, and
 #' [rebase()] for rebasing an index.
-#' 
+#'
 #' [`aggregate()`][aggregate.piar_index] to aggregate elemental indexes
 #' according to an aggregation structure.
 #'

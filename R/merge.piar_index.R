@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' index1 <- as_index(matrix(1:6, 2))
-#' 
+#'
 #' index2 <- index1
 #' levels(index2) <- 3:4
 #'

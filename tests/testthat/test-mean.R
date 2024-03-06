@@ -13,7 +13,7 @@ test_that("aggregating over subperiods works", {
   expect_equal(as.matrix(epr2)[, 2], rowMeans(as.matrix(ms_epr)[, 3:4]))
 
   expect_true(is_chainable_index(epr2))
-  expect_false(is_chainable_index(mean(chain(ms_epr))))
+  expect_false(is_chainable_index(mean(chain(ms_epr), window = 2)))
 
   w <- matrix(seq_len(4 * 4), 4)
   expect_equal(

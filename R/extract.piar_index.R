@@ -26,23 +26,23 @@ replace_matrix <- function(x, i, value) {
       return(x)
     }
   }
-  
+
   if (ncol(i) != 2L) {
     stop("'i' must have exactly two columns")
   }
-  
+
   value <- as.numeric(value)
   n <- length(value)
   if (n == 0L) {
     stop("replacement has length zero")
   }
-  
+
   levels <- dim_indices(x$levels, i[, 1L])
   periods <- dim_indices(x$time, i[, 2L])
   if (length(levels) %% n != 0L) {
     stop("number of items to replace is not a multiple of replacement length")
   }
-  
+
   for (i in seq_along(levels)) {
     x$index[[periods[i]]][levels[i]] <- value[(i - 1L) %% n + 1]
     # drop contributions for replaced values
@@ -70,18 +70,18 @@ replace_index <- function(x, i, j, value) {
 replace_numeric <- function(x, i, j, value) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
-  
+
   value <- as.numeric(value)
   n <- length(value)
   if (n == 0L) {
     stop("replacement has length zero")
   }
-  
+
   m <- length(levels)
   if ((m * length(periods)) %% n != 0) {
     stop("number of items to replace is not a multiple of replacement length")
   }
-  
+
   s <- seq.int(0L, m - 1L)
   for (t in seq_along(periods)) {
     x$index[[periods[t]]][levels] <- value[(s + (t - 1L) * m) %% n + 1]
@@ -107,7 +107,7 @@ replace_numeric <- function(x, i, j, value) {
 #' it inherits from the same class as `x`, then the index values and
 #' percent-change contributions of `x[i, j]` are replaced with those for the
 #' corresponding levels of `value`. If `value` is not an index, then it is
-#' coerced to a numeric vector and behaves the same as replacing values in a 
+#' coerced to a numeric vector and behaves the same as replacing values in a
 #' matrix. Note that replacing the values of an index will remove the
 #' corresponding percent-change contributions (if any). Unlike extraction, it
 #' is possible to replace value in `x` using a logical matrix or a two-column
@@ -139,7 +139,7 @@ replace_numeric <- function(x, i, j, value) {
 #' index[, 2]
 #'
 #' index[1, ] <- 1 # can be useful for doing specific imputations
-#' 
+#'
 #' index
 #'
 #' @family index methods

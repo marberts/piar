@@ -56,7 +56,7 @@
 #' @family index methods
 #' @export
 mean.piar_index <- function(x, weights = NULL, ...,
-                            window = 3L, 
+                            window = 3L,
                             na.rm = FALSE,
                             contrib = TRUE,
                             r = 1) {
@@ -104,7 +104,7 @@ mean.piar_index <- function(x, weights = NULL, ...,
       contrib[[i]][] <- agg_contrib(con, rel, weight)
     }
   }
-  
+
   x$index <- index
   x$contrib <- contrib
   x$time <- periods

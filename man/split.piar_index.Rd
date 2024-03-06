@@ -14,7 +14,7 @@
 
 \item{f}{A factor or list of factors to group elements of \code{x}.}
 
-\item{drop}{Should levels that do not occur in \code{f} be dropped. By default
+\item{drop}{Should levels that do not occur in \code{f} be dropped? By default
 all levels are kept.}
 
 \item{...}{Further arguments passed to \code{\link[=split.default]{split.default()}}.}

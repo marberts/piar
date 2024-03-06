@@ -197,96 +197,6 @@ print.piar_index <- function(x, ...) {
   invisible(x)
 }
 
-#' Get the levels for a price index
-#'
-#' Methods to get and set the levels for a price index.
-#'
-#' @param x A price index, as made by, e.g., [elemental_index()].
-#' @param value A character vector, or something that can be coerced into one,
-#' giving the replacement levels for `x`.
-#'
-#' @returns
-#' `levels()` returns a character vector with the levels for a price index.
-#'
-#' The replacement method returns a copy of `x` with the levels in `value`.
-#'
-#' It's not generally possible to change the levels of an aggregate price
-#' index, and in this case replacing the levels does not return an aggregate
-#' index.
-#'
-#' @family index methods
-#' @export
-levels.piar_index <- function(x) {
-  x$levels
-}
-
-#' @rdname levels.piar_index
-#' @export
-`levels<-.piar_index` <- function(x, value) {
-  x$levels <- as.character(value)
-  validate_piar_index(x)
-}
-
-#' @export
-`levels<-.aggregate_piar_index` <- function(x, value) {
-  value <- as.character(value)
-  if (identical(value, x$levels)) {
-    x
-  } else {
-    piar_index(x$index, x$contrib, value, x$time, is_chainable_index(x))
-  }
-}
-
-#' Get the time periods for a price index
-#'
-#' Methods to get and set the time periods for a price index.
-#'
-#' @param x A price index, as made by, e.g., [elemental_index()].
-#' @param value A character vector, or something that can be coerced into one,
-#' giving the replacement time periods for `x`.
-#' @param ... Not currently used.
-#'
-#' @returns
-#' `time()` return a character vector with the time periods for a price index.
-#' `start()` and `end()` return the first and last time period.
-#'
-#' The replacement method returns a copy of `x` with the time periods in
-#' `value`.
-#'
-#' @importFrom stats time
-#' @family index methods
-#' @export
-time.piar_index <- function(x, ...) {
-  x$time
-}
-
-#' @rdname time.piar_index
-#' @export
-`time<-` <- function(x, value) {
-  UseMethod("time<-")
-}
-
-#' @rdname time.piar_index
-#' @export
-`time<-.piar_index` <- function(x, value) {
-  x$time <- as.character(value)
-  validate_piar_index(x)
-}
-
-#' @rdname time.piar_index
-#' @importFrom stats start
-#' @export
-start.piar_index <- function(x, ...) {
-  x$time[1L]
-}
-
-#' @rdname time.piar_index
-#' @importFrom stats end
-#' @export
-end.piar_index <- function(x, ...) {
-  x$time[length(x$time)]
-}
-
 #' Test if an object is a price index
 #'
 #' Test if an object is a index object, or a subclass of an index object.
@@ -337,7 +247,7 @@ Math.piar_index <- function(x, ...) {
 
 #' @export
 Ops.piar_index <- function(e1, e2) {
-  boolean <- switch(.Generic, `<` = , `>` = , `==` = , `!=` = , 
+  boolean <- switch(.Generic, `<` = , `>` = , `==` = , `!=` = ,
                     `<=` = , `>=` = TRUE, FALSE)
   if (!boolean) {
     stop(gettextf("'%s' not meaningful for index objects", .Generic))
@@ -355,12 +265,3 @@ Ops.piar_index <- function(e1, e2) {
 Summary.piar_index <- function(..., na.rm) {
   stop(gettextf("'%s' not meaningful for index objects", .Generic))
 }
-
-# These would make split.default work.
-# length.piar_index <- function(x) {
-#   length(x$levels)
-# }
-
-# `length<-.piar_index` <- function(x, value) {
-#   stop("cannot change the length of an index object")
-# }

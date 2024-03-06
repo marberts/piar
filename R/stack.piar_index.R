@@ -19,14 +19,14 @@
 #' inherit from [`aggregate_piar_index`].
 #'
 #' `unstack()` returns a list of price indexes with the same class as `x`.
-#' 
+#'
 #' @note
 #' It may be necessary to use `rebase()` prior to stacking fixed-based price
 #' indexes to ensure they have the same base period.
 #'
 #' @examples
 #' index1 <- as_index(matrix(1:6, 2))
-#' 
+#'
 #' index2 <- index1
 #' time(index2) <- 4:6
 #'
