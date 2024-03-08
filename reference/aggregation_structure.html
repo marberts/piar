@@ -14,7 +14,7 @@ elemental indexes."><meta property="og:image" content="https://marberts/github.i
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9020</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0.9021</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,18 +97,11 @@ immediate parent for each node of the aggregation structure below the
 initial nodes.</p></dd>
 
 <dt>levels</dt>
-<dd><p>A character vector that gives the levels of <code>x</code>.</p></dd>
-
-<dt>eas</dt>
-<dd><p>A character vector that gives the subset of
-<code>levels</code> that are elemental aggregates.</p></dd>
+<dd><p>A list of character vectors that give the levels of <code>x</code>.</p></dd>
 
 <dt>weights</dt>
 <dd><p>A named vector giving the weight for each elemental
 aggregate.</p></dd>
-
-<dt>height</dt>
-<dd><p>The length of <code>x</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -152,22 +145,28 @@ price index aggregation structure with an aggregated index.</p></div>
 <span class="r-in"><span>  weight <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">pias</span> <span class="op">&lt;-</span> <span class="fu">aggregation_structure</span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="fu">aggregation_structure</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="va">aggregation_weights</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>  weights <span class="op">=</span> <span class="va">aggregation_weights</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aggregation structure for 3 elemental aggregates with 2 levels above the elemental aggregates </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   level1 level2  ea weight</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1     11 111      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      1     11 112      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      1     12 121      4</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># The aggregation structure can also be made by expanding the</span></span></span>
 <span class="r-in"><span><span class="co"># elemental aggregates</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">aggregation_weights</span>,</span></span>
-<span class="r-in"><span>    <span class="fu">aggregation_structure</span><span class="op">(</span><span class="fu"><a href="expand_classification.html">expand_classification</a></span><span class="op">(</span><span class="va">ea</span><span class="op">)</span>, <span class="va">weight</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span>,</span></span>
-<span class="r-in"><span>  <span class="va">pias</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">aggregation_weights</span>,</span></span>
+<span class="r-in"><span>  <span class="fu">aggregation_structure</span><span class="op">(</span><span class="fu"><a href="expand_classification.html">expand_classification</a></span><span class="op">(</span><span class="va">ea</span><span class="op">)</span>, <span class="va">weight</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aggregation structure for 3 elemental aggregates with 2 levels above the elemental aggregates </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   level1 level2  ea weight</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1     11 111      1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      1     11 112      3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      1     12 121      4</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
