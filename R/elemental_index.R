@@ -93,8 +93,8 @@ different_length <- function(...) {
 #' @param ea A factor, or something that can be coerced into one, giving the
 #' elemental aggregate associated with each price relative in `x`. The
 #' default assumes that all price relatives belong to one elemental aggregate.
-#' @param weights A numeric vector of weights for the price relatives in `x`.
-#' The default is equal weights.
+#' @param weights A numeric vector of weights for the price relatives in `x`,
+#' or something that can be coerced into one. The default is equal weights.
 #' @param contrib Should percent-change contributions be calculated? The
 #' default does not calculate contributions.
 #' @param chainable Are the price relatives in `x` period-over-period
@@ -204,17 +204,21 @@ elemental_index.numeric <- function(x,
                                     na.rm = FALSE,
                                     contrib = FALSE,
                                     r = 0) {
+  if (!is.null(weights)) {
+    weights <- as.numeric(weights)
+  }
+  period <- as.factor(period)
+  ea <- as.factor(ea) # ensures elemental aggregates are balanced
+  
+  time <- levels(period)
+  levels <- levels(ea)
+  
   if (different_length(x, period, ea, weights)) {
     stop("input vectors must be the same length")
   }
   if (any(x <= 0, na.rm = TRUE) || any(weights <= 0, na.rm = TRUE)) {
     warning("some elements of 'x or 'weights' are less than or equal to 0")
   }
-
-  period <- as.factor(period)
-  ea <- as.factor(ea) # ensures elemental aggregates are balanced
-  time <- levels(period)
-  levels <- levels(ea)
 
   if (contrib) {
     if (is.null(names(x))) {
@@ -231,7 +235,7 @@ elemental_index.numeric <- function(x,
   if (is.null(weights)) {
     weights <- list(list(NULL))
   } else {
-    weights <- Map(split, split(as.numeric(weights), period), ea)
+    weights <- Map(split, split(weights, period), ea)
   }
 
   index_fun <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)

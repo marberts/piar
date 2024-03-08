@@ -12,3 +12,4 @@
 ^inst/benchmark\.R$
 ^inst/logo\.R$
 ^tests/testthat/setup\.R$
+^CRAN-SUBMISSION$

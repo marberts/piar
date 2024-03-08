@@ -166,7 +166,7 @@ Aggregation structure for 3 elemental aggregates with 2 levels above the element
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: as.matrix.piar_aggregation_structure
-> ### Title: Coerce a price index aggregation structure into a tabular form
+> ### Title: Coerce an aggregation structure into a tabular form
 > ### Aliases: as.matrix.piar_aggregation_structure
 > ###   as.data.frame.piar_aggregation_structure
 > 
@@ -837,7 +837,7 @@ Indexes
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: update.piar_aggregation_structure
-> ### Title: Update a price index aggregation structure
+> ### Title: Update an aggregation structure
 > ### Aliases: update.piar_aggregation_structure
 > 
 > ### ** Examples
@@ -944,7 +944,7 @@ top 0.007818832 0.003929299
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: weights.piar_aggregation_structure
-> ### Title: Get the weights for a price index aggregation structure
+> ### Title: Get the weights for an aggregation structure
 > ### Aliases: weights.piar_aggregation_structure weights<-
 > ###   weights<-.piar_aggregation_structure
 > 
@@ -988,7 +988,7 @@ top 0.007818832 0.003929299
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.109 0.008 0.118 0 0 
+Time elapsed:  0.105 0.017 0.121 0 0 
 > grDevices::dev.off()
 null device 
           1 

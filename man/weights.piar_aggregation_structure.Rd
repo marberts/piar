@@ -4,7 +4,7 @@
 \alias{weights.piar_aggregation_structure}
 \alias{weights<-}
 \alias{weights<-.piar_aggregation_structure}
-\title{Get the weights for a price index aggregation structure}
+\title{Get the weights for an aggregation structure}
 \usage{
 \method{weights}{piar_aggregation_structure}(object, ..., ea_only = TRUE, na.rm = FALSE)
 
@@ -69,6 +69,7 @@ weights(pias)
 \seealso{
 Other aggregation structure methods: 
 \code{\link{as.matrix.piar_aggregation_structure}()},
+\code{\link{levels.piar_aggregation_structure}()},
 \code{\link{update.piar_aggregation_structure}()}
 }
 \concept{aggregation structure methods}

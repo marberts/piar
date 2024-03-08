@@ -23,7 +23,8 @@ carry_forward(x, period, product)
 carry_backwards(x, period, product)
 }
 \arguments{
-\item{x}{A numeric vector of prices.}
+\item{x}{A numeric vector of prices, or something that can be coerced
+into one.}
 
 \item{period}{A factor, or something that can be coerced into one, giving
 the time period associated with each price in \code{x}. The ordering of time
@@ -41,7 +42,8 @@ coerced into one, as made with \code{\link[=aggregation_structure]{aggregation_s
 imputes from elemental indexes only (i.e., not recursively).}
 
 \item{weights}{A numeric vector of weights for the prices in \code{x} (i.e.,
-product weights). The default is to give each price equal weight.}
+product weights), or something that can be coerced into one. The default is
+to give each price equal weight.}
 
 \item{r1}{Order of the generalized-mean price index used to calculate the
 elemental price indexes: 0 for a geometric index (the default), 1 for an

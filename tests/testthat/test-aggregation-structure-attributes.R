@@ -9,6 +9,8 @@ test_that("levels method works", {
     list(c("1", "2"), c("11", "21", "12"), c("111", "211", "121", "112"))
   )
   expect_error(levels(agg) <- 1:9)
+  
+  expect_identical(levels(agg), lapply(weights(agg, ea_only = FALSE), names))
 })
 
 test_that("weights method works", {

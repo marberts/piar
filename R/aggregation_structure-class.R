@@ -80,7 +80,7 @@ str.piar_aggregation_structure <- function(object, ...) {
   str(unclass(object), ...)
 }
 
-#' Test if an object is a price index aggregation structure
+#' Test if an object is an aggregation structure
 #'
 #' Test if an object is a price index aggregation structure.
 #'

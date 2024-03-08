@@ -21,7 +21,8 @@
 #' section 4.3 of Balk (2008) for details.
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
-#' @param weights A numeric vector of weights for the index values in `x`. The
+#' @param weights A numeric vector of weights for the index values in `x`, or
+#' something that can be coerced into one. The
 #' default is equal weights. It is usually easiest to specify these weights as
 #' a matrix with a row for each index value in `x` and a column for each
 #' time period.
@@ -61,10 +62,11 @@ mean.piar_index <- function(x, weights = NULL, ...,
                             contrib = TRUE,
                             r = 1) {
   if (!is.null(weights)) {
+    weights <- as.numeric(weights)
     if (length(weights) != length(x$time) * length(x$levels)) {
       stop("'weights' must have a value for each index value in 'x'")
     }
-    w <- split(as.numeric(weights), gl(length(x$time), length(x$levels)))
+    w <- split(weights, gl(length(x$time), length(x$levels)))
   }
 
   window <- as.integer(window)

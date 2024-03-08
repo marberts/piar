@@ -2,7 +2,7 @@
 % Please edit documentation in R/aggregation_structure-class.R
 \name{is_aggregation_structure}
 \alias{is_aggregation_structure}
-\title{Test if an object is a price index aggregation structure}
+\title{Test if an object is an aggregation structure}
 \usage{
 is_aggregation_structure(x)
 }

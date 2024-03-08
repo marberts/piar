@@ -43,6 +43,7 @@ reference:
   - as_aggregation_structure
   - as.matrix.piar_aggregation_structure
   - weights.piar_aggregation_structure
+  - levels.piar_aggregation_structure
   - update.piar_aggregation_structure
   - is_aggregation_structure
   

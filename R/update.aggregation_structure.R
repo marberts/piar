@@ -1,4 +1,4 @@
-#' Update a price index aggregation structure
+#' Update an aggregation structure
 #'
 #' Price update the weights in a price index aggregation structure.
 #'

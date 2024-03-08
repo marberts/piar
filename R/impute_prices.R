@@ -27,7 +27,8 @@
 #'
 #' @name impute_prices
 #' @aliases impute_prices
-#' @param x A numeric vector of prices.
+#' @param x A numeric vector of prices, or something that can be coerced
+#' into one.
 #' @param period A factor, or something that can be coerced into one, giving
 #' the time period associated with each price in `x`. The ordering of time
 #' periods follows of the levels of `period`, to agree with
@@ -40,7 +41,8 @@
 #' coerced into one, as made with [aggregation_structure()]. The default
 #' imputes from elemental indexes only (i.e., not recursively).
 #' @param weights A numeric vector of weights for the prices in `x` (i.e.,
-#' product weights). The default is to give each price equal weight.
+#' product weights), or something that can be coerced into one. The default is
+#' to give each price equal weight.
 #' @param r1 Order of the generalized-mean price index used to calculate the
 #' elemental price indexes: 0 for a geometric index (the default), 1 for an
 #' arithmetic index, or -1 for a harmonic index. Other values are possible; see
@@ -77,28 +79,34 @@
 #' @export
 shadow_price <- function(x, period, product, ea,
                          pias = NULL, weights = NULL, r1 = 0, r2 = 1) {
+  # this is mostly a combination of gpindex::back_period() and aggregate()
+  # it just does it period-by-period and keeps track of prices to impute
+  x <- as.numeric(x)
+  period <- as.factor(period)
+  product <- as.factor(product)
+  attributes(product) <- NULL
+  ea <- as.factor(ea)
+  if (!is.null(weights)) {
+    weights <- as.numeric(weights)
+  }
+  
   if (different_length(x, period, product, ea, weights)) {
     stop("input vectors must be the same length")
   }
-  # this is mostly a combination of gpindex::back_period() and aggregate()
-  # it just does it period-by-period and keeps track of prices to impute
-  period <- as.factor(period)
   if (nlevels(period) == 0L) {
     return(rep.int(NA_integer_, length(period)))
   }
 
   res <- split(x, period)
-  product <- as.factor(product)
-  attributes(product) <- NULL
   product <- split(product, period)
   if (duplicate_products(product)) {
     warning("there are duplicated period-product pairs")
   }
-  ea <- split(as.factor(ea), period)
+  ea <- split(ea, period)
   if (is.null(weights)) {
     w <- rep.int(list(NULL), nlevels(period))
   } else {
-    w <- split(as.numeric(weights), period)
+    w <- split(weights, period)
   }
   if (!is.null(pias)) {
     pias <- as_aggregation_structure(pias)
@@ -129,17 +137,19 @@ shadow_price <- function(x, period, product, ea,
 #' @rdname impute_prices
 #' @export
 carry_forward <- function(x, period, product) {
+  x <- as.numeric(x)
+  period <- as.factor(period)
+  product <- as.factor(product)
+  attributes(product) <- NULL
+  
   if (different_length(x, period, product)) {
     stop("input vectors must be the same length")
   }
-  period <- as.factor(period)
   if (nlevels(period) == 0L) {
     return(rep.int(NA_integer_, length(period)))
   }
 
   res <- split(x, period)
-  product <- as.factor(product)
-  attributes(product) <- NULL
   product <- split(product, period)
   if (duplicate_products(product)) {
     warning("there are duplicated period-product pairs")

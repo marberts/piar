@@ -1,4 +1,4 @@
-#' Get the weights for a price index aggregation structure
+#' Get the weights for an aggregation structure
 #'
 #' Get and set the weights for a price index aggregation structure.
 #'

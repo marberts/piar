@@ -9,7 +9,8 @@
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
-\item{weights}{A numeric vector of weights for the index values in \code{x}. The
+\item{weights}{A numeric vector of weights for the index values in \code{x}, or
+something that can be coerced into one. The
 default is equal weights. It is usually easiest to specify these weights as
 a matrix with a row for each index value in \code{x} and a column for each
 time period.}

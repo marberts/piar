@@ -16,8 +16,8 @@ have no duplicates. All vectors should be the same length, without
 \code{x}.}
 
 \item{weights}{A numeric vector of aggregation weights for the elemental
-aggregates (i.e., the last vector in \code{x}). The default is to give each
-elemental aggregate the same weight.}
+aggregates (i.e., the last vector in \code{x}), or something that can be coerced
+into one. The default is to give each elemental aggregate the same weight.}
 }
 \value{
 A price index aggregation structure of class \code{piar_aggregation_structure}.

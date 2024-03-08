@@ -2,7 +2,7 @@
 % Please edit documentation in R/update.aggregation_structure.R
 \name{update.piar_aggregation_structure}
 \alias{update.piar_aggregation_structure}
-\title{Update a price index aggregation structure}
+\title{Update an aggregation structure}
 \usage{
 \method{update}{piar_aggregation_structure}(object, index, period = end(index), ..., r = NULL)
 }
@@ -62,6 +62,7 @@ weights(update(pias, index), ea_only = FALSE)
 
 Other aggregation structure methods: 
 \code{\link{as.matrix.piar_aggregation_structure}()},
+\code{\link{levels.piar_aggregation_structure}()},
 \code{\link{weights.piar_aggregation_structure}()}
 }
 \concept{aggregation structure methods}

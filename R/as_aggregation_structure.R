@@ -87,8 +87,11 @@ as_aggregation_structure.aggregate_piar_index <- function(x,
                                                           weights = NULL, ...) {
   if (is.null(weights)) {
     weights <- rep.int(1, length(x$pias$levels[[length(x$pias$levels)]]))
-  } else if (any(weights <= 0, na.rm = TRUE)) {
-    warning("some elements of 'w' are less than or equal to 0")
+  } else {
+    weights <- as.numeric(weights)
+    if (any(weights <= 0, na.rm = TRUE)) {
+      warning("some elements of 'w' are less than or equal to 0")
+    }
   }
   piar_aggregation_structure(
     x$pias$child, x$pias$parent, x$pias$levels, weights

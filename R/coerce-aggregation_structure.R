@@ -1,4 +1,4 @@
-#' Coerce a price index aggregation structure into a tabular form
+#' Coerce an aggregation structure into a tabular form
 #'
 #' Coerce a price index aggregation structure into an aggregation matrix, or a
 #' data frame.

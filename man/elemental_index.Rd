@@ -39,8 +39,8 @@ relatives belong to one time period.}
 elemental aggregate associated with each price relative in \code{x}. The
 default assumes that all price relatives belong to one elemental aggregate.}
 
-\item{weights}{A numeric vector of weights for the price relatives in \code{x}.
-The default is equal weights.}
+\item{weights}{A numeric vector of weights for the price relatives in \code{x},
+or something that can be coerced into one. The default is equal weights.}
 
 \item{chainable}{Are the price relatives in \code{x} period-over-period
 relatives that are suitable for a chained calculation (the default)? This
