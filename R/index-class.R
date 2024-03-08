@@ -31,7 +31,7 @@
 #' \describe{
 #' \item{r}{The order of the generalized mean used to aggregated the
 #' index (usually 1).}
-#' \item{pias}{A list containing the `child`, `parent`, `eas`, and `height`
+#' \item{pias}{A list containing the `child`, `parent`, and `levels`
 #' components of the aggregation structured used to aggregate the index.}
 #' }
 #'

@@ -6,7 +6,7 @@ agg <- aggregation_structure(list(x1, x2, x3))
 test_that("updating with a length-0 index makes the weights NA", {
   epr <- elemental_index(integer(0))
   index <- aggregate(epr, agg)
-  expect_equal(update(agg, index)[-5], agg[-5])
+  expect_equal(update(agg, index)[-4], agg[-4])
 
   expect_equal(weights(update(agg, index), ea_only = FALSE),
                list(c("1" = NA_real_, "2" = NA),

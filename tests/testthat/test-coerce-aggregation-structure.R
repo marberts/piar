@@ -1,7 +1,7 @@
 x1 <- c("1", "2", "1", "1")
 x2 <- c("11", "21", "12", "11")
 x3 <- c("111", "211", "121", "112")
-agg <- aggregation_structure(list(x1, x2, x3))
+agg <- aggregation_structure(list(level1 = x1, level2 = x2, ea = x3))
 
 test_that("coercion methods works", {
   expect_equal(

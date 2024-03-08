@@ -5,5 +5,5 @@ levels.piar_aggregation_structure <- function(x) {
 
 #' @export
 `levels<-.piar_aggregation_structure` <- function(x, value) {
-  stop("cannot replace levels attribute for aggregation structure")
+  stop("cannot replace levels attribute for an aggregation structure")
 }

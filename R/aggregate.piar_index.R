@@ -159,13 +159,12 @@ aggregate.piar_index <- function(x, pias, ...,
   w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
 
   has_contrib <- has_contrib(x) && contrib
-  pias_eas <- match(pias$eas, pias$levels)
-  eas <- match(pias$eas, x$levels)
+  eas <- match(pias$levels[[length(pias$levels)]], x$levels)
 
   # loop over each time period
   index <- contrib <- vector("list", length(x$time))
   for (t in seq_along(x$time)) {
-    rel <- con <- vector("list", pias$height)
+    rel <- con <- vector("list", length(pias$levels))
     # align epr with weights so that positional indexing works
     rel[[1L]] <- x$index[[t]][eas]
     con[[1L]] <- x$contrib[[t]][eas]
@@ -207,14 +206,14 @@ aggregate.piar_index <- function(x, pias, ...,
     contrib[[t]] <- unlist(rev(con), recursive = FALSE, use.names = FALSE)
     # price update weights for all periods after the first
     if (chainable) {
-      weights(pias) <- price_update(index[[t]][pias_eas], w[[1L]])
+      weights(pias) <- price_update(rel[[1L]], w[[1L]])
       w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
     }
   }
 
   aggregate_piar_index(
-    index, contrib, pias$levels, x$time, r,
-    pias[c("child", "parent", "eas", "height")],
+    index, contrib, unlist(pias$levels, use.names = FALSE), x$time, r,
+    pias[c("child", "parent", "levels")],
     chainable
   )
 }

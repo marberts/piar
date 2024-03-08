@@ -41,7 +41,7 @@ following components:
 \describe{
 \item{r}{The order of the generalized mean used to aggregated the
 index (usually 1).}
-\item{pias}{A list containing the \code{child}, \code{parent}, \code{eas}, and \code{height}
+\item{pias}{A list containing the \code{child}, \code{parent}, and \code{levels}
 components of the aggregation structured used to aggregate the index.}
 }
 }

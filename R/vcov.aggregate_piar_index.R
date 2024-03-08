@@ -83,7 +83,7 @@
 vcov.aggregate_piar_index <- function(object, repweights, ...,
                                       mse = TRUE, sparse = FALSE) {
   repweights <- as.matrix(repweights)
-  eas <- object$pias$eas
+  eas <- object$pias$levels[[length(object$pias$levels)]]
   if (nrow(repweights) != length(eas)) {
     stop("'repweights' must have a row for each weight in 'pias'")
   }

@@ -29,12 +29,9 @@ terminal nodes.}
 \item{parent}{A list that gives the position of the
 immediate parent for each node of the aggregation structure below the
 initial nodes.}
-\item{levels}{A character vector that gives the levels of \code{x}.}
-\item{eas}{A character vector that gives the subset of
-\code{levels} that are elemental aggregates.}
+\item{levels}{A list of character vectors that give the levels of \code{x}.}
 \item{weights}{A named vector giving the weight for each elemental
 aggregate.}
-\item{height}{The length of \code{x}.}
 }
 \description{
 Create a price index aggregation structure from a hierarchical
@@ -64,7 +61,7 @@ aggregation_weights <- data.frame(
   weight = c(1, 3, 4)
 )
 
-pias <- aggregation_structure(
+aggregation_structure(
   aggregation_weights[1:3],
   weights = aggregation_weights[[4]]
 )
@@ -72,12 +69,9 @@ pias <- aggregation_structure(
 # The aggregation structure can also be made by expanding the
 # elemental aggregates
 
-all.equal(
-  with(
-    aggregation_weights,
-    aggregation_structure(expand_classification(ea), weight)
-  ),
-  pias
+with(
+  aggregation_weights,
+  aggregation_structure(expand_classification(ea), weight)
 )
 
 }

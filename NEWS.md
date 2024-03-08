@@ -32,6 +32,10 @@ are aggregated over subperiods.
 
 - Added a `split()` method for index objects.
 
+- `levels(aggregation_structure)` now returns a list of levels to denote
+the position of each level in the hierarchy. Use `unlist()` to get the old
+behavior.
+
 ## Bug fixes
 
 - The default for `ea_only` has changed to `TRUE` when calling

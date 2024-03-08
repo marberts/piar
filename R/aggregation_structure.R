@@ -25,12 +25,9 @@
 #' \item{parent}{A list that gives the position of the
 #' immediate parent for each node of the aggregation structure below the
 #' initial nodes.}
-#' \item{levels}{A character vector that gives the levels of `x`.}
-#' \item{eas}{A character vector that gives the subset of
-#' `levels` that are elemental aggregates.}
+#' \item{levels}{A list of character vectors that give the levels of `x`.}
 #' \item{weights}{A named vector giving the weight for each elemental
 #' aggregate.}
-#' \item{height}{The length of `x`.}
 #'
 #' @section Warning: The `aggregation_structure()` function does its best
 #' to check its arguments, but there should be no expectation that the result
@@ -73,7 +70,7 @@
 #'   weight = c(1, 3, 4)
 #' )
 #'
-#' pias <- aggregation_structure(
+#' aggregation_structure(
 #'   aggregation_weights[1:3],
 #'   weights = aggregation_weights[[4]]
 #' )
@@ -81,12 +78,9 @@
 #' # The aggregation structure can also be made by expanding the
 #' # elemental aggregates
 #'
-#' all.equal(
-#'   with(
-#'     aggregation_weights,
-#'     aggregation_structure(expand_classification(ea), weight)
-#'   ),
-#'   pias
+#' with(
+#'   aggregation_weights,
+#'   aggregation_structure(expand_classification(ea), weight)
 #' )
 #'
 #' @export
@@ -144,6 +138,6 @@ aggregation_structure <- function(x, weights = NULL) {
     )
   }
   parent <- lapply(parent, unlist)
-  levels <- unlist(lapply(x, levels), use.names = FALSE)
-  piar_aggregation_structure(child, parent, levels, ea, weights, len)
+  levels <- lapply(x, levels)
+  piar_aggregation_structure(child, parent, levels, weights)
 }

@@ -48,9 +48,10 @@
 #' @family aggregation structure methods
 #' @export
 as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
-  nea <- length(x$eas)
-  if (x$height == 1L) {
-    res <- matrix(numeric(0L), ncol = nea, dimnames = list(NULL, x$eas))
+  nea <- length(x$weights)
+  height <- length(x$levels)
+  if (height == 1L) {
+    res <- matrix(numeric(0L), ncol = nea, dimnames = list(NULL, x$levels[[1L]]))
     if (sparse) {
       return(Matrix::Matrix(res, sparse = TRUE))
     } else {
@@ -59,7 +60,7 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
   }
   cols <- seq_len(nea)
   # don't need the eas
-  lev <- lapply(as.list(x)[-x$height], \(z) factor(z, unique(z)))
+  lev <- lapply(as.list(x)[-height], \(z) factor(z, unique(z)))
   res <- vector("list", length(lev))
   # generate the rows for each level of the matrix and rbind together
   for (i in seq_along(res)) {
@@ -72,7 +73,7 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
       mat <- matrix(0, nlevels(lev[[i]]), nea)
       mat[cbind(lev[[i]], cols)] <- w
     }
-    dimnames(mat) <- list(levels(lev[[i]]), x$eas)
+    dimnames(mat) <- list(levels(lev[[i]]), x$levels[[height]])
     res[[i]] <- mat
   }
   do.call(rbind, res)
@@ -93,8 +94,8 @@ as.data.frame.piar_aggregation_structure <- function(x, ...,
 
 #' @export
 as.list.piar_aggregation_structure <- function(x, ...) {
-  if (x$height == 1L) {
-    return(list(x$eas))
+  if (length(x$levels) == 1L) {
+    return(x$levels[1L])
   }
   res <- vector("list", length(x$parent))
   res[[1L]] <- x$parent[[1L]]

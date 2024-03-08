@@ -4,8 +4,10 @@ x3 <- c("111", "211", "121", "112")
 agg <- aggregation_structure(list(x1, x2, x3))
 
 test_that("levels method works", {
-  expect_identical(levels(agg),
-                   c("1", "2", "11", "21", "12", "111", "211", "121", "112"))
+  expect_identical(
+    levels(agg),
+    list(c("1", "2"), c("11", "21", "12"), c("111", "211", "121", "112"))
+  )
   expect_error(levels(agg) <- 1:9)
 })
 

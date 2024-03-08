@@ -1,51 +1,44 @@
 #---- Class generator ----
-new_piar_aggregation_structure <- function(child, parent, levels, eas,
-                                           weights, height) {
+new_piar_aggregation_structure <- function(child, parent, levels, weights) {
   stopifnot(is.list(child))
   stopifnot(is.list(parent))
-  stopifnot(is.character(levels))
-  stopifnot(is.character(eas))
+  stopifnot(is.list(levels))
   stopifnot(is.double(weights))
-  stopifnot(is.integer(height))
   res <- list(
-    child = child, parent = parent, levels = levels,
-    eas = eas, weights = weights, height = height
+    child = child, parent = parent, levels = levels, weights = weights
   )
   structure(res, class = "piar_aggregation_structure")
 }
 
-piar_aggregation_structure <- function(child, parent, levels, eas,
-                                       weights, height) {
-  levels <- as.character(levels)
-  eas <- as.character(eas)
+piar_aggregation_structure <- function(child, parent, levels, weights) {
+  levels <- lapply(as.list(levels), as.character)
   weights <- as.numeric(weights)
-  names(weights) <- eas
-  height <- as.integer(height)
+  names(weights) <- levels[[length(levels)]]
   validate_piar_aggregation_structure(
-    new_piar_aggregation_structure(child, parent, levels, eas, weights, height)
+    new_piar_aggregation_structure(child, parent, levels, weights)
   )
 }
 
 #---- Validator ----
 validate_pias_levels <- function(x) {
-  if (anyNA(x$levels) || any(x$levels == "")) {
+  lev = unlist(x$levels, use.names = FALSE)
+  if (anyNA(lev) || any(lev == "")) {
     stop("cannot make an aggregation structure with missing levels")
   }
-  if (anyDuplicated(x$levels)) {
+  if (anyDuplicated(lev)) {
     stop("cannot make an aggregation structure with duplicated levels")
   }
   invisible(x)
 }
 
 validate_pias_structure <- function(x) {
-  eas <- seq.int(to = length(x$levels), length.out = length(x$eas))
-  if (!identical(x$eas, x$levels[eas]) ||
-    x$height != length(x$child) + 1L ||
-    x$height != length(x$parent) + 1L ||
-    anyNA(x$child, recursive = TRUE) ||
-    anyNA(x$parent, recursive = TRUE) ||
-    any(vapply(x$child, \(x) any(lengths(x) == 0L), logical(1L)))
-  ) {
+  height <- length(x$levels)
+  if (height != length(x$child) + 1L ||
+      height != length(x$parent) + 1L ||
+      anyNA(x$child, recursive = TRUE) ||
+      anyNA(x$parent, recursive = TRUE) ||
+      any(vapply(x$child, \(x) any(lengths(x) == 0L), logical(1L)))
+    ) {
     stop(
       "invalid aggregation structure; the input is likely not a nested ",
       "hierachy"
@@ -55,7 +48,7 @@ validate_pias_structure <- function(x) {
 }
 
 validate_pias_weights <- function(x) {
-  if (length(x$weights) != length(x$eas)) {
+  if (length(x$weights) != length(x$levels[[length(x$levels)]])) {
     stop(
       "cannot make an aggregation structure with a different number of ",
       "weights and elemental aggregates"
@@ -74,8 +67,9 @@ validate_piar_aggregation_structure <- function(x) {
 #' @export
 print.piar_aggregation_structure <- function(x, ...) {
   cat(
-    "Aggregation structure for", length(x$eas), "elemental aggregates with",
-    x$height - 1L, "levels above the elemental aggregates", "\n"
+    "Aggregation structure for", length(x$levels[[length(x$levels)]]),
+    "elemental aggregates with",
+    length(x$levels) - 1L, "levels above the elemental aggregates", "\n"
   )
   print(as.data.frame(x), ...)
   invisible(x)
