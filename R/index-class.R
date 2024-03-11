@@ -134,20 +134,20 @@ validate_time <- function(x) {
 
 validate_index_values <- function(x) {
   if (length(x$index) != length(x$time)) {
-    stop("missing index values for each time period")
+    stop("number of time periods does not agree with number of index values")
   }
   if (any(lengths(x$index) != length(x$levels))) {
-    stop("missing index values for each level")
+    stop("number of levels does not agree with number of index values")
   }
   invisible(x)
 }
 
 validate_contrib <- function(x) {
   if (length(x$contrib) != length(x$time)) {
-    stop("missing contributions for each time period")
+    stop("number of time periods does not agree with number of contributions")
   }
   if (any(lengths(x$contrib) != length(x$levels))) {
-    stop("missing contributions for each level")
+    stop("number of levels does not agree with number of contributions")
   }
   invisible(x)
 }
@@ -165,7 +165,7 @@ validate_aggregate_piar_index <- function(x) {
     stop("'r' must be of length 1")
   }
   validate_piar_index(x)
-  validate_pias_structure(c(x$pias, levels = list(x$levels)))
+  validate_pias_structure(x$pias)
   x
 }
 
