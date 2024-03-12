@@ -1,3 +1,10 @@
+# Version 0.7.1
+
+## Improvements
+
+- Added `interact_classifications()` to get the interaction of different
+dimensions for a hierarchical classification.
+
 # Version 0.7.0
 
 ## Significant changes

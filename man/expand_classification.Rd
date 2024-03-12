@@ -2,9 +2,12 @@
 % Please edit documentation in R/expand_classification.R
 \name{expand_classification}
 \alias{expand_classification}
+\alias{interact_classifications}
 \title{Expand a hierarchical classification}
 \usage{
 expand_classification(x, width = 1L)
+
+interact_classifications(..., sep = ":")
 }
 \arguments{
 \item{x}{A character vector, or something that can be coerced into one, of
@@ -15,14 +18,25 @@ codes/labels for a specific level in a classification (e.g., 5-digit COICOP,
 \code{x}. A single value is recycled to span the longest element in
 \code{x}. This cannot contain NAs. The default assumes each digit has a
 width of 1, as in the NAICS, NAPCS, and SIC classifications.}
+
+\item{...}{Lists of character vectors that give the codes/labels for each
+level of the classification, ordered so that moving down the list goes down
+the hierarchy (as made by \code{expand_classification()}).}
+
+\item{sep}{A character used to combine codes/labels across elements of \code{...}.
+The default uses ":".}
 }
 \value{
-A list with a entry for each level in \code{x} giving the "digits"
-that represent each level in the hierarchy.
+\code{expand_classification()} returns a list with a entry for each level in \code{x}
+giving the "digits" that represent each level in the hierarchy.
+
+\code{interact_classfication()} returns a list of lists with the same structure
+as \code{expand_classification()}.
 }
 \description{
 Expand a character representation of a hierarchical classification to make a
-price index aggregation structure.
+price index aggregation structure. Expanded classifications be interacted
+together to get all combinations of aggregation structures.
 }
 \examples{
 # A simple classification structure
