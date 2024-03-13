@@ -31,6 +31,8 @@ test_that("chain is the same as apply", {
 
 test_that("unchain and chain are inverses with no NAs", {
   expect_equal(unchain(chain(index2)), index2)
+  expect_equal(unchain(rebase(chain(index2), 1:8), 1:8), index2)
+  expect_equal(unchain(chain(index2, 1:8), 1 / 1:8), index2)
   expect_failure(expect_equal(unchain(chain(epr2)), epr2))
 })
 

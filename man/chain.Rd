@@ -22,7 +22,7 @@ unchain(x, ...)
 
 \method{unchain}{default}(x, ...)
 
-\method{unchain}{direct_piar_index}(x, ...)
+\method{unchain}{direct_piar_index}(x, base = rep(1, nlevels(x)), ...)
 
 rebase(x, ...)
 

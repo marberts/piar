@@ -5,6 +5,9 @@
 - Added `interact_classifications()` to get the interaction of different
 dimensions for a hierarchical classification.
 
+- `unchain()` gets an new argument `base` for better interaction with
+`chain()` and `rebase()`.
+
 # Version 0.7.0
 
 ## Significant changes

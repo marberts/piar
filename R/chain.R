@@ -134,8 +134,13 @@ unchain.chainable_piar_index <- function(x, ...) {
 
 #' @rdname chain
 #' @export
-unchain.direct_piar_index <- function(x, ...) {
+unchain.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
+  base <- as.numeric(base)
+  if (length(base) != length(x$levels)) {
+    stop("'base' must have a value for each level of 'x'")
+  }
   x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
+  x$index[[1L]] <- x$index[[1L]] * base
   # contributions are difficult to unchain, so remove them
   x$contrib[] <- empty_contrib(x$levels)
   new_piar_index(x$index, x$contrib, x$levels, x$time, chainable = TRUE)
