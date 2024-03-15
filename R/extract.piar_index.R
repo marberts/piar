@@ -7,7 +7,9 @@ dim_indices <- function(x, i) {
   } else {
     res <- match(x[i], x, incomparables = NA)
   }
-  if (length(res) == 0L || anyNA(res)) {
+  if (length(res) == 0L) {
+    stop("attempted to select less than one element")
+  } else if (anyNA(res)) {
     stop("subscript out of bounds")
   }
   res
