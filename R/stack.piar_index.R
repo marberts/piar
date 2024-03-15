@@ -13,10 +13,8 @@
 #' @inheritParams merge.piar_index
 #'
 #' @returns
-#' A price index that inherits from [`chainable_piar_index`] if `x` is a
-#' period-over-period index, or [`direct_piar_index`] if `x` is a fixed-base
-#' index. If both `x` and `y` are aggregate indexes then the result will also
-#' inherit from [`aggregate_piar_index`].
+#' `stack()` returns a combined price index that inherits from the same class
+#' as `x`.
 #'
 #' `unstack()` returns a list of price indexes with the same class as `x`.
 #'
@@ -55,24 +53,6 @@ stack.piar_index <- function(x, y, ...) {
   # periods
   x$time <- c(x$time, y$time)
   validate_piar_index(x)
-}
-
-#' @export
-stack.aggregate_piar_index <- function(x, y, ...) {
-  if (is_aggregate_index(y)) {
-    if (x$r != y$r) {
-      stop("cannot stack indexes of different orders")
-    }
-    if (!identical(x$pias, y$pias)) {
-      stop("'x' and 'y' must be generated from the same aggregation structure")
-    }
-  } else {
-    x <- new_piar_index(
-      x$index, x$contrib, x$levels, x$time,
-      is_chainable_index(x)
-    )
-  }
-  NextMethod("stack")
 }
 
 #' @export

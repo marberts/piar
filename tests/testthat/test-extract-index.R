@@ -48,11 +48,6 @@ test_that("subscripting methods work", {
   )
 })
 
-test_that("subscripting returns an aggregate index when appropriate", {
-  expect_true(is_aggregate_index(index[, 1:2]))
-  expect_false(is_aggregate_index(index[1:2, ]))
-})
-
 test_that("subscripting methods give errors where expected", {
   expect_error(epr[1, NA])
   expect_error(epr[1, 3])
@@ -139,9 +134,6 @@ test_that("replacement methods work with a vector", {
     contrib(epr, "14"),
     matrix(0, 0, 2, dimnames = list(NULL, 1:2))
   )
-  
-  index[1] <- 0
-  expect_false(is_aggregate_index(index))
   
   # Errors
   expect_error(epr[0] <- 1:3)

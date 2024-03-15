@@ -35,9 +35,8 @@ a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 }
 \value{
-A price index with the same class as \code{x}. If \code{x} is an aggregate index
-and \code{r} is different than that used to aggregate \code{x}, then the result is
-not an aggregate index (as it is no longer consistent in aggregation).
+A price index, averaged over subperiods, that inherits from the same
+class as \code{x}.
 }
 \description{
 Aggregate an index over subperiods by taking the (usually arithmetic) mean
@@ -84,7 +83,6 @@ Other index methods:
 \code{\link{merge.piar_index}()},
 \code{\link{split.piar_index}()},
 \code{\link{stack.piar_index}()},
-\code{\link{time.piar_index}()},
-\code{\link{vcov.aggregate_piar_index}()}
+\code{\link{time.piar_index}()}
 }
 \concept{index methods}

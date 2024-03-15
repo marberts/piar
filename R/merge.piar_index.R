@@ -14,11 +14,7 @@
 #' @param ... Not currently used.
 #'
 #' @returns
-#' A price index that inherits from [`chainable_piar_index`] if `x` is a
-#' period-over-period index, or [`direct_piar_index`] if `x` is a fixed-base
-#' index. It is not generally possible to merge aggregated indexes, as this
-#' would change the aggregation structure, so merging does not return an
-#' aggregated index.
+#' A combined price index that inherits from the same class as `x`.
 #'
 #' @examples
 #' index1 <- as_index(matrix(1:6, 2))
@@ -42,15 +38,6 @@ merge.piar_index <- function(x, y, ...) {
   # it's safe to use c() and not union() because there can't be duplicate levels
   x$levels <- c(x$levels, y$levels)
   validate_piar_index(x)
-}
-
-#' @export
-merge.aggregate_piar_index <- function(x, y, ...) {
-  x <- new_piar_index(
-    x$index, x$contrib, x$levels, x$time,
-    is_chainable_index(x)
-  )
-  NextMethod("merge")
 }
 
 #' @export

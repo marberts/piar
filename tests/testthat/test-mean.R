@@ -59,22 +59,14 @@ test_that("mean requires a suitable window", {
   expect_warning(mean(index, window = 2))
 })
 
-test_that("averaging an aggregate index works", {
-  ms_epr <- with(
-    ms_prices,
-    elemental_index(price_relative(price, period, product),
-                    period, business, contrib = TRUE, na.rm = TRUE)
+test_that("mean is consistent in aggregation", {
+  epr <- as_index(matrix(1:54 / 10, 6))
+  pias <- aggregation_structure(
+    list(rep("a", 6), rep(c("b", "c"), each = 3), 1:6), 6:1
   )
   
-  ms_pias <- with(
-    ms_weights,
-    aggregation_structure(
-      c(expand_classification(classification), list(business)), weight
-    )
-  )
+  index <- aggregate(epr, pias)
   
-  ms_index <- aggregate(ms_epr, ms_pias, na.rm = TRUE)
-  
-  expect_true(is_aggregate_index(mean(ms_index, window = 2)))
-  expect_false(is_aggregate_index(mean(ms_index, window = 2, r = -1)))
+  index <- unchain(mean(chain(index)))
+  expect_equal(aggregate(index, pias), index)
 })

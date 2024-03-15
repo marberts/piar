@@ -52,12 +52,9 @@
 #' @export
 update.piar_aggregation_structure <- function(object, index,
                                               period = end(index), ...,
-                                              r = NULL) {
+                                              r = 1) {
   index <- as_index(index)
   period <- match.arg(as.character(period), index$time)
-  if (is.null(r)) {
-    r <- if (is.null(index$r)) 1 else index$r
-  }
   price_update <- gpindex::factor_weights(r)
   eas <- match(object$levels[[length(object$levels)]], index$levels)
   if (anyNA(eas)) {

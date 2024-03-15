@@ -42,9 +42,8 @@
 #' @param ... Not currently used.
 #'
 #' @returns
-#' A price index with the same class as `x`. If `x` is an aggregate index
-#' and `r` is different than that used to aggregate `x`, then the result is
-#' not an aggregate index (as it is no longer consistent in aggregation).
+#' A price index, averaged over subperiods, that inherits from the same
+#' class as `x`.
 #'
 #' @references Balk, B. M. (2008). *Price and Quantity Index Numbers*.
 #' Cambridge University Press.
@@ -111,17 +110,4 @@ mean.piar_index <- function(x, weights = NULL, ...,
   x$contrib <- contrib
   x$time <- periods
   validate_piar_index(x)
-}
-
-#' @export
-mean.aggregate_piar_index <- function(x, weights = NULL, ..., window = 3L,
-                                      na.rm = FALSE, r = 1, contrib = TRUE) {
-  res <- NextMethod("mean")
-  if (r != res$r) {
-    res <- new_piar_index(
-      res$index, res$contrib, res$levels, res$time,
-      is_chainable_index(res)
-    )
-  }
-  res
 }

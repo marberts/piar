@@ -73,15 +73,6 @@ chain.default <- function(x, ...) {
   chain(as_index(x), ...)
 }
 
-#' @export
-chain.aggregate_piar_index <- function(x, ...) {
-  res <- NextMethod("chain")
-  new_aggregate_piar_index(
-    res$index, res$contrib, res$levels,
-    res$time, x$r, x$pias, is_chainable_index(res)
-  )
-}
-
 #' @rdname chain
 #' @export
 chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
@@ -116,15 +107,6 @@ unchain <- function(x, ...) {
 #' @export
 unchain.default <- function(x, ...) {
   unchain(as_index(x, chainable = FALSE), ...)
-}
-
-#' @export
-unchain.aggregate_piar_index <- function(x, ...) {
-  res <- NextMethod("unchain")
-  new_aggregate_piar_index(
-    res$index, res$contrib, res$levels,
-    res$time, x$r, x$pias, is_chainable_index(res)
-  )
 }
 
 #' @export

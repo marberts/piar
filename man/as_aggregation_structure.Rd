@@ -5,7 +5,6 @@
 \alias{as_aggregation_structure.default}
 \alias{as_aggregation_structure.data.frame}
 \alias{as_aggregation_structure.matrix}
-\alias{as_aggregation_structure.aggregate_piar_index}
 \title{Coerce to an aggregation structure}
 \usage{
 as_aggregation_structure(x, ...)
@@ -15,8 +14,6 @@ as_aggregation_structure(x, ...)
 \method{as_aggregation_structure}{data.frame}(x, ...)
 
 \method{as_aggregation_structure}{matrix}(x, ...)
-
-\method{as_aggregation_structure}{aggregate_piar_index}(x, weights = NULL, ...)
 }
 \arguments{
 \item{x}{An object to coerce into an aggregation structure.}
@@ -40,9 +37,6 @@ The default method attempts to coerce \code{x} into a list prior to calling
 The data frame and matrix methods treat \code{x} as a table with a row for
 each elemental aggregate, a column of labels for each level in the
 aggregation structure, and a column of weights for the elemental aggregates.
-
-The method for aggregate indexes reconstructs the aggregation structure used
-to generate the index (with optional weights).
 }
 \examples{
 # A simple aggregation structure

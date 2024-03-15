@@ -5,9 +5,6 @@
 #' - Period-over-period indexes that can be chained over time inherit from
 #' `chainable_piar_index`.
 #' - Fixed-base indexes inherit from `direct_piar_index`.
-#' - Aggregate price indexes that are the result of aggregating elemental
-#' indexes with an aggregation structure further inherit from
-#' `aggregate_piar_index`.
 #'
 #' The `piar_index` object is a list-S3 class with the following
 #' components:
@@ -25,19 +22,8 @@
 #' the same structure as the `piar_index` class, but differ in the methods
 #' used to manipulate the indexes.
 #'
-#' The `aggregate_piar_index` class further subclasses either
-#' `chainable_piar_index` or `direct_piar_index`, and adds the
-#' following components:
-#' \describe{
-#' \item{r}{The order of the generalized mean used to aggregated the
-#' index (usually 1).}
-#' \item{pias}{A list containing the `child`, `parent`, and `levels`
-#' components of the aggregation structured used to aggregate the index.}
-#' }
-#'
 #' @name piar_index
 #' @aliases piar_index chainable_piar_index direct_piar_index
-#' aggregate_piar_index
 #'
 NULL
 
@@ -61,32 +47,6 @@ has_contrib <- function(x) {
 }
 
 #---- Class generator ----
-new_aggregate_piar_index <- function(index, contrib, levels, time,
-                                     r, pias, chainable) {
-  stopifnot(is.list(index))
-  stopifnot(is.list(contrib))
-  stopifnot(is.character(levels))
-  stopifnot(is.character(time))
-  stopifnot(is.double(r))
-  stopifnot(is.list(pias))
-  res <- list(
-    index = index, contrib = contrib, levels = levels,
-    time = time, r = r, pias = pias
-  )
-  type <- if (chainable) "chainable_piar_index" else "direct_piar_index"
-  structure(res, class = c("aggregate_piar_index", type, "piar_index"))
-}
-
-aggregate_piar_index <- function(index, contrib, levels, time,
-                                 r, pias, chainable) {
-  levels <- as.character(levels)
-  time <- as.character(time)
-  r <- as.numeric(r)
-  validate_aggregate_piar_index(
-    new_aggregate_piar_index(index, contrib, levels, time, r, pias, chainable)
-  )
-}
-
 new_piar_index <- function(index, contrib, levels, time, chainable) {
   stopifnot(is.list(index))
   stopifnot(is.list(contrib))
@@ -160,46 +120,39 @@ validate_piar_index <- function(x) {
   x
 }
 
-validate_aggregate_piar_index <- function(x) {
-  if (length(x$r) != 1) {
-    stop("'r' must be of length 1")
-  }
-  validate_piar_index(x)
-  validate_pias_structure(x$pias)
-  x
-}
-
 #' @importFrom utils str
 #' @export
 str.piar_index <- function(object, ...) {
   str(unclass(object), ...)
 }
 
-index_string <- function(x) {
-  res <- c(
-    aggregate_piar_index = "aggregate",
-    chainable_piar_index = "period-over-period",
-    direct_piar_index = "fixed-base",
-    piar_index = "price index"
-  )[class(x)]
-  res <- paste(res, collapse = " ")
-  substr(res, 1, 1) <- toupper(substr(res, 1, 1))
-  res
+#' @export
+print.chainable_piar_index <- function(x, ...) {
+  cat(
+    "Period-over-period price index", "for", length(x$levels), "levels over",
+    length(x$time), "time periods", "\n"
+  )
+  NextMethod("print")
+}
+
+#' @export
+print.direct_piar_index <- function(x, ...) {
+  cat(
+    "Fixed-base price index", "for", length(x$levels), "levels over",
+    length(x$time), "time periods", "\n"
+  )
+  NextMethod("print")
 }
 
 #' @export
 print.piar_index <- function(x, ...) {
-  cat(
-    index_string(x), "for", length(x$levels), "levels over", length(x$time),
-    "time periods", "\n"
-  )
   print(as.matrix(x), ...)
   invisible(x)
 }
 
 #' Test if an object is a price index
 #'
-#' Test if an object is a index object, or a subclass of an index object.
+#' Test if an object is a index object or a subclass of an index object.
 #'
 #' @param x An object to test.
 #'
@@ -212,18 +165,9 @@ print.piar_index <- function(x, ...) {
 #' `is_direct_index()` returns `TRUE` if `x` inherits from
 #' [`direct_piar_index`].
 #'
-#' `is_aggregate_index()` returns `TRUE` if `x` inherits from
-#' [`aggregate_piar_index`].
-#'
 #' @export
 is_index <- function(x) {
   inherits(x, "piar_index")
-}
-
-#' @rdname is_index
-#' @export
-is_aggregate_index <- function(x) {
-  inherits(x, "aggregate_piar_index")
 }
 
 #' @rdname is_index

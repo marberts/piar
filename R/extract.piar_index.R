@@ -115,12 +115,6 @@ replace_numeric <- function(x, i, j, value) {
 #' is possible to replace value in `x` using a logical matrix or a two-column
 #' matrix of indices.
 #'
-#' Subscripting an aggregate index cannot generally preserve the aggregation
-#' structure if any levels are removed or rearranged, and in this case the
-#' resulting index is *not* an aggregate index. Similarly, replacing the
-#' values for an aggregate index generally breaks consistency in aggregation,
-#' and therefore the result is *not* an aggregate index.
-#'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param i,j Indices for the levels and time periods of a price index. See
 #' details.
@@ -130,8 +124,7 @@ replace_numeric <- function(x, i, j, value) {
 #' @returns
 #' A price index that inherits from [`chainable_piar_index`] if `x` is a
 #' period-over-period index, or [`direct_piar_index`] if `x` is a
-#' fixed-base index. If `x` inherits from [`aggregate_piar_index`] then
-#' `[` returns an aggregate index if the levels are unchanged.
+#' fixed-base index.
 #'
 #' @examples
 #' index <- as_index(matrix(1:6, 2))
@@ -162,19 +155,6 @@ replace_numeric <- function(x, i, j, value) {
   validate_piar_index(x)
 }
 
-#' @export
-`[.aggregate_piar_index` <- function(x, i, j, ...) {
-  res <- NextMethod("[")
-  if (!identical(res$levels, x$levels)) {
-    new_piar_index(
-      res$index, res$contrib, res$levels, res$time,
-      is_chainable_index(res)
-    )
-  } else {
-    res
-  }
-}
-
 # FIXME: Does it make sense to bundle the contributions with the index values
 # as a list with a dim?
 #' @rdname sub-.piar_index
@@ -193,15 +173,6 @@ replace_numeric <- function(x, i, j, value) {
     x <- replace_numeric(x, i, j, value)
   }
   validate_piar_index(x)
-}
-
-#' @export
-`[<-.aggregate_piar_index` <- function(x, i, j, ..., value) {
-  x <- new_piar_index(
-    x$index, x$contrib, x$levels, x$time,
-    is_chainable_index(x)
-  )
-  NextMethod("[<-")
 }
 
 #' @export

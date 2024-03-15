@@ -72,8 +72,6 @@ test_that("chaining returns the correct type of index", {
   expect_true(is_chainable_index(index1))
   expect_true(is_chainable_index(unchain(chain(index1))))
   expect_true(is_direct_index(chain(index1)))
-  expect_true(is_aggregate_index(chain(index1)))
-  expect_true(is_aggregate_index(unchain(chain(index1))))
 })
 
 test_that("chaining keeps EA names", {

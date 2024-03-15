@@ -32,8 +32,7 @@ a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 }
 \value{
-An aggregate price index that inherits from \code{\link{aggregate_piar_index}} and
-the class of \code{x}.
+An aggregate price index that inherits from the class of \code{x}.
 }
 \description{
 Aggregate elemental price indexes with a price index aggregation structure.
@@ -144,7 +143,6 @@ Other index methods:
 \code{\link{merge.piar_index}()},
 \code{\link{split.piar_index}()},
 \code{\link{stack.piar_index}()},
-\code{\link{time.piar_index}()},
-\code{\link{vcov.aggregate_piar_index}()}
+\code{\link{time.piar_index}()}
 }
 \concept{index methods}

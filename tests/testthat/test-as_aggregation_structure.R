@@ -7,7 +7,4 @@ test_that("as_aggregation_structure methods work", {
   expect_identical(agg, as_aggregation_structure(data.frame(x1, x2, x3, 1)))
   expect_identical(agg, as_aggregation_structure(cbind(x1, x2, x3, 1)))
   expect_identical(agg, as_aggregation_structure(agg))
-  epr <- elemental_index(1, ea = "111")
-  index <- aggregate(epr, agg)
-  expect_identical(agg, as_aggregation_structure(index))
 })

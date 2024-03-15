@@ -2,14 +2,11 @@
 % Please edit documentation in R/index-class.R
 \name{is_index}
 \alias{is_index}
-\alias{is_aggregate_index}
 \alias{is_chainable_index}
 \alias{is_direct_index}
 \title{Test if an object is a price index}
 \usage{
 is_index(x)
-
-is_aggregate_index(x)
 
 is_chainable_index(x)
 
@@ -26,10 +23,7 @@ is_direct_index(x)
 
 \code{is_direct_index()} returns \code{TRUE} if \code{x} inherits from
 \code{\link{direct_piar_index}}.
-
-\code{is_aggregate_index()} returns \code{TRUE} if \code{x} inherits from
-\code{\link{aggregate_piar_index}}.
 }
 \description{
-Test if an object is a index object, or a subclass of an index object.
+Test if an object is a index object or a subclass of an index object.
 }

@@ -11,10 +11,6 @@
 #'
 #' The replacement method returns a copy of `x` with the levels in `value`.
 #'
-#' It's not generally possible to change the levels of an aggregate price
-#' index, and in this case replacing the levels does not return an aggregate
-#' index.
-#'
 #' @family index methods
 #' @export
 levels.piar_index <- function(x) {
@@ -26,14 +22,4 @@ levels.piar_index <- function(x) {
 `levels<-.piar_index` <- function(x, value) {
   x$levels <- as.character(value)
   validate_piar_index(x)
-}
-
-#' @export
-`levels<-.aggregate_piar_index` <- function(x, value) {
-  value <- as.character(value)
-  if (identical(value, x$levels)) {
-    x
-  } else {
-    piar_index(x$index, x$contrib, value, x$time, is_chainable_index(x))
-  }
 }

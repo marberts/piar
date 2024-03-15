@@ -4,7 +4,6 @@
 \alias{piar_index}
 \alias{chainable_piar_index}
 \alias{direct_piar_index}
-\alias{aggregate_piar_index}
 \title{Price index objects}
 \description{
 There are several classes to represent price indexes.
@@ -13,9 +12,6 @@ There are several classes to represent price indexes.
 \item Period-over-period indexes that can be chained over time inherit from
 \code{chainable_piar_index}.
 \item Fixed-base indexes inherit from \code{direct_piar_index}.
-\item Aggregate price indexes that are the result of aggregating elemental
-indexes with an aggregation structure further inherit from
-\code{aggregate_piar_index}.
 }
 }
 \details{
@@ -34,14 +30,4 @@ a named vector that gives the additive contribution for each price relative.}
 The \code{chainable_piar_index} and \code{direct_piar_index} subclasses have
 the same structure as the \code{piar_index} class, but differ in the methods
 used to manipulate the indexes.
-
-The \code{aggregate_piar_index} class further subclasses either
-\code{chainable_piar_index} or \code{direct_piar_index}, and adds the
-following components:
-\describe{
-\item{r}{The order of the generalized mean used to aggregated the
-index (usually 1).}
-\item{pias}{A list containing the \code{child}, \code{parent}, and \code{levels}
-components of the aggregation structured used to aggregate the index.}
-}
 }

@@ -21,6 +21,7 @@
 #' index <- as_index(matrix(1:6, 2))
 #'
 #' as.data.frame(index)
+#' 
 #' as.matrix(index)
 #'
 #' @family index methods

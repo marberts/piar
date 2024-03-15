@@ -30,6 +30,7 @@ Turn an index into a data frame or a matrix.
 index <- as_index(matrix(1:6, 2))
 
 as.data.frame(index)
+
 as.matrix(index)
 
 }
@@ -49,7 +50,6 @@ Other index methods:
 \code{\link{merge.piar_index}()},
 \code{\link{split.piar_index}()},
 \code{\link{stack.piar_index}()},
-\code{\link{time.piar_index}()},
-\code{\link{vcov.aggregate_piar_index}()}
+\code{\link{time.piar_index}()}
 }
 \concept{index methods}

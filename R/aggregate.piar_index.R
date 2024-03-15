@@ -79,8 +79,7 @@ aggregate_contrib <- function(r) {
 #' @param ... Not currently used.
 #'
 #' @returns
-#' An aggregate price index that inherits from [`aggregate_piar_index`] and
-#' the class of `x`.
+#' An aggregate price index that inherits from the class of `x`.
 #'
 #' @note
 #' For large indexes it can be much faster to turn the aggregation structure
@@ -211,9 +210,7 @@ aggregate.piar_index <- function(x, pias, ...,
     }
   }
 
-  aggregate_piar_index(
-    index, contrib, unlist(pias$levels, use.names = FALSE), x$time, r,
-    pias[c("child", "parent", "levels")],
-    chainable
+  piar_index(
+    index, contrib, unlist(pias$levels, use.names = FALSE), x$time, chainable
   )
 }

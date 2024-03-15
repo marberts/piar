@@ -12,7 +12,6 @@ reference:
   - as_index
   - aggregate.piar_index
   - mean.piar_index
-  - vcov.aggregate_piar_index
   
 - title: Manipulate price indexes
   desc: Helpful functions for working with price indexes

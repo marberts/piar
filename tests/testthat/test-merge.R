@@ -9,7 +9,6 @@ index1 <- aggregate(epr1, pias)
 test_that("merge returns the correct type of index", {
   expect_true(is_chainable_index(merge(epr1, epr2)))
   expect_true(is_direct_index(merge(chain(epr1), chain(epr2))))
-  expect_false(is_aggregate_index(merge(index1, epr2)))
   expect_true(is_chainable_index(merge(epr1, chain(epr2))))
   expect_true(is_direct_index(merge(chain(epr1), epr2)))
 })

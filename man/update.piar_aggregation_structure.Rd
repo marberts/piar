@@ -4,7 +4,7 @@
 \alias{update.piar_aggregation_structure}
 \title{Update an aggregation structure}
 \usage{
-\method{update}{piar_aggregation_structure}(object, index, period = end(index), ..., r = NULL)
+\method{update}{piar_aggregation_structure}(object, index, period = end(index), ..., r = 1)
 }
 \arguments{
 \item{object}{A price index aggregation structure, as made by

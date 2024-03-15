@@ -16,11 +16,7 @@ index; otherwise, \code{y} is coerced into a direct index.}
 \item{...}{Not currently used.}
 }
 \value{
-A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a
-period-over-period index, or \code{\link{direct_piar_index}} if \code{x} is a fixed-base
-index. It is not generally possible to merge aggregated indexes, as this
-would change the aggregation structure, so merging does not return an
-aggregated index.
+A combined price index that inherits from the same class as \code{x}.
 }
 \description{
 Combine two price indexes with common time periods, merging together the
@@ -51,7 +47,6 @@ Other index methods:
 \code{\link{mean.piar_index}()},
 \code{\link{split.piar_index}()},
 \code{\link{stack.piar_index}()},
-\code{\link{time.piar_index}()},
-\code{\link{vcov.aggregate_piar_index}()}
+\code{\link{time.piar_index}()}
 }
 \concept{index methods}
