@@ -424,3 +424,53 @@ test_that("skipping time periods works", {
   
   expect_equal(chain(aggregate(ms_index2, ms_pias, r = 2))[, 3], ms_index[, 4])
 })
+
+test_that("skipping eas works", {
+  ms_epr <- with(
+    ms_prices,
+    elemental_index(price_relative(price, period, product),
+                    period, business, contrib = TRUE, na.rm = TRUE)
+  )
+  
+  ms_pias <- with(
+    ms_weights,
+    aggregation_structure(
+      c(expand_classification(classification), list(business)), weight
+    )
+  )
+  
+  ms_index <- aggregate(ms_epr, ms_pias, na.rm = TRUE)
+  expect_equal(ms_index[1:3],
+               aggregate(ms_epr, ms_pias, na.rm = TRUE, include_ea = FALSE))
+  
+  expect_error(
+    aggregate(ms_epr, aggregation_structure(ms_weights["business"]),
+              include_ea = FALSE)
+  )
+})
+
+test_that("missing weights ignores those index values", {
+  prices <- data.frame(
+    rel = 1:8,
+    period = rep(1:2, each = 4),
+    ea = rep(letters[1:2], 4)
+  )
+  
+  pias <- aggregation_structure(
+    list(c("top", "top"), c("a", "b")), 1:2
+  )
+  
+  elemental <- with(prices, elemental_index(rel, period, ea, contrib = TRUE))
+  
+  index <- aggregate(elemental, pias)
+  
+  weights(pias)[1] <- NA
+  index2 <- aggregate(elemental, pias, na.rm = TRUE)
+  
+  expect_equal(as.numeric(index2[1]), as.numeric(index2[3]))
+  expect_equal(
+    as.numeric(colSums(contrib(index2), na.rm = TRUE) + 1),
+    as.numeric(index2[1])
+  )
+  expect_equal(contrib(index2), contrib(aggregate(elemental, pias)))
+})

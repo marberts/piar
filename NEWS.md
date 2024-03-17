@@ -8,6 +8,9 @@ dimensions for a hierarchical classification.
 - `unchain()` gets an new argument `base` for better interaction with
 `chain()` and `rebase()`.
 
+- `aggregate(index)` gets a new argument `include_ea` to control whether
+elemental indexes are returned when aggregating.
+
 # Version 0.7.0
 
 ## Significant changes

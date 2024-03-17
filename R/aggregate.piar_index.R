@@ -76,6 +76,8 @@ aggregate_contrib <- function(r) {
 #' a Paasche index). Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
+#' @param include_ea Should indexes for the elemental aggregates be included
+#' along with the aggregated indexes? By default, all index values are returned.
 #' @param ... Not currently used.
 #'
 #' @returns
@@ -127,7 +129,8 @@ aggregate_contrib <- function(r) {
 aggregate.chainable_piar_index <- function(x, pias, ...,
                                            na.rm = FALSE,
                                            contrib = TRUE,
-                                           r = 1) {
+                                           r = 1,
+                                           include_ea = TRUE) {
   NextMethod("aggregate", chainable = TRUE)
 }
 
@@ -136,7 +139,8 @@ aggregate.chainable_piar_index <- function(x, pias, ...,
 aggregate.direct_piar_index <- function(x, pias, ...,
                                         na.rm = FALSE,
                                         contrib = TRUE,
-                                        r = 1) {
+                                        r = 1,
+                                        include_ea = TRUE) {
   NextMethod("aggregate", chainable = FALSE)
 }
 
@@ -145,21 +149,31 @@ aggregate.piar_index <- function(x, pias, ...,
                                  na.rm = FALSE,
                                  contrib = TRUE,
                                  r = 1,
+                                 include_ea = TRUE,
                                  chainable) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
+  res <- aggregate_(x, pias, na.rm, contrib, r, include_ea, chainable)
+  if (include_ea) {
+    lev <- unlist(pias$levels, use.names = FALSE)
+  } else {
+    lev <- unlist(pias$levels[-length(pias$levels)], use.names = FALSE)
+  }
+  piar_index(res[[1L]], res[[2L]], lev, x$time, chainable)
+}
 
+aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
   # helpful functions
   price_update <- gpindex::factor_weights(r)
   gen_mean <- gpindex::generalized_mean(r)
   agg_contrib <- aggregate_contrib(r)
-
+  
   # put the aggregation weights upside down to line up with pias
   w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
-
+  
   has_contrib <- has_contrib(x) && contrib
   eas <- match(pias$levels[[length(pias$levels)]], x$levels)
-
+  
   # loop over each time period
   index <- contrib <- vector("list", length(x$time))
   for (t in seq_along(x$time)) {
@@ -167,13 +181,13 @@ aggregate.piar_index <- function(x, pias, ...,
     # align epr with weights so that positional indexing works
     rel[[1L]] <- x$index[[t]][eas]
     con[[1L]] <- x$contrib[[t]][eas]
-  
+    
     # get rid of any NULL contributions
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     for (i in which(is.na(rel[[1L]]))) {
       con[[1L]][[i]][] <- NA_real_
     }
-
+    
     # loop over each level in pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
       nodes <- unname(pias$child[[i - 1L]])
@@ -191,7 +205,7 @@ aggregate.piar_index <- function(x, pias, ...,
         con[i] <- empty_contrib(nodes)
       }
     }
-
+    
     # parental imputation
     if (na.rm) {
       for (i in rev(seq_along(rel))[-1L]) {
@@ -199,18 +213,20 @@ aggregate.piar_index <- function(x, pias, ...,
         rel[[i]][impute] <- rel[[i + 1L]][pias$parent[[i]][impute]]
       }
     }
-
-    # return index and contributions
-    index[[t]] <- unlist(rev(rel), use.names = FALSE)
-    contrib[[t]] <- unlist(rev(con), recursive = FALSE, use.names = FALSE)
+    
     # price update weights for all periods after the first
     if (chainable) {
       weights(pias) <- price_update(rel[[1L]], w[[1L]])
       w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
     }
+    
+    if (!include_ea) {
+      rel <- rel[-1L]
+      con <- con[-1L]
+    }
+    index[[t]] <- unlist(rev(rel), use.names = FALSE)
+    contrib[[t]] <- unlist(rev(con), recursive = FALSE, use.names = FALSE)
   }
-
-  piar_index(
-    index, contrib, unlist(pias$levels, use.names = FALSE), x$time, chainable
-  )
+  
+  list(index, contrib)
 }

@@ -6,9 +6,25 @@
 \alias{aggregate.direct_piar_index}
 \title{Aggregate elemental price indexes}
 \usage{
-\method{aggregate}{chainable_piar_index}(x, pias, ..., na.rm = FALSE, contrib = TRUE, r = 1)
+\method{aggregate}{chainable_piar_index}(
+  x,
+  pias,
+  ...,
+  na.rm = FALSE,
+  contrib = TRUE,
+  r = 1,
+  include_ea = TRUE
+)
 
-\method{aggregate}{direct_piar_index}(x, pias, ..., na.rm = FALSE, contrib = TRUE, r = 1)
+\method{aggregate}{direct_piar_index}(
+  x,
+  pias,
+  ...,
+  na.rm = FALSE,
+  contrib = TRUE,
+  r = 1,
+  include_ea = TRUE
+)
 }
 \arguments{
 \item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
@@ -30,6 +46,9 @@ arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+
+\item{include_ea}{Should indexes for the elemental aggregates be included
+along with the aggregated indexes? By default, all index values are returned.}
 }
 \value{
 An aggregate price index that inherits from the class of \code{x}.
