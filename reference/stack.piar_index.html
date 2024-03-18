@@ -20,7 +20,7 @@ aggregation structures (like a Paasche index)."><meta property="og:image" conten
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,10 +96,8 @@ index; otherwise, <code>y</code> is coerced into a direct index.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A price index that inherits from <code><a href="piar_index.html">chainable_piar_index</a></code> if <code>x</code> is a
-period-over-period index, or <code><a href="piar_index.html">direct_piar_index</a></code> if <code>x</code> is a fixed-base
-index. If both <code>x</code> and <code>y</code> are aggregate indexes then the result will also
-inherit from <code><a href="piar_index.html">aggregate_piar_index</a></code>.</p>
+<p><code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack()</a></code> returns a combined price index that inherits from the same class
+as <code>x</code>.</p>
 
 
 <p><code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">unstack()</a></code> returns a list of price indexes with the same class as <code>x</code>.</p>
@@ -123,8 +121,7 @@ indexes to ensure they have the same base period.</p>
 <code><a href="mean.piar_index.html">mean.piar_index</a>()</code>,
 <code><a href="merge.piar_index.html">merge.piar_index</a>()</code>,
 <code><a href="split.piar_index.html">split.piar_index</a>()</code>,
-<code><a href="time.piar_index.html">time.piar_index</a>()</code>,
-<code><a href="vcov.aggregate_piar_index.html">vcov.aggregate_piar_index</a>()</code></p></div>
+<code><a href="time.piar_index.html">time.piar_index</a>()</code></p></div>
     </div>
 
     <div class="section level2">

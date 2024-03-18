@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,10 +55,26 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for chainable_piar_index</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">pias</span>, <span class="va">...</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, contrib <span class="op">=</span> <span class="cn">TRUE</span>, r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">pias</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  contrib <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  r <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  include_ea <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for direct_piar_index</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">pias</span>, <span class="va">...</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>, contrib <span class="op">=</span> <span class="cn">TRUE</span>, r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">pias</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  contrib <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  r <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  include_ea <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -94,13 +110,17 @@ averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
 
+
+<dt>include_ea</dt>
+<dd><p>Should indexes for the elemental aggregates be included
+along with the aggregated indexes? By default, all index values are returned.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>An aggregate price index that inherits from <code><a href="piar_index.html">aggregate_piar_index</a></code> and
-the class of <code>x</code>.</p>
+<p>An aggregate price index that inherits from the class of <code>x</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -177,8 +197,7 @@ International Monetary Fund.</p>
 <code><a href="merge.piar_index.html">merge.piar_index</a>()</code>,
 <code><a href="split.piar_index.html">split.piar_index</a>()</code>,
 <code><a href="stack.piar_index.html">stack.piar_index</a>()</code>,
-<code><a href="time.piar_index.html">time.piar_index</a>()</code>,
-<code><a href="vcov.aggregate_piar_index.html">vcov.aggregate_piar_index</a>()</code></p></div>
+<code><a href="time.piar_index.html">time.piar_index</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -206,7 +225,7 @@ International Monetary Fund.</p>
 <span class="r-in"><span><span class="co"># Aggregate (note the imputation for elemental index 'c')</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">(</span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">elemental</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Aggregate period-over-period price index for 4 levels over 2 time periods </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Period-over-period price index for 4 levels over 2 time periods </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            1        2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> top 2.462968 6.690949</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> a   1.732051 5.916080</span>

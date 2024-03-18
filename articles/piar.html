@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -217,7 +217,7 @@ are filled in to ensure the index can be chained over time.</p>
 <code class="sourceCode R"><span><span class="va">ms_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">ms_elemental</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ms_index</span></span>
-<span><span class="co">#&gt; Aggregate period-over-period price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Period-over-period price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003   202004</span></span>
 <span><span class="co">#&gt; 1       1 1.3007239 1.0630743 2.734761</span></span>
 <span><span class="co">#&gt; 11      1 1.3007239 1.0630743 1.574515</span></span>
@@ -245,7 +245,7 @@ an index object.</p>
 <code class="sourceCode R"><span><span class="va">ms_index_chained</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="va">ms_index</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ms_index_chained</span></span>
-<span><span class="co">#&gt; Aggregate fixed-base price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Fixed-base price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003    202004</span></span>
 <span><span class="co">#&gt; 1       1 1.3007239 1.3827662 3.7815355</span></span>
 <span><span class="co">#&gt; 11      1 1.3007239 1.3827662 2.1771866</span></span>
@@ -275,7 +275,7 @@ that 202004 is the base period just requires dividing the chained index
 by the slice for 202004.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/chain.html">rebase</a></span><span class="op">(</span><span class="va">ms_index_chained</span>, <span class="va">ms_index_chained</span><span class="op">[</span>, <span class="st">"202004"</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Aggregate fixed-base price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Fixed-base price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;       202001    202002    202003 202004</span></span>
 <span><span class="co">#&gt; 1  0.2644428 0.3439671 0.3656626      1</span></span>
 <span><span class="co">#&gt; 11 0.4593084 0.5974334 0.6351161      1</span></span>
@@ -293,7 +293,7 @@ averaging the index over subperiods before rebasing.</p>
 <span>  <span class="va">ms_index_chained</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">ms_index_chained</span>, window <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">[</span>, <span class="st">"202003"</span><span class="op">]</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Aggregate fixed-base price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Fixed-base price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;       202001    202002    202003    202004</span></span>
 <span><span class="co">#&gt; 1  0.3872740 0.5037366 0.5355095 1.4644905</span></span>
 <span><span class="co">#&gt; 11 0.5618052 0.7307535 0.7768452 1.2231548</span></span>
@@ -348,7 +348,7 @@ two characters wide, not one.</p>
 aggregation structure.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">ms_elemental</span>, <span class="va">pias_sps</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Aggregate period-over-period price index for 11 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Period-over-period price index for 11 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;      202001    202002    202003   202004</span></span>
 <span><span class="co">#&gt; 1         1 1.3007239 1.0630743 2.684412</span></span>
 <span><span class="co">#&gt; 11        1 1.3007239 1.0630743 1.492443</span></span>
@@ -422,7 +422,7 @@ as if the index was a matrix.</p>
 <p>The index can now be aggregated as usual.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">ms_elemental2</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Aggregate period-over-period price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Period-over-period price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003   202004</span></span>
 <span><span class="co">#&gt; 1       1 1.1721550 1.0400686 2.626560</span></span>
 <span><span class="co">#&gt; 11      1 1.1721550 1.0400686 1.398142</span></span>
@@ -568,7 +568,7 @@ example that just splits the <code>ms_prices</code> data in two.</p>
 <span><span class="va">ms_index1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">ms_elemental1</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ms_index1</span></span>
-<span><span class="co">#&gt; Aggregate period-over-period price index for 8 levels over 3 time periods </span></span>
+<span><span class="co">#&gt; Period-over-period price index for 8 levels over 3 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003</span></span>
 <span><span class="co">#&gt; 1       1 1.3007239 1.0630743</span></span>
 <span><span class="co">#&gt; 11      1 1.3007239 1.0630743</span></span>
@@ -594,7 +594,7 @@ structure as usual.</p>
 <code class="sourceCode R"><span><span class="va">ms_index2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">ms_elemental2</span>, <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">pias</span>, <span class="va">ms_index1</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ms_index2</span></span>
-<span><span class="co">#&gt; Aggregate period-over-period price index for 8 levels over 1 time periods </span></span>
+<span><span class="co">#&gt; Period-over-period price index for 8 levels over 1 time periods </span></span>
 <span><span class="co">#&gt;      202004</span></span>
 <span><span class="co">#&gt; 1  2.734761</span></span>
 <span><span class="co">#&gt; 11 1.574515</span></span>
@@ -608,7 +608,7 @@ structure as usual.</p>
 stacked together and then chained.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack</a></span><span class="op">(</span><span class="va">ms_index1</span>, <span class="va">ms_index2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Aggregate fixed-base price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Fixed-base price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003    202004</span></span>
 <span><span class="co">#&gt; 1       1 1.3007239 1.3827662 3.7815355</span></span>
 <span><span class="co">#&gt; 11      1 1.3007239 1.3827662 2.1771866</span></span>
@@ -654,7 +654,7 @@ elemental indexes.</p>
 <code class="sourceCode R"><span><span class="va">ms_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">ms_elemental2</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span> </span>
 <span><span class="va">ms_index</span></span>
-<span><span class="co">#&gt; Aggregate period-over-period price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Period-over-period price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003    202004</span></span>
 <span><span class="co">#&gt; 1       1 1.1721550 0.8082981 2.2653614</span></span>
 <span><span class="co">#&gt; 11      1 1.1721550 0.8082981 0.8093718</span></span>
@@ -715,7 +715,7 @@ two periods, so the time periods need to be made explicit.</p>
 then aggregated.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">ms_elemental1</span>, <span class="va">ms_elemental2</span><span class="op">)</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Aggregate period-over-period price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Period-over-period price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003   202004</span></span>
 <span><span class="co">#&gt; 1       1 1.3007239 1.0630743 2.734761</span></span>
 <span><span class="co">#&gt; 11      1 1.3007239 1.0630743 1.574515</span></span>
@@ -753,7 +753,7 @@ elemental indexes, and aggregated.</p>
 <code class="sourceCode R"><span><span class="va">ms_elemental2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_index.html">as_index</a></span><span class="op">(</span><span class="va">ms_prices2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">ms_elemental1</span>, <span class="va">ms_elemental2</span><span class="op">)</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Aggregate period-over-period price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Period-over-period price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003   202004</span></span>
 <span><span class="co">#&gt; 1       1 1.3007239 1.0630743 2.734761</span></span>
 <span><span class="co">#&gt; 11      1 1.3007239 1.0630743 1.574515</span></span>
@@ -849,7 +849,7 @@ and aggregation structure, and then reducing the result with the
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">paasche</span></span>
-<span><span class="co">#&gt; Aggregate period-over-period price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">#&gt; Period-over-period price index for 8 levels over 4 time periods </span></span>
 <span><span class="co">#&gt;    202001    202002    202003    202004</span></span>
 <span><span class="co">#&gt; 1       1 1.3127080 0.5874490 1.3591916</span></span>
 <span><span class="co">#&gt; 11      1 1.3127080 0.5874490 0.8839797</span></span>
@@ -915,7 +915,7 @@ operation.</p>
 <span><span class="co">#&gt; 7       0  0.78379264 -0.13008203 -0.018866231</span></span>
 <span><span class="co">#&gt; 8       0  0.02893842  0.11116498 -0.006388331</span></span>
 <span><span class="co">#&gt; 9       0 -0.12111255  0.07126804 -0.099076370</span></span></code></pre></div>
-<p>The despite being a matrix, the resulting Fisher index can be chained
+<p>Despite being a matrix, the resulting Fisher index can be chained
 just like any other index.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="va">fisher</span><span class="op">)</span></span>

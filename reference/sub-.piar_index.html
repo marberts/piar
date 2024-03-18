@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,8 +86,7 @@ details.</p></dd>
 
 <p>A price index that inherits from <code><a href="piar_index.html">chainable_piar_index</a></code> if <code>x</code> is a
 period-over-period index, or <code><a href="piar_index.html">direct_piar_index</a></code> if <code>x</code> is a
-fixed-base index. If <code>x</code> inherits from <code><a href="piar_index.html">aggregate_piar_index</a></code> then
-<code>[</code> returns an aggregate index if the levels are unchanged.</p>
+fixed-base index.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -108,11 +107,6 @@ matrix. Note that replacing the values of an index will remove the
 corresponding percent-change contributions (if any). Unlike extraction, it
 is possible to replace value in <code>x</code> using a logical matrix or a two-column
 matrix of indices.</p>
-<p>Subscripting an aggregate index cannot generally preserve the aggregation
-structure if any levels are removed or rearranged, and in this case the
-resulting index is <em>not</em> an aggregate index. Similarly, replacing the
-values for an aggregate index generally breaks consistency in aggregation,
-and therefore the result is <em>not</em> an aggregate index.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -128,8 +122,7 @@ and therefore the result is <em>not</em> an aggregate index.</p>
 <code><a href="merge.piar_index.html">merge.piar_index</a>()</code>,
 <code><a href="split.piar_index.html">split.piar_index</a>()</code>,
 <code><a href="stack.piar_index.html">stack.piar_index</a>()</code>,
-<code><a href="time.piar_index.html">time.piar_index</a>()</code>,
-<code><a href="vcov.aggregate_piar_index.html">vcov.aggregate_piar_index</a>()</code></p></div>
+<code><a href="time.piar_index.html">time.piar_index</a>()</code></p></div>
     </div>
 
     <div class="section level2">

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,11 +48,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.1" id="version-071">Version 0.7.1<a class="anchor" aria-label="anchor" href="#version-071"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.8.0" id="version-080">Version 0.8.0<a class="anchor" aria-label="anchor" href="#version-080"></a></h2>
 <div class="section level3">
-<h3 id="improvements-0-7-1">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-7-1"></a></h3>
+<h3 id="significant-changes-0-8-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-8-0"></a></h3>
+<ul><li><p>There is no longer a class representing aggregated indexes. This class was not well thought out, and added unnecessary restrictions and complications to certain functions. In most cases this has little impact on existing code, but does mean that the few functions related to aggregate indexes have been removed.</p></li>
+<li><p>The deprecated <code>cols</code> argument for <code>as_index(data.frame)</code> has been removed.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="improvements-0-8-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-0"></a></h3>
 <ul><li><p>Added <code><a href="../reference/expand_classification.html">interact_classifications()</a></code> to get the interaction of different dimensions for a hierarchical classification.</p></li>
 <li><p><code><a href="../reference/chain.html">unchain()</a></code> gets an new argument <code>base</code> for better interaction with <code><a href="../reference/chain.html">chain()</a></code> and <code><a href="../reference/chain.html">rebase()</a></code>.</p></li>
+<li><p><code>aggregate(index)</code> gets a new argument <code>include_ea</code> to control whether elemental indexes are returned when aggregating.</p></li>
+<li><p>The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for indexes has been changed to simply print a summary of the index, rather than try to summarized the index values.</p></li>
 </ul></div>
 </div>
     <div class="section level2">

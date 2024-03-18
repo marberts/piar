@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@
 <span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for data.frame</span></span>
-<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, cols <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for chainable_piar_index</span></span>
 <span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -86,13 +86,6 @@
 <dd><p>Are the index values in <code>x</code> period-over-period
 indexes, suitable for a chained calculation (the default)? This should be
 <code>FALSE</code> when <code>x</code> is a fixed-base (direct) index.</p></dd>
-
-
-<dt>cols</dt>
-<dd><p>Deprecated. A vector giving the positions/names of the period,
-level, and value columns in <code>x</code>. The default assumes that the first column
-contains time periods, the second contains levels, and the third contains
-index values.</p></dd>
 
 </dl></div>
     <div class="section level2">

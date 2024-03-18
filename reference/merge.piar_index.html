@@ -16,7 +16,7 @@ come from different sources of data, or use different index-number formulas."><m
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,11 +87,7 @@ index; otherwise, <code>y</code> is coerced into a direct index.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A price index that inherits from <code><a href="piar_index.html">chainable_piar_index</a></code> if <code>x</code> is a
-period-over-period index, or <code><a href="piar_index.html">direct_piar_index</a></code> if <code>x</code> is a fixed-base
-index. It is not generally possible to merge aggregated indexes, as this
-would change the aggregation structure, so merging does not return an
-aggregated index.</p>
+<p>A combined price index that inherits from the same class as <code>x</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -107,8 +103,7 @@ aggregated index.</p>
 <code><a href="mean.piar_index.html">mean.piar_index</a>()</code>,
 <code><a href="split.piar_index.html">split.piar_index</a>()</code>,
 <code><a href="stack.piar_index.html">stack.piar_index</a>()</code>,
-<code><a href="time.piar_index.html">time.piar_index</a>()</code>,
-<code><a href="vcov.aggregate_piar_index.html">vcov.aggregate_piar_index</a>()</code></p></div>
+<code><a href="time.piar_index.html">time.piar_index</a>()</code></p></div>
     </div>
 
     <div class="section level2">
