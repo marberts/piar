@@ -401,7 +401,8 @@ test_that("reaggregating doesn't introduce incorrect contributions", {
   
   r <- as.numeric(index[2:3, 1])
   r <- (r / sum(r))[1]
-  expect_equal(contrib(index)[, 2] * r, contrib(aggregate(index, pias))[, 2])
+  expect_equal(contrib(index)[, 2] * r,
+               contrib(aggregate(index, pias), pad = NA)[, 2])
 })
 
 test_that("skipping time periods works", {

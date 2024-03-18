@@ -127,25 +127,26 @@ str.piar_index <- function(object, ...) {
 }
 
 #' @export
-print.chainable_piar_index <- function(x, ...) {
+summary.chainable_piar_index <- function(object, ...) {
   cat(
-    "Period-over-period price index", "for", length(x$levels), "levels over",
-    length(x$time), "time periods", "\n"
+    "Period-over-period price index", "for", length(object$levels), "levels over",
+    length(object$time), "time periods", "\n"
   )
-  NextMethod("print")
+  invisible()
 }
 
 #' @export
-print.direct_piar_index <- function(x, ...) {
+summary.direct_piar_index <- function(object, ...) {
   cat(
-    "Fixed-base price index", "for", length(x$levels), "levels over",
-    length(x$time), "time periods", "\n"
+    "Fixed-base price index", "for", length(object$levels), "levels over",
+    length(object$time), "time periods", "\n"
   )
-  NextMethod("print")
+  invisible()
 }
 
 #' @export
 print.piar_index <- function(x, ...) {
+  summary(x)
   print(as.matrix(x), ...)
   invisible(x)
 }

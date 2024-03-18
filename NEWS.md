@@ -1,4 +1,13 @@
-# Version 0.7.1
+# Version 0.8.0
+
+## Significant changes
+
+- There is no longer a class representing aggregated indexes. This class was not
+well thought out, and added unnecessary restrictions and complications to
+certain functions. In most cases this has little impact on existing code, but
+does mean that the few functions related to aggregate indexes have been removed.
+
+- The deprecated `cols` argument for `as_index(data.frame)` has been removed.
 
 ## Improvements
 
@@ -10,6 +19,9 @@ dimensions for a hierarchical classification.
 
 - `aggregate(index)` gets a new argument `include_ea` to control whether
 elemental indexes are returned when aggregating.
+
+- The `summary()` method for indexes has been changed to simply print a
+summary of the index, rather than try to summarized the index values.
 
 # Version 0.7.0
 

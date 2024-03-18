@@ -184,9 +184,6 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
     
     # get rid of any NULL contributions
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
-    for (i in which(is.na(rel[[1L]]))) {
-      con[[1L]][[i]][] <- NA_real_
-    }
     
     # loop over each level in pias from the bottom up and aggregate
     for (i in seq_along(rel)[-1L]) {
@@ -211,6 +208,7 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
       for (i in rev(seq_along(rel))[-1L]) {
         impute <- which(is.na(rel[[i]]))
         rel[[i]][impute] <- rel[[i + 1L]][pias$parent[[i]][impute]]
+        con[[i]][impute] <- list(numeric(0L))
       }
     }
     

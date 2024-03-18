@@ -8,7 +8,7 @@
 #' @param ... Not currently used.
 #'
 #' @returns
-#' `time()` return a character vector with the time periods for a price index.
+#' `time()` returns a character vector with the time periods for a price index.
 #' `start()` and `end()` return the first and last time period.
 #'
 #' The replacement method returns a copy of `x` with the time periods in

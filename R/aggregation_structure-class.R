@@ -65,12 +65,18 @@ validate_piar_aggregation_structure <- function(x) {
 }
 
 #' @export
-print.piar_aggregation_structure <- function(x, ...) {
+summary.piar_aggregation_structure <- function(object, ...) {
   cat(
-    "Aggregation structure for", length(x$levels[[length(x$levels)]]),
+    "Aggregation structure for", length(object$levels[[length(object$levels)]]),
     "elemental aggregates with",
-    length(x$levels) - 1L, "levels above the elemental aggregates", "\n"
+    length(object$levels) - 1L, "levels above the elemental aggregates", "\n"
   )
+  invisible()
+}
+
+#' @export
+print.piar_aggregation_structure <- function(x, ...) {
+  summary(x)
   print(as.data.frame(x), ...)
   invisible(x)
 }

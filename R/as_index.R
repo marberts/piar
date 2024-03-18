@@ -29,10 +29,6 @@
 #' @param chainable Are the index values in `x` period-over-period
 #' indexes, suitable for a chained calculation (the default)? This should be
 #' `FALSE` when `x` is a fixed-base (direct) index.
-#' @param cols  Deprecated. A vector giving the positions/names of the period,
-#' level, and value columns in `x`. The default assumes that the first column
-#' contains time periods, the second contains levels, and the third contains
-#' index values.
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
@@ -90,17 +86,11 @@ as_index.matrix <- function(x, ..., chainable = TRUE) {
 
 #' @rdname as_index
 #' @export
-as_index.data.frame <- function(x, cols = NULL, ..., chainable = TRUE) {
-  if (length(x) < 3L) {
+as_index.data.frame <- function(x, ..., chainable = TRUE) {
+  if (length(x) != 3L) {
     stop(
       "'x' must have a column of time periods, index levels, and index values"
     )
-  }
-  if (!is.null(cols)) {
-    warning("'cols' is deprecated and will be removed in a future version")
-    x <- x[cols]
-  } else {
-    x <- x[1:3]
   }
   x[1:2] <- lapply(x[1:2], as.factor)
   time <- levels(x[[1L]])

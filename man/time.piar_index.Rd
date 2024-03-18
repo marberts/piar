@@ -27,7 +27,7 @@ time(x) <- value
 giving the replacement time periods for \code{x}.}
 }
 \value{
-\code{time()} return a character vector with the time periods for a price index.
+\code{time()} returns a character vector with the time periods for a price index.
 \code{start()} and \code{end()} return the first and last time period.
 
 The replacement method returns a copy of \code{x} with the time periods in

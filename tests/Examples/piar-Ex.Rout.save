@@ -797,40 +797,6 @@ Period-over-period price index for 2 levels over 3 time periods
 > 
 > 
 > cleanEx()
-> nameEx("summary.piar_index")
-> ### * summary.piar_index
-> 
-> flush(stderr()); flush(stdout())
-> 
-> ### Name: summary.piar_index
-> ### Title: Summarize a price index
-> ### Aliases: summary.piar_index
-> 
-> ### ** Examples
-> 
-> prices <- data.frame(
-+   rel = 1:8,
-+   period = rep(1:2, each = 4),
-+   ea = rep(letters[1:2], 4),
-+   contrib = TRUE
-+ )
-> 
-> elemental <- with(prices, elemental_index(rel, period, ea))
-> 
-> summary(elemental)
-Indexes
-       1               2        
- Min.   :1.732   Min.   :5.916  
- 1st Qu.:2.006   1st Qu.:6.169  
- Median :2.280   Median :6.422  
- Mean   :2.280   Mean   :6.422  
- 3rd Qu.:2.554   3rd Qu.:6.675  
- Max.   :2.828   Max.   :6.928  
-> 
-> 
-> 
-> 
-> cleanEx()
 > nameEx("update.piar_aggregation_structure")
 > ### * update.piar_aggregation_structure
 > 

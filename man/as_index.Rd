@@ -15,7 +15,7 @@ as_index(x, ...)
 
 \method{as_index}{matrix}(x, ..., chainable = TRUE)
 
-\method{as_index}{data.frame}(x, cols = NULL, ..., chainable = TRUE)
+\method{as_index}{data.frame}(x, ..., chainable = TRUE)
 
 \method{as_index}{chainable_piar_index}(x, ..., chainable = TRUE)
 
@@ -29,11 +29,6 @@ as_index(x, ...)
 \item{chainable}{Are the index values in \code{x} period-over-period
 indexes, suitable for a chained calculation (the default)? This should be
 \code{FALSE} when \code{x} is a fixed-base (direct) index.}
-
-\item{cols}{Deprecated. A vector giving the positions/names of the period,
-level, and value columns in \code{x}. The default assumes that the first column
-contains time periods, the second contains levels, and the third contains
-index values.}
 }
 \value{
 \code{as_index()} returns a price index that inherits from

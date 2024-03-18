@@ -484,7 +484,7 @@ fisher_contrib <- w[1, col(laspeyres_contrib)] * laspeyres_contrib +
 fisher_contrib
 ```
 
-The despite being a matrix, the resulting Fisher index can be chained just like any other index.
+Despite being a matrix, the resulting Fisher index can be chained just like any other index.
 
 ```{r}
 chain(fisher)
