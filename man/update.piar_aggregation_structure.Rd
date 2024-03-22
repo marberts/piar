@@ -19,9 +19,8 @@ uses the last period in \code{index}.}
 
 \item{...}{Not currently used.}
 
-\item{r}{Order of the generalized mean to update the weights. The default
-uses the order used to aggregate \code{index} if it's an aggregate index;
-otherwise, the default is 1 for an arithmetic index.}
+\item{r}{Order of the generalized mean to update the weights. The default is
+1 for an arithmetic index.}
 }
 \value{
 A copy of \code{object} with price-updated weights using the index
