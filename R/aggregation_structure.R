@@ -26,7 +26,7 @@
 #' immediate parent for each node of the aggregation structure below the
 #' initial nodes.}
 #' \item{levels}{A list of character vectors that give the levels of `x`.}
-#' \item{weights}{A named vector giving the weight for each elemental
+#' \item{weights}{A vector giving the weight for each elemental
 #' aggregate.}
 #'
 #' @section Warning: The `aggregation_structure()` function does its best
