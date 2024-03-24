@@ -52,9 +52,9 @@
 update.piar_aggregation_structure <- function(object, index,
                                               period = end(index), ...,
                                               r = 1) {
+  price_update <- gpindex::factor_weights(r)
   index <- as_index(index)
   period <- match.arg(as.character(period), index$time)
-  price_update <- gpindex::factor_weights(r)
   eas <- match(object$levels[[length(object$levels)]], index$levels)
   if (anyNA(eas)) {
     warning("not all weights in 'object' have a corresponding index value")

@@ -41,7 +41,7 @@
 #' @importFrom utils stack
 #' @export
 stack.piar_index <- function(x, y, ...) {
-  if (!identical(x$levels, y$levels)) {
+  if (any(x$levels != y$levels)) {
     stop("'x' and 'y' must be indexes for the same levels")
   }
   if (any(x$time %in% y$time)) {
@@ -78,8 +78,6 @@ unstack.piar_index <- function(x, ...) {
     res[[t]]$contrib <- x$contrib[t]
     res[[t]]$levels <- x$levels
     res[[t]]$time <- x$time[t]
-    res[[t]]$r <- x$r
-    res[[t]]$pias <- x$pias
     class(res[[t]]) <- class(x)
   }
   res

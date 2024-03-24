@@ -15,7 +15,7 @@ test_that("stack returns the correct type of index", {
   expect_true(is_chainable_index(stack(index1, index2)))
   expect_true(is_chainable_index(stack(epr1, chain(epr2))))
   expect_true(is_direct_index(stack(chain(epr1), epr2)))
-  expect_error(stack(index1, epr1))
+  expect_error(suppressWarnings(stack(index1, epr1)))
   time(epr2) <- time(epr1)
   expect_error(stack(epr1, epr2))
   expect_error(stack(index1, aggregate(epr2, pias2, r = 0)))

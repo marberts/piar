@@ -1,7 +1,3 @@
-paste_until <- function(x, i) {
-  paste(x[seq_len(i)], collapse = "")
-}
-
 #' Expand a hierarchical classification
 #'
 #' Expand a character representation of a hierarchical classification to make a
@@ -25,7 +21,7 @@ paste_until <- function(x, i) {
 #' `expand_classification()` returns a list with a entry for each level in `x`
 #' giving the "digits" that represent each level in the hierarchy.
 #' 
-#' `interact_classfication()` returns a list of lists with the same structure
+#' `interact_classfications()` returns a list of lists with the same structure
 #' as `expand_classification()`.
 #'
 #' @seealso
@@ -61,11 +57,11 @@ paste_until <- function(x, i) {
 expand_classification <- function(x, width = 1L) {
   x <- as.character(x)
   width <- as.integer(width)
-  if (any(width <= 0L)) {
-    stop("'width' must be strictly positive")
-  }
   if (anyNA(width)) {
     stop("'width' cannot contain NAs")
+  }
+  if (any(width <= 0L)) {
+    stop("'width' must be strictly positive")
   }
 
   if (length(width) == 1L) {
@@ -75,7 +71,7 @@ expand_classification <- function(x, width = 1L) {
   w <- cumsum(width)
   x <- strsplit(x, character(0L), fixed = TRUE)
   lapply(w, function(i) {
-    vapply(x, paste_until, character(1L), i)
+    vapply(x, \(x) paste(x[seq_len(i)], collapse = ""), character(1L))
   })
 }
 
@@ -86,9 +82,9 @@ interact_classifications <- function(..., sep = ":") {
   if (length(dots) == 0L) {
     return(list())
   }
-  len <- rapply(dots, length)
+  len <- unlist(lapply(dots, lengths), use.names = FALSE)
   n <- len[1L]
-  atomics <- unlist(lapply(dots, lapply, is.atomic), use.names = FALSE)
+  atomics <- unlist(lapply(dots, \(x) lapply(x, is.atomic)), use.names = FALSE)
   if (any(len != n) || n == 0L || !all(atomics)) {
     stop(
       "each element in '...' must contain a list representing an ",

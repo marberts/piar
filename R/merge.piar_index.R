@@ -27,7 +27,7 @@
 #' @family index methods
 #' @export
 merge.piar_index <- function(x, y, ...) {
-  if (!identical(x$time, y$time)) {
+  if (any(x$time != y$time)) {
     stop("'x' and 'y' must be indexes for the same time periods")
   }
   if (any(x$levels %in% y$levels)) {

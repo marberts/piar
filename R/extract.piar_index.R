@@ -1,3 +1,4 @@
+#---- Helpers ----
 dim_indices <- function(x, i) {
   if (missing(i)) {
     return(seq_along(x))
@@ -9,7 +10,8 @@ dim_indices <- function(x, i) {
   }
   if (length(res) == 0L) {
     stop("attempted to select less than one element")
-  } else if (anyNA(res)) {
+  }
+  if (anyNA(res)) {
     stop("subscript out of bounds")
   }
   res

@@ -1,3 +1,5 @@
+#' Aggregate product contributions
+#' @noRd
 aggregate_contrib <- function(r) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
   function(x, rel, w) {
@@ -214,7 +216,7 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
     
     # price update weights for all periods after the first
     if (chainable) {
-      weights(pias) <- price_update(rel[[1L]], w[[1L]])
+      pias$weights <- price_update(rel[[1L]], w[[1L]])
       w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
     }
     
