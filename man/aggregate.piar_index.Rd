@@ -106,7 +106,8 @@ aggregate if the elemental indexes are built from several sources (as with
 a price relative in the aggregated index will be correct, but the sum of all
 contributions will not equal the change in the value of the index. This can
 also happen when aggregating an already aggregated index in which missing
-index values have been imputed (i.e., when \code{na.rm = TRUE}).
+index values have been imputed (i.e., when \code{na.rm = TRUE} and
+\code{contrib = FALSE}).
 }
 \note{
 For large indexes it can be much faster to turn the aggregation structure

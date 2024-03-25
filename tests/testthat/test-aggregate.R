@@ -56,13 +56,15 @@ test_that("a matched-sample index aggregates correctly", {
   expect_equal(as.matrix(aggregate(ms_index, ms_pias, na.rm = TRUE)),
                as.matrix(ms_index))
 
-  # Re aggregating breaks contributions for imputed indexes
-  expect_true(
-    all(colSums(contrib(ms_index), na.rm = TRUE)[-1]
-        > colSums(contrib(aggregate(ms_index, ms_pias)), na.rm = TRUE)[-1])
+  # Re aggregating doesn't breaks contributions for imputed indexes
+  expect_equal(
+    colSums(contrib(ms_index), na.rm = TRUE),
+    colSums(contrib(aggregate(ms_index, ms_pias)), na.rm = TRUE)
   )
-  expect_equal(contrib(aggregate(ms_index, ms_pias)),
-               contrib(aggregate(aggregate(ms_index, ms_pias), ms_pias)))
+  expect_equal(
+    contrib(aggregate(ms_index, ms_pias)),
+    contrib(aggregate(aggregate(ms_index, ms_pias), ms_pias))
+  )
 
   # Two step aggregation gives the same result
   pias2 <- aggregation_structure(list(c(1, 1), c(11, 12)),
@@ -157,8 +159,14 @@ test_that("a weird index aggregates correctly", {
 
   expect_equal(aggregate(chain(ms_index), ms_pias, r = -1.7), chain(ms_index))
 
-  expect_equal(as.matrix(ms_index)[1, ],
-               colSums(contrib(ms_index), na.rm = TRUE) + 1)
+  expect_equal(
+    as.matrix(ms_index)[1, ],
+    colSums(contrib(ms_index), na.rm = TRUE) + 1
+  )
+  expect_equal(
+    as.matrix(ms_index)[1, ],
+    colSums(contrib(aggregate(ms_index, ms_pias, r = -1.7)), na.rm = TRUE) + 1
+  )
 
   expect_equal(
     apply(as.matrix(chain(ms_index)[2:3, ]), 2,
@@ -397,12 +405,22 @@ test_that("reaggregating doesn't introduce incorrect contributions", {
                          contrib = TRUE)
   pias <- as_aggregation_structure(list(c(0, 0), c(1, 2)))
   index <- aggregate(epr, pias, na.rm = TRUE)
-  expect_equal(contrib(index)[, 1], contrib(aggregate(index, pias))[, 1])
+  expect_equal(
+    contrib(index, period = 1),
+    contrib(aggregate(index, pias), period = 1)
+  )
+  expect_equal(
+    sum(contrib(index, period = 2), na.rm = TRUE),
+    sum(contrib(aggregate(index, pias), period = 2), na.rm = TRUE)
+  )
   
+  index2 <- aggregate(epr, pias, na.rm = TRUE, contrib = FALSE)
   r <- as.numeric(index[2:3, 1])
   r <- (r / sum(r))[1]
-  expect_equal(contrib(index)[, 2] * r,
-               contrib(aggregate(index, pias), pad = NA)[, 2])
+  expect_equal(
+    contrib(index, period = 2)[1:2, , drop = FALSE] * r,
+    contrib(aggregate(index2, pias), period = 2)
+  )
 })
 
 test_that("skipping time periods works", {

@@ -3,7 +3,7 @@
 aggregate_contrib <- function(r) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
   function(x, rel, w) {
-    w <- gpindex::scale_weights(arithmetic_weights(rel, w))
+    w <- arithmetic_weights(rel, w)
     res <- unlist(Map("*", x, w))
     names(res) <- make.unique(as.character(names(res)))
     res
@@ -61,7 +61,8 @@ aggregate_contrib <- function(r) {
 #' a price relative in the aggregated index will be correct, but the sum of all
 #' contributions will not equal the change in the value of the index. This can
 #' also happen when aggregating an already aggregated index in which missing
-#' index values have been imputed (i.e., when `na.rm = TRUE`).
+#' index values have been imputed (i.e., when `na.rm = TRUE` and
+#' `contrib = FALSE`).
 #'
 #' @name aggregate.piar_index
 #' @aliases aggregate.piar_index
@@ -209,14 +210,15 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
     if (na.rm) {
       for (i in rev(seq_along(rel))[-1L]) {
         impute <- which(is.na(rel[[i]]))
-        rel[[i]][impute] <- rel[[i + 1L]][pias$parent[[i]][impute]]
-        con[[i]][impute] <- list(numeric(0L))
+        parent <- pias$parent[[i]][impute]
+        rel[[i]][impute] <- rel[[i + 1L]][parent]
+        con[[i]][impute] <- con[[i + 1L]][parent]
       }
     }
     
     # price update weights for all periods after the first
     if (chainable) {
-      pias$weights[] <- price_update(rel[[1L]], w[[1L]])
+      pias$weights <- price_update(rel[[1L]], w[[1L]])
       w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
     }
     

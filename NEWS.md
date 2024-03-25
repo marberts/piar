@@ -23,6 +23,10 @@ elemental indexes are returned when aggregating.
 - The `summary()` method for indexes has been changed to simply print a
 summary of the index, rather than try to summarized the index values.
 
+- `aggregate()` now imputes percent-change contributions for missing index
+values when `na.rm = TRUE`. The previously undocumented behavior was to simply
+drop them.
+
 # Version 0.7.0
 
 ## Significant changes

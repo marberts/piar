@@ -27,10 +27,10 @@ the hierarchy (as made by \code{expand_classification()}).}
 The default uses ":".}
 }
 \value{
-\code{expand_classification()} returns a list with a entry for each level in \code{x}
-giving the "digits" that represent each level in the hierarchy.
+\code{expand_classification()} returns a list with a entry for each level
+in \code{x} giving the "digits" that represent each level in the hierarchy.
 
-\code{interact_classfication()} returns a list of lists with the same structure
+\code{interact_classfications()} returns a list of lists with the same structure
 as \code{expand_classification()}.
 }
 \description{

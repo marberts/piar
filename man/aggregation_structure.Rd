@@ -30,7 +30,7 @@ terminal nodes.}
 immediate parent for each node of the aggregation structure below the
 initial nodes.}
 \item{levels}{A list of character vectors that give the levels of \code{x}.}
-\item{weights}{A named vector giving the weight for each elemental
+\item{weights}{A vector giving the weight for each elemental
 aggregate.}
 }
 \description{

@@ -18,8 +18,8 @@
 #' The default uses ":".
 #'
 #' @returns
-#' `expand_classification()` returns a list with a entry for each level in `x`
-#' giving the "digits" that represent each level in the hierarchy.
+#' `expand_classification()` returns a list with a entry for each level
+#' in `x` giving the "digits" that represent each level in the hierarchy.
 #' 
 #' `interact_classfications()` returns a list of lists with the same structure
 #' as `expand_classification()`.
