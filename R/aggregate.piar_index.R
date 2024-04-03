@@ -2,8 +2,8 @@
 #' @noRd
 aggregate_contrib <- function(r) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
-  function(x, rel, w, index = NULL) {
-    w <- arithmetic_weights(rel, w, index)
+  function(x, rel, w) {
+    w <- arithmetic_weights(rel, w)
     res <- unlist(Map("*", x, w))
     names(res) <- make.unique(as.character(names(res)))
     res
@@ -196,7 +196,6 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
         \(z) gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm),
         numeric(1L)
       )
-      # TODO Use computed index values in agg_contrib().
       if (has_contrib) {
         con[[i]] <- lapply(
           nodes,

@@ -245,7 +245,7 @@ elemental_index.numeric <- function(x,
 
   index <- Map(index_fun, x, weights, na.rm = na.rm, USE.NAMES = FALSE)
   if (contrib) {
-    contributions <- Map(contrib_fun, x, weights, index, USE.NAMES = FALSE)
+    contributions <- Map(contrib_fun, x, weights, USE.NAMES = FALSE)
   } else {
     # mimic contributions structure instead of a NULL
     contributions <- contrib_skeleton(levels, time)

@@ -102,7 +102,7 @@ mean.piar_index <- function(x, weights = NULL, ...,
     index[[i]][] <- gen_mean(rel, weight, na.rm = na.rm)
     if (has_contrib) {
       con <- .mapply(\(...) c(list(...)), x$contrib[j], list())
-      contrib[[i]][] <- agg_contrib(con, rel, weight, index[[i]])
+      contrib[[i]][] <- agg_contrib(con, rel, weight)
     }
   }
 
