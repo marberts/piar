@@ -59,10 +59,10 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
     }
   }
   cols <- seq_len(nea)
-  # don't need the eas
+  # Don't need the eas.
   lev <- lapply(as.list(x)[-height], \(z) factor(z, unique(z)))
   res <- vector("list", length(lev))
-  # generate the rows for each level of the matrix and rbind together
+  # Generate the rows for each level of the matrix and rbind together.
   for (i in seq_along(res)) {
     w <- unsplit(
       lapply(split(x$weights, lev[[i]]), gpindex::scale_weights), lev[[i]]
@@ -99,7 +99,7 @@ as.list.piar_aggregation_structure <- function(x, ...) {
   }
   res <- vector("list", length(x$parent))
   res[[1L]] <- x$parent[[1L]]
-  # walk up the parent nodes to reconstruct the inputs that generated 'x'
+  # Walk up the parent nodes to reconstruct the inputs that generated 'x'.
   for (i in seq_along(x$parent)[-1L]) {
     res[[i]] <- x$parent[[i]][res[[i - 1L]]]
   }

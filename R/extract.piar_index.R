@@ -49,7 +49,7 @@ replace_matrix <- function(x, i, value) {
 
   for (i in seq_along(levels)) {
     x$index[[periods[i]]][levels[i]] <- value[(i - 1L) %% n + 1]
-    # drop contributions for replaced values
+    # Drop contributions for replaced values.
     x$contrib[[periods[i]]][levels[i]] <- list(numeric(0L))
   }
   x

@@ -227,9 +227,9 @@ elemental_index.numeric <- function(x,
       names(x) <- valid_product_names(names(x), period)
     }
   }
-  # splitting 'x' into a nested list by period then ea is the same as
+  # Splitting 'x' into a nested list by period then ea is the same as
   # using interaction(), but makes it easier to get the results as
-  # a list
+  # a list.
   ea <- split(ea, period)
   x <- Map(split, split(x, period), ea)
   if (is.null(weights)) {
@@ -247,7 +247,7 @@ elemental_index.numeric <- function(x,
   if (contrib) {
     contributions <- Map(contrib_fun, x, weights, USE.NAMES = FALSE)
   } else {
-    # mimic contributions structure instead of a NULL
+    # Mimic contributions structure instead of a NULL.
     contributions <- contrib_skeleton(levels, time)
   }
 

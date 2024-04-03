@@ -49,8 +49,6 @@ stack.piar_index <- function(x, y, ...) {
   }
   x$index <- c(x$index, y$index)
   x$contrib <- c(x$contrib, y$contrib)
-  # it's safe to use c() and not union() because there can't be duplicate
-  # periods
   x$time <- c(x$time, y$time)
   validate_piar_index(x)
 }

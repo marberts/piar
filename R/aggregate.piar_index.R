@@ -1,10 +1,12 @@
 #' Aggregate product contributions
 #' @noRd
+# This function is inefficient because it recalculates the mean, but this
+# ensures that contributions are still produced with missing index values.
 aggregate_contrib <- function(r) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
   function(x, rel, w) {
     w <- arithmetic_weights(rel, w)
-    res <- unlist(Map("*", x, w))
+    res <- unlist(Map(`*`, x, w))
     names(res) <- make.unique(as.character(names(res)))
     res
   }
@@ -166,29 +168,29 @@ aggregate.piar_index <- function(x, pias, ...,
 }
 
 aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
-  # helpful functions
+  # Helpful functions.
   price_update <- gpindex::factor_weights(r)
   gen_mean <- gpindex::generalized_mean(r)
   agg_contrib <- aggregate_contrib(r)
   
-  # put the aggregation weights upside down to line up with pias
+  # Put the aggregation weights upside down to line up with pias.
   w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
   
   has_contrib <- has_contrib(x) && contrib
   eas <- match(pias$levels[[length(pias$levels)]], x$levels)
   
-  # loop over each time period
+  # Loop over each time period.
   index <- contrib <- vector("list", length(x$time))
   for (t in seq_along(x$time)) {
     rel <- con <- vector("list", length(pias$levels))
-    # align epr with weights so that positional indexing works
+    # Align epr with weights so that positional indexing works.
     rel[[1L]] <- x$index[[t]][eas]
     con[[1L]] <- x$contrib[[t]][eas]
     
-    # get rid of any NULL contributions
+    # Get rid of any NULL contributions.
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     
-    # loop over each level in pias from the bottom up and aggregate
+    # Loop over each level in pias from the bottom up and aggregate.
     for (i in seq_along(rel)[-1L]) {
       nodes <- unname(pias$child[[i - 1L]])
       rel[[i]] <- vapply(
@@ -206,7 +208,7 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
       }
     }
     
-    # parental imputation
+    # Parental imputation.
     if (na.rm) {
       for (i in rev(seq_along(rel))[-1L]) {
         impute <- which(is.na(rel[[i]]))
@@ -216,7 +218,7 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
       }
     }
     
-    # price update weights for all periods after the first
+    # Price update weights for all periods after the first.
     if (chainable) {
       pias$weights <- price_update(rel[[1L]], w[[1L]])
       w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))

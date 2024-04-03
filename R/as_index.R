@@ -95,7 +95,7 @@ as_index.data.frame <- function(x, ..., chainable = TRUE) {
   x[1:2] <- lapply(x[1:2], as.factor)
   time <- levels(x[[1L]])
   levels <- levels(x[[2L]])
-  # elemental_index() usually gives NaN for missing cells
+  # elemental_index() usually gives NaN for missing cells.
   res <- matrix(NA_real_,
     nrow = length(levels), ncol = length(time),
     dimnames = list(levels, time)

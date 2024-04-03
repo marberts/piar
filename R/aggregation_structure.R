@@ -104,8 +104,8 @@ aggregation_structure <- function(x, weights = NULL) {
     }
   }
 
-  # basic argument checking to make sure inputs can make an
-  # aggregation structure
+  # Basic argument checking to make sure inputs can make an
+  # aggregation structure.
   if (any(lengths(x) != length(weights))) {
     stop("all arguments must be the same length")
   }
@@ -124,7 +124,7 @@ aggregation_structure <- function(x, weights = NULL) {
   upper <- x[-len] # nodes above eas
   lower <- x[-1L] # nodes below initial nodes
   child <- parent <- vector("list", len)[-1L]
-  # produce a list for each level with all the parent and child nodes
+  # Produce a list for each level with all the parent and child nodes.
   for (i in seq_along(upper)) {
     child[[i]] <- lapply(
       split(as.integer(lower[[len - i]]), upper[[len - i]]), unique

@@ -76,13 +76,13 @@ mean.piar_index <- function(x, weights = NULL, ...,
     stop("'x' must have at least 'window' time periods")
   }
 
-  # helpful functions
+  # Helpful functions.
   gen_mean <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
   agg_contrib <- Vectorize(aggregate_contrib(r),
     SIMPLIFY = FALSE, USE.NAMES = FALSE
   )
 
-  # get the starting location for each window
+  # Get the starting location for each window.
   if (length(x$time) %% window != 0) {
     warning("'window' is not a multiple of the number of time periods in 'x'")
   }
@@ -92,7 +92,7 @@ mean.piar_index <- function(x, weights = NULL, ...,
 
   has_contrib <- has_contrib(x) && contrib
 
-  # loop over each window and calculate the mean for each level
+  # Loop over each window and calculate the mean for each level.
   index <- index_skeleton(x$levels, periods)
   contrib <- contrib_skeleton(x$levels, periods)
   for (i in seq_along(loc)) {

@@ -73,9 +73,9 @@ contrib.piar_index <- function(x, level = levels(x)[1L], period = time(x), ...,
   out <- vector("list", length(con))
   names(out) <- period
 
-  # initialize 0 contributions for all products in all time periods, then
+  # Initialize 0 contributions for all products in all time periods, then
   # replace with the actual values so products that didn't sell have 0 and
-  # not NA contributions
+  # not NA contributions.
   out[] <- list(structure(rep.int(pad, length(products)), names = products))
   res <- Map(replace, out, con_names, con)
   do.call(cbind, res)
