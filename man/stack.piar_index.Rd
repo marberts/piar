@@ -2,12 +2,19 @@
 % Please edit documentation in R/stack.piar_index.R
 \name{stack.piar_index}
 \alias{stack.piar_index}
-\alias{unstack.piar_index}
+\alias{stack.chainable_piar_index}
+\alias{stack.direct_piar_index}
+\alias{unstack.chainable_piar_index}
+\alias{unstack.direct_piar_index}
 \title{Stack price indexes}
 \usage{
-\method{stack}{piar_index}(x, y, ...)
+\method{stack}{chainable_piar_index}(x, y, ...)
 
-\method{unstack}{piar_index}(x, ...)
+\method{stack}{direct_piar_index}(x, y, ...)
+
+\method{unstack}{chainable_piar_index}(x, ...)
+
+\method{unstack}{direct_piar_index}(x, ...)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}

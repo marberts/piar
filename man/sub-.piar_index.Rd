@@ -20,9 +20,7 @@ details.}
 \item{value}{A numeric vector or price index. See details.}
 }
 \value{
-A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a
-period-over-period index, or \code{\link{direct_piar_index}} if \code{x} is a
-fixed-base index.
+A price index that inherits from the same class as \code{x}.
 }
 \description{
 Methods to extract and replace index values like a matrix.

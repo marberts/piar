@@ -68,6 +68,7 @@ aggregate_contrib <- function(r) {
 #'
 #' @name aggregate.piar_index
 #' @aliases aggregate.piar_index
+#' 
 #' @param x A price index, usually made by [elemental_index()].
 #' @param pias A price index aggregation structure or something that can be
 #' coerced into one. This can be made with [aggregation_structure()].

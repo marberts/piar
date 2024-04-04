@@ -20,6 +20,9 @@
 #' over subperiods, which is often useful when aggregating a Paasche index; see
 #' section 4.3 of Balk (2008) for details.
 #'
+#' @name mean.piar_index
+#' @aliases mean.piar_index
+#' 
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param weights A numeric vector of weights for the index values in `x`, or
 #' something that can be coerced into one. The
@@ -55,11 +58,31 @@
 #'
 #' @family index methods
 #' @export
+mean.chainable_piar_index <- function(x, weights = NULL, ...,
+                                      window = 3L,
+                                      na.rm = FALSE,
+                                      contrib = TRUE,
+                                      r = 1) {
+  NextMethod("mean", chainable = TRUE)
+}
+
+#' @rdname mean.piar_index
+#' @export
+mean.direct_piar_index <- function(x, weights = NULL, ...,
+                                   window = 3L,
+                                   na.rm = FALSE,
+                                   contrib = TRUE,
+                                   r = 1) {
+  NextMethod("mean", chainable = FALSE)
+}
+
+#' @export
 mean.piar_index <- function(x, weights = NULL, ...,
                             window = 3L,
                             na.rm = FALSE,
                             contrib = TRUE,
-                            r = 1) {
+                            r = 1,
+                            chainable) {
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
     if (length(weights) != length(x$time) * length(x$levels)) {
@@ -106,8 +129,5 @@ mean.piar_index <- function(x, weights = NULL, ...,
     }
   }
 
-  x$index <- index
-  x$contrib <- contrib
-  x$time <- periods
-  validate_piar_index(x)
+  piar_index(index, contrib, x$levels, periods, chainable)
 }

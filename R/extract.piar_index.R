@@ -124,9 +124,7 @@ replace_numeric <- function(x, i, j, value) {
 #' @param ... Not currently used.
 #'
 #' @returns
-#' A price index that inherits from [`chainable_piar_index`] if `x` is a
-#' period-over-period index, or [`direct_piar_index`] if `x` is a
-#' fixed-base index.
+#' A price index that inherits from the same class as `x`.
 #'
 #' @examples
 #' index <- as_index(matrix(1:6, 2))

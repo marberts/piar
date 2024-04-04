@@ -2,9 +2,13 @@
 % Please edit documentation in R/merge.piar_index.R
 \name{merge.piar_index}
 \alias{merge.piar_index}
+\alias{merge.chainable_piar_index}
+\alias{merge.direct_piar_index}
 \title{Merge price indexes}
 \usage{
-\method{merge}{piar_index}(x, y, ...)
+\method{merge}{chainable_piar_index}(x, y, ...)
+
+\method{merge}{direct_piar_index}(x, y, ...)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}

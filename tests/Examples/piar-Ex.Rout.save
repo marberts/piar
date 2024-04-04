@@ -621,7 +621,8 @@ Period-over-period price index for 2 levels over 3 time periods
 > 
 > ### Name: mean.piar_index
 > ### Title: Aggregate a price index over subperiods
-> ### Aliases: mean.piar_index
+> ### Aliases: mean.piar_index mean.chainable_piar_index
+> ###   mean.direct_piar_index
 > 
 > ### ** Examples
 > 
@@ -644,7 +645,8 @@ Period-over-period price index for 2 levels over 4 time periods
 > 
 > ### Name: merge.piar_index
 > ### Title: Merge price indexes
-> ### Aliases: merge.piar_index
+> ### Aliases: merge.piar_index merge.chainable_piar_index
+> ###   merge.direct_piar_index
 > 
 > ### ** Examples
 > 
@@ -734,7 +736,9 @@ Period-over-period price index for 2 levels over 1 time periods
 > 
 > ### Name: stack.piar_index
 > ### Title: Stack price indexes
-> ### Aliases: stack.piar_index unstack.piar_index
+> ### Aliases: stack.piar_index stack.chainable_piar_index
+> ###   stack.direct_piar_index unstack.chainable_piar_index
+> ###   unstack.direct_piar_index
 > 
 > ### ** Examples
 > 

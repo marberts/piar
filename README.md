@@ -24,9 +24,9 @@ collection of *elemental aggregates* at each point in time, and then
 aggregated according to a *price index aggregation structure*. These
 indexes can then be chained together to form a time series that gives
 the evolution of prices with respect to a fixed base period. This
-package contains a collections of functions that revolve around this
-work flow, making it easy to build standard price indexes, and implement
-the methods described by Balk (2008), von der Lippe (2001), and the CPI
+package contains a collection of functions that revolve around this work
+flow, making it easy to build standard price indexes, and implement the
+methods described by Balk (2008), von der Lippe (2001), and the CPI
 manual (2020) for bilateral price indexes.
 
 ## Installation

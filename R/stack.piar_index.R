@@ -9,7 +9,10 @@
 #'
 #' These methods can be used in a map-reduce to make an index with multiple
 #' aggregation structures (like a Paasche index).
-#'
+#' 
+#' @name stack.piar_index
+#' @aliases stack.piar_index
+#' 
 #' @inheritParams merge.piar_index
 #'
 #' @returns
@@ -40,6 +43,19 @@
 #' @family index methods
 #' @importFrom utils stack
 #' @export
+stack.chainable_piar_index <- function(x, y, ...) {
+  y <- as_index(y, chainable = TRUE)
+  NextMethod("stack")
+}
+
+#' @rdname stack.piar_index
+#' @export
+stack.direct_piar_index <- function(x, y, ...) {
+  y <- as_index(y, chainable = FALSE)
+  NextMethod("stack")
+}
+
+#' @export
 stack.piar_index <- function(x, y, ...) {
   if (any(x$levels != y$levels)) {
     stop("'x' and 'y' must be indexes for the same levels")
@@ -50,33 +66,30 @@ stack.piar_index <- function(x, y, ...) {
   x$index <- c(x$index, y$index)
   x$contrib <- c(x$contrib, y$contrib)
   x$time <- c(x$time, y$time)
-  validate_piar_index(x)
-}
-
-#' @export
-stack.chainable_piar_index <- function(x, y, ...) {
-  y <- as_index(y, chainable = TRUE)
-  NextMethod("stack")
-}
-
-#' @export
-stack.direct_piar_index <- function(x, y, ...) {
-  y <- as_index(y, chainable = FALSE)
-  NextMethod("stack")
+  x
 }
 
 #' @rdname stack.piar_index
 #' @importFrom utils unstack
 #' @export
-unstack.piar_index <- function(x, ...) {
+unstack.chainable_piar_index <- function(x, ...) {
+  NextMethod("unstack", chainable = TRUE)
+}
+
+#' @rdname stack.piar_index
+#' @export
+unstack.direct_piar_index <- function(x, ...) {
+  NextMethod("unstack", chainable = FALSE)
+}
+
+#' @export
+unstack.piar_index <- function(x, ..., chainable) {
   res <- vector("list", length(x$time))
   names(res) <- x$time
   for (t in seq_along(res)) {
-    res[[t]]$index <- x$index[t]
-    res[[t]]$contrib <- x$contrib[t]
-    res[[t]]$levels <- x$levels
-    res[[t]]$time <- x$time[t]
-    class(res[[t]]) <- class(x)
+    res[[t]] <- new_piar_index(
+      x$index[t], x$contrib[t], x$levels, x$time[t], chainable
+    )
   }
   res
 }

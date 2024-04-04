@@ -7,6 +7,9 @@
 #' This is useful for building up an index when different elemental aggregates
 #' come from different sources of data, or use different index-number formulas.
 #'
+#' @name merge.piar_index
+#' @aliases merge.piar_index
+#' 
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param y A price index, or something that can coerced into one. If `x`
 #' is a period-over-period index then `y` is coerced into a chainable
@@ -26,6 +29,19 @@
 #'
 #' @family index methods
 #' @export
+merge.chainable_piar_index <- function(x, y, ...) {
+  y <- as_index(y, chainable = TRUE)
+  NextMethod("merge")
+}
+
+#' @rdname merge.piar_index
+#' @export
+merge.direct_piar_index <- function(x, y, ...) {
+  y <- as_index(y, chainable = FALSE)
+  NextMethod("merge")
+}
+
+#' @export
 merge.piar_index <- function(x, y, ...) {
   if (any(x$time != y$time)) {
     stop("'x' and 'y' must be indexes for the same time periods")
@@ -36,17 +52,5 @@ merge.piar_index <- function(x, y, ...) {
   x$index <- Map(c, x$index, y$index)
   x$contrib <- Map(c, x$contrib, y$contrib)
   x$levels <- c(x$levels, y$levels)
-  validate_piar_index(x)
-}
-
-#' @export
-merge.chainable_piar_index <- function(x, y, ...) {
-  y <- as_index(y, chainable = TRUE)
-  NextMethod("merge")
-}
-
-#' @export
-merge.direct_piar_index <- function(x, y, ...) {
-  y <- as_index(y, chainable = FALSE)
-  NextMethod("merge")
+  x
 }
