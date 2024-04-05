@@ -148,7 +148,37 @@ pias_sps <- with(
 The elemental indexes can now be aggregated according to this new aggregation structure.
 
 ```{r}
-aggregate(ms_elemental, pias_sps, na.rm = TRUE)
+index_sps <- aggregate(ms_elemental, pias_sps, na.rm = TRUE)
+index_sps
+```
+
+When a price index has many dimensions (e.g., industry, sampling stratum, region), it can be useful to interact the classifications for these different dimensions to get all possible aggregation structures. The aggregated index can then be re-aggregated to get index values for all dimensions.
+
+Continuing with the example, the industry and strata structures can be interacted to get two
+aggregation structures that can be used to re-aggregate `index_sps`.
+
+```{r}
+interacted_hierarchy <- with(
+  ms_weights,
+  interact_classifications(
+    expand_classification(classification),
+    expand_classification(stratum)
+  )
+)
+
+pias_sps2 <- lapply(
+  interacted_hierarchy,
+  \(x) aggregation_structure(c(x, ms_weights["business"]), ms_weights$weight)
+)
+
+index_sps2 <- lapply(pias_sps2, \(x) aggregate(index_sps, x, include_ea = FALSE))
+```
+
+The resulting indexes can be merged together to give an index that includes all
+combinations of industry and sampling stratum.
+
+```{r}
+Reduce(merge, index_sps2)
 ```
 
 ## Computing the shadow of an index

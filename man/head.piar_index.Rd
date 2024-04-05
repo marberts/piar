@@ -18,9 +18,7 @@ first/last 6 levels of \code{x}.}
 \item{...}{Not currently used.}
 }
 \value{
-A price index that inherits from \code{\link{chainable_piar_index}} if \code{x} is a
-period-over-period index, or \code{direct_piar_index()} if \code{x} is a
-fixed-base index.
+A price index that inherits from the same class as \code{x}.
 }
 \description{
 Extract the first/last parts of an index as if it were a matrix.
