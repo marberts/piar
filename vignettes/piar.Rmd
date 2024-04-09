@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Most price indexes are made with a two-step procedure, where period-over-period *elemental indexes* are calculated for a collection of *elemental aggregates* at each point in time, and then aggregated according to a *price index aggregation structure*. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. The **piar** package contains a collections of functions that revolve around this work flow, making it easy to build standard price indexes in **R**.
+Most price indexes are made with a two-step procedure, where period-over-period *elemental indexes* are calculated for a collection of *elemental aggregates* at each point in time, and then aggregated according to a *price index aggregation structure*. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. The **piar** package contains a collection of functions that revolve around this work flow, making it easy to build standard price indexes in **R**.
 
 The purpose of this vignette is to give several extended examples of how to use the functions in this package to make different types of price indexes. This should serve both as a introduction to the functionality in **piar**, and a reference for solving specific index-number problems.
 
@@ -37,11 +37,11 @@ ms_weights
 The `elemental_index()` function makes, well, elemental indexes, using information on price relatives, elemental aggregates (businesses), and time periods (quarters). By default it makes a Jevons index, but any bilateral generalized-mean index is possible. The only wrinkle is that price data here are in levels, and not relatives, but the `price_relative()` function can make the necessary conversion.
 
 ```{r}
-relative <- with(ms_prices, price_relative(price, period, product))
+relatives <- with(ms_prices, price_relative(price, period, product))
 
 ms_elemental <- with(
   ms_prices,
-  elemental_index(relative, period, business, na.rm = TRUE)
+  elemental_index(relatives, period, business, na.rm = TRUE)
 )
 
 ms_elemental
@@ -51,7 +51,7 @@ ms_elemental
 
 As with most functions in **R**, missing values are contagious by default in **piar**. Setting `na.rm = TRUE` in `elemental_index()` means that missing price relatives are ignored, which is equivalent to imputing these missing relatives with the value of the elemental index for the respective businesses (i.e., parental or overall mean imputation). Other types of imputation are possible, and are the topic of a subsequent example.
 
-The `elemental_index()` function returns a special index object, and there are a number of methods for working with these objects. Probably the most useful of these methods allows the resulting elemental indexes to be extracted like a matrix, even though it's not a matrix. (Note that there are only indexes for four businesses, not five, because the fifth business never reports any prices; an elemental index can be made for this business with a small change to the call to `elemental_index()`.)
+The `elemental_index()` function returns a special index object, and there are a number of methods for working with these objects. Probably the most useful of these methods allows the resulting elemental indexes to be extracted like a matrix, even though it's not a matrix. (Note that there are only indexes for four businesses, not five, because the fifth business never reports any prices; as will be seen in another example, an elemental index can be made for this business with a small change to the call to `elemental_index()`.)
 
 ```{r}
 ms_elemental[, "202004"]
@@ -181,6 +181,21 @@ combinations of industry and sampling stratum.
 Reduce(merge, index_sps2)
 ```
 
+## Matrix aggregation
+
+Aggregating a price index can be done as a matrix operation. Although this approach is less flexible than the `aggregate()` method, it can be considerably faster for larger indexes. The key is to turn the aggregation structure into an aggregation matrix.
+
+```{r}
+pias_matrix <- as.matrix(pias)
+pias_matrix
+```
+
+Multiplying this matrix by a matrix of fixed-base elemental indexes now computes the aggregate index in each time period.
+
+```{r}
+pias_matrix %*% as.matrix(chain(ms_index[ms_weights$business]))
+```
+
 ## Computing the shadow of an index
 
 It's often useful to determine which higher-level index values are missing, and subsequently get imputed during aggregation (i.e., compute the shadow of an index). This is simple to do if there's an elemental index for each elemental aggregate in the aggregation structure.
@@ -189,7 +204,7 @@ It's often useful to determine which higher-level index values are missing, and 
 ms_elemental2 <- with(
   ms_prices,
   elemental_index(
-    relative, period, factor(business, ms_weights$business),
+    relatives, period, factor(business, ms_weights$business),
     na.rm = TRUE
   )
 )
@@ -229,7 +244,7 @@ By default, the `elemental_index()` function calculates a Jevons index. Although
 ```{r}
 with(
   ms_prices, 
-  elemental_index(relative, period, business, na.rm = TRUE, r = 1)
+  elemental_index(relatives, period, business, na.rm = TRUE, r = 1)
 )
 ```
 
@@ -238,7 +253,7 @@ The Coggeshall index (equally-weighted harmonic mean of price relatives) is anot
 ```{r}
 with(
   ms_prices,
-  elemental_index(relative, period, business, na.rm = TRUE, r = -1)
+  elemental_index(relatives, period, business, na.rm = TRUE, r = -1)
 )
 ```
 
@@ -288,7 +303,7 @@ It's often convenient to decompose an index into the (additive) contribution of 
 ```{r}
 ms_elemental <- with(
   ms_prices,
-  elemental_index(relative, period, business, contrib = TRUE, na.rm = TRUE)
+  elemental_index(relatives, period, business, contrib = TRUE, na.rm = TRUE)
 )
 ```
 
@@ -299,6 +314,10 @@ contrib(ms_elemental)
 ```
 
 Aggregating the elemental indexes automatically aggregates percent-change contributions, so no extra steps are needed after the elemental indexes are made.
+
+```{r}
+contrib(aggregate(ms_elemental, pias, na.rm = TRUE))
+```
 
 ## Updating a basket
 

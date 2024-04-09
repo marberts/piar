@@ -1,6 +1,6 @@
 
-R version 4.3.2 (2023-10-31) -- "Eye Holes"
-Copyright (C) 2023 The R Foundation for Statistical Computing
+R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
+Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -151,7 +151,7 @@ Aggregation structure for 3 elemental aggregates with 2 levels above the element
 4      2     2     4
 5      3     1     5
 6      3     2     6
->
+> 
 > as.matrix(index)
   1 2 3
 1 1 3 5
@@ -915,7 +915,7 @@ Period-over-period price index for 2 levels over 3 time periods
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.105 0.017 0.121 0 0 
+Time elapsed:  0.107 0.004 0.112 0 0 
 > grDevices::dev.off()
 null device 
           1 

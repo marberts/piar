@@ -1,6 +1,6 @@
 
-R version 4.3.1 (2023-06-16) -- "Beagle Scouts"
-Copyright (C) 2023 The R Foundation for Statistical Computing
+R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
+Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -15,7 +15,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> ## ---- include = FALSE---------------------------------------------------------
+> ## ----include = FALSE----------------------------------------------------------
 > knitr::opts_chunk$set(
 +   collapse = TRUE,
 +   comment = "#>"
@@ -42,10 +42,14 @@ Type 'q()' to quit R.
 5       B5             12    330
 > 
 > ## -----------------------------------------------------------------------------
-> relative <- with(ms_prices, price_relative(price, period, product))
+> relatives <- with(ms_prices, price_relative(price, period, product))
 > 
-> (ms_epr <- with(ms_prices,
-+                 elemental_index(relative, period, business, na.rm = TRUE)))
+> ms_elemental <- with(
++   ms_prices,
++   elemental_index(relatives, period, business, na.rm = TRUE)
++ )
+> 
+> ms_elemental
 Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003   202004
 B1      1 0.8949097 0.3342939      NaN
@@ -54,26 +58,31 @@ B3      1 2.0200036 1.6353355 0.537996
 B4    NaN       NaN       NaN 4.576286
 > 
 > ## -----------------------------------------------------------------------------
-> ms_epr[, "202004"]
+> ms_elemental[, "202004"]
 Period-over-period price index for 4 levels over 1 time periods 
      202004
 B1      NaN
 B2 2.770456
 B3 0.537996
 B4 4.576286
-> ms_epr["B1", ]
+> 
+> ms_elemental["B1", ]
 Period-over-period price index for 1 levels over 4 time periods 
    202001    202002    202003 202004
 B1      1 0.8949097 0.3342939    NaN
 > 
 > ## -----------------------------------------------------------------------------
-> hierarchy <- with(ms_weights, 
-+                   c(expand_classification(classification), list(business)))
+> hierarchy <- with(
++   ms_weights, 
++   c(expand_classification(classification), list(business))
++ )
 > 
 > pias <- aggregation_structure(hierarchy, ms_weights$weight)
 > 
 > ## -----------------------------------------------------------------------------
-> (ms_index <- aggregate(ms_epr, pias, na.rm = TRUE))
+> ms_index <- aggregate(ms_elemental, pias, na.rm = TRUE)
+> 
+> ms_index
 Period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003   202004
 1       1 1.3007239 1.0630743 2.734761
@@ -86,7 +95,9 @@ B4      1 1.3007239 1.0630743 4.576286
 B5      1 1.3007239 1.0630743 4.576286
 > 
 > ## -----------------------------------------------------------------------------
-> (ms_index_chained <- chain(ms_index))
+> ms_index_chained <- chain(ms_index)
+> 
+> ms_index_chained
 Fixed-base price index for 8 levels over 4 time periods 
    202001    202002    202003    202004
 1       1 1.3007239 1.3827662 3.7815355
@@ -124,8 +135,10 @@ B4 0.1580295 0.2055527 0.2185178      1
 B5 0.1580295 0.2055527 0.2185178      1
 > 
 > ## -----------------------------------------------------------------------------
-> rebase(ms_index_chained,
-+        rowMeans(as.matrix(ms_index_chained)[, c("202003", "202004")]))
+> rebase(
++   ms_index_chained,
++   mean(ms_index_chained, window = 2)[, "202003"]
++ )
 Fixed-base price index for 8 levels over 4 time periods 
       202001    202002    202003    202004
 1  0.3872740 0.5037366 0.5355095 1.4644905
@@ -138,7 +151,9 @@ B4 0.2593798 0.3373815 0.3586616 1.6413384
 B5 0.2593798 0.3373815 0.3586616 1.6413384
 > 
 > ## -----------------------------------------------------------------------------
-> (ms_weights <- transform(ms_weights, stratum = c("TS", "TA", "TS", "TS", "TS")))
+> ms_weights$stratum <- c("TS", "TA", "TS", "TS", "TS")
+> 
+> ms_weights
   business classification weight stratum
 1       B1             11    553      TS
 2       B2             11    646      TA
@@ -147,28 +162,25 @@ B5 0.2593798 0.3373815 0.3586616 1.6413384
 5       B5             12    330      TS
 > 
 > ## -----------------------------------------------------------------------------
-> (classification_sps <- with(ms_weights, paste0(classification, stratum)))
+> classification_sps <- with(ms_weights, paste0(classification, stratum))
+> 
+> classification_sps
 [1] "11TS" "11TA" "11TS" "12TS" "12TS"
 > 
 > ## -----------------------------------------------------------------------------
-> (classification_sps <- expand_classification(classification_sps,
-+                                              width = c(1, 1, 2)))
-[[1]]
-[1] "1" "1" "1" "1" "1"
-
-[[2]]
-[1] "11" "11" "11" "12" "12"
-
-[[3]]
-[1] "11TS" "11TA" "11TS" "12TS" "12TS"
-
+> classification_sps <- expand_classification(
++   classification_sps,
++   width = c(1, 1, 2)
++ )
+> 
 > pias_sps <- with(
 +   ms_weights, 
 +   aggregation_structure(c(classification_sps, list(business)), weight)
 + )
 > 
 > ## -----------------------------------------------------------------------------
-> aggregate(ms_epr, pias_sps, na.rm = TRUE)
+> index_sps <- aggregate(ms_elemental, pias_sps, na.rm = TRUE)
+> index_sps
 Period-over-period price index for 11 levels over 4 time periods 
      202001    202002    202003   202004
 1         1 1.3007239 1.0630743 2.684412
@@ -184,9 +196,70 @@ B4        1 1.3007239 1.0630743 4.576286
 B5        1 1.3007239 1.0630743 4.576286
 > 
 > ## -----------------------------------------------------------------------------
-> ms_epr2 <- ms_epr
-> ms_epr2["B2", 2:3] <- 1
-> ms_epr2
+> interacted_hierarchy <- with(
++   ms_weights,
++   interact_classifications(
++     expand_classification(classification),
++     expand_classification(stratum)
++   )
++ )
+> 
+> pias_sps2 <- lapply(
++   interacted_hierarchy,
++   \(x) aggregation_structure(c(x, ms_weights["business"]), ms_weights$weight)
++ )
+> 
+> index_sps2 <- lapply(pias_sps2, \(x) aggregate(index_sps, x, include_ea = FALSE))
+> 
+> ## -----------------------------------------------------------------------------
+> Reduce(merge, index_sps2)
+Period-over-period price index for 8 levels over 4 time periods 
+      202001   202002   202003   202004
+1:T        1 1.300724 1.063074 2.684412
+1:TS       1 1.300724 1.063074 2.653820
+1:TA       1 1.300724 1.063074 2.770456
+11:T       1 1.300724 1.063074 1.492443
+12:T       1 1.300724 1.063074 4.576286
+11:TS      1 1.300724 1.063074 0.537996
+11:TA      1 1.300724 1.063074 2.770456
+12:TS      1 1.300724 1.063074 4.576286
+> 
+> ## -----------------------------------------------------------------------------
+> pias_matrix <- as.matrix(pias)
+> pias_matrix
+          B1        B2        B3        B4        B5
+1  0.2245229 0.2622818 0.1266748 0.2525376 0.1339829
+11 0.3659828 0.4275314 0.2064858 0.0000000 0.0000000
+12 0.0000000 0.0000000 0.0000000 0.6533613 0.3466387
+> 
+> ## -----------------------------------------------------------------------------
+> pias_matrix %*% as.matrix(chain(ms_index[ms_weights$business]))
+   202001   202002   202003   202004
+1       1 1.300724 1.382766 3.781536
+11      1 1.300724 1.382766 2.177187
+12      1 1.300724 1.382766 6.327934
+> 
+> ## -----------------------------------------------------------------------------
+> ms_elemental2 <- with(
++   ms_prices,
++   elemental_index(
++     relatives, period, factor(business, ms_weights$business),
++     na.rm = TRUE
++   )
++ )
+> 
+> ## -----------------------------------------------------------------------------
+> pias_matrix <- as.matrix(pias) > 0 
+> pias_matrix %*% is.na(ms_elemental2) / rowSums(pias_matrix)
+   202001    202002    202003    202004
+1     0.4 0.6000000 0.6000000 0.4000000
+11    0.0 0.3333333 0.3333333 0.3333333
+12    1.0 1.0000000 1.0000000 0.5000000
+> 
+> ## -----------------------------------------------------------------------------
+> ms_elemental2 <- ms_elemental
+> ms_elemental2["B2", 2:3] <- 1
+> ms_elemental2
 Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003   202004
 B1      1 0.8949097 0.3342939      NaN
@@ -195,7 +268,7 @@ B3      1 2.0200036 1.6353355 0.537996
 B4    NaN       NaN       NaN 4.576286
 > 
 > ## -----------------------------------------------------------------------------
-> aggregate(ms_epr2, pias, na.rm = TRUE)
+> aggregate(ms_elemental2, pias, na.rm = TRUE)
 Period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003   202004
 1       1 1.1721550 1.0400686 2.626560
@@ -208,8 +281,10 @@ B4      1 1.1721550 1.0400686 4.576286
 B5      1 1.1721550 1.0400686 4.576286
 > 
 > ## -----------------------------------------------------------------------------
-> with(ms_prices, 
-+      elemental_index(relative, period, business, na.rm = TRUE, r = 1))
+> with(
++   ms_prices, 
++   elemental_index(relatives, period, business, na.rm = TRUE, r = 1)
++ )
 Period-over-period price index for 4 levels over 4 time periods 
    202001     202002    202003   202004
 B1      1  0.8949097 0.3342939      NaN
@@ -218,8 +293,10 @@ B3      1 23.7480455 2.4900997 0.607197
 B4    NaN        NaN       NaN 9.368610
 > 
 > ## -----------------------------------------------------------------------------
-> with(ms_prices,
-+      elemental_index(relative, period, business, na.rm = TRUE, r = -1))
+> with(
++   ms_prices,
++   elemental_index(relatives, period, business, na.rm = TRUE, r = -1)
++ )
 Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003    202004
 B1      1 0.8949097 0.3342939       NaN
@@ -243,12 +320,17 @@ B4    NaN       NaN       NaN 2.2353790
 > 
 > ms_prices2$weight <- with(
 +   ms_prices2,
-+   tw(price, back_price, quantity, back_quantity,
-+      group = interaction(period, business))
++   tw(
++     price, back_price, quantity, back_quantity,
++     group = interaction(period, business)
++   )
 + )
 > 
 > ## -----------------------------------------------------------------------------
-> with(ms_prices2, elemental_index(price / back_price, period, business, weight))
+> with(
++   ms_prices2,
++   elemental_index(price / back_price, period, business, weight)
++ )
 Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003   202004
 B1      1 0.8949097 0.3342939      NaN
@@ -257,30 +339,50 @@ B3      1 0.9520982 1.5913929 0.542372
 B4    NaN       NaN       NaN 5.904237
 > 
 > ## -----------------------------------------------------------------------------
-> ms_epr <- with(
+> ms_elemental <- with(
 +   ms_prices,
-+   elemental_index(relative, period, business, contrib = TRUE, na.rm = TRUE)
++   elemental_index(relatives, period, business, contrib = TRUE, na.rm = TRUE)
 + )
 > 
 > ## -----------------------------------------------------------------------------
-> contrib(ms_epr)
+> contrib(ms_elemental)
   202001     202002     202003 202004
 1      0  0.0000000  0.0000000      0
 2     NA         NA -0.6657061      0
 3      0 -0.1050903         NA     NA
 > 
 > ## -----------------------------------------------------------------------------
+> contrib(aggregate(ms_elemental, pias, na.rm = TRUE))
+   202001      202002     202003       202004
+1       0  0.00000000  0.0000000  0.000000000
+10      0 -0.08782076  0.2731949 -0.078173579
+11      0  0.00000000         NA  0.059392635
+12      0  0.00000000         NA  1.322915301
+2      NA          NA -0.2928098  0.000000000
+3       0 -0.06718490         NA           NA
+4       0          NA         NA -0.018209690
+5       0          NA         NA  0.094562963
+6       0          NA         NA  0.427935081
+7       0  0.51646606 -0.2054665 -0.011177530
+8       0  0.01906845  0.1755868 -0.003784845
+9       0 -0.07980493  0.1125689 -0.058699008
+> 
+> ## -----------------------------------------------------------------------------
 > ms_prices1 <- subset(ms_prices, period <= "202003")
 > ms_prices2 <- subset(ms_prices, period >= "202003")
 > 
 > ## -----------------------------------------------------------------------------
-> ms_epr1 <- with(
+> ms_elemental1 <- with(
 +   ms_prices1, 
-+   elemental_index(price_relative(price, period, product), period, business,
-+                   na.rm = TRUE)
++   elemental_index(
++     price_relative(price, period, product),
++     period, business, na.rm = TRUE
++   )
 + )
 > 
-> (ms_index1 <- aggregate(ms_epr1, pias, na.rm = TRUE))
+> ms_index1 <- aggregate(ms_elemental1, pias, na.rm = TRUE)
+> 
+> ms_index1
 Period-over-period price index for 8 levels over 3 time periods 
    202001    202002    202003
 1       1 1.3007239 1.0630743
@@ -293,14 +395,15 @@ B4      1 1.3007239 1.0630743
 B5      1 1.3007239 1.0630743
 > 
 > ## -----------------------------------------------------------------------------
-> ms_epr2 <- with(
-+   subset(transform(ms_prices2, rel = price_relative(price, period, product)),
-+          period > "202003"),
-+   elemental_index(rel, period, business, na.rm = TRUE)
-+ )
+> ms_elemental2 <- ms_prices2 |>
++   transform(rel = price_relative(price, period, product)) |>
++   subset(period > "202003") |>
++   with(elemental_index(rel, period, business, na.rm = TRUE))
 > 
 > ## -----------------------------------------------------------------------------
-> (ms_index2 <- aggregate(ms_epr2, update(pias, ms_index1), na.rm = TRUE))
+> ms_index2 <- aggregate(ms_elemental2, update(pias, ms_index1), na.rm = TRUE)
+> 
+> ms_index2
 Period-over-period price index for 8 levels over 1 time periods 
      202004
 1  2.734761
@@ -326,13 +429,15 @@ B4      1 1.3007239 1.3827662 6.3279338
 B5      1 1.3007239 1.3827662 6.3279338
 > 
 > ## -----------------------------------------------------------------------------
-> (ms_epr2 <- with(
+> ms_elemental2 <- with(
 +   ms_prices, 
 +   elemental_index(
-+     price_relative(carry_forward(price, period, product),period, product),
++     price_relative(carry_forward(price, period, product), period, product),
 +     period, business, na.rm = TRUE
 +   )
-+ ))
++ )
+> 
+> ms_elemental2
 Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003   202004
 B1      1 0.8949097 0.5781816 1.000000
@@ -341,7 +446,9 @@ B3      1 2.0200036 1.6353355 0.537996
 B4    NaN       NaN       NaN 4.576286
 > 
 > ## -----------------------------------------------------------------------------
-> (ms_index <- aggregate(ms_epr2, pias, na.rm = TRUE))
+> ms_index <- aggregate(ms_elemental2, pias, na.rm = TRUE)
+>  
+> ms_index
 Period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003    202004
 1       1 1.1721550 0.8082981 2.2653614
@@ -358,29 +465,37 @@ B5      1 1.1721550 0.8082981 4.5762862
 > ms_prices2 <- subset(ms_prices, business == "B4")
 > 
 > ## -----------------------------------------------------------------------------
-> ms_epr1 <- with(
+> ms_elemental1 <- with(
 +   ms_prices1, 
-+   elemental_index(price_relative(price, period, product),
-+                   period, business, na.rm = TRUE)
++   elemental_index(
++     price_relative(price, period, product),
++     period, business, na.rm = TRUE
++   )
 + )
-> ms_epr1
+> 
+> ms_elemental1
 Period-over-period price index for 3 levels over 4 time periods 
    202001    202002    202003   202004
 B1      1 0.8949097 0.3342939      NaN
 B2      1       NaN       NaN 2.770456
 B3      1 2.0200036 1.6353355 0.537996
-> ms_epr2 <- with(
-+   transform(ms_prices2, period = factor(period, levels = time(ms_epr1))), 
-+   elemental_index(price_relative(price, period, product),
-+                   period, business, na.rm = TRUE)
-+ )
-> ms_epr2
+> 
+> ms_elemental2 <- ms_prices2 |>
++   transform(period = factor(period, levels = time(ms_elemental1))) |>
++   with(
++     elemental_index(
++       price_relative(price, period, product),
++       period, business, na.rm = TRUE
++     )
++   )
+> 
+> ms_elemental2
 Period-over-period price index for 1 levels over 4 time periods 
    202001 202002 202003   202004
 B4    NaN    NaN    NaN 4.576286
 > 
 > ## -----------------------------------------------------------------------------
-> aggregate(merge(ms_epr1, ms_epr2), pias, na.rm = TRUE)
+> aggregate(merge(ms_elemental1, ms_elemental2), pias, na.rm = TRUE)
 Period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003   202004
 1       1 1.3007239 1.0630743 2.734761
@@ -394,9 +509,10 @@ B5      1 1.3007239 1.0630743 4.576286
 > 
 > ## -----------------------------------------------------------------------------
 > ms_prices2 <- subset(
-+   as.data.frame(aggregate(ms_epr, pias, na.rm = TRUE)),
++   as.data.frame(aggregate(ms_elemental, pias, na.rm = TRUE)),
 +   level %in% c("B4", "B5")
 + )
+> 
 > ms_prices2
    period level    value
 7  202001    B4 1.000000
@@ -409,8 +525,9 @@ B5      1 1.3007239 1.0630743 4.576286
 32 202004    B5 4.576286
 > 
 > ## -----------------------------------------------------------------------------
-> ms_epr2 <- as_index(ms_prices2)
-> aggregate(merge(ms_epr1, ms_epr2), pias, na.rm = TRUE)
+> ms_elemental2 <- as_index(ms_prices2)
+> 
+> aggregate(merge(ms_elemental1, ms_elemental2), pias, na.rm = TRUE)
 Period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003   202004
 1       1 1.3007239 1.0630743 2.734761
@@ -428,6 +545,7 @@ B5      1 1.3007239 1.0630743 4.576286
 +   classification = ms_weights$classification,
 +   weight = 1:20
 + )
+> 
 > head(weights)
   period classification weight
 1 202001             11      1
@@ -438,7 +556,9 @@ B5      1 1.3007239 1.0630743 4.576286
 6 202002             11      6
 > 
 > ## -----------------------------------------------------------------------------
-> (ms_epr <- unstack(ms_epr))
+> ms_elemental <- unstack(ms_elemental)
+> 
+> ms_elemental
 $`202001`
 Period-over-period price index for 4 levels over 1 time periods 
    202001
@@ -473,14 +593,18 @@ B4 4.576286
 
 > 
 > ## -----------------------------------------------------------------------------
-> pias <- with(weights, 
-+              Map(aggregation_structure, 
-+                  list(hierarchy), 
-+                  split(weight, period))
+> pias <- with(
++   weights, 
++   Map(aggregation_structure, list(hierarchy), split(weight, period))
 + )
 > 
 > ## -----------------------------------------------------------------------------
-> (paasche <- Reduce(stack, Map(aggregate, ms_epr, pias, na.rm = TRUE, r = -1)))
+> paasche <- Reduce(
++   stack,
++   Map(aggregate, ms_elemental, pias, na.rm = TRUE, r = -1)
++ )
+> 
+> paasche
 Period-over-period price index for 8 levels over 4 time periods 
    202001    202002    202003    202004
 1       1 1.3127080 0.5874490 1.3591916
@@ -493,10 +617,14 @@ B4      1 1.3127080 0.5874490 4.5762862
 B5      1 1.3127080 0.5874490 4.5762862
 > 
 > ## -----------------------------------------------------------------------------
-> laspeyres <- Reduce(stack,
-+                     Map(aggregate, ms_epr, pias[c(1, 1, 2, 3)], na.rm = TRUE))
+> laspeyres <- Reduce(
++   stack,
++   Map(aggregate, ms_elemental, pias[c(1, 1, 2, 3)], na.rm = TRUE)
++ )
 > 
-> (fisher <- sqrt(as.matrix(laspeyres) * as.matrix(paasche)))
+> fisher <- sqrt(as.matrix(laspeyres) * as.matrix(paasche))
+> 
+> fisher
    202001    202002    202003   202004
 1       1 1.5107763 0.7956890 1.996688
 11      1 1.5107763 0.7956890 1.192826
@@ -509,9 +637,12 @@ B5      1 1.5107763 0.7956890 4.576286
 > 
 > ## -----------------------------------------------------------------------------
 > geometric_weights <- transmute_weights(0, 1)
-> w <- mapply(\(x, y) scale_weights(geometric_weights(c(x, y))),
-+             as.numeric(laspeyres[1]),
-+             as.numeric(paasche[1]))
+> 
+> w <- mapply(
++   \(x, y) scale_weights(geometric_weights(c(x, y))),
++   as.numeric(laspeyres[1]),
++   as.numeric(paasche[1])
++ )
 > 
 > laspeyres_contrib <- contrib(laspeyres)
 > paasche_contrib <- contrib(paasche)
@@ -559,6 +690,7 @@ B3      1 2.0200036 3.3033836 1.7772072
 B4      1 1.5107763 1.2021080 5.5011904
 B5      1 1.5107763 1.2021080 5.5011904
 > 
+> 
 > proc.time()
    user  system elapsed 
-  0.555   0.238   0.545 
+  0.162   0.032   0.189 
