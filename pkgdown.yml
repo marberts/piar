@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   piar: piar.html
-last_built: 2024-04-05T02:53Z
+last_built: 2024-04-09T03:06Z
 urls:
   reference: https://marberts/github.io/piar/reference
   article: https://marberts/github.io/piar/articles
