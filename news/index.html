@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,8 @@
 <li><p><code><a href="../reference/chain.html">unchain()</a></code> gets an new argument <code>base</code> for better interaction with <code><a href="../reference/chain.html">chain()</a></code> and <code><a href="../reference/chain.html">rebase()</a></code>.</p></li>
 <li><p><code>aggregate(index)</code> gets a new argument <code>include_ea</code> to control whether elemental indexes are returned when aggregating.</p></li>
 <li><p>The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for indexes has been changed to simply print a summary of the index, rather than try to summarized the index values.</p></li>
-<li><p><code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> now imputes percent-change contributions for missing index values when <code>na.rm = TRUE</code>. The previously undocumented behavior was to simply drop them.</p></li>
+<li><p><code>aggregate(index)</code> now imputes percent-change contributions for missing index values when <code>na.rm = TRUE</code>. The previously undocumented behavior was to simply drop them.</p></li>
+<li><p>Added <code>window(index)</code> to extract a window of price indexes and <code>window(index) &lt;- value</code> to replace them.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
