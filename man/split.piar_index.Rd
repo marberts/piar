@@ -55,6 +55,7 @@ Other index methods:
 \code{\link{mean.piar_index}()},
 \code{\link{merge.piar_index}()},
 \code{\link{stack.piar_index}()},
-\code{\link{time.piar_index}()}
+\code{\link{time.piar_index}()},
+\code{\link{window.piar_index}()}
 }
 \concept{index methods}

@@ -910,12 +910,44 @@ Period-over-period price index for 2 levels over 3 time periods
 > 
 > 
 > 
+> cleanEx()
+> nameEx("window.piar_index")
+> ### * window.piar_index
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: window.piar_index
+> ### Title: Index window
+> ### Aliases: window.piar_index window<-.piar_index
+> 
+> ### ** Examples
+> 
+> x <- as_index(matrix(1:9, 3))
+> 
+> window(x, "2")
+Period-over-period price index for 3 levels over 2 time periods 
+  2 3
+1 4 7
+2 5 8
+3 6 9
+> 
+> window(x, "2") <- 1
+> x
+Period-over-period price index for 3 levels over 3 time periods 
+  1 2 3
+1 1 1 1
+2 2 1 1
+3 3 1 1
+> 
+> 
+> 
+> 
 > ### * <FOOTER>
 > ###
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.107 0.004 0.112 0 0 
+Time elapsed:  0.104 0.008 0.112 0 0 
 > grDevices::dev.off()
 null device 
           1 

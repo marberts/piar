@@ -20,6 +20,7 @@ reference:
   - merge.piar_index
   - stack.piar_index
   - "[.piar_index"
+  - window.piar_index
   - head.piar_index
   - contrib
   - split.piar_index
