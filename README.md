@@ -146,6 +146,11 @@ chain(index)
 #> B5      1 1.3007239 1.3827662 6.3279338
 ```
 
+## Contributing
+
+All contributions are welcome. Please start by opening an issue on
+GitHub to report any bugs or suggest improvements and new features.
+
 ## References
 
 Balk, B. M. (2008). *Price and Quantity Index Numbers*. Cambridge
