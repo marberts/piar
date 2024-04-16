@@ -20,7 +20,7 @@ in the new base period."><meta property="og:image" content="https://marberts/git
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9016</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,7 +113,9 @@ that no linking is done.</p></dd>
 <dt>base</dt>
 <dd><p>A numeric vector, or something that can coerced into one, of
 base-period index values for each level in <code>x</code>. The default is a vector
-of 1s so that the base period remains the same.</p></dd>
+of 1s so that the base period remains the same. If <code>base</code> is a length-one
+character vector giving a time period of <code>x</code> then the index values for this
+time period are used as the base-period values.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -141,7 +143,7 @@ by the corresponding values for each level in the new base period. It's
 roughly the same as <code>as.matrix(x) / base</code>. Like unchaining, rebasing a
 period-over-period index does nothing.</p>
 <p>Percent-change contributions are removed when chaining/unchaining/rebasing
-an index, as it's not usually possible to update them correctly.</p>
+an index as it's not usually possible to update them correctly.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

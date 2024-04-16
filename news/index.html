@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9015</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9016</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,7 @@
 <li><p>The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for indexes has been changed to simply print a summary of the index, rather than try to summarized the index values.</p></li>
 <li><p><code>aggregate(index)</code> now imputes percent-change contributions for missing index values when <code>na.rm = TRUE</code>. The previously undocumented behavior was to simply drop them.</p></li>
 <li><p>Added <code>window(index)</code> to extract a window of price indexes and <code>window(index) &lt;- value</code> to replace them.</p></li>
+<li><p>The base period for <code><a href="../reference/chain.html">rebase()</a></code> can now be a time period specifying a new base period. This makes it easier to rebase with pipes; e.g., <code>index |&gt; mean() |&gt; rebase("202001")</code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
