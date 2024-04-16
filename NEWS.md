@@ -30,6 +30,10 @@ drop them.
 - Added `window(index)` to extract a window of price indexes and
 `window(index) <- value` to replace them.
 
+- The base period for `rebase()` can now be a time period specifying a new base
+period. This makes it easier to rebase with pipes; e.g.,
+`index |> mean() |> rebase("202001")`.
+
 # Version 0.7.0
 
 ## Significant changes
