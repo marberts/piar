@@ -59,19 +59,19 @@ contrib <- function(x, ...) {
 #' @export
 contrib.piar_index <- function(x, level = levels(x)[1L], period = time(x), ...,
                                pad = 0) {
-  level <- match.arg(as.character(level), x$levels)
-  period <- match.arg(as.character(period), x$time, several.ok = TRUE)
+  level <- match_levels(as.character(level), x$levels)
+  period <- match_time(as.character(period), x$time, several = TRUE)
   pad <- as.numeric(pad)
   if (length(pad) != 1L) {
     stop("'pad' must be a length 1 numeric value")
   }
-  con <- lapply(x$contrib[match(period, x$time)], `[[`, match(level, x$levels))
+  con <- lapply(x$contrib[period], `[[`, level)
 
   con_names <- lapply(con, names)
   products <- sort.int(unique(unlist(con_names, use.names = FALSE)))
 
   out <- vector("list", length(con))
-  names(out) <- period
+  names(out) <- x$time[period]
 
   # Initialize 0 contributions for all products in all time periods, then
   # replace with the actual values so products that didn't sell have 0 and

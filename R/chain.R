@@ -120,7 +120,7 @@ unchain.chainable_piar_index <- function(x, ...) {
 #' @export
 unchain.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   if (length(base) == 1L && is.character(base)) {
-    base <- x$index[[match(match.arg(base, x$time), x$time)]] / x$index[[1L]]
+    base <- x$index[[match_time(base, x$time)]] / x$index[[1L]]
   } else {
     base <- as.numeric(base)
     if (length(base) != length(x$levels)) {
@@ -155,7 +155,7 @@ rebase.chainable_piar_index <- function(x, ...) {
 #' @export
 rebase.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   if (length(base) == 1L && is.character(base)) {
-    base <- x$index[[match(match.arg(base, x$time), x$time)]]
+    base <- x$index[[match_time(base, x$time)]]
   } else {
     base <- as.numeric(base)
     if (length(base) != length(x$levels)) {
