@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9016</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9017</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,8 +51,9 @@
 <h2 class="pkg-version" data-toc-text="0.8.0" id="version-080">Version 0.8.0<a class="anchor" aria-label="anchor" href="#version-080"></a></h2>
 <div class="section level3">
 <h3 id="significant-changes-0-8-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-8-0"></a></h3>
-<ul><li><p>There is no longer a class representing aggregated indexes. This class was not well thought out, and added unnecessary restrictions and complications to certain functions. In most cases this has little impact on existing code, but does mean that the few functions related to aggregate indexes have been removed.</p></li>
+<ul><li><p>The <code>aggregate_piar_index</code> class has been removed. This class was not well thought out, and added unnecessary restrictions and complications to certain functions. In most cases this has little impact on existing code, but does mean that the few functions related to aggregate indexes have been removed.</p></li>
 <li><p>The deprecated <code>cols</code> argument for <code>as_index(data.frame)</code> has been removed.</p></li>
+<li><p>The default window size for <code>mean(index)</code> now covers the entire index. This makes it so that <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> doesn’t assume an index is monthly, and makes it easier to use <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> with the new <code><a href="https://rdrr.io/r/stats/window.html" class="external-link">window()</a></code> method for index object.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-0-8-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-0"></a></h3>
