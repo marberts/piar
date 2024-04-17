@@ -21,33 +21,33 @@ bibliography: paper.bib
 The systematic inflation of prices for goods and services over time is a
 ubiquitous feature of modern economies. A price index is the main empirical tool
 to measure changes in prices over time, and consequently price indexes are a core
-macroeconomic statistic produced by national statistical agencies to measure
-inflation. Price indexes are often made with a two-step procedure---especially those coming from by national statistical
+macroeconomic statistic produced by national statistical agencies to measure and study
+inflation. Price indexes are often made with a two-step procedure---especially those coming from national statistical
 agencies---where period-over-period
 indexes are calculated for a large collection of well-defined goods and services at
-each point in time and aggregated according to a hierarchical structure.
+each point in time and aggregated according to a hierarchical structure [@cpimanual; @ppimanual].
 These period-over-period indexes can then be chained together to form a collection of time
 series that give the evolution of prices in the economy with respect to a fixed point in time.
 
 `piar` is an R [@R] package for aggregating price indexes. It contains a
 collection of functions that revolve around the usual two-step work flow for
-computing price indexes, making it easy to build large, hierarchical price indexes using the methods described in the literature [@balk2008; @cpimanual; @ppimanual]. `piar` is currently
+computing price indexes, making it easy to build large, hierarchical indexes using the methods described in the literature [e.g., @balk2008; @vonderlippe2001]. `piar` is designed to be useful for both researching new sources of data and methods to construct price indexes, and the regular production of price statistics. It is currently
 used to produce several price indexes at Statistics Canada [e.g., @CMSPI; @FHMCFSPI].
 
 # Statement of need
 
 `piar` fills a gap in the open-source ecosystem for measuring inflation by providing a tool to build the kinds of large,
-hierarchical price indexes made by national statistical agencies. There are several R and Python package for accessing published price indexes made by statistical agencies [e.g., @vonbergmann2021; @welsh2024], but these are not suitable for computing new indexes.   
+hierarchical price indexes made by national statistical agencies. There are several R and Python package for accessing published price indexes made by statistical agencies [e.g., @vonbergmann2021; @welsh2024], but these are not suitable for computing new indexes or researching new methods and data sources to measure inflation.   
 
 To compute a price index, the `micEconIndex` [@henningsen2022] and `IndexNumbers` [@saavedra2021] packages implement text-book index-number formulas to measure the change in prices over time for a collection of goods and services. These methods, however, are seldom directly used in practice; for example, most text-book index-number formulas use information on both
-prices and quantities over time, but quantity information is rarely available in most cases. The `IndexNumR` [@white2023] and `PriceIndices` [@bialek2024] packages implement a variety of more sophisticated methods to build price indexes with high-frequency retail scanner data (in addition to the text-book methods). Similarly, the `hpiR` [@krausse2020] and `rsmatrix` [@martin2023] packages implement methods that are applicable to housing data. Although these more advanced methods are directly used in practice for certain types of goods and services, they are not suitable for constructing the conventional price indexes that cover a wide range of products or industries.
+prices and quantities over time, but quantity information is rarely available in most cases. The `IndexNumR` [@white2023] and `PriceIndices` [@bialek2024] packages implement a variety of more sophisticated methods to build price indexes with high-frequency retail scanner data (in addition to the text-book methods). Similarly, the `hpiR` [@krausse2020] and `rsmatrix` [@martin2023] packages implement methods that are applicable to housing data. Although these more advanced methods are directly used in practice to make price indexes for certain types of goods and services, they are not suitable for constructing the conventional price indexes that cover a wide range of products or industries.
 
 In contrast to existing tools, `piar` provides a flexible API to build large, hierarchical price indexes over time in a way that is suitable for both the data and methods used to make large-scale measures of inflation. Part of this flexible design means that pre-computed indexes can serve as an input to a larger index, alongside other sources of price data (e.g., survey data), and so `piar` complements existing tools in R by providing a framework for integrating different index-number methods with heterogeneous sources of data.
 
 # Example
 
-The goal of this example is illustrate the core features of `piar` by building a typical industry price index. The built-in `ms_prices` dataset has price data for five businesses over four
-quarters, and the `ms_weights` dataset contain weights that give the relative importance of these business in their respective industries. Note that these data have a fairly realistic pattern of missing data, and, although small, are emblematic of the kinds of survey data used to measure inflation.
+The goal of this example is illustrate some of the core features of `piar` by building a typical industry price index. The built-in `ms_prices` dataset has price data for five businesses over four
+quarters, and the `ms_weights` dataset contain weights that give the relative importance of these business in their respective industries. Note that these data have a fairly realistic pattern of missing data, and, although small, are emblematic of the kinds of survey data used to measure inflation (although the values are purposely unrealistic).
 
 ```r
 head(ms_prices)
@@ -125,7 +125,7 @@ pias
 It is now simple to aggregate the business-level indexes according to this aggregation structure with the `aggregate()` function and chain them together to get the evolution of prices over time.
 
 ```r
-ms_index <- aggregate(ms_elemental, pias, na.rm = TRUE)
+ms_index <- aggregate(elementals, pias, na.rm = TRUE)
 
 chain(ms_index)
 ```
@@ -144,9 +144,13 @@ chain(ms_index)
 ```
 
 There are a variety of methods to manipulate the index objects that come from
-these computations in order to compose more complex workflows for building price indexes.
+these computations in order to compose more complex workflows for building price
+indexes.
 
 # Acknowledgements
+
+I am grateful for many useful conversations with the research staff at
+Statistics Canada that have improved `piar`, particularly those with Xin Ha.
 
 The views and opinions expressed in this paper are those of the author and do
 not necessarily reflect those of the Government of Canada.
