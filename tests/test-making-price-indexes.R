@@ -53,7 +53,7 @@ rebase(ms_index_chained, ms_index_chained[, "202004"])
 ## -----------------------------------------------------------------------------
 rebase(
   ms_index_chained,
-  mean(ms_index_chained, window = 2)[, "202003"]
+  mean(window(ms_index_chained, "202003"))
 )
 
 ## -----------------------------------------------------------------------------

@@ -67,6 +67,6 @@ test_that("mean is consistent in aggregation", {
   
   index <- aggregate(epr, pias)
   
-  index <- unchain(mean(chain(index)))
+  index <- unchain(mean(chain(index), window = 3))
   expect_equal(aggregate(index, pias), index)
 })

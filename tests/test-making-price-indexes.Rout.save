@@ -137,7 +137,7 @@ B5 0.1580295 0.2055527 0.2185178      1
 > ## -----------------------------------------------------------------------------
 > rebase(
 +   ms_index_chained,
-+   mean(ms_index_chained, window = 2)[, "202003"]
++   mean(window(ms_index_chained, "202003"))
 + )
 Fixed-base price index for 8 levels over 4 time periods 
       202001    202002    202003    202004

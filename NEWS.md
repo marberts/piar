@@ -2,12 +2,17 @@
 
 ## Significant changes
 
-- There is no longer a class representing aggregated indexes. This class was not
+- The `aggregate_piar_index` class has been removed. This class was not
 well thought out, and added unnecessary restrictions and complications to
 certain functions. In most cases this has little impact on existing code, but
 does mean that the few functions related to aggregate indexes have been removed.
 
 - The deprecated `cols` argument for `as_index(data.frame)` has been removed.
+
+- The default window size for `mean(index)` now covers the entire index. This
+makes it so that `mean()` doesn't assume an index is monthly, and
+makes it easier to use `mean()` with the new `window()` method for index
+object.
 
 ## Improvements
 

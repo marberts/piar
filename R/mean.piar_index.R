@@ -30,8 +30,8 @@
 #' a matrix with a row for each index value in `x` and a column for each
 #' time period.
 #' @param window A positive integer giving the size of the window used to
-#' average index values across subperiods. The default (3) turns a monthly
-#' index into into a quarterly one. Non-integers are truncated towards 0.
+#' average index values across subperiods. The default averages over all periods
+#' in `x`. Non-integers are truncated towards 0.
 #' @param na.rm Should missing values be removed? By default, missing values
 #' are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #' imputation.
@@ -54,7 +54,8 @@
 #' @examples
 #' index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE))
 #'
-#' mean(index)
+#' # Turn a monthly index into a quarterly index
+#' mean(index, window = 3)
 #'
 #' @family index methods
 #' @export
@@ -78,7 +79,7 @@ mean.direct_piar_index <- function(x, weights = NULL, ...,
 
 #' @export
 mean.piar_index <- function(x, weights = NULL, ...,
-                            window = 3L,
+                            window = ntime(x),
                             na.rm = FALSE,
                             contrib = TRUE,
                             r = 1,

@@ -109,7 +109,7 @@ In some cases the base period is the average of several periods; setting the bas
 ```{r}
 rebase(
   ms_index_chained,
-  mean(ms_index_chained, window = 2)[, "202003"]
+  mean(window(ms_index_chained, "202003"))
 )
 ```
 
