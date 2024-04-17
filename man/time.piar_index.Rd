@@ -6,6 +6,7 @@
 \alias{time<-.piar_index}
 \alias{start.piar_index}
 \alias{end.piar_index}
+\alias{ntime}
 \title{Get the time periods for a price index}
 \usage{
 \method{time}{piar_index}(x, ...)
@@ -17,6 +18,8 @@ time(x) <- value
 \method{start}{piar_index}(x, ...)
 
 \method{end}{piar_index}(x, ...)
+
+ntime(x)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
@@ -28,7 +31,8 @@ giving the replacement time periods for \code{x}.}
 }
 \value{
 \code{time()} returns a character vector with the time periods for a price index.
-\code{start()} and \code{end()} return the first and last time period.
+\code{start()} and \code{end()} return the first and last time period. \code{ntime()}
+returns the number of time periods, analogous to \code{nlevels()}.
 
 The replacement method returns a copy of \code{x} with the time periods in
 \code{value}.

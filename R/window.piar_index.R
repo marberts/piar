@@ -1,14 +1,10 @@
 #' Get the indexes for a window of time periods
 #' @noRd
 index_window <- function(x, start, end) {
-  start <- match(
-    if (is.null(start)) start(x) else match.arg(start, x$time),
-    x$time
-  )
-  end <- match(
-    if (is.null(end)) end(x) else match.arg(end, x$time),
-    x$time
-  )
+  if (is.null(start)) start <- start(x)
+  if (is.null(end)) end <- end(x)
+  start <- match_time(as.character(start), x$time)
+  end <- match_time(as.character(end), x$time)
   
   if (start > end) {
     stop("'start' must refer to a time period before 'end'")

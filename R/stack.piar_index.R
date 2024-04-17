@@ -57,7 +57,7 @@ stack.direct_piar_index <- function(x, y, ...) {
 
 #' @export
 stack.piar_index <- function(x, y, ...) {
-  if (any(x$levels != y$levels)) {
+  if (length(x$levels) != length(y$levels) || any(x$levels != y$levels)) {
     stop("'x' and 'y' must be indexes for the same levels")
   }
   if (any(x$time %in% y$time)) {

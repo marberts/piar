@@ -101,6 +101,10 @@ index <- aggregate(elementals, pias, na.rm = TRUE)
 chain(index)
 ```
 
+## Contributing
+
+All contributions are welcome. Please start by opening an issue on GitHub to report any bugs or suggest improvements and new features.
+
 ## References
 
 Balk, B. M. (2008). *Price and Quantity Index Numbers*. Cambridge University Press.

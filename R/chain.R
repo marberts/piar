@@ -26,7 +26,7 @@
 #' period-over-period index does nothing.
 #'
 #' Percent-change contributions are removed when chaining/unchaining/rebasing
-#' an index, as it's not usually possible to update them correctly.
+#' an index as it's not usually possible to update them correctly.
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param link A numeric vector, or something that can coerced into one, of
@@ -34,7 +34,9 @@
 #' that no linking is done.
 #' @param base A numeric vector, or something that can coerced into one, of
 #' base-period index values for each level in `x`. The default is a vector
-#' of 1s so that the base period remains the same.
+#' of 1s so that the base period remains the same. If `base` is a length-one
+#' character vector giving a time period of `x` then the index values for this
+#' time period are used as the base-period values.
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
@@ -117,9 +119,13 @@ unchain.chainable_piar_index <- function(x, ...) {
 #' @rdname chain
 #' @export
 unchain.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
-  base <- as.numeric(base)
-  if (length(base) != length(x$levels)) {
-    stop("'base' must have a value for each level of 'x'")
+  if (length(base) == 1L && is.character(base)) {
+    base <- x$index[[match_time(base, x$time)]] / x$index[[1L]]
+  } else {
+    base <- as.numeric(base)
+    if (length(base) != length(x$levels)) {
+      stop("'base' must have a value for each level of 'x'")
+    }
   }
   x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
   x$index[[1L]] <- x$index[[1L]] * base
@@ -148,9 +154,13 @@ rebase.chainable_piar_index <- function(x, ...) {
 #' @rdname chain
 #' @export
 rebase.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
-  base <- as.numeric(base)
-  if (length(base) != length(x$levels)) {
-    stop("'base' must have a value for each level of 'x'")
+  if (length(base) == 1L && is.character(base)) {
+    base <- x$index[[match_time(base, x$time)]]
+  } else {
+    base <- as.numeric(base)
+    if (length(base) != length(x$levels)) {
+      stop("'base' must have a value for each level of 'x'")
+    }
   }
   x$index <- Map(`/`, x$index, list(base))
   # Contributions are difficult to rebase, so remove them.

@@ -49,6 +49,7 @@ test_that("aggregating with a window of 1 does nothing", {
   x <- as_index(matrix(1:9, 3))
   expect_equal(mean(x, window = 1), x)
   expect_equal(mean(x, 9:1, window = 1, r = 0), x)
+  expect_equal(mean(window(x, end(x))), window(x, end(x)))
 })
 
 test_that("mean requires a suitable window", {
@@ -67,6 +68,6 @@ test_that("mean is consistent in aggregation", {
   
   index <- aggregate(epr, pias)
   
-  index <- unchain(mean(chain(index)))
+  index <- unchain(mean(chain(index), window = 3))
   expect_equal(aggregate(index, pias), index)
 })

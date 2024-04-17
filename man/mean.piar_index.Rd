@@ -22,8 +22,8 @@ time period.}
 \item{...}{Not currently used.}
 
 \item{window}{A positive integer giving the size of the window used to
-average index values across subperiods. The default (3) turns a monthly
-index into into a quarterly one. Non-integers are truncated towards 0.}
+average index values across subperiods. The default averages over all periods
+in \code{x}. Non-integers are truncated towards 0.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
@@ -67,7 +67,8 @@ section 4.3 of Balk (2008) for details.
 \examples{
 index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE))
 
-mean(index)
+# Turn a monthly index into a quarterly index
+mean(index, window = 3)
 
 }
 \references{

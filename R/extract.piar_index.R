@@ -4,9 +4,9 @@ dim_indices <- function(x, i) {
     return(seq_along(x))
   }
   if (is.character(i)) {
-    res <- match(i, x, incomparables = NA)
+    res <- match(i, x)
   } else {
-    res <- match(x[i], x, incomparables = NA)
+    res <- match(x[i], x)
   }
   if (length(res) == 0L) {
     stop("attempted to select less than one element")

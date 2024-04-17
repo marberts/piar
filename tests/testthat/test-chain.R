@@ -83,3 +83,10 @@ test_that("link and base values are the right length", {
   expect_error(chain(epr1, link = 1))
   expect_error(rebase(chain(epr1), base = 1))
 })
+
+test_that("rebasing with a character vector works", {
+  index1_chain <- chain(index1)
+  index1_rebase <- rebase(index1_chain, index1_chain[, end(index1_chain)])
+  expect_equal(index1_rebase, rebase(index1_chain, end(index1_chain)))
+  expect_equal(index2, unchain(index1_rebase, end(index1_rebase)))
+})

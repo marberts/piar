@@ -46,6 +46,31 @@ has_contrib <- function(x) {
   Position(\(x) any(lengths(x) > 0L), x$contrib, nomatch = 0L) > 0L
 }
 
+match_levels <- function(x, levels) {
+  if (length(x) != 1L) {
+    stop("must supply exactly one index level")
+  }
+  i <- match(x, levels)
+  if (is.na(i)) {
+    stop(gettextf("'%s' is not an index level", x))
+  }
+  i
+}
+
+match_time <- function(x, time, several = FALSE) {
+  if (!several && length(x) != 1L) {
+    stop("must supply exactly one time period")
+  } else if (several && length(x) == 0L) {
+    stop("must supply at least one time period")
+  }
+  i <- match(x, time)
+  no_match <- is.na(i)
+  if (any(no_match)) {
+    stop(gettextf("'%s' is not a time period", x[no_match][1L]))
+  }
+  i
+}
+
 #---- Class generator ----
 new_piar_index <- function(index, contrib, levels, time, chainable) {
   stopifnot(is.list(index))

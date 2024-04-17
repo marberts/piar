@@ -9,7 +9,8 @@
 #'
 #' @returns
 #' `time()` returns a character vector with the time periods for a price index.
-#' `start()` and `end()` return the first and last time period.
+#' `start()` and `end()` return the first and last time period. `ntime()`
+#' returns the number of time periods, analogous to `nlevels()`.
 #'
 #' The replacement method returns a copy of `x` with the time periods in
 #' `value`.
@@ -46,4 +47,10 @@ start.piar_index <- function(x, ...) {
 #' @export
 end.piar_index <- function(x, ...) {
   x$time[length(x$time)]
+}
+
+#' @rdname time.piar_index
+#' @export
+ntime <- function(x) {
+  length(time(x))
 }
