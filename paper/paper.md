@@ -46,7 +46,7 @@ In contrast to existing tools, `piar` provides a flexible API to build large, hi
 
 # Example
 
-The goal of this example is illustrate some of the core features of `piar` by building a typical industry price index. The built-in `ms_prices` dataset has price data for five businesses over four
+The goal of this example is to illustrate some of the core features of `piar` by building a typical industry price index. The built-in `ms_prices` dataset has price data for five businesses over four
 quarters, and the `ms_weights` dataset contain weights that give the relative importance of these business in their respective industries. Note that these data have a fairly realistic pattern of missing data, and, although small, are emblematic of the kinds of survey data used to measure inflation (although the values are purposely unrealistic).
 
 ```r
