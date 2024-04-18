@@ -60,7 +60,7 @@
 #' @family index methods
 #' @export
 mean.chainable_piar_index <- function(x, weights = NULL, ...,
-                                      window = 3L,
+                                      window = ntime(x),
                                       na.rm = FALSE,
                                       contrib = TRUE,
                                       r = 1) {
@@ -70,7 +70,7 @@ mean.chainable_piar_index <- function(x, weights = NULL, ...,
 #' @rdname mean.piar_index
 #' @export
 mean.direct_piar_index <- function(x, weights = NULL, ...,
-                                   window = 3L,
+                                   window = ntime(x),
                                    na.rm = FALSE,
                                    contrib = TRUE,
                                    r = 1) {

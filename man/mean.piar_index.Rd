@@ -6,9 +6,25 @@
 \alias{mean.direct_piar_index}
 \title{Aggregate a price index over subperiods}
 \usage{
-\method{mean}{chainable_piar_index}(x, weights = NULL, ..., window = 3L, na.rm = FALSE, contrib = TRUE, r = 1)
+\method{mean}{chainable_piar_index}(
+  x,
+  weights = NULL,
+  ...,
+  window = ntime(x),
+  na.rm = FALSE,
+  contrib = TRUE,
+  r = 1
+)
 
-\method{mean}{direct_piar_index}(x, weights = NULL, ..., window = 3L, na.rm = FALSE, contrib = TRUE, r = 1)
+\method{mean}{direct_piar_index}(
+  x,
+  weights = NULL,
+  ...,
+  window = ntime(x),
+  na.rm = FALSE,
+  contrib = TRUE,
+  r = 1
+)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
