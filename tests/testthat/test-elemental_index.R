@@ -82,6 +82,23 @@ test_that("contributions add up", {
                lapply(epr3$contrib, function(x) sapply(x, sum_contrib) + 1))
 })
 
+test_that("NSE works", {
+  expect_equal(
+    elemental_index(ms_prices, rel ~ period + business, contrib = TRUE),
+    epr1
+  )
+  expect_equal(
+    elemental_index(
+      ms_prices, rel ~ period + business, contrib = TRUE, na.rm = TRUE, r = -1
+    ),
+    epr2
+  )
+  expect_equal(
+    elemental_index(ms_prices2, rel ~ period + business, w, contrib = TRUE),
+    epr3
+  )
+})
+
 test_that("argument checking works", {
   expect_error(elemental_index(1:3, 1:2))
   expect_error(elemental_index(1:3, 1:3, 1:4))

@@ -52,7 +52,9 @@ different_length <- function(...) {
 #' elemental indexes, and chapter 5 of Balk (2008).
 #'
 #' The default method simply coerces `x` to a numeric vector prior to
-#' calling the method above.
+#' calling the method above. The data frame method provides a formula interface
+#' to specify columns of price relatives, time periods, and elemental
+#' aggregates and call the method above.
 #'
 #' Names for `x` are used as product names when calculating percent-change
 #' contributions. Product names should be unique within each time period, and,
@@ -83,8 +85,8 @@ different_length <- function(...) {
 #' are calculated.
 #'
 #' @param x Period-over-period or fixed-base price relatives. Currently there
-#' is only a method for numeric vectors; these can be made with
-#' [price_relative()].
+#' are methods for numeric vectors (which can be made with
+#' [price_relative()]) and data frames.
 #' @param period A factor, or something that can be coerced into one, giving
 #' the time period associated with each price relative in `x`. The
 #' ordering of time periods follows of the levels of `period`, to agree
@@ -110,6 +112,9 @@ different_length <- function(...) {
 #' a Paasche index). Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
 #' @param ... Further arguments passed to or used by methods.
+#' @param formula A two-part formula with price relatives on the left-hand
+#' side, and time periods and elemental aggregates (in that order) on the
+#' right-hand side.
 #'
 #' @returns
 #' A price index that inherits from [`piar_index`]. If
@@ -192,6 +197,35 @@ elemental_index <- function(x, ...) {
 #' @export
 elemental_index.default <- function(x, ...) {
   elemental_index(as.numeric(x), ...)
+}
+
+#' @rdname elemental_index
+#' @export
+elemental_index.data.frame <- function(x,
+                                       formula,
+                                       weights = NULL, ...,
+                                       chainable = TRUE,
+                                       na.rm = FALSE,
+                                       contrib = FALSE,
+                                       r = 0) {
+  if (length(formula) != 3L) {
+    stop("'formula' must have a left-hand and right-hand side")
+  }
+  fterms <- stats::terms(formula)
+  if (length(attr(fterms, "term.labels")) != 2L) {
+    stop("right-hand side of 'formula' must have exactly two terms")
+  }
+  x <- eval(attr(fterms, "variables"), x, environment(formula))
+  w <- eval(substitute(weights), x, parent.frame())
+  
+  elemental_index(
+    x[[1L]], x[[2L]], x[[3L]],
+    weights = w,
+    chainable = chainable,
+    na.rm = na.rm,
+    contrib = contrib,
+    r = r
+  )
 }
 
 #' @rdname elemental_index
