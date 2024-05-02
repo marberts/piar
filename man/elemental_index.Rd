@@ -143,7 +143,7 @@ prices <- data.frame(
 
 # Calculate Jevons elemental indexes
 
-with(prices, elemental_index(rel, period, ea))
+elemental_index(prices, rel ~ period + ea)
 
 # Same as using lm() or tapply()
 
@@ -163,13 +163,11 @@ fw <- grouped(nested_transmute(0, c(1, -1), 1))
 # Calculate a CSWD index (same as the Jevons in this example)
 # as an arithmetic index by using the appropriate weights
 
-with(
+elemental_index(
   prices,
-  elemental_index(
-    rel, period, ea,
-    fw(rel, group = interaction(period, ea)),
-    r = 1
-  )
+  rel ~ period + ea,
+  fw(rel, group = interaction(period, ea)),
+  r = 1
 )
 
 }

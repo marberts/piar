@@ -159,7 +159,7 @@ different_length <- function(...) {
 #'
 #' # Calculate Jevons elemental indexes
 #'
-#' with(prices, elemental_index(rel, period, ea))
+#' elemental_index(prices, rel ~ period + ea)
 #'
 #' # Same as using lm() or tapply()
 #'
@@ -179,13 +179,11 @@ different_length <- function(...) {
 #' # Calculate a CSWD index (same as the Jevons in this example)
 #' # as an arithmetic index by using the appropriate weights
 #'
-#' with(
+#' elemental_index(
 #'   prices,
-#'   elemental_index(
-#'     rel, period, ea,
-#'     fw(rel, group = interaction(period, ea)),
-#'     r = 1
-#'   )
+#'   rel ~ period + ea,
+#'   fw(rel, group = interaction(period, ea)),
+#'   r = 1
 #' )
 #'
 #' @export
@@ -215,12 +213,12 @@ elemental_index.data.frame <- function(x,
   if (length(attr(fterms, "term.labels")) != 2L) {
     stop("right-hand side of 'formula' must have exactly two terms")
   }
+  weights <- eval(substitute(weights), x, parent.frame())
   x <- eval(attr(fterms, "variables"), x, environment(formula))
-  w <- eval(substitute(weights), x, parent.frame())
   
   elemental_index(
     x[[1L]], x[[2L]], x[[3L]],
-    weights = w,
+    weights = weights,
     chainable = chainable,
     na.rm = na.rm,
     contrib = contrib,
@@ -251,7 +249,7 @@ elemental_index.numeric <- function(x,
     stop("input vectors must be the same length")
   }
   if (any(x <= 0, na.rm = TRUE) || any(weights <= 0, na.rm = TRUE)) {
-    warning("some elements of 'x or 'weights' are less than or equal to 0")
+    warning("some elements of 'x' or 'weights' are less than or equal to 0")
   }
 
   if (contrib) {
