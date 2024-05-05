@@ -29,6 +29,8 @@
 #' @param chainable Are the index values in `x` period-over-period
 #' indexes, suitable for a chained calculation (the default)? This should be
 #' `FALSE` when `x` is a fixed-base (direct) index.
+#' @param contrib Should the index values in `x` be used to construct
+#' percent-change contributions? The default does not make contributions.
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
@@ -62,13 +64,13 @@ as_index <- function(x, ...) {
 
 #' @rdname as_index
 #' @export
-as_index.default <- function(x, ..., chainable = TRUE) {
-  as_index(as.matrix(x), ..., chainable = chainable)
+as_index.default <- function(x, ..., chainable = TRUE, contrib = FALSE) {
+  as_index(as.matrix(x), ..., chainable = chainable, contrib = contrib)
 }
 
 #' @rdname as_index
 #' @export
-as_index.matrix <- function(x, ..., chainable = TRUE) {
+as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
   storage.mode(x) <- "numeric"
   levels <- if (is.null(rownames(x))) seq_len(nrow(x)) else rownames(x)
   periods <- if (is.null(colnames(x))) seq_len(ncol(x)) else colnames(x)
@@ -80,13 +82,21 @@ as_index.matrix <- function(x, ..., chainable = TRUE) {
   for (t in seq_along(periods)) {
     index[[t]][] <- x[, t]
   }
-  contrib <- contrib_skeleton(levels, periods)
-  piar_index(index, contrib, levels, periods, chainable)
+  contributions <- contrib_skeleton(levels, periods)
+  if (contrib) {
+    i <- seq_along(levels)
+    for (t in seq_along(periods)) {
+      con <- index[[t]] - 1
+      names(con) <- levels
+      contributions[[t]][] <- lapply(i, \(x) con[x])
+    }
+  }
+  piar_index(index, contributions, levels, periods, chainable)
 }
 
 #' @rdname as_index
 #' @export
-as_index.data.frame <- function(x, ..., chainable = TRUE) {
+as_index.data.frame <- function(x, ..., chainable = TRUE, contrib = FALSE) {
   if (length(x) != 3L) {
     stop(
       "'x' must have a column of time periods, index levels, and index values"
@@ -101,7 +111,7 @@ as_index.data.frame <- function(x, ..., chainable = TRUE) {
     dimnames = list(levels, time)
   )
   res[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
-  as_index(res, ..., chainable = chainable)
+  as_index(res, ..., chainable = chainable, contrib = contrib)
 }
 
 #' @rdname as_index
