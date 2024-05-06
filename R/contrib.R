@@ -56,12 +56,12 @@
 #' )
 #'
 #' @export contrib
+#' @family index methods
 contrib <- function(x, ...) {
   UseMethod("contrib")
 }
 
 #' @rdname contrib
-#' @family index methods
 #' @export
 contrib.piar_index <- function(x, level = levels(x)[1L], period = time(x), ...,
                                pad = 0) {
@@ -87,15 +87,16 @@ contrib.piar_index <- function(x, level = levels(x)[1L], period = time(x), ...,
   do.call(cbind, res)
 }
 
-#' @export
 #' @rdname contrib
+#' @export
 contrib2DF <- function(x, ...) {
   UseMethod("contrib2DF")
 }
 
-#' @export
 #' @rdname contrib
-contrib2DF <- function(x, level = levels(x)[1L], period = time(x), ...) {
+#' @export
+contrib2DF.piar_index <- function(x, level = levels(x)[1L], period = time(x),
+                                  ...) {
   level <- match_levels(as.character(level), x$levels, several = TRUE)
   period <- match_time(as.character(period), x$time, several = TRUE)
   

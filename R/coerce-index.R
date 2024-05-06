@@ -7,11 +7,11 @@
 #' @param ... Not currently used.
 #'
 #' @returns
-#' `as.data.frame()` returns a data frame with three columns: `period`, `level`,
-#' and `value`.
+#' `as.data.frame()` returns the index values in `x` as a data frame with three
+#' columns: `period`, `level`, and `value`.
 #'
-#' `as.matrix()` returns a matrix with a row for each level and a column
-#' for each time period.
+#' `as.matrix()` returns the index values in `x` as a matrix with a row for
+#' each level and a column for each time period in `x`.
 #'
 #' @seealso
 #' [as_index()] to coerce a matrix/data frame of index values into an index

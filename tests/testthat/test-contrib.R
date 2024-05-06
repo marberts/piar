@@ -34,6 +34,40 @@ test_that("contrib works", {
   )
 })
 
+test_that("contrib2DF works", {
+  expect_equal(
+    contrib2DF(epr),
+    data.frame(
+      period = c("1", "1", "2", "2"),
+      level = c("11", "11", "11", "11"),
+      product = c("1", "2", "1", "2"),
+      value = as.numeric(contrib(epr))
+    )
+  )
+  
+  expect_equal(
+    contrib2DF(epr, levels(epr), 2),
+    data.frame(
+      period = c("2", "2", "2", "2"),
+      level = c("11", "11", "12", "14"),
+      product = c("1", "2", "3", "6"),
+      value = c(
+        contrib(epr, "11", 2), contrib(epr, "12", 2), contrib(epr, "14", 2)
+      )
+    )
+  )
+  
+  expect_equal(
+    contrib2DF(epr2),
+    data.frame(
+      period = character(0),
+      level = character(0),
+      product = character(0),
+      value = numeric(0)
+    )
+  )
+})
+
 test_that("padding work", {
   expect_equal(
     contrib(epr, 12, pad = -99),

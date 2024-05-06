@@ -4,15 +4,16 @@
 \alias{contrib}
 \alias{contrib.piar_index}
 \alias{contrib2DF}
+\alias{contrib2DF.piar_index}
 \title{Extract percent-change contributions}
 \usage{
 contrib(x, ...)
 
 \method{contrib}{piar_index}(x, level = levels(x)[1L], period = time(x), ..., pad = 0)
 
-contrib2DF(x, level = levels(x)[1L], period = time(x), ...)
+contrib2DF(x, ...)
 
-contrib2DF(x, level = levels(x)[1L], period = time(x), ...)
+\method{contrib2DF}{piar_index}(x, level = levels(x)[1L], period = time(x), ...)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}

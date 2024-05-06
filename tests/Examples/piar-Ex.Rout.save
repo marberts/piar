@@ -331,7 +331,7 @@ Fixed-base price index for 3 levels over 3 time periods
 > 
 > ### Name: contrib
 > ### Title: Extract percent-change contributions
-> ### Aliases: contrib contrib.piar_index
+> ### Aliases: contrib contrib.piar_index contrib2DF contrib2DF.piar_index
 > 
 > ### ** Examples
 > 
@@ -360,6 +360,17 @@ a.1 0.0000000 0.5081686
 a.2 0.2440169 0.6442213
 b.1 0.3905243 2.0513858
 b.2 0.8284271 2.4871732
+>
+> contrib2DF(index)
+  period level product     value
+1      1   top     a.1 0.0000000
+2      1   top     a.2 0.2440169
+3      1   top     b.1 0.3905243
+4      1   top     b.2 0.8284271
+5      2   top     a.1 0.5081686
+6      2   top     a.2 0.6442213
+7      2   top     b.1 2.0513858
+8      2   top     b.2 2.4871732
 > 
 > # Calculate EA contributions for the chained index
 > 
