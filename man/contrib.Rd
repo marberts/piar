@@ -36,8 +36,8 @@ for each \code{period} and a row for each product (sorted) for which there are
 contributions in \code{level}. Contributions are padded with \code{pad} to fit into a
 rectangular array when products differ over time.
 
-\code{contrib2DF()} returns a data frame with four columns: \code{period}, \code{level},
-\code{product}, and \code{value}.
+\code{contrib2DF()} returns a data frame of contributions with four
+columns: \code{period}, \code{level}, \code{product}, and \code{value}.
 }
 \description{
 Extract a matrix or data frame of percent-change contributions from a price

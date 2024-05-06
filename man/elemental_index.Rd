@@ -84,7 +84,8 @@ fixed-based index that inherits from \code{\link{direct_piar_index}}.
 }
 \description{
 Compute period-over-period (chainable) or fixed-base (direct) elemental
-price indexes, with optional percent-change contributions.
+price indexes, with optional percent-change contributions for each
+product.
 }
 \details{
 When supplied with a numeric vector, \code{elemental_index()} is a simple

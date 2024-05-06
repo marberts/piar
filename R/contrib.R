@@ -19,8 +19,8 @@
 #' contributions in `level`. Contributions are padded with `pad` to fit into a
 #' rectangular array when products differ over time.
 #' 
-#' `contrib2DF()` returns a data frame with four columns: `period`, `level`,
-#' `product`, and `value`.
+#' `contrib2DF()` returns a data frame of contributions with four
+#' columns: `period`, `level`, `product`, and `value`.
 #'
 #' @examples
 #' prices <- data.frame(

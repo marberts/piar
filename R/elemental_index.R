@@ -37,7 +37,8 @@ different_length <- function(...) {
 #' Make elemental price indexes
 #'
 #' Compute period-over-period (chainable) or fixed-base (direct) elemental
-#' price indexes, with optional percent-change contributions.
+#' price indexes, with optional percent-change contributions for each
+#' product.
 #'
 #' When supplied with a numeric vector, `elemental_index()` is a simple
 #' wrapper that applies

@@ -1,6 +1,6 @@
 # Version 0.8.1
 
-## New features
+## Improvements
 
 - `elemetal_index()` now accepts a formula to specify the price relatives,
 time periods, and elemental aggregates in a table. This makes it easier to use

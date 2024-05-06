@@ -13,7 +13,8 @@
 #' a vector of index values for each level in `levels`.}
 #' \item{contrib}{A list with an entry for each period in `time`, which
 #' itself contains a list with an entry for each level in `levels` with
-#' a named vector that gives the additive contribution for each price relative.}
+#' a named vector that gives the percent-change contribution for each price
+#' relative.}
 #' \item{levels}{A character vector giving the levels of the index.}
 #' \item{time}{A character vector giving the time periods for the index.}
 #' }
