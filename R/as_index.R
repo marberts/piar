@@ -82,6 +82,7 @@ as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
   for (t in seq_along(periods)) {
     index[[t]][] <- x[, t]
   }
+  
   contributions <- contrib_skeleton(levels, periods)
   if (contrib) {
     i <- seq_along(levels)

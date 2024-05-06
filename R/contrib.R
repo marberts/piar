@@ -1,11 +1,12 @@
 #' Extract percent-change contributions
 #'
-#' Extract a matrix of percent-change contributions from a price index.
+#' Extract a matrix or data frame of percent-change contributions from a price
+#' index.
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param level The level of an index for which percent-change contributions
 #' are desired, defaulting to the first level (usually the top-level for an
-#' aggregate index).
+#' aggregate index). `contrib2DF()` can accept multiple levels.
 #' @param period The time periods for which percent-change contributions are
 #' desired, defaulting to all time periods.
 #' @param pad A numeric value to pad contributions so that they fit into a
@@ -13,10 +14,13 @@
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
-#' A matrix of percent-change contributions with a column for each
-#' `period` and a row for each product (sorted) for which there are
+#' `contrib()` returns a matrix of percent-change contributions with a column
+#' for each `period` and a row for each product (sorted) for which there are
 #' contributions in `level`. Contributions are padded with `pad` to fit into a
 #' rectangular array when products differ over time.
+#' 
+#' `contrib2DF()` returns a data frame with four columns: `period`, `level`,
+#' `product`, and `value`.
 #'
 #' @examples
 #' prices <- data.frame(
@@ -39,6 +43,8 @@
 #' # Percent-change contributions for the top-level index
 #'
 #' contrib(index)
+#' 
+#' contrib2DF(index)
 #'
 #' # Calculate EA contributions for the chained index
 #'
@@ -79,4 +85,38 @@ contrib.piar_index <- function(x, level = levels(x)[1L], period = time(x), ...,
   out[] <- list(structure(rep.int(pad, length(products)), names = products))
   res <- Map(replace, out, con_names, con)
   do.call(cbind, res)
+}
+
+#' @export
+#' @rdname contrib
+contrib2DF <- function(x, ...) {
+  UseMethod("contrib2DF")
+}
+
+#' @export
+#' @rdname contrib
+contrib2DF <- function(x, level = levels(x)[1L], period = time(x), ...) {
+  level <- match_levels(as.character(level), x$levels, several = TRUE)
+  period <- match_time(as.character(period), x$time, several = TRUE)
+  
+  con <- lapply(x$contrib[period], `[`, level)
+  
+  products <- lapply(con, lengths)
+  
+  levels <- x$levels[level]
+  levels <- unlist(
+    lapply(products, \(z) rep.int(levels, z)),
+    use.names = FALSE
+  )
+  
+  periods <- rep.int(x$time[period], vapply(products, sum, numeric(1L)))
+  
+  contributions <- unlist(con)
+  data.frame(
+    period = periods,
+    level = levels,
+    # NULL if there are no contributions.
+    product = as.character(names(contributions)), 
+    value = unname(contributions)
+  )
 }
