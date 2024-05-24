@@ -210,7 +210,7 @@ elemental_index.data.frame <- function(x,
   if (length(formula) != 3L) {
     stop("'formula' must have a left-hand and right-hand side")
   }
-  fterms <- stats::terms(formula)
+  fterms <- stats::terms(formula, data = x)
   if (length(attr(fterms, "term.labels")) != 2L) {
     stop("right-hand side of 'formula' must have exactly two terms")
   }

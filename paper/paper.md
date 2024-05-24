@@ -116,11 +116,10 @@ wrinkle is that price data here are in levels, and not changes, but the
 `price_relative()` function can make the necessary conversion.
 
 ```r
-relatives <- with(ms_prices, price_relative(price, period, product))
-
-elementals <- with(
+elementals <- elemental_index(
   ms_prices,
-  elemental_index(relatives, period, business, na.rm = TRUE)
+  price_relative(price, period, product) ~ period + business,
+  na.rm = TRUE
 )
 
 elementals
@@ -142,12 +141,11 @@ classification for each businesses that defines the hierarchy. That's the job of
 the `expand_classification()` function.
 
 ```r
-hierarchy <- with(
-  ms_weights, 
-  c(expand_classification(classification), list(business))
-)
+ms_weights[c("level1", "level2")] <- expand_classification(ms_weights$classification)
 
-pias <- aggregation_structure(hierarchy, ms_weights$weight)
+pias <- as_aggregation_structure(
+  ms_weights[c("level1", "level2", "business", "weight")]
+)
 
 pias
 ```
