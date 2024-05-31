@@ -99,9 +99,9 @@ with(prices, shadow_price(price, period, product, ea))
 
 }
 \references{
-ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020).
-\emph{Consumer Price Index Manual: Theory and Practice}. International
-Monetary Fund.
+IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).
+\emph{Consumer Price Index Manual: Concepts and Methods}.
+International Monetary Fund.
 }
 \seealso{
 \code{\link[=price_relative]{price_relative()}} for making price relatives for the

@@ -60,9 +60,9 @@
 #' same products over time.
 #'
 #' @references
-#' ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020).
-#' *Consumer Price Index Manual: Theory and Practice*. International
-#' Monetary Fund.
+#' IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).
+#' *Consumer Price Index Manual: Concepts and Methods*.
+#' International Monetary Fund.
 #'
 #' @examples
 #' prices <- data.frame(

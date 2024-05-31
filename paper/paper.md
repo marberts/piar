@@ -24,7 +24,7 @@ to measure changes in prices over time, and consequently price indexes are a
 core macroeconomic statistic produced by national statistical agencies to
 measure and study inflation. Price indexes are often made with a two-step procedure---especially those coming from national statistical agencies---where period-over-period indexes are calculated for a large collection of well-defined
 goods and services at each point in time and aggregated according to a
-hierarchical structure [@cpimanual; @ppimanual]. These period-over-period
+hierarchical structure [@ppimanual; @cpimanual]. These period-over-period
 indexes can then be chained together to form a collection of time series that
 give the evolution of prices in the economy with respect to a fixed point in
 time.
@@ -42,7 +42,7 @@ several price indexes at Statistics Canada [e.g., @CMSPI; @FHMCFSPI].
 
 `piar` fills a gap in the open-source ecosystem for measuring inflation by
 providing a tool to build the kinds of large, hierarchical price indexes made by
-national statistical agencies. There are several R and Python package for
+national statistical agencies. There are several R and Python packages for
 accessing price indexes published by statistical agencies
 [e.g., @vonbergmann2021; @welsh2024], but these are not suitable for computing
 new indexes or researching new methods and data sources to measure inflation.   
@@ -72,13 +72,12 @@ different index-number methods with heterogeneous sources of data.
 # Example
 
 The goal of this example is to illustrate some of the core features of `piar` by
-building a typical industry price index. The built-in `ms_prices` dataset has
-price data for five businesses over four
+building a typical industry price index with synthetic data. The built-in
+`ms_prices` dataset has random price data for five businesses over four
 quarters, and the `ms_weights` dataset contain weights that give the relative
-importance of these business in their respective industries. Note that these
+importance of these businesses in their respective industries. Note that these
 data have a fairly realistic pattern of missing data, and, although small, are
-emblematic of the kinds of survey data used to measure inflation (although the
-values are purposely unrealistic).
+emblematic of the kinds of survey data used to measure inflation.
 
 ```r
 head(ms_prices)
@@ -111,8 +110,8 @@ The first step to build a price index with these data is to make business-level 
 the industry-level indexes. The `elemental_index()` function makes elemental
 indexes using information on the change in price for the products sold by each
 business (price relatives) in each quarter. By default `elemental_index()` makes
-a Jevons index, but any bilateral generalized-mean index is possible. The only
-wrinkle is that price data here are in levels, and not changes, but the
+a Jevons index, but any bilateral generalized-mean index is possible. Note that
+price data here are in levels, and not changes, but the
 `price_relative()` function can make the necessary conversion.
 
 ```r
@@ -136,9 +135,10 @@ elementals
 
 With the elemental indexes out of the way, it's time to make a price-index
 aggregation structure that maps each business to its position in the
-hierarchical industry structure. The only hiccup is unpacking the digit-wise
-classification for each businesses that defines the hierarchy. That's the job of
-the `expand_classification()` function.
+hierarchical industry structure. Each business has a two-digit industry
+classification that's first unpacked with the `expand_classification()` function
+to make the aggregation hierarchy and then combined with the weights to make
+an aggregation structure.
 
 ```r
 ms_weights[c("level1", "level2")] <- expand_classification(ms_weights$classification)

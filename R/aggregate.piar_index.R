@@ -100,8 +100,8 @@ aggregate_contrib <- function(r) {
 #' Balk, B. M. (2008). *Price and Quantity Index Numbers*.
 #' Cambridge University Press.
 #'
-#' ILO, IMF, OECD, Eurostat, UN, and World Bank. (2020).
-#' *Consumer Price Index Manual: Theory and Practice*.
+#' IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).
+#' *Consumer Price Index Manual: Concepts and Methods*.
 #' International Monetary Fund.
 #'
 #' @examples
