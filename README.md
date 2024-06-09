@@ -29,6 +29,14 @@ flow, making it easy to build standard price indexes, and implement the
 methods described by Balk (2008), von der Lippe (2001), and the CPI
 manual (2020) for bilateral price indexes.
 
+The tools in this package are designed to be useful for both researching
+new sources of data and methods to construct price indexes, and the
+regular production of price statistics. It is targeted towards
+economists, statisticians, and data scientists working at national
+statistical agencies, central banks, financial institutions, and in
+academia that want to measure and study the evolution of prices over
+time.
+
 ## Installation
 
 Get the stable version from CRAN.

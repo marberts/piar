@@ -24,7 +24,7 @@ to measure changes in prices over time, and consequently price indexes are a
 core macroeconomic statistic produced by national statistical agencies to
 measure and study inflation. Price indexes are often made with a two-step procedure---especially those coming from national statistical agencies---where period-over-period indexes are calculated for a large collection of well-defined
 goods and services at each point in time and aggregated according to a
-hierarchical structure [@ppimanual; @cpimanual]. These period-over-period
+hierarchical structure [@ppimanual; @cpimanual]. These aggregated
 indexes can then be chained together to form a collection of time series that
 give the evolution of prices in the economy with respect to a fixed point in
 time.
@@ -35,8 +35,12 @@ computing price indexes, making it easy to build large, hierarchical indexes
 using the methods described in the literature
 [e.g., @balk2008; @cpimanual; @vonderlippe2001]. `piar` is designed to be useful
 for both researching new sources of data and methods to construct price indexes,
-and the regular production of price statistics. It is currently used to produce
-several price indexes at Statistics Canada [e.g., @CMSPI; @FHMCFSPI].
+and the regular production of price statistics. It is targeted towards
+economists, statisticians, and data scientists working at national statistical
+agencies, central banks, financial institutions, and in academia that want to
+measure and study the evolution of prices over time. `piar` is
+currently used to produce several price indexes at Statistics Canada
+[e.g., @CMSPI; @FHMCFSPI].
 
 # Statement of need
 
@@ -45,7 +49,7 @@ providing a tool to build the kinds of large, hierarchical price indexes made by
 national statistical agencies. There are several R and Python packages for
 accessing price indexes published by statistical agencies
 [e.g., @vonbergmann2021; @welsh2024], but these are not suitable for computing
-new indexes or researching new methods and data sources to measure inflation.   
+new indexes or researching new methods and data sources to measure inflation.
 
 To compute a price index, the `micEconIndex` [@henningsen2022] and
 `IndexNumbers` [@saavedra2021] packages implement text-book index-number
