@@ -80,7 +80,8 @@ building a typical industry price index with synthetic data. The built-in
 `ms_prices` dataset has random price data for five businesses over four
 quarters, and the `ms_weights` dataset contain weights that give the relative
 importance of these businesses in their respective industries. Note that these
-data have a fairly realistic pattern of missing data, and, although small, are
+data have a fairly realistic pattern of missing data (e.g., there are no prices
+for businesses `B5`), and, although small, are
 emblematic of the kinds of survey data used to measure inflation.
 
 ```r
@@ -98,7 +99,7 @@ head(ms_prices)
 ```
 
 ```r
-head(ms_weights)
+ms_weights
 ```
 
 ```
@@ -110,20 +111,37 @@ head(ms_weights)
 #> 5       B5             12    330
 ```
 
-The first step to build a price index with these data is to make business-level indexes---so called elemental indexes---that serve as the building blocks for
-the industry-level indexes. The `elemental_index()` function makes elemental
-indexes using information on the change in price for the products sold by each
-business (price relatives) in each quarter. By default `elemental_index()` makes
-a Jevons index, but any bilateral generalized-mean index is possible. Note that
-price data here are in levels, and not changes, but the
+The first step to build a price index with these data is to make business-level indexes---so called elemental or elementary indexes---that serve as the building
+blocks for the industry-level indexes. The `elemental_index()` function makes
+elemental indexes using information on the change in price for the products sold
+by each business (price relatives) in each quarter. By default `elemental_index()`
+makes a Jevons index, but any bilateral generalized-mean index is possible. Note
+that price data here are in levels, and not changes, but the
 `price_relative()` function can make the necessary conversion.
 
 ```r
-relatives <- with(ms_prices, price_relative(price, period, product))
+ms_prices$relative <- with(ms_prices, price_relative(price, period, product))
 
+head(subset(ms_prices, business == "B1"))
+```
+
+```
+#>    period business product price  relative
+#> 1  202001       B1       1  1.14 1.0000000
+#> 2  202001       B1       2    NA        NA
+#> 3  202001       B1       3  6.09 1.0000000
+#> 11 202002       B1       2  6.94        NA
+#> 12 202002       B1       3  5.45 0.8949097
+#> 20 202003       B1       2  2.32 0.3342939
+```
+
+These price relatives can now be pass to `elemental_index()` to make the
+business-level price indexes.
+
+```r
 elementals <- with(
   ms_prices,
-  elemental_index(relatives, period, business, na.rm = TRUE)
+  elemental_index(relative, period, business, na.rm = TRUE)
 )
 
 elementals

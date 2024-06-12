@@ -103,7 +103,7 @@ function.
 # Make an aggregation structure from businesses to higher-level
 # industrial classifications
 
-head(ms_weights)
+ms_weights
 #>   business classification weight
 #> 1       B1             11    553
 #> 2       B2             11    646
@@ -157,7 +157,9 @@ chain(index)
 ## Contributing
 
 All contributions are welcome. Please start by opening an issue on
-GitHub to report any bugs or suggest improvements and new features.
+GitHub to report any bugs or suggest improvements and new features. See
+the [contribution guidelines for this project](CONTRIBUTING.md) for more
+information.
 
 ## References
 

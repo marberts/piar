@@ -83,7 +83,7 @@ And an aggregation structure with the `aggregation_structure()` function.
 # Make an aggregation structure from businesses to higher-level
 # industrial classifications
 
-head(ms_weights)
+ms_weights
 
 pias <- with(
   ms_weights,
@@ -110,7 +110,8 @@ chain(index)
 
 ## Contributing
 
-All contributions are welcome. Please start by opening an issue on GitHub to report any bugs or suggest improvements and new features.
+All contributions are welcome. Please start by opening an issue on GitHub to report any bugs or suggest improvements and new features. See the [contribution 
+guidelines for this project](CONTRIBUTING.md) for more information.
 
 ## References
 
