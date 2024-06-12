@@ -79,10 +79,12 @@ head(ms_prices)
 #> 5 202001       B2       5  8.61
 #> 6 202001       B2       6  6.40
 
-elementals <- elemental_index(
-  ms_prices,
-  price_relative(price, period, product) ~ period + business,
-  na.rm = TRUE
+elementals <- with(
+  ms_prices, 
+  elemental_index(
+    price_relative(price, period, product), 
+    period, business, na.rm = TRUE
+  )
 )
 
 elementals
@@ -94,7 +96,7 @@ elementals
 #> B4    NaN       NaN       NaN 4.576286
 ```
 
-And an aggregation structure with the `as_aggregation_structure()`
+And an aggregation structure with the `aggregation_structure()`
 function.
 
 ``` r
@@ -109,9 +111,13 @@ ms_weights
 #> 4       B4             12    622
 #> 5       B5             12    330
 
-ms_weights[c("level1", "level2")] <- expand_classification(ms_weights$classification)
-
-pias <- as_aggregation_structure(ms_weights[c("level1", "level2", "business", "weight")])
+pias <- with(
+  ms_weights,
+  aggregation_structure(
+    c(expand_classification(classification), list(business)),
+    weight
+  )
+)
 
 pias
 #> Aggregation structure for 5 elemental aggregates with 2 levels above the elemental aggregates 
