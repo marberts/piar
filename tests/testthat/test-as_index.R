@@ -22,6 +22,12 @@ test_that("as_index makes a valid index", {
 
 test_that("as_index works with matrices", {
   expect_equal(as_index(as.matrix(epr)), epr2)
+  expect_equal(
+    contrib(as_index(as.matrix(epr), contrib = TRUE)),
+    as.matrix(epr)[1, , drop = FALSE] - 1
+  )
+  
+  # A character vector used to get pass through without coercion.
   mat <- as.matrix(epr)
   mat[] <- as.character(mat)
   expect_equal(as_index(mat), epr2)
@@ -30,6 +36,10 @@ test_that("as_index works with matrices", {
 
 test_that("as_index works for data frames", {
   expect_equal(as_index(as.data.frame(epr)), epr2)
+  expect_equal(
+    contrib(as_index(as.data.frame(epr), contrib = TRUE)),
+    as.matrix(epr)[1, , drop = FALSE] - 1
+  )
   df <- as.data.frame(epr)
   df[[1]] <- factor(df[[1]], levels = 2:1)
   expect_equal(

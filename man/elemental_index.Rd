@@ -3,12 +3,24 @@
 \name{elemental_index}
 \alias{elemental_index}
 \alias{elemental_index.default}
+\alias{elemental_index.data.frame}
 \alias{elemental_index.numeric}
 \title{Make elemental price indexes}
 \usage{
 elemental_index(x, ...)
 
 \method{elemental_index}{default}(x, ...)
+
+\method{elemental_index}{data.frame}(
+  x,
+  formula,
+  weights = NULL,
+  ...,
+  chainable = TRUE,
+  na.rm = FALSE,
+  contrib = FALSE,
+  r = 0
+)
 
 \method{elemental_index}{numeric}(
   x,
@@ -24,20 +36,14 @@ elemental_index(x, ...)
 }
 \arguments{
 \item{x}{Period-over-period or fixed-base price relatives. Currently there
-is only a method for numeric vectors; these can be made with
-\code{\link[=price_relative]{price_relative()}}.}
+are methods for numeric vectors (which can be made with
+\code{\link[=price_relative]{price_relative()}}) and data frames.}
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{period}{A factor, or something that can be coerced into one, giving
-the time period associated with each price relative in \code{x}. The
-ordering of time periods follows of the levels of \code{period}, to agree
-with \code{\link[=cut.Date]{cut()}}. The default assumes that all price
-relatives belong to one time period.}
-
-\item{ea}{A factor, or something that can be coerced into one, giving the
-elemental aggregate associated with each price relative in \code{x}. The
-default assumes that all price relatives belong to one elemental aggregate.}
+\item{formula}{A two-part formula with price relatives on the left-hand
+side, and time periods and elemental aggregates (in that order) on the
+right-hand side.}
 
 \item{weights}{A numeric vector of weights for the price relatives in \code{x},
 or something that can be coerced into one. The default is equal weights.}
@@ -59,6 +65,16 @@ arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+
+\item{period}{A factor, or something that can be coerced into one, giving
+the time period associated with each price relative in \code{x}. The
+ordering of time periods follows of the levels of \code{period}, to agree
+with \code{\link[=cut.Date]{cut()}}. The default assumes that all price
+relatives belong to one time period.}
+
+\item{ea}{A factor, or something that can be coerced into one, giving the
+elemental aggregate associated with each price relative in \code{x}. The
+default assumes that all price relatives belong to one elemental aggregate.}
 }
 \value{
 A price index that inherits from \code{\link{piar_index}}. If
@@ -68,7 +84,8 @@ fixed-based index that inherits from \code{\link{direct_piar_index}}.
 }
 \description{
 Compute period-over-period (chainable) or fixed-base (direct) elemental
-price indexes, with optional percent-change contributions.
+price indexes, with optional percent-change contributions for each
+product.
 }
 \details{
 When supplied with a numeric vector, \code{elemental_index()} is a simple
@@ -84,7 +101,9 @@ order \code{r} and, optionally, percent-change contributions. The default
 elemental indexes, and chapter 5 of Balk (2008).
 
 The default method simply coerces \code{x} to a numeric vector prior to
-calling the method above.
+calling the method above. The data frame method provides a formula interface
+to specify columns of price relatives, time periods, and elemental
+aggregates and call the method above.
 
 Names for \code{x} are used as product names when calculating percent-change
 contributions. Product names should be unique within each time period, and,
@@ -125,7 +144,7 @@ prices <- data.frame(
 
 # Calculate Jevons elemental indexes
 
-with(prices, elemental_index(rel, period, ea))
+elemental_index(prices, rel ~ period + ea)
 
 # Same as using lm() or tapply()
 
@@ -145,13 +164,11 @@ fw <- grouped(nested_transmute(0, c(1, -1), 1))
 # Calculate a CSWD index (same as the Jevons in this example)
 # as an arithmetic index by using the appropriate weights
 
-with(
+elemental_index(
   prices,
-  elemental_index(
-    rel, period, ea,
-    fw(rel, group = interaction(period, ea)),
-    r = 1
-  )
+  rel ~ period + ea,
+  fw(rel, group = interaction(period, ea)),
+  r = 1
 )
 
 }

@@ -9,8 +9,9 @@
 #'
 #' @returns
 #' `time()` returns a character vector with the time periods for a price index.
-#' `start()` and `end()` return the first and last time period. `ntime()`
-#' returns the number of time periods, analogous to `nlevels()`.
+#' `start()` and `end()` return the first and last time period.
+#'
+#' `ntime()` returns the number of time periods, analogous to `nlevels()`.
 #'
 #' The replacement method returns a copy of `x` with the time periods in
 #' `value`.

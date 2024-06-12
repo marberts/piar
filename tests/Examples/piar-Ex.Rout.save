@@ -331,7 +331,7 @@ Fixed-base price index for 3 levels over 3 time periods
 > 
 > ### Name: contrib
 > ### Title: Extract percent-change contributions
-> ### Aliases: contrib contrib.piar_index
+> ### Aliases: contrib contrib.piar_index contrib2DF contrib2DF.piar_index
 > 
 > ### ** Examples
 > 
@@ -360,6 +360,17 @@ a.1 0.0000000 0.5081686
 a.2 0.2440169 0.6442213
 b.1 0.3905243 2.0513858
 b.2 0.8284271 2.4871732
+>
+> contrib2DF(index)
+  period level product     value
+1      1   top     a.1 0.0000000
+2      1   top     a.2 0.2440169
+3      1   top     b.1 0.3905243
+4      1   top     b.2 0.8284271
+5      2   top     a.1 0.5081686
+6      2   top     a.2 0.6442213
+7      2   top     b.1 2.0513858
+8      2   top     b.2 2.4871732
 > 
 > # Calculate EA contributions for the chained index
 > 
@@ -387,7 +398,7 @@ detaching ‘package:gpindex’
 > ### Name: elemental_index
 > ### Title: Make elemental price indexes
 > ### Aliases: elemental_index elemental_index.default
-> ###   elemental_index.numeric
+> ###   elemental_index.data.frame elemental_index.numeric
 > 
 > ### ** Examples
 > 
@@ -401,7 +412,7 @@ detaching ‘package:gpindex’
 > 
 > # Calculate Jevons elemental indexes
 > 
-> with(prices, elemental_index(rel, period, ea))
+> elemental_index(prices,rel ~ period + ea)
 Period-over-period price index for 2 levels over 2 time periods 
          1        2
 a 1.732051 5.916080
@@ -430,13 +441,11 @@ b 2.828427 6.928203
 > # Calculate a CSWD index (same as the Jevons in this example)
 > # as an arithmetic index by using the appropriate weights
 > 
-> with(
+> elemental_index(
 +   prices,
-+   elemental_index(
-+     rel, period, ea,
-+     fw(rel, group = interaction(period, ea)),
-+     r = 1
-+   )
++   rel ~ period + ea,
++   fw(rel, group = interaction(period, ea)),
++   r = 1
 + )
 Period-over-period price index for 2 levels over 2 time periods 
          1        2

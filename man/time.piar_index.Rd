@@ -31,8 +31,9 @@ giving the replacement time periods for \code{x}.}
 }
 \value{
 \code{time()} returns a character vector with the time periods for a price index.
-\code{start()} and \code{end()} return the first and last time period. \code{ntime()}
-returns the number of time periods, analogous to \code{nlevels()}.
+\code{start()} and \code{end()} return the first and last time period.
+
+\code{ntime()} returns the number of time periods, analogous to \code{nlevels()}.
 
 The replacement method returns a copy of \code{x} with the time periods in
 \code{value}.

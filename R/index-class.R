@@ -13,7 +13,8 @@
 #' a vector of index values for each level in `levels`.}
 #' \item{contrib}{A list with an entry for each period in `time`, which
 #' itself contains a list with an entry for each level in `levels` with
-#' a named vector that gives the additive contribution for each price relative.}
+#' a named vector that gives the percent-change contribution for each price
+#' relative.}
 #' \item{levels}{A character vector giving the levels of the index.}
 #' \item{time}{A character vector giving the time periods for the index.}
 #' }
@@ -46,30 +47,26 @@ has_contrib <- function(x) {
   Position(\(x) any(lengths(x) > 0L), x$contrib, nomatch = 0L) > 0L
 }
 
-match_levels <- function(x, levels) {
-  if (length(x) != 1L) {
-    stop("must supply exactly one index level")
+match_dim <- function(what) {
+  what <- as.character(what)
+  function(x, dim, several = FALSE) {
+    if (!several && length(x) != 1L) {
+      stop(gettextf("must supply exactly one %s", what))
+    } else if (several && length(x) == 0L) {
+      stop(gettextf("must supply at least one %s", what))
+    }
+    i <- match(x, dim)
+    no_match <- is.na(i)
+    if (any(no_match)) {
+      stop(gettextf("'%s' is not a %s", x[no_match][1L], what))
+    }
+    i
   }
-  i <- match(x, levels)
-  if (is.na(i)) {
-    stop(gettextf("'%s' is not an index level", x))
-  }
-  i
 }
 
-match_time <- function(x, time, several = FALSE) {
-  if (!several && length(x) != 1L) {
-    stop("must supply exactly one time period")
-  } else if (several && length(x) == 0L) {
-    stop("must supply at least one time period")
-  }
-  i <- match(x, time)
-  no_match <- is.na(i)
-  if (any(no_match)) {
-    stop(gettextf("'%s' is not a time period", x[no_match][1L]))
-  }
-  i
-}
+match_levels <- match_dim("index level")
+
+match_time <- match_dim("time period")
 
 #---- Class generator ----
 new_piar_index <- function(index, contrib, levels, time, chainable) {

@@ -1,3 +1,16 @@
+# Version 0.8.1
+
+## Improvements
+
+- `elemetal_index()` now accepts a formula to specify the price relatives,
+time periods, and elemental aggregates in a table. This makes it easier to use
+this function with pipes without needing to wrap the function in `with()`.
+
+- `as_index()` gains a new argument `contrib` to add contributions to
+pre-computed indexes.
+
+- Added `contrib2DF()` to extract percent-change contributions as a data frame.
+
 # Version 0.8.0
 
 ## Significant changes
