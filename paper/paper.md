@@ -116,33 +116,16 @@ blocks for the industry-level indexes. The `elemental_index()` function makes
 elemental indexes using information on the change in price for the products sold
 by each business (price relatives) in each quarter. By default `elemental_index()`
 makes a Jevons index, but any bilateral generalized-mean index is possible. Note
-that price data here are in levels, and not changes, but the
-`price_relative()` function can make the necessary conversion.
+that price data here are in levels, not changes, but the
+`price_relative()` function can make the necessary conversion and construct a
+numeric vector of price relatives for each product.
 
 ```r
-ms_prices$relative <- with(ms_prices, price_relative(price, period, product))
-
-head(subset(ms_prices, business == "B1"))
-```
-
-```
-#>    period business product price  relative
-#> 1  202001       B1       1  1.14 1.0000000
-#> 2  202001       B1       2    NA        NA
-#> 3  202001       B1       3  6.09 1.0000000
-#> 11 202002       B1       2  6.94        NA
-#> 12 202002       B1       3  5.45 0.8949097
-#> 20 202003       B1       2  2.32 0.3342939
-```
-
-These price relatives can now be pass to `elemental_index()` to make the
-business-level price indexes.
-
-```r
-elementals <- with(
-  ms_prices,
-  elemental_index(relative, period, business, na.rm = TRUE)
-)
+elementals <- ms_prices |>
+  transform(
+    relative = price_relative(price, period = period, product = product)
+  ) |>
+  elemental_index(relative ~ period + business, na.rm = TRUE)
 
 elementals
 ```
@@ -156,33 +139,29 @@ elementals
 #> B4    NaN       NaN       NaN 4.576286
 ```
 
-With the elemental indexes out of the way, it's time to make a price-index
-aggregation structure that maps each business to its position in the
-hierarchical industry structure. Each business has a two-digit industry
+With the elemental indexes out of the way, it's time to transform the weights to
+make a price-index aggregation structure that maps each business to its position
+in the hierarchical industry structure. Each business has a two-digit industry
 classification that's first unpacked with the `expand_classification()` function
 to make the aggregation hierarchy and then combined with the weights to make
 an aggregation structure.
 
 ```r
-hierarchy <- with(
-  ms_weights, 
-  c(expand_classification(classification), list(business))
-)
+ms_weights[c("level1", "level2")] <-
+  expand_classification(ms_weights$classification)
 
-pias <- aggregation_structure(hierarchy, ms_weights$weight)
+pias <- ms_weights[c("level1", "level2", "business", "weight")]
 
 pias
 ```
 
 ```
-#> Aggregation structure for 5 elemental aggregates with 2 levels
-#> above the elemental aggregates 
-#>   level1 level2 ea weight
-#> 1      1     11 B1    553
-#> 2      1     11 B2    646
-#> 3      1     11 B3    312
-#> 4      1     12 B4    622
-#> 5      1     12 B5    330
+#>   level1 level2 business weight
+#> 1      1     11       B1    553
+#> 2      1     11       B2    646
+#> 3      1     11       B3    312
+#> 4      1     12       B4    622
+#> 5      1     12       B5    330
 ```
 
 It is now simple to aggregate the business-level indexes according to this
