@@ -12,11 +12,14 @@ head(ms_prices)
 ms_weights
 
 ## -----------------------------------------------------------------------------
-relatives <- with(ms_prices, price_relative(price, period, product))
+relatives <- with(
+  ms_prices,
+  price_relative(price, period = period, product = product)
+)
 
 ms_elemental <- with(
   ms_prices,
-  elemental_index(relatives, period, business, na.rm = TRUE)
+  elemental_index(relatives, period = period, ea = business, na.rm = TRUE)
 )
 
 ms_elemental
@@ -32,7 +35,7 @@ hierarchy <- with(
   c(expand_classification(classification), list(business))
 )
 
-pias <- aggregation_structure(hierarchy, ms_weights$weight)
+pias <- aggregation_structure(hierarchy, weights = ms_weights$weight)
 
 ## -----------------------------------------------------------------------------
 ms_index <- aggregate(ms_elemental, pias, na.rm = TRUE)

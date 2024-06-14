@@ -66,18 +66,16 @@ library(piar)
 
 head(ms_prices)
 
-elementals <- with(
-  ms_prices, 
-  elemental_index(
-    price_relative(price, period, product), 
-    period, business, na.rm = TRUE
-  )
-)
+elementals <- ms_prices |>
+  transform(
+    relative = price_relative(price, period = period, product = product)
+  ) |>
+  elemental_index(relative ~ period + business, na.rm = TRUE)
 
 elementals
 ```
 
-And an aggregation structure with the `aggregation_structure()` function.
+And an aggregation structure.
 
 ```{r}
 # Make an aggregation structure from businesses to higher-level
@@ -85,13 +83,10 @@ And an aggregation structure with the `aggregation_structure()` function.
 
 ms_weights
 
-pias <- with(
-  ms_weights,
-  aggregation_structure(
-    c(expand_classification(classification), list(business)),
-    weight
-  )
-)
+ms_weights[c("level1", "level2")] <-
+  expand_classification(ms_weights$classification)
+
+pias <- ms_weights[c("level1", "level2", "business", "weight")]
 
 pias
 ```

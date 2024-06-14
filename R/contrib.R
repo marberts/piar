@@ -29,13 +29,10 @@
 #'   ea = rep(letters[1:2], 4)
 #' )
 #'
-#' index <- with(
-#'   prices,
-#'   elemental_index(rel, period, ea, contrib = TRUE)
-#' )
+#' index <- elemental_index(prices, rel ~ period + ea, contrib = TRUE)
 #'
 #' pias <- aggregation_structure(
-#'   list(c("top", "top", "top"), c("a", "b", "c")), 1:3
+#'   list(c("top", "top", "top"), c("a", "b", "c")), weights = 1:3
 #' )
 #'
 #' index <- aggregate(index, pias, na.rm = TRUE)

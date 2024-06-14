@@ -79,13 +79,11 @@ head(ms_prices)
 #> 5 202001       B2       5  8.61
 #> 6 202001       B2       6  6.40
 
-elementals <- with(
-  ms_prices, 
-  elemental_index(
-    price_relative(price, period, product), 
-    period, business, na.rm = TRUE
-  )
-)
+elementals <- ms_prices |>
+  transform(
+    relative = price_relative(price, period = period, product = product)
+  ) |>
+  elemental_index(relative ~ period + business, na.rm = TRUE)
 
 elementals
 #> Period-over-period price index for 4 levels over 4 time periods 
@@ -96,8 +94,7 @@ elementals
 #> B4    NaN       NaN       NaN 4.576286
 ```
 
-And an aggregation structure with the `aggregation_structure()`
-function.
+And an aggregation structure.
 
 ``` r
 # Make an aggregation structure from businesses to higher-level
@@ -111,22 +108,18 @@ ms_weights
 #> 4       B4             12    622
 #> 5       B5             12    330
 
-pias <- with(
-  ms_weights,
-  aggregation_structure(
-    c(expand_classification(classification), list(business)),
-    weight
-  )
-)
+ms_weights[c("level1", "level2")] <-
+  expand_classification(ms_weights$classification)
+
+pias <- ms_weights[c("level1", "level2", "business", "weight")]
 
 pias
-#> Aggregation structure for 5 elemental aggregates with 2 levels above the elemental aggregates 
-#>   level1 level2 ea weight
-#> 1      1     11 B1    553
-#> 2      1     11 B2    646
-#> 3      1     11 B3    312
-#> 4      1     12 B4    622
-#> 5      1     12 B5    330
+#>   level1 level2 business weight
+#> 1      1     11       B1    553
+#> 2      1     11       B2    646
+#> 3      1     11       B3    312
+#> 4      1     12       B4    622
+#> 5      1     12       B5    330
 ```
 
 The `aggregate()` method can then be used to aggregate the elemental

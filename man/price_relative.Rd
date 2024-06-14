@@ -25,7 +25,11 @@ Construct period-over-period price relatives from information on prices and
 products over time.
 }
 \examples{
-price_relative(1:6, rep(1:2, each = 3), rep(letters[1:3], 2))
+price_relative(
+  1:6,
+  period = rep(1:2, each = 3),
+  product = rep(letters[1:3], 2)
+)
 
 }
 \seealso{

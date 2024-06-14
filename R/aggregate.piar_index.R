@@ -114,12 +114,12 @@ aggregate_contrib <- function(r) {
 #' # A two-level aggregation structure
 #'
 #' pias <- aggregation_structure(
-#'   list(c("top", "top", "top"), c("a", "b", "c")), 1:3
+#'   list(c("top", "top", "top"), c("a", "b", "c")), weights = 1:3
 #' )
 #'
 #' # Calculate Jevons elemental indexes
 #'
-#' (elemental <- with(prices, elemental_index(rel, period, ea)))
+#' (elemental <- elemental_index(prices, rel ~ period + ea))
 #'
 #' # Aggregate (note the imputation for elemental index 'c')
 #'

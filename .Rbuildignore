@@ -14,3 +14,4 @@
 ^tests/testthat/setup\.R$
 ^CRAN-SUBMISSION$
 ^paper$
+^CONTRIBUTING\.md$

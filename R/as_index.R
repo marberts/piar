@@ -52,7 +52,7 @@
 #'   ea = rep(letters[1:2], 4)
 #' )
 #'
-#' index <- with(prices, elemental_index(rel, period, ea))
+#' index <- elemental_index(prices, rel ~ period + ea)
 #'
 #' all.equal(as_index(as.data.frame(index)), index)
 #' all.equal(as_index(as.matrix(index)), index)

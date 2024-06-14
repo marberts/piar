@@ -37,11 +37,14 @@ ms_weights
 The `elemental_index()` function makes, well, elemental indexes, using information on price relatives, elemental aggregates (businesses), and time periods (quarters). By default it makes a Jevons index, but any bilateral generalized-mean index is possible. The only wrinkle is that price data here are in levels, and not relatives, but the `price_relative()` function can make the necessary conversion.
 
 ```{r}
-relatives <- with(ms_prices, price_relative(price, period, product))
+relatives <- with(
+  ms_prices,
+  price_relative(price, period = period, product = product)
+)
 
 ms_elemental <- with(
   ms_prices,
-  elemental_index(relatives, period, business, na.rm = TRUE)
+  elemental_index(relatives, period = period, ea = business, na.rm = TRUE)
 )
 
 ms_elemental
@@ -67,7 +70,7 @@ hierarchy <- with(
   c(expand_classification(classification), list(business))
 )
 
-pias <- aggregation_structure(hierarchy, ms_weights$weight)
+pias <- aggregation_structure(hierarchy, weights = ms_weights$weight)
 ```
 
 It is now simple to aggregate the elemental indexes according to this aggregation structure with the `aggregate()` function. As with the elemental indexes, missing values are ignored by setting `na.rm = TRUE`, which is equivalent to parentally imputing missing values. Note that, unlike the elemental indexes, missing values are filled in to ensure the index can be chained over time.

@@ -1,7 +1,7 @@
 
-R version 4.3.3 (2024-02-29) -- "Angel Food Cake"
+R version 4.4.0 (2024-04-24) -- "Puppy Cup"
 Copyright (C) 2024 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -42,11 +42,14 @@ Type 'q()' to quit R.
 5       B5             12    330
 > 
 > ## -----------------------------------------------------------------------------
-> relatives <- with(ms_prices, price_relative(price, period, product))
+> relatives <- with(
++   ms_prices,
++   price_relative(price, period = period, product = product)
++ )
 > 
 > ms_elemental <- with(
 +   ms_prices,
-+   elemental_index(relatives, period, business, na.rm = TRUE)
++   elemental_index(relatives, period = period, ea = business, na.rm = TRUE)
 + )
 > 
 > ms_elemental
@@ -77,7 +80,7 @@ B1      1 0.8949097 0.3342939    NaN
 +   c(expand_classification(classification), list(business))
 + )
 > 
-> pias <- aggregation_structure(hierarchy, ms_weights$weight)
+> pias <- aggregation_structure(hierarchy, weights = ms_weights$weight)
 > 
 > ## -----------------------------------------------------------------------------
 > ms_index <- aggregate(ms_elemental, pias, na.rm = TRUE)
@@ -693,4 +696,4 @@ B5      1 1.5107763 1.2021080 5.5011904
 > 
 > proc.time()
    user  system elapsed 
-  0.162   0.032   0.189 
+  0.177   0.019   0.190 
