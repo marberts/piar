@@ -123,9 +123,10 @@ pias
 ```
 
 The `aggregate()` method can then be used to aggregate the elemental
-indexes according to the aggregation structure. There are a variety of
-methods to work with these index objects, such as chaining them over
-time.
+indexes according to the aggregation structure (the first three rows
+below) and fill in missing elemental indexes while maintaining
+consistency in aggregation. There are a variety of methods to work with
+these index objects, such as chaining them over time.
 
 ``` r
 # Aggregate elemental indexes with an arithmetic index

@@ -118,7 +118,8 @@ by each business (price relatives) in each quarter. By default `elemental_index(
 makes a Jevons index, but any bilateral generalized-mean index is possible. Note
 that price data here are in levels, not changes, but the
 `price_relative()` function can make the necessary conversion and construct a
-numeric vector of price relatives for each product.
+numeric vector of price relatives for each product. Missing price relatives
+are ignored by setting `na.rm = TRUE`.
 
 ```r
 elementals <- ms_prices |>
@@ -166,7 +167,8 @@ pias
 
 It is now simple to aggregate the business-level indexes according to this
 aggregation structure with the `aggregate()` function and chain them together to
-get the evolution of prices over time.
+get the evolution of prices over time. Missing
+elemental indexes are ignored by setting `na.rm = TRUE`.
 
 ```r
 ms_index <- aggregate(elementals, pias, na.rm = TRUE)
@@ -187,6 +189,9 @@ chain(ms_index)
 #> B5      1 1.3007239 1.3827662 6.3279338
 ```
 
+In addition to calculating the aggregated industry indexes (the first three rows
+above), missing elemental indexes have been filled in to ensure that the index
+can be chained over time while remaining consistent in aggregation.
 There are a variety of methods to manipulate the index objects that come from
 these computations in order to compose more complex workflows for building price
 indexes.
