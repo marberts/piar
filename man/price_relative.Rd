@@ -2,12 +2,21 @@
 % Please edit documentation in R/price_relative.R
 \name{price_relative}
 \alias{price_relative}
+\alias{price_relative.default}
+\alias{price_relative.data.frame}
 \title{Calculate period-over-period price relatives}
 \usage{
-price_relative(x, period, product)
+price_relative(x, ...)
+
+\method{price_relative}{default}(x, ..., period, product)
+
+\method{price_relative}{data.frame}(x, formula, ...)
 }
 \arguments{
-\item{x}{A numeric vector of prices.}
+\item{x}{Either a numeric vector (or something that can be coerced into one)
+or data frame of prices.}
+
+\item{...}{Further arguments passed to or used by methods.}
 
 \item{period}{A factor, or something that can be coerced into one, that
 gives the corresponding time period for each element in \code{x}. The
@@ -16,6 +25,10 @@ ordering of time periods follows the levels of \code{period} to agree with
 
 \item{product}{A factor, or something that can be coerced into one, that
 gives the corresponding product identifier for each element in \code{x}.}
+
+\item{formula}{A two-part formula with prices on the left-hand
+side, and time periods and products (in that order) on the
+right-hand side.}
 }
 \value{
 A numeric vector of price relatives, with \code{product} as names.

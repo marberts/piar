@@ -3,13 +3,18 @@
 #' Construct period-over-period price relatives from information on prices and
 #' products over time.
 #'
-#' @param x A numeric vector of prices.
+#' @param x Either a numeric vector (or something that can be coerced into one)
+#' or data frame of prices.
 #' @param period A factor, or something that can be coerced into one, that
 #' gives the corresponding time period for each element in `x`. The
 #' ordering of time periods follows the levels of `period` to agree with
 #' [`cut()`][cut.Date].
 #' @param product A factor, or something that can be coerced into one, that
 #' gives the corresponding product identifier for each element in `x`.
+#' @param ... Further arguments passed to or used by methods.
+#' @param formula A two-part formula with prices on the left-hand
+#' side, and time periods and products (in that order) on the
+#' right-hand side.
 #'
 #' @returns
 #' A numeric vector of price relatives, with `product` as names.
@@ -31,7 +36,13 @@
 #' )
 #'
 #' @export
-price_relative <- function(x, period, product) {
+price_relative <- function(x, ...) {
+  UseMethod("price_relative")
+}
+
+#' @rdname price_relative
+#' @export
+price_relative.default <- function(x, ..., period, product) {
   x <- as.numeric(x)
   period <- as.factor(period)
   product <- as.factor(product)
@@ -43,4 +54,18 @@ price_relative <- function(x, period, product) {
   res <- x / x[gpindex::back_period(period, product)]
   names(res) <- as.character(product)
   res
+}
+
+#' @rdname price_relative
+#' @export
+price_relative.data.frame <- function(x, formula, ...) {
+  if (length(formula) != 3L) {
+    stop("'formula' must have a left-hand and right-hand side")
+  }
+  fterms <- stats::terms(formula, data = x)
+  if (length(attr(fterms, "term.labels")) != 2L) {
+    stop("right-hand side of 'formula' must have exactly two terms")
+  }
+  x <- eval(attr(fterms, "variables"), x, environment(formula))
+  price_relative(x[[1L]], period = x[[2L]], product = x[[3L]])
 }
