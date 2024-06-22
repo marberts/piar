@@ -5,34 +5,37 @@ pias <- with(
                         weight)
 )
 
-sp <- with(ms_prices, shadow_price(price, period, product, business, pias))
+sp <- shadow_price(ms_prices, price ~ period + product + business, pias = pias)
 
 test_that("a length 0 inputs returns a length 0 output", {
-  expect_length(carry_forward(integer(0), factor(integer(0), 1:5), integer(0)),
-                0)
   expect_length(
-    shadow_price(integer(0), integer(0), integer(0), integer(0), pias), 0
+    carry_forward(integer(0), period = factor(integer(0), 1:5), product = integer(0)),
+    0
+  )
+  expect_length(
+    shadow_price(integer(0), period = integer(0), product = integer(0), ea = integer(0), pias = pias),
+    0
   )
 })
 
 test_that("imputing shadow prices does noting", {
   expect_equal(
     sp,
-    with(ms_prices, shadow_price(sp, period, product, business, pias))
+    shadow_price(ms_prices, sp ~ period + product + business, pias = pias)
   )
 })
 
 test_that("sp imputation is the same are regular parental in periods 1, 2", {
-  epr <- with(
+  epr <- elemental_index(
     ms_prices,
-    elemental_index(price_relative(price, period, product), period, business,
-                    na.rm = TRUE)
+    price_relative(price, period = period, product = product) ~ period + business,
+    na.rm = TRUE
   )
 
-  epr2 <- with(
+  epr2 <- elemental_index(
     ms_prices,
-    elemental_index(price_relative(sp, period, product), period, business,
-                    na.rm = TRUE)
+    price_relative(sp, period = period, product = product) ~ period + business,
+    na.rm = TRUE
   )
 
   # B2 is imputed from above the EA level
@@ -53,7 +56,7 @@ test_that("imputing with an improper pias does nothing", {
 
   expect_equal(
     ms_prices$price,
-    with(ms_prices, shadow_price(price, period, product, business, pias2))
+    shadow_price(ms_prices, price ~ period + product + business, pias = pias2)
   )
 })
 
@@ -63,14 +66,14 @@ test_that("jumbling prices does nothing", {
               12, 21, 36, 7, 37)
   ms_prices <- ms_prices[jumble, ]
   expect_equal(
-    with(ms_prices, shadow_price(price, period, product, business, pias)),
+    shadow_price(ms_prices, price ~ period + product + business, pias = pias),
     sp[jumble]
   )
 })
 
 test_that("carrying forward/backwards imputation works", {
-  expect_equal(carry_forward(c(NA, 1, 2, NA, 3), gl(5, 1), gl(1, 5)),
+  expect_equal(carry_forward(c(NA, 1, 2, NA, 3), period = gl(5, 1), product = gl(1, 5)),
                c(NA, 1, 2, 2, 3))
-  expect_equal(carry_backwards(c(NA, 1, 2, NA, 3), gl(5, 1), gl(1, 5)),
+  expect_equal(carry_backward(c(NA, 1, 2, NA, 3), period = gl(5, 1), product = gl(1, 5)),
                c(1, 1, 2, 3, 3))
 })

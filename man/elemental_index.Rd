@@ -14,8 +14,8 @@ elemental_index(x, ...)
 \method{elemental_index}{data.frame}(
   x,
   formula,
-  weights = NULL,
   ...,
+  weights = NULL,
   chainable = TRUE,
   na.rm = FALSE,
   contrib = FALSE,
@@ -24,10 +24,10 @@ elemental_index(x, ...)
 
 \method{elemental_index}{numeric}(
   x,
+  ...,
   period = gl(1, length(x)),
   ea = gl(1, length(x)),
   weights = NULL,
-  ...,
   chainable = TRUE,
   na.rm = FALSE,
   contrib = FALSE,
@@ -167,7 +167,7 @@ fw <- grouped(nested_transmute(0, c(1, -1), 1))
 elemental_index(
   prices,
   rel ~ period + ea,
-  fw(rel, group = interaction(period, ea)),
+  weights = fw(rel, group = interaction(period, ea)),
   r = 1
 )
 

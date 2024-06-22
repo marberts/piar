@@ -8,8 +8,8 @@
 \usage{
 \method{mean}{chainable_piar_index}(
   x,
-  weights = NULL,
   ...,
+  weights = NULL,
   window = ntime(x),
   na.rm = FALSE,
   contrib = TRUE,
@@ -18,8 +18,8 @@
 
 \method{mean}{direct_piar_index}(
   x,
-  weights = NULL,
   ...,
+  weights = NULL,
   window = ntime(x),
   na.rm = FALSE,
   contrib = TRUE,
@@ -29,13 +29,13 @@
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
+\item{...}{Not currently used.}
+
 \item{weights}{A numeric vector of weights for the index values in \code{x}, or
 something that can be coerced into one. The
 default is equal weights. It is usually easiest to specify these weights as
 a matrix with a row for each index value in \code{x} and a column for each
 time period.}
-
-\item{...}{Not currently used.}
 
 \item{window}{A positive integer giving the size of the window used to
 average index values across subperiods. The default averages over all periods

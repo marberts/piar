@@ -6,8 +6,8 @@ pias <- as_aggregation_structure(
   data.frame(level1 = 1, level2 = c(11, 12, 13, 14), weight = 1)
 )
 
-epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
-epr2 <- with(dat, elemental_index(rel, period, ea))
+epr <- elemental_index(dat, rel ~ period + ea, contrib = TRUE)
+epr2 <- elemental_index(dat, rel ~ period + ea)
 
 index <- aggregate(epr, pias)
 
@@ -32,19 +32,12 @@ test_that("subscripting methods work", {
   expect_equal(index[], index)
   expect_equal(
     epr[c(TRUE, FALSE, TRUE, TRUE), 2:1],
-    with(
-      dat,
-      elemental_index(rel, factor(period, 2:1), factor(ea, c(11, 13:14)),
-                      contrib = TRUE)
-    )
+    elemental_index(dat, rel ~ factor(period, 2:1) + factor(ea, c(11, 13:14)),
+                    contrib = TRUE)
   )
   expect_equal(
     epr[c("14", "12"), TRUE],
-    with(
-      dat,
-      elemental_index(rel, period, factor(ea, c(14, 12)),
-                      contrib = TRUE)
-    )
+    elemental_index(dat, rel ~ period + factor(ea, c(14, 12)), contrib = TRUE)
   )
 })
 

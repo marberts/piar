@@ -9,7 +9,7 @@
 \usage{
 as_aggregation_structure(x, ...)
 
-\method{as_aggregation_structure}{default}(x, weights = NULL, ...)
+\method{as_aggregation_structure}{default}(x, ..., weights = NULL)
 
 \method{as_aggregation_structure}{data.frame}(x, ...)
 

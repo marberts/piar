@@ -2,7 +2,7 @@ dat <- data.frame(rel = c(1:2, NA, 4:6, NA, 7, 8),
                   period = c(1, 1, 1, 1, 1, 2, 2, 2, 2),
                   ea = c("11", "11", "12", "12", "13", "11", "12", "11", "14"))
 
-epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE, na.rm = TRUE))
+epr <- elemental_index(dat, rel ~ period + ea, contrib = TRUE, na.rm = TRUE)
 
 test_that("is.na works", {
   expect_equal(

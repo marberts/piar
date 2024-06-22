@@ -66,6 +66,7 @@ price_relative.data.frame <- function(x, formula, ...) {
   if (length(attr(fterms, "term.labels")) != 2L) {
     stop("right-hand side of 'formula' must have exactly two terms")
   }
+  
   x <- eval(attr(fterms, "variables"), x, environment(formula))
   price_relative(x[[1L]], period = x[[2L]], product = x[[3L]])
 }

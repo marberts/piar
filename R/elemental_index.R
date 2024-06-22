@@ -183,7 +183,7 @@ different_length <- function(...) {
 #' elemental_index(
 #'   prices,
 #'   rel ~ period + ea,
-#'   fw(rel, group = interaction(period, ea)),
+#'   weights = fw(rel, group = interaction(period, ea)),
 #'   r = 1
 #' )
 #'
@@ -201,8 +201,8 @@ elemental_index.default <- function(x, ...) {
 #' @rdname elemental_index
 #' @export
 elemental_index.data.frame <- function(x,
-                                       formula,
-                                       weights = NULL, ...,
+                                       formula, ...,
+                                       weights = NULL,
                                        chainable = TRUE,
                                        na.rm = FALSE,
                                        contrib = FALSE,
@@ -218,7 +218,7 @@ elemental_index.data.frame <- function(x,
   x <- eval(attr(fterms, "variables"), x, environment(formula))
   
   elemental_index(
-    x[[1L]], x[[2L]], x[[3L]],
+    x[[1L]], period = x[[2L]], ea = x[[3L]],
     weights = weights,
     chainable = chainable,
     na.rm = na.rm,
@@ -229,10 +229,10 @@ elemental_index.data.frame <- function(x,
 
 #' @rdname elemental_index
 #' @export
-elemental_index.numeric <- function(x,
+elemental_index.numeric <- function(x, ...,
                                     period = gl(1, length(x)),
                                     ea = gl(1, length(x)),
-                                    weights = NULL, ...,
+                                    weights = NULL,
                                     chainable = TRUE,
                                     na.rm = FALSE,
                                     contrib = FALSE,
@@ -272,8 +272,10 @@ elemental_index.numeric <- function(x,
   }
 
   index_fun <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
-  contrib_fun <- Vectorize(gpindex::contributions(r),
-    SIMPLIFY = FALSE, USE.NAMES = FALSE
+  contrib_fun <- Vectorize(
+    gpindex::contributions(r),
+    SIMPLIFY = FALSE,
+    USE.NAMES = FALSE
   )
 
   index <- Map(index_fun, x, weights, na.rm = na.rm, USE.NAMES = FALSE)

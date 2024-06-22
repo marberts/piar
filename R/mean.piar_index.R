@@ -59,7 +59,8 @@
 #'
 #' @family index methods
 #' @export
-mean.chainable_piar_index <- function(x, weights = NULL, ...,
+mean.chainable_piar_index <- function(x, ...,
+                                      weights = NULL,
                                       window = ntime(x),
                                       na.rm = FALSE,
                                       contrib = TRUE,
@@ -69,7 +70,8 @@ mean.chainable_piar_index <- function(x, weights = NULL, ...,
 
 #' @rdname mean.piar_index
 #' @export
-mean.direct_piar_index <- function(x, weights = NULL, ...,
+mean.direct_piar_index <- function(x, ...,
+                                   weights = NULL,
                                    window = ntime(x),
                                    na.rm = FALSE,
                                    contrib = TRUE,
@@ -78,7 +80,8 @@ mean.direct_piar_index <- function(x, weights = NULL, ...,
 }
 
 #' @export
-mean.piar_index <- function(x, weights = NULL, ...,
+mean.piar_index <- function(x, ...,
+                            weights = NULL,
                             window = ntime(x),
                             na.rm = FALSE,
                             contrib = TRUE,

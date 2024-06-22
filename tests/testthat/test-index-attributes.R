@@ -6,8 +6,8 @@ pias <- as_aggregation_structure(
   data.frame(level1 = 1, level2 = c(11, 12, 13, 14), weight = 1)
 )
 
-epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
-epr2 <- with(dat, elemental_index(rel, period, ea, contrib = FALSE))
+epr <- elemental_index(dat, rel ~ period + ea, contrib = TRUE)
+epr2 <- elemental_index(dat, rel ~ period + ea, contrib = FALSE)
 index <- aggregate(epr, pias)
 
 res <- c(1.41421356237309, 3.46410161513775, 5, NaN,

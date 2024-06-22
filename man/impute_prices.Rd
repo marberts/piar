@@ -3,12 +3,21 @@
 \name{impute_prices}
 \alias{impute_prices}
 \alias{shadow_price}
+\alias{shadow_price.default}
+\alias{shadow_price.data.frame}
 \alias{carry_forward}
-\alias{carry_backwards}
+\alias{carry_forward.default}
+\alias{carry_forward.data.frame}
+\alias{carry_backward}
+\alias{carry_backward.default}
+\alias{carry_backward.data.frame}
 \title{Impute missing prices}
 \usage{
-shadow_price(
+shadow_price(x, ...)
+
+\method{shadow_price}{default}(
   x,
+  ...,
   period,
   product,
   ea,
@@ -18,13 +27,25 @@ shadow_price(
   r2 = 1
 )
 
-carry_forward(x, period, product)
+\method{shadow_price}{data.frame}(x, formula, ..., pias = NULL, weights = NULL, r1 = 0, r2 = 1)
 
-carry_backwards(x, period, product)
+carry_forward(x, ...)
+
+\method{carry_forward}{default}(x, ..., period, product)
+
+\method{carry_forward}{data.frame}(x, formula, ...)
+
+carry_backward(x, ...)
+
+\method{carry_backward}{default}(x, ..., period, product)
+
+\method{carry_backward}{data.frame}(x, formula, ...)
 }
 \arguments{
-\item{x}{A numeric vector of prices, or something that can be coerced
-into one.}
+\item{x}{Either a numeric vector (or something that can be coerced into one)
+or data frame of prices.}
+
+\item{...}{Further arguments passed to or used by methods.}
 
 \item{period}{A factor, or something that can be coerced into one, giving
 the time period associated with each price in \code{x}. The ordering of time
@@ -54,9 +75,15 @@ arithmetic index, or -1 for a harmonic index. Other values are possible; see
 elemental price indexes: 0 for a geometric index, 1 for an arithmetic index
 (the default), or -1 for a harmonic index. Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+
+\item{formula}{A two-part formula with prices on the left-hand
+side. For \code{carry_forward()} and \code{carry_backward()}, the right-hand side
+should have time periods and products (in that order); for
+\code{shadow_price()}, the right-hand side should have time period, products, and
+elemental aggregates (in that order).}
 }
 \value{
-A copy of \code{x} with missing values replaced (where possible).
+A numeric vector of prices with missing values replaced (where possible).
 }
 \description{
 Impute missing prices using the carry forward or shadow price method.
@@ -93,9 +120,9 @@ prices <- data.frame(
   ea = rep(letters[1:2], 4)
 )
 
-with(prices, carry_forward(price, period, product))
+carry_forward(prices, price ~ period + product)
 
-with(prices, shadow_price(price, period, product, ea))
+shadow_price(prices, price ~ period + product + ea)
 
 }
 \references{

@@ -6,12 +6,11 @@ pias <- as_aggregation_structure(
   data.frame(level1 = 1, level2 = c(11, 12, 13, 14), weight = 1)
 )
 
-epr <- with(
-  dat,
-  elemental_index(setNames(rel, c(1:5, 1, 3, 2, 6)), period, ea, contrib = TRUE)
+epr <- elemental_index(
+  dat, setNames(rel, c(1:5, 1, 3, 2, 6)) ~ period + ea, contrib = TRUE
 )
 index <- aggregate(epr, pias, na.rm = TRUE)
-epr2 <- with(dat, elemental_index(rel, period, ea))
+epr2 <- elemental_index(dat, rel ~ period + ea)
 
 test_that("contrib works", {
   expect_equal(
@@ -88,7 +87,7 @@ test_that("product names are correct", {
   expect_equal(
     suppressWarnings(
       contrib(elemental_index(c(a = 1, b = 2, c = 3, a = 4, a = 5),
-                              c(1, 1, 1, 2, 2), contrib = TRUE, r = 1))
+                              period = c(1, 1, 1, 2, 2), contrib = TRUE, r = 1))
     ),
     matrix(c(0, 0, 1 / 3, 2 / 3, 1.5, 2, 0, 0), 4, 2,
            dimnames = list(c("a", "a.1", "b", "c"), 1:2))
@@ -98,8 +97,8 @@ test_that("product names are correct", {
   expect_equal(
     contrib(epr),
     contrib(
-      with(dat, elemental_index(setNames(rel, c(1:5, 1, 3, 2, 6)),
-                                period, ea, w, contrib = TRUE))
+      elemental_index(dat, setNames(rel, c(1:5, 1, 3, 2, 6)) ~
+        period + ea, w, contrib = TRUE)
     )
   )
 })

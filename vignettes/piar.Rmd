@@ -204,12 +204,10 @@ pias_matrix %*% as.matrix(chain(ms_index[ms_weights$business]))
 It's often useful to determine which higher-level index values are missing, and subsequently get imputed during aggregation (i.e., compute the shadow of an index). This is simple to do if there's an elemental index for each elemental aggregate in the aggregation structure.
 
 ```{r}
-ms_elemental2 <- with(
+ms_elemental2 <- elemental_index(
   ms_prices,
-  elemental_index(
-    relatives, period, factor(business, ms_weights$business),
-    na.rm = TRUE
-  )
+  relatives ~ period + factor(business, ms_weights$business),
+  na.rm = TRUE
 )
 ```
 
@@ -245,19 +243,13 @@ aggregate(ms_elemental2, pias, na.rm = TRUE)
 By default, the `elemental_index()` function calculates a Jevons index. Although this is the standard index-number formula for making elemental indexes, many other types of index-numbers are possible. The Carli index (equally-weighted arithmetic mean of price relatives) is the main competitor to the Jevons, and requires specifying the order of the index `r` when calling `elemental_index()`. An order of 1 corresponds to an arithmetic mean.
 
 ```{r}
-with(
-  ms_prices, 
-  elemental_index(relatives, period, business, na.rm = TRUE, r = 1)
-)
+elemental_index(ms_prices, relatives ~ period + business, na.rm = TRUE, r = 1)
 ```
 
 The Coggeshall index (equally-weighted harmonic mean of price relatives) is another competitor to the Jevons, but is seldom used in practice. Despite it being more exotic, it is just as easy to make by specifying an order `r` of -1.
 
 ```{r}
-with(
-  ms_prices,
-  elemental_index(relatives, period, business, na.rm = TRUE, r = -1)
-)
+elemental_index(ms_prices, relatives ~ period + business, na.rm = TRUE, r = -1)
 ```
 
 The type of mean used to aggregate elemental indexes can be controlled in the same way in the call to `aggregate()`. The default makes an arithmetic index, but any type of generalized-mean index is possible. 
@@ -293,9 +285,10 @@ ms_prices2$weight <- with(
 As `elemental_index()` makes a geometric index by default, all that is needed to make a Tornqvist index is to provide the weights.
 
 ```{r}
-with(
+elemental_index(
   ms_prices2,
-  elemental_index(price / back_price, period, business, weight)
+  price / back_price ~ period + business,
+  weights = weight
 )
 ```
 
@@ -304,9 +297,10 @@ with(
 It's often convenient to decompose an index into the (additive) contribution of each price relative, also known as the percent-change contributions. This can be done with the same work flow as in the previous examples, specifying `contrib = TRUE` when calling `elemental_index()`.
 
 ```{r}
-ms_elemental <- with(
+ms_elemental <- elemental_index(
   ms_prices,
-  elemental_index(relatives, period, business, contrib = TRUE, na.rm = TRUE)
+  relatives ~ period + business,
+  contrib = TRUE, na.rm = TRUE
 )
 ```
 
@@ -336,12 +330,10 @@ ms_prices2 <- subset(ms_prices, period >= "202003")
 The index for the first basket can be calculate as usual.
 
 ```{r}
-ms_elemental1 <- with(
+ms_elemental1 <- elemental_index(
   ms_prices1, 
-  elemental_index(
-    price_relative(price, period, product),
-    period, business, na.rm = TRUE
-  )
+  price_relative(price, period = period, product = product) ~ period + business,
+  na.rm = TRUE
 )
 
 ms_index1 <- aggregate(ms_elemental1, pias, na.rm = TRUE)
@@ -353,9 +345,9 @@ Nothing special needs to be done to make the elemental indexes for the new baske
 
 ```{r}
 ms_elemental2 <- ms_prices2 |>
-  transform(rel = price_relative(price, period, product)) |>
+  transform(rel = price_relative(price, period = period, product = product)) |>
   subset(period > "202003") |>
-  with(elemental_index(rel, period, business, na.rm = TRUE))
+  elemental_index(rel ~ period + business, na.rm = TRUE)
 ```
 
 Aggregating these elemental indexes, however, requires an aggregation structure. The results of the first example can be reproduced by simply "price updating" the original weights, then building the aggregation structure as usual.
@@ -377,13 +369,13 @@ chain(stack(ms_index1, ms_index2))
 The previous examples used parental imputation to both impute missing price relatives when calculating the elemental indexes, and to impute missing elemental indexes during aggregation. Another common imputation strategy when making elemental indexes is to carry forward the previous price to impute for missing prices, and parentally impute missing elemental indexes during aggregation. As the `elemental_index()` function accepts price relatives as its input, other types of imputations can be done prior to passing price relatives to this function.
 
 ```{r}
-ms_elemental2 <- with(
-  ms_prices, 
+ms_elemental2 <- ms_prices |>
+  transform(imputed_price = carry_forward(price, period = period, product = product)) |>
   elemental_index(
-    price_relative(carry_forward(price, period, product), period, product),
-    period, business, na.rm = TRUE
+    price_relative(imputed_price, period = period, product = product) ~
+      period + business,
+    na.rm = TRUE
   )
-)
 
 ms_elemental2
 ```
@@ -410,23 +402,19 @@ ms_prices2 <- subset(ms_prices, business == "B4")
 Elemental indexes can be made for both groups separately with the usual recipe. Note that there is no data for business B4 in the first two periods, so the time periods need to be made explicit.
 
 ```{r}
-ms_elemental1 <- with(
-  ms_prices1, 
-  elemental_index(
-    price_relative(price, period, product),
-    period, business, na.rm = TRUE
-  )
+ms_elemental1 <- elemental_index(
+  ms_prices1,
+  price_relative(price, period = period, product = product) ~ period + business,
+  na.rm = TRUE
 )
 
 ms_elemental1
 
 ms_elemental2 <- ms_prices2 |>
   transform(period = factor(period, levels = time(ms_elemental1))) |>
-  with(
-    elemental_index(
-      price_relative(price, period, product),
-      period, business, na.rm = TRUE
-    )
+  elemental_index(
+    price_relative(price, period = period, product = product) ~ period + business,
+    na.rm = TRUE
   )
 
 ms_elemental2

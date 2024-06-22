@@ -1,5 +1,5 @@
 
-R version 4.4.0 (2024-04-24) -- "Puppy Cup"
+R version 4.4.1 (2024-06-14) -- "Race for Your Life"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -243,12 +243,10 @@ Period-over-period price index for 8 levels over 4 time periods
 12      1 1.300724 1.382766 6.327934
 > 
 > ## -----------------------------------------------------------------------------
-> ms_elemental2 <- with(
+> ms_elemental2 <- elemental_index(
 +   ms_prices,
-+   elemental_index(
-+     relatives, period, factor(business, ms_weights$business),
-+     na.rm = TRUE
-+   )
++   relatives ~ period + factor(business, ms_weights$business),
++   na.rm = TRUE
 + )
 > 
 > ## -----------------------------------------------------------------------------
@@ -284,10 +282,7 @@ B4      1 1.1721550 1.0400686 4.576286
 B5      1 1.1721550 1.0400686 4.576286
 > 
 > ## -----------------------------------------------------------------------------
-> with(
-+   ms_prices, 
-+   elemental_index(relatives, period, business, na.rm = TRUE, r = 1)
-+ )
+> elemental_index(ms_prices, relatives ~ period + business, na.rm = TRUE, r = 1)
 Period-over-period price index for 4 levels over 4 time periods 
    202001     202002    202003   202004
 B1      1  0.8949097 0.3342939      NaN
@@ -296,10 +291,7 @@ B3      1 23.7480455 2.4900997 0.607197
 B4    NaN        NaN       NaN 9.368610
 > 
 > ## -----------------------------------------------------------------------------
-> with(
-+   ms_prices,
-+   elemental_index(relatives, period, business, na.rm = TRUE, r = -1)
-+ )
+> elemental_index(ms_prices, relatives ~ period + business, na.rm = TRUE, r = -1)
 Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003    202004
 B1      1 0.8949097 0.3342939       NaN
@@ -330,9 +322,10 @@ B4    NaN       NaN       NaN 2.2353790
 + )
 > 
 > ## -----------------------------------------------------------------------------
-> with(
+> elemental_index(
 +   ms_prices2,
-+   elemental_index(price / back_price, period, business, weight)
++   price / back_price ~ period + business,
++   weights = weight
 + )
 Period-over-period price index for 4 levels over 4 time periods 
    202001    202002    202003   202004
@@ -342,9 +335,10 @@ B3      1 0.9520982 1.5913929 0.542372
 B4    NaN       NaN       NaN 5.904237
 > 
 > ## -----------------------------------------------------------------------------
-> ms_elemental <- with(
+> ms_elemental <- elemental_index(
 +   ms_prices,
-+   elemental_index(relatives, period, business, contrib = TRUE, na.rm = TRUE)
++   relatives ~ period + business,
++   contrib = TRUE, na.rm = TRUE
 + )
 > 
 > ## -----------------------------------------------------------------------------
@@ -375,12 +369,10 @@ B4    NaN       NaN       NaN 5.904237
 > ms_prices2 <- subset(ms_prices, period >= "202003")
 > 
 > ## -----------------------------------------------------------------------------
-> ms_elemental1 <- with(
+> ms_elemental1 <- elemental_index(
 +   ms_prices1, 
-+   elemental_index(
-+     price_relative(price, period, product),
-+     period, business, na.rm = TRUE
-+   )
++   price_relative(price, period = period, product = product) ~ period + business,
++   na.rm = TRUE
 + )
 > 
 > ms_index1 <- aggregate(ms_elemental1, pias, na.rm = TRUE)
@@ -399,9 +391,9 @@ B5      1 1.3007239 1.0630743
 > 
 > ## -----------------------------------------------------------------------------
 > ms_elemental2 <- ms_prices2 |>
-+   transform(rel = price_relative(price, period, product)) |>
++   transform(rel = price_relative(price, period = period, product = product)) |>
 +   subset(period > "202003") |>
-+   with(elemental_index(rel, period, business, na.rm = TRUE))
++   elemental_index(rel ~ period + business, na.rm = TRUE)
 > 
 > ## -----------------------------------------------------------------------------
 > ms_index2 <- aggregate(ms_elemental2, update(pias, ms_index1), na.rm = TRUE)
@@ -432,13 +424,13 @@ B4      1 1.3007239 1.3827662 6.3279338
 B5      1 1.3007239 1.3827662 6.3279338
 > 
 > ## -----------------------------------------------------------------------------
-> ms_elemental2 <- with(
-+   ms_prices, 
+> ms_elemental2 <- ms_prices |>
++   transform(imputed_price = carry_forward(price, period = period, product = product)) |>
 +   elemental_index(
-+     price_relative(carry_forward(price, period, product), period, product),
-+     period, business, na.rm = TRUE
++     price_relative(imputed_price, period = period, product = product) ~
++       period + business,
++     na.rm = TRUE
 +   )
-+ )
 > 
 > ms_elemental2
 Period-over-period price index for 4 levels over 4 time periods 
@@ -468,12 +460,10 @@ B5      1 1.1721550 0.8082981 4.5762862
 > ms_prices2 <- subset(ms_prices, business == "B4")
 > 
 > ## -----------------------------------------------------------------------------
-> ms_elemental1 <- with(
-+   ms_prices1, 
-+   elemental_index(
-+     price_relative(price, period, product),
-+     period, business, na.rm = TRUE
-+   )
+> ms_elemental1 <- elemental_index(
++   ms_prices1,
++   price_relative(price, period = period, product = product) ~ period + business,
++   na.rm = TRUE
 + )
 > 
 > ms_elemental1
@@ -485,11 +475,9 @@ B3      1 2.0200036 1.6353355 0.537996
 > 
 > ms_elemental2 <- ms_prices2 |>
 +   transform(period = factor(period, levels = time(ms_elemental1))) |>
-+   with(
-+     elemental_index(
-+       price_relative(price, period, product),
-+       period, business, na.rm = TRUE
-+     )
++   elemental_index(
++     price_relative(price, period = period, product = product) ~ period + business,
++     na.rm = TRUE
 +   )
 > 
 > ms_elemental2
@@ -696,4 +684,4 @@ B5      1 1.5107763 1.2021080 5.5011904
 > 
 > proc.time()
    user  system elapsed 
-  0.177   0.019   0.190 
+  0.199   0.017   0.213 

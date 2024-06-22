@@ -1,17 +1,13 @@
 library(gpindex)
 
-ms_prices$rel <- with(ms_prices, price_relative(price, period, product))
+ms_prices$rel <- price_relative(ms_prices, price ~ period + product)
 ms_prices$w1 <- 1:40
 ms_prices$w2 <- 40:1
 
-epr1 <- with(
-  ms_prices,
-  elemental_index(rel, period, business, contrib = TRUE)
-)
+epr1 <- elemental_index(ms_prices, rel ~ period + business, contrib = TRUE)
 
-epr2 <- with(
-  ms_prices,
-  elemental_index(rel, period, business, r = -1, contrib = TRUE, na.rm = TRUE)
+epr2 <- elemental_index(
+  ms_prices, rel ~ period + business, r = -1, contrib = TRUE, na.rm = TRUE
 )
 
 # Test a Fisher calculation
@@ -26,9 +22,9 @@ ms_prices2 <- na.omit(ms_prices)
 w <- with(ms_prices2,
           grouped(fw)(rel, w1, w2, group = interaction(period, business)))
 
-epr3 <- with(
+epr3 <- elemental_index(
   ms_prices2,
-  elemental_index(rel, period, business, w, contrib = TRUE)
+  rel ~ period + business, weights = w, contrib = TRUE
 )
 
 test_that("results agree with an alternate implementation", {
@@ -45,8 +41,8 @@ test_that("results agree with an alternate implementation", {
 })
 
 test_that("Fisher calculation agrees with manual calculation", {
-  l <- with(ms_prices2, elemental_index(rel, period, business, w1, r = 1))
-  p <- with(ms_prices2, elemental_index(rel, period, business, w2, r = -1))
+  l <- elemental_index(ms_prices2, rel ~ period + business, weights = w1, r = 1)
+  p <- elemental_index(ms_prices2, rel ~ period + business, weights = w2, r = -1)
   expect_equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(epr3))
 
   # Should work for other kinds of superlative indexes
@@ -61,10 +57,10 @@ test_that("Fisher calculation agrees with manual calculation", {
     grouped(fw)(rel, w1, w2, group = interaction(period, business))
   )
 
-  sepr <- with(ms_prices2, elemental_index(rel, period, business, w))
+  sepr <- elemental_index(ms_prices2, rel ~ period + business, weights = w)
 
-  l <- with(ms_prices2, elemental_index(rel, period, business, r = 1.5))
-  p <- with(ms_prices2, elemental_index(rel, period, business, w2, r = -1.5))
+  l <- elemental_index(ms_prices2, rel ~ period + business, r = 1.5)
+  p <- elemental_index(ms_prices2, rel ~ period + business, weights = w2, r = -1.5)
   expect_equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 })
 
@@ -82,28 +78,11 @@ test_that("contributions add up", {
                lapply(epr3$contrib, function(x) sapply(x, sum_contrib) + 1))
 })
 
-test_that("NSE works", {
-  expect_equal(
-    elemental_index(ms_prices, rel ~ period + business, contrib = TRUE),
-    epr1
-  )
-  expect_equal(
-    elemental_index(
-      ms_prices, rel ~ period + business, contrib = TRUE, na.rm = TRUE, r = -1
-    ),
-    epr2
-  )
-  expect_equal(
-    elemental_index(ms_prices2, rel ~ period + business, w, contrib = TRUE),
-    epr3
-  )
-})
-
 test_that("argument checking works", {
-  expect_error(elemental_index(1:3, 1:2))
-  expect_error(elemental_index(1:3, 1:3, 1:4))
-  expect_error(elemental_index(1:3, 1:3, 1:3, weights = 1:2))
-  expect_error(elemental_index(1:3, factor(1:3, levels = numeric(0))))
+  expect_error(elemental_index(1:3, period = 1:2))
+  expect_error(elemental_index(1:3, period = 1:3, ea = 1:4))
+  expect_error(elemental_index(1:3, period = 1:3, product = 1:3, weights = 1:2))
+  expect_error(elemental_index(1:3, period = factor(1:3, levels = numeric(0))))
   expect_error(elemental_index(1:3, ea = factor(1:3, levels = numeric(0))))
   expect_error(elemental_index(setNames(1:3, c("", 1, 2)), contrib = TRUE))
   expect_warning(elemental_index(-1:1, r = 1))

@@ -1,15 +1,24 @@
 # Version 0.8.1
 
-## Improvements
+## Significant changes
 
-- `elemetal_index()` now accepts a formula to specify the price relatives,
-time periods, and elemental aggregates in a table. This makes it easier to use
-this function with pipes without needing to wrap the function in `with()`.
+-`elemental_index()`, `price_relative()`, `shadow_price()`, `carry_forward()`,
+and `carry_backward()` now have a formula interface to select the relevant,
+e.g., price variables from a data frame instead of using `with()`. This
+changes the signature of these functions, and may break old code if argument
+were not named.
+
+## Improvements
 
 - `as_index()` gains a new argument `contrib` to add contributions to
 pre-computed indexes.
 
 - Added `contrib2DF()` to extract percent-change contributions as a data frame.
+
+-`elemental_index()`, `price_relative()`, `shadow_price()`, `carry_forward()`,
+and `carry_backward()` now require the arguments for time periods, products, and
+elemental aggregates to be named so as to avoid accidentally changing the order
+of these arguments (gh #7).
 
 # Version 0.8.0
 

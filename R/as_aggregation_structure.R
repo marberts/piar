@@ -61,7 +61,7 @@ as_aggregation_structure <- function(x, ...) {
 
 #' @rdname as_aggregation_structure
 #' @export
-as_aggregation_structure.default <- function(x, weights = NULL, ...) {
+as_aggregation_structure.default <- function(x, ..., weights = NULL) {
   aggregation_structure(as.list(x), weights)
 }
 

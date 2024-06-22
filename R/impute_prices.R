@@ -27,8 +27,8 @@
 #'
 #' @name impute_prices
 #' @aliases impute_prices
-#' @param x A numeric vector of prices, or something that can be coerced
-#' into one.
+#' @param x Either a numeric vector (or something that can be coerced into one)
+#' or data frame of prices.
 #' @param period A factor, or something that can be coerced into one, giving
 #' the time period associated with each price in `x`. The ordering of time
 #' periods follows of the levels of `period`, to agree with
@@ -51,9 +51,15 @@
 #' elemental price indexes: 0 for a geometric index, 1 for an arithmetic index
 #' (the default), or -1 for a harmonic index. Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
+#' @param formula A two-part formula with prices on the left-hand
+#' side. For `carry_forward()` and `carry_backward()`, the right-hand side
+#' should have time periods and products (in that order); for
+#' `shadow_price()`, the right-hand side should have time period, products, and
+#' elemental aggregates (in that order).
+#' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
-#' A copy of `x` with missing values replaced (where possible).
+#' A numeric vector of prices with missing values replaced (where possible).
 #'
 #' @seealso
 #' [price_relative()] for making price relatives for the
@@ -72,13 +78,19 @@
 #'   ea = rep(letters[1:2], 4)
 #' )
 #'
-#' with(prices, carry_forward(price, period, product))
+#' carry_forward(prices, price ~ period + product)
 #'
-#' with(prices, shadow_price(price, period, product, ea))
+#' shadow_price(prices, price ~ period + product + ea)
 #'
 #' @export
-shadow_price <- function(x, period, product, ea,
-                         pias = NULL, weights = NULL, r1 = 0, r2 = 1) {
+shadow_price <- function(x, ...) {
+  UseMethod("shadow_price")
+}
+
+#' @rdname impute_prices
+#' @export
+shadow_price.default <- function(x, ..., period, product, ea,
+                                 pias = NULL, weights = NULL, r1 = 0, r2 = 1) {
   # This is mostly a combination of gpindex::back_period() and aggregate()
   # it just does it period-by-period and keeps track of prices to impute.
   x <- as.numeric(x)
@@ -117,8 +129,12 @@ shadow_price <- function(x, period, product, ea,
     back_price <- res[[t - 1L]][matches]
     price <- res[[t]]
     # Calculate indexes.
-    epr <- elemental_index(price / back_price,
-      ea = ea[[t]], weights = w[[t]], na.rm = TRUE, r = r1
+    epr <- elemental_index(
+      price / back_price,
+      period = gl(1, length(price)),
+      ea = ea[[t]],
+      weights = w[[t]],
+      na.rm = TRUE, r = r1
     )
     if (!is.null(pias)) {
       epr <- aggregate(epr, pias, na.rm = TRUE, r = r2)
@@ -129,14 +145,37 @@ shadow_price <- function(x, period, product, ea,
     eas <- match(as.character(ea[[t]][impute]), epr$levels)
     res[[t]][impute] <- epr$index[[1L]][eas] * back_price[impute]
   }
-  res <- unsplit(res, period)
-  attributes(res) <- attributes(x)
-  res
+  unsplit(res, period)
 }
 
 #' @rdname impute_prices
 #' @export
-carry_forward <- function(x, period, product) {
+shadow_price.data.frame <- function(x, formula, ...,
+                                    pias = NULL, weights = NULL,
+                                    r1 = 0, r2 = 1) {
+  if (length(formula) != 3L) {
+    stop("'formula' must have a left-hand and right-hand side")
+  }
+  fterms <- stats::terms(formula, data = x)
+  if (length(attr(fterms, "term.labels")) != 3L) {
+    stop("right-hand side of 'formula' must have exactly three terms")
+  }
+  weights <- eval(substitute(weights), x, parent.frame())
+  x <- eval(attr(fterms, "variables"), x, environment(formula))
+  
+  shadow_price(x[[1L]], period = x[[2L]], product = x[[3L]], ea = x[[4L]],
+               pias = pias, weights = weights, r1 = r1, r2 = r2)
+}
+
+#' @rdname impute_prices
+#' @export
+carry_forward <- function(x, ...) {
+  UseMethod("carry_forward")
+}
+
+#' @rdname impute_prices
+#' @export
+carry_forward.default <- function(x, ..., period, product) {
   x <- as.numeric(x)
   period <- as.factor(period)
   product <- as.factor(product)
@@ -162,14 +201,49 @@ carry_forward <- function(x, period, product) {
     )
     res[[t]][impute] <- res[[t - 1L]][matches]
   }
-  res <- unsplit(res, period)
-  attributes(res) <- attributes(x)
-  res
+  unsplit(res, period)
 }
 
 #' @rdname impute_prices
 #' @export
-carry_backwards <- function(x, period, product) {
+carry_forward.data.frame <- function(x, formula, ...) {
+  if (length(formula) != 3L) {
+    stop("'formula' must have a left-hand and right-hand side")
+  }
+  fterms <- stats::terms(formula, data = x)
+  if (length(attr(fterms, "term.labels")) != 2L) {
+    stop("right-hand side of 'formula' must have exactly two terms")
+  }
+  x <- eval(attr(fterms, "variables"), x, environment(formula))
+  
+  carry_forward(x[[1L]], period = x[[2L]], product = x[[3L]])
+}
+
+#' @rdname impute_prices
+#' @export
+carry_backward <- function(x, ...) {
+  UseMethod("carry_backward")
+}
+
+#' @rdname impute_prices
+#' @export
+carry_backward.default <- function(x, ..., period, product) {
   period <- as.factor(period)
-  carry_forward(x, factor(period, rev(levels(period))), product)
+  levels <- rev(levels(period))
+  carry_forward(x, period = factor(period, levels), product = product)
+}
+
+#' @rdname impute_prices
+#' @export
+carry_backward.data.frame <- function(x, formula, ...) {
+  if (length(formula) != 3L) {
+    stop("'formula' must have a left-hand and right-hand side")
+  }
+  fterms <- stats::terms(formula, data = x)
+  if (length(attr(fterms, "term.labels")) != 2L) {
+    stop("right-hand side of 'formula' must have exactly two terms")
+  }
+  x <- eval(attr(fterms, "variables"), x, environment(formula))
+  
+  carry_backward(x[[1L]], period = x[[2L]], product = x[[3L]])
 }

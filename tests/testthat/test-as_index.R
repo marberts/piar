@@ -6,8 +6,8 @@ pias <- as_aggregation_structure(
   data.frame(level1 = 1, level2 = c(11, 12, 13, 14), weight = 1)
 )
 
-epr <- with(dat, elemental_index(rel, period, ea, contrib = TRUE))
-epr2 <- with(dat, elemental_index(rel, period, ea, contrib = FALSE))
+epr <- elemental_index(dat, rel ~ period + ea, contrib = TRUE)
+epr2 <- elemental_index(dat, rel ~ period + ea, contrib = FALSE)
 index <- aggregate(epr, pias)
 
 test_that("as_index makes a valid index", {
@@ -44,7 +44,10 @@ test_that("as_index works for data frames", {
   df[[1]] <- factor(df[[1]], levels = 2:1)
   expect_equal(
     as_index(df),
-    with(dat, elemental_index(rel, factor(period, levels = 2:1), ea))
+    with(
+      dat,
+      elemental_index(rel, period = factor(period, levels = 2:1), ea = ea)
+    )
   )
   
   expect_equal(

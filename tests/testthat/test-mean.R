@@ -1,8 +1,8 @@
 test_that("aggregating over subperiods works", {
-  ms_epr <- with(
+  ms_epr <- elemental_index(
     ms_prices,
-    elemental_index(price_relative(price, period, product),
-                    period, business, contrib = TRUE, na.rm = TRUE)
+    price_relative(price, period = period, product = product)~ period + business,
+    contrib = TRUE, na.rm = TRUE
   )
 
   epr2 <- mean(ms_epr, window = 2)
@@ -17,12 +17,12 @@ test_that("aggregating over subperiods works", {
 
   w <- matrix(seq_len(4 * 4), 4)
   expect_equal(
-    as.matrix(mean(ms_epr, w, window = 2))[, 1],
+    as.matrix(mean(ms_epr, weights = w, window = 2))[, 1],
     diag(as.matrix(ms_epr)[, 1:2] %*% apply(w[, 1:2], 1, scale_weights)),
     ignore_attr = TRUE
   )
   expect_equal(
-    as.matrix(mean(ms_epr, w, window = 2))[, 2],
+    as.matrix(mean(ms_epr, weights = w, window = 2))[, 2],
     diag(as.matrix(ms_epr)[, 3:4] %*% apply(w[, 3:4], 1, scale_weights)),
     ignore_attr = TRUE
   )
@@ -39,7 +39,7 @@ test_that("aggregating over subperiods works", {
                as.numeric(contrib(epr2, "B3")[, 2]))
   expect_equal(colSums(contrib(epr2, "B3")), as.matrix(epr2)["B3", ] - 1)
   
-  epr3 <- mean(ms_epr, w, window = 2, r = 2.5, na.rm = TRUE)
+  epr3 <- mean(ms_epr, weights = w, window = 2, r = 2.5, na.rm = TRUE)
   expect_equal(colSums(contrib(epr3, "B1"), na.rm = TRUE),
                as.matrix(epr3)["B1", ] - 1)
   expect_equal(colSums(contrib(epr3, "B3")), as.matrix(epr3)["B3", ] - 1)

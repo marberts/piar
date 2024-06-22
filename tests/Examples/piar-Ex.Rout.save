@@ -1,5 +1,5 @@
 
-R version 4.4.0 (2024-04-24) -- "Puppy Cup"
+R version 4.4.1 (2024-06-14) -- "Race for Your Life"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -441,7 +441,7 @@ b 2.828427 6.928203
 > elemental_index(
 +   prices,
 +   rel ~ period + ea,
-+   fw(rel, group = interaction(period, ea)),
++   weights = fw(rel, group = interaction(period, ea)),
 +   r = 1
 + )
 Period-over-period price index for 2 levels over 2 time periods 
@@ -566,7 +566,10 @@ Period-over-period price index for 1 levels over 3 time periods
 > 
 > ### Name: impute_prices
 > ### Title: Impute missing prices
-> ### Aliases: impute_prices shadow_price carry_forward carry_backwards
+> ### Aliases: impute_prices shadow_price shadow_price.default
+> ###   shadow_price.data.frame carry_forward carry_forward.default
+> ###   carry_forward.data.frame carry_backward carry_backward.default
+> ###   carry_backward.data.frame
 > 
 > ### ** Examples
 > 
@@ -577,10 +580,10 @@ Period-over-period price index for 1 levels over 3 time periods
 +   ea = rep(letters[1:2], 4)
 + )
 > 
-> with(prices, carry_forward(price, period, product))
+> carry_forward(prices, price ~ period + product)
 [1] 1 2 3 4 5 6 7 4
 > 
-> with(prices, shadow_price(price, period, product, ea))
+> shadow_price(prices, price ~ period + product + ea)
 [1]  1  2  3  4  5  6  7 12
 > 
 > 
@@ -681,7 +684,8 @@ Period-over-period price index for 4 levels over 3 time periods
 > 
 > ### Name: price_relative
 > ### Title: Calculate period-over-period price relatives
-> ### Aliases: price_relative
+> ### Aliases: price_relative price_relative.default
+> ###   price_relative.data.frame
 > 
 > ### ** Examples
 > 
@@ -958,7 +962,7 @@ Period-over-period price index for 3 levels over 3 time periods
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.119 0.004 0.122 0 0 
+Time elapsed:  0.117 0.004 0.121 0 0 
 > grDevices::dev.off()
 null device 
           1 

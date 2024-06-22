@@ -1,13 +1,13 @@
-epr1 <- with(
+epr1 <- elemental_index(
   ms_prices,
-  elemental_index(price_relative(price, period, product),
-                  period, business, contrib = TRUE, na.rm = TRUE)
+  price_relative(price, period = period, product = product) ~ period + business,
+  contrib = TRUE, na.rm = TRUE
 )
 
-epr2 <- with(
+epr2 <- elemental_index(
   ms_prices,
-  elemental_index(price_relative(price, period, product),
-                  period, business, na.rm = TRUE)
+  price_relative(price, period = period, product = product) ~ period + business,
+  na.rm = TRUE
 )
 
 pias <- with(
