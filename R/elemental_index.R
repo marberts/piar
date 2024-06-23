@@ -34,6 +34,18 @@ different_length <- function(...) {
   any(res != res[1L])
 }
 
+formula_vars <- function(formula, x, n = 2L) {
+  if (length(formula) != 3L) {
+    stop("'formula' must have a left-hand and right-hand side")
+  }
+  fterms <- stats::terms(formula, data = x)
+  x <- eval(attr(fterms, "variables"), x, environment(formula))
+  if (length(x) != n + 1L) {
+    stop(gettextf("right-hand side of 'formula' must have exactly %s terms", n))
+  }
+  x
+}
+
 #' Make elemental price indexes
 #'
 #' Compute period-over-period (chainable) or fixed-base (direct) elemental
@@ -91,11 +103,9 @@ different_length <- function(...) {
 #' @param period A factor, or something that can be coerced into one, giving
 #' the time period associated with each price relative in `x`. The
 #' ordering of time periods follows of the levels of `period`, to agree
-#' with [`cut()`][cut.Date]. The default assumes that all price
-#' relatives belong to one time period.
+#' with [`cut()`][cut.Date].
 #' @param ea A factor, or something that can be coerced into one, giving the
-#' elemental aggregate associated with each price relative in `x`. The
-#' default assumes that all price relatives belong to one elemental aggregate.
+#' elemental aggregate associated with each price relative in `x`.
 #' @param weights A numeric vector of weights for the price relatives in `x`,
 #' or something that can be coerced into one. The default is equal weights.
 #' @param contrib Should percent-change contributions be calculated? The
@@ -113,7 +123,7 @@ different_length <- function(...) {
 #' a Paasche index). Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
 #' @param ... Further arguments passed to or used by methods.
-#' @param formula A two-part formula with price relatives on the left-hand
+#' @param formula A two-sided formula with price relatives on the left-hand
 #' side, and time periods and elemental aggregates (in that order) on the
 #' right-hand side.
 #'
@@ -200,38 +210,9 @@ elemental_index.default <- function(x, ...) {
 
 #' @rdname elemental_index
 #' @export
-elemental_index.data.frame <- function(x,
-                                       formula, ...,
-                                       weights = NULL,
-                                       chainable = TRUE,
-                                       na.rm = FALSE,
-                                       contrib = FALSE,
-                                       r = 0) {
-  if (length(formula) != 3L) {
-    stop("'formula' must have a left-hand and right-hand side")
-  }
-  fterms <- stats::terms(formula, data = x)
-  if (length(attr(fterms, "term.labels")) != 2L) {
-    stop("right-hand side of 'formula' must have exactly two terms")
-  }
-  weights <- eval(substitute(weights), x, parent.frame())
-  x <- eval(attr(fterms, "variables"), x, environment(formula))
-  
-  elemental_index(
-    x[[1L]], period = x[[2L]], ea = x[[3L]],
-    weights = weights,
-    chainable = chainable,
-    na.rm = na.rm,
-    contrib = contrib,
-    r = r
-  )
-}
-
-#' @rdname elemental_index
-#' @export
 elemental_index.numeric <- function(x, ...,
-                                    period = gl(1, length(x)),
-                                    ea = gl(1, length(x)),
+                                    period,
+                                    ea,
                                     weights = NULL,
                                     chainable = TRUE,
                                     na.rm = FALSE,
@@ -252,7 +233,7 @@ elemental_index.numeric <- function(x, ...,
   if (any(x <= 0, na.rm = TRUE) || any(weights <= 0, na.rm = TRUE)) {
     warning("some elements of 'x' or 'weights' are less than or equal to 0")
   }
-
+  
   if (contrib) {
     if (is.null(names(x))) {
       names(x) <- paste(ea, sequential_names(period, ea), sep = ".")
@@ -270,14 +251,14 @@ elemental_index.numeric <- function(x, ...,
   } else {
     weights <- Map(split, split(weights, period), ea)
   }
-
+  
   index_fun <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
   contrib_fun <- Vectorize(
     gpindex::contributions(r),
     SIMPLIFY = FALSE,
     USE.NAMES = FALSE
   )
-
+  
   index <- Map(index_fun, x, weights, na.rm = na.rm, USE.NAMES = FALSE)
   if (contrib) {
     contributions <- Map(contrib_fun, x, weights, USE.NAMES = FALSE)
@@ -285,6 +266,29 @@ elemental_index.numeric <- function(x, ...,
     # Mimic contributions structure instead of a NULL.
     contributions <- contrib_skeleton(levels, time)
   }
-
+  
   piar_index(index, contributions, levels, time, chainable)
+}
+
+
+#' @rdname elemental_index
+#' @export
+elemental_index.data.frame <- function(x,
+                                       formula, ...,
+                                       weights = NULL,
+                                       chainable = TRUE,
+                                       na.rm = FALSE,
+                                       contrib = FALSE,
+                                       r = 0) {
+  vars <- formula_vars(formula, x)
+  weights <- eval(substitute(weights), x, parent.frame())
+  
+  elemental_index(
+    vars[[1L]], period = vars[[2L]], ea = vars[[3L]],
+    weights = weights,
+    chainable = chainable,
+    na.rm = na.rm,
+    contrib = contrib,
+    r = r
+  )
 }

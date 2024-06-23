@@ -51,7 +51,7 @@
 #' elemental price indexes: 0 for a geometric index, 1 for an arithmetic index
 #' (the default), or -1 for a harmonic index. Other values are possible; see
 #' [gpindex::generalized_mean()] for details.
-#' @param formula A two-part formula with prices on the left-hand
+#' @param formula A two-sided formula with prices on the left-hand
 #' side. For `carry_forward()` and `carry_backward()`, the right-hand side
 #' should have time periods and products (in that order); for
 #' `shadow_price()`, the right-hand side should have time period, products, and
@@ -153,18 +153,11 @@ shadow_price.default <- function(x, ..., period, product, ea,
 shadow_price.data.frame <- function(x, formula, ...,
                                     pias = NULL, weights = NULL,
                                     r1 = 0, r2 = 1) {
-  if (length(formula) != 3L) {
-    stop("'formula' must have a left-hand and right-hand side")
-  }
-  fterms <- stats::terms(formula, data = x)
-  if (length(attr(fterms, "term.labels")) != 3L) {
-    stop("right-hand side of 'formula' must have exactly three terms")
-  }
+  vars <- formula_vars(formula, x, 3L)
   weights <- eval(substitute(weights), x, parent.frame())
-  x <- eval(attr(fterms, "variables"), x, environment(formula))
   
-  shadow_price(x[[1L]], period = x[[2L]], product = x[[3L]], ea = x[[4L]],
-               pias = pias, weights = weights, r1 = r1, r2 = r2)
+  shadow_price(vars[[1L]], period = vars[[2L]], product = vars[[3L]],
+               ea = vars[[4L]], pias = pias, weights = weights, r1 = r1, r2 = r2)
 }
 
 #' @rdname impute_prices
@@ -207,16 +200,9 @@ carry_forward.default <- function(x, ..., period, product) {
 #' @rdname impute_prices
 #' @export
 carry_forward.data.frame <- function(x, formula, ...) {
-  if (length(formula) != 3L) {
-    stop("'formula' must have a left-hand and right-hand side")
-  }
-  fterms <- stats::terms(formula, data = x)
-  if (length(attr(fterms, "term.labels")) != 2L) {
-    stop("right-hand side of 'formula' must have exactly two terms")
-  }
-  x <- eval(attr(fterms, "variables"), x, environment(formula))
+  vars <- formula_vars(formula, x)
   
-  carry_forward(x[[1L]], period = x[[2L]], product = x[[3L]])
+  carry_forward(vars[[1L]], period = vars[[2L]], product = vars[[3L]])
 }
 
 #' @rdname impute_prices
@@ -236,14 +222,7 @@ carry_backward.default <- function(x, ..., period, product) {
 #' @rdname impute_prices
 #' @export
 carry_backward.data.frame <- function(x, formula, ...) {
-  if (length(formula) != 3L) {
-    stop("'formula' must have a left-hand and right-hand side")
-  }
-  fterms <- stats::terms(formula, data = x)
-  if (length(attr(fterms, "term.labels")) != 2L) {
-    stop("right-hand side of 'formula' must have exactly two terms")
-  }
-  x <- eval(attr(fterms, "variables"), x, environment(formula))
+  vars <- formula_vars(formula, x)
   
-  carry_backward(x[[1L]], period = x[[2L]], product = x[[3L]])
+  carry_backward(vars[[1L]], period = vars[[2L]], product = vars[[3L]])
 }

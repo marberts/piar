@@ -395,7 +395,7 @@ detaching ‘package:gpindex’
 > ### Name: elemental_index
 > ### Title: Make elemental price indexes
 > ### Aliases: elemental_index elemental_index.default
-> ###   elemental_index.data.frame elemental_index.numeric
+> ###   elemental_index.numeric elemental_index.data.frame
 > 
 > ### ** Examples
 > 

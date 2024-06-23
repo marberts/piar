@@ -79,12 +79,27 @@ test_that("contributions add up", {
 })
 
 test_that("argument checking works", {
-  expect_error(elemental_index(1:3, period = 1:2))
+  expect_error(elemental_index(1:3, period = 1:2, ea = 1:3))
   expect_error(elemental_index(1:3, period = 1:3, ea = 1:4))
   expect_error(elemental_index(1:3, period = 1:3, product = 1:3, weights = 1:2))
   expect_error(elemental_index(1:3, period = factor(1:3, levels = numeric(0))))
   expect_error(elemental_index(1:3, ea = factor(1:3, levels = numeric(0))))
   expect_error(elemental_index(setNames(1:3, c("", 1, 2)), contrib = TRUE))
-  expect_warning(elemental_index(-1:1, r = 1))
-  expect_warning(elemental_index(setNames(1:3, rep(1, 3)), contrib = TRUE))
+  expect_warning(elemental_index(-1:1, period = 1:3, ea = 1:3, r = 1))
+  expect_warning(elemental_index(
+    setNames(1:3, rep(1, 3)), period = gl(1, 3), ea = gl(1, 3), contrib = TRUE
+  ))
+})
+
+test_that("nse works", {
+  expect_equal(
+    elemental_index(ms_prices, rel ~ period:business, contrib = TRUE),
+    epr1
+  )
+  expect_equal(
+    elemental_index(ms_prices[c(1:2, 5)], rel ~ ., contrib = TRUE),
+    epr1
+  )
+  expect_error(elemental_index(ms_prices, rel ~ .))
+  expect_error(elemental_index(ms_prices,  ~ period + business))
 })

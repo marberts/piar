@@ -26,7 +26,7 @@ ordering of time periods follows the levels of \code{period} to agree with
 \item{product}{A factor, or something that can be coerced into one, that
 gives the corresponding product identifier for each element in \code{x}.}
 
-\item{formula}{A two-part formula with prices on the left-hand
+\item{formula}{A two-sided formula with prices on the left-hand
 side, and time periods and products (in that order) on the
 right-hand side.}
 }

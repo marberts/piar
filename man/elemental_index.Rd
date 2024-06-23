@@ -3,18 +3,19 @@
 \name{elemental_index}
 \alias{elemental_index}
 \alias{elemental_index.default}
-\alias{elemental_index.data.frame}
 \alias{elemental_index.numeric}
+\alias{elemental_index.data.frame}
 \title{Make elemental price indexes}
 \usage{
 elemental_index(x, ...)
 
 \method{elemental_index}{default}(x, ...)
 
-\method{elemental_index}{data.frame}(
+\method{elemental_index}{numeric}(
   x,
-  formula,
   ...,
+  period,
+  ea,
   weights = NULL,
   chainable = TRUE,
   na.rm = FALSE,
@@ -22,11 +23,10 @@ elemental_index(x, ...)
   r = 0
 )
 
-\method{elemental_index}{numeric}(
+\method{elemental_index}{data.frame}(
   x,
+  formula,
   ...,
-  period = gl(1, length(x)),
-  ea = gl(1, length(x)),
   weights = NULL,
   chainable = TRUE,
   na.rm = FALSE,
@@ -41,9 +41,13 @@ are methods for numeric vectors (which can be made with
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{formula}{A two-part formula with price relatives on the left-hand
-side, and time periods and elemental aggregates (in that order) on the
-right-hand side.}
+\item{period}{A factor, or something that can be coerced into one, giving
+the time period associated with each price relative in \code{x}. The
+ordering of time periods follows of the levels of \code{period}, to agree
+with \code{\link[=cut.Date]{cut()}}.}
+
+\item{ea}{A factor, or something that can be coerced into one, giving the
+elemental aggregate associated with each price relative in \code{x}.}
 
 \item{weights}{A numeric vector of weights for the price relatives in \code{x},
 or something that can be coerced into one. The default is equal weights.}
@@ -66,15 +70,9 @@ averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
-\item{period}{A factor, or something that can be coerced into one, giving
-the time period associated with each price relative in \code{x}. The
-ordering of time periods follows of the levels of \code{period}, to agree
-with \code{\link[=cut.Date]{cut()}}. The default assumes that all price
-relatives belong to one time period.}
-
-\item{ea}{A factor, or something that can be coerced into one, giving the
-elemental aggregate associated with each price relative in \code{x}. The
-default assumes that all price relatives belong to one elemental aggregate.}
+\item{formula}{A two-sided formula with price relatives on the left-hand
+side, and time periods and elemental aggregates (in that order) on the
+right-hand side.}
 }
 \value{
 A price index that inherits from \code{\link{piar_index}}. If

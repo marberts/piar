@@ -2,11 +2,17 @@
 
 ## Significant changes
 
--`elemental_index()`, `price_relative()`, `shadow_price()`, `carry_forward()`,
+- `elemental_index()`, `price_relative()`, `shadow_price()`, `carry_forward()`,
 and `carry_backward()` now have a formula interface to select the relevant,
 e.g., price variables from a data frame instead of using `with()`. This
 changes the signature of these functions, and may break old code if argument
 were not named.
+
+    - As part of the above change, `elemental_index()` no longer defaults to putting
+    all price relatives in one time period/elemental aggregate.
+    
+    - `as_aggregation_structure(list)` and `mean(index)` now require the `weights`
+    argument to be named to be consistent with other functions.
 
 ## Improvements
 
@@ -15,7 +21,7 @@ pre-computed indexes.
 
 - Added `contrib2DF()` to extract percent-change contributions as a data frame.
 
--`elemental_index()`, `price_relative()`, `shadow_price()`, `carry_forward()`,
+- `elemental_index()`, `price_relative()`, `shadow_price()`, `carry_forward()`,
 and `carry_backward()` now require the arguments for time periods, products, and
 elemental aggregates to be named so as to avoid accidentally changing the order
 of these arguments (gh #7).

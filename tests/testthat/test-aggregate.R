@@ -322,7 +322,7 @@ test_that("partial contributions are correct", {
 })
 
 test_that("duplicate products get unique names during aggregation", {
-  epr1 <- elemental_index(setNames(1:4, 1:4), ea = gl(2, 2), contrib = TRUE, r = 1)
+  epr1 <- elemental_index(setNames(1:4, 1:4), ea = gl(2, 2), period = gl(1, 4), contrib = TRUE, r = 1)
   epr2 <- epr1
   levels(epr2) <- 3:4
   index <- aggregate(merge(epr1, epr2),

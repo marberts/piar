@@ -23,6 +23,11 @@ test_that("imputing shadow prices does noting", {
     sp,
     shadow_price(ms_prices, sp ~ period + product + business, pias = pias)
   )
+  
+  expect_equal(
+    sp,
+    shadow_price(ms_prices, sp ~ period + product + business, pias = pias, weights = price)
+  )
 })
 
 test_that("sp imputation is the same are regular parental in periods 1, 2", {
@@ -72,8 +77,9 @@ test_that("jumbling prices does nothing", {
 })
 
 test_that("carrying forward/backwards imputation works", {
-  expect_equal(carry_forward(c(NA, 1, 2, NA, 3), period = gl(5, 1), product = gl(1, 5)),
+  df <- data.frame(price = c(NA, 1, 2, NA, 3), period = gl(5, 1), product = gl(1, 5))
+  expect_equal(carry_forward(df, price ~ period + product),
                c(NA, 1, 2, 2, 3))
-  expect_equal(carry_backward(c(NA, 1, 2, NA, 3), period = gl(5, 1), product = gl(1, 5)),
+  expect_equal(carry_backward(df, price ~ period + product),
                c(1, 1, 2, 3, 3))
 })

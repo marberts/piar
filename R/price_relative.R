@@ -12,7 +12,7 @@
 #' @param product A factor, or something that can be coerced into one, that
 #' gives the corresponding product identifier for each element in `x`.
 #' @param ... Further arguments passed to or used by methods.
-#' @param formula A two-part formula with prices on the left-hand
+#' @param formula A two-sided formula with prices on the left-hand
 #' side, and time periods and products (in that order) on the
 #' right-hand side.
 #'
@@ -59,14 +59,6 @@ price_relative.default <- function(x, ..., period, product) {
 #' @rdname price_relative
 #' @export
 price_relative.data.frame <- function(x, formula, ...) {
-  if (length(formula) != 3L) {
-    stop("'formula' must have a left-hand and right-hand side")
-  }
-  fterms <- stats::terms(formula, data = x)
-  if (length(attr(fterms, "term.labels")) != 2L) {
-    stop("right-hand side of 'formula' must have exactly two terms")
-  }
-  
-  x <- eval(attr(fterms, "variables"), x, environment(formula))
-  price_relative(x[[1L]], period = x[[2L]], product = x[[3L]])
+  vars <- formula_vars(formula, x)
+  price_relative(vars[[1L]], period = vars[[2L]], product = vars[[3L]])
 }

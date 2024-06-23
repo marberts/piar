@@ -87,7 +87,8 @@ test_that("product names are correct", {
   expect_equal(
     suppressWarnings(
       contrib(elemental_index(c(a = 1, b = 2, c = 3, a = 4, a = 5),
-                              period = c(1, 1, 1, 2, 2), contrib = TRUE, r = 1))
+        period = c(1, 1, 1, 2, 2), ea = gl(1, 5), contrib = TRUE, r = 1
+      ))
     ),
     matrix(c(0, 0, 1 / 3, 2 / 3, 1.5, 2, 0, 0), 4, 2,
            dimnames = list(c("a", "a.1", "b", "c"), 1:2))
