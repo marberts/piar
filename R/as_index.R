@@ -34,7 +34,7 @@
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
-#' `as_index()` returns a price index that inherits from
+#' A price index that inherits from
 #' [`piar_index`]. If `chainable = TRUE` then this is a
 #' period-over-period price index that also inherits from
 #' [`chainable_piar_index`]; otherwise, it is a fixed-base index that

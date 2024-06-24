@@ -34,7 +34,7 @@ indexes, suitable for a chained calculation (the default)? This should be
 percent-change contributions? The default does not make contributions.}
 }
 \value{
-\code{as_index()} returns a price index that inherits from
+A price index that inherits from
 \code{\link{piar_index}}. If \code{chainable = TRUE} then this is a
 period-over-period price index that also inherits from
 \code{\link{chainable_piar_index}}; otherwise, it is a fixed-base index that

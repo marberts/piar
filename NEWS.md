@@ -14,22 +14,6 @@ were not named.
     - `as_aggregation_structure(list)` and `mean(index)` now require the `weights`
     argument to be named to be consistent with other functions.
 
-## Improvements
-
-- `as_index()` gains a new argument `contrib` to add contributions to
-pre-computed indexes.
-
-- Added `contrib2DF()` to extract percent-change contributions as a data frame.
-
-- `elemental_index()`, `price_relative()`, `shadow_price()`, `carry_forward()`,
-and `carry_backward()` now require the arguments for time periods, products, and
-elemental aggregates to be named so as to avoid accidentally changing the order
-of these arguments (gh #7).
-
-# Version 0.8.0
-
-## Significant changes
-
 - The `aggregate_piar_index` class has been removed. This class was not
 well thought out, and added unnecessary restrictions and complications to
 certain functions. In most cases this has little impact on existing code, but
@@ -43,6 +27,16 @@ makes it easier to use `mean()` with the new `window()` method for index
 object.
 
 ## Improvements
+
+- `as_index()` gains a new argument `contrib` to add contributions to
+pre-computed indexes.
+
+- Added `contrib2DF()` to extract percent-change contributions as a data frame.
+
+- `elemental_index()`, `price_relative()`, `shadow_price()`, `carry_forward()`,
+and `carry_backward()` now require the arguments for time periods, products, and
+elemental aggregates to be named so as to avoid accidentally changing the order
+of these arguments (gh #7).
 
 - Added `interact_classifications()` to get the interaction of different
 dimensions for a hierarchical classification.

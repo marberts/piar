@@ -64,3 +64,7 @@ test_that("price updating works with a stacked index", {
   expect_equal(aggregate(index[, 2], update(pias1, index, 1)), index[, 2])
   expect_equal(aggregate(index[, 4], update(pias2, index[, 3:4], 3)), index[, 4])
 })
+
+test_that("stack matches y to x", {
+  expect_equal(stack(epr1, epr2), stack(epr1, epr2[4:1]))
+})
