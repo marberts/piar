@@ -11,7 +11,7 @@
 \usage{
 as_index(x, ...)
 
-\method{as_index}{default}(x, ..., chainable = TRUE, contrib = FALSE)
+\method{as_index}{default}(x, ...)
 
 \method{as_index}{matrix}(x, ..., chainable = TRUE, contrib = FALSE)
 

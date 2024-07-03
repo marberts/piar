@@ -99,7 +99,7 @@ test_that("product names are correct", {
     contrib(epr),
     contrib(
       elemental_index(dat, setNames(rel, c(1:5, 1, 3, 2, 6)) ~
-        period + ea, w, contrib = TRUE)
+        period + ea, weights = w, contrib = TRUE)
     )
   )
 })

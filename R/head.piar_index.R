@@ -21,6 +21,7 @@
 #' @importFrom utils head
 #' @export
 head.piar_index <- function(x, n = 6L, ...) {
+  chkDots(...)
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {
@@ -44,6 +45,7 @@ head.piar_index <- function(x, n = 6L, ...) {
 #' @importFrom utils tail
 #' @export
 tail.piar_index <- function(x, n = 6L, ...) {
+  chkDots(...)
   nl <- levels <- length(x$levels)
   np <- periods <- length(x$time)
   if (!is.na(n[1L])) {

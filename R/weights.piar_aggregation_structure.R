@@ -50,8 +50,11 @@
 #' @importFrom stats weights
 #' @family aggregation structure methods
 #' @export
-weights.piar_aggregation_structure <- function(object, ..., ea_only = TRUE,
+weights.piar_aggregation_structure <- function(object,
+                                               ...,
+                                               ea_only = TRUE,
                                                na.rm = FALSE) {
+  chkDots(...)
   names(object$weights) <- object$levels[[length(object$levels)]]
   if (ea_only) {
     return(object$weights)

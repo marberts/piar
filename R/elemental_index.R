@@ -210,7 +210,8 @@ elemental_index.default <- function(x, ...) {
 
 #' @rdname elemental_index
 #' @export
-elemental_index.numeric <- function(x, ...,
+elemental_index.numeric <- function(x,
+                                    ...,
                                     period,
                                     ea,
                                     weights = NULL,
@@ -218,6 +219,7 @@ elemental_index.numeric <- function(x, ...,
                                     na.rm = FALSE,
                                     contrib = FALSE,
                                     r = 0) {
+  chkDots(...)
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
   }
@@ -274,17 +276,21 @@ elemental_index.numeric <- function(x, ...,
 #' @rdname elemental_index
 #' @export
 elemental_index.data.frame <- function(x,
-                                       formula, ...,
+                                       formula,
+                                       ...,
                                        weights = NULL,
                                        chainable = TRUE,
                                        na.rm = FALSE,
                                        contrib = FALSE,
                                        r = 0) {
+  chkDots(...)
   vars <- formula_vars(formula, x)
   weights <- eval(substitute(weights), x, parent.frame())
   
   elemental_index(
-    vars[[1L]], period = vars[[2L]], ea = vars[[3L]],
+    vars[[1L]],
+    period = vars[[2L]],
+    ea = vars[[3L]],
     weights = weights,
     chainable = chainable,
     na.rm = na.rm,

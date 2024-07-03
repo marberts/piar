@@ -43,6 +43,7 @@ price_relative <- function(x, ...) {
 #' @rdname price_relative
 #' @export
 price_relative.default <- function(x, ..., period, product) {
+  chkDots(...)
   x <- as.numeric(x)
   period <- as.factor(period)
   product <- as.factor(product)
@@ -59,6 +60,7 @@ price_relative.default <- function(x, ..., period, product) {
 #' @rdname price_relative
 #' @export
 price_relative.data.frame <- function(x, formula, ...) {
+  chkDots(...)
   vars <- formula_vars(formula, x)
   price_relative(vars[[1L]], period = vars[[2L]], product = vars[[3L]])
 }

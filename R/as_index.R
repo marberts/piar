@@ -64,13 +64,14 @@ as_index <- function(x, ...) {
 
 #' @rdname as_index
 #' @export
-as_index.default <- function(x, ..., chainable = TRUE, contrib = FALSE) {
-  as_index(as.matrix(x), ..., chainable = chainable, contrib = contrib)
+as_index.default <- function(x, ...) {
+  as_index(as.matrix(x), ...)
 }
 
 #' @rdname as_index
 #' @export
 as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
+  chkDots(...)
   storage.mode(x) <- "numeric"
   levels <- if (is.null(rownames(x))) seq_len(nrow(x)) else rownames(x)
   periods <- if (is.null(colnames(x))) seq_len(ncol(x)) else colnames(x)
@@ -98,6 +99,7 @@ as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
 #' @rdname as_index
 #' @export
 as_index.data.frame <- function(x, ..., chainable = TRUE, contrib = FALSE) {
+  chkDots(...)
   if (length(x) != 3L) {
     stop(
       "'x' must have a column of time periods, index levels, and index values"
@@ -112,17 +114,19 @@ as_index.data.frame <- function(x, ..., chainable = TRUE, contrib = FALSE) {
     dimnames = list(levels, time)
   )
   res[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
-  as_index(res, ..., chainable = chainable, contrib = contrib)
+  as_index(res, chainable = chainable, contrib = contrib)
 }
 
 #' @rdname as_index
 #' @export
 as_index.chainable_piar_index <- function(x, ..., chainable = TRUE) {
+  chkDots(...)
   if (chainable) x else chain(x)
 }
 
 #' @rdname as_index
 #' @export
 as_index.direct_piar_index <- function(x, ..., chainable = FALSE) {
+  chkDots(...)
   if (chainable) unchain(x) else x
 }

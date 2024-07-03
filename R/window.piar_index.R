@@ -41,6 +41,7 @@ index_window <- function(x, start, end) {
 #' @importFrom stats window
 #' @export
 window.piar_index <- function(x, start = NULL, end = NULL, ...) {
+  chkDots(...)
   x[, index_window(x, start, end)]
 }
 
@@ -48,6 +49,7 @@ window.piar_index <- function(x, start = NULL, end = NULL, ...) {
 #' @importFrom stats window<-
 #' @export
 `window<-.piar_index` <- function(x, start = NULL, end = NULL, ..., value) {
+  chkDots(...)
   x[, index_window(x, start, end)] <- value
   x
 }

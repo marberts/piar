@@ -27,15 +27,20 @@
 #' @family index methods
 #' @export
 as.data.frame.piar_index <- function(x, ..., stringsAsFactors = FALSE) {
+  chkDots(...)
   value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))
   if (stringsAsFactors) {
-    data.frame(period = factor(period, x$time),
-      level = factor(x$levels, x$levels), value
+    data.frame(
+      period = factor(period, x$time),
+      level = factor(x$levels, x$levels),
+      value
     )
   } else {
-    data.frame(period,
-      level = x$levels, value,
+    data.frame(
+      period,
+      level = x$levels,
+      value,
       stringsAsFactors = FALSE
     )
   }
@@ -44,6 +49,7 @@ as.data.frame.piar_index <- function(x, ..., stringsAsFactors = FALSE) {
 #' @rdname as.data.frame.piar_index
 #' @export
 as.matrix.piar_index <- function(x, ...) {
+  chkDots(...)
   res <- do.call(cbind, x$index)
   dimnames(res) <- list(x$levels, x$time)
   res
@@ -51,5 +57,6 @@ as.matrix.piar_index <- function(x, ...) {
 
 #' @export
 as.double.piar_index <- function(x, ...) {
+  chkDots(...)
   as.double(as.matrix(x))
 }

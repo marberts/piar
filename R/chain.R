@@ -78,6 +78,7 @@ chain.default <- function(x, ...) {
 #' @rdname chain
 #' @export
 chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
+  chkDots(...)
   link <- as.numeric(link)
   if (length(link) != length(x$levels)) {
     stop("'link' must have a value for each level of 'x'")
@@ -96,6 +97,7 @@ chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
 
 #' @export
 chain.direct_piar_index <- function(x, ...) {
+  chkDots(...)
   x
 }
 
@@ -113,12 +115,14 @@ unchain.default <- function(x, ...) {
 
 #' @export
 unchain.chainable_piar_index <- function(x, ...) {
+  chkDots(...)
   x
 }
 
 #' @rdname chain
 #' @export
 unchain.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
+  chkDots(...)
   if (length(base) == 1L && is.character(base)) {
     base <- x$index[[match_time(base, x$time)]] / x$index[[1L]]
   } else {
@@ -148,12 +152,14 @@ rebase.default <- function(x, ...) {
 
 #' @export
 rebase.chainable_piar_index <- function(x, ...) {
+  chkDots(...)
   x
 }
 
 #' @rdname chain
 #' @export
 rebase.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
+  chkDots(...)
   if (length(base) == 1L && is.character(base)) {
     base <- x$index[[match_time(base, x$time)]]
   } else {

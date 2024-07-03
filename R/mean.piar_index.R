@@ -1,3 +1,55 @@
+#' Internal function to aggregate over subperiods
+#' @noRd
+mean_index <- function(x, weights, window, na.rm, contrib, r, chainable) {
+  if (!is.null(weights)) {
+    weights <- as.numeric(weights)
+    if (length(weights) != length(x$time) * length(x$levels)) {
+      stop("'weights' must have a value for each index value in 'x'")
+    }
+    w <- split(weights, gl(length(x$time), length(x$levels)))
+  }
+
+  window <- as.integer(window)
+  if (length(window) > 1L || window < 1L) {
+    stop("'window' must be a positive length 1 integer")
+  }
+  if (window > length(x$time)) {
+    stop("'x' must have at least 'window' time periods")
+  }
+
+  # Helpful functions.
+  gen_mean <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
+  agg_contrib <- Vectorize(aggregate_contrib(r),
+    SIMPLIFY = FALSE, USE.NAMES = FALSE
+  )
+
+  # Get the starting location for each window.
+  if (length(x$time) %% window != 0) {
+    warning("'window' is not a multiple of the number of time periods in 'x'")
+  }
+  len <- length(x$time) %/% window
+  loc <- seq.int(1L, by = window, length.out = len)
+  periods <- x$time[loc]
+
+  has_contrib <- has_contrib(x) && contrib
+
+  # Loop over each window and calculate the mean for each level.
+  index <- index_skeleton(x$levels, periods)
+  contrib <- contrib_skeleton(x$levels, periods)
+  for (i in seq_along(loc)) {
+    j <- seq(loc[i], length.out = window)
+    rel <- .mapply(c, x$index[j], list())
+    weight <- if (is.null(weights)) list(NULL) else .mapply(c, w[j], list())
+    index[[i]][] <- gen_mean(rel, weight, na.rm = na.rm)
+    if (has_contrib) {
+      con <- .mapply(\(...) c(list(...)), x$contrib[j], list())
+      contrib[[i]][] <- agg_contrib(con, rel, weight)
+    }
+  }
+
+  piar_index(index, contrib, x$levels, periods, chainable)
+}
+
 #' Aggregate a price index over subperiods
 #'
 #' Aggregate an index over subperiods by taking the (usually arithmetic) mean
@@ -59,79 +111,27 @@
 #'
 #' @family index methods
 #' @export
-mean.chainable_piar_index <- function(x, ...,
+mean.chainable_piar_index <- function(x,
+                                      ...,
                                       weights = NULL,
                                       window = ntime(x),
                                       na.rm = FALSE,
                                       contrib = TRUE,
                                       r = 1) {
-  NextMethod("mean", chainable = TRUE)
+  chkDots(...)
+  mean_index(x, weights, window, na.rm, contrib, r, TRUE)
 }
 
 #' @rdname mean.piar_index
 #' @export
-mean.direct_piar_index <- function(x, ...,
+mean.direct_piar_index <- function(x,
+                                   ...,
                                    weights = NULL,
                                    window = ntime(x),
                                    na.rm = FALSE,
                                    contrib = TRUE,
                                    r = 1) {
-  NextMethod("mean", chainable = FALSE)
+  chkDots(...)
+  mean_index(x, weights, window, na.rm, contrib, r, FALSE)
 }
 
-#' @export
-mean.piar_index <- function(x, ...,
-                            weights = NULL,
-                            window = ntime(x),
-                            na.rm = FALSE,
-                            contrib = TRUE,
-                            r = 1,
-                            chainable) {
-  if (!is.null(weights)) {
-    weights <- as.numeric(weights)
-    if (length(weights) != length(x$time) * length(x$levels)) {
-      stop("'weights' must have a value for each index value in 'x'")
-    }
-    w <- split(weights, gl(length(x$time), length(x$levels)))
-  }
-
-  window <- as.integer(window)
-  if (length(window) > 1L || window < 1L) {
-    stop("'window' must be a positive length 1 integer")
-  }
-  if (window > length(x$time)) {
-    stop("'x' must have at least 'window' time periods")
-  }
-
-  # Helpful functions.
-  gen_mean <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
-  agg_contrib <- Vectorize(aggregate_contrib(r),
-    SIMPLIFY = FALSE, USE.NAMES = FALSE
-  )
-
-  # Get the starting location for each window.
-  if (length(x$time) %% window != 0) {
-    warning("'window' is not a multiple of the number of time periods in 'x'")
-  }
-  len <- length(x$time) %/% window
-  loc <- seq.int(1L, by = window, length.out = len)
-  periods <- x$time[loc]
-
-  has_contrib <- has_contrib(x) && contrib
-
-  # Loop over each window and calculate the mean for each level.
-  index <- index_skeleton(x$levels, periods)
-  contrib <- contrib_skeleton(x$levels, periods)
-  for (i in seq_along(loc)) {
-    j <- seq(loc[i], length.out = window)
-    rel <- .mapply(c, x$index[j], list())
-    weight <- if (is.null(weights)) list(NULL) else .mapply(c, w[j], list())
-    index[[i]][] <- gen_mean(rel, weight, na.rm = na.rm)
-    if (has_contrib) {
-      con <- .mapply(\(...) c(list(...)), x$contrib[j], list())
-      contrib[[i]][] <- agg_contrib(con, rel, weight)
-    }
-  }
-
-  piar_index(index, contrib, x$levels, periods, chainable)
-}

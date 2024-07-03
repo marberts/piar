@@ -89,10 +89,18 @@ shadow_price <- function(x, ...) {
 
 #' @rdname impute_prices
 #' @export
-shadow_price.default <- function(x, ..., period, product, ea,
-                                 pias = NULL, weights = NULL, r1 = 0, r2 = 1) {
+shadow_price.default <- function(x,
+                                 ...,
+                                 period,
+                                 product,
+                                 ea,
+                                 pias = NULL,
+                                 weights = NULL,
+                                 r1 = 0, 
+                                 r2 = 1) {
   # This is mostly a combination of gpindex::back_period() and aggregate()
   # it just does it period-by-period and keeps track of prices to impute.
+  chkDots(...)
   x <- as.numeric(x)
   period <- as.factor(period)
   product <- as.factor(product)
@@ -150,14 +158,27 @@ shadow_price.default <- function(x, ..., period, product, ea,
 
 #' @rdname impute_prices
 #' @export
-shadow_price.data.frame <- function(x, formula, ...,
-                                    pias = NULL, weights = NULL,
-                                    r1 = 0, r2 = 1) {
+shadow_price.data.frame <- function(x, 
+                                    formula, 
+                                    ...,
+                                    pias = NULL,
+                                    weights = NULL,
+                                    r1 = 0,
+                                    r2 = 1) {
+  chkDots(...)
   vars <- formula_vars(formula, x, 3L)
   weights <- eval(substitute(weights), x, parent.frame())
   
-  shadow_price(vars[[1L]], period = vars[[2L]], product = vars[[3L]],
-               ea = vars[[4L]], pias = pias, weights = weights, r1 = r1, r2 = r2)
+  shadow_price(
+    vars[[1L]],
+    period = vars[[2L]],
+    product = vars[[3L]],
+    ea = vars[[4L]],
+    pias = pias,
+    weights = weights,
+    r1 = r1,
+    r2 = r2
+  )
 }
 
 #' @rdname impute_prices
@@ -169,6 +190,7 @@ carry_forward <- function(x, ...) {
 #' @rdname impute_prices
 #' @export
 carry_forward.default <- function(x, ..., period, product) {
+  chkDots(...)
   x <- as.numeric(x)
   period <- as.factor(period)
   product <- as.factor(product)
@@ -200,6 +222,7 @@ carry_forward.default <- function(x, ..., period, product) {
 #' @rdname impute_prices
 #' @export
 carry_forward.data.frame <- function(x, formula, ...) {
+  chkDots(...)
   vars <- formula_vars(formula, x)
   
   carry_forward(vars[[1L]], period = vars[[2L]], product = vars[[3L]])
@@ -214,6 +237,7 @@ carry_backward <- function(x, ...) {
 #' @rdname impute_prices
 #' @export
 carry_backward.default <- function(x, ..., period, product) {
+  chkDots(...)
   period <- as.factor(period)
   levels <- rev(levels(period))
   carry_forward(x, period = factor(period, levels), product = product)
@@ -222,6 +246,7 @@ carry_backward.default <- function(x, ..., period, product) {
 #' @rdname impute_prices
 #' @export
 carry_backward.data.frame <- function(x, formula, ...) {
+  chkDots(...)
   vars <- formula_vars(formula, x)
   
   carry_backward(vars[[1L]], period = vars[[2L]], product = vars[[3L]])

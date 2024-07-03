@@ -140,6 +140,7 @@ replace_numeric <- function(x, i, j, value) {
 #' @family index methods
 #' @export
 `[.piar_index` <- function(x, i, j, ...) {
+  chkDots(...)
   periods <- dim_indices(x$time, j)
   # Optimize for extracting by time period.
   if (missing(i)) {
@@ -160,6 +161,7 @@ replace_numeric <- function(x, i, j, value) {
 #' @rdname sub-.piar_index
 #' @export
 `[<-.piar_index` <- function(x, i, j, ..., value) {
+  chkDots(...)
   if (!missing(i) && is.matrix(i)) {
     if (!missing(j)) {
       warning(

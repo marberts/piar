@@ -62,12 +62,14 @@ as_aggregation_structure <- function(x, ...) {
 #' @rdname as_aggregation_structure
 #' @export
 as_aggregation_structure.default <- function(x, ..., weights = NULL) {
+  chkDots(...)
   aggregation_structure(as.list(x), weights)
 }
 
 #' @rdname as_aggregation_structure
 #' @export
 as_aggregation_structure.data.frame <- function(x, ...) {
+  chkDots(...)
   x <- as.list(x)
   aggregation_structure(x[-length(x)], x[[length(x)]])
 }
@@ -80,5 +82,6 @@ as_aggregation_structure.matrix <- function(x, ...) {
 
 #' @export
 as_aggregation_structure.piar_aggregation_structure <- function(x, ...) {
+  chkDots(...)
   x
 }

@@ -57,6 +57,7 @@ stack.direct_piar_index <- function(x, y, ...) {
 
 #' @export
 stack.piar_index <- function(x, y, ...) {
+  chkDots(...)
   if (length(x$levels) != length(y$levels) || !setequal(x$levels, y$levels)) {
     stop("'x' and 'y' must be indexes for the same levels")
   }

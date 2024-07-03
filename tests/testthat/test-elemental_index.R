@@ -81,7 +81,7 @@ test_that("contributions add up", {
 test_that("argument checking works", {
   expect_error(elemental_index(1:3, period = 1:2, ea = 1:3))
   expect_error(elemental_index(1:3, period = 1:3, ea = 1:4))
-  expect_error(elemental_index(1:3, period = 1:3, product = 1:3, weights = 1:2))
+  expect_error(elemental_index(1:3, period = 1:3, ea = 1:3, weights = 1:2))
   expect_error(elemental_index(1:3, period = factor(1:3, levels = numeric(0))))
   expect_error(elemental_index(1:3, ea = factor(1:3, levels = numeric(0))))
   expect_error(elemental_index(setNames(1:3, c("", 1, 2)), contrib = TRUE))

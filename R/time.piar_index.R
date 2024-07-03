@@ -20,6 +20,7 @@
 #' @family index methods
 #' @export
 time.piar_index <- function(x, ...) {
+  chkDots(...)
   x$time
 }
 
@@ -40,6 +41,7 @@ time.piar_index <- function(x, ...) {
 #' @importFrom stats start
 #' @export
 start.piar_index <- function(x, ...) {
+  chkDots(...)
   x$time[1L]
 }
 
@@ -47,6 +49,7 @@ start.piar_index <- function(x, ...) {
 #' @importFrom stats end
 #' @export
 end.piar_index <- function(x, ...) {
+  chkDots(...)
   x$time[length(x$time)]
 }
 

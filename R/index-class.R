@@ -150,6 +150,7 @@ str.piar_index <- function(object, ...) {
 
 #' @export
 summary.chainable_piar_index <- function(object, ...) {
+  chkDots(...)
   cat(
     "Period-over-period price index", "for", length(object$levels), "levels over",
     length(object$time), "time periods", "\n"
@@ -159,6 +160,7 @@ summary.chainable_piar_index <- function(object, ...) {
 
 #' @export
 summary.direct_piar_index <- function(object, ...) {
+  chkDots(...)
   cat(
     "Fixed-base price index", "for", length(object$levels), "levels over",
     length(object$time), "time periods", "\n"

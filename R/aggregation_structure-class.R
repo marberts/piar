@@ -65,6 +65,7 @@ validate_piar_aggregation_structure <- function(x) {
 
 #' @export
 summary.piar_aggregation_structure <- function(object, ...) {
+  chkDots(...)
   cat(
     "Aggregation structure for", length(object$levels[[length(object$levels)]]),
     "elemental aggregates with",

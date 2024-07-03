@@ -49,9 +49,12 @@
 #' @importFrom stats update
 #' @family aggregation structure methods
 #' @export
-update.piar_aggregation_structure <- function(object, index,
-                                              period = end(index), ...,
+update.piar_aggregation_structure <- function(object,
+                                              index,
+                                              period = end(index),
+                                              ...,
                                               r = 1) {
+  chkDots(...)
   price_update <- gpindex::factor_weights(r)
   index <- as_index(index)
   period <- match_time(as.character(period), index$time)

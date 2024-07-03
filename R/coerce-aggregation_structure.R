@@ -48,6 +48,7 @@
 #' @family aggregation structure methods
 #' @export
 as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
+  chkDots(...)
   nea <- length(x$weights)
   height <- length(x$levels)
   if (height == 1L) {
@@ -81,10 +82,13 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
 
 #' @rdname as.matrix.piar_aggregation_structure
 #' @export
-as.data.frame.piar_aggregation_structure <- function(x, ...,
+as.data.frame.piar_aggregation_structure <- function(x,
+                                                     ...,
                                                      stringsAsFactors = FALSE) {
+  chkDots(...)
   colnames <- c(paste0("level", seq_along(x$child), recycle0 = TRUE), "ea")
-  res <- as.data.frame(as.list(x),
+  res <- as.data.frame(
+    as.list(x),
     col.names = colnames,
     stringsAsFactors = stringsAsFactors
   )
@@ -94,6 +98,7 @@ as.data.frame.piar_aggregation_structure <- function(x, ...,
 
 #' @export
 as.list.piar_aggregation_structure <- function(x, ...) {
+  chkDots(...)
   if (length(x$levels) == 1L) {
     return(x$levels[1L])
   }
