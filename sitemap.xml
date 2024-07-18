@@ -1,120 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://marberts/github.io/piar/404.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/articles/piar.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/aggregate.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/aggregation_structure.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/as.data.frame.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/as.matrix.piar_aggregation_structure.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/as_aggregation_structure.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/as_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/chain.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/contrib.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/elemental_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/expand_classification.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/head.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/impute_prices.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/is.na.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/is_aggregation_structure.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/is_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/levels.piar_aggregation_structure.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/levels.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/mean.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/merge.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/piar-package.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/price_data.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/price_relative.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/split.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/stack.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/sub-.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/time.piar_index.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/update.piar_aggregation_structure.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/weights.piar_aggregation_structure.html</loc>
-  </url>
-  <url>
-    <loc>https://marberts/github.io/piar/reference/window.piar_index.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://marberts.github.io/piar/404.html</loc></url>
+<url><loc>https://marberts.github.io/piar/LICENSE-text.html</loc></url>
+<url><loc>https://marberts.github.io/piar/LICENSE.html</loc></url>
+<url><loc>https://marberts.github.io/piar/articles/index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/articles/piar.html</loc></url>
+<url><loc>https://marberts.github.io/piar/authors.html</loc></url>
+<url><loc>https://marberts.github.io/piar/index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/news/index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/aggregate.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/aggregation_structure.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/as.data.frame.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/as.matrix.piar_aggregation_structure.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/as_aggregation_structure.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/as_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/chain.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/contrib.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/elemental_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/expand_classification.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/head.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/impute_prices.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/is.na.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/is_aggregation_structure.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/is_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/levels.piar_aggregation_structure.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/levels.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/mean.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/merge.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/piar-package.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/price_data.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/price_relative.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/split.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/stack.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/sub-.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/time.piar_index.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/update.piar_aggregation_structure.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/weights.piar_aggregation_structure.html</loc></url>
+<url><loc>https://marberts.github.io/piar/reference/window.piar_index.html</loc></url>
 </urlset>
+

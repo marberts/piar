@@ -1,10 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.0.8
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   piar: piar.html
-last_built: 2024-04-18T01:54Z
+last_built: 2024-07-18T20:08Z
 urls:
-  reference: https://marberts/github.io/piar/reference
-  article: https://marberts/github.io/piar/articles
-
+  reference: https://marberts.github.io/piar/reference
+  article: https://marberts.github.io/piar/articles
