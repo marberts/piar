@@ -158,6 +158,8 @@ formula_vars <- function(formula, x, n = 2L) {
 #' IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).
 #' *Consumer Price Index Manual: Concepts and Methods*.
 #' International Monetary Fund.
+#' 
+#' von der Lippe, P. (2007). *Index Theory and Price Statistics*. Peter Lang.
 #'
 #' @examples
 #' library(gpindex)

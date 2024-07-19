@@ -181,11 +181,13 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
 #' @references
 #' Balk, B. M. (2008). *Price and Quantity Index Numbers*.
 #' Cambridge University Press.
-#'
+#' 
 #' IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).
 #' *Consumer Price Index Manual: Concepts and Methods*.
 #' International Monetary Fund.
 #'
+#' von der Lippe, P. (2007). *Index Theory and Price Statistics*. Peter Lang.
+#' 
 #' @examples
 #' prices <- data.frame(
 #'   rel = 1:8,

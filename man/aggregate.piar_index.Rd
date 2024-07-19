@@ -149,6 +149,8 @@ Cambridge University Press.
 IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).
 \emph{Consumer Price Index Manual: Concepts and Methods}.
 International Monetary Fund.
+
+von der Lippe, P. (2007). \emph{Index Theory and Price Statistics}. Peter Lang.
 }
 \seealso{
 Other index methods: 

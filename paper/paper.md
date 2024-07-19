@@ -33,7 +33,7 @@ time.
 collection of functions that revolve around the usual two-step work flow for
 computing price indexes, making it easy to build large, hierarchical indexes
 using the methods described in the literature
-[e.g., @balk2008; @cpimanual; @vonderlippe2001]. `piar` is designed to be useful
+[e.g., @balk2008; @cpimanual; @vonderlippe2007]. `piar` is designed to be useful
 for both researching new sources of data and methods to construct price indexes,
 and the regular production of price statistics. It is targeted towards
 economists, statisticians, and data scientists working at national statistical

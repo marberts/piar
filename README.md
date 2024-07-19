@@ -8,7 +8,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/piar)](https://cran.r-project.org/package=piar)
 [![piar status
-badge](https://marberts.r-universe.dev/badges/piar)](https://marberts.r-universe.dev)
+badge](https://marberts.r-universe.dev/badges/piar)](https://marberts.r-universe.dev/piar)
 [![Conda
 Version](https://img.shields.io/conda/vn/conda-forge/r-piar.svg)](https://anaconda.org/conda-forge/r-piar)
 [![R-CMD-check](https://github.com/marberts/piar/workflows/R-CMD-check/badge.svg)](https://github.com/marberts/piar/actions)
@@ -26,7 +26,7 @@ indexes can then be chained together to form a time series that gives
 the evolution of prices with respect to a fixed base period. This
 package contains a collection of functions that revolve around this work
 flow, making it easy to build standard price indexes, and implement the
-methods described by Balk (2008), von der Lippe (2001), and the CPI
+methods described by Balk (2008), von der Lippe (2007), and the CPI
 manual (2020) for bilateral price indexes.
 
 The tools in this package are designed to be useful for both researching
@@ -167,6 +167,5 @@ catalogue 62-553-X. Statistics Canada.
 IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020). *Consumer Price
 Index Manual: Concepts and Methods*. International Monetary Fund.
 
-von der Lippe, P. (2001). *Chain Indices: A Study in Price Index
-Theory*, Spectrum of Federal Statistics vol. 16. Federal Statistical
-Office, Wiesbaden.
+von der Lippe, P. (2007). *Index Theory and Price Statistics*. Peter
+Lang.
