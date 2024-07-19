@@ -164,7 +164,7 @@ Chiru, R., Huang, N., Lequain, M. Smith, P., and Wright, A. (2015). *The
 Canadian Consumer Price Index Reference Paper*, Statistics Canada
 catalogue 62-553-X. Statistics Canada.
 
-IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020). *Consumer Price
+IMF, ILO, Eurostat, UNECE, OECD, and World Bank. (2020). *Consumer Price
 Index Manual: Concepts and Methods*. International Monetary Fund.
 
 von der Lippe, P. (2007). *Index Theory and Price Statistics*. Peter
