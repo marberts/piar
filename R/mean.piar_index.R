@@ -19,8 +19,10 @@ mean_index <- function(x, weights, window, na.rm, contrib, r, chainable) {
 
   # Helpful functions.
   gen_mean <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
-  agg_contrib <- Vectorize(aggregate_contrib(r),
-    SIMPLIFY = FALSE, USE.NAMES = FALSE
+  agg_contrib <- Vectorize(
+    aggregate_contrib(r),
+    SIMPLIFY = FALSE,
+    USE.NAMES = FALSE
   )
 
   # Get the starting location for each window.

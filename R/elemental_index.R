@@ -1,4 +1,4 @@
-#--- Helpers ----
+#---- Helpers ----
 which_duplicate_products <- function(x) {
   vapply(x, anyDuplicated, numeric(1L), incomparables = NA) > 0
 }
@@ -59,7 +59,9 @@ formula_vars <- function(formula, x, n = 2L) {
 #' to `x` and `weights` grouped by `ea` and `period`. That
 #' is, for every combination of elemental aggregate and time period,
 #' `elemental_index()` calculates an index based on a generalized mean of
-#' order `r` and, optionally, percent-change contributions. The default
+#' order `r` and, optionally, percent-change contributions. Product names should
+#' be unique within each time period when making contributions, and, if not, are
+#' passed to [make.unique()] with a warning. The default
 #' (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8
 #' (pp. 175--190) of the CPI manual (2020) for more detail about making
 #' elemental indexes, and chapter 5 of Balk (2008).
@@ -68,12 +70,6 @@ formula_vars <- function(formula, x, n = 2L) {
 #' calling the method above. The data frame method provides a formula interface
 #' to specify columns of price relatives, time periods, and elemental
 #' aggregates and call the method above.
-#'
-#' Names for `x` are used as product names when calculating percent-change
-#' contributions. Product names should be unique within each time period, and,
-#' if not, are passed to [make.unique()] with a
-#' warning. If `x` has no names then elements of `x` are given
-#' sequential names within each elemental aggregate.
 #'
 #' The interpretation of the index depends on how the price relatives in
 #' `x` are made. If these are period-over-period relatives, then the
@@ -103,11 +99,18 @@ formula_vars <- function(formula, x, n = 2L) {
 #' @param period A factor, or something that can be coerced into one, giving
 #' the time period associated with each price relative in `x`. The
 #' ordering of time periods follows of the levels of `period`, to agree
-#' with [`cut()`][cut.Date].
+#' with [`cut()`][cut.Date]. The default makes an index for one time period.
 #' @param ea A factor, or something that can be coerced into one, giving the
-#' elemental aggregate associated with each price relative in `x`.
+#' elemental aggregate associated with each price relative in `x`. The
+#' default makes an index for one elemental aggregate.
 #' @param weights A numeric vector of weights for the price relatives in `x`,
 #' or something that can be coerced into one. The default is equal weights.
+#' This is evaluated in `x` for the data frame method.
+#' @param product A character vector of product names, or something that can
+#' be coerced into one, for each price relative in `x` when making
+#' percent-change contributions. The default uses the names of `x`, if any;
+#' otherwise, elements of `x` are given sequential names within each elemental
+#' aggregate. This is evaluated in `x` for the data frame method.
 #' @param contrib Should percent-change contributions be calculated? The
 #' default does not calculate contributions.
 #' @param chainable Are the price relatives in `x` period-over-period
@@ -214,9 +217,10 @@ elemental_index.default <- function(x, ...) {
 #' @export
 elemental_index.numeric <- function(x,
                                     ...,
-                                    period,
-                                    ea,
+                                    period = gl(1, length(x)),
+                                    ea = gl(1, length(x)),
                                     weights = NULL,
+                                    product = NULL,
                                     chainable = TRUE,
                                     na.rm = FALSE,
                                     contrib = FALSE,
@@ -239,6 +243,9 @@ elemental_index.numeric <- function(x,
   }
   
   if (contrib) {
+    if (!is.null(product)) {
+      names(x) <- as.character(product)
+    }
     if (is.null(names(x))) {
       names(x) <- paste(ea, sequential_names(period, ea), sep = ".")
     } else {
@@ -281,22 +288,17 @@ elemental_index.data.frame <- function(x,
                                        formula,
                                        ...,
                                        weights = NULL,
-                                       chainable = TRUE,
-                                       na.rm = FALSE,
-                                       contrib = FALSE,
-                                       r = 0) {
-  chkDots(...)
+                                       product = NULL) {
   vars <- formula_vars(formula, x)
   weights <- eval(substitute(weights), x, parent.frame())
+  product <- eval(substitute(product), x, parent.frame())
   
   elemental_index(
     vars[[1L]],
     period = vars[[2L]],
     ea = vars[[3L]],
     weights = weights,
-    chainable = chainable,
-    na.rm = na.rm,
-    contrib = contrib,
-    r = r
+    product = product,
+    ...
   )
 }

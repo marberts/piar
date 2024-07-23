@@ -15,7 +15,7 @@ as_index(x, ...)
 
 \method{as_index}{matrix}(x, ..., chainable = TRUE, contrib = FALSE)
 
-\method{as_index}{data.frame}(x, ..., chainable = TRUE, contrib = FALSE)
+\method{as_index}{data.frame}(x, ...)
 
 \method{as_index}{chainable_piar_index}(x, ..., chainable = TRUE)
 

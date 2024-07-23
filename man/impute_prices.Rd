@@ -27,7 +27,7 @@ shadow_price(x, ...)
   r2 = 1
 )
 
-\method{shadow_price}{data.frame}(x, formula, ..., pias = NULL, weights = NULL, r1 = 0, r2 = 1)
+\method{shadow_price}{data.frame}(x, formula, ..., weights = NULL)
 
 carry_forward(x, ...)
 
@@ -64,7 +64,8 @@ imputes from elemental indexes only (i.e., not recursively).}
 
 \item{weights}{A numeric vector of weights for the prices in \code{x} (i.e.,
 product weights), or something that can be coerced into one. The default is
-to give each price equal weight.}
+to give each price equal weight. This is evaluated in \code{x} for the data frame
+method.}
 
 \item{r1}{Order of the generalized-mean price index used to calculate the
 elemental price indexes: 0 for a geometric index (the default), 1 for an

@@ -42,7 +42,8 @@
 #' imputes from elemental indexes only (i.e., not recursively).
 #' @param weights A numeric vector of weights for the prices in `x` (i.e.,
 #' product weights), or something that can be coerced into one. The default is
-#' to give each price equal weight.
+#' to give each price equal weight. This is evaluated in `x` for the data frame
+#' method.
 #' @param r1 Order of the generalized-mean price index used to calculate the
 #' elemental price indexes: 0 for a geometric index (the default), 1 for an
 #' arithmetic index, or -1 for a harmonic index. Other values are possible; see
@@ -161,11 +162,7 @@ shadow_price.default <- function(x,
 shadow_price.data.frame <- function(x, 
                                     formula, 
                                     ...,
-                                    pias = NULL,
-                                    weights = NULL,
-                                    r1 = 0,
-                                    r2 = 1) {
-  chkDots(...)
+                                    weights = NULL) {
   vars <- formula_vars(formula, x, 3L)
   weights <- eval(substitute(weights), x, parent.frame())
   
@@ -174,10 +171,8 @@ shadow_price.data.frame <- function(x,
     period = vars[[2L]],
     product = vars[[3L]],
     ea = vars[[4L]],
-    pias = pias,
     weights = weights,
-    r1 = r1,
-    r2 = r2
+    ...
   )
 }
 

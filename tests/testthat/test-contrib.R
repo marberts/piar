@@ -98,8 +98,10 @@ test_that("product names are correct", {
   expect_equal(
     contrib(epr),
     contrib(
-      elemental_index(dat, setNames(rel, c(1:5, 1, 3, 2, 6)) ~
-        period + ea, weights = w, contrib = TRUE)
+      elemental_index(dat, rel ~ period + ea,
+        weights = w, contrib = TRUE,
+        product = c(1:5, 1, 3, 2, 6)
+      )
     )
   )
 })

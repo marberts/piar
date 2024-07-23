@@ -14,25 +14,17 @@ elemental_index(x, ...)
 \method{elemental_index}{numeric}(
   x,
   ...,
-  period,
-  ea,
+  period = gl(1, length(x)),
+  ea = gl(1, length(x)),
   weights = NULL,
+  product = NULL,
   chainable = TRUE,
   na.rm = FALSE,
   contrib = FALSE,
   r = 0
 )
 
-\method{elemental_index}{data.frame}(
-  x,
-  formula,
-  ...,
-  weights = NULL,
-  chainable = TRUE,
-  na.rm = FALSE,
-  contrib = FALSE,
-  r = 0
-)
+\method{elemental_index}{data.frame}(x, formula, ..., weights = NULL, product = NULL)
 }
 \arguments{
 \item{x}{Period-over-period or fixed-base price relatives. Currently there
@@ -44,13 +36,21 @@ are methods for numeric vectors (which can be made with
 \item{period}{A factor, or something that can be coerced into one, giving
 the time period associated with each price relative in \code{x}. The
 ordering of time periods follows of the levels of \code{period}, to agree
-with \code{\link[=cut.Date]{cut()}}.}
+with \code{\link[=cut.Date]{cut()}}. The default makes an index for one time period.}
 
 \item{ea}{A factor, or something that can be coerced into one, giving the
-elemental aggregate associated with each price relative in \code{x}.}
+elemental aggregate associated with each price relative in \code{x}. The
+default makes an index for one elemental aggregate.}
 
 \item{weights}{A numeric vector of weights for the price relatives in \code{x},
-or something that can be coerced into one. The default is equal weights.}
+or something that can be coerced into one. The default is equal weights.
+This is evaluated in \code{x} for the data frame method.}
+
+\item{product}{A character vector of product names, or something that can
+be coerced into one, for each price relative in \code{x} when making
+percent-change contributions. The default uses the names of \code{x}, if any;
+otherwise, elements of \code{x} are given sequential names within each elemental
+aggregate. This is evaluated in \code{x} for the data frame method.}
 
 \item{chainable}{Are the price relatives in \code{x} period-over-period
 relatives that are suitable for a chained calculation (the default)? This
@@ -93,7 +93,9 @@ wrapper that applies
 to \code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
 is, for every combination of elemental aggregate and time period,
 \code{elemental_index()} calculates an index based on a generalized mean of
-order \code{r} and, optionally, percent-change contributions. The default
+order \code{r} and, optionally, percent-change contributions. Product names should
+be unique within each time period when making contributions, and, if not, are
+passed to \code{\link[=make.unique]{make.unique()}} with a warning. The default
 (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8
 (pp. 175--190) of the CPI manual (2020) for more detail about making
 elemental indexes, and chapter 5 of Balk (2008).
@@ -102,12 +104,6 @@ The default method simply coerces \code{x} to a numeric vector prior to
 calling the method above. The data frame method provides a formula interface
 to specify columns of price relatives, time periods, and elemental
 aggregates and call the method above.
-
-Names for \code{x} are used as product names when calculating percent-change
-contributions. Product names should be unique within each time period, and,
-if not, are passed to \code{\link[=make.unique]{make.unique()}} with a
-warning. If \code{x} has no names then elements of \code{x} are given
-sequential names within each elemental aggregate.
 
 The interpretation of the index depends on how the price relatives in
 \code{x} are made. If these are period-over-period relatives, then the

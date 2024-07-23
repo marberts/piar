@@ -98,8 +98,7 @@ as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
 
 #' @rdname as_index
 #' @export
-as_index.data.frame <- function(x, ..., chainable = TRUE, contrib = FALSE) {
-  chkDots(...)
+as_index.data.frame <- function(x, ...) {
   if (length(x) != 3L) {
     stop(
       "'x' must have a column of time periods, index levels, and index values"
@@ -114,7 +113,7 @@ as_index.data.frame <- function(x, ..., chainable = TRUE, contrib = FALSE) {
     dimnames = list(levels, time)
   )
   res[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
-  as_index(res, chainable = chainable, contrib = contrib)
+  as_index(res, ...)
 }
 
 #' @rdname as_index

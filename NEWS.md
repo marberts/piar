@@ -7,9 +7,6 @@ and `carry_backward()` now have a formula interface to select the relevant,
 e.g., price variables from a data frame instead of using `with()`. This
 changes the signature of these functions, and may break old code if argument
 were not named.
-
-    - As part of the above change, `elemental_index()` no longer defaults to putting
-    all price relatives in one time period/elemental aggregate.
     
     - `as_aggregation_structure(list)` and `mean(index)` now require the `weights`
     argument to be named to be consistent with other functions.
@@ -60,6 +57,9 @@ drop them.
 - The base period for `rebase()` can now be a time period specifying a new base
 period. This makes it easier to rebase with pipes; e.g.,
 `index |> mean() |> rebase("202001")`.
+
+- `elemental_index()` gets a new argument `product` to better control product
+names.
 
 # Version 0.7.0
 
