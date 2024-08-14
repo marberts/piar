@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,13 +42,13 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Default S3 method</span></span>
-<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'matrix'</span></span>
-<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span>, contrib <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'data.frame'</span></span>
-<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'chainable_piar_index'</span></span>
 <span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -74,10 +74,15 @@
 indexes, suitable for a chained calculation (the default)? This should be
 <code>FALSE</code> when <code>x</code> is a fixed-base (direct) index.</p></dd>
 
+
+<dt id="arg-contrib">contrib<a class="anchor" aria-label="anchor" href="#arg-contrib"></a></dt>
+<dd><p>Should the index values in <code>x</code> be used to construct
+percent-change contributions? The default does not make contributions.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>as_index()</code> returns a price index that inherits from
+    <p>A price index that inherits from
 <code><a href="piar_index.html">piar_index</a></code>. If <code>chainable = TRUE</code> then this is a
 period-over-period price index that also inherits from
 <code><a href="piar_index.html">chainable_piar_index</a></code>; otherwise, it is a fixed-base index that
@@ -121,7 +126,7 @@ into a tabular form.</p></div>
 <span class="r-in"><span>  ea <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">prices</span>, <span class="fu"><a href="elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">rel</span>, <span class="va">period</span>, <span class="va">ea</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">prices</span>, <span class="va">rel</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">ea</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu">as_index</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span><span class="op">)</span>, <span class="va">index</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>

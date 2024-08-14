@@ -9,7 +9,7 @@ of index values over consecutive windows of subperiods."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,8 +45,8 @@ of index values over consecutive windows of subperiods.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'chainable_piar_index'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span>,</span>
+<span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  window <span class="op">=</span> <span class="fu"><a href="time.piar_index.html">ntime</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
 <span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  contrib <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -56,8 +56,8 @@ of index values over consecutive windows of subperiods.</p>
 <span><span class="co"># S3 method for class 'direct_piar_index'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span>,</span>
+<span>  weights <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  window <span class="op">=</span> <span class="fu"><a href="time.piar_index.html">ntime</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
 <span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  contrib <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -73,16 +73,16 @@ of index values over consecutive windows of subperiods.</p>
 <dd><p>A price index, as made by, e.g., <code><a href="elemental_index.html">elemental_index()</a></code>.</p></dd>
 
 
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Not currently used.</p></dd>
+
+
 <dt id="arg-weights">weights<a class="anchor" aria-label="anchor" href="#arg-weights"></a></dt>
 <dd><p>A numeric vector of weights for the index values in <code>x</code>, or
 something that can be coerced into one. The
 default is equal weights. It is usually easiest to specify these weights as
 a matrix with a row for each index value in <code>x</code> and a column for each
 time period.</p></dd>
-
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Not currently used.</p></dd>
 
 
 <dt id="arg-window">window<a class="anchor" aria-label="anchor" href="#arg-window"></a></dt>
@@ -141,7 +141,7 @@ Cambridge University Press.</p>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other index methods:
 <code><a href="sub-.piar_index.html">[.piar_index</a>()</code>,
-<code><a href="aggregate.piar_index.html">aggregate.piar_index</a>()</code>,
+<code><a href="aggregate.piar_index.html">aggregate.piar_index</a></code>,
 <code><a href="as.data.frame.piar_index.html">as.data.frame.piar_index</a>()</code>,
 <code><a href="chain.html">chain</a>()</code>,
 <code><a href="contrib.html">contrib</a>()</code>,

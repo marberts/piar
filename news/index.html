@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,22 +33,31 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.8.0" id="version-080">Version 0.8.0<a class="anchor" aria-label="anchor" href="#version-080"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.8.1" id="version-081">Version 0.8.1<a class="anchor" aria-label="anchor" href="#version-081"></a></h2>
 <div class="section level3">
-<h3 id="significant-changes-0-8-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-8-0"></a></h3>
-<ul><li><p>The <code>aggregate_piar_index</code> class has been removed. This class was not well thought out, and added unnecessary restrictions and complications to certain functions. In most cases this has little impact on existing code, but does mean that the few functions related to aggregate indexes have been removed.</p></li>
+<h3 id="significant-changes-0-8-1">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-8-1"></a></h3>
+<ul><li>
+<p><code><a href="../reference/elemental_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code><a href="../reference/impute_prices.html">shadow_price()</a></code>, <code><a href="../reference/impute_prices.html">carry_forward()</a></code>, and <code><a href="../reference/impute_prices.html">carry_backward()</a></code> now have a formula interface to select the relevant, e.g., price variables from a data frame instead of using <code><a href="https://rdrr.io/r/base/with.html" class="external-link">with()</a></code>. This changes the signature of these functions, and may break old code if argument were not named.</p>
+<ul><li>
+<code>as_aggregation_structure(list)</code> and <code>mean(index)</code> now require the <code>weights</code> argument to be named to be consistent with other functions.</li>
+</ul></li>
+<li><p>The <code>aggregate_piar_index</code> class has been removed. This class was not well thought out, and added unnecessary restrictions and complications to certain functions. In most cases this has little impact on existing code, but does mean that the few functions related to aggregate indexes have been removed.</p></li>
 <li><p>The deprecated <code>cols</code> argument for <code>as_index(data.frame)</code> has been removed.</p></li>
 <li><p>The default window size for <code>mean(index)</code> now covers the entire index. This makes it so that <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> doesn’t assume an index is monthly, and makes it easier to use <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> with the new <code><a href="https://rdrr.io/r/stats/window.html" class="external-link">window()</a></code> method for index object.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="improvements-0-8-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-0"></a></h3>
-<ul><li><p>Added <code><a href="../reference/expand_classification.html">interact_classifications()</a></code> to get the interaction of different dimensions for a hierarchical classification.</p></li>
+<h3 id="improvements-0-8-1">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-1"></a></h3>
+<ul><li><p><code><a href="../reference/as_index.html">as_index()</a></code> gains a new argument <code>contrib</code> to add contributions to pre-computed indexes.</p></li>
+<li><p>Added <code><a href="../reference/contrib.html">contrib2DF()</a></code> to extract percent-change contributions as a data frame.</p></li>
+<li><p><code><a href="../reference/elemental_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code><a href="../reference/impute_prices.html">shadow_price()</a></code>, <code><a href="../reference/impute_prices.html">carry_forward()</a></code>, and <code><a href="../reference/impute_prices.html">carry_backward()</a></code> now require the arguments for time periods, products, and elemental aggregates to be named so as to avoid accidentally changing the order of these arguments (gh <a href="https://github.com/marberts/piar/issues/7" class="external-link">#7</a>).</p></li>
+<li><p>Added <code><a href="../reference/expand_classification.html">interact_classifications()</a></code> to get the interaction of different dimensions for a hierarchical classification.</p></li>
 <li><p><code><a href="../reference/chain.html">unchain()</a></code> gets an new argument <code>base</code> for better interaction with <code><a href="../reference/chain.html">chain()</a></code> and <code><a href="../reference/chain.html">rebase()</a></code>.</p></li>
 <li><p><code>aggregate(index)</code> gets a new argument <code>include_ea</code> to control whether elemental indexes are returned when aggregating.</p></li>
 <li><p>The <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> method for indexes has been changed to simply print a summary of the index, rather than try to summarized the index values.</p></li>
 <li><p><code>aggregate(index)</code> now imputes percent-change contributions for missing index values when <code>na.rm = TRUE</code>. The previously undocumented behavior was to simply drop them.</p></li>
 <li><p>Added <code>window(index)</code> to extract a window of price indexes and <code>window(index) &lt;- value</code> to replace them.</p></li>
 <li><p>The base period for <code><a href="../reference/chain.html">rebase()</a></code> can now be a time period specifying a new base period. This makes it easier to rebase with pipes; e.g., <code>index |&gt; mean() |&gt; rebase("202001")</code>.</p></li>
+<li><p><code><a href="../reference/elemental_index.html">elemental_index()</a></code> gets a new argument <code>product</code> to better control product names.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -104,7 +113,7 @@
 <li><p><code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> gains a new argument <code>contrib</code> that controls if percent-change contributions for elemental indexes are aggregated. The default maintains the current behavior of aggregating contributions if there are any.</p></li>
 <li><p>The class names for index objects have changed to fix a name conflict with <code>Matrix</code>. This means it’s now possible to use <code>rsmatrix</code> with <code>piar</code>.</p></li>
 <li><p>The <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> method for aggregation structures gains a new argument <code>sparse</code>. If <code>sparse = TRUE</code> then the aggregation matrix is a sparse, rather than dense, matrix. This option can also be used in the <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov()</a></code> method for aggregate price indexes to improve performance for large indexes.</p></li>
-<li><p>Added the <code><a href="../reference/impute_prices.html">carry_backwards()</a></code> function to do carry backwards (as opposed to carry forwards) imputation.</p></li>
+<li><p>Added the <code>carry_backwards()</code> function to do carry backwards (as opposed to carry forwards) imputation.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-6-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-0"></a></h3>
