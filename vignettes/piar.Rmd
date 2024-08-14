@@ -530,7 +530,7 @@ Despite being a matrix, the resulting Fisher index can be chained just like any 
 chain(fisher)
 ```
 
-A chained Fisher index can also be made by first chaining the Laspyeres and Paasche indexes, then taking the geometric mean.
+A chained Fisher index can also be made by first chaining the Laspeyres and Paasche indexes, then taking the geometric mean.
 
 ```{r}
 sqrt(as.matrix(chain(laspeyres)) * as.matrix(chain(paasche)))
