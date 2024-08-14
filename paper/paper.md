@@ -45,9 +45,9 @@ currently used to produce several price indexes at Statistics Canada
 # Statement of need
 
 `piar` fills a gap in the open-source ecosystem for measuring inflation by
-providing a tool to build the kinds of large, hierarchical price indexes made by
-national statistical agencies. There are several R and Python packages for
-accessing price indexes published by statistical agencies
+providing a tool to build large, hierarchical price indexes. There are several
+R and Python packages for
+accessing price indexes published by national statistical agencies
 [e.g., @vonbergmann2021; @welsh2024], but these are not suitable for computing
 new indexes or researching new methods and data sources to measure inflation.
 
@@ -65,7 +65,7 @@ advanced methods are directly used in practice to make price indexes for certain
 types of goods and services, they are not suitable for constructing the
 conventional price indexes that cover a wide range of products or industries.
 
-In contrast to existing tools, `piar` provides a flexible API to build large,
+In contrast to existing tools, `piar` provides a flexible interface to build large,
 hierarchical price indexes over time in a way that is suitable for both the data
 and methods used to make large-scale measures of inflation. Part of this
 flexible design means that pre-computed indexes can serve as an input to a
@@ -199,7 +199,7 @@ indexes.
 # Acknowledgements
 
 I am grateful for many useful conversations with the research staff at
-Statistics Canada, and in particular Xin Ha, that have improved `piar`.
+Statistics Canada, and in particular with Xin Ha, that have improved `piar`.
 
 The views and opinions expressed in this paper are my own and do
 not necessarily reflect those of the Government of Canada.
