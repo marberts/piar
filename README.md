@@ -16,6 +16,7 @@ Version](https://img.shields.io/conda/vn/conda-forge/r-piar.svg)](https://anacon
 [![DOI](https://zenodo.org/badge/370889275.svg)](https://zenodo.org/doi/10.5281/zenodo.10110046)
 [![Mentioned in Awesome Official
 Statistics](https://awesome.re/mentioned-badge.svg)](https://github.com/SNStatComp/awesome-official-statistics-software)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.06781/status.svg)](https://doi.org/10.21105/joss.06781)
 <!-- badges: end -->
 
 Most price indexes are made with a two-step procedure, where
