@@ -153,8 +153,7 @@ chain(index)
 
 All contributions are welcome. Please start by opening an issue on
 GitHub to report any bugs or suggest improvements and new features. See
-the [contribution guidelines for this project](CONTRIBUTING.md) for more
-information.
+the contribution guidelines for this project for more information.
 
 ## References
 
