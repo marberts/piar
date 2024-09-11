@@ -4,7 +4,7 @@ bibentry(
   author   = person("Steve", "Martin",
                     comment = c(ORCID = "0000-0003-2544-9480")),
   year     = "2024",
-  doi      = "doi.org/10.21105/joss.06781",
+  doi      = "10.21105/joss.06781",
   journal  = "Journal of Open Source Software",
   volume    = "9",
   number   = "101",
