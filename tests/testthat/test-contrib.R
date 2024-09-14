@@ -105,3 +105,31 @@ test_that("product names are correct", {
     )
   )
 })
+
+test_that("replacement works", {
+  contrib(epr) <- matrix(as.numeric(epr[1]) - 1, 1)
+  expect_equal(
+    contrib(epr),
+    matrix(as.numeric(epr[1]) - 1, 1, dimnames = list(1, 1:2))
+  )
+  
+  contrib(epr) <- numeric(0)
+  expect_equal(
+    contrib2DF(epr),
+    data.frame(
+      period = character(0),
+      level = character(0),
+      product = character(0),
+      value = numeric(0)
+    )
+  )
+  
+  contrib(epr, 14) <- matrix(c(NA, 2:3, 6, 1, NA), 3, dimnames = list(letters[1:3], NULL))
+  expect_equal(
+    contrib(epr, 14),
+    matrix(c(NA, 2:3, 6, 1, NA), 3, dimnames = list(letters[1:3], 1:2))
+  )
+  
+  expect_error(contrib(epr, period = 1) <- 1)
+  expect_error(contrib(epr, 14, 1) <- 1:3)
+})

@@ -12,7 +12,7 @@ sequential_names <- function(...) {
   unsplit(Map(seq_len, tabulate(f)), f)
 }
 
-valid_product_names <- function(x, period) {
+valid_product_names <- function(x, period = gl(1, length(x))) {
   x <- as.character(x)
   period <- as.factor(period)
   if (anyNA(x) || any(x == "")) {

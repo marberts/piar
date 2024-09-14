@@ -1,3 +1,18 @@
+#---- Helpers ----
+near <- function(x, y, tol = .Machine$double.eps^0.5) {
+  abs(x - y) < tol
+}
+
+valid_replacement_contrib <- function(x, value) {
+  if (is.na(x)) {
+    anyNA(value)
+  } else if (length(value) > 0L) {
+    near(sum(value, na.rm = TRUE), x - 1)
+  } else {
+    TRUE
+  }
+}
+
 #' Extract percent-change contributions
 #'
 #' Extract a matrix or data frame of percent-change contributions from a price
@@ -12,6 +27,8 @@
 #' @param pad A numeric value to pad contributions so that they fit into a
 #' rectangular array when products differ over time. The default is 0.
 #' @param ... Further arguments passed to or used by methods.
+#' @param value A numeric matrix of replacement values with a row for each
+#' product and a column for each time period.
 #'
 #' @returns
 #' `contrib()` returns a matrix of percent-change contributions with a column
@@ -124,4 +141,46 @@ contrib2DF.piar_index <- function(x,
     product = as.character(names(contributions)), 
     value = unname(contributions)
   )
+}
+
+#' @rdname contrib
+#' @export
+`contrib<-` <- function(x, ..., value) {
+  UseMethod("contrib<-")
+}
+
+#' @rdname contrib
+#' @export
+`contrib<-.piar_index` <- function(x,
+                                   level = levels(x)[1L],
+                                   period = time(x),
+                                   ...,
+                                   value) {
+  chkDots(...)
+  level <- match_levels(as.character(level), x$levels)
+  period <- match_time(as.character(period), x$time, several = TRUE)
+  
+  value <- as.matrix(value)
+  if (is.null(rownames(value))) {
+    products <- seq_len(nrow(value))
+  } else {
+    products <- valid_product_names(rownames(value))
+  }
+  
+  value <- split(value, col(value))
+  if (length(period) %% length(value) != 0) {
+    warning("number of columns in 'value' is not a multiple of 'period'")
+  }
+  
+  j <- 0
+  for (t in period) {
+    j <- j %% length(value) + 1
+    if (!valid_replacement_contrib(x$index[[t]][[level]], value[[j]])) {
+      stop("contributions do not add up in each time period")
+    }
+
+    x$contrib[[t]][level] <- list(as.numeric(value[[j]]))
+    names(x$contrib[[t]][[level]]) <- products
+  }
+  validate_piar_index(x)
 }

@@ -5,6 +5,7 @@
 \alias{contrib.piar_index}
 \alias{contrib2DF}
 \alias{contrib2DF.piar_index}
+\alias{contrib<-}
 \title{Extract percent-change contributions}
 \usage{
 contrib(x, ...)
@@ -14,6 +15,8 @@ contrib(x, ...)
 contrib2DF(x, ...)
 
 \method{contrib2DF}{piar_index}(x, level = levels(x)[1L], period = time(x), ...)
+
+contrib(x, ...) <- value
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
@@ -29,6 +32,9 @@ desired, defaulting to all time periods.}
 
 \item{pad}{A numeric value to pad contributions so that they fit into a
 rectangular array when products differ over time. The default is 0.}
+
+\item{value}{A numeric matrix of replacement values with a row for each
+product and a column for each time period.}
 }
 \value{
 \code{contrib()} returns a matrix of percent-change contributions with a column
