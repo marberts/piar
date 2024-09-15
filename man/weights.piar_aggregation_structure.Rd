@@ -4,6 +4,7 @@
 \alias{weights.piar_aggregation_structure}
 \alias{weights<-}
 \alias{weights<-.piar_aggregation_structure}
+\alias{set_weights}
 \title{Get the weights for an aggregation structure}
 \usage{
 \method{weights}{piar_aggregation_structure}(object, ..., ea_only = TRUE, na.rm = FALSE)
@@ -11,6 +12,8 @@
 weights(object) <- value
 
 \method{weights}{piar_aggregation_structure}(object) <- value
+
+set_weights(object, value)
 }
 \arguments{
 \item{object}{A price index aggregation structure, as made by

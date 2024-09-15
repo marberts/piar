@@ -332,6 +332,7 @@ Fixed-base price index for 3 levels over 3 time periods
 > ### Name: contrib
 > ### Title: Extract percent-change contributions
 > ### Aliases: contrib contrib.piar_index contrib2DF contrib2DF.piar_index
+> ###   contrib<- contrib<-.piar_index
 > 
 > ### ** Examples
 > 
@@ -393,9 +394,9 @@ detaching ‘package:gpindex’
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: elemental_index
-> ### Title: Make elemental price indexes
+> ### Title: Make elemental/elementary price indexes
 > ### Aliases: elemental_index elemental_index.default
-> ###   elemental_index.numeric elemental_index.data.frame
+> ###   elemental_index.numeric elemental_index.data.frame elementary_index
 > 
 > ### ** Examples
 > 
@@ -888,7 +889,7 @@ Period-over-period price index for 2 levels over 3 time periods
 > ### Name: weights.piar_aggregation_structure
 > ### Title: Get the weights for an aggregation structure
 > ### Aliases: weights.piar_aggregation_structure weights<-
-> ###   weights<-.piar_aggregation_structure
+> ###   weights<-.piar_aggregation_structure set_weights
 > 
 > ### ** Examples
 > 

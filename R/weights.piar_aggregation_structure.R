@@ -84,3 +84,7 @@ weights.piar_aggregation_structure <- function(object,
   object$weights[] <- as.numeric(value)
   object
 }
+
+#' @rdname weights.piar_aggregation_structure
+#' @export
+set_weights <- `weights<-`
