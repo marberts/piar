@@ -170,11 +170,9 @@ contrib2DF.piar_index <- function(x,
   }
   
   if (ncol(value) == 0L) {
-    stop("'value' must have at least one column")
-  } else if (ncol(value) > length(period)) {
-    stop("'value' cannot have more columns than time periods")
+    stop("replacement has length zero")
   } else if (length(period) %% ncol(value) != 0) {
-    warning("number of columns in 'value' is not a multiple of 'period'")
+    warning("number of items to replace is not a multiple of replacement length")
   }
   
   j <- 0
