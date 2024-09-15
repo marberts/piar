@@ -9,8 +9,8 @@
 #' all levels are kept.
 #' @param margin Either 'levels' to split over the levels of `x` (the default),
 #'  or 'time' to split over the time periods of `x`.
-#' @param value A list of values compatible with the splitting of `x`, recycled
-#' if necessary.
+#' @param value A list of values compatible with the splitting of `x`, or
+#' something that can be coerced into one, recycled if necessary.
 #' @param ... Further arguments passed to [`split.default()`].
 #'
 #' @returns
@@ -42,9 +42,13 @@ split.piar_index <- function(x, f, drop = FALSE, ...,
 #' @export
 `split<-.piar_index` <- function(x, f, drop = FALSE, ...,
                                  margin = c("levels", "time"), value) {
+  value <- as.list(value)
   margin <- match.arg(margin)
   ix <- split(seq_along(x[[margin]]), f, drop = drop, ...)
   n <- length(value)
+  if (n > 0L && length(ix) %% n != 0) {
+    warning("number of items to replace is not a multiple of replacement length")
+  }
   j <- 0
   if (margin == "levels") {
     for (i in ix) {
