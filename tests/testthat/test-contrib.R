@@ -107,12 +107,19 @@ test_that("product names are correct", {
 })
 
 test_that("replacement works", {
+  # No op.
+  epr2 <- epr
+  contrib(epr) <- contrib(epr)
+  expect_identical(epr, epr2)
+  
+  # Replacing with change in index.
   contrib(epr) <- matrix(as.numeric(epr[1]) - 1, 1)
   expect_equal(
     contrib(epr),
     matrix(as.numeric(epr[1]) - 1, 1, dimnames = list(1, 1:2))
   )
   
+  # Deleting contributions.
   contrib(epr) <- numeric(0)
   expect_equal(
     contrib2DF(epr),
@@ -124,12 +131,16 @@ test_that("replacement works", {
     )
   )
   
+  # Adding contributions.
   contrib(epr, 14) <- matrix(c(NA, 2:3, 6, 1, NA), 3, dimnames = list(letters[1:3], NULL))
   expect_equal(
     contrib(epr, 14),
     matrix(c(NA, 2:3, 6, 1, NA), 3, dimnames = list(letters[1:3], 1:2))
   )
   
+  # Errors work.
   expect_error(contrib(epr, period = 1) <- 1)
   expect_error(contrib(epr, 14, 1) <- 1:3)
+  expect_error(contrib(epr) <- matrix(0, 0, 0))
+  expect_error(contrib(epr) <- matrix(0, 1, 3))
 })

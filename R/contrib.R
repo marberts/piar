@@ -27,14 +27,16 @@ valid_replacement_contrib <- function(x, value) {
 #' @param pad A numeric value to pad contributions so that they fit into a
 #' rectangular array when products differ over time. The default is 0.
 #' @param ... Further arguments passed to or used by methods.
-#' @param value A numeric matrix of replacement values with a row for each
-#' product and a column for each time period.
+#' @param value A numeric matrix of replacement contributions with a row for
+#' each product and a column for each time period. Recycling occurs along time
+#' periods.
 #'
 #' @returns
 #' `contrib()` returns a matrix of percent-change contributions with a column
 #' for each `period` and a row for each product (sorted) for which there are
 #' contributions in `level`. Contributions are padded with `pad` to fit into a
-#' rectangular array when products differ over time.
+#' rectangular array when products differ over time. The replacement methods
+#' returns a copy of `x` with contributions given by the matrix `value`.
 #' 
 #' `contrib2DF()` returns a data frame of contributions with four
 #' columns: `period`, `level`, `product`, and `value`.
@@ -167,20 +169,24 @@ contrib2DF.piar_index <- function(x,
     products <- valid_product_names(rownames(value))
   }
   
-  value <- split(value, col(value))
-  if (length(period) %% length(value) != 0) {
+  if (ncol(value) == 0L) {
+    stop("'value' must have at least one column")
+  } else if (ncol(value) > length(period)) {
+    stop("'value' cannot have more columns than time periods")
+  } else if (length(period) %% ncol(value) != 0) {
     warning("number of columns in 'value' is not a multiple of 'period'")
   }
   
   j <- 0
   for (t in period) {
-    j <- j %% length(value) + 1
-    if (!valid_replacement_contrib(x$index[[t]][[level]], value[[j]])) {
+    j <- j %% ncol(value) + 1
+    con <- as.numeric(value[, j])
+    names(con) <- products
+    if (!valid_replacement_contrib(x$index[[t]][[level]], con)) {
       stop("contributions do not add up in each time period")
     }
 
-    x$contrib[[t]][level] <- list(as.numeric(value[[j]]))
-    names(x$contrib[[t]][[level]]) <- products
+    x$contrib[[t]][level] <- list(con)
   }
   validate_piar_index(x)
 }
