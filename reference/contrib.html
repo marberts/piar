@@ -9,7 +9,7 @@ index."><meta property="og:image" content="https://marberts.github.io/piar/logo.
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,12 @@ index.</p>
 <span><span class="fu">contrib2DF</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'piar_index'</span></span>
-<span><span class="fu">contrib2DF</span><span class="op">(</span><span class="va">x</span>, level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">time</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">contrib2DF</span><span class="op">(</span><span class="va">x</span>, level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">time</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">contrib</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'piar_index'</span></span>
+<span><span class="fu">contrib</span><span class="op">(</span><span class="va">x</span>, level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">time</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,13 +85,20 @@ desired, defaulting to all time periods.</p></dd>
 <dd><p>A numeric value to pad contributions so that they fit into a
 rectangular array when products differ over time. The default is 0.</p></dd>
 
+
+<dt id="arg-value">value<a class="anchor" aria-label="anchor" href="#arg-value"></a></dt>
+<dd><p>A numeric matrix of replacement contributions with a row for
+each product and a column for each time period. Recycling occurs along time
+periods.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p><code>contrib()</code> returns a matrix of percent-change contributions with a column
 for each <code>period</code> and a row for each product (sorted) for which there are
 contributions in <code>level</code>. Contributions are padded with <code>pad</code> to fit into a
-rectangular array when products differ over time.</p>
+rectangular array when products differ over time. The replacement methods
+returns a copy of <code>x</code> with contributions given by the matrix <code>value</code>.</p>
 <p><code>contrib2DF()</code> returns a data frame of contributions with four
 columns: <code>period</code>, <code>level</code>, <code>product</code>, and <code>value</code>.</p>
     </div>
