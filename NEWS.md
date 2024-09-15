@@ -1,3 +1,15 @@
+# Version 0.8.2
+
+## Improvements
+
+- Added `set_levels()`, `set_time()`, and `set_weights()` to make it easier to
+replace levels, times, and weights with pipes.
+
+- `contrib(index) <- value` can now be used to replace product contributions.
+
+- `elementary_index()` is now an alias for `elemental_index()` as this is
+more common in the literature.
+
 # Version 0.8.1
 
 ## Significant changes

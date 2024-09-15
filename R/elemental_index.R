@@ -12,7 +12,7 @@ sequential_names <- function(...) {
   unsplit(Map(seq_len, tabulate(f)), f)
 }
 
-valid_product_names <- function(x, period) {
+valid_product_names <- function(x, period = gl(1, length(x))) {
   x <- as.character(x)
   period <- as.factor(period)
   if (anyNA(x) || any(x == "")) {
@@ -46,7 +46,7 @@ formula_vars <- function(formula, x, n = 2L) {
   x
 }
 
-#' Make elemental price indexes
+#' Make elemental/elementary price indexes
 #'
 #' Compute period-over-period (chainable) or fixed-base (direct) elemental
 #' price indexes, with optional percent-change contributions for each
@@ -92,6 +92,9 @@ formula_vars <- function(formula, x, n = 2L) {
 #' example below. It is important to note that there are several ways to
 #' make these weights, and this affects how percent-change contributions
 #' are calculated.
+#' 
+#' `elementary_index()` is an alias for `elemental_index()` as this is more
+#' common in the literature.
 #'
 #' @param x Period-over-period or fixed-base price relatives. Currently there
 #' are methods for numeric vectors (which can be made with
@@ -302,3 +305,7 @@ elemental_index.data.frame <- function(x,
     ...
   )
 }
+
+#' @rdname elemental_index
+#' @export
+elementary_index <- elemental_index

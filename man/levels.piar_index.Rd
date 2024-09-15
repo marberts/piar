@@ -3,11 +3,14 @@
 \name{levels.piar_index}
 \alias{levels.piar_index}
 \alias{levels<-.piar_index}
+\alias{set_levels}
 \title{Get the levels for a price index}
 \usage{
 \method{levels}{piar_index}(x)
 
 \method{levels}{piar_index}(x) <- value
+
+set_levels()
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}

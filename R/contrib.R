@@ -1,3 +1,18 @@
+#---- Helpers ----
+near <- function(x, y, tol = .Machine$double.eps^0.5) {
+  abs(x - y) < tol
+}
+
+valid_replacement_contrib <- function(x, value) {
+  if (is.na(x)) {
+    anyNA(value)
+  } else if (length(value) > 0L) {
+    near(sum(value, na.rm = TRUE), x - 1)
+  } else {
+    TRUE
+  }
+}
+
 #' Extract percent-change contributions
 #'
 #' Extract a matrix or data frame of percent-change contributions from a price
@@ -12,12 +27,16 @@
 #' @param pad A numeric value to pad contributions so that they fit into a
 #' rectangular array when products differ over time. The default is 0.
 #' @param ... Further arguments passed to or used by methods.
+#' @param value A numeric matrix of replacement contributions with a row for
+#' each product and a column for each time period. Recycling occurs along time
+#' periods.
 #'
 #' @returns
 #' `contrib()` returns a matrix of percent-change contributions with a column
 #' for each `period` and a row for each product (sorted) for which there are
 #' contributions in `level`. Contributions are padded with `pad` to fit into a
-#' rectangular array when products differ over time.
+#' rectangular array when products differ over time. The replacement methods
+#' returns a copy of `x` with contributions given by the matrix `value`.
 #' 
 #' `contrib2DF()` returns a data frame of contributions with four
 #' columns: `period`, `level`, `product`, and `value`.
@@ -124,4 +143,48 @@ contrib2DF.piar_index <- function(x,
     product = as.character(names(contributions)), 
     value = unname(contributions)
   )
+}
+
+#' @rdname contrib
+#' @export
+`contrib<-` <- function(x, ..., value) {
+  UseMethod("contrib<-")
+}
+
+#' @rdname contrib
+#' @export
+`contrib<-.piar_index` <- function(x,
+                                   level = levels(x)[1L],
+                                   period = time(x),
+                                   ...,
+                                   value) {
+  chkDots(...)
+  level <- match_levels(as.character(level), x$levels)
+  period <- match_time(as.character(period), x$time, several = TRUE)
+  
+  value <- as.matrix(value)
+  if (is.null(rownames(value))) {
+    products <- seq_len(nrow(value))
+  } else {
+    products <- valid_product_names(rownames(value))
+  }
+  
+  if (ncol(value) == 0L) {
+    stop("replacement has length zero")
+  } else if (length(period) %% ncol(value) != 0) {
+    warning("number of items to replace is not a multiple of replacement length")
+  }
+  
+  j <- 0
+  for (t in period) {
+    j <- j %% ncol(value) + 1
+    con <- as.numeric(value[, j])
+    names(con) <- products
+    if (!valid_replacement_contrib(x$index[[t]][[level]], con)) {
+      stop("contributions do not add up in each time period")
+    }
+
+    x$contrib[[t]][level] <- list(con)
+  }
+  validate_piar_index(x)
 }

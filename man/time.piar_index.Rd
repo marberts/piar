@@ -4,6 +4,7 @@
 \alias{time.piar_index}
 \alias{time<-}
 \alias{time<-.piar_index}
+\alias{set_time}
 \alias{start.piar_index}
 \alias{end.piar_index}
 \alias{ntime}
@@ -14,6 +15,8 @@
 time(x) <- value
 
 \method{time}{piar_index}(x) <- value
+
+set_time(x, value)
 
 \method{start}{piar_index}(x, ...)
 

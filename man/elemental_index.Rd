@@ -5,7 +5,8 @@
 \alias{elemental_index.default}
 \alias{elemental_index.numeric}
 \alias{elemental_index.data.frame}
-\title{Make elemental price indexes}
+\alias{elementary_index}
+\title{Make elemental/elementary price indexes}
 \usage{
 elemental_index(x, ...)
 
@@ -25,6 +26,8 @@ elemental_index(x, ...)
 )
 
 \method{elemental_index}{data.frame}(x, formula, ..., weights = NULL, product = NULL)
+
+elementary_index(x, ...)
 }
 \arguments{
 \item{x}{Period-over-period or fixed-base price relatives. Currently there
@@ -126,6 +129,9 @@ supplying the appropriate weights with \code{\link[gpindex:transmute_weights]{gp
 example below. It is important to note that there are several ways to
 make these weights, and this affects how percent-change contributions
 are calculated.
+
+\code{elementary_index()} is an alias for \code{elemental_index()} as this is more
+common in the literature.
 }
 \examples{
 library(gpindex)

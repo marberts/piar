@@ -38,6 +38,10 @@ time.piar_index <- function(x, ...) {
 }
 
 #' @rdname time.piar_index
+#' @export
+set_time <- `time<-`
+
+#' @rdname time.piar_index
 #' @importFrom stats start
 #' @export
 start.piar_index <- function(x, ...) {
