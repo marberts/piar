@@ -14,10 +14,26 @@ aggregate_contrib <- function(r) {
 
 #' Internal functions to aggregate a price index
 #' @noRd
-aggregate_index <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
+aggregate_index <- function(x, pias, pias2, na.rm, contrib, r, include_ea, chainable) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
   res <- aggregate_(x, pias, na.rm, contrib, r, include_ea, chainable)
+  if (!is.null(pias2)) {
+    arithmetic_weights <- gpindex::transmute_weights(0, 1)
+    pias2 <- as_aggregation_structure(pias2)
+    ans2 <- aggregate_(x, pias2, na.rm, contrib, -r, include_ea, chainable)
+    ans <- res
+    for (t in seq_along(x$time)) {
+      res[[1L]][[t]] <- (ans[[1L]][[t]] * ans2[[1L]][[t]])^0.5
+      if (contrib) {
+        for (l in seq_along(x$levels)) {
+          w <- arithmetic_weights(c(ans[[1L]][[t]][[l]], ans2[[1L]][[t]][[l]]))
+          res[[2L]][[t]][[l]] <- w[[1L]] * ans[[2L]][[t]][[l]] +
+            w[[2L]] * ans2[[2L]][[t]][[l]]
+        }
+      }
+    }
+  }
   if (include_ea) {
     lev <- unlist(pias$levels, use.names = FALSE)
   } else {
@@ -147,6 +163,12 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
 #' also happen when aggregating an already aggregated index in which missing
 #' index values have been imputed (i.e., when `na.rm = TRUE` and
 #' `contrib = FALSE`).
+#' 
+#' If two aggregation structures are given then the steps above are done for
+#' each aggregation structure and the resulting indexes are combined with a
+#' geometric mean to make a superlative quadratic mean of order `r + 1` index.
+#' Percent-change contributions are combined using a generalized van IJzeren
+#' decomposition; see [`gpindex::nested_transmute()`] for details.
 #'
 #' @name aggregate.piar_index
 #' @aliases aggregate.piar_index
@@ -154,6 +176,8 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
 #' @param x A price index, usually made by [elemental_index()].
 #' @param pias A price index aggregation structure or something that can be
 #' coerced into one. This can be made with [aggregation_structure()].
+#' @param pias2 An optional secondary aggregation structure to make a
+#' superlative index.
 #' @param na.rm Should missing values be removed? By default, missing values
 #' are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #' imputation.
@@ -162,7 +186,8 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
 #' arithmetic index (the default for aggregating elemental indexes and
 #' averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #' a Paasche index). Other values are possible; see
-#' [gpindex::generalized_mean()] for details.
+#' [gpindex::generalized_mean()] for details. If `pias2` is given then the
+#' index is aggregate with a quadratic mean of order `r + 1`.
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
 #' @param include_ea Should indexes for the elemental aggregates be included
 #' along with the aggregated indexes? By default, all index values are returned.
@@ -219,12 +244,13 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
 aggregate.chainable_piar_index <- function(x,
                                            pias,
                                            ...,
+                                           pias2 = NULL,
                                            na.rm = FALSE,
                                            contrib = TRUE,
                                            r = 1,
                                            include_ea = TRUE) {
   chkDots(...)
-  aggregate_index(x, pias, na.rm, contrib, r, include_ea, TRUE)
+  aggregate_index(x, pias, pias2, na.rm, contrib, r, include_ea, TRUE)
 }
 
 #' @rdname aggregate.piar_index
@@ -232,10 +258,11 @@ aggregate.chainable_piar_index <- function(x,
 aggregate.direct_piar_index <- function(x,
                                         pias,
                                         ...,
+                                        pias2 = NULL,
                                         na.rm = FALSE,
                                         contrib = TRUE,
                                         r = 1,
                                         include_ea = TRUE) {
   chkDots(...)
-  aggregate_index(x, pias, na.rm, contrib, r, include_ea, FALSE)
+  aggregate_index(x, pias, pias2, na.rm, contrib, r, include_ea, FALSE)
 }
