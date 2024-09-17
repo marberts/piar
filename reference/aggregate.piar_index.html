@@ -103,7 +103,7 @@ arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details. If <code>pias2</code> is given then the
-index is aggregate with a quadratic mean of order 1.</p></dd>
+index is aggregated with a quadratic mean of order <code>r+1</code>.</p></dd>
 
 
 <dt id="arg-include-ea">include_ea<a class="anchor" aria-label="anchor" href="#arg-include-ea"></a></dt>
@@ -162,7 +162,7 @@ index values have been imputed (i.e., when <code>na.rm = TRUE</code> and
 <code>contrib = FALSE</code>).</p>
 <p>If two aggregation structures are given then the steps above are done for
 each aggregation structure and the resulting indexes are combined with a
-geometric mean to make a superlative quadratic mean of order 1 index.
+geometric mean to make a superlative quadratic mean of order <code>r+1</code> index.
 Percent-change contributions are combined using a generalized van IJzeren
 decomposition; see <code><a href="https://marberts.github.io/gpindex/reference/transmute_weights.html" class="external-link">gpindex::nested_transmute()</a></code> for details.</p>
     </div>
