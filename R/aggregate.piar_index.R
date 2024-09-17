@@ -18,6 +18,7 @@ aggregate_index <- function(x, pias, pias2, na.rm, contrib, r, include_ea, chain
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
   res <- aggregate_(x, pias, na.rm, contrib, r, include_ea, chainable)
+  
   if (!is.null(pias2)) {
     arithmetic_weights <- gpindex::transmute_weights(0, 1)
     pias2 <- as_aggregation_structure(pias2)
@@ -34,6 +35,7 @@ aggregate_index <- function(x, pias, pias2, na.rm, contrib, r, include_ea, chain
       }
     }
   }
+  
   if (include_ea) {
     lev <- unlist(pias$levels, use.names = FALSE)
   } else {

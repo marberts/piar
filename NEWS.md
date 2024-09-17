@@ -10,6 +10,9 @@ replace levels, times, and weights with pipes.
 - `elementary_index()` is now an alias for `elemental_index()` as this is
 more common in the literature.
 
+- `aggregate()` can now use two aggregation structures to make a superlative
+index.
+
 # Version 0.8.1
 
 ## Significant changes
