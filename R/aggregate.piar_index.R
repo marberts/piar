@@ -168,7 +168,7 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
 #' 
 #' If two aggregation structures are given then the steps above are done for
 #' each aggregation structure and the resulting indexes are combined with a
-#' geometric mean to make a superlative quadratic mean of order `r + 1` index.
+#' geometric mean to make a superlative quadratic mean of order `r+1` index.
 #' Percent-change contributions are combined using a generalized van IJzeren
 #' decomposition; see [`gpindex::nested_transmute()`] for details.
 #'
@@ -189,7 +189,7 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
 #' averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #' a Paasche index). Other values are possible; see
 #' [gpindex::generalized_mean()] for details. If `pias2` is given then the
-#' index is aggregate with a quadratic mean of order `r + 1`.
+#' index is aggregated with a quadratic mean of order `r+1`.
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
 #' @param include_ea Should indexes for the elemental aggregates be included
 #' along with the aggregated indexes? By default, all index values are returned.
