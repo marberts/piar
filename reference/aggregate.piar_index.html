@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,7 @@
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">pias</span>,</span>
 <span>  <span class="va">...</span>,</span>
+<span>  pias2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  contrib <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  r <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -55,6 +56,7 @@
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">pias</span>,</span>
 <span>  <span class="va">...</span>,</span>
+<span>  pias2 <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  contrib <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  r <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -79,6 +81,11 @@ coerced into one. This can be made with <code><a href="aggregation_structure.htm
 <dd><p>Not currently used.</p></dd>
 
 
+<dt id="arg-pias-">pias2<a class="anchor" aria-label="anchor" href="#arg-pias-"></a></dt>
+<dd><p>An optional secondary aggregation structure to make a
+superlative index.</p></dd>
+
+
 <dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
 <dd><p>Should missing values be removed? By default, missing values
 are not removed. Setting <code>na.rm = TRUE</code> is equivalent to overall mean
@@ -95,7 +102,8 @@ geometric index (the default for making elemental indexes), 1 for an
 arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
-<code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
+<code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details. If <code>pias2</code> is given then the
+index is aggregate with a quadratic mean of order 1.</p></dd>
 
 
 <dt id="arg-include-ea">include_ea<a class="anchor" aria-label="anchor" href="#arg-include-ea"></a></dt>
@@ -152,6 +160,11 @@ contributions will not equal the change in the value of the index. This can
 also happen when aggregating an already aggregated index in which missing
 index values have been imputed (i.e., when <code>na.rm = TRUE</code> and
 <code>contrib = FALSE</code>).</p>
+<p>If two aggregation structures are given then the steps above are done for
+each aggregation structure and the resulting indexes are combined with a
+geometric mean to make a superlative quadratic mean of order 1 index.
+Percent-change contributions are combined using a generalized van IJzeren
+decomposition; see <code><a href="https://marberts.github.io/gpindex/reference/transmute_weights.html" class="external-link">gpindex::nested_transmute()</a></code> for details.</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
