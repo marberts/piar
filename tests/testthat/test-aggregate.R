@@ -508,3 +508,25 @@ test_that("missing weights ignores those index values", {
   )
   expect_equal(contrib(index2), contrib(aggregate(elemental, pias)))
 })
+
+test_that("superlative index aggregates correctly", {
+  epr <- as_index(matrix(1:9, 3), contrib = TRUE)
+  pias <- aggregation_structure(
+    list(c("top", "top", "top"), 1:3), 1:3
+  )
+  pias2 <- aggregation_structure(
+    list(c("top", "top", "top"), 1:3), c(3, 1, 2)
+  )
+  res <- aggregate(epr, pias, pias2 = pias2)
+  res1 <- aggregate(epr, pias)
+  res2 <- aggregate(epr, pias2, r = -1)
+  
+  expect_equal(
+    sqrt(as.matrix(res1) * as.matrix(res2)),
+    as.matrix(res)
+  )
+  
+  expect_equal(
+    colSums(contrib(res)), as.matrix(res)[1, ] - 1
+  )
+})
