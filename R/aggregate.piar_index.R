@@ -12,6 +12,17 @@ aggregate_contrib <- function(r) {
   }
 }
 
+super_aggregate_contrib <- function() {
+  arithmetic_weights <- gpindex::transmute_weights(0, 1)
+  Vectorize(
+    function(x, y, rel1, rel2) {
+      w <- arithmetic_weights(c(rel1, rel2))
+      w[1L] * x + w[2L] * y
+    },
+    SIMPLIFY = FALSE
+  )
+}
+
 #' Internal functions to aggregate a price index
 #' @noRd
 aggregate_index <- function(x, pias, pias2, na.rm, contrib, r, include_ea, chainable) {
@@ -20,20 +31,21 @@ aggregate_index <- function(x, pias, pias2, na.rm, contrib, r, include_ea, chain
   res <- aggregate_(x, pias, na.rm, contrib, r, include_ea, chainable)
   
   if (!is.null(pias2)) {
-    arithmetic_weights <- gpindex::transmute_weights(0, 1)
     pias2 <- as_aggregation_structure(pias2)
-    ans2 <- aggregate_(x, pias2, na.rm, contrib, -r, include_ea, chainable)
-    ans <- res
-    for (t in seq_along(x$time)) {
-      res[[1L]][[t]] <- (ans[[1L]][[t]] * ans2[[1L]][[t]])^0.5
-      if (contrib) {
-        for (l in seq_along(x$levels)) {
-          w <- arithmetic_weights(c(ans[[1L]][[t]][[l]], ans2[[1L]][[t]][[l]]))
-          res[[2L]][[t]][[l]] <- w[[1L]] * ans[[2L]][[t]][[l]] +
-            w[[2L]] * ans2[[2L]][[t]][[l]]
-        }
-      }
+    if (!identical(pias[1:3], pias2[1:3])) {
+      stop("'pias' and 'pias2' must represent the same aggregation structure")
     }
+    res2 <- aggregate_(x, pias2, na.rm, contrib, -r, include_ea, chainable)
+    if (contrib) {
+      res[[2L]] <- Map(
+        super_aggregate_contrib(),
+        res[[2L]],
+        res2[[2L]],
+        res[[1L]],
+        res2[[1L]]
+      )
+    }
+    res[[1L]] <- Map(\(x, y) (x * y)^0.5, res[[1L]], res2[[1L]])
   }
   
   if (include_ea) {
@@ -41,6 +53,7 @@ aggregate_index <- function(x, pias, pias2, na.rm, contrib, r, include_ea, chain
   } else {
     lev <- unlist(pias$levels[-length(pias$levels)], use.names = FALSE)
   }
+  
   piar_index(res[[1L]], res[[2L]], lev, x$time, chainable)
 }
 
@@ -178,8 +191,8 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
 #' @param x A price index, usually made by [elemental_index()].
 #' @param pias A price index aggregation structure or something that can be
 #' coerced into one. This can be made with [aggregation_structure()].
-#' @param pias2 An optional secondary aggregation structure to make a
-#' superlative index.
+#' @param pias2 An optional secondary aggregation structure with current-period
+#' weights to make a superlative index.
 #' @param na.rm Should missing values be removed? By default, missing values
 #' are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #' imputation.

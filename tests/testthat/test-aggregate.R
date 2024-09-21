@@ -511,6 +511,7 @@ test_that("missing weights ignores those index values", {
 
 test_that("superlative index aggregates correctly", {
   epr <- as_index(matrix(c(1:4, NA, 6:9), 3), contrib = TRUE)
+  contrib(epr, 1, 1) <- c(-2, -1, 1, 1, 0.25, 0.75)
   pias <- aggregation_structure(
     list(c("top", "top", "top"), 1:3), 1:3
   )
@@ -532,4 +533,21 @@ test_that("superlative index aggregates correctly", {
   expect_equal(
     colSums(contrib(res, 1)), as.matrix(res)[2, ] - 1
   )
+  
+  # Example from vignette.
+  geometric_weights <- gpindex::transmute_weights(0, 1)
+  
+  w <- mapply(
+    \(x, y) geometric_weights(c(x, y)),
+    as.numeric(res1[1]),
+    as.numeric(res2[1])
+  )
+  
+  laspeyres_contrib <- contrib(res1)
+  paasche_contrib <- contrib(res2)
+  
+  fisher_contrib <- w[1, col(laspeyres_contrib)] * laspeyres_contrib +
+    w[2, col(paasche_contrib)] * paasche_contrib
+  
+  expect_equal(contrib(res), fisher_contrib)
 })

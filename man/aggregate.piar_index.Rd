@@ -36,8 +36,8 @@ coerced into one. This can be made with \code{\link[=aggregation_structure]{aggr
 
 \item{...}{Not currently used.}
 
-\item{pias2}{An optional secondary aggregation structure to make a
-superlative index.}
+\item{pias2}{An optional secondary aggregation structure with current-period
+weights to make a superlative index.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
