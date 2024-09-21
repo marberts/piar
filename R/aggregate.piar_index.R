@@ -28,15 +28,16 @@ super_aggregate_contrib <- function() {
 aggregate_index <- function(x, pias, pias2, na.rm, contrib, r, include_ea, chainable) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
-  res <- aggregate_(x, pias, na.rm, contrib, r, include_ea, chainable)
+  has_contrib <- has_contrib(x) && contrib
+  res <- aggregate_(x, pias, na.rm, has_contrib, r, include_ea, chainable)
   
   if (!is.null(pias2)) {
     pias2 <- as_aggregation_structure(pias2)
     if (!identical(pias[1:3], pias2[1:3])) {
       stop("'pias' and 'pias2' must represent the same aggregation structure")
     }
-    res2 <- aggregate_(x, pias2, na.rm, contrib, -r, include_ea, chainable)
-    if (contrib) {
+    res2 <- aggregate_(x, pias2, na.rm, has_contrib, -r, include_ea, chainable)
+    if (has_contrib) {
       res[[2L]] <- Map(
         super_aggregate_contrib(),
         res[[2L]],
@@ -57,7 +58,7 @@ aggregate_index <- function(x, pias, pias2, na.rm, contrib, r, include_ea, chain
   piar_index(res[[1L]], res[[2L]], lev, x$time, chainable)
 }
 
-aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
+aggregate_ <- function(x, pias, na.rm, has_contrib, r, include_ea, chainable) {
   # Helpful functions.
   price_update <- gpindex::factor_weights(r)
   gen_mean <- gpindex::generalized_mean(r)
@@ -66,7 +67,6 @@ aggregate_ <- function(x, pias, na.rm, contrib, r, include_ea, chainable) {
   # Put the aggregation weights upside down to line up with pias.
   w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
   
-  has_contrib <- has_contrib(x) && contrib
   eas <- match(pias$levels[[length(pias$levels)]], x$levels)
   
   # Loop over each time period.
