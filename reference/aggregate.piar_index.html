@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,8 +82,8 @@ coerced into one. This can be made with <code><a href="aggregation_structure.htm
 
 
 <dt id="arg-pias-">pias2<a class="anchor" aria-label="anchor" href="#arg-pias-"></a></dt>
-<dd><p>An optional secondary aggregation structure to make a
-superlative index.</p></dd>
+<dd><p>An optional secondary aggregation structure, usually with
+current-period weights, to make a superlative index. See details.</p></dd>
 
 
 <dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
@@ -103,7 +103,7 @@ arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details. If <code>pias2</code> is given then the
-index is aggregated with a quadratic mean of order <code>r+1</code>.</p></dd>
+index is aggregated with a quadratic mean of order <code>2*r</code>.</p></dd>
 
 
 <dt id="arg-include-ea">include_ea<a class="anchor" aria-label="anchor" href="#arg-include-ea"></a></dt>
@@ -161,8 +161,10 @@ also happen when aggregating an already aggregated index in which missing
 index values have been imputed (i.e., when <code>na.rm = TRUE</code> and
 <code>contrib = FALSE</code>).</p>
 <p>If two aggregation structures are given then the steps above are done for
-each aggregation structure and the resulting indexes are combined with a
-geometric mean to make a superlative quadratic mean of order <code>r+1</code> index.
+each aggregation structure, with the aggregation for <code>pias</code> done with a
+generalized mean of order <code>r</code> the aggregation for <code>pias2</code> done with a
+generalized mean of order <code>-r</code>. The resulting indexes are combined with a
+geometric mean to make a superlative quadratic mean of order <code>2*r</code> index.
 Percent-change contributions are combined using a generalized van IJzeren
 decomposition; see <code><a href="https://marberts.github.io/gpindex/reference/transmute_weights.html" class="external-link">gpindex::nested_transmute()</a></code> for details.</p>
     </div>
@@ -250,7 +252,7 @@ International Monetary Fund.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>
