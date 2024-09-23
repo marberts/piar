@@ -332,7 +332,7 @@ Fixed-base price index for 3 levels over 3 time periods
 > ### Name: contrib
 > ### Title: Extract percent-change contributions
 > ### Aliases: contrib contrib.piar_index contrib2DF contrib2DF.piar_index
-> ###   contrib<- contrib<-.piar_index
+> ###   contrib<- contrib<-.piar_index set_contrib
 > 
 > ### ** Examples
 > 

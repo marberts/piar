@@ -5,7 +5,8 @@
 - Added `set_levels()`, `set_time()`, and `set_weights()` to make it easier to
 replace levels, times, and weights with pipes.
 
-- `contrib(index) <- value` can now be used to replace product contributions.
+- `contrib(index) <- value` can now be used to replace product contributions. The
+alias `set_contrib()` is easier to use with pipes.
 
 - `elementary_index()` is now an alias for `elemental_index()` as this is
 more common in the literature.

@@ -14,7 +14,7 @@
 #' `ntime()` returns the number of time periods, analogous to `nlevels()`.
 #'
 #' The replacement method returns a copy of `x` with the time periods in
-#' `value`.
+#' `value`. (`set_time()` is an alias that's easier to use with pipes.)
 #'
 #' @importFrom stats time
 #' @family index methods
