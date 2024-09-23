@@ -39,7 +39,7 @@ giving the replacement time periods for \code{x}.}
 \code{ntime()} returns the number of time periods, analogous to \code{nlevels()}.
 
 The replacement method returns a copy of \code{x} with the time periods in
-\code{value}.
+\code{value}. (\code{set_time()} is an alias that's easier to use with pipes.)
 }
 \description{
 Methods to get and set the time periods for a price index.

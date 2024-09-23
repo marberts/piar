@@ -10,7 +10,7 @@
 
 \method{levels}{piar_index}(x) <- value
 
-set_levels()
+set_levels(x, value)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
@@ -22,6 +22,7 @@ giving the replacement levels for \code{x}.}
 \code{levels()} returns a character vector with the levels for a price index.
 
 The replacement method returns a copy of \code{x} with the levels in \code{value}.
+(\code{set_levels()} is an alias that's easier to use with pipes.)
 }
 \description{
 Methods to get and set the levels for a price index.

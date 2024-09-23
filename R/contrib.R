@@ -37,6 +37,7 @@ valid_replacement_contrib <- function(x, value) {
 #' contributions in `level`. Contributions are padded with `pad` to fit into a
 #' rectangular array when products differ over time. The replacement methods
 #' returns a copy of `x` with contributions given by the matrix `value`.
+#' (`set_contrib()` is an alias that's easier to use with pipes.)
 #' 
 #' `contrib2DF()` returns a data frame of contributions with four
 #' columns: `period`, `level`, `product`, and `value`.
@@ -188,3 +189,7 @@ contrib2DF.piar_index <- function(x,
   }
   validate_piar_index(x)
 }
+
+#' @rdname contrib
+#' @export
+set_contrib <- `contrib<-`
