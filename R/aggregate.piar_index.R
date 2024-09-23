@@ -38,15 +38,15 @@ aggregate_index <- function(x, pias, pias2, na.rm, contrib, r, include_ea, chain
     }
     res2 <- aggregate_(x, pias2, na.rm, has_contrib, -r, include_ea, chainable)
     if (has_contrib) {
-      res[[2L]] <- Map(
+      res$contrib <- Map(
         super_aggregate_contrib(),
-        res[[2L]],
-        res2[[2L]],
-        res[[1L]],
-        res2[[1L]]
+        res$contrib,
+        res2$contrib,
+        res$index,
+        res2$index
       )
     }
-    res[[1L]] <- Map(\(x, y) (x * y)^0.5, res[[1L]], res2[[1L]])
+    res$index <- Map(\(x, y) (x * y)^0.5, res$index, res2$index)
   }
   
   if (include_ea) {
@@ -55,7 +55,7 @@ aggregate_index <- function(x, pias, pias2, na.rm, contrib, r, include_ea, chain
     lev <- unlist(pias$levels[-length(pias$levels)], use.names = FALSE)
   }
   
-  piar_index(res[[1L]], res[[2L]], lev, x$time, chainable)
+  piar_index(res$index, res$contrib, lev, x$time, chainable)
 }
 
 aggregate_ <- function(x, pias, na.rm, has_contrib, r, include_ea, chainable) {
@@ -122,7 +122,7 @@ aggregate_ <- function(x, pias, na.rm, has_contrib, r, include_ea, chainable) {
     contrib[[t]] <- unlist(rev(con), recursive = FALSE, use.names = FALSE)
   }
   
-  list(index, contrib)
+  list(index = index, contrib = contrib)
 }
 
 #' Aggregate elemental price indexes
@@ -180,8 +180,10 @@ aggregate_ <- function(x, pias, na.rm, has_contrib, r, include_ea, chainable) {
 #' `contrib = FALSE`).
 #' 
 #' If two aggregation structures are given then the steps above are done for
-#' each aggregation structure and the resulting indexes are combined with a
-#' geometric mean to make a superlative quadratic mean of order `r+1` index.
+#' each aggregation structure, with the aggregation for `pias` done with a
+#' generalized mean of order `r` the aggregation for `pias2` done with a
+#' generalized mean of order `-r`. The resulting indexes are combined with a
+#' geometric mean to make a superlative quadratic mean of order `2*r` index.
 #' Percent-change contributions are combined using a generalized van IJzeren
 #' decomposition; see [`gpindex::nested_transmute()`] for details.
 #'
@@ -191,8 +193,8 @@ aggregate_ <- function(x, pias, na.rm, has_contrib, r, include_ea, chainable) {
 #' @param x A price index, usually made by [elemental_index()].
 #' @param pias A price index aggregation structure or something that can be
 #' coerced into one. This can be made with [aggregation_structure()].
-#' @param pias2 An optional secondary aggregation structure with current-period
-#' weights to make a superlative index.
+#' @param pias2 An optional secondary aggregation structure, usually with
+#' current-period weights, to make a superlative index. See details.
 #' @param na.rm Should missing values be removed? By default, missing values
 #' are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #' imputation.
@@ -202,7 +204,7 @@ aggregate_ <- function(x, pias, na.rm, has_contrib, r, include_ea, chainable) {
 #' averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #' a Paasche index). Other values are possible; see
 #' [gpindex::generalized_mean()] for details. If `pias2` is given then the
-#' index is aggregated with a quadratic mean of order `r+1`.
+#' index is aggregated with a quadratic mean of order `2*r`.
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
 #' @param include_ea Should indexes for the elemental aggregates be included
 #' along with the aggregated indexes? By default, all index values are returned.
