@@ -36,8 +36,8 @@ coerced into one. This can be made with \code{\link[=aggregation_structure]{aggr
 
 \item{...}{Not currently used.}
 
-\item{pias2}{An optional secondary aggregation structure to make a
-superlative index.}
+\item{pias2}{An optional secondary aggregation structure, usually with
+current-period weights, to make a superlative index. See details.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
@@ -51,7 +51,7 @@ arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details. If \code{pias2} is given then the
-index is aggregated with a quadratic mean of order \code{r+1}.}
+index is aggregated with a quadratic mean of order \code{2*r}.}
 
 \item{include_ea}{Should indexes for the elemental aggregates be included
 along with the aggregated indexes? By default, all index values are returned.}
@@ -116,8 +116,10 @@ index values have been imputed (i.e., when \code{na.rm = TRUE} and
 \code{contrib = FALSE}).
 
 If two aggregation structures are given then the steps above are done for
-each aggregation structure and the resulting indexes are combined with a
-geometric mean to make a superlative quadratic mean of order \code{r+1} index.
+each aggregation structure, with the aggregation for \code{pias} done with a
+generalized mean of order \code{r} the aggregation for \code{pias2} done with a
+generalized mean of order \code{-r}. The resulting indexes are combined with a
+geometric mean to make a superlative quadratic mean of order \code{2*r} index.
 Percent-change contributions are combined using a generalized van IJzeren
 decomposition; see \code{\link[gpindex:transmute_weights]{gpindex::nested_transmute()}} for details.
 }

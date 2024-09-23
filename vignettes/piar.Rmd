@@ -535,3 +535,20 @@ A chained Fisher index can also be made by first chaining the Laspeyres and Paas
 ```{r}
 sqrt(as.matrix(chain(laspeyres)) * as.matrix(chain(paasche)))
 ```
+
+Alternatively, both sets of aggregation structures can be passed to `aggregate()` to build a Fisher index without making the Lasyepres and Paasche indexes separately.
+
+```{r}
+fisher <- Reduce(
+  stack,
+  Map(aggregate, ms_elemental, pias[c(1, 1, 2, 3)], pias2 = pias, na.rm = TRUE)
+)
+
+fisher
+```
+
+This approach has the advantage of returning an index object (instead of a matrix) and computing percent-change contributions.
+
+```{r}
+contrib(fisher)
+```
