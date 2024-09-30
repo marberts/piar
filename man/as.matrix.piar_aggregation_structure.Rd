@@ -61,6 +61,7 @@ all.equal(as.data.frame(pias), aggregation_weights)
 \code{\link[=as_aggregation_structure]{as_aggregation_structure()}} for coercing into an aggregation structure.
 
 Other aggregation structure methods: 
+\code{\link{cut.piar_aggregation_structure}()},
 \code{\link{levels.piar_aggregation_structure}()},
 \code{\link{update.piar_aggregation_structure}()},
 \code{\link{weights.piar_aggregation_structure}()}

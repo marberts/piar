@@ -14,6 +14,9 @@ more common in the literature.
 - `aggregate()` can now use two aggregation structures to make a superlative
 index.
 
+- `cut(aggregation_structure)` can be used cut off the bottom/top of an
+aggregation structure.
+
 # Version 0.8.1
 
 ## Significant changes
