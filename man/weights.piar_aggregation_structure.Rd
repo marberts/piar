@@ -75,6 +75,7 @@ weights(pias)
 \seealso{
 Other aggregation structure methods: 
 \code{\link{as.matrix.piar_aggregation_structure}()},
+\code{\link{cut.piar_aggregation_structure}()},
 \code{\link{levels.piar_aggregation_structure}()},
 \code{\link{update.piar_aggregation_structure}()}
 }
