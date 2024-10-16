@@ -63,6 +63,7 @@ validate_piar_aggregation_structure <- function(x) {
   x
 }
 
+#---- Undocumented methods ----
 #' @export
 summary.piar_aggregation_structure <- function(object, ...) {
   chkDots(...)

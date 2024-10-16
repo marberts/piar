@@ -28,7 +28,7 @@ as_index(x, ...)
 
 \item{chainable}{Are the index values in \code{x} period-over-period
 indexes, suitable for a chained calculation (the default)? This should be
-\code{FALSE} when \code{x} is a fixed-base (direct) index.}
+\code{FALSE} when \code{x} contains fixed-base (direct) index values.}
 
 \item{contrib}{Should the index values in \code{x} be used to construct
 percent-change contributions? The default does not make contributions.}

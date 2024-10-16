@@ -1,18 +1,3 @@
-#---- Helpers ----
-near <- function(x, y, tol = .Machine$double.eps^0.5) {
-  abs(x - y) < tol
-}
-
-valid_replacement_contrib <- function(x, value) {
-  if (is.na(x)) {
-    anyNA(value)
-  } else if (length(value) > 0L) {
-    near(sum(value, na.rm = TRUE), x - 1)
-  } else {
-    TRUE
-  }
-}
-
 #' Extract percent-change contributions
 #'
 #' Extract a matrix or data frame of percent-change contributions from a price

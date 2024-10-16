@@ -1,22 +1,5 @@
-#---- Helpers ----
-dim_indices <- function(x, i) {
-  if (missing(i)) {
-    return(seq_along(x))
-  }
-  if (is.character(i)) {
-    res <- match(i, x)
-  } else {
-    res <- match(x[i], x)
-  }
-  if (length(res) == 0L) {
-    stop("attempted to select less than one element")
-  }
-  if (anyNA(res)) {
-    stop("subscript out of bounds")
-  }
-  res
-}
-
+#' Internal replacement functions
+#' @noRd
 replace_matrix <- function(x, i, value) {
   if (is.logical(i)) {
     if (nrow(i) != length(x$levels) || ncol(i) != length(x$time)) {
