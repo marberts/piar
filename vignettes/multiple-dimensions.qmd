@@ -1,0 +1,75 @@
+---
+title: "Aggregating across dimensions"
+vignette: >
+  %\VignetteIndexEntry{Aggregating across dimensions}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+Price indexes are often aggregated over multiple dimensions. Matched sample indexes that use sequential Poisson sampling to draw a sample of businesses are a good example, as there are usually take-all and take-some strata in addition to, say, an industry classification. 
+
+Let's extend `vignette("piar")` by adding another dimension to the classification to say if a business belong to the take-all or take-some sampling stratum.
+
+```{r}
+library(piar)
+
+elementals <- ms_prices |>
+  transform(
+    relative = price_relative(price, period = period, product = product)
+  ) |>
+  elemental_index(relative ~ period + business, na.rm = TRUE)
+```
+
+```{r}
+ms_weights$stratum <- c("TS", "TA", "TS", "TS", "TS")
+
+ms_weights
+```
+
+The easiest way to deal with multiple digit-wise classifications is to concatenate them into one classification. In this example the "stratum" dimension comes before the "classification" dimension for the purposes of parental imputation. This classification can be expanded with the `expand_classification()` function as before, just with an extra instruction to say that the last "digit" in the classification is two characters wide, not one.
+
+```{r}
+classification_sps <- paste0(ms_weights$classification, ms_weights$stratum) |>
+  expand_classification(width = c(1, 1, 2))
+
+pias_sps <- aggregation_structure(
+  c(classification_sps, ms_weights["business"]),
+  ms_weights$weight
+)
+
+pias_sps
+```
+
+The elemental indexes can now be aggregated according to this new aggregation structure.
+
+```{r}
+index_sps <- aggregate(elementals, pias_sps, na.rm = TRUE)
+
+index_sps
+```
+
+When a price index has many dimensions (e.g., industry, sampling stratum, region), it can be useful to interact the classifications for these different dimensions to get all possible aggregation structures. The aggregated index can then be re-aggregated to get index values for all dimensions.
+
+Continuing with the example, the industry and strata classifications can be interacted to get two
+aggregation structures that can be used to re-aggregate `index_sps`.
+
+```{r}
+interacted_hierarchy <- interact_classifications(
+  expand_classification(ms_weights$classification),
+  expand_classification(ms_weights$stratum)
+)
+
+pias_sps2 <- lapply(
+  interacted_hierarchy,
+  \(x) aggregation_structure(c(x, ms_weights["business"]), ms_weights$weight)
+)
+
+index_sps2 <- lapply(pias_sps2, \(x) aggregate(index_sps, x, include_ea = FALSE))
+```
+
+The resulting indexes can be merged together to give an index that includes all
+combinations of industry and sampling stratum.
+
+```{r}
+Reduce(merge, index_sps2)
+```

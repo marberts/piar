@@ -33,7 +33,7 @@ Encoding: UTF-8
 URL: https://marberts.github.io/piar/, https://github.com/marberts/piar
 BugReports: https://github.com/marberts/piar/issues
 LazyData: true
-VignetteBuilder: knitr
+VignetteBuilder: knitr, quarto
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
