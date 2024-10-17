@@ -1,0 +1,7 @@
+---
+title: "Superlative aggregation"
+vignette: >
+  %\VignetteIndexEntry{Superlative aggregation}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
