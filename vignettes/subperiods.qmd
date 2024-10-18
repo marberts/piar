@@ -1,0 +1,7 @@
+---
+title: "Aggregating over subperiods"
+vignette: >
+  %\VignetteIndexEntry{Aggregating over subperiods}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---

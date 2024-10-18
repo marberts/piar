@@ -25,6 +25,7 @@ Imports:
     Matrix (>= 1.5-0)
 Suggests: 
     rmarkdown,
+    quarto,
     knitr,
     sps,
     testthat (>= 3.0.0)

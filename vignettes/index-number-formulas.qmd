@@ -6,14 +6,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Price indexes based on the generalized mean give a large family of
-index-number formulas that are consistent in aggregation, and any index
-based on the generalized mean can be used to make and aggregate
-elemental indexes. To see how to make superlative indexes as well, let's
-start with a simple dataset of prices and quantities for two businesses
-over three periods. We'll be making extensive use of the *gpindex*
-package for lower-level price-index functions; see the help pages for
-that package to get more detail.
+Price indexes based on a generalized mean of price relatives constitute
+a large family of bilateral index-number formulas that are consistent in
+aggregation, and any index based on the generalized mean can be used to
+make and aggregate elemental indexes. To see how to make superlative
+indexes as well, let's start with a simple dataset of prices and
+quantities for two businesses over three periods. We'll be making
+extensive use of the *gpindex* package for lower-level price-index
+functions; see the help pages for that package to get more detail.
 
 ```{r}
 library(piar)
@@ -29,6 +29,8 @@ prices <- data.frame(
 
 prices[c("back_price", "back_quantity")] <- 
   prices[back_period(prices$period, prices$product), c("price", "quantity")]
+
+head(prices)
 ```
 
 ## Basic indexes
@@ -38,7 +40,7 @@ function calculates a Jevons index (equally-weighted geometric mean of
 price relatives). Although this is the standard index-number formula for
 making elemental indexes, many other types of index-numbers are
 possible. Among the unweighted index-number formulas, the Carli index
-(equally-weighted arithmetic mean of price relatives) is the main
+(equally-weighted arithmetic mean of price relatives) is the historical
 competitor to the Jevons, and requires specifying the order of the
 generalized mean `r` when calling `elemental_index()`. An order of 1
 corresponds to an arithmetic mean.

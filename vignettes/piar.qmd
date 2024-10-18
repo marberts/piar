@@ -1,0 +1,173 @@
+---
+title: "Making price indexes"
+vignette: >
+  %\VignetteIndexEntry{Making price indexes}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+Most price indexes are made with a two-step procedure, where
+period-over-period *elemental indexes* are calculated for a collection
+of *elemental aggregates* at each point in time, and then aggregated
+according to a *price index aggregation structure*. These indexes can
+then be chained together to form a time series that gives the evolution
+of prices with respect to a fixed base period. This package contains a
+collection of functions that revolve around this work flow, making it
+easy to build standard price indexes in **R**.
+
+The purpose of this vignette is to give an introductory example for how
+to use the core functionality in this package to make a standard price
+index. Subsequent vignettes go into more details on advanced topics,
+often referencing the example in this vignette.
+
+## Matched-sample index
+
+In this vignette we'll be calculating a matched-sample index, where a
+fixed set of businesses each provide prices for a collection of products
+over time. The products reported by a businesses can change over time,
+but the set of businesses is fixed for the duration of the sample. Each
+businesses has a weight that is established when the sample is drawn,
+and represents a particular segment of the economy.
+
+The usual approach for calculating a matched-sample index starts by
+computing an elemental index for each business as an equally-weighted
+geometric mean of price relatives (i.e., a Jevons index). From there,
+index values for different segments of the economy are calculated as an
+arithmetic mean of the elemental indexes, using the businesses-level
+weights (either a Young or Lowe index, depending how the weights are
+constructed).
+
+The `ms_prices` dataset has price data for five businesses over four
+quarters, and the `ms_weights` dataset has the weight data. Note that
+these data have fairly realistic patterns of missing data and are
+emblematic of the kinds of survey data used to make price indexes.
+
+```{r}
+library(piar)
+
+head(ms_prices)
+
+ms_weights
+```
+
+The `elemental_index()` function makes, well, elemental indexes, using
+information on price relatives, elemental aggregates (businesses), and
+time periods (quarters). By default it makes a Jevons index, but any
+bilateral generalized-mean index is possible (see
+`vignette("index-number-formulas")` for more details). The only wrinkle
+is that price data here are in levels, and not relatives, but the
+`price_relative()` function can make the necessary conversion.
+
+```{r}
+elementals <- ms_prices |>
+  transform(
+    relative = price_relative(price, period = period, product = product)
+  ) |>
+  elemental_index(relative ~ period + business, na.rm = TRUE)
+
+elementals
+```
+
+As with most functions in **R**, missing values are contagious by
+default. Setting `na.rm = TRUE` in `elemental_index()` means that
+missing price relatives are ignored, which is equivalent to imputing
+these missing relatives with the value of the elemental index for the
+respective businesses (i.e., parental or overall mean imputation). Other
+types of imputation are covered in `vignette("imputation")`.
+
+The `elemental_index()` function returns a special index object, and
+there are a number of methods for working with these objects. For
+example, the resulting indexes to be extracted like a matrix, even
+though it's not a matrix.[^1]
+
+[^1]: Note that there are only indexes for four businesses, not five,
+    because the fifth business never reports any prices. An elemental
+    index can be made for this business by passing a factor with a level
+    for all five businesses to `elemental_index()`.
+
+```{r}
+elementals[, "202004"]
+
+elementals[c("B1", "B3"), ]
+```
+
+With the elemental indexes out of the way, it's time to make a
+price-index aggregation structure that maps each business to its
+position in the aggregation hierarchy. The only hiccup is unpacking the
+digit-wise classification for each businesses that defines the
+hierarchy. That's the job of the `expand_classification()` function.
+
+```{r}
+ms_weights[c("level1", "level2")] <- 
+  expand_classification(ms_weights$classification)
+
+pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
+  as_aggregation_structure()
+```
+
+It is now simple to aggregate the elemental indexes according to this
+aggregation structure with the `aggregate()` function. As with the
+elemental indexes, missing values are ignored by setting `na.rm = TRUE`,
+which is equivalent to parentally imputing missing values. Note that,
+unlike the elemental indexes, missing values are filled in to ensure the
+index can be chained over time.
+
+```{r}
+index <- aggregate(elementals, pias, na.rm = TRUE)
+
+index
+```
+
+## Chaining
+
+The `elemental_index()` function makes period-over-period elemental
+indexes by default, which are then aggregated to make a
+period-over-period index. Chaining an index is the process of taking the
+cumulative product of each of these period-over-period indexes to make a
+time series that compares prices to a fixed base period.
+
+The `chain()` function can be used to chain the values in an index
+object.
+
+```{r}
+chained_index <- chain(index)
+
+chained_index
+```
+
+This gives almost the same result as directly manipulating the index as
+a matrix, except that the former returns an index object (not a matrix).
+
+Chained indexes often need be to rebased, and this can be done with the
+`rebase()` function. For example, rebasing the index so that 202004 is
+the base period just requires dividing the chained index by the slice
+for 202004.
+
+```{r}
+rebase(chained_index, chained_index[, "202004"])
+```
+
+## Working with indexes
+
+Once an index has been calculated, it usually needs to be turned into a
+table of index values. This can be done by either coercing an index into
+a matrix
+
+```{r}
+as.matrix(chained_index)
+```
+
+or a data frame
+
+```{r}
+as.data.frame(chained_index)
+```
+
+It is also sometimes useful to get the price-updated weights used to
+aggregate the index; these can be calculated by first updating the
+aggregate structure with the aggregated index, then made into a table.
+
+```{r}
+update(pias, index) |>
+  as.data.frame()
+```

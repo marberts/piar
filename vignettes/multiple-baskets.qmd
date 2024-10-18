@@ -1,0 +1,7 @@
+---
+title: "Aggregating across baskets"
+vignette: >
+  %\VignetteIndexEntry{Aggregating across baskets}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
