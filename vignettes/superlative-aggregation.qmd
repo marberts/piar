@@ -5,3 +5,108 @@ vignette: >
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
+
+All of the examples so far have used a single set of weights to aggregate an index. Although this is by far the most common case, it is not suitable for aggregating a superlative index where there is more than one set of aggregation weights that change every period.
+
+## Aggregating a Paasche index
+
+Let's start by making a chained Paasche index from 6 elemental indexes over 4 time periods to see how to deal with time-varying aggregation weights. This is similar to the example of building an index across multiple basket in `vignette("mutiple-baskets")`, except that the weights change each period.
+
+```{r}
+library(piar)
+
+set.seed(12345)
+
+# Make 6 elemental indexes over 4 time periods.
+elementals <- matrix(c(rep(1, 6), runif(6 * 3, 0.8, 1.2)), nrow = 6) |>
+  as_index() |>
+  set_levels(paste0("B", 1:6))
+
+head(elementals)
+
+# Make aggregation weights over 4 time periods.
+#            1
+#      |-----+-----|
+#      11          12
+#  |---+---|   |---+---|
+#  B1  B2  B3  B4  B5  B6
+
+weights <- data.frame(
+  level1 = 1,
+  level2 = rep(11:12, each = 3),
+  ea = levels(elementals),
+  weights = runif(4 * 6, 100, 200),
+  period = rep(1:4, each = 6)
+)
+
+head(weights)
+```
+
+The key tools to deal with time-varying aggregation weights are the `stack()` and `unstack()` functions. `stack()` appends a later index series onto an earlier one for the same levels, whereas `unstack()` pulls apart an index series for many periods into a collection of one-period indexes. These function allow the aggregation to be done with a map-reduce.
+
+The first step to making a Paasche index is to unstack the elemental indexes into a list of elemental indexes for each period. (Trying to make the elemental indexes period-by-period can be dangerous when there are missing values.)
+
+```{r}
+elementals <- unstack(elementals)
+```
+
+This is followed by making a sequence of aggregation structures for each set of weights.
+
+```{r}
+paasche_pias <- split(
+  weights[c("level1", "level2", "ea", "weights")],
+  weights[["period"]]
+) |>
+  lapply(as_aggregation_structure)
+```
+
+Computing the Paasche index for each period is now just a case of mapping the `aggregate()` function to each elemental index and aggregation structure, and then reducing the result with the `stack()` function.
+
+```{r}
+paasche <- Map(
+  aggregate,
+  elementals,
+  paasche_pias,
+  na.rm = TRUE,
+  include_ea = FALSE,
+  r = -1
+) |>
+  Reduce(stack, x = _)
+
+paasche
+```
+
+## Making a Fisher index
+
+Making a chained Fisher index requires two sets of weights: base-period weights to make the Laspeyres index and current-period weights to make the Paasche index. As with the Paasche index this can be done with a map-reduce, except now by passing two aggregation structures to the `aggregate()` function instead of one.
+
+```{r}
+laspeyres_pias <- paasche_pias[c(1, 1, 2, 3)]
+
+fisher <- Map(
+  aggregate,
+  elementals,
+  pias = laspeyres_pias,
+  pias2 = paasche_pias,
+  na.rm = TRUE,
+  include_ea = FALSE
+) |>
+  Reduce(stack, x = _)
+
+fisher
+```
+
+This gives the same result as calculating the Laspeyres and Paasche indexes individually, and then caluclating the Fisher index manually.
+
+```{r}
+laspeyres <- Map(
+  aggregate,
+  elementals,
+  pias = laspeyres_pias,
+  na.rm = TRUE,
+  include_ea = FALSE
+) |>
+  Reduce(stack, x = _)
+
+sqrt(as.matrix(laspeyres) * as.matrix(paasche))
+```
