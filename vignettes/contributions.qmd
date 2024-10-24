@@ -8,7 +8,7 @@ vignette: >
 
 ## Product contributions
 
-It's often convenient to decompose an index into the (additive) contribution of each price relative, also known as the percent-change contributions. This can be done with the same work flow used in `vignette("piar")`, specifying `contrib = TRUE` when calling `elemental_index()`.
+It's often convenient to decompose an index into the (additive) contribution of each price relative, also known as the percent-change contribution. This can be done with the same work flow used in `vignette("piar")`, specifying `contrib = TRUE` when calling `elemental_index()`.
 
 ```{r}
 library(piar)
@@ -55,7 +55,7 @@ contrib(index)
 
 ## Index contributions
 
-After an index has been calculated, it's often useful to compute the contribution of higher-level indexes towards the total index. The easiest way to do this with a collection of pre-computed index values is to simply coerce them into a index object with the index values as contributions and reaggregate with a restricted aggregation structure.
+After an index has been calculated, it's often useful to compute the contribution of higher-level indexes towards the total index. The easiest way to do this with a collection of pre-computed index values is to simply coerce them into an index object with the index values as contributions and reaggregate with a restricted aggregation structure.
 
 ```{r}
 index <- as_index(as.matrix(index), contrib = TRUE)
