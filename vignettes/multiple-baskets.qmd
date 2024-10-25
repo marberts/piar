@@ -36,7 +36,7 @@ elementals2 <- matrix(
 #      |-----+-----|
 #      11          12
 #  |---+---|   |---+---|
-#  1   2   3  4        5
+#  B1  B2  B3  B4      B5
 
 weights1 <- data.frame(
   level1 = 1,
@@ -50,7 +50,7 @@ weights1 <- data.frame(
 #      |-----+-----|
 #      11          12
 #  |---+---|   |---+---|
-#  1   2   3   4   5   6
+#  B1  B2  B3  B4  B5  B6
 
 weights2 <- data.frame(
   level1 = 1,
@@ -78,7 +78,7 @@ stack(index[[1]], window(index[[2]], start = "9")) |>
   chain()
 ```
 
-Alternatively, the index values from the new basket can be chained using the value in the last period of the first basket as a link factor and combined with the chained index values from the old basket.
+Alternatively, the index values from the new basket can be chained using the values in the last period of the first basket as a link factor and combined with the chained index values from the old basket.
 
 ```{r}
 link_factor <- chain(index[[1]])|>

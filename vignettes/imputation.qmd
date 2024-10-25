@@ -21,7 +21,7 @@ the previous price to impute for missing prices. As the
 `elemental_index()` function accepts price relatives as its input, any
 imputations can be done prior to passing price relatives to this
 function. (Missing values still need to be removed in this example
-because not all missing prices can imputed.)
+because not all missing prices can be imputed.)
 
 ```{r}
 library(piar)

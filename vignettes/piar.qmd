@@ -165,7 +165,7 @@ as.data.frame(chained_index)
 
 It is also sometimes useful to get the price-updated weights used to
 aggregate the index; these can be calculated by first updating the
-aggregate structure with the aggregated index, then made into a table.
+aggregation structure with the aggregated index, then made into a table.
 
 ```{r}
 update(pias, index) |>

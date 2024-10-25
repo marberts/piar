@@ -1,6 +1,6 @@
 Package: piar
 Title: Price Index Aggregation
-Version: 0.8.1.9005
+Version: 0.8.1.9006
 Authors@R: c(
     person("Steve", "Martin", role = c("aut", "cre", "cph"),
            email = "marberts@protonmail.com",
@@ -24,7 +24,6 @@ Imports:
     gpindex (>= 0.6.1),
     Matrix (>= 1.5-0)
 Suggests: 
-    rmarkdown,
     quarto,
     knitr,
     sps,

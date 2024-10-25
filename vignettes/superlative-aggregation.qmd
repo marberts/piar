@@ -10,7 +10,7 @@ All of the examples so far have used a single set of weights to aggregate an ind
 
 ## Aggregating a Paasche index
 
-Let's start by making a chained Paasche index from 6 elemental indexes over 4 time periods to see how to deal with time-varying aggregation weights. This is similar to the example of building an index across multiple basket in `vignette("mutiple-baskets")`, except that the weights change each period.
+Let's start by making a chained Paasche index from 6 elemental indexes over 4 time periods to see how to deal with time-varying aggregation weights. This is similar to the example of building an index across multiple basket in `vignette("multiple-baskets")`, except that the weights change each period.
 
 ```{r}
 library(piar)
