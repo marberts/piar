@@ -2,8 +2,16 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
+  contributions: contributions.html
+  imputation: imputation.html
+  index-number-formulas: index-number-formulas.html
+  matrix-aggregation: matrix-aggregation.html
+  multiple-baskets: multiple-baskets.html
+  multiple-data-sources: multiple-data-sources.html
+  multiple-dimensions: multiple-dimensions.html
   piar: piar.html
-last_built: 2024-09-30T04:21Z
+  superlative-aggregation: superlative-aggregation.html
+last_built: 2024-10-26T03:04Z
 urls:
   reference: https://marberts.github.io/piar/reference
   article: https://marberts.github.io/piar/articles

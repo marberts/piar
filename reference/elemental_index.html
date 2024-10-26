@@ -11,7 +11,7 @@ product."><meta property="og:image" content="https://marberts.github.io/piar/log
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,6 +21,17 @@ product."><meta property="og:image" content="https://marberts.github.io/piar/log
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/piar.html">Get started</a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/contributions.html">Contributions</a></li>
+    <li><a class="dropdown-item" href="../articles/imputation.html">Imputation</a></li>
+    <li><a class="dropdown-item" href="../articles/index-number-formulas.html">Index-number formulas</a></li>
+    <li><a class="dropdown-item" href="../articles/matrix-aggregation.html">Matrix aggregation</a></li>
+    <li><a class="dropdown-item" href="../articles/multiple-baskets.html">Aggregating across baskets</a></li>
+    <li><a class="dropdown-item" href="../articles/multiple-data-sources.html">Multiple sources of data</a></li>
+    <li><a class="dropdown-item" href="../articles/multiple-dimensions.html">Aggregating across dimensions</a></li>
+    <li><a class="dropdown-item" href="../articles/superlative-aggregation.html">Superlative aggregation</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -164,7 +175,8 @@ be unique within each time period when making contributions, and, if not, are
 passed to <code><a href="https://rdrr.io/r/base/make.unique.html" class="external-link">make.unique()</a></code> with a warning. The default
 (<code>r = 0</code> and no weights) makes Jevons elemental indexes. See chapter 8
 (pp. 175–190) of the CPI manual (2020) for more detail about making
-elemental indexes, and chapter 5 of Balk (2008).</p>
+elemental indexes, or chapter 9 of the PPI manual (2004), and chapter 5 of
+Balk (2008).</p>
 <p>The default method simply coerces <code>x</code> to a numeric vector prior to
 calling the method above. The data frame method provides a formula interface
 to specify columns of price relatives, time periods, and elemental
@@ -195,6 +207,9 @@ common in the literature.</p>
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Balk, B. M. (2008). <em>Price and Quantity Index Numbers</em>.
 Cambridge University Press.</p>
+<p>ILO, IMF, UNECE, OECD, and World Bank. (2004).
+<em>Producer Price Index Manual: Theory and Practice</em>.
+International Monetary Fund.</p>
 <p>IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).
 <em>Consumer Price Index Manual: Concepts and Methods</em>.
 International Monetary Fund.</p>
