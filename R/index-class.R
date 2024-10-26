@@ -28,46 +28,6 @@
 #'
 NULL
 
-#---- Helpers ----
-index_skeleton <- function(levels, time) {
-  index <- rep.int(NA_real_, length(levels))
-  rep.int(list(index), length(time))
-}
-
-empty_contrib <- function(x) {
-  res <- rep.int(list(numeric(0L)), length(x))
-  list(res)
-}
-
-contrib_skeleton <- function(levels, time) {
-  rep.int(empty_contrib(levels), length(time))
-}
-
-has_contrib <- function(x) {
-  Position(\(x) any(lengths(x) > 0L), x$contrib, nomatch = 0L) > 0L
-}
-
-match_dim <- function(what) {
-  what <- as.character(what)
-  function(x, dim, several = FALSE) {
-    if (!several && length(x) != 1L) {
-      stop(gettextf("must supply exactly one %s", what))
-    } else if (several && length(x) == 0L) {
-      stop(gettextf("must supply at least one %s", what))
-    }
-    i <- match(x, dim)
-    no_match <- is.na(i)
-    if (any(no_match)) {
-      stop(gettextf("'%s' is not a %s", x[no_match][1L], what))
-    }
-    i
-  }
-}
-
-match_levels <- match_dim("index level")
-
-match_time <- match_dim("time period")
-
 #---- Class generator ----
 new_piar_index <- function(index, contrib, levels, time, chainable) {
   stopifnot(is.list(index))
@@ -142,6 +102,7 @@ validate_piar_index <- function(x) {
   x
 }
 
+#---- Undocumented methods ----
 #' @importFrom utils str
 #' @export
 str.piar_index <- function(object, ...) {

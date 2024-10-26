@@ -1,51 +1,3 @@
-#---- Helpers ----
-which_duplicate_products <- function(x) {
-  vapply(x, anyDuplicated, numeric(1L), incomparables = NA) > 0
-}
-
-duplicate_products <- function(x) {
-  any(which_duplicate_products(x))
-}
-
-sequential_names <- function(...) {
-  f <- interaction(...)
-  unsplit(Map(seq_len, tabulate(f)), f)
-}
-
-valid_product_names <- function(x, period = gl(1, length(x))) {
-  x <- as.character(x)
-  period <- as.factor(period)
-  if (anyNA(x) || any(x == "")) {
-    stop("each product must have a non-missing name")
-  }
-  xs <- split(x, period)
-  dups <- which_duplicate_products(xs)
-  if (any(dups)) {
-    warning("product names are not unique in each time period")
-    xs[dups] <- lapply(xs[dups], make.unique)
-    unsplit(xs, period)
-  } else {
-    x
-  }
-}
-
-different_length <- function(...) {
-  res <- lengths(Filter(Negate(is.null), list(...)))
-  any(res != res[1L])
-}
-
-formula_vars <- function(formula, x, n = 2L) {
-  if (length(formula) != 3L) {
-    stop("'formula' must have a left-hand and right-hand side")
-  }
-  fterms <- stats::terms(formula, data = x)
-  x <- eval(attr(fterms, "variables"), x, environment(formula))
-  if (length(x) != n + 1L) {
-    stop(gettextf("right-hand side of 'formula' must have exactly %s terms", n))
-  }
-  x
-}
-
 #' Make elemental/elementary price indexes
 #'
 #' Compute period-over-period (chainable) or fixed-base (direct) elemental
@@ -64,7 +16,8 @@ formula_vars <- function(formula, x, n = 2L) {
 #' passed to [make.unique()] with a warning. The default
 #' (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8
 #' (pp. 175--190) of the CPI manual (2020) for more detail about making
-#' elemental indexes, and chapter 5 of Balk (2008).
+#' elemental indexes, or chapter 9 of the PPI manual (2004), and chapter 5 of
+#' Balk (2008).
 #'
 #' The default method simply coerces `x` to a numeric vector prior to
 #' calling the method above. The data frame method provides a formula interface
@@ -160,6 +113,10 @@ formula_vars <- function(formula, x, n = 2L) {
 #' @references
 #' Balk, B. M. (2008). *Price and Quantity Index Numbers*.
 #' Cambridge University Press.
+#' 
+#' ILO, IMF, UNECE, OECD, and World Bank. (2004).
+#' *Producer Price Index Manual: Theory and Practice*.
+#' International Monetary Fund.
 #'
 #' IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).
 #' *Consumer Price Index Manual: Concepts and Methods*.

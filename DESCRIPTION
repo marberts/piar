@@ -1,6 +1,6 @@
 Package: piar
 Title: Price Index Aggregation
-Version: 0.8.1.9005
+Version: 0.8.1.9006
 Authors@R: c(
     person("Steve", "Martin", role = c("aut", "cre", "cph"),
            email = "marberts@protonmail.com",
@@ -24,7 +24,7 @@ Imports:
     gpindex (>= 0.6.1),
     Matrix (>= 1.5-0)
 Suggests: 
-    rmarkdown,
+    quarto,
     knitr,
     sps,
     testthat (>= 3.0.0)
@@ -33,7 +33,7 @@ Encoding: UTF-8
 URL: https://marberts.github.io/piar/, https://github.com/marberts/piar
 BugReports: https://github.com/marberts/piar/issues
 LazyData: true
-VignetteBuilder: knitr
+VignetteBuilder: knitr, quarto
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1

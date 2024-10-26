@@ -28,7 +28,7 @@
 #' @param x An object to coerce into a price index.
 #' @param chainable Are the index values in `x` period-over-period
 #' indexes, suitable for a chained calculation (the default)? This should be
-#' `FALSE` when `x` is a fixed-base (direct) index.
+#' `FALSE` when `x` contains fixed-base (direct) index values.
 #' @param contrib Should the index values in `x` be used to construct
 #' percent-change contributions? The default does not make contributions.
 #' @param ... Further arguments passed to or used by methods.

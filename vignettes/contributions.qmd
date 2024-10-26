@@ -1,0 +1,91 @@
+---
+title: "Contributions"
+vignette: >
+  %\VignetteIndexEntry{Contributions}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Product contributions
+
+It's often convenient to decompose an index into the (additive) contribution of each price relative, also known as the percent-change contribution. This can be done with the same work flow used in `vignette("piar")`, specifying `contrib = TRUE` when calling `elemental_index()`.
+
+```{r}
+library(piar)
+
+# Make an aggregation structure.
+ms_weights[c("level1", "level2")] <- 
+  expand_classification(ms_weights$classification)
+
+pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
+  as_aggregation_structure()
+
+# Make elemental index with contributions.
+elementals <- ms_prices |>
+  transform(
+    relative = price_relative(price, period = period, product = product)
+  ) |>
+  elemental_index(
+    relative ~ period + business,
+    product = product,
+    na.rm = TRUE,
+    contrib = TRUE
+  )
+```
+
+As with index values, percent-change contributions for a given level of the index can be extracted as a matrix.
+
+```{r}
+contrib(elementals, level = "B1")
+```
+
+Or as a data frame.
+
+```{r}
+contrib2DF(elementals, level = "B1")
+```
+
+Aggregating the elemental indexes automatically aggregates percent-change contributions, so no extra steps are needed after the elemental indexes are made.
+
+```{r}
+index <- aggregate(elementals, pias, na.rm = TRUE)
+
+contrib(index)
+```
+
+## Index contributions
+
+After an index has been calculated, it's often useful to compute the contribution of higher-level indexes towards the total index. The easiest way to do this with a collection of pre-computed index values is to simply coerce them into an index object with the index values as contributions and reaggregate with a restricted aggregation structure.
+
+```{r}
+index <- as_index(as.matrix(index), contrib = TRUE)
+```
+
+If the index values are already an index object, it's also possible to directly replace the contributions.
+
+```{r}
+reset_contrib <- function(index) {
+  for (l in levels(index)) {
+    contrib(index, l) <- as.matrix(index[l]) - 1
+  }
+  index
+}
+
+index <- reset_contrib(index)
+```
+
+We now cut the aggregation structure to keep only the top two levels and reaggregate to get the contribution of the second-level indexes to the top level index.
+
+```{r}
+aggregate(index, cut(pias, 2)) |>
+  contrib()
+```
+
+The same approach works with a fixed-base index as well.
+
+```{r}
+chain(index) |>
+  reset_contrib() |>
+  aggregate(cut(pias, 2)) |>
+  contrib()
+```

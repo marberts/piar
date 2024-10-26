@@ -28,7 +28,7 @@ the evolution of prices with respect to a fixed base period. This
 package contains a collection of functions that revolve around this work
 flow, making it easy to build standard price indexes, and implement the
 methods described by Balk (2008), von der Lippe (2007), and the CPI
-manual (2020) for bilateral price indexes.
+manual (2020) / PPI manual (2004) for bilateral price indexes.
 
 The tools in this package are designed to be useful for both researching
 new sources of data and methods to construct price indexes, and the
@@ -60,7 +60,7 @@ pak::pak("marberts/piar")
 
 ## Usage
 
-There is a detailed vignette showing how to use **piar**:
+There iare several detailed vignette showing how to use **piar**:
 `browseVignettes("piar")`. But the basic work flow is fairly simple.
 
 The starting point is to make period-over-period elemental price indexes
@@ -163,6 +163,9 @@ University Press.
 Chiru, R., Huang, N., Lequain, M. Smith, P., and Wright, A. (2015). *The
 Canadian Consumer Price Index Reference Paper*, Statistics Canada
 catalogue 62-553-X. Statistics Canada.
+
+ILO, IMF, UNECE, OECD, and World Bank. (2004). *Producer Price Index
+Manual: Theory and Practice*. International Monetary Fund.
 
 IMF, ILO, Eurostat, UNECE, OECD, and World Bank. (2020). *Consumer Price
 Index Manual: Concepts and Methods*. International Monetary Fund.

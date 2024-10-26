@@ -1,0 +1,59 @@
+---
+title: "Imputation"
+vignette: >
+  %\VignetteIndexEntry{Imputation}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+The example in `vignette("piar")` used parental imputation to both
+impute missing price relatives when calculating the elemental indexes
+and to impute missing elemental indexes during aggregation. Although
+parental imputation is simple and transparent, it is not the only way to
+impute missing prices or index values.
+
+## Imputing missing prices
+
+Instead of implicitly imputing missing price relatives by ignoring
+missing values, a common explicit (but methodologically dubious)
+imputation strategy when making elemental indexes is to carry forward
+the previous price to impute for missing prices. As the
+`elemental_index()` function accepts price relatives as its input, any
+imputations can be done prior to passing price relatives to this
+function. (Missing values still need to be removed in this example
+because not all missing prices can be imputed.)
+
+```{r}
+library(piar)
+
+elementals <- ms_prices |>
+  transform(
+    imputed_price = carry_forward(price, period = period, product = product)
+  ) |>
+  elemental_index(
+    price_relative(imputed_price, period = period, product = product) ~
+      period + business,
+    na.rm = TRUE
+  )
+
+elementals
+```
+
+## Non-parental imputation during aggregation
+
+Parental imputation is the usual way to impute missing elemental index
+values during aggregation, and it is simple to do with `aggregate()`. In
+some cases, however, an elemental index may get imputed with the value
+for, say, another elemental aggregate, rather than for an entire group
+of elemental aggregates. The simplest way to do this sort of imputation
+is to alter the elemental indexes prior to aggregation.
+
+As an example, suppose that missing index values for business B4 should
+be imputed as 1, rather than the value for group 12. This replacement
+can be done as if the index was a matrix.
+
+```{r}
+elementals["B4", 1:3] <- 1
+
+elementals
+```
