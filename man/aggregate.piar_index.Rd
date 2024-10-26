@@ -92,7 +92,8 @@ missing values for a level of \code{pias} are removed and recursively replaced
 by the value of its immediate parent.
 
 In most cases aggregation is done with an arithmetic mean (the default), and
-this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020).
+this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020), with
+analogous details in chapter 9 of the PPI manual (2004).
 Aggregating with a non-arithmetic mean follows the same steps, except that
 the elemental indexes are aggregated with a mean of a different order (e.g.,
 harmonic for a Paasche index), and the method for price updating the weights
@@ -159,6 +160,10 @@ as.matrix(pias) \%*\% as.matrix(chain(index[letters[1:3]]))
 \references{
 Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}.
 Cambridge University Press.
+
+ILO, IMF, UNECE, OECD, and World Bank. (2004).
+\emph{Producer Price Index Manual: Theory and Practice}.
+International Monetary Fund.
 
 IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).
 \emph{Consumer Price Index Manual: Concepts and Methods}.

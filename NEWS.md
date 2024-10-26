@@ -17,7 +17,7 @@ index.
 - `cut(aggregation_structure)` can be used cut off the bottom/top of an
 aggregation structure.
 
-- The vignette has been re-written, and split into small examples that cover more
+- The vignette has been re-written, split into small examples that cover more
 topics, and should be easier to follow.
 
 # Version 0.8.1

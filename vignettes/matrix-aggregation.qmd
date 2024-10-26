@@ -47,7 +47,7 @@ pias_matrix <- as.matrix(pias)
 pias_matrix
 ```
 
-Multiplying this matrix by a matrix of fixed-base elemental indexes now
+Multiplying this matrix with a matrix of fixed-base elemental indexes now
 computes the aggregate index in each time period.
 
 ```{r}

@@ -12,7 +12,7 @@ businesses are a good example, as there are usually take-all and
 take-some strata in addition to, say, an industry classification.
 
 Let's extend `vignette("piar")` by adding another dimension to the
-classification to say if a business belong to the take-all or take-some
+classification to say if a business belongs to the take-all or take-some
 sampling stratum.
 
 ```{r}

@@ -101,7 +101,8 @@ be unique within each time period when making contributions, and, if not, are
 passed to \code{\link[=make.unique]{make.unique()}} with a warning. The default
 (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8
 (pp. 175--190) of the CPI manual (2020) for more detail about making
-elemental indexes, and chapter 5 of Balk (2008).
+elemental indexes, or chapter 9 of the PPI manual (2004), and chapter 5 of
+Balk (2008).
 
 The default method simply coerces \code{x} to a numeric vector prior to
 calling the method above. The data frame method provides a formula interface
@@ -175,6 +176,10 @@ elemental_index(
 \references{
 Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}.
 Cambridge University Press.
+
+ILO, IMF, UNECE, OECD, and World Bank. (2004).
+\emph{Producer Price Index Manual: Theory and Practice}.
+International Monetary Fund.
 
 IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).
 \emph{Consumer Price Index Manual: Concepts and Methods}.
