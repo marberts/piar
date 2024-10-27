@@ -1,8 +1,9 @@
 ---
 title: "Aggregating across dimensions"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Aggregating across dimensions}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 

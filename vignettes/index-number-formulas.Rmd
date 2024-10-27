@@ -1,8 +1,9 @@
 ---
 title: "Index-number formulas"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Index-number formulas}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 

@@ -1,14 +1,21 @@
 ---
 title: "Multiple sources of data"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Multiple sources of data}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-Price indexes are usually made from several sources of data. An important benefit of the usual two-step workflow to make price indexes is that the elemental indexes can be built piecemeal---using different sources of data and different index-number formulas---and then aggregated with a consistent structure.
+Price indexes are usually made from several sources of data. An
+important benefit of the usual two-step workflow to make price indexes
+is that the elemental indexes can be built piecemeal---using different
+sources of data and different index-number formulas---and then
+aggregated with a consistent structure.
 
-Let's extend the example in `vignette("piar")` by having an alternate source of data for business `B5` that is always missing in the `ms_prices` dataset.
+Let's extend the example in `vignette("piar")` by having an alternate
+source of data for business `B5` that is always missing in the
+`ms_prices` dataset.
 
 ```{r}
 library(piar)
@@ -30,7 +37,9 @@ elementals <- ms_prices |>
 elementals
 ```
 
-Instead of using survey-like data for the other businesses, `B5` is made from scanner-like data with many price and quantity observations at each point in time.
+Instead of using survey-like data for the other businesses, `B5` is made
+from scanner-like data with many price and quantity observations at each
+point in time.
 
 ```{r}
 set.seed(12345)
@@ -45,7 +54,10 @@ scanner_prices <- data.frame(
 head(scanner_prices)
 ```
 
-These type of data often require the use of a multilateral index like the GEKS. For the sake of illustration, we'll make a Fisher GEKS index over a 3 quarter rolling window and use a mean splice to make a single time series.
+These type of data often require the use of a multilateral index like
+the GEKS. For the sake of illustration, we'll make a Fisher GEKS index
+over a 3 quarter rolling window and use a mean splice to make a single
+time series.
 
 ```{r}
 library(gpindex)
@@ -62,10 +74,11 @@ geks_elementals <- with(
 geks_elementals
 ```
 
-These values can now be merged with the other elemental indexes, getting turned into a period-over-period index in the process, and then aggregated.
+These values can now be merged with the other elemental indexes, getting
+turned into a period-over-period index in the process, and then
+aggregated.
 
 ```{r}
 merge(elementals, geks_elementals) |>
   aggregate(pias, na.rm = TRUE)
 ```
-

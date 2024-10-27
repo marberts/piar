@@ -1,8 +1,9 @@
 ---
 title: "Matrix aggregation"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Matrix aggregation}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -47,8 +48,8 @@ pias_matrix <- as.matrix(pias)
 pias_matrix
 ```
 
-Multiplying this matrix with a matrix of fixed-base elemental indexes now
-computes the aggregate index in each time period.
+Multiplying this matrix with a matrix of fixed-base elemental indexes
+now computes the aggregate index in each time period.
 
 ```{r}
 pias_matrix %*% as.matrix(index[levels(pias)$business])

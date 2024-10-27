@@ -1,8 +1,9 @@
 ---
 title: "Making price indexes"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Making price indexes}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 

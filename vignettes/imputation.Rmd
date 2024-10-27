@@ -1,8 +1,9 @@
 ---
 title: "Imputation"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Imputation}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
