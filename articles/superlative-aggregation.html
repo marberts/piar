@@ -10,10 +10,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="superlative-aggregation_files/libs/quarto-html/popper.min.js"></script><script src="superlative-aggregation_files/libs/quarto-html/tippy.umd.min.js"></script><link href="superlative-aggregation_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="superlative-aggregation_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Superlative aggregation">
-<meta property="og:image" content="https://marberts.github.io/piar/logo.png">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Superlative aggregation">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -23,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,29 +56,35 @@
 
 
   </div>
-</nav><div class="container template-quarto">
+</nav><div class="container template-article">
+
+
+
+
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Superlative aggregation</h1>
-
-
-
-
-      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/main/vignettes/superlative-aggregation.qmd" class="external-link"><code>vignettes/superlative-aggregation.qmd</code></a></small>
-      <div class="d-none name"><code></code></div>
+            
+      
+      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/main/vignettes/superlative-aggregation.Rmd" class="external-link"><code>vignettes/superlative-aggregation.Rmd</code></a></small>
+      <div class="d-none name"><code>superlative-aggregation.Rmd</code></div>
     </div>
 
-
-
-
-
-
-    <p>All of the examples so far have used a single set of weights to aggregate an index. Although this is by far the most common case, it is not suitable for aggregating a superlative index where there is more than one set of aggregation weights that change every period.</p>
-<section class="level2"><h2 id="aggregating-a-paasche-index">Aggregating a Paasche index<a class="anchor" aria-label="anchor" href="#aggregating-a-paasche-index"></a>
+    
+    
+<p>All of the examples so far have used a single set of weights to
+aggregate an index. Although this is by far the most common case, it is
+not suitable for aggregating a superlative index where there is more
+than one set of aggregation weights that change every period.</p>
+<div class="section level2">
+<h2 id="aggregating-a-paasche-index">Aggregating a Paasche index<a class="anchor" aria-label="anchor" href="#aggregating-a-paasche-index"></a>
 </h2>
-<p>Let’s start by making a chained Paasche index from 6 elemental indexes over 4 time periods to see how to deal with time-varying aggregation weights. This is similar to the example of building an index across multiple basket in <code><a href="../articles/multiple-baskets.html">vignette("multiple-baskets")</a></code>, except that the weights change each period.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<p>Let’s start by making a chained Paasche index from 6 elemental
+indexes over 4 time periods to see how to deal with time-varying
+aggregation weights. This is similar to the example of building an index
+across multiple basket in <code><a href="../articles/multiple-baskets.html">vignette("multiple-baskets")</a></code>,
+except that the weights change each period.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://marberts.github.io/piar/">piar</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
@@ -92,17 +95,15 @@
 <span>  <span class="fu"><a href="../reference/levels.piar_index.html">set_levels</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"B"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">elementals</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Period-over-period price index for 6 levels over 4 time periods
-   1         2         3         4
-B1 1 1.0883616 0.9300382 1.0942740
-B2 1 1.1503093 1.0036897 0.8004546
-B3 1 1.1043929 1.0910821 0.9564813
-B4 1 1.1544498 1.1958948 0.9849979
-B5 1 0.9825924 0.8138142 0.9552576
-B6 1 0.8665487 0.8609494 0.9609941</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Period-over-period price index for 6 levels over 4 time periods </span></span>
+<span><span class="co">##    1         2         3         4</span></span>
+<span><span class="co">## B1 1 1.0883616 0.9300382 1.0942740</span></span>
+<span><span class="co">## B2 1 1.1503093 1.0036897 0.8004546</span></span>
+<span><span class="co">## B3 1 1.1043929 1.0910821 0.9564813</span></span>
+<span><span class="co">## B4 1 1.1544498 1.1958948 0.9849979</span></span>
+<span><span class="co">## B5 1 0.9825924 0.8138142 0.9552576</span></span>
+<span><span class="co">## B6 1 0.8665487 0.8609494 0.9609941</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Make aggregation weights over 4 time periods.</span></span>
 <span><span class="co">#            1</span></span>
 <span><span class="co">#      |-----+-----|</span></span>
@@ -119,34 +120,38 @@ B6 1 0.8665487 0.8609494 0.9609941</code></pre>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">weights</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  level1 level2 ea  weights period
-1      1     11 B1 117.8964      1
-2      1     11 B2 195.1659      1
-3      1     11 B3 145.3728      1
-4      1     12 B4 132.6752      1
-5      1     12 B5 196.5415      1
-6      1     12 B6 170.7482      1</code></pre>
-</div>
-</div>
-<p>The key tools to deal with time-varying aggregation weights are the <code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack()</a></code> and <code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">unstack()</a></code> functions. <code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack()</a></code> appends a later index series onto an earlier one for the same levels, whereas <code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">unstack()</a></code> pulls apart an index series for many periods into a collection of one-period indexes. These function allow the aggregation to be done with a map-reduce.</p>
-<p>The first step to making a Paasche index is to unstack the elemental indexes into a list of elemental indexes for each period. (Trying to make the elemental indexes period-by-period can be dangerous when there are missing values.)</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">##   level1 level2 ea  weights period</span></span>
+<span><span class="co">## 1      1     11 B1 117.8964      1</span></span>
+<span><span class="co">## 2      1     11 B2 195.1659      1</span></span>
+<span><span class="co">## 3      1     11 B3 145.3728      1</span></span>
+<span><span class="co">## 4      1     12 B4 132.6752      1</span></span>
+<span><span class="co">## 5      1     12 B5 196.5415      1</span></span>
+<span><span class="co">## 6      1     12 B6 170.7482      1</span></span></code></pre>
+<p>The key tools to deal with time-varying aggregation weights are the
+<code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack()</a></code> and <code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">unstack()</a></code> functions.
+<code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack()</a></code> appends a later index series onto an earlier one
+for the same levels, whereas <code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">unstack()</a></code> pulls apart an index
+series for many periods into a collection of one-period indexes. These
+function allow the aggregation to be done with a map-reduce.</p>
+<p>The first step to making a Paasche index is to unstack the elemental
+indexes into a list of elemental indexes for each period. (Trying to
+make the elemental indexes period-by-period can be dangerous when there
+are missing values.)</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elementals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/stack.html" class="external-link">unstack</a></span><span class="op">(</span><span class="va">elementals</span><span class="op">)</span></span></code></pre></div>
-</div>
-<p>This is followed by making a sequence of aggregation structures for each set of weights.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<p>This is followed by making a sequence of aggregation structures for
+each set of weights.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">paasche_pias</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span></span>
 <span>  <span class="va">weights</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"level1"</span>, <span class="st">"level2"</span>, <span class="st">"ea"</span>, <span class="st">"weights"</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>  <span class="va">weights</span><span class="op">[[</span><span class="st">"period"</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">as_aggregation_structure</span><span class="op">)</span></span></code></pre></div>
-</div>
-<p>Computing the Paasche index for each period is now just a case of mapping the <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> function to each elemental index and aggregation structure, and then reducing the result with the <code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack()</a></code> function.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<p>Computing the Paasche index for each period is now just a case of
+mapping the <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> function to each elemental index
+and aggregation structure, and then reducing the result with the
+<code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack()</a></code> function.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">paasche</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span></span>
 <span>  <span class="va">aggregate</span>,</span>
 <span>  <span class="va">elementals</span>,</span>
@@ -158,19 +163,21 @@ B6 1 0.8665487 0.8609494 0.9609941</code></pre>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">stack</span>, x <span class="op">=</span> <span class="va">_</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">paasche</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Period-over-period price index for 3 levels over 4 time periods
-   1         2         3         4
-1  1 1.0504784 0.9666398 0.9468934
-11 1 1.1117341 0.9920294 0.9329698
-12 1 0.9898158 0.9447976 0.9647535</code></pre>
+<pre><code><span><span class="co">## Period-over-period price index for 3 levels over 4 time periods </span></span>
+<span><span class="co">##    1         2         3         4</span></span>
+<span><span class="co">## 1  1 1.0504784 0.9666398 0.9468934</span></span>
+<span><span class="co">## 11 1 1.1117341 0.9920294 0.9329698</span></span>
+<span><span class="co">## 12 1 0.9898158 0.9447976 0.9647535</span></span></code></pre>
 </div>
-</div>
-</section><section class="level2"><h2 id="making-a-fisher-index">Making a Fisher index<a class="anchor" aria-label="anchor" href="#making-a-fisher-index"></a>
+<div class="section level2">
+<h2 id="making-a-fisher-index">Making a Fisher index<a class="anchor" aria-label="anchor" href="#making-a-fisher-index"></a>
 </h2>
-<p>Making a chained Fisher index requires two sets of weights: base-period weights to make the Laspeyres index and current-period weights to make the Paasche index. As with the Paasche index this can be done with a map-reduce, except now by passing two aggregation structures to the <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> function instead of one.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<p>Making a chained Fisher index requires two sets of weights:
+base-period weights to make the Laspeyres index and current-period
+weights to make the Paasche index. As with the Paasche index this can be
+done with a map-reduce, except now by passing two aggregation structures
+to the <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> function instead of one.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">laspeyres_pias</span> <span class="op">&lt;-</span> <span class="va">paasche_pias</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="va">fisher</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span></span>
@@ -184,17 +191,15 @@ B6 1 0.8665487 0.8609494 0.9609941</code></pre>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">stack</span>, x <span class="op">=</span> <span class="va">_</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fisher</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Period-over-period price index for 3 levels over 4 time periods
-   1         2         3         4
-1  1 1.0509134 0.9783795 0.9600792
-11 1 1.1157686 1.0007074 0.9557479
-12 1 0.9891911 0.9567760 0.9665552</code></pre>
-</div>
-</div>
-<p>This gives the same result as calculating the Laspeyres and Paasche indexes individually, and then caluclating the Fisher index manually.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Period-over-period price index for 3 levels over 4 time periods </span></span>
+<span><span class="co">##    1         2         3         4</span></span>
+<span><span class="co">## 1  1 1.0509134 0.9783795 0.9600792</span></span>
+<span><span class="co">## 11 1 1.1157686 1.0007074 0.9557479</span></span>
+<span><span class="co">## 12 1 0.9891911 0.9567760 0.9665552</span></span></code></pre>
+<p>This gives the same result as calculating the Laspeyres and Paasche
+indexes individually, and then caluclating the Fisher index
+manually.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">laspeyres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span></span>
 <span>  <span class="va">aggregate</span>,</span>
 <span>  <span class="va">elementals</span>,</span>
@@ -205,117 +210,15 @@ B6 1 0.8665487 0.8609494 0.9609941</code></pre>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">stack</span>, x <span class="op">=</span> <span class="va">_</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">laspeyres</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">paasche</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   1         2         3         4
-1  1 1.0509134 0.9783795 0.9600792
-11 1 1.1157686 1.0007074 0.9557479
-12 1 0.9891911 0.9567760 0.9665552</code></pre>
+<pre><code><span><span class="co">##    1         2         3         4</span></span>
+<span><span class="co">## 1  1 1.0509134 0.9783795 0.9600792</span></span>
+<span><span class="co">## 11 1 1.1157686 1.0007074 0.9557479</span></span>
+<span><span class="co">## 12 1 0.9891911 0.9567760 0.9665552</span></span></code></pre>
 </div>
-</div>
-</section><script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'light-border',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config);
-  }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
-      });
-    }
-  }
-});
-</script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
+
 
 
     <footer><div class="pkgdown-footer-left">

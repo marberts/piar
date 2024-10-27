@@ -10,10 +10,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="piar_files/libs/quarto-html/popper.min.js"></script><script src="piar_files/libs/quarto-html/tippy.umd.min.js"></script><link href="piar_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="piar_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Making price indexes">
-<meta property="og:image" content="https://marberts.github.io/piar/logo.png">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Making price indexes">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -23,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,58 +56,84 @@
 
 
   </div>
-</nav><div class="container template-quarto">
+</nav><div class="container template-article">
+
+
+
+
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Making price indexes</h1>
-
-
-
-
-      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/main/vignettes/piar.qmd" class="external-link"><code>vignettes/piar.qmd</code></a></small>
-      <div class="d-none name"><code></code></div>
+            
+      
+      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/main/vignettes/piar.Rmd" class="external-link"><code>vignettes/piar.Rmd</code></a></small>
+      <div class="d-none name"><code>piar.Rmd</code></div>
     </div>
 
-
-
-
-
-
-    <p>Most price indexes are made with a two-step procedure, where period-over-period <em>elemental indexes</em> are calculated for a collection of <em>elemental aggregates</em> at each point in time, and then aggregated according to a <em>price index aggregation structure</em>. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. This package contains a collection of functions that revolve around this work flow, making it easy to build standard price indexes in <strong>R</strong>.</p>
-<p>The purpose of this vignette is to give an introductory example for how to use the core functionality in this package to make a standard price index. Subsequent vignettes go into more details on advanced topics, often referencing the example in this vignette.</p>
-<section class="level2"><h2 id="matched-sample-index">Matched-sample index<a class="anchor" aria-label="anchor" href="#matched-sample-index"></a>
+    
+    
+<p>Most price indexes are made with a two-step procedure, where
+period-over-period <em>elemental indexes</em> are calculated for a
+collection of <em>elemental aggregates</em> at each point in time, and
+then aggregated according to a <em>price index aggregation
+structure</em>. These indexes can then be chained together to form a
+time series that gives the evolution of prices with respect to a fixed
+base period. This package contains a collection of functions that
+revolve around this work flow, making it easy to build standard price
+indexes in <strong>R</strong>.</p>
+<p>The purpose of this vignette is to give an introductory example for
+how to use the core functionality in this package to make a standard
+price index. Subsequent vignettes go into more details on advanced
+topics, often referencing the example in this vignette.</p>
+<div class="section level2">
+<h2 id="matched-sample-index">Matched-sample index<a class="anchor" aria-label="anchor" href="#matched-sample-index"></a>
 </h2>
-<p>In this vignette we’ll be calculating a matched-sample index, where a fixed set of businesses each provide prices for a collection of products over time. The products reported by a businesses can change over time, but the set of businesses is fixed for the duration of the sample. Each businesses has a weight that is established when the sample is drawn, and represents a particular segment of the economy.</p>
-<p>The usual approach for calculating a matched-sample index starts by computing an elemental index for each business as an equally-weighted geometric mean of price relatives (i.e., a Jevons index). From there, index values for different segments of the economy are calculated as an arithmetic mean of the elemental indexes, using the businesses-level weights (either a Young or Lowe index, depending how the weights are constructed).</p>
-<p>The <code>ms_prices</code> dataset has price data for five businesses over four quarters, and the <code>ms_weights</code> dataset has the weight data. Note that these data have fairly realistic patterns of missing data and are emblematic of the kinds of survey data used to make price indexes.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<p>In this vignette we’ll be calculating a matched-sample index, where a
+fixed set of businesses each provide prices for a collection of products
+over time. The products reported by a businesses can change over time,
+but the set of businesses is fixed for the duration of the sample. Each
+businesses has a weight that is established when the sample is drawn,
+and represents a particular segment of the economy.</p>
+<p>The usual approach for calculating a matched-sample index starts by
+computing an elemental index for each business as an equally-weighted
+geometric mean of price relatives (i.e., a Jevons index). From there,
+index values for different segments of the economy are calculated as an
+arithmetic mean of the elemental indexes, using the businesses-level
+weights (either a Young or Lowe index, depending how the weights are
+constructed).</p>
+<p>The <code>ms_prices</code> dataset has price data for five businesses
+over four quarters, and the <code>ms_weights</code> dataset has the
+weight data. Note that these data have fairly realistic patterns of
+missing data and are emblematic of the kinds of survey data used to make
+price indexes.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://marberts.github.io/piar/">piar</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ms_prices</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  period business product price
-1 202001       B1       1  1.14
-2 202001       B1       2    NA
-3 202001       B1       3  6.09
-4 202001       B2       4  6.23
-5 202001       B2       5  8.61
-6 202001       B2       6  6.40</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">##   period business product price</span></span>
+<span><span class="co">## 1 202001       B1       1  1.14</span></span>
+<span><span class="co">## 2 202001       B1       2    NA</span></span>
+<span><span class="co">## 3 202001       B1       3  6.09</span></span>
+<span><span class="co">## 4 202001       B2       4  6.23</span></span>
+<span><span class="co">## 5 202001       B2       5  8.61</span></span>
+<span><span class="co">## 6 202001       B2       6  6.40</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ms_weights</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  business classification weight
-1       B1             11    553
-2       B2             11    646
-3       B3             11    312
-4       B4             12    622
-5       B5             12    330</code></pre>
-</div>
-</div>
-<p>The <code><a href="../reference/elemental_index.html">elemental_index()</a></code> function makes, well, elemental indexes, using information on price relatives, elemental aggregates (businesses), and time periods (quarters). By default it makes a Jevons index, but any bilateral generalized-mean index is possible (see <code><a href="../articles/index-number-formulas.html">vignette("index-number-formulas")</a></code> for more details). The only wrinkle is that price data here are in levels, and not relatives, but the <code><a href="../reference/price_relative.html">price_relative()</a></code> function can make the necessary conversion.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">##   business classification weight</span></span>
+<span><span class="co">## 1       B1             11    553</span></span>
+<span><span class="co">## 2       B2             11    646</span></span>
+<span><span class="co">## 3       B3             11    312</span></span>
+<span><span class="co">## 4       B4             12    622</span></span>
+<span><span class="co">## 5       B5             12    330</span></span></code></pre>
+<p>The <code><a href="../reference/elemental_index.html">elemental_index()</a></code> function makes, well, elemental
+indexes, using information on price relatives, elemental aggregates
+(businesses), and time periods (quarters). By default it makes a Jevons
+index, but any bilateral generalized-mean index is possible (see
+<code><a href="../articles/index-number-formulas.html">vignette("index-number-formulas")</a></code> for more details). The
+only wrinkle is that price data here are in levels, and not relatives,
+but the <code><a href="../reference/price_relative.html">price_relative()</a></code> function can make the necessary
+conversion.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elementals</span> <span class="op">&lt;-</span> <span class="va">ms_prices</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span></span>
 <span>    relative <span class="op">=</span> <span class="fu"><a href="../reference/price_relative.html">price_relative</a></span><span class="op">(</span><span class="va">price</span>, period <span class="op">=</span> <span class="va">period</span>, product <span class="op">=</span> <span class="va">product</span><span class="op">)</span></span>
@@ -118,281 +141,189 @@
 <span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">relative</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">elementals</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Period-over-period price index for 4 levels over 4 time periods
-   202001    202002    202003   202004
-B1      1 0.8949097 0.3342939      NaN
-B2      1       NaN       NaN 2.770456
-B3      1 2.0200036 1.6353355 0.537996
-B4    NaN       NaN       NaN 4.576286</code></pre>
-</div>
-</div>
-<p>As with most functions in <strong>R</strong>, missing values are contagious by default. Setting <code>na.rm = TRUE</code> in <code><a href="../reference/elemental_index.html">elemental_index()</a></code> means that missing price relatives are ignored, which is equivalent to imputing these missing relatives with the value of the elemental index for the respective businesses (i.e., parental or overall mean imputation). Other types of imputation are covered in <code><a href="../articles/imputation.html">vignette("imputation")</a></code>.</p>
-<p>The <code><a href="../reference/elemental_index.html">elemental_index()</a></code> function returns a special index object, and there are a number of methods for working with these objects. For example, the resulting indexes to be extracted like a matrix, even though it’s not a matrix.<a class="footnote-ref" role="doc-noteref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Note that there are only indexes for four businesses, not five, because the fifth business never reports any prices. An elemental index can be made for this business by passing a factor with a level for all five businesses to &lt;code&gt;&lt;a href="../reference/elemental_index.html"&gt;elemental_index()&lt;/a&gt;&lt;/code&gt;.&lt;/p&gt;'><sup>1</sup></a></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Period-over-period price index for 4 levels over 4 time periods </span></span>
+<span><span class="co">##    202001    202002    202003   202004</span></span>
+<span><span class="co">## B1      1 0.8949097 0.3342939      NaN</span></span>
+<span><span class="co">## B2      1       NaN       NaN 2.770456</span></span>
+<span><span class="co">## B3      1 2.0200036 1.6353355 0.537996</span></span>
+<span><span class="co">## B4    NaN       NaN       NaN 4.576286</span></span></code></pre>
+<p>As with most functions in <strong>R</strong>, missing values are
+contagious by default. Setting <code>na.rm = TRUE</code> in
+<code><a href="../reference/elemental_index.html">elemental_index()</a></code> means that missing price relatives are
+ignored, which is equivalent to imputing these missing relatives with
+the value of the elemental index for the respective businesses (i.e.,
+parental or overall mean imputation). Other types of imputation are
+covered in <code><a href="../articles/imputation.html">vignette("imputation")</a></code>.</p>
+<p>The <code><a href="../reference/elemental_index.html">elemental_index()</a></code> function returns a special index
+object, and there are a number of methods for working with these
+objects. For example, the resulting indexes to be extracted like a
+matrix, even though it’s not a matrix.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;Note that there are only indexes for four businesses,
+not five, because the fifth business never reports any prices. An
+elemental index can be made for this business by passing a factor with a
+level for all five businesses to &lt;code&gt;&lt;a href="../reference/elemental_index.html"&gt;elemental_index()&lt;/a&gt;&lt;/code&gt;.&lt;/p&gt;'><sup>1</sup></a></p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elementals</span><span class="op">[</span>, <span class="st">"202004"</span><span class="op">]</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Period-over-period price index for 4 levels over 1 time periods
-     202004
-B1      NaN
-B2 2.770456
-B3 0.537996
-B4 4.576286</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Period-over-period price index for 4 levels over 1 time periods </span></span>
+<span><span class="co">##      202004</span></span>
+<span><span class="co">## B1      NaN</span></span>
+<span><span class="co">## B2 2.770456</span></span>
+<span><span class="co">## B3 0.537996</span></span>
+<span><span class="co">## B4 4.576286</span></span></code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elementals</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B1"</span>, <span class="st">"B3"</span><span class="op">)</span>, <span class="op">]</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Period-over-period price index for 2 levels over 4 time periods
-   202001    202002    202003   202004
-B1      1 0.8949097 0.3342939      NaN
-B3      1 2.0200036 1.6353355 0.537996</code></pre>
-</div>
-</div>
-<p>With the elemental indexes out of the way, it’s time to make a price-index aggregation structure that maps each business to its position in the aggregation hierarchy. The only hiccup is unpacking the digit-wise classification for each businesses that defines the hierarchy. That’s the job of the <code><a href="../reference/expand_classification.html">expand_classification()</a></code> function.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Period-over-period price index for 2 levels over 4 time periods </span></span>
+<span><span class="co">##    202001    202002    202003   202004</span></span>
+<span><span class="co">## B1      1 0.8949097 0.3342939      NaN</span></span>
+<span><span class="co">## B3      1 2.0200036 1.6353355 0.537996</span></span></code></pre>
+<p>With the elemental indexes out of the way, it’s time to make a
+price-index aggregation structure that maps each business to its
+position in the aggregation hierarchy. The only hiccup is unpacking the
+digit-wise classification for each businesses that defines the
+hierarchy. That’s the job of the <code><a href="../reference/expand_classification.html">expand_classification()</a></code>
+function.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ms_weights</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"level1"</span>, <span class="st">"level2"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu"><a href="../reference/expand_classification.html">expand_classification</a></span><span class="op">(</span><span class="va">ms_weights</span><span class="op">$</span><span class="va">classification</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pias</span> <span class="op">&lt;-</span> <span class="va">ms_weights</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"level1"</span>, <span class="st">"level2"</span>, <span class="st">"business"</span>, <span class="st">"weight"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/as_aggregation_structure.html">as_aggregation_structure</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</div>
-<p>It is now simple to aggregate the elemental indexes according to this aggregation structure with the <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> function. As with the elemental indexes, missing values are ignored by setting <code>na.rm = TRUE</code>, which is equivalent to parentally imputing missing values. Note that, unlike the elemental indexes, missing values are filled in to ensure the index can be chained over time.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
+<p>It is now simple to aggregate the elemental indexes according to this
+aggregation structure with the <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> function. As
+with the elemental indexes, missing values are ignored by setting
+<code>na.rm = TRUE</code>, which is equivalent to parentally imputing
+missing values. Note that, unlike the elemental indexes, missing values
+are filled in to ensure the index can be chained over time.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">elementals</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">index</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Period-over-period price index for 8 levels over 4 time periods
-   202001    202002    202003   202004
-1       1 1.3007239 1.0630743 2.734761
-11      1 1.3007239 1.0630743 1.574515
-12      1 1.3007239 1.0630743 4.576286
-B1      1 0.8949097 0.3342939 1.574515
-B2      1 1.3007239 1.0630743 2.770456
-B3      1 2.0200036 1.6353355 0.537996
-B4      1 1.3007239 1.0630743 4.576286
-B5      1 1.3007239 1.0630743 4.576286</code></pre>
+<pre><code><span><span class="co">## Period-over-period price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">##    202001    202002    202003   202004</span></span>
+<span><span class="co">## 1       1 1.3007239 1.0630743 2.734761</span></span>
+<span><span class="co">## 11      1 1.3007239 1.0630743 1.574515</span></span>
+<span><span class="co">## 12      1 1.3007239 1.0630743 4.576286</span></span>
+<span><span class="co">## B1      1 0.8949097 0.3342939 1.574515</span></span>
+<span><span class="co">## B2      1 1.3007239 1.0630743 2.770456</span></span>
+<span><span class="co">## B3      1 2.0200036 1.6353355 0.537996</span></span>
+<span><span class="co">## B4      1 1.3007239 1.0630743 4.576286</span></span>
+<span><span class="co">## B5      1 1.3007239 1.0630743 4.576286</span></span></code></pre>
 </div>
-</div>
-</section><section class="level2"><h2 id="chaining">Chaining<a class="anchor" aria-label="anchor" href="#chaining"></a>
+<div class="section level2">
+<h2 id="chaining">Chaining<a class="anchor" aria-label="anchor" href="#chaining"></a>
 </h2>
-<p>The <code><a href="../reference/elemental_index.html">elemental_index()</a></code> function makes period-over-period elemental indexes by default, which are then aggregated to make a period-over-period index. Chaining an index is the process of taking the cumulative product of each of these period-over-period indexes to make a time series that compares prices to a fixed base period.</p>
-<p>The <code><a href="../reference/chain.html">chain()</a></code> function can be used to chain the values in an index object.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
+<p>The <code><a href="../reference/elemental_index.html">elemental_index()</a></code> function makes period-over-period
+elemental indexes by default, which are then aggregated to make a
+period-over-period index. Chaining an index is the process of taking the
+cumulative product of each of these period-over-period indexes to make a
+time series that compares prices to a fixed base period.</p>
+<p>The <code><a href="../reference/chain.html">chain()</a></code> function can be used to chain the values in
+an index object.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chained_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">chained_index</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Fixed-base price index for 8 levels over 4 time periods
-   202001    202002    202003    202004
-1       1 1.3007239 1.3827662 3.7815355
-11      1 1.3007239 1.3827662 2.1771866
-12      1 1.3007239 1.3827662 6.3279338
-B1      1 0.8949097 0.2991629 0.4710366
-B2      1 1.3007239 1.3827662 3.8308934
-B3      1 2.0200036 3.3033836 1.7772072
-B4      1 1.3007239 1.3827662 6.3279338
-B5      1 1.3007239 1.3827662 6.3279338</code></pre>
-</div>
-</div>
-<p>This gives almost the same result as directly manipulating the index as a matrix, except that the former returns an index object (not a matrix).</p>
-<p>Chained indexes often need be to rebased, and this can be done with the <code><a href="../reference/chain.html">rebase()</a></code> function. For example, rebasing the index so that 202004 is the base period just requires dividing the chained index by the slice for 202004.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## Fixed-base price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">##    202001    202002    202003    202004</span></span>
+<span><span class="co">## 1       1 1.3007239 1.3827662 3.7815355</span></span>
+<span><span class="co">## 11      1 1.3007239 1.3827662 2.1771866</span></span>
+<span><span class="co">## 12      1 1.3007239 1.3827662 6.3279338</span></span>
+<span><span class="co">## B1      1 0.8949097 0.2991629 0.4710366</span></span>
+<span><span class="co">## B2      1 1.3007239 1.3827662 3.8308934</span></span>
+<span><span class="co">## B3      1 2.0200036 3.3033836 1.7772072</span></span>
+<span><span class="co">## B4      1 1.3007239 1.3827662 6.3279338</span></span>
+<span><span class="co">## B5      1 1.3007239 1.3827662 6.3279338</span></span></code></pre>
+<p>This gives almost the same result as directly manipulating the index
+as a matrix, except that the former returns an index object (not a
+matrix).</p>
+<p>Chained indexes often need be to rebased, and this can be done with
+the <code><a href="../reference/chain.html">rebase()</a></code> function. For example, rebasing the index so
+that 202004 is the base period just requires dividing the chained index
+by the slice for 202004.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/chain.html">rebase</a></span><span class="op">(</span><span class="va">chained_index</span>, <span class="va">chained_index</span><span class="op">[</span>, <span class="st">"202004"</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Fixed-base price index for 8 levels over 4 time periods
-      202001    202002    202003 202004
-1  0.2644428 0.3439671 0.3656626      1
-11 0.4593084 0.5974334 0.6351161      1
-12 0.1580295 0.2055527 0.2185178      1
-B1 2.1229774 1.8998731 0.6351161      1
-B2 0.2610357 0.3395354 0.3609514      1
-B3 0.5626806 1.1366169 1.8587499      1
-B4 0.1580295 0.2055527 0.2185178      1
-B5 0.1580295 0.2055527 0.2185178      1</code></pre>
+<pre><code><span><span class="co">## Fixed-base price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">##       202001    202002    202003 202004</span></span>
+<span><span class="co">## 1  0.2644428 0.3439671 0.3656626      1</span></span>
+<span><span class="co">## 11 0.4593084 0.5974334 0.6351161      1</span></span>
+<span><span class="co">## 12 0.1580295 0.2055527 0.2185178      1</span></span>
+<span><span class="co">## B1 2.1229774 1.8998731 0.6351161      1</span></span>
+<span><span class="co">## B2 0.2610357 0.3395354 0.3609514      1</span></span>
+<span><span class="co">## B3 0.5626806 1.1366169 1.8587499      1</span></span>
+<span><span class="co">## B4 0.1580295 0.2055527 0.2185178      1</span></span>
+<span><span class="co">## B5 0.1580295 0.2055527 0.2185178      1</span></span></code></pre>
 </div>
-</div>
-</section><section class="level2"><h2 id="working-with-indexes">Working with indexes<a class="anchor" aria-label="anchor" href="#working-with-indexes"></a>
+<div class="section level2">
+<h2 id="working-with-indexes">Working with indexes<a class="anchor" aria-label="anchor" href="#working-with-indexes"></a>
 </h2>
-<p>Once an index has been calculated, it usually needs to be turned into a table of index values. This can be done by either coercing an index into a matrix</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
+<p>Once an index has been calculated, it usually needs to be turned into
+a table of index values. This can be done by either coercing an index
+into a matrix</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">chained_index</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   202001    202002    202003    202004
-1       1 1.3007239 1.3827662 3.7815355
-11      1 1.3007239 1.3827662 2.1771866
-12      1 1.3007239 1.3827662 6.3279338
-B1      1 0.8949097 0.2991629 0.4710366
-B2      1 1.3007239 1.3827662 3.8308934
-B3      1 2.0200036 3.3033836 1.7772072
-B4      1 1.3007239 1.3827662 6.3279338
-B5      1 1.3007239 1.3827662 6.3279338</code></pre>
-</div>
-</div>
+<pre><code><span><span class="co">##    202001    202002    202003    202004</span></span>
+<span><span class="co">## 1       1 1.3007239 1.3827662 3.7815355</span></span>
+<span><span class="co">## 11      1 1.3007239 1.3827662 2.1771866</span></span>
+<span><span class="co">## 12      1 1.3007239 1.3827662 6.3279338</span></span>
+<span><span class="co">## B1      1 0.8949097 0.2991629 0.4710366</span></span>
+<span><span class="co">## B2      1 1.3007239 1.3827662 3.8308934</span></span>
+<span><span class="co">## B3      1 2.0200036 3.3033836 1.7772072</span></span>
+<span><span class="co">## B4      1 1.3007239 1.3827662 6.3279338</span></span>
+<span><span class="co">## B5      1 1.3007239 1.3827662 6.3279338</span></span></code></pre>
 <p>or a data frame</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">chained_index</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   period level     value
-1  202001     1 1.0000000
-2  202001    11 1.0000000
-3  202001    12 1.0000000
-4  202001    B1 1.0000000
-5  202001    B2 1.0000000
-6  202001    B3 1.0000000
-7  202001    B4 1.0000000
-8  202001    B5 1.0000000
-9  202002     1 1.3007239
-10 202002    11 1.3007239
-11 202002    12 1.3007239
-12 202002    B1 0.8949097
-13 202002    B2 1.3007239
-14 202002    B3 2.0200036
-15 202002    B4 1.3007239
-16 202002    B5 1.3007239
-17 202003     1 1.3827662
-18 202003    11 1.3827662
-19 202003    12 1.3827662
-20 202003    B1 0.2991629
-21 202003    B2 1.3827662
-22 202003    B3 3.3033836
-23 202003    B4 1.3827662
-24 202003    B5 1.3827662
-25 202004     1 3.7815355
-26 202004    11 2.1771866
-27 202004    12 6.3279338
-28 202004    B1 0.4710366
-29 202004    B2 3.8308934
-30 202004    B3 1.7772072
-31 202004    B4 6.3279338
-32 202004    B5 6.3279338</code></pre>
-</div>
-</div>
-<p>It is also sometimes useful to get the price-updated weights used to aggregate the index; these can be calculated by first updating the aggregation structure with the aggregated index, then made into a table.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">##    period level     value</span></span>
+<span><span class="co">## 1  202001     1 1.0000000</span></span>
+<span><span class="co">## 2  202001    11 1.0000000</span></span>
+<span><span class="co">## 3  202001    12 1.0000000</span></span>
+<span><span class="co">## 4  202001    B1 1.0000000</span></span>
+<span><span class="co">## 5  202001    B2 1.0000000</span></span>
+<span><span class="co">## 6  202001    B3 1.0000000</span></span>
+<span><span class="co">## 7  202001    B4 1.0000000</span></span>
+<span><span class="co">## 8  202001    B5 1.0000000</span></span>
+<span><span class="co">## 9  202002     1 1.3007239</span></span>
+<span><span class="co">## 10 202002    11 1.3007239</span></span>
+<span><span class="co">## 11 202002    12 1.3007239</span></span>
+<span><span class="co">## 12 202002    B1 0.8949097</span></span>
+<span><span class="co">## 13 202002    B2 1.3007239</span></span>
+<span><span class="co">## 14 202002    B3 2.0200036</span></span>
+<span><span class="co">## 15 202002    B4 1.3007239</span></span>
+<span><span class="co">## 16 202002    B5 1.3007239</span></span>
+<span><span class="co">## 17 202003     1 1.3827662</span></span>
+<span><span class="co">## 18 202003    11 1.3827662</span></span>
+<span><span class="co">## 19 202003    12 1.3827662</span></span>
+<span><span class="co">## 20 202003    B1 0.2991629</span></span>
+<span><span class="co">## 21 202003    B2 1.3827662</span></span>
+<span><span class="co">## 22 202003    B3 3.3033836</span></span>
+<span><span class="co">## 23 202003    B4 1.3827662</span></span>
+<span><span class="co">## 24 202003    B5 1.3827662</span></span>
+<span><span class="co">## 25 202004     1 3.7815355</span></span>
+<span><span class="co">## 26 202004    11 2.1771866</span></span>
+<span><span class="co">## 27 202004    12 6.3279338</span></span>
+<span><span class="co">## 28 202004    B1 0.4710366</span></span>
+<span><span class="co">## 29 202004    B2 3.8308934</span></span>
+<span><span class="co">## 30 202004    B3 1.7772072</span></span>
+<span><span class="co">## 31 202004    B4 6.3279338</span></span>
+<span><span class="co">## 32 202004    B5 6.3279338</span></span></code></pre>
+<p>It is also sometimes useful to get the price-updated weights used to
+aggregate the index; these can be calculated by first updating the
+aggregation structure with the aggregated index, then made into a
+table.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">pias</span>, <span class="va">index</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  level1 level2 ea    weight
-1      1     11 B1  260.4832
-2      1     11 B2 2474.7571
-3      1     11 B3  554.4886
-4      1     12 B4 3935.9748
-5      1     12 B5 2088.2182</code></pre>
+<pre><code><span><span class="co">##   level1 level2 ea    weight</span></span>
+<span><span class="co">## 1      1     11 B1  260.4832</span></span>
+<span><span class="co">## 2      1     11 B2 2474.7571</span></span>
+<span><span class="co">## 3      1     11 B3  554.4886</span></span>
+<span><span class="co">## 4      1     12 B4 3935.9748</span></span>
+<span><span class="co">## 5      1     12 B5 2088.2182</span></span></code></pre>
 </div>
-</div>
-</section><script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'light-border',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config);
-  }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
-      });
-    }
-  }
-});
-</script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
+
 
 
     <footer><div class="pkgdown-footer-left">
