@@ -2,6 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
+  adjust-weights: adjust-weights.html
   contributions: contributions.html
   imputation: imputation.html
   index-number-formulas: index-number-formulas.html
@@ -11,7 +12,7 @@ articles:
   multiple-dimensions: multiple-dimensions.html
   piar: piar.html
   superlative-aggregation: superlative-aggregation.html
-last_built: 2024-10-27T03:00Z
+last_built: 2024-11-09T04:46Z
 urls:
   reference: https://marberts.github.io/piar/reference
   article: https://marberts.github.io/piar/articles
