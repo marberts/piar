@@ -36,7 +36,7 @@ geometric mean of price relatives (i.e., a Jevons index). From there,
 index values for different segments of the economy are calculated as an
 arithmetic mean of the elemental indexes, using the businesses-level
 weights (either a Young or Lowe index, depending how the weights are
-constructed).
+constructed; see `vignette("adjust-weights")`).
 
 The `ms_prices` dataset has price data for five businesses over four
 quarters, and the `ms_weights` dataset has the weight data. Note that
