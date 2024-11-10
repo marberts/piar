@@ -9,8 +9,9 @@ vignette: >
 
 Making a monthly or quarterly Lowe index with annual expenditure or revenue
 weights requires adjusting these weights so that the implicit annual quantity vector
-is the fixed basket when making the index with the usual two-step procedure. This
-can be done by price updating the annual weights to the base period of the index.
+is used as the fixed basket when making the index with the usual two-step procedure. This
+can be done by price updating the annual weights to the base period of the index,
+and it serves as a good example of extending the functions in this package.
 
 Let's start by making some annual weights and quarterly indexes for a year.
 
@@ -50,11 +51,12 @@ for each quarter.
 weights(pias) / rowMeans(as.matrix(chain(elementals)))
 ```
 
-The procedure is more complicated with missing elemental indexes,
+The procedure is more complicated with missing elemental indexes
 as reaggregating these indexes with the newly adjusted weights will generally result
 in different imputations for the missing elemental indexes, which in turn gives a
 different adjustment for the weights. In practice this procedure is done a few times
-until the index values converge to a fixed point.
+until the index values converge to a fixed point. The following function shows how
+to do this adjustment using the tools in this package.
 
 ```{r}
 # Function to adjust annual weights.
@@ -69,7 +71,7 @@ adjust_weights <- function(index,
     elementals <- chain(agg_index[levels(pias)[[nlevels(pias)]]])
     # Compute annual elemental indexes.
     pb <- rowMeans(as.matrix(elementals))
-    # Stop if average price-update weight is within tolerance of original
+    # Stop if average price-update weights are within tolerance of original
     # weights; adjust otherwise.
     if (max(abs(pb * weights(adj_pias) - weights(pias))) < tol) {
       message(gettextf("Converged after %d iterations", i - 1))
@@ -78,7 +80,7 @@ adjust_weights <- function(index,
       weights(adj_pias) <- weights(pias) / pb
     }
   }
-  warning("weight adjustment did not converge")
+  warning("weights adjustment did not converge")
   adj_pias
 }
 ```
