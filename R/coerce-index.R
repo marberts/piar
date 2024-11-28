@@ -3,7 +3,8 @@
 #' Turn an index into a data frame or a matrix.
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
-#' @param stringsAsFactors See [as.data.frame()].
+#' @param row.names,stringsAsFactors See [as.data.frame()].
+#' @param optional Not currently used.
 #' @param ... Not currently used.
 #'
 #' @returns
@@ -26,7 +27,11 @@
 #'
 #' @family index methods
 #' @export
-as.data.frame.piar_index <- function(x, ..., stringsAsFactors = FALSE) {
+as.data.frame.piar_index <- function(x,
+                                     row.names = NULL,
+                                     optional = FALSE,
+                                     ...,
+                                     stringsAsFactors = FALSE) {
   chkDots(...)
   value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))
@@ -34,13 +39,15 @@ as.data.frame.piar_index <- function(x, ..., stringsAsFactors = FALSE) {
     data.frame(
       period = factor(period, x$time),
       level = factor(x$levels, x$levels),
-      value
+      value,
+      row.names = row.names
     )
   } else {
     data.frame(
       period,
       level = x$levels,
       value,
+      row.names = row.names,
       stringsAsFactors = FALSE
     )
   }

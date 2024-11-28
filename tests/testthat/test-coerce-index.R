@@ -9,10 +9,11 @@ test_that("as.matrix work", {
 
 test_that("as.data.frame works", {
   expect_equal(
-    as.data.frame(as_index(matrix(1:4, 2))),
+    as.data.frame(as_index(matrix(1:4, 2)), row.names = 4:1),
     data.frame(period = as.character(rep(1:2, each = 2)),
                level = as.character(1:2),
-               value = 1:4)
+               value = 1:4,
+               row.names = 4:1)
   )
   expect_equal(
     as.data.frame(as_index(matrix(1:4, 1))),

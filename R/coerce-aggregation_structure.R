@@ -8,7 +8,8 @@
 #' @param sparse Should the result be a sparse matrix from \pkg{Matrix}? This
 #' is faster for large aggregation structures. The default returns an ordinary
 #' dense matrix.
-#' @param stringsAsFactors See [as.data.frame()].
+#' @param row.names,stringsAsFactors See [as.data.frame()].
+#' @param optional Not currently used.
 #' @param ... Not currently used.
 #'
 #' @returns
@@ -83,12 +84,16 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
 #' @rdname as.matrix.piar_aggregation_structure
 #' @export
 as.data.frame.piar_aggregation_structure <- function(x,
+                                                     row.names = NULL,
+                                                     optional = FALSE,
                                                      ...,
                                                      stringsAsFactors = FALSE) {
   chkDots(...)
   colnames <- c(paste0("level", seq_along(x$child), recycle0 = TRUE), "ea")
   res <- as.data.frame(
     as.list(x),
+    row.names = row.names,
+    optional = optional,
     col.names = colnames,
     stringsAsFactors = stringsAsFactors
   )

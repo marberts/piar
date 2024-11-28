@@ -13,11 +13,12 @@ test_that("coercion methods works", {
   )
   expect_equal(as.matrix(agg), as.matrix(as.matrix(agg, sparse = TRUE)))
   expect_equal(
-    as.data.frame(agg),
+    as.data.frame(agg, row.names = 4:1),
     data.frame(level1 = c("1", "2", "1", "1"),
                level2 = c("11", "21", "12", "11"),
                ea = c("111", "211", "121", "112"),
-               weight = c(1, 1, 1, 1))
+               weight = c(1, 1, 1, 1),
+               row.names = 4:1)
   )
   expect_equal(agg, as_aggregation_structure(as.data.frame(agg)))
   expect_equal(as.list(agg), list(x1, x2, x3))

@@ -20,6 +20,12 @@ aggregation structure.
 - The vignette has been re-written, split into small examples that cover more
 topics, and should be easier to follow.
 
+## Bug fixes
+
+- `as.data.frame()` methods now respect the signature of the generic. This
+allows row names to be set and prevents superfluous warnings when trying to
+use `data.frame()`; e.g., with `write.csv()` (#34).
+
 # Version 0.8.1
 
 ## Significant changes
@@ -55,7 +61,7 @@ pre-computed indexes.
 - `elemental_index()`, `price_relative()`, `shadow_price()`, `carry_forward()`,
 and `carry_backward()` now require the arguments for time periods, products, and
 elemental aggregates to be named so as to avoid accidentally changing the order
-of these arguments (gh #7).
+of these arguments (#7, @schneiderpy).
 
 - Added `interact_classifications()` to get the interaction of different
 dimensions for a hierarchical classification.
