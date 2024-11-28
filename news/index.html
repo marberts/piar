@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9009</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,11 @@
 <li><p><code>cut(aggregation_structure)</code> can be used cut off the bottom/top of an aggregation structure.</p></li>
 <li><p>The vignette has been re-written, split into small examples that cover more topics, and should be easier to follow.</p></li>
 </ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-8-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-2"></a></h3>
+<ul><li>
+<code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> methods now respect the signature of the generic. This allows row names to be set and prevents superfluous warnings when trying to use <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code>; e.g., with <code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv()</a></code> (<a href="https://github.com/marberts/piar/issues/34" class="external-link">#34</a>).</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.8.1" id="version-081">Version 0.8.1<a class="anchor" aria-label="anchor" href="#version-081"></a></h2><p class="text-muted">CRAN release: 2024-09-12</p>
@@ -73,7 +78,7 @@
 <h3 id="improvements-0-8-1">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-1"></a></h3>
 <ul><li><p><code><a href="../reference/as_index.html">as_index()</a></code> gains a new argument <code>contrib</code> to add contributions to pre-computed indexes.</p></li>
 <li><p>Added <code><a href="../reference/contrib.html">contrib2DF()</a></code> to extract percent-change contributions as a data frame.</p></li>
-<li><p><code><a href="../reference/elemental_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code><a href="../reference/impute_prices.html">shadow_price()</a></code>, <code><a href="../reference/impute_prices.html">carry_forward()</a></code>, and <code><a href="../reference/impute_prices.html">carry_backward()</a></code> now require the arguments for time periods, products, and elemental aggregates to be named so as to avoid accidentally changing the order of these arguments (gh <a href="https://github.com/marberts/piar/issues/7" class="external-link">#7</a>).</p></li>
+<li><p><code><a href="../reference/elemental_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code><a href="../reference/impute_prices.html">shadow_price()</a></code>, <code><a href="../reference/impute_prices.html">carry_forward()</a></code>, and <code><a href="../reference/impute_prices.html">carry_backward()</a></code> now require the arguments for time periods, products, and elemental aggregates to be named so as to avoid accidentally changing the order of these arguments (<a href="https://github.com/marberts/piar/issues/7" class="external-link">#7</a>, <a href="https://github.com/schneiderpy" class="external-link">@schneiderpy</a>).</p></li>
 <li><p>Added <code><a href="../reference/expand_classification.html">interact_classifications()</a></code> to get the interaction of different dimensions for a hierarchical classification.</p></li>
 <li><p><code><a href="../reference/chain.html">unchain()</a></code> gets an new argument <code>base</code> for better interaction with <code><a href="../reference/chain.html">chain()</a></code> and <code><a href="../reference/chain.html">rebase()</a></code>.</p></li>
 <li><p><code>aggregate(index)</code> gets a new argument <code>include_ea</code> to control whether elemental indexes are returned when aggregating.</p></li>
