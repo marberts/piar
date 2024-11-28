@@ -7,7 +7,13 @@
 \usage{
 \method{as.matrix}{piar_aggregation_structure}(x, ..., sparse = FALSE)
 
-\method{as.data.frame}{piar_aggregation_structure}(x, ..., stringsAsFactors = FALSE)
+\method{as.data.frame}{piar_aggregation_structure}(
+  x,
+  row.names = NULL,
+  optional = FALSE,
+  ...,
+  stringsAsFactors = FALSE
+)
 }
 \arguments{
 \item{x}{A price index aggregation structure, as made by
@@ -19,7 +25,9 @@
 is faster for large aggregation structures. The default returns an ordinary
 dense matrix.}
 
-\item{stringsAsFactors}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
+\item{row.names, stringsAsFactors}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
+
+\item{optional}{Not currently used.}
 }
 \value{
 \code{as.matrix()} represents an aggregation structure as a matrix,

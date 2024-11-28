@@ -5,16 +5,24 @@
 \alias{as.matrix.piar_index}
 \title{Coerce an index into a tabular form}
 \usage{
-\method{as.data.frame}{piar_index}(x, ..., stringsAsFactors = FALSE)
+\method{as.data.frame}{piar_index}(
+  x,
+  row.names = NULL,
+  optional = FALSE,
+  ...,
+  stringsAsFactors = FALSE
+)
 
 \method{as.matrix}{piar_index}(x, ...)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
 
-\item{...}{Not currently used.}
+\item{row.names, stringsAsFactors}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
 
-\item{stringsAsFactors}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
+\item{optional}{Not currently used.}
+
+\item{...}{Not currently used.}
 }
 \value{
 \code{as.data.frame()} returns the index values in \code{x} as a data frame with three
