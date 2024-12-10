@@ -150,7 +150,7 @@ contrib2DF.piar_index <- function(x,
   
   value <- as.matrix(value)
   if (is.null(rownames(value))) {
-    products <- seq_len(nrow(value))
+    products <- as.character(seq_len(nrow(value)))
   } else {
     products <- valid_product_names(rownames(value))
   }
@@ -165,7 +165,9 @@ contrib2DF.piar_index <- function(x,
   for (t in period) {
     j <- j %% ncol(value) + 1
     con <- as.numeric(value[, j])
-    names(con) <- products
+    if (length(con) > 0L) {
+      names(con) <- products
+    }
     if (!valid_replacement_contrib(x$index[[t]][[level]], con)) {
       stop("contributions do not add up in each time period")
     }

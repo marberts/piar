@@ -84,12 +84,7 @@ chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
     stop("'link' must have a value for each level of 'x'")
   }
   x$index[[1L]] <- x$index[[1L]] * link
-  # x$index[] <- Reduce(`*`, x$index, accumulate = TRUE) simplifies results
-  # with one level.
-  # TODO: use Reduce once my patch is in a released version of R.
-  for (t in seq_along(x$time)[-1L]) {
-    x$index[[t]] <- x$index[[t]] * x$index[[t - 1L]]
-  }
+  x$index <- Reduce(`*`, x$index, accumulate = TRUE, simplify = FALSE)
   # Contributions are difficult to chain, so remove them.
   x$contrib[] <- empty_contrib(x$levels)
   new_piar_index(x$index, x$contrib, x$levels, x$time, chainable = FALSE)

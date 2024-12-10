@@ -7,7 +7,9 @@ aggregate_contrib <- function(r) {
   function(x, rel, w) {
     w <- arithmetic_weights(rel, w)
     res <- unlist(Map(`*`, x, w))
-    names(res) <- make.unique(as.character(names(res)))
+    if (length(res) > 0L) {
+      names(res) <- make.unique(as.character(names(res)))
+    }
     res
   }
 }
