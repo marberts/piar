@@ -4,8 +4,8 @@
 #'
 #' @param object A price index aggregation structure, as made by
 #' [aggregation_structure()].
-#' @param index A price index, or something that can be coerced into one.
-#' Usually an aggregate price index as made by
+#' @param index A fixed-base (direct) price index, or something that can be
+#' coerced into one. Usually an aggregate price index as made by
 #' [`aggregate()`][aggregate.piar_index].
 #' @param period The time period used to price update the weights. The default
 #' uses the last period in `index`.
