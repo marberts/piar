@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9012</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,7 @@
 <span>  row.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  optional <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span>,</span>
+<span>  contrib <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -83,11 +84,17 @@
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Not currently used.</p></dd>
 
+
+<dt id="arg-contrib">contrib<a class="anchor" aria-label="anchor" href="#arg-contrib"></a></dt>
+<dd><p>Include percent-change contributions (the default does not
+include them).</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p><code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> returns the index values in <code>x</code> as a data frame with three
-columns: <code>period</code>, <code>level</code>, and <code>value</code>.</p>
+columns: <code>period</code>, <code>level</code>, and <code>value</code>. If <code>contrib = TRUE</code> then there is
+a fourth (list) column <code>contrib</code> containing percent-change contributions.</p>
 <p><code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> returns the index values in <code>x</code> as a matrix with a row for
 each level and a column for each time period in <code>x</code>.</p>
     </div>
