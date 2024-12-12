@@ -10,6 +10,7 @@
   row.names = NULL,
   optional = FALSE,
   ...,
+  contrib = FALSE,
   stringsAsFactors = FALSE
 )
 
@@ -23,10 +24,14 @@
 \item{optional}{Not currently used.}
 
 \item{...}{Not currently used.}
+
+\item{contrib}{Include percent-change contributions (the default does not
+include them).}
 }
 \value{
 \code{as.data.frame()} returns the index values in \code{x} as a data frame with three
-columns: \code{period}, \code{level}, and \code{value}.
+columns: \code{period}, \code{level}, and \code{value}. If \code{contrib = TRUE} then there is
+a fourth (list) column \code{contrib} containing percent-change contributions.
 
 \code{as.matrix()} returns the index values in \code{x} as a matrix with a row for
 each level and a column for each time period in \code{x}.

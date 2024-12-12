@@ -15,7 +15,7 @@ as_index(x, ...)
 
 \method{as_index}{matrix}(x, ..., chainable = TRUE, contrib = FALSE)
 
-\method{as_index}{data.frame}(x, ...)
+\method{as_index}{data.frame}(x, ..., contrib = FALSE)
 
 \method{as_index}{chainable_piar_index}(x, ..., chainable = TRUE)
 
@@ -60,7 +60,8 @@ index object. It constructs a matrix by taking the levels of
 \code{x[[1]]} as columns and the levels of \code{x[[2]]} as rows
 (coercing to a factor if necessary). It then populates this matrix with the
 corresponding values in \code{x[[3]]}, and uses the matrix method for
-\code{as_index()}.
+\code{as_index()}. If \code{contrib = TRUE} and there is a fourth list column of
+product contributions then these are also included in the resulting index.
 
 If \code{x} is a period-over-period index then it is returned unchanged when
 \code{chainable = TRUE} and chained otherwise. Similarly, if \code{x} is a

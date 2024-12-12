@@ -18,7 +18,8 @@
 #' `x[[1]]` as columns and the levels of `x[[2]]` as rows
 #' (coercing to a factor if necessary). It then populates this matrix with the
 #' corresponding values in `x[[3]]`, and uses the matrix method for
-#' `as_index()`.
+#' `as_index()`. If `contrib = TRUE` and there is a fourth list column of
+#' product contributions then these are also included in the resulting index.
 #'
 #' If `x` is a period-over-period index then it is returned unchanged when
 #' `chainable = TRUE` and chained otherwise. Similarly, if `x` is a
@@ -98,8 +99,8 @@ as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
 
 #' @rdname as_index
 #' @export
-as_index.data.frame <- function(x, ...) {
-  if (length(x) != 3L) {
+as_index.data.frame <- function(x, ..., contrib = FALSE) {
+  if (length(x) < 3L) {
     stop(
       "'x' must have a column of time periods, index levels, and index values"
     )
@@ -108,12 +109,51 @@ as_index.data.frame <- function(x, ...) {
   time <- levels(x[[1L]])
   levels <- levels(x[[2L]])
   # elemental_index() usually gives NaN for missing cells.
-  res <- matrix(NA_real_,
-    nrow = length(levels), ncol = length(time),
+  index <- matrix(
+    NA_real_,
+    nrow = length(levels),
+    ncol = length(time),
     dimnames = list(levels, time)
   )
-  res[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
-  as_index(res, ...)
+  index[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
+  
+  if (contrib && length(x) > 3L) {
+    contributions <- matrix(
+      list(numeric(0L)),
+      nrow = length(levels),
+      ncol = length(time),
+      dimnames = list(levels, time)
+    )
+    contributions[as.matrix(x[2:1])] <- x[[4L]]
+    
+    # Validate.
+    for (i in seq_along(contributions)) {
+      if (is.null(names(contributions[[i]]))) {
+        products <- if (length(contributions[[i]]) > 0L) {
+          as.character(seq_along(contributions[[i]]))
+        }
+      } else {
+        products <- valid_product_names(names(contributions[[i]]))
+      }
+      contributions[[i]] <- as.numeric(contributions[[i]])
+      names(contributions[[i]]) <- products
+      if (!valid_replacement_contrib(index[[i]], contributions[[i]])) {
+        stop(
+          "contributions do not add up for each level ",
+          "in each time period"
+        )
+      }
+    }
+    
+    index <- as_index(index, ...)
+    # No need to explicitly validate contrib.
+    for (t in seq_along(time)) {
+      index$contrib[[t]][] <- contributions[, t]
+    }
+  } else {
+    index <- as_index(index, contrib = contrib, ...)
+  }
+  index
 }
 
 #' @rdname as_index

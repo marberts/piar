@@ -42,3 +42,21 @@ test_that("as.data.frame works", {
                value = 1:6)
   )
 })
+
+test_that("as.data.frame works with contribs", {
+  x <- as_index(matrix(1:4, 2), contrib = TRUE)
+  contrib(x, 1, 1) = c(a = -1, b = 1)
+  contrib(x, 2, 2) = numeric(0)
+  res <- data.frame(
+    period = as.character(c(1, 1, 2, 2)),
+    level = as.character(c(1, 2, 1, 2)),
+    value = 1:4
+  )
+  res$contrib <- c(
+    list(c(a = -1, b = 1)),
+    list(c("2" = 1)),
+    list(c("1" = 2)),
+    list(numeric(0))
+  )
+  expect_equal(as.data.frame(x, contrib = TRUE), res)
+})

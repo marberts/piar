@@ -17,6 +17,10 @@ index.
 - `cut(aggregation_structure)` can be used cut off the bottom/top of an
 aggregation structure.
 
+- `as.data.frame(index)` gets an option to make a list-column of percent-change
+contribution. `as_index(data.frame)` gets an analogous option to add
+contributions in a table to an index.
+
 - The vignette has been re-written, split into small examples that cover more
 topics, and should be easier to follow.
 

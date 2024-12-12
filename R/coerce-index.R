@@ -6,10 +6,13 @@
 #' @param row.names,stringsAsFactors See [as.data.frame()].
 #' @param optional Not currently used.
 #' @param ... Not currently used.
+#' @param contrib Include percent-change contributions (the default does not
+#' include them).
 #'
 #' @returns
 #' `as.data.frame()` returns the index values in `x` as a data frame with three
-#' columns: `period`, `level`, and `value`.
+#' columns: `period`, `level`, and `value`. If `contrib = TRUE` then there is
+#' a fourth (list) column `contrib` containing percent-change contributions.
 #'
 #' `as.matrix()` returns the index values in `x` as a matrix with a row for
 #' each level and a column for each time period in `x`.
@@ -31,19 +34,20 @@ as.data.frame.piar_index <- function(x,
                                      row.names = NULL,
                                      optional = FALSE,
                                      ...,
+                                     contrib = FALSE,
                                      stringsAsFactors = FALSE) {
   chkDots(...)
   value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))
   if (stringsAsFactors) {
-    data.frame(
+    res <- data.frame(
       period = factor(period, x$time),
       level = factor(x$levels, x$levels),
       value,
       row.names = row.names
     )
   } else {
-    data.frame(
+    res <- data.frame(
       period,
       level = x$levels,
       value,
@@ -51,6 +55,10 @@ as.data.frame.piar_index <- function(x,
       stringsAsFactors = FALSE
     )
   }
+  if (contrib) {
+    res$contrib <- unlist(x$contrib, use.names = FALSE, recursive = FALSE)
+  }
+  res
 }
 
 #' @rdname as.data.frame.piar_index

@@ -119,10 +119,10 @@ test_that("replacement works", {
     matrix(as.numeric(epr[1]) - 1, 1, dimnames = list(1, 1:2))
   )
   
-  # Deleting contributions.
-  contrib(epr) <- numeric(0)
+  # Deleting contributions, used to be give an error.
+  contrib(epr, 12) <- numeric(0)
   expect_equal(
-    contrib2DF(epr),
+    contrib2DF(epr, 12),
     data.frame(
       period = character(0),
       level = character(0),

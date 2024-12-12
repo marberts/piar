@@ -4,12 +4,12 @@ near <- function(x, y, tol = .Machine$double.eps^0.5) {
 }
 
 valid_replacement_contrib <- function(x, value) {
-  if (is.na(x)) {
-    anyNA(value)
-  } else if (length(value) > 0L) {
-    near(sum(value, na.rm = TRUE), x - 1)
-  } else {
+  if (length(value) == 0L) {
     TRUE
+  } else if (is.na(x)) {
+    anyNA(value)
+  } else {
+    near(sum(value, na.rm = TRUE), x - 1)
   }
 }
 

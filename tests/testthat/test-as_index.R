@@ -58,6 +58,27 @@ test_that("as_index works for data frames", {
   expect_error(as_index(df[1:2]))
 })
 
+test_that("as_index works with contribs", {
+  expect_equal(
+    as_index(as.data.frame(epr, contrib = TRUE), contrib = TRUE),
+    epr
+  )
+  expect_equal(
+    as_index(as.data.frame(epr2, contrib = TRUE), contrib = TRUE),
+    epr2
+  )
+  
+  index2 <- aggregate(epr, pias, contrib = FALSE)
+  index2df <- as.data.frame(index2, contrib = TRUE)
+  expect_equal(
+    as_index(index2df[-1, ], contrib = TRUE),
+    index2
+  )
+  
+  index2df[1, 4] <- list(a = 0)
+  expect_error(as_index(index2df, contrib = TRUE))
+})
+
 test_that("as_index works for indexes", {
   expect_equal(as_index(epr), epr)
   expect_equal(as_index(index), index)
