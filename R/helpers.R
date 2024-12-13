@@ -27,20 +27,28 @@ sequential_names <- function(...) {
   unsplit(Map(seq_len, tabulate(f)), f)
 }
 
-valid_product_names <- function(x, period = gl(1, length(x))) {
+valid_product_names <- function(x, period = NULL) {
   x <- as.character(x)
-  period <- as.factor(period)
   if (anyNA(x) || any(x == "")) {
     stop("each product must have a non-missing name")
   }
-  xs <- split(x, period)
-  dups <- which_duplicate_products(xs)
-  if (any(dups)) {
-    warning("product names are not unique in each time period")
-    xs[dups] <- lapply(xs[dups], make.unique)
-    unsplit(xs, period)
+  if (is.null(period)) {
+    if (anyDuplicated(x) > 0L) {
+      x <- make.unique(x)
+    } else {
+      x
+    }
   } else {
-    x
+    period <- as.factor(period)
+    xs <- split(x, period)
+    dups <- which_duplicate_products(xs)
+    if (any(dups)) {
+      warning("product names are not unique in each time period")
+      xs[dups] <- lapply(xs[dups], make.unique)
+      unsplit(xs, period)
+    } else {
+      x
+    }
   }
 }
 
