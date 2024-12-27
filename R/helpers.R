@@ -3,14 +3,40 @@ near <- function(x, y, tol = .Machine$double.eps^0.5) {
   abs(x - y) < tol
 }
 
-valid_replacement_contrib <- function(x, value) {
-  if (length(value) == 0L) {
+valid_replacement_contrib <- function(index, contrib) {
+  if (length(contrib) == 0L) {
     TRUE
-  } else if (is.na(x)) {
-    anyNA(value)
+  } else if (is.na(index)) {
+    anyNA(contrib)
   } else {
-    near(sum(value, na.rm = TRUE), x - 1)
+    near(sum(contrib, na.rm = TRUE), index - 1)
   }
+}
+
+valid_contrib <- function(index, contrib) {
+  if (is.null(names(contrib))) {
+    products <- if (length(contrib) > 0L) {
+      as.character(seq_along(contrib))
+    }
+  } else {
+    products <- valid_product_names(names(contrib))
+  }
+  contrib <- as.numeric(contrib)
+  names(contrib) <- products
+  if (!valid_replacement_contrib(index, contrib)) {
+    stop(
+      "contributions do not add up for each level ",
+      "in each time period"
+    )
+  }
+  contrib
+}
+  
+valid_contrib_array <- function(index, contrib) {
+  for (i in seq_along(contrib)) {
+    contrib[[i]] <- valid_contrib(index[[i]], contrib[[i]])
+  }
+  contrib
 }
 
 #---- Product names ----

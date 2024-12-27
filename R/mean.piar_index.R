@@ -136,4 +136,3 @@ mean.direct_piar_index <- function(x,
   chkDots(...)
   mean_index(x, weights, window, na.rm, contrib, r, FALSE)
 }
-

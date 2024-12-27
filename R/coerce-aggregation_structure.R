@@ -67,7 +67,8 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
   # Generate the rows for each level of the matrix and rbind together.
   for (i in seq_along(res)) {
     w <- unsplit(
-      lapply(split(x$weights, lev[[i]]), gpindex::scale_weights), lev[[i]]
+      lapply(split(x$weights, lev[[i]]), gpindex::scale_weights),
+      lev[[i]]
     )
     if (sparse) {
       mat <- Matrix::sparseMatrix(lev[[i]], cols, x = w)

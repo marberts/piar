@@ -5,7 +5,10 @@ new_piar_aggregation_structure <- function(child, parent, levels, weights) {
   stopifnot(is.list(levels))
   stopifnot(is.double(weights))
   res <- list(
-    child = child, parent = parent, levels = levels, weights = weights
+    child = child,
+    parent = parent,
+    levels = levels,
+    weights = weights
   )
   structure(res, class = "piar_aggregation_structure")
 }

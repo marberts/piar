@@ -126,25 +126,7 @@ as_index.data.frame <- function(x, ..., contrib = FALSE) {
     )
     contributions[as.matrix(x[2:1])] <- x[[4L]]
     
-    # Validate.
-    for (i in seq_along(contributions)) {
-      if (is.null(names(contributions[[i]]))) {
-        products <- if (length(contributions[[i]]) > 0L) {
-          as.character(seq_along(contributions[[i]]))
-        }
-      } else {
-        products <- valid_product_names(names(contributions[[i]]))
-      }
-      contributions[[i]] <- as.numeric(contributions[[i]])
-      names(contributions[[i]]) <- products
-      if (!valid_replacement_contrib(index[[i]], contributions[[i]])) {
-        stop(
-          "contributions do not add up for each level ",
-          "in each time period"
-        )
-      }
-    }
-    
+    contributions <- valid_contrib_array(index, contributions)
     index <- as_index(index, ...)
     # No need to explicitly validate contrib.
     for (t in seq_along(time)) {
