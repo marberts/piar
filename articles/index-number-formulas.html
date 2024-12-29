@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +48,7 @@
     <li><a class="dropdown-item" href="../articles/multiple-baskets.html">Aggregating across baskets</a></li>
     <li><a class="dropdown-item" href="../articles/multiple-data-sources.html">Multiple sources of data</a></li>
     <li><a class="dropdown-item" href="../articles/multiple-dimensions.html">Aggregating across dimensions</a></li>
+    <li><a class="dropdown-item" href="../articles/spatial-price-index.html">Spatial price indexes</a></li>
     <li><a class="dropdown-item" href="../articles/superlative-aggregation.html">Superlative aggregation</a></li>
   </ul>
 </li>
@@ -164,11 +165,11 @@ index is possible.</p>
 </h2>
 <p>Many superlative indexes can be made by supplying unequal and
 time-varying weights when making the elemental indexes, usually from
-information on quantities. The Törnqvist index is a popular superlative
-index-number formula, using average period-over-period value shares as
-the weights in a geometric mean. As <code><a href="../reference/elemental_index.html">elemental_index()</a></code> makes
-a geometric index by default, all that is needed to make a Törnqvist
-index is the weights.</p>
+information about quantities. The Törnqvist index is a popular
+superlative index-number formula, using average period-over-period value
+shares as the weights in a geometric mean. As
+<code><a href="../reference/elemental_index.html">elemental_index()</a></code> makes a geometric index by default, all
+that is needed to make a Törnqvist index is the weights.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/grouped.html" class="external-link">grouped</a></span><span class="op">(</span><span class="fu"><a href="https://marberts.github.io/gpindex/reference/index_weights.html" class="external-link">index_weights</a></span><span class="op">(</span><span class="st">"Tornqvist"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -205,6 +206,67 @@ order.</p>
 <span><span class="co">## B2 1 2.215934 1.556046</span></span></code></pre>
 <p>Aggregating with a superlative index is more complex, and is the
 subject of <code><a href="../articles/superlative-aggregation.html">vignette("superlative-aggregation")</a></code>.</p>
+</div>
+<div class="section level2">
+<h2 id="product-contributions">Product contributions<a class="anchor" aria-label="anchor" href="#product-contributions"></a>
+</h2>
+<p>As shown in <code><a href="../articles/contributions.html">vignette("contributions")</a></code>, supplying
+<code>contrib = TRUE</code> in the call to
+<code><a href="../reference/elemental_index.html">elemental_index()</a></code> makes percent-change product
+contributions for each index value. The method used in this package is
+flexible and works well for a variety of different index-number
+formulas, but does not include all methods found in the literature. (See
+the help page for <code><a href="../reference/elemental_index.html">elemental_index()</a></code>, and the references
+therein, for more detail about the exact methods.)</p>
+<p>Let’s extend the previous example by calculating product
+contributions for the Fisher index using the default method.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fisher_index</span> <span class="op">&lt;-</span> <span class="va">prices</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span></span>
+<span>    <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>,</span>
+<span>    weights <span class="op">=</span> <span class="fu">fw</span><span class="op">(</span></span>
+<span>      <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span>, <span class="va">back_price</span> <span class="op">*</span> <span class="va">back_quantity</span>, <span class="va">price</span> <span class="op">*</span> <span class="va">quantity</span>,</span>
+<span>      group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">period</span>, <span class="va">business</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    contrib <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="va">fisher_index</span>, <span class="st">"B1"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##      1         2         3</span></span>
+<span><span class="co">## B1.1 0 1.1024526 0.2899319</span></span>
+<span><span class="co">## B1.2 0 1.0256151 0.2530718</span></span>
+<span><span class="co">## B1.3 0 0.9487724 0.2162114</span></span></code></pre>
+<p>We can change the method used to make contributions for, say,
+business <code>B1</code> by making a function to compute contributions
+according to a different method</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">diewert_contributions</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">Pf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/price_indexes.html" class="external-link">fisher_index</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span></span>
+<span>  <span class="va">Pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/price_indexes.html" class="external-link">laspeyres_index</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q0</span><span class="op">)</span></span>
+<span>  <span class="va">wl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/scale_weights.html" class="external-link">scale_weights</a></span><span class="op">(</span><span class="fu"><a href="https://marberts.github.io/gpindex/reference/index_weights.html" class="external-link">index_weights</a></span><span class="op">(</span><span class="st">"Laspeyres"</span><span class="op">)</span><span class="op">(</span><span class="va">p0</span>, <span class="va">q0</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">wp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/scale_weights.html" class="external-link">scale_weights</a></span><span class="op">(</span><span class="fu"><a href="https://marberts.github.io/gpindex/reference/index_weights.html" class="external-link">index_weights</a></span><span class="op">(</span><span class="st">"HybridPaasche"</span><span class="op">)</span><span class="op">(</span><span class="va">p0</span>, <span class="va">q1</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">Pf</span><span class="op">)</span> <span class="op">*</span> <span class="va">wl</span> <span class="op">+</span> <span class="va">Pl</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">Pf</span><span class="op">)</span> <span class="op">*</span> <span class="va">wp</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>and using this function to replace the contributions for business
+<code>B1</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="va">fisher_index</span>, <span class="st">"B1"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">prices</span>, <span class="va">business</span> <span class="op">==</span> <span class="st">"B1"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="op">~</span><span class="va">period</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span></span>
+<span>    \<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu">diewert_contributions</span><span class="op">(</span></span>
+<span>      <span class="va">df</span><span class="op">$</span><span class="va">price</span>, <span class="va">df</span><span class="op">$</span><span class="va">back_price</span>, <span class="va">df</span><span class="op">$</span><span class="va">quantity</span>, <span class="va">df</span><span class="op">$</span><span class="va">back_quantity</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="va">fisher_index</span>, <span class="st">"B1"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##   1         2         3</span></span>
+<span><span class="co">## 1 0 1.1124046 0.2937263</span></span>
+<span><span class="co">## 2 0 1.0256134 0.2530717</span></span>
+<span><span class="co">## 3 0 0.9388222 0.2124170</span></span></code></pre>
+<p>Aggregating the elemental indexes will then consistently aggregate
+the contributions for both businesses, even though they use different
+methods.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

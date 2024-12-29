@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9014</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9016</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +48,7 @@
     <li><a class="dropdown-item" href="../articles/multiple-baskets.html">Aggregating across baskets</a></li>
     <li><a class="dropdown-item" href="../articles/multiple-data-sources.html">Multiple sources of data</a></li>
     <li><a class="dropdown-item" href="../articles/multiple-dimensions.html">Aggregating across dimensions</a></li>
+    <li><a class="dropdown-item" href="../articles/spatial-price-index.html">Spatial price indexes</a></li>
     <li><a class="dropdown-item" href="../articles/superlative-aggregation.html">Superlative aggregation</a></li>
   </ul>
 </li>
@@ -146,12 +147,13 @@ time series.</p>
 <span>  <span class="fu"><a href="https://marberts.github.io/gpindex/reference/splice_index.html" class="external-link">splice_index</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/as_index.html">as_index</a></span><span class="op">(</span>chainable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/levels.piar_index.html">set_levels</a></span><span class="op">(</span><span class="st">"B5"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/levels.piar_index.html">set_levels</a></span><span class="op">(</span><span class="st">"B5"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/chain.html">rebase</a></span><span class="op">(</span><span class="st">"202001"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">geks_elementals</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fixed-base price index for 1 levels over 4 time periods </span></span>
-<span><span class="co">##       202001    202002   202003   202004</span></span>
-<span><span class="co">## B5 0.8862618 0.8969686 1.013005 0.718693</span></span></code></pre>
+<span><span class="co">##    202001   202002   202003    202004</span></span>
+<span><span class="co">## B5      1 1.012081 1.143009 0.8109263</span></span></code></pre>
 <p>These values can now be merged with the other elemental indexes,
 getting turned into a period-over-period index in the process, and then
 aggregated.</p>
@@ -159,15 +161,15 @@ aggregated.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">elementals</span>, <span class="va">geks_elementals</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 8 levels over 4 time periods </span></span>
-<span><span class="co">##       202001    202002    202003    202004</span></span>
-<span><span class="co">## 1  0.9560379 1.1973001 1.0831525 2.0991849</span></span>
-<span><span class="co">## 11 1.0000000 1.3007239 1.0630743 1.5745154</span></span>
-<span><span class="co">## 12 0.8862618 1.0120809 1.1293651 3.2358970</span></span>
-<span><span class="co">## B1 1.0000000 0.8949097 0.3342939 1.5745154</span></span>
-<span><span class="co">## B2 1.0000000 1.3007239 1.0630743 2.7704563</span></span>
-<span><span class="co">## B3 1.0000000 2.0200036 1.6353355 0.5379960</span></span>
-<span><span class="co">## B4 0.8862618 1.0120809 1.1293651 4.5762862</span></span>
-<span><span class="co">## B5 0.8862618 1.0120809 1.1293651 0.7094664</span></span></code></pre>
+<span><span class="co">##    202001    202002    202003    202004</span></span>
+<span><span class="co">## 1       1 1.1891575 1.0848816 2.1434597</span></span>
+<span><span class="co">## 11      1 1.3007239 1.0630743 1.5745154</span></span>
+<span><span class="co">## 12      1 1.0120809 1.1293651 3.2358970</span></span>
+<span><span class="co">## B1      1 0.8949097 0.3342939 1.5745154</span></span>
+<span><span class="co">## B2      1 1.3007239 1.0630743 2.7704563</span></span>
+<span><span class="co">## B3      1 2.0200036 1.6353355 0.5379960</span></span>
+<span><span class="co">## B4      1 1.0120809 1.1293651 4.5762862</span></span>
+<span><span class="co">## B5      1 1.0120809 1.1293651 0.7094664</span></span></code></pre>
   </main>
 </div>
 
