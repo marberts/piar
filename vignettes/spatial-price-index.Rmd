@@ -1,0 +1,77 @@
+---
+title: "Spatial price indexes"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Spatial price indexes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+It is possible to rework the functions in this package to make a spatial, rather
+than temporal, price index using a star model by simply replacing "time" with "space".
+Although this is not a suitable
+approach for making a system of purchasing power parities, is it useful for making indexes
+that adjust pay for cost-of-living differences relative to a fixed location. These
+sorts of indexes are made by the United Nations International Civil Service Commission, Eurostat, and various governments
+and private-sector organizations for administering cost-of-living allowances.
+
+The basic workflow is the same as with a temporal index, just treating each
+country as a different "time period" in a fixed-based index.
+
+```{r}
+library(piar)
+
+set.seed(12345)
+
+# Make indexes for 6 basic headings for 4 countries.
+bh_index <- matrix(
+  c(rep(1, 6), runif(6 * 3, 0.8, 1.2)),
+  nrow = 6,
+  dimnames = list(
+    paste0("BH", 1:6),
+    paste("Country", 1:4)
+  )
+) |>
+  as_index(chainable = FALSE)
+
+head(bh_index)
+
+# Make fixed aggregation weights.
+#            1
+#      |-----+-----|
+#      11          12
+#  |---+---|   |---+---|
+#  B1  B2  B3  B4  B5  B6
+
+weights <- data.frame(
+  level1 = 1,
+  level2 = rep(11:12, each = 3),
+  bh = levels(bh_index),
+  weights = runif(6, 100, 200)
+)
+
+head(weights)
+```
+
+The indexes at the basic-heading level can be aggregated as usual to get a
+collection of indexes that give the difference in purchasing power relative to
+the base country (country 1 in this example). Different choices for weights make
+different assumptions about how people change their spending patterns between
+each country and the base country.
+
+```{r}
+index <- aggregate(bh_index, weights)
+```
+
+As it can be costly to collect price data from various countries on a regular
+basis, these sorts of indexes are often updated over time by changes in exchange
+rates and inflation rates for each country.
+
+```{r}
+as.matrix(index[1, -1])
+
+update_factors <- runif(3, 0.8, 1.2)
+
+as.matrix(index[1, -1]) * update_factors
+```
+

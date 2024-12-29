@@ -78,8 +78,9 @@ directly replace the contributions.
 
 ```{r}
 reset_contrib <- function(index) {
+  contrib_matrix <- as.matrix(index) - 1
   for (l in levels(index)) {
-    contrib(index, l) <- as.matrix(index[l]) - 1
+    contrib(index, l) <- contrib_matrix[l, , drop = FALSE]
   }
   index
 }
