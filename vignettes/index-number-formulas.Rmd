@@ -80,7 +80,7 @@ arithmetic index, but any type of generalized-mean index is possible.
 
 Many superlative indexes can be made by supplying unequal and
 time-varying weights when making the elemental indexes, usually from
-information on quantities. The Törnqvist index is a popular superlative
+information about quantities. The Törnqvist index is a popular superlative
 index-number formula, using average period-over-period value shares as
 the weights in a geometric mean. As `elemental_index()` makes a
 geometric index by default, all that is needed to make a Törnqvist index
@@ -118,3 +118,60 @@ prices |>
 
 Aggregating with a superlative index is more complex, and is the subject
 of `vignette("superlative-aggregation")`.
+
+## Product contributions
+
+As shown in `vignette("contributions")`, supplying `contrib = TRUE` in the call
+to `elemental_index()` makes percent-change product contributions for each index
+value. The method used in this package is flexible and works well for a variety 
+of different index-number formulas, but does not include all methods found in the
+literature. (See the help page for `elemental_index()`, and the references therein,
+for more detail about the exact methods.)
+
+Let's extend the previous example by calculating product contributions for the
+Fisher index using the default method.
+
+```{r}
+fisher_index <- prices |>
+  elemental_index(
+    price / back_price ~ period + business,
+    weights = fw(
+      price / back_price, back_price * back_quantity, price * quantity,
+      group = interaction(period, business)
+    ),
+    contrib = TRUE
+  )
+
+contrib(fisher_index, "B1")
+```
+
+We can change the method used to make contributions for, say, business `B1` by making
+a function to compute contributions according to a different method
+
+```{r}
+diewert_contributions <- function(p1, p0, q1, q0) {
+  Pf <- fisher_index(p1, p0, q1, q0)
+  Pl <- laspeyres_index(p1, p0, q0)
+  wl <- scale_weights(index_weights("Laspeyres")(p0, q0))
+  wp <- scale_weights(index_weights("HybridPaasche")(p0, q1))
+  
+  (1 / (1 + Pf) * wl + Pl / (1 + Pf) * wp) * (p1 / p0 - 1)
+}
+```
+
+and using this function to replace the contributions for business `B1`.
+
+```{r}
+contrib(fisher_index, "B1") <- subset(prices, business == "B1") |>
+  split(~period) |>
+  sapply(
+    \(df) diewert_contributions(
+      df$price, df$back_price, df$quantity, df$back_quantity
+    )
+  )
+
+contrib(fisher_index, "B1")
+```
+
+Aggregating the elemental indexes will then consistently aggregate the contributions
+for both businesses, even though they use different methods.

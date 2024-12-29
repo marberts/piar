@@ -10,10 +10,13 @@ vignette: >
 It is possible to rework the functions in this package to make a spatial, rather
 than temporal, price index using a star model by simply replacing "time" with "space".
 Although this is not a suitable
-approach for making purchasing power parities, is it useful for making indexes
+approach for making a system of purchasing power parities, is it useful for making indexes
 that adjust pay for cost-of-living differences relative to a fixed location. These
 sorts of indexes are made by the United Nations International Civil Service Commission, Eurostat, and various governments
 and private-sector organizations for administering cost-of-living allowances.
+
+The basic workflow is the same as with a temporal index, just treating each
+country as a different "time period" in a fixed-based index.
 
 ```{r}
 library(piar)
