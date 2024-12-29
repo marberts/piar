@@ -69,7 +69,8 @@ geks_elementals <- with(
   splice_index() |>
   t() |>
   as_index(chainable = FALSE) |>
-  set_levels("B5")
+  set_levels("B5") |>
+  rebase("202001")
 
 geks_elementals
 ```
