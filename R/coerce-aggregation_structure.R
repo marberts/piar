@@ -4,10 +4,10 @@
 #' data frame.
 #'
 #' @param x A price index aggregation structure, as made by
-#' [aggregation_structure()].
+#'   [aggregation_structure()].
 #' @param sparse Should the result be a sparse matrix from \pkg{Matrix}? This
-#' is faster for large aggregation structures. The default returns an ordinary
-#' dense matrix.
+#'   is faster for large aggregation structures. The default returns an ordinary
+#'   dense matrix.
 #' @param row.names,stringsAsFactors See [as.data.frame()].
 #' @param optional Not currently used.
 #' @param ... Not currently used.
@@ -53,7 +53,11 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
   nea <- length(x$weights)
   height <- length(x$levels)
   if (height == 1L) {
-    res <- matrix(numeric(0L), ncol = nea, dimnames = list(NULL, x$levels[[1L]]))
+    res <- matrix(
+      numeric(0L),
+      ncol = nea,
+      dimnames = list(NULL, x$levels[[1L]])
+    )
     if (sparse) {
       return(Matrix::Matrix(res, sparse = TRUE))
     } else {

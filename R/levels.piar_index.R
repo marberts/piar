@@ -4,7 +4,7 @@
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param value A character vector, or something that can be coerced into one,
-#' giving the replacement levels for `x`.
+#'   giving the replacement levels for `x`.
 #'
 #' @returns
 #' `levels()` returns a character vector with the levels for a price index.

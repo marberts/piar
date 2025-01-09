@@ -6,14 +6,14 @@
 #'
 #' @aliases piar_aggregation_structure
 #' @param x A list of character vectors that give the codes/labels for each
-#' level of the classification, ordered so that moving down the list goes down
-#' the hierarchy. The last vector gives the elemental aggregates, which should
-#' have no duplicates. All vectors should be the same length, without
-#' `NA`s, and there should be no duplicates across different levels of
-#' `x`.
+#'   level of the classification, ordered so that moving down the list goes down
+#'   the hierarchy. The last vector gives the elemental aggregates, which should
+#'   have no duplicates. All vectors should be the same length, without
+#'   `NA`s, and there should be no duplicates across different levels of
+#'   `x`.
 #' @param weights A numeric vector of aggregation weights for the elemental
-#' aggregates (i.e., the last vector in `x`), or something that can be coerced
-#' into one. The default is to give each elemental aggregate the same weight.
+#'   aggregates (i.e., the last vector in `x`), or something that can be coerced
+#'   into one. The default is to give each elemental aggregate the same weight.
 #'
 #' @returns
 #' A price index aggregation structure of class `piar_aggregation_structure`.

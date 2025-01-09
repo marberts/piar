@@ -4,7 +4,7 @@
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param value A character vector, or something that can be coerced into one,
-#' giving the replacement time periods for `x`.
+#'   giving the replacement time periods for `x`.
 #' @param ... Not currently used.
 #'
 #' @returns

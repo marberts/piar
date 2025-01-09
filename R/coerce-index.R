@@ -7,7 +7,7 @@
 #' @param optional Not currently used.
 #' @param ... Not currently used.
 #' @param contrib Include percent-change contributions (the default does not
-#' include them).
+#'   include them).
 #'
 #' @returns
 #' `as.data.frame()` returns the index values in `x` as a data frame with three
@@ -25,7 +25,7 @@
 #' index <- as_index(matrix(1:6, 2))
 #'
 #' as.data.frame(index)
-#' 
+#'
 #' as.matrix(index)
 #'
 #' @family index methods

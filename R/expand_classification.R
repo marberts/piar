@@ -5,22 +5,22 @@
 #' together to get all combinations of aggregation structures.
 #'
 #' @param x A character vector, or something that can be coerced into one, of
-#' codes/labels for a specific level in a classification (e.g., 5-digit COICOP,
-#' 5-digit NAICS, 4-digit SIC).
+#'   codes/labels for a specific level in a classification (e.g., 5-digit
+#'   COICOP, 5-digit NAICS, 4-digit SIC).
 #' @param width An integer vector that gives the width of each digit in
-#' `x`. A single value is recycled to span the longest element in
-#' `x`. This cannot contain NAs. The default assumes each digit has a
-#' width of 1, as in the NAICS, NAPCS, and SIC classifications.
+#'   `x`. A single value is recycled to span the longest element in
+#'   `x`. This cannot contain NAs. The default assumes each digit has a
+#'   width of 1, as in the NAICS, NAPCS, and SIC classifications.
 #' @param ... Lists of character vectors that give the codes/labels for each
-#' level of the classification, ordered so that moving down the list goes down
-#' the hierarchy (as made by `expand_classification()`).
+#'   level of the classification, ordered so that moving down the list goes down
+#'   the hierarchy (as made by `expand_classification()`).
 #' @param sep A character used to combine codes/labels across elements of `...`.
-#' The default uses ":".
+#'   The default uses ":".
 #'
 #' @returns
 #' `expand_classification()` returns a list with a entry for each level
 #' in `x` giving the "digits" that represent each level in the hierarchy.
-#' 
+#'
 #' `interact_classfications()` returns a list of lists with the same structure
 #' as `expand_classification()`.
 #'

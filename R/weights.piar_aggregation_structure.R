@@ -3,15 +3,15 @@
 #' Get and set the weights for a price index aggregation structure.
 #'
 #' @param object A price index aggregation structure, as made by
-#' [aggregation_structure()].
+#'   [aggregation_structure()].
 #' @param ea_only Should weights be returned for only the elemental aggregates
-#' (the default)? Setting to `FALSE` gives the weights for the entire
-#' aggregation structure.
+#'   (the default)? Setting to `FALSE` gives the weights for the entire
+#'   aggregation structure.
 #' @param na.rm Should missing values be removed when aggregating the
-#' weights (i.e., when `ea_only = FALSE`)? By default, missing values are
-#' not removed.
+#'   weights (i.e., when `ea_only = FALSE`)? By default, missing values are
+#'   not removed.
 #' @param value A numeric vector of weights for the elemental aggregates of
-#' `object`.
+#'   `object`.
 #' @param ... Not currently used.
 #'
 #' @returns
@@ -19,7 +19,7 @@
 #' The replacement method replaces these values without changing the
 #' aggregation structure. (`set_weights()` is an alias that's easier to use with
 #' pipes.)
-#' 
+#'
 #' If `ea_only = FALSE` then the return value is a list
 #' with a named vector of weights for each level in the aggregation structure.
 #'

@@ -54,7 +54,8 @@ a Paasche index). Other values are possible; see
 index is aggregated with a quadratic mean of order \code{2*r}.}
 
 \item{include_ea}{Should indexes for the elemental aggregates be included
-along with the aggregated indexes? By default, all index values are returned.}
+along with the aggregated indexes? By default, all index values are
+returned.}
 }
 \value{
 An aggregate price index that inherits from the class of \code{x}.

@@ -28,10 +28,10 @@
 #'
 #' @param x An object to coerce into a price index.
 #' @param chainable Are the index values in `x` period-over-period
-#' indexes, suitable for a chained calculation (the default)? This should be
-#' `FALSE` when `x` contains fixed-base (direct) index values.
+#'   indexes, suitable for a chained calculation (the default)? This should be
+#'   `FALSE` when `x` contains fixed-base (direct) index values.
 #' @param contrib Should the index values in `x` be used to construct
-#' percent-change contributions? The default does not make contributions.
+#'   percent-change contributions? The default does not make contributions.
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
@@ -84,7 +84,7 @@ as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
   for (t in seq_along(periods)) {
     index[[t]][] <- x[, t]
   }
-  
+
   contributions <- contrib_skeleton(levels, periods)
   if (contrib) {
     i <- seq_along(levels)
@@ -116,7 +116,7 @@ as_index.data.frame <- function(x, ..., contrib = FALSE) {
     dimnames = list(levels, time)
   )
   index[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
-  
+
   if (contrib && length(x) > 3L) {
     contributions <- matrix(
       list(numeric(0L)),
@@ -125,7 +125,7 @@ as_index.data.frame <- function(x, ..., contrib = FALSE) {
       dimnames = list(levels, time)
     )
     contributions[as.matrix(x[2:1])] <- x[[4L]]
-    
+
     contributions <- valid_contrib_array(index, contributions)
     index <- as_index(index, ...)
     # No need to explicitly validate contrib.
