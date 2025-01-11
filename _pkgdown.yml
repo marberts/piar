@@ -4,9 +4,34 @@ template:
   bootstrap: 5
   bootswatch: united
   
+articles:
+- title: Aggregation
+  desc: Core workflows for aggregating price indexes.
+  navbar: ~
+  contents:
+  - multiple-baskets
+  - multiple-dimensions
+  - matrix-aggregation
+  - superlative-aggregation
+  - subperiods
+  
+- title: Advanced methods
+  desc: More advanced price-index methods.
+  contents:
+  - index-number-formulas
+  - contributions
+  - adjust-weights
+
+- title: Other topics
+  desc: Miscellaneous articles showing useful features.
+  contents:
+  - multiple-data-sources
+  - imputation
+  - spatial-price-index
+  
 reference:
 - title: Calculate price indexes
-  desc: Functions to make elemental and aggregated price indexes
+  desc: Functions to make elemental and aggregated price indexes.
   contents:
   - elemental_index
   - as_index
@@ -14,7 +39,7 @@ reference:
   - mean.piar_index
   
 - title: Manipulate price indexes
-  desc: Helpful functions for working with price indexes
+  desc: Helpful functions for working with price indexes.
   contents:
   - chain
   - merge.piar_index
@@ -30,13 +55,13 @@ reference:
   - is.na.piar_index
   
 - title: Manipulate prices
-  desc: Helpful functions for working with prices
+  desc: Helpful functions for working with prices.
   contents:
   - impute_prices
   - price_relative
 
 - title: Aggregation structure
-  desc: Functions to make and work with price-index aggregation structures
+  desc: Functions to make and work with price-index aggregation structures.
   contents:
   - aggregation_structure
   - expand_classification
@@ -49,7 +74,7 @@ reference:
   - is_aggregation_structure
   
 - title: Index objects
-  desc: The model used to represent price indexes
+  desc: The model used to represent price indexes.
   contents:
   - piar_index
   - is_index
