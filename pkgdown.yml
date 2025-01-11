@@ -12,8 +12,9 @@ articles:
   multiple-dimensions: multiple-dimensions.html
   piar: piar.html
   spatial-price-index: spatial-price-index.html
+  subperiods: subperiods.html
   superlative-aggregation: superlative-aggregation.html
-last_built: 2024-12-29T15:19Z
+last_built: 2025-01-11T02:04Z
 urls:
   reference: https://marberts.github.io/piar/reference
   article: https://marberts.github.io/piar/articles
