@@ -18,14 +18,15 @@ giving the level at which to cut \code{x}.}
 \item{na.rm}{Should missing values be removed when aggregating the
 weights? By default, missing values are not removed.}
 
-\item{upper}{Keep only the part of \code{x} above \code{level} (the default); otherwise,
-return the part of \code{x} below \code{level}.}
+\item{upper}{Keep only the part of \code{x} above \code{level} (the default);
+otherwise, return the part of \code{x} below \code{level}.}
 }
 \value{
 A price index aggregation structure.
 }
 \description{
-Keep only the part of an aggregation structure above or below a certain level.
+Keep only the part of an aggregation structure above or below a certain
+level.
 }
 \examples{
 # A simple aggregation structure

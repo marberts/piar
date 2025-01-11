@@ -21,6 +21,12 @@ set.seed(54321)
 library(piar)
 
 # Make an aggregation structure.
+#                  1
+#      |-----------|-----------|
+#      11          12          13
+#  |---+---|   |---+---|   |---+---|
+# 111     121 121     122 131     132
+
 pias <- data.frame(
   level1 = rep(1, 12),
   level2 = rep(c(11, 12, 13), each = 4),

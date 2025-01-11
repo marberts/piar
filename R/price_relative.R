@@ -4,17 +4,17 @@
 #' products over time.
 #'
 #' @param x Either a numeric vector (or something that can be coerced into one)
-#' or data frame of prices.
+#'   or data frame of prices.
 #' @param period A factor, or something that can be coerced into one, that
-#' gives the corresponding time period for each element in `x`. The
-#' ordering of time periods follows the levels of `period` to agree with
-#' [`cut()`][cut.Date].
+#'   gives the corresponding time period for each element in `x`. The
+#'   ordering of time periods follows the levels of `period` to agree with
+#'   [`cut()`][cut.Date].
 #' @param product A factor, or something that can be coerced into one, that
-#' gives the corresponding product identifier for each element in `x`.
+#'   gives the corresponding product identifier for each element in `x`.
 #' @param ... Further arguments passed to or used by methods.
 #' @param formula A two-sided formula with prices on the left-hand
-#' side, and time periods and products (in that order) on the
-#' right-hand side.
+#'   side, and time periods and products (in that order) on the
+#'   right-hand side.
 #'
 #' @returns
 #' A numeric vector of price relatives, with `product` as names.
@@ -47,11 +47,11 @@ price_relative.default <- function(x, ..., period, product) {
   x <- as.numeric(x)
   period <- as.factor(period)
   product <- as.factor(product)
-  
+
   if (different_length(x, period, product)) {
     stop("'x', 'period', and 'product' must be the same length")
   }
-  
+
   res <- x / x[gpindex::back_period(period, product)]
   names(res) <- as.character(product)
   res

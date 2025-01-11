@@ -9,10 +9,10 @@
 #'
 #' These methods can be used in a map-reduce to make an index with multiple
 #' aggregation structures (like a Paasche index).
-#' 
+#'
 #' @name stack.piar_index
 #' @aliases stack.piar_index
-#' 
+#'
 #' @inheritParams merge.piar_index
 #'
 #' @returns

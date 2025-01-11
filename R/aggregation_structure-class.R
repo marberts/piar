@@ -40,7 +40,7 @@ validate_pias_structure <- function(x) {
       anyNA(x$child, recursive = TRUE) ||
       anyNA(x$parent, recursive = TRUE) ||
       any(vapply(x$child, \(x) any(lengths(x) == 0L), logical(1L)))
-    ) {
+  ) {
     stop(
       "invalid aggregation structure; the input is likely not a nested ",
       "hierachy"

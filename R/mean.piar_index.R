@@ -1,3 +1,104 @@
+#' Aggregate a price index over subperiods
+#'
+#' Aggregate an index over subperiods by taking the (usually arithmetic) mean
+#' of index values over consecutive windows of subperiods.
+#'
+#' The `mean()` method constructs a set of non-overlapping windows of
+#' length `window`, starting in the first period of the index, and takes
+#' the mean of each index value in these windows for each level of the index.
+#' The last window is discarded if it is incomplete (with a warning), so that
+#' index values are
+#' always averaged over `window` periods. The names for the first time
+#' period in each window form the new names for the aggregated time periods.
+#'
+#' Percent-change contributions are aggregated if `contrib = TRUE` by treating
+#' each product-subperiod pair as a unique product, then following the same
+#' approach as [`aggregate()`][aggregate.piar_index]. The number of the
+#' subperiod is appended to product names to make them unique across subperiods.
+#'
+#' An optional vector of weights can be specified when aggregating index values
+#' over subperiods, which is often useful when aggregating a Paasche index; see
+#' section 4.3 of Balk (2008) for details.
+#'
+#' @name mean.piar_index
+#' @aliases mean.piar_index
+#'
+#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param weights A numeric vector of weights for the index values in `x`, or
+#'   something that can be coerced into one. The
+#'   default is equal weights. It is usually easiest to specify these weights as
+#'   a matrix with a row for each index value in `x` and a column for each
+#'   time period.
+#' @param window A positive integer giving the size of the window used to
+#'   average index values across subperiods. The default averages over all
+#'   periods in `x`. Non-integers are truncated towards 0.
+#' @param na.rm Should missing values be removed? By default, missing values
+#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
+#'   imputation.
+#' @param r Order of the generalized mean to aggregate index values. 0 for a
+#'   geometric index (the default for making elemental indexes), 1 for an
+#'   arithmetic index (the default for aggregating elemental indexes and
+#'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
+#'   a Paasche index). Other values are possible; see
+#'   [gpindex::generalized_mean()] for details.
+#' @param contrib Aggregate percent-change contributions in `x` (if any)?
+#' @param ... Not currently used.
+#'
+#' @returns
+#' A price index, averaged over subperiods, that inherits from the same
+#' class as `x`.
+#'
+#' @references Balk, B. M. (2008). *Price and Quantity Index Numbers*.
+#' Cambridge University Press.
+#'
+#' @examples
+#' index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE))
+#'
+#' # Turn a monthly index into a quarterly index
+#' mean(index, window = 3)
+#'
+#' @family index methods
+#' @export
+mean.chainable_piar_index <- function(x,
+                                      ...,
+                                      weights = NULL,
+                                      window = ntime(x),
+                                      na.rm = FALSE,
+                                      contrib = TRUE,
+                                      r = 1) {
+  chkDots(...)
+  mean_index(
+    x,
+    weights,
+    window = window,
+    na.rm = na.rm,
+    contrib = contrib,
+    r = r,
+    chainable = TRUE
+  )
+}
+
+#' @rdname mean.piar_index
+#' @export
+mean.direct_piar_index <- function(x,
+                                   ...,
+                                   weights = NULL,
+                                   window = ntime(x),
+                                   na.rm = FALSE,
+                                   contrib = TRUE,
+                                   r = 1) {
+  chkDots(...)
+  mean_index(
+    x,
+    weights,
+    window = window,
+    na.rm = na.rm,
+    contrib = contrib,
+    r = r,
+    chainable = FALSE
+  )
+}
+
 #' Internal function to aggregate over subperiods
 #' @noRd
 mean_index <- function(x, weights, window, na.rm, contrib, r, chainable) {
@@ -50,89 +151,4 @@ mean_index <- function(x, weights, window, na.rm, contrib, r, chainable) {
   }
 
   piar_index(index, contrib, x$levels, periods, chainable)
-}
-
-#' Aggregate a price index over subperiods
-#'
-#' Aggregate an index over subperiods by taking the (usually arithmetic) mean
-#' of index values over consecutive windows of subperiods.
-#'
-#' The `mean()` method constructs a set of non-overlapping windows of
-#' length `window`, starting in the first period of the index, and takes
-#' the mean of each index value in these windows for each level of the index.
-#' The last window is discarded if it is incomplete (with a warning), so that
-#' index values are
-#' always averaged over `window` periods. The names for the first time
-#' period in each window form the new names for the aggregated time periods.
-#'
-#' Percent-change contributions are aggregated if `contrib = TRUE` by treating
-#' each product-subperiod pair as a unique product, then following the same
-#' approach as [`aggregate()`][aggregate.piar_index]. The number of the
-#' subperiod is appended to product names to make them unique across subperiods.
-#'
-#' An optional vector of weights can be specified when aggregating index values
-#' over subperiods, which is often useful when aggregating a Paasche index; see
-#' section 4.3 of Balk (2008) for details.
-#'
-#' @name mean.piar_index
-#' @aliases mean.piar_index
-#' 
-#' @param x A price index, as made by, e.g., [elemental_index()].
-#' @param weights A numeric vector of weights for the index values in `x`, or
-#' something that can be coerced into one. The
-#' default is equal weights. It is usually easiest to specify these weights as
-#' a matrix with a row for each index value in `x` and a column for each
-#' time period.
-#' @param window A positive integer giving the size of the window used to
-#' average index values across subperiods. The default averages over all periods
-#' in `x`. Non-integers are truncated towards 0.
-#' @param na.rm Should missing values be removed? By default, missing values
-#' are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
-#' imputation.
-#' @param r Order of the generalized mean to aggregate index values. 0 for a
-#' geometric index (the default for making elemental indexes), 1 for an
-#' arithmetic index (the default for aggregating elemental indexes and
-#' averaging indexes over subperiods), or -1 for a harmonic index (usually for
-#' a Paasche index). Other values are possible; see
-#' [gpindex::generalized_mean()] for details.
-#' @param contrib Aggregate percent-change contributions in `x` (if any)?
-#' @param ... Not currently used.
-#'
-#' @returns
-#' A price index, averaged over subperiods, that inherits from the same
-#' class as `x`.
-#'
-#' @references Balk, B. M. (2008). *Price and Quantity Index Numbers*.
-#' Cambridge University Press.
-#'
-#' @examples
-#' index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE))
-#'
-#' # Turn a monthly index into a quarterly index
-#' mean(index, window = 3)
-#'
-#' @family index methods
-#' @export
-mean.chainable_piar_index <- function(x,
-                                      ...,
-                                      weights = NULL,
-                                      window = ntime(x),
-                                      na.rm = FALSE,
-                                      contrib = TRUE,
-                                      r = 1) {
-  chkDots(...)
-  mean_index(x, weights, window, na.rm, contrib, r, TRUE)
-}
-
-#' @rdname mean.piar_index
-#' @export
-mean.direct_piar_index <- function(x,
-                                   ...,
-                                   weights = NULL,
-                                   window = ntime(x),
-                                   na.rm = FALSE,
-                                   contrib = TRUE,
-                                   r = 1) {
-  chkDots(...)
-  mean_index(x, weights, window, na.rm, contrib, r, FALSE)
 }

@@ -1,0 +1,101 @@
+---
+title: "Aggregating over subperiods"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Aggregating over subperiods}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+With the exception of `vignette("spatial-price-index")`, all the examples so far
+have revolved around aggregating over the levels of a price index for each
+time period. Although this is the core workflow in this package, it is also
+useful to be able to aggregate over the time periods for each level of an index
+to turn a monthly or quarterly index into an annual index.
+
+Let's modify the example in `vignette("adjust-weights")` by adding an additional
+eight quarters to make three years of data.
+
+```{r}
+set.seed(54321)
+
+library(piar)
+
+# Make an aggregation structure.
+#                  1
+#      |-----------|-----------|
+#      11          12          13
+#  |---+---|   |---+---|   |---+---|
+# 111     121 121     122 131     132
+
+pias <- data.frame(
+  level1 = rep(1, 12),
+  level2 = rep(c(11, 12, 13), each = 4),
+  level3 = rep(c(111, 112, 121, 122, 131, 132), each = 2),
+  ea = sprintf("B%02d", 1:12),
+  weight = 1:12
+) |>
+  as_aggregation_structure()
+
+pias
+
+# Make elemental indexes over 3 years and aggregate.
+quarterly_index <- matrix(
+  runif(12 * 12, 0.4, 1.2),
+  nrow = 12,
+  dimnames = list(sprintf("B%02d", 1:12), paste0("Q", 1:12))
+) |>
+  as_index() |>
+  aggregate(pias)
+
+head(quarterly_index)
+```
+
+The conventional way to turn a quarterly arithmetic index into an annual one is
+to take the (unweighted) arithmetic mean of the index values over each year and
+rebase to a new base year.
+
+```{r}
+annual_index <- chain(quarterly_index) |>
+  mean(window = 4)
+
+annual_index |>
+  rebase("Q1") |>
+  head()
+```
+
+It's worth not that, at least with an arithmetic index, the aggregation
+properties of the index continue to hold after price-updating the weights.
+
+```{r}
+annual_pias <- pias |>
+  update(annual_index, period = "Q1")
+
+annual_index <- annual_index |>
+  rebase("Q1")
+
+annual_index |>
+  aggregate(annual_pias) |>
+  all.equal(annual_index)
+```
+
+This means that, for example, the workflow in `vignette("contributions")` for
+determining, say, the quarter-over-quarter contribution of the level 2 indexes
+to top-level index remains the same.
+
+```{r}
+# Reuse the reset_contrib() function from the other vignette.
+reset_contrib <- function(index) {
+  contrib_matrix <- as.matrix(index) - 1
+  for (l in levels(index)) {
+    contrib(index, l) <- contrib_matrix[l, , drop = FALSE]
+  }
+  index
+}
+
+annual_index |>
+  unchain() |>
+  reset_contrib() |>
+  aggregate(cut(annual_pias, 2)) |>
+  contrib()
+```

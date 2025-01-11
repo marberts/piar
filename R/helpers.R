@@ -31,7 +31,7 @@ valid_contrib <- function(index, contrib) {
   }
   contrib
 }
-  
+
 valid_contrib_array <- function(index, contrib) {
   for (i in seq_along(contrib)) {
     contrib[[i]] <- valid_contrib(index[[i]], contrib[[i]])

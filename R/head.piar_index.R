@@ -4,7 +4,7 @@
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param n See [head()]/[tail()]. The default takes the
-#' first/last 6 levels of `x`.
+#'   first/last 6 levels of `x`.
 #' @param ... Not currently used.
 #'
 #' @returns

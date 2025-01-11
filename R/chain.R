@@ -30,13 +30,13 @@
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param link A numeric vector, or something that can coerced into one, of
-#' link values for each level in `x`. The default is a vector of 1s so
-#' that no linking is done.
+#'   link values for each level in `x`. The default is a vector of 1s so
+#'   that no linking is done.
 #' @param base A numeric vector, or something that can coerced into one, of
-#' base-period index values for each level in `x`. The default is a vector
-#' of 1s so that the base period remains the same. If `base` is a length-one
-#' character vector giving a time period of `x` then the index values for this
-#' time period are used as the base-period values.
+#'   base-period index values for each level in `x`. The default is a vector
+#'   of 1s so that the base period remains the same. If `base` is a length-one
+#'   character vector giving a time period of `x` then the index values for this
+#'   time period are used as the base-period values.
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns

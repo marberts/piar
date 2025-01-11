@@ -11,7 +11,8 @@
 #'
 #' @param x An object to coerce into an aggregation structure.
 #' @param weights A numeric vector of aggregation weights for the elemental
-#' aggregates. The default is to give each elemental aggregate the same weight.
+#'   aggregates. The default is to give each elemental aggregate the same
+#'   weight.
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns

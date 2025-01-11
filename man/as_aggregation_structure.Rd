@@ -21,7 +21,8 @@ as_aggregation_structure(x, ...)
 \item{...}{Further arguments passed to or used by methods.}
 
 \item{weights}{A numeric vector of aggregation weights for the elemental
-aggregates. The default is to give each elemental aggregate the same weight.}
+aggregates. The default is to give each elemental aggregate the same
+weight.}
 }
 \value{
 A price index aggregation structure that inherits from

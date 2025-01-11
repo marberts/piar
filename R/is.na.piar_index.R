@@ -4,7 +4,7 @@
 #'
 #' @param x A price index, as made by, e.g., [elemental_index()].
 #' @param recursive Check if `x` also has missing percent-change
-#' contributions. By default only index values are checked for missingness.
+#'   contributions. By default only index values are checked for missingness.
 #'
 #' @returns
 #' `is.na()` returns a logical matrix, with a row for each level of `x` and a
