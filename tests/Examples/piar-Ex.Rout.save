@@ -1,5 +1,5 @@
 
-R version 4.4.1 (2024-06-14) -- "Race for Your Life"
+R version 4.4.2 (2024-10-31) -- "Pile of Leaves"
 Copyright (C) 2024 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -198,6 +198,31 @@ Aggregation structure for 3 elemental aggregates with 2 levels above the element
 > 
 > all.equal(as.data.frame(pias), aggregation_weights)
 [1] TRUE
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("as.ts.piar_index")
+> ### * as.ts.piar_index
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: as.ts.piar_index
+> ### Title: Coerce an index into a time series
+> ### Aliases: as.ts.piar_index
+> 
+> ### ** Examples
+> 
+> as.ts(as_index(matrix(1:9, 3)))
+Time Series:
+Start = 1 
+End = 3 
+Frequency = 1 
+  1 2 3
+1 1 2 3
+2 4 5 6
+3 7 8 9
 > 
 > 
 > 
@@ -1010,7 +1035,7 @@ Period-over-period price index for 3 levels over 3 time periods
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.128 0 0.128 0 0 
+Time elapsed:  0.158 0.012 0.169 0 0 
 > grDevices::dev.off()
 null device 
           1 

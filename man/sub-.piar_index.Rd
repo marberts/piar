@@ -61,6 +61,7 @@ index
 Other index methods: 
 \code{\link{aggregate.piar_index}},
 \code{\link{as.data.frame.piar_index}()},
+\code{\link{as.ts.piar_index}()},
 \code{\link{chain}()},
 \code{\link{contrib}()},
 \code{\link{head.piar_index}()},

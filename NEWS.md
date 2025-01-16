@@ -24,6 +24,8 @@ contributions in a table to an index.
 - The vignette has been re-written, split into small examples that cover more
 topics, and should be easier to follow.
 
+- `as.ts(index)` can now be used to turn an index into a regular time series.
+
 ## Bug fixes
 
 - `as.data.frame()` methods now respect the signature of the generic. This
