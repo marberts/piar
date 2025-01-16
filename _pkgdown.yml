@@ -52,6 +52,7 @@ reference:
   - levels.piar_index
   - time.piar_index
   - as.matrix.piar_index
+  - as.ts.piar_index
   - is.na.piar_index
   
 - title: Manipulate prices
