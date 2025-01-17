@@ -1,6 +1,6 @@
 Package: piar
 Title: Price Index Aggregation
-Version: 0.8.1.9019
+Version: 0.8.1.9020
 Authors@R: c(
     person("Steve", "Martin", role = c("aut", "cre", "cph"),
            email = "marberts@protonmail.com",
@@ -27,7 +27,8 @@ Suggests:
     knitr,
     rmarkdown,
     sps,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    treemap
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://marberts.github.io/piar/, https://github.com/marberts/piar

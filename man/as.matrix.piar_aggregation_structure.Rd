@@ -64,9 +64,21 @@ as.matrix(pias)
 
 all.equal(as.data.frame(pias), aggregation_weights)
 
+\dontrun{
+# Visualize as a treemap.
+treemap::treemap(
+  aggregation_weights,
+  index = names(aggregation_weights)[-4],
+  vSize = "weight",
+  title = "aggregation structure"   
+)
+}
+
 }
 \seealso{
 \code{\link[=as_aggregation_structure]{as_aggregation_structure()}} for coercing into an aggregation structure.
+
+\code{\link[treemap:treemap]{treemap::treemap()}} for visualizing an aggregation structure.
 
 Other aggregation structure methods: 
 \code{\link{cut.piar_aggregation_structure}()},

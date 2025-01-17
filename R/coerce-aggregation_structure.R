@@ -23,6 +23,8 @@
 #'
 #' @seealso
 #' [as_aggregation_structure()] for coercing into an aggregation structure.
+#' 
+#' [treemap::treemap()] for visualizing an aggregation structure.
 #'
 #' @examples
 #' # A simple aggregation structure
@@ -45,6 +47,16 @@
 #' as.matrix(pias)
 #'
 #' all.equal(as.data.frame(pias), aggregation_weights)
+#' 
+#' \dontrun{
+#' # Visualize as a treemap.
+#' treemap::treemap(
+#'   aggregation_weights,
+#'   index = names(aggregation_weights)[-4],
+#'   vSize = "weight",
+#'   title = "aggregation structure"   
+#' )
+#' }
 #'
 #' @family aggregation structure methods
 #' @export

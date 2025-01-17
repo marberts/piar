@@ -198,6 +198,16 @@ Aggregation structure for 3 elemental aggregates with 2 levels above the element
 > 
 > all.equal(as.data.frame(pias), aggregation_weights)
 [1] TRUE
+>
+> ## Not run: 
+> ##D # Visualize as a treemap.
+> ##D treemap::treemap(
+> ##D   aggregation_weights,
+> ##D   index = names(aggregation_weights)[-4],
+> ##D   vSize = "weight",
+> ##D   title = "aggregation structure"   
+> ##D )
+> ## End(Not run)
 > 
 > 
 > 
