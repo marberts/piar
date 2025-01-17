@@ -72,13 +72,21 @@ treemap::treemap(
   vSize = "weight",
   title = "aggregation structure"   
 )
+
+# Or turn into a more genereal tree object and plot.
+aggregation_weights$pathString <- do.call(
+  \(...) paste(..., sep = "/"),
+  aggregation_weights[-4]
+)
+plot(data.tree::as.Node(aggregation_weights))
 }
 
 }
 \seealso{
 \code{\link[=as_aggregation_structure]{as_aggregation_structure()}} for coercing into an aggregation structure.
 
-\code{\link[treemap:treemap]{treemap::treemap()}} for visualizing an aggregation structure.
+\code{\link[treemap:treemap]{treemap::treemap()}} and \code{\link[data.tree:as.Node]{data.tree::as.Node()}} for visualizing an
+aggregation structure.
 
 Other aggregation structure methods: 
 \code{\link{cut.piar_aggregation_structure}()},

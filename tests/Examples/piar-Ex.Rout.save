@@ -207,6 +207,13 @@ Aggregation structure for 3 elemental aggregates with 2 levels above the element
 > ##D   vSize = "weight",
 > ##D   title = "aggregation structure"   
 > ##D )
+> ##D 
+> ##D # Or turn into a more genereal tree object and plot.
+> ##D aggregation_weights$pathString <- do.call(
+> ##D   \(...) paste(..., sep = "/"),
+> ##D   aggregation_weights[-4]
+> ##D )
+> ##D plot(data.tree::as.Node(aggregation_weights))
 > ## End(Not run)
 > 
 > 
