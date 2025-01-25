@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.8.2" id="version-082">Version 0.8.2<a class="anchor" aria-label="anchor" href="#version-082"></a></h2>
-<div class="section level3">
+<ul><li>The vignette has been re-written, split into small examples that cover more topics, and should be easier to follow.</li>
+</ul><div class="section level3">
 <h3 id="improvements-0-8-2">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-2"></a></h3>
 <ul><li><p>Added <code><a href="../reference/levels.piar_index.html">set_levels()</a></code>, <code><a href="../reference/time.piar_index.html">set_time()</a></code>, and <code><a href="../reference/weights.piar_aggregation_structure.html">set_weights()</a></code> to make it easier to replace levels, times, and weights with pipes.</p></li>
 <li><p><code>contrib(index) &lt;- value</code> can now be used to replace product contributions. The alias <code><a href="../reference/contrib.html">set_contrib()</a></code> is easier to use with pipes.</p></li>
@@ -52,8 +53,8 @@
 <li><p><code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> can now use two aggregation structures to make a superlative index.</p></li>
 <li><p><code>cut(aggregation_structure)</code> can be used cut off the bottom/top of an aggregation structure.</p></li>
 <li><p><code>as.data.frame(index)</code> gets an option to make a list-column of percent-change contribution. <code>as_index(data.frame)</code> gets an analogous option to add contributions in a table to an index.</p></li>
-<li><p>The vignette has been re-written, split into small examples that cover more topics, and should be easier to follow.</p></li>
 <li><p><code>as.ts(index)</code> can now be used to turn an index into a regular time series.</p></li>
+<li><p><code><a href="../reference/split_classification.html">split_classification()</a></code> gives another way to generate an aggregation structure from a character vector.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-0-8-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-2"></a></h3>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9021</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9022</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,10 @@
 <span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'direct_piar_index'</span></span>
-<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, chainable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'mts'</span></span>
+<span><span class="fu">as_index</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -107,8 +110,8 @@ are used to denote time periods, and row names are used to denote levels
 (so they must be unique). This essentially reverses calling
 <code><a href="as.data.frame.piar_index.html">as.matrix()</a></code> on an index object. If a
 dimension is unnamed, then it is given a sequential label from 1 to the size
-of that dimension. The default method coerces <code>x</code> to a matrix prior to
-using the matrix method.</p>
+of that dimension. The default and multiple time series methods coerces <code>x</code>
+to a matrix prior to using the matrix method.</p>
 <p>The data frame method for <code>as_index()</code> is best understood as reversing
 the effect of <code><a href="as.data.frame.piar_index.html">as.data.frame()</a></code> on an
 index object. It constructs a matrix by taking the levels of
