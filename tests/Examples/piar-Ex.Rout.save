@@ -198,7 +198,7 @@ Aggregation structure for 3 elemental aggregates with 2 levels above the element
 > 
 > all.equal(as.data.frame(pias), aggregation_weights)
 [1] TRUE
->
+> 
 > ## Not run: 
 > ##D # Visualize as a treemap.
 > ##D treemap::treemap(
@@ -301,7 +301,7 @@ Frequency = 1
 > ### Name: as_index
 > ### Title: Coerce to a price index
 > ### Aliases: as_index as_index.default as_index.matrix as_index.data.frame
-> ###   as_index.chainable_piar_index as_index.direct_piar_index
+> ###   as_index.chainable_piar_index as_index.direct_piar_index as_index.mts
 > 
 > ### ** Examples
 > 
@@ -834,6 +834,52 @@ Period-over-period price index for 2 levels over 1 time periods
 > 
 > 
 > cleanEx()
+> nameEx("split_classification")
+> ### * split_classification
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: split_classification
+> ### Title: Split a hierarchical classification
+> ### Aliases: split_classification
+> 
+> ### ** Examples
+> 
+> #' # A simple classification structure
+> #            1
+> #      |-----+-----|
+> #      11          12
+> #  |---+---|       |
+> #  111     112     121
+> 
+> split_classification(c("111", "112", "121"), "")
+[[1]]
+[1] "1" "1" "1"
+
+[[2]]
+[1] "1.1" "1.1" "1.2"
+
+[[3]]
+[1] "1.1.1" "1.1.2" "1.2.1"
+
+> 
+> # Useful if there are delimiters in the classification (like COICOP)
+> 
+> split_classification(c("01.1.1", "01.1.2", "01.2.1"), ".", fixed = TRUE)
+[[1]]
+[1] "01" "01" "01"
+
+[[2]]
+[1] "01.1" "01.1" "01.2"
+
+[[3]]
+[1] "01.1.1" "01.1.2" "01.2.1"
+
+> 
+> 
+> 
+> 
+> cleanEx()
 > nameEx("stack.piar_index")
 > ### * stack.piar_index
 > 
@@ -1052,7 +1098,7 @@ Period-over-period price index for 3 levels over 3 time periods
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.158 0.012 0.169 0 0 
+Time elapsed:  0.168 0.021 0.19 0 0 
 > grDevices::dev.off()
 null device 
           1 

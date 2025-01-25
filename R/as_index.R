@@ -9,8 +9,8 @@
 #' (so they must be unique). This essentially reverses calling
 #' [`as.matrix()`][as.matrix.piar_index] on an index object. If a
 #' dimension is unnamed, then it is given a sequential label from 1 to the size
-#' of that dimension. The default method coerces `x` to a matrix prior to
-#' using the matrix method.
+#' of that dimension. The default and multiple time series methods coerces `x`
+#' to a matrix prior to using the matrix method.
 #'
 #' The data frame method for `as_index()` is best understood as reversing
 #' the effect of [`as.data.frame()`][as.data.frame.piar_index] on an
@@ -150,4 +150,11 @@ as_index.chainable_piar_index <- function(x, ..., chainable = TRUE) {
 as_index.direct_piar_index <- function(x, ..., chainable = FALSE) {
   chkDots(...)
   if (chainable) unchain(x) else x
+}
+
+
+#' @rdname as_index
+#' @export
+as_index.mts <- function(x, ...) {
+  as_index(t(as.matrix(x)), ...)
 }
