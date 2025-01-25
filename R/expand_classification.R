@@ -26,6 +26,9 @@
 #'
 #' @seealso
 #' [aggregation_structure()] to make a price-index aggregation structure.
+#' 
+#' [split_classification()] to expand a classification by splitting along
+#' a delimiter.
 #'
 #' @examples
 #' # A simple classification structure

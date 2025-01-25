@@ -121,7 +121,7 @@ fisher
 ```
 
 This gives the same result as calculating the Laspeyres and Paasche
-indexes individually, and then caluclating the Fisher index manually.
+indexes individually, and then calculating the Fisher index manually.
 
 ```{r}
 laspeyres <- Map(

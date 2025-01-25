@@ -67,4 +67,7 @@ expand_classification(c("01.1.1", "01.1.2", "01.2.1"), width = 2)
 }
 \seealso{
 \code{\link[=aggregation_structure]{aggregation_structure()}} to make a price-index aggregation structure.
+
+\code{\link[=split_classification]{split_classification()}} to expand a classification by splitting along
+a delimiter.
 }

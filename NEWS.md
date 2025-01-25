@@ -1,5 +1,8 @@
 # Version 0.8.2
 
+- The vignette has been re-written, split into small examples that cover more
+topics, and should be easier to follow.
+
 ## Improvements
 
 - Added `set_levels()`, `set_time()`, and `set_weights()` to make it easier to
@@ -21,10 +24,10 @@ aggregation structure.
 contribution. `as_index(data.frame)` gets an analogous option to add
 contributions in a table to an index.
 
-- The vignette has been re-written, split into small examples that cover more
-topics, and should be easier to follow.
-
 - `as.ts(index)` can now be used to turn an index into a regular time series.
+
+- `split_classification()` gives another way to generate an aggregation structure
+from a character vector.
 
 ## Bug fixes
 
