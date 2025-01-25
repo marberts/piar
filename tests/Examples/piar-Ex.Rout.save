@@ -301,7 +301,7 @@ Frequency = 1
 > ### Name: as_index
 > ### Title: Coerce to a price index
 > ### Aliases: as_index as_index.default as_index.matrix as_index.data.frame
-> ###   as_index.chainable_piar_index as_index.direct_piar_index
+> ###   as_index.chainable_piar_index as_index.direct_piar_index as_index.mts
 > 
 > ### ** Examples
 > 

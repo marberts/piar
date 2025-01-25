@@ -7,6 +7,7 @@
 \alias{as_index.data.frame}
 \alias{as_index.chainable_piar_index}
 \alias{as_index.direct_piar_index}
+\alias{as_index.mts}
 \title{Coerce to a price index}
 \usage{
 as_index(x, ...)
@@ -20,6 +21,8 @@ as_index(x, ...)
 \method{as_index}{chainable_piar_index}(x, ..., chainable = TRUE)
 
 \method{as_index}{direct_piar_index}(x, ..., chainable = FALSE)
+
+\method{as_index}{mts}(x, ...)
 }
 \arguments{
 \item{x}{An object to coerce into a price index.}
@@ -51,8 +54,8 @@ are used to denote time periods, and row names are used to denote levels
 (so they must be unique). This essentially reverses calling
 \code{\link[=as.matrix.piar_index]{as.matrix()}} on an index object. If a
 dimension is unnamed, then it is given a sequential label from 1 to the size
-of that dimension. The default method coerces \code{x} to a matrix prior to
-using the matrix method.
+of that dimension. The default and multiple time series methods coerces \code{x}
+to a matrix prior to using the matrix method.
 
 The data frame method for \code{as_index()} is best understood as reversing
 the effect of \code{\link[=as.data.frame.piar_index]{as.data.frame()}} on an
