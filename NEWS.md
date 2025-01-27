@@ -24,7 +24,8 @@ aggregation structure.
 contribution. `as_index(data.frame)` gets an analogous option to add
 contributions in a table to an index.
 
-- `as.ts(index)` can now be used to turn an index into a regular time series.
+- `as.ts(index)` can now be used to turn an index into a regular time series and
+`as_index(ts)` can turn a time series into an index object.
 
 - `split_classification()` gives another way to generate an aggregation structure
 from a character vector.
