@@ -107,14 +107,17 @@ replace_matrix <- function(x, i, value) {
         "time period in 'x'"
       )
     }
-    i <- which(i, arr.ind = TRUE)
-    if (nrow(i) == 0L) {
-      return(x)
+    if (anyNA(i)) {
+      stop("subscript out of bounds")
     }
+    i <- which(i, arr.ind = TRUE)
   }
 
   if (ncol(i) != 2L) {
     stop("'i' must have exactly two columns")
+  }
+  if (nrow(i) == 0L) {
+    return(x)
   }
 
   value <- as.numeric(value)
@@ -140,6 +143,10 @@ replace_matrix <- function(x, i, value) {
 replace_index <- function(x, i, j, value) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
+  if (length(levels) == 0L || length(periods) == 0L) {
+    return(x)
+  }
+  
   if (length(value$time) != length(periods)) {
     stop("'x' and 'value' must have the same number of time periods")
   }
@@ -156,6 +163,9 @@ replace_index <- function(x, i, j, value) {
 replace_numeric <- function(x, i, j, value) {
   levels <- dim_indices(x$levels, i)
   periods <- dim_indices(x$time, j)
+  if (length(levels) == 0L || length(periods) == 0L) {
+    return(x)
+  }
 
   value <- as.numeric(value)
   n <- length(value)

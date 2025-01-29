@@ -45,7 +45,7 @@ test_that("subscripting methods give errors where expected", {
   expect_error(epr[1, NA])
   expect_error(epr[1, 3])
   expect_error(epr[c(1, 2, 1), ])
-  expect_error(epr[NULL])
+  expect_error(epr[, NULL])
   expect_error(epr[integer(0)])
   expect_error(epr[NA])
 })
@@ -53,6 +53,7 @@ test_that("subscripting methods give errors where expected", {
 test_that("replacement methods work with an index", {
   # No op
   expect_equal(replace(epr, 1:4, epr), epr)
+  expect_equal(replace(epr, integer(0), epr[1]), epr)
   # Adds contributions
   expect_equal(replace(epr2, 1:4, epr), epr)
   # Removes contributions
@@ -80,7 +81,6 @@ test_that("replacement methods work with an index", {
   expect_error(epr[1:3]<- epr[1:2])
   expect_error(epr[NA] <- epr[1])
   expect_error(epr[, NA] <- epr[1])
-  expect_error(epr[integer(0)] <- epr[1])
   expect_error(epr[1] <- chain(epr[1]))
   epr <- chain(epr)
   expect_error(epr[1] <- epr2[1])
@@ -128,30 +128,39 @@ test_that("replacement methods work with a vector", {
     matrix(0, 0, 2, dimnames = list(NULL, 1:2))
   )
   
+  # Replacing nothing
+  epr2 <- epr
+  epr[FALSE] <- "a"
+  expect_identical(epr, epr2)
+  
+  epr[1, 0] <- "a"
+  expect_identical(epr, epr2)
+  
   # Errors
-  expect_error(epr[0] <- 1:3)
   expect_error(epr[1] <- 1:3)
   expect_error(epr[1:2] <- 1:3)
   expect_error(epr[NA] <- 1)
   expect_error(epr[1, NA] <- 1)
+  expect_error(epr[1, c(TRUE, FALSE, FALSE)] <- 1)
   expect_error(epr[5] <- 1)
   expect_error(epr[1] <- numeric(0))
 })
 
 test_that("replacement method works with a matrix", {
-  epr3 <- replace(epr, epr > 2, 1:2)
+  epr3 <- replace(epr, is.na(epr), 1:3)
   expect_equal(
     as.matrix(epr3),
-    matrix(c(sqrt(2), 1, 2, NA, 1, NA, NA, 2), 4, dimnames = list(11:14, 1:2))
+    replace(as.matrix(epr), c(4, 6, 7), c(1, 2, 3))
   )
-  expect_equal(contrib(epr3), replace(contrib(epr), 3:4, 0))
   
   epr4 <- replace(
     epr3, matrix(c("11", "11", "12", "12", "2", "2", "2", "2"), 4), 1:2
   )
   expect_equal(as.matrix(epr4), replace(as.matrix(epr3), 5:6, 2))
-  expect_equal(contrib(epr4), contrib(epr3))
   
+  expect_identical(replace(epr, matrix(FALSE, 4, 2), 0), epr)
+  
+  expect_error(replace(epr, matrix(NA, 4, 2), 0))
   expect_error(epr[is.na(epr)] <- numeric(0))
   expect_error(epr[matrix(TRUE, 3, 3)] <- 1)
   expect_error(epr[matrix(1, nrow = 1, ncol = 3)] <- 1)

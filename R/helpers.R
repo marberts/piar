@@ -104,10 +104,12 @@ dim_indices <- function(x, i) {
   if (is.character(i)) {
     res <- match(i, x)
   } else {
+    if (is.logical(i)) {
+      if (length(i) > length(x)) {
+        stop("logical subscript too long")
+      }
+    }
     res <- match(x[i], x)
-  }
-  if (length(res) == 0L) {
-    stop("attempted to select less than one element")
   }
   if (anyNA(res)) {
     stop("subscript out of bounds")
