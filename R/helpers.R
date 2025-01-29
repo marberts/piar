@@ -101,6 +101,9 @@ dim_indices <- function(x, i) {
   if (missing(i)) {
     return(seq_along(x))
   }
+  if (anyNA(i)) {
+    stop("cannot subscript with missing values")
+  }
   if (is.character(i)) {
     res <- match(i, x)
   } else {

@@ -36,6 +36,8 @@ from a character vector.
 allows row names to be set and prevents superfluous warnings when trying to
 use `data.frame()`; e.g., with `write.csv()` (#34).
 
+- Subscripting an index object with a length 0 vector is no longer an error (#48).
+
 # Version 0.8.1
 
 ## Significant changes
