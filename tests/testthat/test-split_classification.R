@@ -23,6 +23,7 @@ test_that("missing levels are padded with NA", {
 
 test_that("works with empty strings", {
   expect_identical(split_classification(character(0), "1"), list())
+  expect_identical(split_classification(c("", ""), "1"), list())
   expect_identical(split_classification(c("", "a"), "a"),
                    list(c(NA, "")))
 })

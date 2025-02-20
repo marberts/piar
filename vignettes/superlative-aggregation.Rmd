@@ -54,8 +54,8 @@ The key tools to deal with time-varying aggregation weights are the
 `stack()` and `unstack()` functions. `stack()` appends a later index
 series onto an earlier one for the same levels, whereas `unstack()`
 pulls apart an index series for many periods into a collection of
-one-period indexes. These function allow the aggregation to be done with
-a map-reduce.
+one-period indexes.^[`split()` can also be used for this.] These function allow
+the aggregation to be done with a map-reduce.
 
 The first step to making a Paasche index is to unstack the elemental
 indexes into a list of elemental indexes for each period. (Trying to

@@ -60,7 +60,7 @@ pak::pak("marberts/piar")
 
 ## Usage
 
-There iare several detailed vignette showing how to use **piar**:
+There are several detailed vignette showing how to use **piar**:
 `browseVignettes("piar")`. But the basic work flow is fairly simple.
 
 The starting point is to make period-over-period elemental price indexes
