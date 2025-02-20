@@ -44,9 +44,8 @@ split_classification <- function(x, split, ..., sep = ".") {
   }
   x <- strsplit(x = x, split = split, ...)
   n <- max(lengths(x))
-  # This is consistent with expand classification.
   if (n == 0L) {
-    return(list())
+    return(list(rep.int("", length(x))))
   }
   res <- do.call(rbind, lapply(x, `[`, seq_len(n)))
   Reduce(

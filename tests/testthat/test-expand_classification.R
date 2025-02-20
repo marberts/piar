@@ -10,6 +10,7 @@ test_that("expand classification works", {
                list(c("1.1", "1.1", "1.2"),
                     c("1.1.1NA", "1.1.2NA", "1.2.1NA")))
   expect_equal(expand_classification(character(0)), list())
+  expect_equal(expand_classification(c("", "")), list(c("NA", "NA")))
 })
 
 test_that("expand classification fails when expected", {

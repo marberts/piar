@@ -59,16 +59,19 @@
 #' @export
 expand_classification <- function(x, width = 1L) {
   x <- as.character(x)
+  if (length(x) == 0L) {
+    return(list())
+  }
   width <- as.integer(width)
   if (anyNA(width)) {
     stop("'width' cannot contain NAs")
   }
   if (any(width <= 0L)) {
-    stop("'width' must be strictly positive")
+    stop("'width' must be at least 1")
   }
 
   if (length(width) == 1L) {
-    longest <- max(nchar(x), 0L, na.rm = TRUE)
+    longest <- max(nchar(x), 1L, na.rm = TRUE)
     width <- rep.int(width, ceiling(longest / width))
   }
   w <- cumsum(width)
