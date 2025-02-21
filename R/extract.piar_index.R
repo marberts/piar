@@ -108,7 +108,7 @@ replace_matrix <- function(x, i, value) {
       )
     }
     if (anyNA(i)) {
-      stop("subscript out of bounds")
+      stop("cannot subscript with missing values")
     }
     i <- which(i, arr.ind = TRUE)
   }

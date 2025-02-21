@@ -85,8 +85,11 @@ expand_classification <- function(x, width = 1L) {
 #' @export
 interact_classifications <- function(..., sep = ":") {
   dots <- list(...)
-  if (length(dots) == 0L) {
+  if (length(dots) == 0L || all(lengths(dots) == 0L)) {
     return(list())
+  }
+  if (any(lengths(dots) == 0L)) {
+    stop("each element in '...' must be a non-empty list")
   }
   len <- unlist(lapply(dots, lengths), use.names = FALSE)
   n <- len[1L]

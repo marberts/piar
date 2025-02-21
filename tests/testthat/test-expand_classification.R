@@ -54,11 +54,13 @@ test_that("interaction works", {
   )
   
   expect_error(interact_classifications(c1, list(c2)))
+  expect_error(interact_classifications(list(), c1))
   expect_error(interact_classifications(c1, list(1)))
 })
 
 test_that("interacting a single classification does nothing", {
   expect_identical(interact_classifications(), list())
+  expect_identical(interact_classifications(list(), list()), list())
   expect_identical(interact_classifications(list(1)), list(list(1)))
   
   x = expand_classification(c("1.1.1", "1.1.2", "1.2.1"), c(2, 2, 1))
