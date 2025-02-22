@@ -18,7 +18,7 @@
 #' aggregated index.
 #'
 #' `as.data.frame()` takes an aggregation structure and returns a data
-#' frame that could have generated it, with columns `level1`,
+#' frame that could have generated it, with columns like `level1`,
 #' `level2`, ..., `ea`, and `weight`.
 #'
 #' @seealso
@@ -114,12 +114,10 @@ as.data.frame.piar_aggregation_structure <- function(x,
                                                      ...,
                                                      stringsAsFactors = FALSE) {
   chkDots(...)
-  colnames <- c(paste0("level", seq_along(x$child), recycle0 = TRUE), "ea")
   res <- as.data.frame(
     as.list(x),
     row.names = row.names,
     optional = optional,
-    col.names = colnames,
     stringsAsFactors = stringsAsFactors
   )
   res$weight <- x$weights
@@ -139,5 +137,7 @@ as.list.piar_aggregation_structure <- function(x, ...) {
     res[[i]] <- x$parent[[i]][res[[i - 1L]]]
   }
   top <- names(x$child[[length(x$child)]])[res[[length(res)]]]
-  c(list(top), lapply(rev(res), names))
+  res <- c(list(top), lapply(rev(res), names))
+  names(res) <- names(x$levels)
+  res
 }

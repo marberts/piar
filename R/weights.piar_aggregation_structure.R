@@ -63,6 +63,7 @@ weights.piar_aggregation_structure <- function(object,
     return(object$weights)
   }
   res <- vector("list", length(object$levels))
+  names(res) <- rev(names(object$levels))
   res[[1L]] <- object$weights
 
   for (i in seq_along(res)[-1L]) {

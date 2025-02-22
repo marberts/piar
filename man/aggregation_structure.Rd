@@ -13,7 +13,8 @@ level of the classification, ordered so that moving down the list goes down
 the hierarchy. The last vector gives the elemental aggregates, which should
 have no duplicates. All vectors should be the same length, without
 \code{NA}s, and there should be no duplicates across different levels of
-\code{x}.}
+\code{x}. Names for \code{x} are used as level names; otherwise, levels are named
+level1, level2, ..., ea.}
 
 \item{weights}{A numeric vector of aggregation weights for the elemental
 aggregates (i.e., the last vector in \code{x}), or something that can be coerced
@@ -29,7 +30,7 @@ terminal nodes.}
 \item{parent}{A list that gives the position of the
 immediate parent for each node of the aggregation structure below the
 initial nodes.}
-\item{levels}{A list of character vectors that give the levels of \code{x}.}
+\item{levels}{A named list of character vectors that give the levels of \code{x}.}
 \item{weights}{A vector giving the weight for each elemental
 aggregate.}
 }

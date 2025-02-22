@@ -95,7 +95,7 @@ interacted_hierarchy <- with(
 
 pias_sps2 <- lapply(
   interacted_hierarchy,
-  \(x) aggregation_structure(c(x, ms_weights["business"]), ms_weights$weight)
+  \(x) aggregation_structure(c(x, list(ms_weights$business)), ms_weights$weight)
 )
 
 index_sps2 <- lapply(pias_sps2, \(x) aggregate(index_sps, x, include_ea = FALSE))

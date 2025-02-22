@@ -15,6 +15,12 @@ new_piar_aggregation_structure <- function(child, parent, levels, weights) {
 
 piar_aggregation_structure <- function(child, parent, levels, weights) {
   levels <- lapply(as.list(levels), as.character)
+  if (is.null(names(levels))) {
+    names(levels) <- c(
+      paste0("level", seq_along(child), recycle0 = TRUE),
+      "ea"
+    )
+  }
   weights <- as.numeric(weights)
   validate_piar_aggregation_structure(
     new_piar_aggregation_structure(child, parent, levels, weights)
@@ -26,6 +32,9 @@ validate_pias_levels <- function(x) {
   lev <- unlist(x$levels, use.names = FALSE)
   if (anyNA(lev) || any(lev == "")) {
     stop("cannot make an aggregation structure with missing levels")
+  }
+  if (anyNA(names(x$levels)) || any(names(x$levels) == "")) {
+    stop("cannot make an aggregation structure with missing level names")
   }
   if (anyDuplicated(lev)) {
     stop("cannot make an aggregation structure with duplicated levels")

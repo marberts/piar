@@ -35,7 +35,7 @@ such that multiplying with a (column) vector of elemental indexes gives the
 aggregated index.
 
 \code{as.data.frame()} takes an aggregation structure and returns a data
-frame that could have generated it, with columns \code{level1},
+frame that could have generated it, with columns like \code{level1},
 \code{level2}, ..., \code{ea}, and \code{weight}.
 }
 \description{

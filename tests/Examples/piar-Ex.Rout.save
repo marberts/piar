@@ -469,9 +469,9 @@ detaching ‘package:gpindex’
 > 
 > cut(pias, 2)
 Aggregation structure for 2 elemental aggregates with 1 levels above the elemental aggregates 
-  level1 ea weight
-1      1 11      4
-2      1 12      4
+  level1 level2 weight
+1      1     11      4
+2      1     12      4
 > 
 > 
 > 
@@ -985,29 +985,29 @@ Period-over-period price index for 2 levels over 3 time periods
 + )
 > 
 > weights(pias, ea_only = FALSE)
-[[1]]
+$level1
 1 
 8 
 
-[[2]]
+$level2
 11 12 
  4  4 
 
-[[3]]
+$ea
 111 112 121 
   1   3   4 
 
 > 
 > weights(update(pias, index), ea_only = FALSE)
-[[1]]
+$level1
   1 
 916 
 
-[[2]]
+$level2
  11  12 
 268 648 
 
-[[3]]
+$ea
 111 112 121 
  28 240 648 
 

@@ -45,7 +45,7 @@ classification_sps <- paste0(ms_weights$classification, ms_weights$stratum) |>
   expand_classification(width = c(1, 1, 2))
 
 pias_sps <- aggregation_structure(
-  c(classification_sps, ms_weights["business"]),
+  c(classification_sps, list(ms_weights$business)),
   ms_weights$weight
 )
 
@@ -79,7 +79,7 @@ interacted_hierarchy <- interact_classifications(
 
 pias_sps2 <- lapply(
   interacted_hierarchy,
-  \(x) aggregation_structure(c(x, ms_weights["business"]), ms_weights$weight)
+  \(x) aggregation_structure(c(x, list(ms_weights$business)), ms_weights$weight)
 )
 
 index_sps2 <- lapply(pias_sps2, \(x) aggregate(index_sps, x, include_ea = FALSE))

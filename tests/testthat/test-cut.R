@@ -15,10 +15,10 @@ test_that("cutting a pias work with upper == TRUE", {
     cut(pias, 4),
     aggregation_structure(
       list(
-        c(1, 1, 1, 2, 2, 1),
-        c(11, 11, 12, 21, 22, 12),
-        c(112, 111, 121, 211, 221, 121),
-        c(1121, 1111, 1211, 2111, 2211, 1212)
+        level1 = c(1, 1, 1, 2, 2, 1),
+        level2 = c(11, 11, 12, 21, 22, 12),
+        level3 = c(112, 111, 121, 211, 221, 121),
+        level4 = c(1121, 1111, 1211, 2111, 2211, 1212)
       )
     )
   )
@@ -27,9 +27,9 @@ test_that("cutting a pias work with upper == TRUE", {
     cut(pias, 3),
     aggregation_structure(
       list(
-        c(1, 1, 1, 2, 2),
-        c(11, 11, 12, 21, 22),
-        c(112, 111, 121, 211, 221)
+        level1 = c(1, 1, 1, 2, 2),
+        level2 = c(11, 11, 12, 21, 22),
+        level3 = c(112, 111, 121, 211, 221)
       ),
       weights = c(1, 1, 2, 1, 1)
     )
@@ -39,8 +39,8 @@ test_that("cutting a pias work with upper == TRUE", {
     cut(pias, 2),
     aggregation_structure(
       list(
-        c(1, 1, 2, 2),
-        c(11, 12, 21, 22)
+        level1 = c(1, 1, 2, 2),
+        level2 = c(11, 12, 21, 22)
       ),
       weights = c(2, 2, 1, 1)
     )
@@ -50,7 +50,7 @@ test_that("cutting a pias work with upper == TRUE", {
     cut(pias, 1),
     aggregation_structure(
       list(
-        c(1, 2)
+        level1 = c(1, 2)
       ),
       weights = c(4, 2)
     )
@@ -64,10 +64,10 @@ test_that("cutting a pias work with upper == FALSE", {
     cut(pias, 2, upper = FALSE),
     aggregation_structure(
       list(
-        c(11, 11, 12, 21, 22, 12),
-        c(112, 111, 121, 211, 221, 121),
-        c(1121, 1111, 1211, 2111, 2211, 1212),
-        letters[1:6]
+        level2 = c(11, 11, 12, 21, 22, 12),
+        level3 = c(112, 111, 121, 211, 221, 121),
+        level4  = c(1121, 1111, 1211, 2111, 2211, 1212),
+        ea = letters[1:6]
       )
     )
   )
@@ -76,9 +76,9 @@ test_that("cutting a pias work with upper == FALSE", {
     cut(pias, 3, upper = FALSE),
     aggregation_structure(
       list(
-        c(112, 111, 121, 211, 221, 121),
-        c(1121, 1111, 1211, 2111, 2211, 1212),
-        letters[1:6]
+        level3 = c(112, 111, 121, 211, 221, 121),
+        level4 = c(1121, 1111, 1211, 2111, 2211, 1212),
+        ea = letters[1:6]
       )
     )
   )
@@ -87,8 +87,8 @@ test_that("cutting a pias work with upper == FALSE", {
     cut(pias, 4, upper = FALSE),
     aggregation_structure(
       list(
-        c(1121, 1111, 1211, 2111, 2211, 1212),
-        letters[1:6]
+        level4 = c(1121, 1111, 1211, 2111, 2211, 1212),
+        ea = letters[1:6]
       )
     )
   )
@@ -97,7 +97,7 @@ test_that("cutting a pias work with upper == FALSE", {
     cut(pias, 5, upper = FALSE),
     aggregation_structure(
       list(
-        letters[1:6]
+        ea = letters[1:6]
       )
     )
   )

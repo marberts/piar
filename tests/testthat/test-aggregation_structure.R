@@ -17,11 +17,17 @@ test_that("factors do nothing", {
 
 test_that("order is preserved", {
   agg <- aggregation_structure(list(x1, x2, x3))
-  expect_identical(unlist(levels(agg)), unique(c(x1, x2, x3)))
+  expect_identical(
+    unlist(levels(agg), use.names = FALSE),
+    unique(c(x1, x2, x3))
+  )
 
   ord <- c(2, 4, 1, 3)
   agg <- aggregation_structure(list(x1[ord], x2[ord], x3[ord]))
-  expect_identical(unlist(levels(agg)), unique(c(x1[ord], x2[ord], x3[ord])))
+  expect_identical(
+    unlist(levels(agg), use.names = FALSE),
+    unique(c(x1[ord], x2[ord], x3[ord]))
+  )
 })
 
 test_that("errors work", {
