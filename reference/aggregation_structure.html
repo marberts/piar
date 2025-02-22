@@ -11,7 +11,7 @@ elemental indexes."><meta property="og:image" content="https://marberts.github.i
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9025</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9026</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,8 @@ level of the classification, ordered so that moving down the list goes down
 the hierarchy. The last vector gives the elemental aggregates, which should
 have no duplicates. All vectors should be the same length, without
 <code>NA</code>s, and there should be no duplicates across different levels of
-<code>x</code>.</p></dd>
+<code>x</code>. Names for <code>x</code> are used as level names; otherwise, levels are named
+level1, level2, ..., ea.</p></dd>
 
 
 <dt id="arg-weights">weights<a class="anchor" aria-label="anchor" href="#arg-weights"></a></dt>
@@ -92,7 +93,7 @@ immediate parent for each node of the aggregation structure below the
 initial nodes.</p></dd>
 
 <dt>levels</dt>
-<dd><p>A list of character vectors that give the levels of <code>x</code>.</p></dd>
+<dd><p>A named list of character vectors that give the levels of <code>x</code>.</p></dd>
 
 <dt>weights</dt>
 <dd><p>A vector giving the weight for each elemental
