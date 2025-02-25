@@ -9,7 +9,7 @@ data frame."><meta property="og:image" content="https://marberts.github.io/piar/
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9026</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9027</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,13 +56,7 @@ data frame.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'piar_aggregation_structure'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
-<span>  row.names <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  optional <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span>,</span>
-<span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span>, row.names <span class="op">=</span> <span class="cn">NULL</span>, optional <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -75,7 +69,8 @@ data frame.</p>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Not currently used.</p></dd>
+<dd><p>Not currently used for the matrix method. Extra arguments to
+<code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame.list()</a></code> for the data frame method.</p></dd>
 
 
 <dt id="arg-sparse">sparse<a class="anchor" aria-label="anchor" href="#arg-sparse"></a></dt>
@@ -84,7 +79,7 @@ is faster for large aggregation structures. The default returns an ordinary
 dense matrix.</p></dd>
 
 
-<dt id="arg-row-names-stringsasfactors">row.names, stringsAsFactors<a class="anchor" aria-label="anchor" href="#arg-row-names-stringsasfactors"></a></dt>
+<dt id="arg-row-names">row.names<a class="anchor" aria-label="anchor" href="#arg-row-names"></a></dt>
 <dd><p>See <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>.</p></dd>
 
 
@@ -98,8 +93,7 @@ dense matrix.</p></dd>
 such that multiplying with a (column) vector of elemental indexes gives the
 aggregated index.</p>
 <p><code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> takes an aggregation structure and returns a data
-frame that could have generated it, with columns like <code>level1</code>,
-<code>level2</code>, ..., <code>ea</code>, and <code>weight</code>.</p>
+frame that could have generated it.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
