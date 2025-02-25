@@ -143,5 +143,8 @@ aggregation_structure <- function(x, weights = NULL) {
   }
   parent <- lapply(parent, unlist)
   levels <- lapply(x, levels)
+  if (is.null(names(levels))) {
+    names(levels) <- c(paste0("level", seq_along(child), recycle0 = TRUE), "ea")
+  }
   piar_aggregation_structure(child, parent, levels, weights)
 }

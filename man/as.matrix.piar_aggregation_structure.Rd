@@ -7,25 +7,20 @@
 \usage{
 \method{as.matrix}{piar_aggregation_structure}(x, ..., sparse = FALSE)
 
-\method{as.data.frame}{piar_aggregation_structure}(
-  x,
-  row.names = NULL,
-  optional = FALSE,
-  ...,
-  stringsAsFactors = FALSE
-)
+\method{as.data.frame}{piar_aggregation_structure}(x, row.names = NULL, optional = FALSE, ...)
 }
 \arguments{
 \item{x}{A price index aggregation structure, as made by
 \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{...}{Not currently used.}
+\item{...}{Not currently used for the matrix method. Extra arguments to
+\code{\link[=as.data.frame.list]{as.data.frame.list()}} for the data frame method.}
 
 \item{sparse}{Should the result be a sparse matrix from \pkg{Matrix}? This
 is faster for large aggregation structures. The default returns an ordinary
 dense matrix.}
 
-\item{row.names, stringsAsFactors}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
+\item{row.names}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
 
 \item{optional}{Not currently used.}
 }
@@ -35,8 +30,7 @@ such that multiplying with a (column) vector of elemental indexes gives the
 aggregated index.
 
 \code{as.data.frame()} takes an aggregation structure and returns a data
-frame that could have generated it, with columns like \code{level1},
-\code{level2}, ..., \code{ea}, and \code{weight}.
+frame that could have generated it.
 }
 \description{
 Coerce a price index aggregation structure into an aggregation matrix, or a

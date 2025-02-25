@@ -8,9 +8,10 @@
 #' @param sparse Should the result be a sparse matrix from \pkg{Matrix}? This
 #'   is faster for large aggregation structures. The default returns an ordinary
 #'   dense matrix.
-#' @param row.names,stringsAsFactors See [as.data.frame()].
+#' @param row.names See [as.data.frame()].
 #' @param optional Not currently used.
-#' @param ... Not currently used.
+#' @param ... Not currently used for the matrix method. Extra arguments to
+#'   [as.data.frame.list()] for the data frame method.
 #'
 #' @returns
 #' `as.matrix()` represents an aggregation structure as a matrix,
@@ -18,8 +19,7 @@
 #' aggregated index.
 #'
 #' `as.data.frame()` takes an aggregation structure and returns a data
-#' frame that could have generated it, with columns like `level1`,
-#' `level2`, ..., `ea`, and `weight`.
+#' frame that could have generated it.
 #'
 #' @seealso
 #' [as_aggregation_structure()] for coercing into an aggregation structure.
@@ -111,14 +111,12 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
 as.data.frame.piar_aggregation_structure <- function(x,
                                                      row.names = NULL,
                                                      optional = FALSE,
-                                                     ...,
-                                                     stringsAsFactors = FALSE) {
-  chkDots(...)
+                                                     ...) {
   res <- as.data.frame(
     as.list(x),
     row.names = row.names,
     optional = optional,
-    stringsAsFactors = stringsAsFactors
+    ...
   )
   res$weight <- x$weights
   res
