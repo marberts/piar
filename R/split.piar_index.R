@@ -47,7 +47,8 @@ split.piar_index <- function(x,
                                  f,
                                  drop = FALSE,
                                  ...,
-                                 margin = c("levels", "time"), value) {
+                                 margin = c("levels", "time"),
+                                 value) {
   value <- as.list(value)
   margin <- match.arg(margin)
   ix <- split(seq_along(x[[margin]]), f, drop = drop, ...)

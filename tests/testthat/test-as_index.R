@@ -84,6 +84,10 @@ test_that("as_index works with contribs", {
   
   index2df[1, 4] <- list(a = 0)
   expect_error(as_index(index2df, contrib = TRUE))
+  
+  index2df[1, 4][[1]] <- list(c(a = 2, a = 1, b = NA))
+  expect_warning(index2 <- as_index(index2df, contrib = TRUE))
+  expect_identical(rownames(contrib(index2)), c("a", "a.1", "b"))
 })
 
 test_that("as_index works for indexes", {

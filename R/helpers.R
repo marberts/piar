@@ -60,6 +60,7 @@ valid_product_names <- function(x, period = NULL) {
   }
   if (is.null(period)) {
     if (anyDuplicated(x) > 0L) {
+      warning("product names are not unique")
       x <- make.unique(x)
     } else {
       x

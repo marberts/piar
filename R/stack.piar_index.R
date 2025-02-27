@@ -92,7 +92,11 @@ unstack.piar_index <- function(x, ..., chainable) {
   names(res) <- x$time
   for (t in seq_along(res)) {
     res[[t]] <- new_piar_index(
-      x$index[t], x$contrib[t], x$levels, x$time[t], chainable
+      x$index[t],
+      x$contrib[t],
+      x$levels,
+      x$time[t],
+      chainable
     )
   }
   res
