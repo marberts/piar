@@ -8,6 +8,7 @@
 \alias{contrib<-}
 \alias{contrib<-.piar_index}
 \alias{set_contrib}
+\alias{set_contrib_from_index}
 \title{Extract percent-change contributions}
 \usage{
 contrib(x, ...)
@@ -23,6 +24,8 @@ contrib(x, ...) <- value
 \method{contrib}{piar_index}(x, level = levels(x)[1L], period = time(x), ...) <- value
 
 set_contrib(x, ..., value)
+
+set_contrib_from_index(x)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
@@ -50,6 +53,8 @@ contributions in \code{level}. Contributions are padded with \code{pad} to fit i
 rectangular array when products differ over time. The replacement methods
 returns a copy of \code{x} with contributions given by the matrix \code{value}.
 (\code{set_contrib()} is an alias that's easier to use with pipes.)
+\code{set_contrib_from_index()} is a helper to return a copy of \code{x} with all
+contributions set to the corresponding index value minus 1.
 
 \code{contrib2DF()} returns a data frame of contributions with four
 columns: \code{period}, \code{level}, \code{product}, and \code{value}.

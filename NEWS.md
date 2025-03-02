@@ -18,14 +18,15 @@ more common in the literature.
 index.
 
 - `cut(aggregation_structure)` can be used cut off the bottom/top of an
-aggregation structure.
+aggregation structure. Works in conjunction with `set_contrib_from_index()` to
+calculate index-level contributions.
 
 - Aggregation structures now preserve the names of their levels to work
 with `cut()`. This means that `as.data.frame(aggregation_structure)` can produce
 different column names.
 
 - `as.data.frame(index)` gets an option to make a list-column of percent-change
-contribution. `as_index(data.frame)` gets an analogous option to add
+contributions. `as_index(data.frame)` gets an analogous option to add
 contributions in a table to an index.
 
 - `as.ts(index)` can now be used to turn an index into a regular time series and

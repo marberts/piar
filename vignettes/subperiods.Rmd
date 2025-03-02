@@ -84,18 +84,9 @@ determining, say, the quarter-over-quarter contribution of the level 2 indexes
 to top-level index remains the same.
 
 ```{r}
-# Reuse the reset_contrib() function from the other vignette.
-reset_contrib <- function(index) {
-  contrib_matrix <- as.matrix(index) - 1
-  for (l in levels(index)) {
-    contrib(index, l) <- contrib_matrix[l, , drop = FALSE]
-  }
-  index
-}
-
 annual_index |>
   unchain() |>
-  reset_contrib() |>
+  set_contrib_from_index() |>
   aggregate(cut(annual_pias, 2)) |>
   contrib()
 ```

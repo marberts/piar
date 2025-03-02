@@ -74,26 +74,14 @@ index <- as_index(as.matrix(index), contrib = TRUE)
 ```
 
 If the index values are already an index object, it's also possible to
-directly replace the contributions.
-
-```{r}
-reset_contrib <- function(index) {
-  contrib_matrix <- as.matrix(index) - 1
-  for (l in levels(index)) {
-    contrib(index, l) <- contrib_matrix[l, , drop = FALSE]
-  }
-  index
-}
-
-index <- reset_contrib(index)
-```
-
-We now cut the aggregation structure to keep only the top two levels and
+directly replace the contributions with the `set_contrib_from_index()` function.
+We can now cut the aggregation structure to keep only the top two levels and
 reaggregate to get the contribution of the second-level indexes to the
 top level index.
 
 ```{r}
-aggregate(index, cut(pias, 2)) |>
+set_contrib_from_index(index) |>
+  aggregate(cut(pias, 2)) |>
   contrib()
 ```
 
@@ -101,7 +89,7 @@ The same approach works with a fixed-base index as well.
 
 ```{r}
 chain(index) |>
-  reset_contrib() |>
+  set_contrib_from_index() |>
   aggregate(cut(pias, 2)) |>
   contrib()
 ```

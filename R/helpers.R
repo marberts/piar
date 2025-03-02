@@ -39,6 +39,17 @@ valid_contrib_array <- function(index, contrib) {
   contrib
 }
 
+index2contrib <- function(index, levels, time) {
+  contrib <- contrib_skeleton(levels, time)
+  i <- seq_along(levels)
+  for (t in seq_along(time)) {
+    con <- index[[t]] - 1
+    names(con) <- levels
+    contrib[[t]][] <- lapply(i, \(x) con[x])
+  }
+  contrib
+}
+
 #---- Product names ----
 which_duplicate_products <- function(x) {
   vapply(x, anyDuplicated, numeric(1L), incomparables = NA) > 0

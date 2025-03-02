@@ -23,10 +23,12 @@
 #' rectangular array when products differ over time. The replacement methods
 #' returns a copy of `x` with contributions given by the matrix `value`.
 #' (`set_contrib()` is an alias that's easier to use with pipes.)
+#' `set_contrib_from_index()` is a helper to return a copy of `x` with all
+#' contributions set to the corresponding index value minus 1.
 #'
 #' `contrib2DF()` returns a data frame of contributions with four
 #' columns: `period`, `level`, `product`, and `value`.
-#'
+#' 
 #' @examples
 #' prices <- data.frame(
 #'   rel = 1:8,
@@ -182,3 +184,10 @@ contrib2DF.piar_index <- function(x,
 #' @rdname contrib
 #' @export
 set_contrib <- `contrib<-`
+
+#' @rdname contrib
+#' @export
+set_contrib_from_index <- function(x) {
+  x$contrib <- index2contrib(x$index, x$levels, x$time)
+  x
+}

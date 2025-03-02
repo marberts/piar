@@ -85,14 +85,10 @@ as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
     index[[t]][] <- x[, t]
   }
 
-  contributions <- contrib_skeleton(levels, periods)
   if (contrib) {
-    i <- seq_along(levels)
-    for (t in seq_along(periods)) {
-      con <- index[[t]] - 1
-      names(con) <- levels
-      contributions[[t]][] <- lapply(i, \(x) con[x])
-    }
+    contributions <- index2contrib(index, levels, periods)
+  } else {
+    contributions <- contrib_skeleton(levels, periods)
   }
   piar_index(index, contributions, levels, periods, chainable)
 }

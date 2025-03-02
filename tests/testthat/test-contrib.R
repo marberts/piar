@@ -145,3 +145,14 @@ test_that("replacement works", {
   expect_warning(contrib(epr) <- matrix(c(as.numeric(epr[1]), 3) - 1, 1, 3))
   expect_warning(contrib(epr, 14, 1) <- c(a = 1, a = NA))
 })
+
+test_that("setting as index works", {
+  reset_contrib <- function(index) {
+    contrib_matrix <- as.matrix(index) - 1
+    for (l in levels(index)) {
+      contrib(index, l) <- contrib_matrix[l, , drop = FALSE]
+    }
+    index
+  }
+  expect_equal(reset_contrib(epr), set_contrib_from_index(epr2))
+})
