@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9028</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9029</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -159,30 +159,22 @@ structure.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as_index.html">as_index</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span>, contrib <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>If the index values are already an index object, it’s also possible
-to directly replace the contributions.</p>
+to directly replace the contributions with the
+<code><a href="../reference/contrib.html">set_contrib_from_index()</a></code> function. We can now cut the
+aggregation structure to keep only the top two levels and reaggregate to
+get the contribution of the second-level indexes to the top level
+index.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">reset_contrib</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">index</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">contrib_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
-<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">l</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="va">index</span>, <span class="va">l</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">contrib_matrix</span><span class="op">[</span><span class="va">l</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
-<span>  <span class="op">}</span></span>
-<span>  <span class="va">index</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu">reset_contrib</span><span class="op">(</span><span class="va">index</span><span class="op">)</span></span></code></pre></div>
-<p>We now cut the aggregation structure to keep only the top two levels
-and reaggregate to get the contribution of the second-level indexes to
-the top level index.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">index</span>, <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">pias</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/contrib.html">set_contrib_from_index</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">pias</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    202001   202002     202003    202004</span></span>
 <span><span class="co">## 11      0 0.184488 0.03869481 0.3524534</span></span>
 <span><span class="co">## 12      0 0.116236 0.02437952 1.3823079</span></span></code></pre>
 <p>The same approach works with a fixed-base index as well.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">reset_contrib</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/contrib.html">set_contrib_from_index</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">pias</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    202001   202002    202003    202004</span></span>
