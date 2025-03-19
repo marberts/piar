@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9029</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,7 +137,7 @@ except that the weights change each period.</p>
 <code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack()</a></code> appends a later index series onto an earlier one
 for the same levels, whereas <code><a href="https://rdrr.io/r/utils/stack.html" class="external-link">unstack()</a></code> pulls apart an index
 series for many periods into a collection of one-period indexes.<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;&lt;code&gt;&lt;a href="https://rdrr.io/r/base/split.html" class="external-link"&gt;split()&lt;/a&gt;&lt;/code&gt; can also be used for this.&lt;/p&gt;'><sup>1</sup></a> These
-function allow the aggregation to be done with a map-reduce.</p>
+functions allow the aggregation to be done with a map-reduce.</p>
 <p>The first step to making a Paasche index is to unstack the elemental
 indexes into a list of elemental indexes for each period. (Trying to
 make the elemental indexes period-by-period can be dangerous when there
