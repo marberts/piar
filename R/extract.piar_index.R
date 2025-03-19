@@ -146,7 +146,7 @@ replace_index <- function(x, i, j, value) {
   if (length(levels) == 0L || length(periods) == 0L) {
     return(x)
   }
-  
+
   if (length(value$time) != length(periods)) {
     stop("'x' and 'value' must have the same number of time periods")
   }

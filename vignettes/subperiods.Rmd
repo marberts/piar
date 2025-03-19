@@ -64,7 +64,7 @@ annual_index |>
   head()
 ```
 
-It's worth not that, at least with an arithmetic index, the aggregation
+It's worth noting that, at least with an arithmetic index, the aggregation
 properties of the index continue to hold after price-updating the weights.
 
 ```{r}

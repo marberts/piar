@@ -23,18 +23,18 @@ often referencing the example in this vignette.
 
 ## Matched-sample index
 
-In this vignette we'll be calculating a matched-sample index, where a
+In this vignette we'll be calculating a matched-sample index where a
 fixed set of businesses each provide prices for a collection of products
 over time. The products reported by a businesses can change over time,
 but the set of businesses is fixed for the duration of the sample. Each
-businesses has a weight that is established when the sample is drawn,
+businesses has a weight that is established when the sample is drawn
 and represents a particular segment of the economy.
 
 The usual approach for calculating a matched-sample index starts by
 computing an elemental index for each business as an equally-weighted
 geometric mean of price relatives (i.e., a Jevons index). From there,
 index values for different segments of the economy are calculated as an
-arithmetic mean of the elemental indexes, using the businesses-level
+arithmetic mean of the elemental indexes using the businesses-level
 weights (either a Young or Lowe index, depending how the weights are
 constructed; see `vignette("adjust-weights")`).
 
@@ -78,7 +78,7 @@ types of imputation are covered in `vignette("imputation")`.
 
 The `elemental_index()` function returns a special index object, and
 there are a number of methods for working with these objects. For
-example, the resulting indexes to be extracted like a matrix, even
+example, the resulting indexes to be extracted like a matrix even
 though it's not a matrix.[^1]
 
 [^1]: Note that there are only indexes for four businesses, not five,

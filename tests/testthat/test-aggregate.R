@@ -550,4 +550,10 @@ test_that("superlative index aggregates correctly", {
     w[2, col(paasche_contrib)] * paasche_contrib
   
   expect_equal(contrib(res), fisher_contrib)
+  
+  # Tornqvist.
+  expect_equal(
+    aggregate(epr, pias, r = 0, na.rm = TRUE),
+    aggregate(epr, pias, pias2 = pias, r = 0, na.rm = TRUE)
+  )
 })

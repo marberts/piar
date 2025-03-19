@@ -57,4 +57,3 @@ bench::mark(
     elemental_index(price_relative(price, period, product), period, business)
   )
 )
-

@@ -28,7 +28,7 @@
 #'
 #' `contrib2DF()` returns a data frame of contributions with four
 #' columns: `period`, `level`, `product`, and `value`.
-#' 
+#'
 #' @examples
 #' prices <- data.frame(
 #'   rel = 1:8,

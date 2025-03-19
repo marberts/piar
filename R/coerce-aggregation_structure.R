@@ -23,7 +23,7 @@
 #'
 #' @seealso
 #' [as_aggregation_structure()] for coercing into an aggregation structure.
-#' 
+#'
 #' [treemap::treemap()] and [data.tree::as.Node()] for visualizing an
 #' aggregation structure.
 #'
@@ -48,16 +48,16 @@
 #' as.matrix(pias)
 #'
 #' all.equal(as.data.frame(pias), aggregation_weights)
-#' 
+#'
 #' \dontrun{
 #' # Visualize as a treemap.
 #' treemap::treemap(
 #'   aggregation_weights,
 #'   index = names(aggregation_weights)[-4],
 #'   vSize = "weight",
-#'   title = "aggregation structure"   
+#'   title = "aggregation structure"
 #' )
-#' 
+#'
 #' # Or turn into a more genereal tree object and plot.
 #' aggregation_weights$pathString <- do.call(
 #'   \(...) paste(..., sep = "/"),
