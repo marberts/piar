@@ -84,6 +84,10 @@
 #'   along with the aggregated indexes? By default, all index values are
 #'   returned.
 #' @param ... Not currently used.
+#' @param dup_products The method to deal with duplicate product contributions.
+#'   Either 'make.unique' to treat duplicate
+#'   products as distinct products and make their names unique
+#'   with [make.unique()] or 'sum' to add contributions for each product.
 #'
 #' @returns
 #' An aggregate price index that inherits from the class of `x`.
@@ -119,7 +123,8 @@
 #' # A two-level aggregation structure
 #'
 #' pias <- aggregation_structure(
-#'   list(c("top", "top", "top"), c("a", "b", "c")), weights = 1:3
+#'   list(c("top", "top", "top"), c("a", "b", "c")),
+#'   weights = 1:3
 #' )
 #'
 #' # Calculate Jevons elemental indexes
@@ -144,7 +149,8 @@ aggregate.chainable_piar_index <- function(x,
                                            na.rm = FALSE,
                                            contrib = TRUE,
                                            r = 1,
-                                           include_ea = TRUE) {
+                                           include_ea = TRUE,
+                                           dup_products = c("make.unique", "sum")) {
   chkDots(...)
   aggregate_index(
     x,
@@ -154,7 +160,8 @@ aggregate.chainable_piar_index <- function(x,
     contrib = contrib,
     r = r,
     include_ea = include_ea,
-    chainable = TRUE
+    chainable = TRUE,
+    dup_products = dup_products
   )
 }
 
@@ -167,7 +174,8 @@ aggregate.direct_piar_index <- function(x,
                                         na.rm = FALSE,
                                         contrib = TRUE,
                                         r = 1,
-                                        include_ea = TRUE) {
+                                        include_ea = TRUE,
+                                        dup_products = c("make.unique", "sum")) {
   chkDots(...)
   aggregate_index(
     x,
@@ -177,7 +185,8 @@ aggregate.direct_piar_index <- function(x,
     contrib = contrib,
     r = r,
     include_ea = include_ea,
-    chainable = FALSE
+    chainable = FALSE,
+    dup_products = dup_products
   )
 }
 
@@ -190,18 +199,37 @@ aggregate_index <- function(x,
                             contrib,
                             r,
                             include_ea,
-                            chainable) {
+                            chainable,
+                            dup_products) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
   has_contrib <- has_contrib(x) && contrib
-  res <- aggregate_(x, pias, na.rm, has_contrib, r, include_ea, chainable)
+  res <- aggregate_(
+    x,
+    pias,
+    na.rm,
+    has_contrib,
+    r,
+    include_ea,
+    chainable,
+    dup_products
+  )
 
   if (!is.null(pias2)) {
     pias2 <- as_aggregation_structure(pias2)
     if (!identical(pias[1:3], pias2[1:3])) {
       stop("'pias' and 'pias2' must represent the same aggregation structure")
     }
-    res2 <- aggregate_(x, pias2, na.rm, has_contrib, -r, include_ea, chainable)
+    res2 <- aggregate_(
+      x,
+      pias2,
+      na.rm,
+      has_contrib,
+      -r,
+      include_ea,
+      chainable,
+      dup_products
+    )
     if (has_contrib) {
       res$contrib <- Map(
         super_aggregate_contrib(),
@@ -223,7 +251,14 @@ aggregate_index <- function(x,
   piar_index(res$index, res$contrib, lev, x$time, chainable)
 }
 
-aggregate_ <- function(x, pias, na.rm, has_contrib, r, include_ea, chainable) {
+aggregate_ <- function(x,
+                       pias,
+                       na.rm,
+                       has_contrib,
+                       r,
+                       include_ea,
+                       chainable,
+                       dup_products) {
   # Helpful functions.
   price_update <- gpindex::factor_weights(r)
   gen_mean <- gpindex::generalized_mean(r)
@@ -256,7 +291,12 @@ aggregate_ <- function(x, pias, na.rm, has_contrib, r, include_ea, chainable) {
       if (has_contrib) {
         con[[i]] <- lapply(
           nodes,
-          \(z) agg_contrib(con[[i - 1L]][z], rel[[i - 1L]][z], w[[i - 1L]][z])
+          \(z) agg_contrib(
+            con[[i - 1L]][z],
+            rel[[i - 1L]][z],
+            w[[i - 1L]][z],
+            dup_products
+          )
         )
       } else {
         con[i] <- empty_contrib(nodes)
@@ -296,15 +336,32 @@ aggregate_ <- function(x, pias, na.rm, has_contrib, r, include_ea, chainable) {
 # ensures that contributions are still produced with missing index values.
 aggregate_contrib <- function(r) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
-  function(x, rel, w) {
+  function(x, rel, w, dup_products = c("make.unique", "sum")) {
+    dup_products <- match.arg(dup_products)
     w <- arithmetic_weights(rel, w)
-    res <- unlist(Map(`*`, x, w))
-    if (length(res) > 0L) {
+    res <- Map(`*`, x, w)
+    if (all(lengths(res) == 0L)) {
+      return(numeric(0L))
+    }
+    if (dup_products == "make.unique") {
+      res <- unlist(res)
       names(res) <- make.unique(as.character(names(res)))
+    } else {
+      products <- unlist(lapply(res, names), use.names = FALSE)
+      if (anyDuplicated(products) > 0L) {
+        products <- unique(products)
+        mat <- do.call(cbind, Map(`[`, res, list(products)))
+        res <- rowSums(mat, na.rm = TRUE)
+        res[apply(is.na(mat), 1, all)] <- NA
+        names(res) <- products
+      } else {
+        res <- unlist(res)
+      }
     }
     res
   }
 }
+
 
 #' Aggregate product contributions for a superlative index
 #' @noRd

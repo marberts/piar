@@ -34,12 +34,16 @@ test_that("aggregating over subperiods works", {
   con[c(2, 3, 9, 10)] <- NA
   con[c(5, 7)] <- contrib(ms_epr)[c(6, 8)] / 2:1
   expect_equal(contrib(epr2), con)
+  expect_equal(
+    contrib(mean(ms_epr, window = 2, dup_products = "sum")),
+    rbind("1" = con[1, ], "2" = colSums(con[2:3, ]), "3" = colSums(con[4:5, ]))
+  )
   
   expect_equal(as.numeric(t(contrib(ms_epr, "B3")[, 3:4])) / 2,
                as.numeric(contrib(epr2, "B3")[, 2]))
   expect_equal(colSums(contrib(epr2, "B3")), as.matrix(epr2)["B3", ] - 1)
   
-  epr3 <- mean(ms_epr, weights = w, window = 2, r = 2.5, na.rm = TRUE)
+  epr3 <- mean(ms_epr, weights = w, window = 2, r = 2.5, na.rm = TRUE, dup_products = "sum")
   expect_equal(colSums(contrib(epr3, "B1"), na.rm = TRUE),
                as.matrix(epr3)["B1", ] - 1)
   expect_equal(colSums(contrib(epr3, "B3")), as.matrix(epr3)["B3", ] - 1)

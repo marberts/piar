@@ -13,7 +13,8 @@
   window = ntime(x),
   na.rm = FALSE,
   contrib = TRUE,
-  r = 1
+  r = 1,
+  dup_products = c("make.unique", "sum")
 )
 
 \method{mean}{direct_piar_index}(
@@ -23,7 +24,8 @@
   window = ntime(x),
   na.rm = FALSE,
   contrib = TRUE,
-  r = 1
+  r = 1,
+  dup_products = c("make.unique", "sum")
 )
 }
 \arguments{
@@ -53,6 +55,11 @@ arithmetic index (the default for aggregating elemental indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+
+\item{dup_products}{The method to deal with duplicate product contributions.
+Either 'make.unique' to make duplicate product names unique
+with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for duplicate products
+across subperiods.}
 }
 \value{
 A price index, averaged over subperiods, that inherits from the same
@@ -73,8 +80,7 @@ period in each window form the new names for the aggregated time periods.
 
 Percent-change contributions are aggregated if \code{contrib = TRUE} by treating
 each product-subperiod pair as a unique product, then following the same
-approach as \code{\link[=aggregate.piar_index]{aggregate()}}. The number of the
-subperiod is appended to product names to make them unique across subperiods.
+approach as \code{\link[=aggregate.piar_index]{aggregate()}}.
 
 An optional vector of weights can be specified when aggregating index values
 over subperiods, which is often useful when aggregating a Paasche index; see

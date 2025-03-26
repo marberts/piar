@@ -64,7 +64,7 @@ treemap::treemap(
   aggregation_weights,
   index = names(aggregation_weights)[-4],
   vSize = "weight",
-  title = "aggregation structure"   
+  title = "aggregation structure"
 )
 
 # Or turn into a more genereal tree object and plot.
