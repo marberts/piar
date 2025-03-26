@@ -1,3 +1,15 @@
+# Upcoming changes
+
+## Improvements
+
+- Both `aggregate(index)` and `mean(index)` get a new argument `dup_products` to
+control how product contributions are made when there are duplicate products.
+
+## Bug fixes
+
+- Fixed description of how product contributions are combined across subperiods
+in `?mean.piar_index` (#51).
+
 # Version 0.8.2
 
 - The vignette has been re-written, split into small examples that cover more

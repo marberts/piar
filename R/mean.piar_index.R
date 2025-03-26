@@ -13,8 +13,7 @@
 #'
 #' Percent-change contributions are aggregated if `contrib = TRUE` by treating
 #' each product-subperiod pair as a unique product, then following the same
-#' approach as [`aggregate()`][aggregate.piar_index]. The number of the
-#' subperiod is appended to product names to make them unique across subperiods.
+#' approach as [`aggregate()`][aggregate.piar_index].
 #'
 #' An optional vector of weights can be specified when aggregating index values
 #' over subperiods, which is often useful when aggregating a Paasche index; see
@@ -43,6 +42,10 @@
 #'   [gpindex::generalized_mean()] for details.
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
 #' @param ... Not currently used.
+#' @param dup_products The method to deal with duplicate product contributions.
+#'   Either 'make.unique' to make duplicate product names unique
+#'   with [make.unique()] or 'sum' to add contributions for duplicate products
+#'   across subperiods.
 #'
 #' @returns
 #' A price index, averaged over subperiods, that inherits from the same
@@ -65,7 +68,8 @@ mean.chainable_piar_index <- function(x,
                                       window = ntime(x),
                                       na.rm = FALSE,
                                       contrib = TRUE,
-                                      r = 1) {
+                                      r = 1,
+                                      dup_products = c("make.unique", "sum")) {
   chkDots(...)
   mean_index(
     x,
@@ -74,7 +78,8 @@ mean.chainable_piar_index <- function(x,
     na.rm = na.rm,
     contrib = contrib,
     r = r,
-    chainable = TRUE
+    chainable = TRUE,
+    dup_products = dup_products
   )
 }
 
@@ -86,7 +91,8 @@ mean.direct_piar_index <- function(x,
                                    window = ntime(x),
                                    na.rm = FALSE,
                                    contrib = TRUE,
-                                   r = 1) {
+                                   r = 1,
+                                   dup_products = c("make.unique", "sum")) {
   chkDots(...)
   mean_index(
     x,
@@ -95,13 +101,21 @@ mean.direct_piar_index <- function(x,
     na.rm = na.rm,
     contrib = contrib,
     r = r,
-    chainable = FALSE
+    chainable = FALSE,
+    dup_products = dup_products
   )
 }
 
 #' Internal function to aggregate over subperiods
 #' @noRd
-mean_index <- function(x, weights, window, na.rm, contrib, r, chainable) {
+mean_index <- function(x,
+                       weights,
+                       window,
+                       na.rm,
+                       contrib,
+                       r,
+                       chainable,
+                       dup_products) {
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
     if (length(weights) != length(x$time) * length(x$levels)) {
@@ -123,7 +137,8 @@ mean_index <- function(x, weights, window, na.rm, contrib, r, chainable) {
   agg_contrib <- Vectorize(
     aggregate_contrib(r),
     SIMPLIFY = FALSE,
-    USE.NAMES = FALSE
+    USE.NAMES = FALSE,
+    vectorize.args = c("x", "rel", "w")
   )
 
   # Get the starting location for each window.
@@ -146,7 +161,7 @@ mean_index <- function(x, weights, window, na.rm, contrib, r, chainable) {
     index[[i]][] <- gen_mean(rel, weight, na.rm = na.rm)
     if (has_contrib) {
       con <- .mapply(\(...) c(list(...)), x$contrib[j], list())
-      contrib[[i]][] <- agg_contrib(con, rel, weight)
+      contrib[[i]][] <- agg_contrib(con, rel, weight, dup_products)
     }
   }
 

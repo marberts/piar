@@ -14,7 +14,8 @@
   na.rm = FALSE,
   contrib = TRUE,
   r = 1,
-  include_ea = TRUE
+  include_ea = TRUE,
+  dup_products = c("make.unique", "sum")
 )
 
 \method{aggregate}{direct_piar_index}(
@@ -25,7 +26,8 @@
   na.rm = FALSE,
   contrib = TRUE,
   r = 1,
-  include_ea = TRUE
+  include_ea = TRUE,
+  dup_products = c("make.unique", "sum")
 )
 }
 \arguments{
@@ -56,6 +58,11 @@ index is aggregated with a quadratic mean of order \code{2*r}.}
 \item{include_ea}{Should indexes for the elemental aggregates be included
 along with the aggregated indexes? By default, all index values are
 returned.}
+
+\item{dup_products}{The method to deal with duplicate product contributions.
+Either 'make.unique' to treat duplicate
+products as distinct products and make their names unique
+with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for each product.}
 }
 \value{
 An aggregate price index that inherits from the class of \code{x}.
@@ -142,7 +149,8 @@ prices <- data.frame(
 # A two-level aggregation structure
 
 pias <- aggregation_structure(
-  list(c("top", "top", "top"), c("a", "b", "c")), weights = 1:3
+  list(c("top", "top", "top"), c("a", "b", "c")),
+  weights = 1:3
 )
 
 # Calculate Jevons elemental indexes
