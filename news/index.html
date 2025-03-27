@@ -43,7 +43,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.8.2" id="version-082">Version 0.8.2<a class="anchor" aria-label="anchor" href="#version-082"></a></h2><p class="text-muted">CRAN release: 2025-03-19</p>
+<h2 class="pkg-version" data-toc-text="development version" id="piar-development-version">piar (development version)<a class="anchor" aria-label="anchor" href="#piar-development-version"></a></h2>
+<div class="section level3">
+<h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
+<ul><li>Both <code>aggregate(index)</code> and <code>mean(index)</code> get a new argument <code>dup_products</code> to control how product contributions are made when there are duplicate products.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li>Fixed description of how product contributions are combined across subperiods in <code><a href="../reference/mean.piar_index.html">?mean.piar_index</a></code> (<a href="https://github.com/marberts/piar/issues/51" class="external-link">#51</a>).</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.8.2" id="piar-082">piar 0.8.2<a class="anchor" aria-label="anchor" href="#piar-082"></a></h2><p class="text-muted">CRAN release: 2025-03-19</p>
 <ul><li>The vignette has been re-written, split into small examples that cover more topics, and should be easier to follow.</li>
 </ul><div class="section level3">
 <h3 id="improvements-0-8-2">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-2"></a></h3>
@@ -64,7 +75,7 @@
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.8.1" id="version-081">Version 0.8.1<a class="anchor" aria-label="anchor" href="#version-081"></a></h2><p class="text-muted">CRAN release: 2024-09-12</p>
+<h2 class="pkg-version" data-toc-text="0.8.1" id="piar-081">piar 0.8.1<a class="anchor" aria-label="anchor" href="#piar-081"></a></h2><p class="text-muted">CRAN release: 2024-09-12</p>
 <div class="section level3">
 <h3 id="significant-changes-0-8-1">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-8-1"></a></h3>
 <ul><li>
@@ -92,7 +103,7 @@
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.7.0" id="version-070">Version 0.7.0<a class="anchor" aria-label="anchor" href="#version-070"></a></h2><p class="text-muted">CRAN release: 2024-03-08</p>
+<h2 class="pkg-version" data-toc-text="0.7.0" id="piar-070">piar 0.7.0<a class="anchor" aria-label="anchor" href="#piar-070"></a></h2><p class="text-muted">CRAN release: 2024-03-08</p>
 <div class="section level3">
 <h3 id="significant-changes-0-7-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-7-0"></a></h3>
 <ul><li><p>Some arguments for <code><a href="../reference/elemental_index.html">elemental_index()</a></code>, <code><a href="../reference/as_index.html">as_index()</a></code>, <code>aggregate(index)</code>, <code>mean(index)</code>, <code>vcov(index)</code>, <code>update(aggregation_structure)</code>, and <code>weights(aggregation_structure)</code> now need to be named (e.g., <code>na.rm</code>, <code>contrib</code>). This helps to unify the signatures for several functions that had similar arguments in different positions. In all cases these are arguments that are not near the beginning of the function and should have probably been named anyways.</p></li>
@@ -122,7 +133,7 @@
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.6.0" id="version-060">Version 0.6.0<a class="anchor" aria-label="anchor" href="#version-060"></a></h2><p class="text-muted">CRAN release: 2023-11-19</p>
+<h2 class="pkg-version" data-toc-text="0.6.0" id="piar-060">piar 0.6.0<a class="anchor" aria-label="anchor" href="#piar-060"></a></h2><p class="text-muted">CRAN release: 2023-11-19</p>
 <div class="section level3">
 <h3 id="significant-changes-0-6-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-6-0"></a></h3>
 <ul><li><p>The <code>[[</code> method for index objects has been removed as it created unexpected problems for little gain. <code>as.matrix(index)[[1, 1]]</code> is a more explicit and flexible way to get the same behavior as <code>index[[1, 1]]</code>.</p></li>
@@ -155,7 +166,7 @@
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.5.0" id="version-050">Version 0.5.0<a class="anchor" aria-label="anchor" href="#version-050"></a></h2><p class="text-muted">CRAN release: 2023-08-10</p>
+<h2 class="pkg-version" data-toc-text="0.5.0" id="piar-050">piar 0.5.0<a class="anchor" aria-label="anchor" href="#piar-050"></a></h2><p class="text-muted">CRAN release: 2023-08-10</p>
 <div class="section level3">
 <h3 id="significant-changes-0-5-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-5-0"></a></h3>
 <ul><li><p><code>piar</code> now requires <strong>R</strong> &gt;= 4.0.</p></li>
@@ -186,7 +197,7 @@
 </ul></div>
 </div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.4.0" id="version-040">Version 0.4.0<a class="anchor" aria-label="anchor" href="#version-040"></a></h2><p class="text-muted">CRAN release: 2022-04-30</p>
+<h2 class="pkg-version" data-toc-text="0.4.0" id="piar-040">piar 0.4.0<a class="anchor" aria-label="anchor" href="#piar-040"></a></h2><p class="text-muted">CRAN release: 2022-04-30</p>
 <div class="section level3">
 <h3 id="significant-changes-0-4-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-4-0"></a></h3>
 <ul><li><p>The <code><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov()</a></code> method for aggregate indexes now returns a matrix of variances instead of an array of covariances, as the covariances are usually misleading and unnecessary. In most cases elemental aggregates are sampled independently, in which case the covariances should be 0. This is not backwards compatible.</p></li>
