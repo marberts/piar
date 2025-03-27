@@ -11,9 +11,8 @@
 #' always averaged over `window` periods. The names for the first time
 #' period in each window form the new names for the aggregated time periods.
 #'
-#' Percent-change contributions are aggregated if `contrib = TRUE` by treating
-#' each product-subperiod pair as a unique product, then following the same
-#' approach as [`aggregate()`][aggregate.piar_index].
+#' Percent-change contributions are aggregated if `contrib = TRUE` following the
+#' same approach as [`aggregate()`][aggregate.piar_index].
 #'
 #' An optional vector of weights can be specified when aggregating index values
 #' over subperiods, which is often useful when aggregating a Paasche index; see
@@ -44,7 +43,7 @@
 #' @param ... Not currently used.
 #' @param dup_products The method to deal with duplicate product contributions.
 #'   Either 'make.unique' to make duplicate product names unique
-#'   with [make.unique()] or 'sum' to add contributions for duplicate products
+#'   with [make.unique()] or 'sum' to add contributions for the same products
 #'   across subperiods.
 #'
 #' @returns
@@ -135,10 +134,9 @@ mean_index <- function(x,
   # Helpful functions.
   gen_mean <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
   agg_contrib <- Vectorize(
-    aggregate_contrib(r),
+    aggregate_contrib(r, dup_products),
     SIMPLIFY = FALSE,
-    USE.NAMES = FALSE,
-    vectorize.args = c("x", "rel", "w")
+    USE.NAMES = FALSE
   )
 
   # Get the starting location for each window.
@@ -161,7 +159,7 @@ mean_index <- function(x,
     index[[i]][] <- gen_mean(rel, weight, na.rm = na.rm)
     if (has_contrib) {
       con <- .mapply(\(...) c(list(...)), x$contrib[j], list())
-      contrib[[i]][] <- agg_contrib(con, rel, weight, dup_products)
+      contrib[[i]][] <- agg_contrib(con, rel, weight)
     }
   }
 

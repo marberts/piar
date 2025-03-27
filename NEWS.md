@@ -1,4 +1,4 @@
-# Upcoming changes
+# piar (development version)
 
 ## Improvements
 
@@ -10,7 +10,7 @@ control how product contributions are made when there are duplicate products.
 - Fixed description of how product contributions are combined across subperiods
 in `?mean.piar_index` (#51).
 
-# Version 0.8.2
+# piar 0.8.2
 
 - The vignette has been re-written, split into small examples that cover more
 topics, and should be easier to follow.
@@ -55,7 +55,7 @@ use `data.frame()`; e.g., with `write.csv()` (#34).
 
 - Subscripting an index object with a length 0 vector is no longer an error (#48).
 
-# Version 0.8.1
+# piar 0.8.1
 
 ## Significant changes
 
@@ -118,7 +118,7 @@ period. This makes it easier to rebase with pipes; e.g.,
 - `elemental_index()` gets a new argument `product` to better control product
 names.
 
-# Version 0.7.0
+# piar 0.7.0
 
 ## Significant changes
 
@@ -175,7 +175,7 @@ used to make `index`.
 - The `cols` argument for `as_index()` is deprecated and will be removed in a
 future version.
 
-# Version 0.6.0
+# piar 0.6.0
 
 ## Significant changes
 
@@ -221,7 +221,7 @@ There are a number of changes to the way product names are handled when making a
 
 - Stacking two indexes now only returns an aggregate index if both indexes are themselves aggregate indexes. Previously it was possible to stack an aggregate index with a non-aggregate index to produce an aggregate index that was not consistent in aggregation.
 
-# Version 0.5.0
+# piar 0.5.0
 
 ## Significant changes
 
@@ -263,7 +263,7 @@ There are a number of changes to the way product names are handled when making a
 
 - Subscripting an index with `NA`s or duplicate indices is no longer allowed.
 
-# Version 0.4.0
+# piar 0.4.0
 
 ## Significant changes
 

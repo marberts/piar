@@ -51,9 +51,16 @@ pias2 <- with(
 )
 
 #---- Benchmarks ----
+big_prices2$rel <- price_relative(big_prices2, price ~ period + product)
+
+elem <- with(
+  big_prices2,
+  elemental_index(rel, period = period, ea = business, contrib = T)
+)
+
+index <- aggregate(elem, pias2, na.rm = T)
+
 bench::mark(
-  with(
-    big_prices,
-    elemental_index(price_relative(price, period, product), period, business)
-  )
+  aggregate(index, pias),
+  aggregate(index, pias, dup_products = "sum")
 )

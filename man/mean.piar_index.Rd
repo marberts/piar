@@ -58,7 +58,7 @@ a Paasche index). Other values are possible; see
 
 \item{dup_products}{The method to deal with duplicate product contributions.
 Either 'make.unique' to make duplicate product names unique
-with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for duplicate products
+with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for the same products
 across subperiods.}
 }
 \value{
@@ -78,9 +78,8 @@ index values are
 always averaged over \code{window} periods. The names for the first time
 period in each window form the new names for the aggregated time periods.
 
-Percent-change contributions are aggregated if \code{contrib = TRUE} by treating
-each product-subperiod pair as a unique product, then following the same
-approach as \code{\link[=aggregate.piar_index]{aggregate()}}.
+Percent-change contributions are aggregated if \code{contrib = TRUE} following the
+same approach as \code{\link[=aggregate.piar_index]{aggregate()}}.
 
 An optional vector of weights can be specified when aggregating index values
 over subperiods, which is often useful when aggregating a Paasche index; see

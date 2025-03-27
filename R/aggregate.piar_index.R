@@ -262,7 +262,7 @@ aggregate_ <- function(x,
   # Helpful functions.
   price_update <- gpindex::factor_weights(r)
   gen_mean <- gpindex::generalized_mean(r)
-  agg_contrib <- aggregate_contrib(r)
+  agg_contrib <- aggregate_contrib(r, dup_products)
 
   # Put the aggregation weights upside down to line up with pias.
   w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
@@ -291,12 +291,7 @@ aggregate_ <- function(x,
       if (has_contrib) {
         con[[i]] <- lapply(
           nodes,
-          \(z) agg_contrib(
-            con[[i - 1L]][z],
-            rel[[i - 1L]][z],
-            w[[i - 1L]][z],
-            dup_products
-          )
+          \(z) agg_contrib(con[[i - 1L]][z], rel[[i - 1L]][z], w[[i - 1L]][z])
         )
       } else {
         con[i] <- empty_contrib(nodes)
@@ -334,10 +329,10 @@ aggregate_ <- function(x,
 #' @noRd
 # This function is inefficient because it recalculates the mean, but this
 # ensures that contributions are still produced with missing index values.
-aggregate_contrib <- function(r) {
+aggregate_contrib <- function(r, dup_products = c("make.unique", "sum")) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
-  function(x, rel, w, dup_products = c("make.unique", "sum")) {
-    dup_products <- match.arg(dup_products)
+  dup_products <- match.arg(dup_products)
+  function(x, rel, w) {
     w <- arithmetic_weights(rel, w)
     res <- Map(`*`, x, w)
     if (all(lengths(res) == 0L)) {
