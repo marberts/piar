@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Superlative aggregation • piar</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,13 +100,14 @@ except that the weights change each period.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">elementals</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 6 levels over 4 time periods </span></span>
-<span><span class="co">##    1         2         3         4</span></span>
-<span><span class="co">## B1 1 1.0883616 0.9300382 1.0942740</span></span>
-<span><span class="co">## B2 1 1.1503093 1.0036897 0.8004546</span></span>
-<span><span class="co">## B3 1 1.1043929 1.0910821 0.9564813</span></span>
-<span><span class="co">## B4 1 1.1544498 1.1958948 0.9849979</span></span>
-<span><span class="co">## B5 1 0.9825924 0.8138142 0.9552576</span></span>
-<span><span class="co">## B6 1 0.8665487 0.8609494 0.9609941</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels 1         2         3         4</span></span>
+<span><span class="co">##     B1 1 1.0883616 0.9300382 1.0942740</span></span>
+<span><span class="co">##     B2 1 1.1503093 1.0036897 0.8004546</span></span>
+<span><span class="co">##     B3 1 1.1043929 1.0910821 0.9564813</span></span>
+<span><span class="co">##     B4 1 1.1544498 1.1958948 0.9849979</span></span>
+<span><span class="co">##     B5 1 0.9825924 0.8138142 0.9552576</span></span>
+<span><span class="co">##     B6 1 0.8665487 0.8609494 0.9609941</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Make aggregation weights over 4 time periods.</span></span>
 <span><span class="co">#            1</span></span>
@@ -169,10 +169,11 @@ and aggregation structure, and then reducing the result with the
 <span></span>
 <span><span class="va">paasche</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 3 levels over 4 time periods </span></span>
-<span><span class="co">##    1         2         3         4</span></span>
-<span><span class="co">## 1  1 1.0504784 0.9666398 0.9468934</span></span>
-<span><span class="co">## 11 1 1.1117341 0.9920294 0.9329698</span></span>
-<span><span class="co">## 12 1 0.9898158 0.9447976 0.9647535</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels 1         2         3         4</span></span>
+<span><span class="co">##     1  1 1.0504784 0.9666398 0.9468934</span></span>
+<span><span class="co">##     11 1 1.1117341 0.9920294 0.9329698</span></span>
+<span><span class="co">##     12 1 0.9898158 0.9447976 0.9647535</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="making-a-fisher-index">Making a Fisher index<a class="anchor" aria-label="anchor" href="#making-a-fisher-index"></a>
@@ -197,10 +198,11 @@ to the <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-li
 <span></span>
 <span><span class="va">fisher</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 3 levels over 4 time periods </span></span>
-<span><span class="co">##    1         2         3         4</span></span>
-<span><span class="co">## 1  1 1.0509134 0.9783795 0.9600792</span></span>
-<span><span class="co">## 11 1 1.1157686 1.0007074 0.9557479</span></span>
-<span><span class="co">## 12 1 0.9891911 0.9567760 0.9665552</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels 1         2         3         4</span></span>
+<span><span class="co">##     1  1 1.0509134 0.9783795 0.9600792</span></span>
+<span><span class="co">##     11 1 1.1157686 1.0007074 0.9557479</span></span>
+<span><span class="co">##     12 1 0.9891911 0.9567760 0.9665552</span></span></code></pre>
 <p>This gives the same result as calculating the Laspeyres and Paasche
 indexes individually, and then calculating the Fisher index
 manually.</p>
@@ -215,10 +217,11 @@ manually.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">stack</span>, x <span class="op">=</span> <span class="va">_</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">laspeyres</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">paasche</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    1         2         3         4</span></span>
-<span><span class="co">## 1  1 1.0509134 0.9783795 0.9600792</span></span>
-<span><span class="co">## 11 1 1.1157686 1.0007074 0.9557479</span></span>
-<span><span class="co">## 12 1 0.9891911 0.9567760 0.9665552</span></span></code></pre>
+<pre><code><span><span class="co">##       time</span></span>
+<span><span class="co">## levels 1         2         3         4</span></span>
+<span><span class="co">##     1  1 1.0509134 0.9783795 0.9600792</span></span>
+<span><span class="co">##     11 1 1.1157686 1.0007074 0.9557479</span></span>
+<span><span class="co">##     12 1 0.9891911 0.9567760 0.9665552</span></span></code></pre>
 </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -232,7 +235,7 @@ manually.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

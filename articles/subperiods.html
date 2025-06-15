@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Aggregating over subperiods • piar</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -133,20 +132,22 @@ by adding an additional eight quarters to make three years of data.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">quarterly_index</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 6 levels over 12 time periods </span></span>
-<span><span class="co">##            Q1        Q2        Q3        Q4        Q5        Q6        Q7</span></span>
-<span><span class="co">## 1   0.6847172 0.7513116 0.8602744 0.9150072 0.6691529 0.7621597 0.7928512</span></span>
-<span><span class="co">## 11  0.6442816 0.9426238 0.9800151 0.9787698 0.9366504 0.8698449 0.8068903</span></span>
-<span><span class="co">## 12  0.6553744 0.8448298 0.7877433 0.7364719 0.6864661 0.6092876 0.5790867</span></span>
-<span><span class="co">## 13  0.7125093 0.6568730 0.8763973 1.0105002 0.5713334 0.7912029 0.8792723</span></span>
-<span><span class="co">## 111 0.7802316 0.7678844 0.8888722 1.0294469 0.9856799 1.0533765 1.1007037</span></span>
-<span><span class="co">## 112 0.5860173 1.0423311 1.0183284 0.9601751 0.9173623 0.7922671 0.6417663</span></span>
-<span><span class="co">##            Q8        Q9       Q10       Q11       Q12</span></span>
-<span><span class="co">## 1   0.9285013 0.7802293 0.8192686 0.7150868 0.9343166</span></span>
-<span><span class="co">## 11  1.0502027 0.8297739 0.9545600 0.7823591 0.8891911</span></span>
-<span><span class="co">## 12  0.7510670 1.0351129 0.6936704 0.5073677 0.7432221</span></span>
-<span><span class="co">## 13  0.9130143 0.6873897 0.7607797 0.7188072 1.0262155</span></span>
-<span><span class="co">## 111 1.1442371 0.7836807 1.0508585 0.5157759 1.1069026</span></span>
-<span><span class="co">## 112 0.9595630 0.8827540 0.8562962 1.1161902 0.7632120</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels        Q1        Q2        Q3        Q4        Q5        Q6        Q7</span></span>
+<span><span class="co">##    1   0.6847172 0.7513116 0.8602744 0.9150072 0.6691529 0.7621597 0.7928512</span></span>
+<span><span class="co">##    11  0.6442816 0.9426238 0.9800151 0.9787698 0.9366504 0.8698449 0.8068903</span></span>
+<span><span class="co">##    12  0.6553744 0.8448298 0.7877433 0.7364719 0.6864661 0.6092876 0.5790867</span></span>
+<span><span class="co">##    13  0.7125093 0.6568730 0.8763973 1.0105002 0.5713334 0.7912029 0.8792723</span></span>
+<span><span class="co">##    111 0.7802316 0.7678844 0.8888722 1.0294469 0.9856799 1.0533765 1.1007037</span></span>
+<span><span class="co">##    112 0.5860173 1.0423311 1.0183284 0.9601751 0.9173623 0.7922671 0.6417663</span></span>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels        Q8        Q9       Q10       Q11       Q12</span></span>
+<span><span class="co">##    1   0.9285013 0.7802293 0.8192686 0.7150868 0.9343166</span></span>
+<span><span class="co">##    11  1.0502027 0.8297739 0.9545600 0.7823591 0.8891911</span></span>
+<span><span class="co">##    12  0.7510670 1.0351129 0.6936704 0.5073677 0.7432221</span></span>
+<span><span class="co">##    13  0.9130143 0.6873897 0.7607797 0.7188072 1.0262155</span></span>
+<span><span class="co">##    111 1.1442371 0.7836807 1.0508585 0.5157759 1.1069026</span></span>
+<span><span class="co">##    112 0.9595630 0.8827540 0.8562962 1.1161902 0.7632120</span></span></code></pre>
 <p>The conventional way to turn a quarterly arithmetic index into an
 annual one is to take the (unweighted) arithmetic mean of the index
 values over each year and rebase to a new base year.</p>
@@ -158,13 +159,14 @@ values over each year and rebase to a new base year.</p>
 <span>  <span class="fu"><a href="../reference/chain.html">rebase</a></span><span class="op">(</span><span class="st">"Q1"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fixed-base price index for 6 levels over 3 time periods </span></span>
-<span><span class="co">##     Q1        Q5         Q9</span></span>
-<span><span class="co">## 1    1 0.3875906 0.17112143</span></span>
-<span><span class="co">## 11   1 0.7431798 0.46232765</span></span>
-<span><span class="co">## 12   1 0.2497373 0.07096693</span></span>
-<span><span class="co">## 13   1 0.3687070 0.14792335</span></span>
-<span><span class="co">## 111  1 0.9971250 0.72915914</span></span>
-<span><span class="co">## 112  1 0.6323628 0.34588738</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels Q1        Q5         Q9</span></span>
+<span><span class="co">##    1    1 0.3875906 0.17112143</span></span>
+<span><span class="co">##    11   1 0.7431798 0.46232765</span></span>
+<span><span class="co">##    12   1 0.2497373 0.07096693</span></span>
+<span><span class="co">##    13   1 0.3687070 0.14792335</span></span>
+<span><span class="co">##    111  1 0.9971250 0.72915914</span></span>
+<span><span class="co">##    112  1 0.6323628 0.34588738</span></span></code></pre>
 <p>It’s worth noting that, at least with an arithmetic index, the
 aggregation properties of the index continue to hold after
 price-updating the weights.</p>
@@ -189,10 +191,11 @@ index remains the same.</p>
 <span>  <span class="fu"><a href="../reference/contrib.html">set_contrib_from_index</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">annual_pias</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    Q1          Q5         Q9</span></span>
-<span><span class="co">## 11  0 -0.03908184 -0.1102682</span></span>
-<span><span class="co">## 12  0 -0.24028499 -0.1477187</span></span>
-<span><span class="co">## 13  0 -0.33304262 -0.3005126</span></span></code></pre>
+<pre><code><span><span class="co">##       time</span></span>
+<span><span class="co">## levels Q1          Q5         Q9</span></span>
+<span><span class="co">##     11  0 -0.03908184 -0.1102682</span></span>
+<span><span class="co">##     12  0 -0.24028499 -0.1477187</span></span>
+<span><span class="co">##     13  0 -0.33304262 -0.3005126</span></span></code></pre>
   </main>
 </div>
 
@@ -203,7 +206,7 @@ index remains the same.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

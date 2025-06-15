@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Adjusting annual weights • piar</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,19 +131,20 @@ year.</p>
 <span></span>
 <span><span class="va">elementals</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 12 levels over 4 time periods </span></span>
-<span><span class="co">##            Q1        Q2        Q3        Q4</span></span>
-<span><span class="co">## B01 0.7432063 0.4362399 1.1441564 1.1277327</span></span>
-<span><span class="co">## B02 0.7987443 0.9221768 0.8326890 0.9997250</span></span>
-<span><span class="co">## B03 0.5413539 1.1952528 0.9594449 1.0966120</span></span>
-<span><span class="co">## B04 0.6195148 0.9421099 1.0672886 0.8581942</span></span>
-<span><span class="co">## B05 0.5732081 1.1348361 0.4098346 1.1227607</span></span>
-<span><span class="co">## B06 1.0930889 0.7699560 1.1682339 0.5616191</span></span>
-<span><span class="co">## B07 0.4395281 0.8571318 0.9445658 0.9494140</span></span>
-<span><span class="co">## B08 0.5673079 0.7615511 0.4677992 0.7279183</span></span>
-<span><span class="co">## B09 0.6732899 0.5341656 1.1756704 1.1541544</span></span>
-<span><span class="co">## B10 0.6973270 0.4546091 0.4928318 0.8646791</span></span>
-<span><span class="co">## B11 0.5093139 1.1175286 1.1014889 0.8980850</span></span>
-<span><span class="co">## B12 0.9408381 0.6190696 0.7101399 1.1024539</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels        Q1        Q2        Q3        Q4</span></span>
+<span><span class="co">##    B01 0.7432063 0.4362399 1.1441564 1.1277327</span></span>
+<span><span class="co">##    B02 0.7987443 0.9221768 0.8326890 0.9997250</span></span>
+<span><span class="co">##    B03 0.5413539 1.1952528 0.9594449 1.0966120</span></span>
+<span><span class="co">##    B04 0.6195148 0.9421099 1.0672886 0.8581942</span></span>
+<span><span class="co">##    B05 0.5732081 1.1348361 0.4098346 1.1227607</span></span>
+<span><span class="co">##    B06 1.0930889 0.7699560 1.1682339 0.5616191</span></span>
+<span><span class="co">##    B07 0.4395281 0.8571318 0.9445658 0.9494140</span></span>
+<span><span class="co">##    B08 0.5673079 0.7615511 0.4677992 0.7279183</span></span>
+<span><span class="co">##    B09 0.6732899 0.5341656 1.1756704 1.1541544</span></span>
+<span><span class="co">##    B10 0.6973270 0.4546091 0.4928318 0.8646791</span></span>
+<span><span class="co">##    B11 0.5093139 1.1175286 1.1014889 0.8980850</span></span>
+<span><span class="co">##    B12 0.9408381 0.6190696 0.7101399 1.1024539</span></span></code></pre>
 <p>Adjusting the weights is simple when there are no missing elemental
 indexes: the weight for each elemental aggregate is just divided by the
 average (fixed-base) index for each quarter.</p>
@@ -215,7 +215,7 @@ adjustment using the tools in this package.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

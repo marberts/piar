@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Aggregating across baskets • piar</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -152,14 +151,16 @@ the new basket onto the those in the old basket.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/stack.html" class="external-link">stack</a></span><span class="op">(</span><span class="va">index</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">index</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, start <span class="op">=</span> <span class="st">"9"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fixed-base price index for 3 levels over 12 time periods </span></span>
-<span><span class="co">##           1        2         3         4        5        6         7        8</span></span>
-<span><span class="co">## 1  1.101645 1.109240 1.0073206 0.9850853 1.055811 1.037494 0.9931005 1.030081</span></span>
-<span><span class="co">## 11 1.108522 1.037686 0.9807159 0.9482265 1.016769 1.028660 0.9505788 1.037308</span></span>
-<span><span class="co">## 12 1.090230 1.228015 1.0514823 1.0462678 1.120616 1.052158 1.0636831 1.018084</span></span>
-<span><span class="co">##           9        10        11        12</span></span>
-<span><span class="co">## 1  1.082712 1.0297273 1.0833225 1.0117095</span></span>
-<span><span class="co">## 11 1.149467 1.1530529 1.2475735 1.0303923</span></span>
-<span><span class="co">## 12 1.024395 0.9280337 0.9496758 0.9909764</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels        1        2         3         4        5        6         7</span></span>
+<span><span class="co">##     1  1.101645 1.109240 1.0073206 0.9850853 1.055811 1.037494 0.9931005</span></span>
+<span><span class="co">##     11 1.108522 1.037686 0.9807159 0.9482265 1.016769 1.028660 0.9505788</span></span>
+<span><span class="co">##     12 1.090230 1.228015 1.0514823 1.0462678 1.120616 1.052158 1.0636831</span></span>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels        8        9        10        11        12</span></span>
+<span><span class="co">##     1  1.030081 1.082712 1.0297273 1.0833225 1.0117095</span></span>
+<span><span class="co">##     11 1.037308 1.149467 1.1530529 1.2475735 1.0303923</span></span>
+<span><span class="co">##     12 1.018084 1.024395 0.9280337 0.9496758 0.9909764</span></span></code></pre>
 <p>Alternatively, the index values from the new basket can be chained
 using the values in the last period of the first basket as a link factor
 and combined with the chained index values from the old basket.</p>
@@ -173,14 +174,16 @@ and combined with the chained index values from the old basket.</p>
 <span>  <span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">index</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, start <span class="op">=</span> <span class="st">"9"</span><span class="op">)</span>, link <span class="op">=</span> <span class="va">link_factor</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fixed-base price index for 3 levels over 12 time periods </span></span>
-<span><span class="co">##           1        2         3         4        5        6         7        8</span></span>
-<span><span class="co">## 1  1.101645 1.109240 1.0073206 0.9850853 1.055811 1.037494 0.9931005 1.030081</span></span>
-<span><span class="co">## 11 1.108522 1.037686 0.9807159 0.9482265 1.016769 1.028660 0.9505788 1.037308</span></span>
-<span><span class="co">## 12 1.090230 1.228015 1.0514823 1.0462678 1.120616 1.052158 1.0636831 1.018084</span></span>
-<span><span class="co">##           9        10        11        12</span></span>
-<span><span class="co">## 1  1.082712 1.0297273 1.0833225 1.0117095</span></span>
-<span><span class="co">## 11 1.149467 1.1530529 1.2475735 1.0303923</span></span>
-<span><span class="co">## 12 1.024395 0.9280337 0.9496758 0.9909764</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels        1        2         3         4        5        6         7</span></span>
+<span><span class="co">##     1  1.101645 1.109240 1.0073206 0.9850853 1.055811 1.037494 0.9931005</span></span>
+<span><span class="co">##     11 1.108522 1.037686 0.9807159 0.9482265 1.016769 1.028660 0.9505788</span></span>
+<span><span class="co">##     12 1.090230 1.228015 1.0514823 1.0462678 1.120616 1.052158 1.0636831</span></span>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels        8        9        10        11        12</span></span>
+<span><span class="co">##     1  1.030081 1.082712 1.0297273 1.0833225 1.0117095</span></span>
+<span><span class="co">##     11 1.037308 1.149467 1.1530529 1.2475735 1.0303923</span></span>
+<span><span class="co">##     12 1.018084 1.024395 0.9280337 0.9496758 0.9909764</span></span></code></pre>
 <p>The index values for the overlap period can be used to make more
 complex link factors when the index series have an annual base
 period.</p>
@@ -200,14 +203,16 @@ rebasing the index series for the new basket.</p>
 <span>  <span class="fu"><a href="../reference/chain.html">rebase</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">index</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, start <span class="op">=</span> <span class="st">"9"</span><span class="op">)</span>, base <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">link_factor</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fixed-base price index for 3 levels over 12 time periods </span></span>
-<span><span class="co">##            1        2         3         4        5         6         7</span></span>
-<span><span class="co">## 1  1.0483642 1.055592 0.9586018 0.9374418 1.004747 0.9873156 0.9450694</span></span>
-<span><span class="co">## 11 1.0880796 1.018550 0.9626304 0.9307402 0.998019 1.0096899 0.9330491</span></span>
-<span><span class="co">## 12 0.9875283 1.112334 0.9524307 0.9477073 1.015052 0.9530428 0.9634821</span></span>
-<span><span class="co">##            8        9        10        11        12</span></span>
-<span><span class="co">## 1  0.9802611 1.036713 0.9859794 1.0372977 0.9687271</span></span>
-<span><span class="co">## 11 1.0181791 1.027851 1.0310566 1.1155766 0.9213738</span></span>
-<span><span class="co">## 12 0.9221784 1.037244 0.9396738 0.9615874 1.0034060</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels         1        2         3         4        5         6         7</span></span>
+<span><span class="co">##     1  1.0483642 1.055592 0.9586018 0.9374418 1.004747 0.9873156 0.9450694</span></span>
+<span><span class="co">##     11 1.0880796 1.018550 0.9626304 0.9307402 0.998019 1.0096899 0.9330491</span></span>
+<span><span class="co">##     12 0.9875283 1.112334 0.9524307 0.9477073 1.015052 0.9530428 0.9634821</span></span>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels         8        9        10        11        12</span></span>
+<span><span class="co">##     1  0.9802611 1.036713 0.9859794 1.0372977 0.9687271</span></span>
+<span><span class="co">##     11 1.0181791 1.027851 1.0310566 1.1155766 0.9213738</span></span>
+<span><span class="co">##     12 0.9221784 1.037244 0.9396738 0.9615874 1.0034060</span></span></code></pre>
 <p>Updating the reference year to that of the new basket involves
 rebasing the series for both the old basket and the new basket.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -220,14 +225,16 @@ rebasing the series for both the old basket and the new basket.</p>
 <span>  <span class="fu"><a href="../reference/chain.html">rebase</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/window.html" class="external-link">window</a></span><span class="op">(</span><span class="va">index</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, start <span class="op">=</span> <span class="st">"9"</span><span class="op">)</span>, base <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">link_factor</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Fixed-base price index for 3 levels over 12 time periods </span></span>
-<span><span class="co">##           1        2        3         4        5         6         7         8</span></span>
-<span><span class="co">## 1  1.070471 1.077852 0.978816 0.9572099 1.025934 1.0081354 0.9649983 1.0009321</span></span>
-<span><span class="co">## 11 1.099365 1.029114 0.972615 0.9403940 1.008371 1.0201626 0.9427269 1.0287398</span></span>
-<span><span class="co">## 12 1.025004 1.154545 0.988574 0.9836715 1.053572 0.9892094 1.0000448 0.9571738</span></span>
-<span><span class="co">##            9        10        11        12</span></span>
-<span><span class="co">## 1  1.0520739 1.0005887 1.0526672 0.9830807</span></span>
-<span><span class="co">## 11 1.1399727 1.1435285 1.2372683 1.0218811</span></span>
-<span><span class="co">## 12 0.9631074 0.8725112 0.8928585 0.9316881</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels        1        2        3         4        5         6         7</span></span>
+<span><span class="co">##     1  1.070471 1.077852 0.978816 0.9572099 1.025934 1.0081354 0.9649983</span></span>
+<span><span class="co">##     11 1.099365 1.029114 0.972615 0.9403940 1.008371 1.0201626 0.9427269</span></span>
+<span><span class="co">##     12 1.025004 1.154545 0.988574 0.9836715 1.053572 0.9892094 1.0000448</span></span>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels         8         9        10        11        12</span></span>
+<span><span class="co">##     1  1.0009321 1.0520739 1.0005887 1.0526672 0.9830807</span></span>
+<span><span class="co">##     11 1.0287398 1.1399727 1.1435285 1.2372683 1.0218811</span></span>
+<span><span class="co">##     12 0.9571738 0.9631074 0.8725112 0.8928585 0.9316881</span></span></code></pre>
   </main>
 </div>
 
@@ -238,7 +245,7 @@ rebasing the series for both the old basket and the new basket.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

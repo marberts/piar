@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Aggregating across dimensions • piar</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -26,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -133,18 +132,19 @@ aggregation structure.</p>
 <span></span>
 <span><span class="va">index_sps</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 11 levels over 4 time periods </span></span>
-<span><span class="co">##      202001    202002    202003   202004</span></span>
-<span><span class="co">## 1         1 1.3007239 1.0630743 2.684412</span></span>
-<span><span class="co">## 11        1 1.3007239 1.0630743 1.492443</span></span>
-<span><span class="co">## 12        1 1.3007239 1.0630743 4.576286</span></span>
-<span><span class="co">## 11TS      1 1.3007239 1.0630743 0.537996</span></span>
-<span><span class="co">## 11TA      1 1.3007239 1.0630743 2.770456</span></span>
-<span><span class="co">## 12TS      1 1.3007239 1.0630743 4.576286</span></span>
-<span><span class="co">## B1        1 0.8949097 0.3342939 0.537996</span></span>
-<span><span class="co">## B2        1 1.3007239 1.0630743 2.770456</span></span>
-<span><span class="co">## B3        1 2.0200036 1.6353355 0.537996</span></span>
-<span><span class="co">## B4        1 1.3007239 1.0630743 4.576286</span></span>
-<span><span class="co">## B5        1 1.3007239 1.0630743 4.576286</span></span></code></pre>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels 202001    202002    202003   202004</span></span>
+<span><span class="co">##   1         1 1.3007239 1.0630743 2.684412</span></span>
+<span><span class="co">##   11        1 1.3007239 1.0630743 1.492443</span></span>
+<span><span class="co">##   12        1 1.3007239 1.0630743 4.576286</span></span>
+<span><span class="co">##   11TS      1 1.3007239 1.0630743 0.537996</span></span>
+<span><span class="co">##   11TA      1 1.3007239 1.0630743 2.770456</span></span>
+<span><span class="co">##   12TS      1 1.3007239 1.0630743 4.576286</span></span>
+<span><span class="co">##   B1        1 0.8949097 0.3342939 0.537996</span></span>
+<span><span class="co">##   B2        1 1.3007239 1.0630743 2.770456</span></span>
+<span><span class="co">##   B3        1 2.0200036 1.6353355 0.537996</span></span>
+<span><span class="co">##   B4        1 1.3007239 1.0630743 4.576286</span></span>
+<span><span class="co">##   B5        1 1.3007239 1.0630743 4.576286</span></span></code></pre>
 <p>When a price index has many dimensions (e.g., industry, sampling
 stratum, region), it can be useful to interact the classifications for
 these different dimensions to get all possible aggregation structures.
@@ -170,15 +170,16 @@ includes all combinations of industry and sampling stratum.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">merge</span>, <span class="va">index_sps2</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 8 levels over 4 time periods </span></span>
-<span><span class="co">##       202001   202002   202003   202004</span></span>
-<span><span class="co">## 1:T        1 1.300724 1.063074 2.684412</span></span>
-<span><span class="co">## 1:TS       1 1.300724 1.063074 2.653820</span></span>
-<span><span class="co">## 1:TA       1 1.300724 1.063074 2.770456</span></span>
-<span><span class="co">## 11:T       1 1.300724 1.063074 1.492443</span></span>
-<span><span class="co">## 12:T       1 1.300724 1.063074 4.576286</span></span>
-<span><span class="co">## 11:TS      1 1.300724 1.063074 0.537996</span></span>
-<span><span class="co">## 11:TA      1 1.300724 1.063074 2.770456</span></span>
-<span><span class="co">## 12:TS      1 1.300724 1.063074 4.576286</span></span></code></pre>
+<span><span class="co">##        time</span></span>
+<span><span class="co">## levels  202001   202002   202003   202004</span></span>
+<span><span class="co">##   1:T        1 1.300724 1.063074 2.684412</span></span>
+<span><span class="co">##   1:TS       1 1.300724 1.063074 2.653820</span></span>
+<span><span class="co">##   1:TA       1 1.300724 1.063074 2.770456</span></span>
+<span><span class="co">##   11:T       1 1.300724 1.063074 1.492443</span></span>
+<span><span class="co">##   12:T       1 1.300724 1.063074 4.576286</span></span>
+<span><span class="co">##   11:TS      1 1.300724 1.063074 0.537996</span></span>
+<span><span class="co">##   11:TA      1 1.300724 1.063074 2.770456</span></span>
+<span><span class="co">##   12:TS      1 1.300724 1.063074 4.576286</span></span></code></pre>
   </main>
 </div>
 
@@ -189,7 +190,7 @@ includes all combinations of industry and sampling stratum.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
