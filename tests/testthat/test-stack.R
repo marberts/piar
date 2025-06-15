@@ -34,17 +34,17 @@ test_that("stacking returns the correct result", {
   epr3 <- stack(epr1, epr2)
   expect_equal(
     as.matrix(epr3),
-    matrix(1:8, 4, 4, dimnames = list(letters[1:4], 1:4))
+    matrix(1:8, 4, 4, dimnames = list(levels = letters[1:4], time = 1:4))
   )
   expect_identical(levels(epr3), levels(epr1))
   expect_identical(time(epr3), as.character(1:4))
   expect_equal(
     contrib(epr3),
-    matrix(c(0, 4, 0, 0), 1, 4, dimnames = list("a.1", 1:4))
+    matrix(c(0, 4, 0, 0), 1, 4, dimnames = list(levels = "a.1", time = 1:4))
   )
   expect_equal(
     as.matrix(stack(epr2, epr1)),
-    matrix(1:8, 4, 4, dimnames = list(letters[1:4], c(3:4, 1:2)))
+    matrix(1:8, 4, 4, dimnames = list(levels = letters[1:4], time = c(3:4, 1:2)))
   )
 })
 

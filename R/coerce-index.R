@@ -66,7 +66,7 @@ as.data.frame.piar_index <- function(x,
 as.matrix.piar_index <- function(x, ...) {
   chkDots(...)
   res <- do.call(cbind, x$index)
-  dimnames(res) <- list(x$levels, x$time)
+  dimnames(res) <- list(levels = x$levels, time = x$time)
   res
 }
 

@@ -39,7 +39,8 @@
 #' index <- elemental_index(prices, rel ~ period + ea, contrib = TRUE)
 #'
 #' pias <- aggregation_structure(
-#'   list(c("top", "top", "top"), c("a", "b", "c")), weights = 1:3
+#'   list(c("top", "top", "top"), c("a", "b", "c")),
+#'   weights = 1:3
 #' )
 #'
 #' index <- aggregate(index, pias, na.rm = TRUE)
@@ -92,7 +93,9 @@ contrib.piar_index <- function(x,
   # not NA contributions.
   out[] <- list(structure(rep.int(pad, length(products)), names = products))
   res <- Map(replace, out, con_names, con)
-  do.call(cbind, res)
+  res <- do.call(cbind, res)
+  names(dimnames(res)) <- c("levels", "time")
+  res
 }
 
 #' @rdname contrib

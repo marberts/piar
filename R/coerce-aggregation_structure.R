@@ -103,7 +103,9 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
     dimnames(mat) <- list(levels(lev[[i]]), x$levels[[height]])
     res[[i]] <- mat
   }
-  do.call(rbind, res)
+  res <- do.call(rbind, res)
+  names(dimnames(res)) <- c("levels", "")
+  res
 }
 
 #' @rdname as.matrix.piar_aggregation_structure

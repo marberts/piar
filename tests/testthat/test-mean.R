@@ -1,7 +1,7 @@
 test_that("aggregating over subperiods works", {
   ms_epr <- elemental_index(
     ms_prices,
-    price_relative(price, period = period, product = product)~ period + business,
+    price_relative(price, period = period, product = product) ~ period + business,
     contrib = TRUE, na.rm = TRUE
   )
 
@@ -26,26 +26,35 @@ test_that("aggregating over subperiods works", {
     diag(as.matrix(ms_epr)[, 3:4] %*% apply(w[, 3:4], 1, scale_weights)),
     ignore_attr = TRUE
   )
-  
+
   # Test contributions
   con <- matrix(0, 5, 2)
-  rownames(con) <- c("1", "2", "2.1", "3", "3.1")
-  colnames(con) <- c("202001", "202003")
+  dimnames(con) <- list(
+    levels = c("1", "2", "2.1", "3", "3.1"),
+    time = c("202001", "202003")
+  )
   con[c(2, 3, 9, 10)] <- NA
   con[c(5, 7)] <- contrib(ms_epr)[c(6, 8)] / 2:1
   expect_equal(contrib(epr2), con)
   expect_equal(
     contrib(mean(ms_epr, window = 2, dup_products = "sum")),
-    rbind("1" = con[1, ], "2" = colSums(con[2:3, ]), "3" = colSums(con[4:5, ]))
+    structure(
+      rbind("1" = con[1, ], "2" = colSums(con[2:3, ]), "3" = colSums(con[4:5, ])),
+      dimnames = list(levels = 1:3, time = time(ms_epr)[c(1, 3)])
+    )
   )
-  
-  expect_equal(as.numeric(t(contrib(ms_epr, "B3")[, 3:4])) / 2,
-               as.numeric(contrib(epr2, "B3")[, 2]))
+
+  expect_equal(
+    as.numeric(t(contrib(ms_epr, "B3")[, 3:4])) / 2,
+    as.numeric(contrib(epr2, "B3")[, 2])
+  )
   expect_equal(colSums(contrib(epr2, "B3")), as.matrix(epr2)["B3", ] - 1)
-  
+
   epr3 <- mean(ms_epr, weights = w, window = 2, r = 2.5, na.rm = TRUE, dup_products = "sum")
-  expect_equal(colSums(contrib(epr3, "B1"), na.rm = TRUE),
-               as.matrix(epr3)["B1", ] - 1)
+  expect_equal(
+    colSums(contrib(epr3, "B1"), na.rm = TRUE),
+    as.matrix(epr3)["B1", ] - 1
+  )
   expect_equal(colSums(contrib(epr3, "B3")), as.matrix(epr3)["B3", ] - 1)
 })
 
@@ -69,9 +78,9 @@ test_that("mean is consistent in aggregation", {
   pias <- aggregation_structure(
     list(rep("a", 6), rep(c("b", "c"), each = 3), 1:6), 6:1
   )
-  
+
   index <- aggregate(epr, pias)
-  
+
   index <- unchain(mean(chain(index), window = 3))
   expect_equal(aggregate(index, pias), index)
 })

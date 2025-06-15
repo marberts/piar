@@ -21,12 +21,18 @@ index1 <- aggregate(epr1, pias, na.rm = TRUE)
 index2 <- aggregate(epr2, pias, na.rm = TRUE)
 
 test_that("chain is the same as apply", {
-  expect_equal(as.matrix(chain(epr1)),
-               t(apply(as.matrix(epr1), 1, cumprod)))
-  expect_equal(as.matrix(chain(epr1, link = 1:4)),
-               t(apply(as.matrix(epr1), 1, cumprod)) * 1:4)
-  expect_equal(as.matrix(chain(index1)),
-               t(apply(as.matrix(index1), 1, cumprod)))
+  expect_equal(
+    as.matrix(chain(epr1)),
+    t(apply(as.matrix(epr1), 1, cumprod))
+  )
+  expect_equal(
+    as.matrix(chain(epr1, link = 1:4)),
+    t(apply(as.matrix(epr1), 1, cumprod)) * 1:4
+  )
+  expect_equal(
+    as.matrix(chain(index1)),
+    t(apply(as.matrix(index1), 1, cumprod))
+  )
 })
 
 test_that("unchain and chain are inverses with no NAs", {
@@ -49,19 +55,27 @@ test_that("chaining a fixed-base index does nothing", {
 })
 
 test_that("rebase should be the same as division", {
-  expect_equal(as.matrix(rebase(chain(epr2), 1:4)),
-               as.matrix(chain(epr2)) / 1:4)
-  expect_equal(as.matrix(rebase(chain(index2), 1:8)),
-               as.matrix(chain(index2)) / 1:8)
+  expect_equal(
+    as.matrix(rebase(chain(epr2), 1:4)),
+    as.matrix(chain(epr2)) / 1:4
+  )
+  expect_equal(
+    as.matrix(rebase(chain(index2), 1:8)),
+    as.matrix(chain(index2)) / 1:8
+  )
 })
 
 test_that("rebase works with mean", {
   index2 <- chain(index2)
-  expect_equal(rebase(index2, mean(index2, window = 2)[, 1]),
-               rebase(index2, rowMeans(as.matrix(index2[, 1:2]))))
-  
-  expect_equal(rebase(index2, mean(index2, window = 4)),
-               rebase(index2, rowMeans(as.matrix(index2))))
+  expect_equal(
+    rebase(index2, mean(index2, window = 2)[, 1]),
+    rebase(index2, rowMeans(as.matrix(index2[, 1:2])))
+  )
+
+  expect_equal(
+    rebase(index2, mean(index2, window = 4)),
+    rebase(index2, rowMeans(as.matrix(index2)))
+  )
 })
 
 
@@ -75,8 +89,10 @@ test_that("chaining returns the correct type of index", {
 })
 
 test_that("chaining keeps EA names", {
-  expect_equal(as.matrix(chain(as_index(matrix(1:5, 1)))),
-               matrix(cumprod(1:5), 1, dimnames = list(1, 1:5)))
+  expect_equal(
+    as.matrix(chain(as_index(matrix(1:5, 1)))),
+    matrix(cumprod(1:5), 1, dimnames = list(levels = 1, time = 1:5))
+  )
 })
 
 test_that("link and base values are the right length", {
