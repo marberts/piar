@@ -160,6 +160,7 @@ test_that("replacement methods work with a vector", {
   expect_error(epr[1, c(TRUE, FALSE, FALSE)] <- 1)
   expect_error(epr[5] <- 1)
   expect_error(epr[1] <- numeric(0))
+  expect_warning(epr[c(T, F, T), ])
 })
 
 test_that("replacement method works with a matrix", {
