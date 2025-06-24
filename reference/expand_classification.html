@@ -11,7 +11,7 @@ together to get all combinations of aggregation structures."><meta property="og:
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@ together to get all combinations of aggregation structures.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">expand_classification</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">expand_classification</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">1L</span>, pad <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">interact_classifications</span><span class="op">(</span><span class="va">...</span>, sep <span class="op">=</span> <span class="st">":"</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -75,6 +75,11 @@ COICOP, 5-digit NAICS, 4-digit SIC).</p></dd>
 <code>x</code>. A single value is recycled to span the longest element in
 <code>x</code>. This cannot contain NAs. The default assumes each digit has a
 width of 1, as in the NAICS, NAPCS, and SIC classifications.</p></dd>
+
+
+<dt id="arg-pad">pad<a class="anchor" aria-label="anchor" href="#arg-pad"></a></dt>
+<dd><p>A string used to pad the shorter labels for an unbalanced
+classification. The default pads with NA.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -99,7 +104,9 @@ as <code>expand_classification()</code>.</p>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="aggregation_structure.html">aggregation_structure()</a></code> to make a price-index aggregation structure.</p>
 <p><code><a href="split_classification.html">split_classification()</a></code> to expand a classification by splitting along
-a delimiter.</p></div>
+a delimiter.</p>
+<p><code>csh_from_digits()</code> in the <span class="pkg">accumulate</span> package for different handling
+of unbalanced classifications.</p></div>
     </div>
 
     <div class="section level2">
