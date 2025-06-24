@@ -1,3 +1,13 @@
+padded_extract <- function(x, i, pad) {
+  pad <- as.character(pad)
+  if (length(pad) != 1L) {
+    stop("'pad' must be a length 1 character")
+  }
+  res <- x[seq_len(i)]
+  res[seq.int(to = i, length.out = max(i - length(x), 0L))] <- pad
+  res
+}
+
 #---- Replacing contributions ----
 near <- function(x, y, tol = .Machine$double.eps^0.5) {
   abs(x - y) < tol

@@ -16,6 +16,8 @@
 #'   the hierarchy (as made by `expand_classification()`).
 #' @param sep A character used to combine codes/labels across elements of `...`.
 #'   The default uses ":".
+#' @param pad A string used to pad the shorter labels for an unbalanced
+#'   classification. The default pads with NA.
 #'
 #' @returns
 #' `expand_classification()` returns a list with a entry for each level
@@ -29,6 +31,9 @@
 #'
 #' [split_classification()] to expand a classification by splitting along
 #' a delimiter.
+#'
+#' `csh_from_digits()` in the \pkg{accumulate} package for different handling
+#' of unbalanced classifications.
 #'
 #' @examples
 #' # A simple classification structure
@@ -57,7 +62,7 @@
 #' expand_classification(c("01.1.1", "01.1.2", "01.2.1"), width = 2)
 #'
 #' @export
-expand_classification <- function(x, width = 1L) {
+expand_classification <- function(x, width = 1L, pad = NA) {
   x <- as.character(x)
   if (length(x) == 0L) {
     return(list())
@@ -77,7 +82,7 @@ expand_classification <- function(x, width = 1L) {
   w <- cumsum(width)
   x <- strsplit(x, character(0L), fixed = TRUE)
   lapply(w, function(i) {
-    vapply(x, \(x) paste(x[seq_len(i)], collapse = ""), character(1L))
+    vapply(x, \(x) paste(padded_extract(x, i, pad), collapse = ""), character(1L))
   })
 }
 
