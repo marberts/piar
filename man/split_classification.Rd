@@ -4,7 +4,7 @@
 \alias{split_classification}
 \title{Split a hierarchical classification}
 \usage{
-split_classification(x, split, ..., sep = ".")
+split_classification(x, split, ..., sep = ".", pad = NA)
 }
 \arguments{
 \item{x}{A character vector, or something that can be coerced into one, of
@@ -18,6 +18,9 @@ See \code{\link[=strsplit]{strsplit()}}.}
 
 \item{sep}{A character used to delineate levels in \code{x} in the result. The
 default separates levels by ".".}
+
+\item{pad}{A string used to pad the shorter labels for an unbalanced
+classification. The default pads with NA.}
 }
 \value{
 A list with a entry for each level in \code{x} giving the "digits" that

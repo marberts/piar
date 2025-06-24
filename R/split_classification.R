@@ -11,6 +11,8 @@
 #' @param ... Additional argument to pass to [strsplit()].
 #' @param sep A character used to delineate levels in `x` in the result. The
 #'   default separates levels by ".".
+#' @param pad A string used to pad the shorter labels for an unbalanced
+#'   classification. The default pads with NA.
 #'
 #' @returns
 #' A list with a entry for each level in `x` giving the "digits" that
@@ -37,7 +39,7 @@
 #' split_classification(c("01.1.1", "01.1.2", "01.2.1"), ".", fixed = TRUE)
 #'
 #' @export
-split_classification <- function(x, split, ..., sep = ".") {
+split_classification <- function(x, split, ..., sep = ".", pad = NA) {
   x <- as.character(x)
   if (length(x) == 0L) {
     return(list())
@@ -47,7 +49,7 @@ split_classification <- function(x, split, ..., sep = ".") {
   if (n == 0L) {
     return(list(rep.int("", length(x))))
   }
-  res <- do.call(rbind, lapply(x, `[`, seq_len(n)))
+  res <- do.call(rbind, lapply(x, \(z) padded_extract(z, n, pad)))
   Reduce(
     \(...) paste(..., sep = sep),
     split(res, gl(ncol(res), nrow(res))),

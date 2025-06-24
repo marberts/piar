@@ -73,7 +73,8 @@ prices <- data.frame(
 index <- elemental_index(prices, rel ~ period + ea, contrib = TRUE)
 
 pias <- aggregation_structure(
-  list(c("top", "top", "top"), c("a", "b", "c")), weights = 1:3
+  list(c("top", "top", "top"), c("a", "b", "c")),
+  weights = 1:3
 )
 
 index <- aggregate(index, pias, na.rm = TRUE)
