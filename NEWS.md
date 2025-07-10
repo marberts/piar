@@ -2,8 +2,8 @@
 
 ## Improvements
 
-- Both `aggregate(index)` and `mean(index)` get a new argument `dup_products` to
-control how product contributions are made when there are duplicate products.
+- Both `aggregate(index)` and `mean(index)` get a new argument `duplicate_contrib`
+to control how product contributions are made when there are duplicate products.
 
 - Coercing an index or an aggregation structure to a matrix now has dimension
 names.

@@ -15,7 +15,7 @@
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  dup_products = c("make.unique", "sum")
+  duplicate_contrib = c("make.unique", "sum")
 )
 
 \method{aggregate}{direct_piar_index}(
@@ -27,7 +27,7 @@
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  dup_products = c("make.unique", "sum")
+  duplicate_contrib = c("make.unique", "sum")
 )
 }
 \arguments{
@@ -59,7 +59,7 @@ index is aggregated with a quadratic mean of order \code{2*r}.}
 along with the aggregated indexes? By default, all index values are
 returned.}
 
-\item{dup_products}{The method to deal with duplicate product contributions.
+\item{duplicate_contrib}{The method to deal with duplicate product contributions.
 Either 'make.unique' to treat duplicate
 products as distinct products and make their names unique
 with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for each product.}

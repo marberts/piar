@@ -84,7 +84,7 @@
 #'   along with the aggregated indexes? By default, all index values are
 #'   returned.
 #' @param ... Not currently used.
-#' @param dup_products The method to deal with duplicate product contributions.
+#' @param duplicate_contrib The method to deal with duplicate product contributions.
 #'   Either 'make.unique' to treat duplicate
 #'   products as distinct products and make their names unique
 #'   with [make.unique()] or 'sum' to add contributions for each product.
@@ -142,15 +142,16 @@
 #' @importFrom stats aggregate
 #' @family index methods
 #' @export
-aggregate.chainable_piar_index <- function(x,
-                                           pias,
-                                           ...,
-                                           pias2 = NULL,
-                                           na.rm = FALSE,
-                                           contrib = TRUE,
-                                           r = 1,
-                                           include_ea = TRUE,
-                                           dup_products = c("make.unique", "sum")) {
+aggregate.chainable_piar_index <- function(
+    x,
+    pias,
+    ...,
+    pias2 = NULL,
+    na.rm = FALSE,
+    contrib = TRUE,
+    r = 1,
+    include_ea = TRUE,
+    duplicate_contrib = c("make.unique", "sum")) {
   chkDots(...)
   aggregate_index(
     x,
@@ -161,21 +162,22 @@ aggregate.chainable_piar_index <- function(x,
     r = r,
     include_ea = include_ea,
     chainable = TRUE,
-    dup_products = dup_products
+    duplicate_contrib = duplicate_contrib
   )
 }
 
 #' @rdname aggregate.piar_index
 #' @export
-aggregate.direct_piar_index <- function(x,
-                                        pias,
-                                        ...,
-                                        pias2 = NULL,
-                                        na.rm = FALSE,
-                                        contrib = TRUE,
-                                        r = 1,
-                                        include_ea = TRUE,
-                                        dup_products = c("make.unique", "sum")) {
+aggregate.direct_piar_index <- function(
+    x,
+    pias,
+    ...,
+    pias2 = NULL,
+    na.rm = FALSE,
+    contrib = TRUE,
+    r = 1,
+    include_ea = TRUE,
+    duplicate_contrib = c("make.unique", "sum")) {
   chkDots(...)
   aggregate_index(
     x,
@@ -186,21 +188,22 @@ aggregate.direct_piar_index <- function(x,
     r = r,
     include_ea = include_ea,
     chainable = FALSE,
-    dup_products = dup_products
+    duplicate_contrib = duplicate_contrib
   )
 }
 
 #' Internal functions to aggregate a price index
 #' @noRd
-aggregate_index <- function(x,
-                            pias,
-                            pias2,
-                            na.rm,
-                            contrib,
-                            r,
-                            include_ea,
-                            chainable,
-                            dup_products) {
+aggregate_index <- function(
+    x,
+    pias,
+    pias2,
+    na.rm,
+    contrib,
+    r,
+    include_ea,
+    chainable,
+    duplicate_contrib) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
   has_contrib <- has_contrib(x) && contrib
@@ -212,7 +215,7 @@ aggregate_index <- function(x,
     r,
     include_ea,
     chainable,
-    dup_products
+    duplicate_contrib
   )
 
   if (!is.null(pias2)) {
@@ -228,7 +231,7 @@ aggregate_index <- function(x,
       -r,
       include_ea,
       chainable,
-      dup_products
+      duplicate_contrib
     )
     if (has_contrib) {
       res$contrib <- Map(
@@ -251,18 +254,19 @@ aggregate_index <- function(x,
   piar_index(res$index, res$contrib, lev, x$time, chainable)
 }
 
-aggregate_ <- function(x,
-                       pias,
-                       na.rm,
-                       has_contrib,
-                       r,
-                       include_ea,
-                       chainable,
-                       dup_products) {
+aggregate_ <- function(
+    x,
+    pias,
+    na.rm,
+    has_contrib,
+    r,
+    include_ea,
+    chainable,
+    duplicate_contrib) {
   # Helpful functions.
   price_update <- gpindex::factor_weights(r)
   gen_mean <- gpindex::generalized_mean(r)
-  agg_contrib <- aggregate_contrib(r, dup_products)
+  agg_contrib <- aggregate_contrib(r, duplicate_contrib)
 
   # Put the aggregation weights upside down to line up with pias.
   w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
@@ -329,16 +333,16 @@ aggregate_ <- function(x,
 #' @noRd
 # This function is inefficient because it recalculates the mean, but this
 # ensures that contributions are still produced with missing index values.
-aggregate_contrib <- function(r, dup_products = c("make.unique", "sum")) {
+aggregate_contrib <- function(r, duplicate_contrib = c("make.unique", "sum")) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
-  dup_products <- match.arg(dup_products)
+  duplicate_contrib <- match.arg(duplicate_contrib)
   function(x, rel, w) {
     w <- arithmetic_weights(rel, w)
     res <- Map(`*`, x, w)
     if (all(lengths(res) == 0L)) {
       return(numeric(0L))
     }
-    if (dup_products == "make.unique") {
+    if (duplicate_contrib == "make.unique") {
       res <- unlist(res)
       names(res) <- make.unique(as.character(names(res)))
     } else {

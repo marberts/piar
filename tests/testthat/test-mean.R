@@ -37,7 +37,7 @@ test_that("aggregating over subperiods works", {
   con[c(5, 7)] <- contrib(ms_epr)[c(6, 8)] / 2:1
   expect_equal(contrib(epr2), con)
   expect_equal(
-    contrib(mean(ms_epr, window = 2, dup_products = "sum")),
+    contrib(mean(ms_epr, window = 2, duplicate_contrib = "sum")),
     structure(
       rbind("1" = con[1, ], "2" = colSums(con[2:3, ]), "3" = colSums(con[4:5, ])),
       dimnames = list(levels = 1:3, time = time(ms_epr)[c(1, 3)])
@@ -50,7 +50,7 @@ test_that("aggregating over subperiods works", {
   )
   expect_equal(colSums(contrib(epr2, "B3")), as.matrix(epr2)["B3", ] - 1)
 
-  epr3 <- mean(ms_epr, weights = w, window = 2, r = 2.5, na.rm = TRUE, dup_products = "sum")
+  epr3 <- mean(ms_epr, weights = w, window = 2, r = 2.5, na.rm = TRUE, duplicate_contrib = "sum")
   expect_equal(
     colSums(contrib(epr3, "B1"), na.rm = TRUE),
     as.matrix(epr3)["B1", ] - 1

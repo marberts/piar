@@ -14,7 +14,7 @@
   na.rm = FALSE,
   contrib = TRUE,
   r = 1,
-  dup_products = c("make.unique", "sum")
+  duplicate_contrib = c("make.unique", "sum")
 )
 
 \method{mean}{direct_piar_index}(
@@ -25,7 +25,7 @@
   na.rm = FALSE,
   contrib = TRUE,
   r = 1,
-  dup_products = c("make.unique", "sum")
+  duplicate_contrib = c("make.unique", "sum")
 )
 }
 \arguments{
@@ -56,7 +56,7 @@ averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
-\item{dup_products}{The method to deal with duplicate product contributions.
+\item{duplicate_contrib}{The method to deal with duplicate product contributions.
 Either 'make.unique' to make duplicate product names unique
 with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for the same products
 across subperiods.}

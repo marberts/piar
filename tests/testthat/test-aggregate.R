@@ -70,7 +70,7 @@ test_that("a matched-sample index aggregates correctly", {
   )
   expect_equal(
     ms_index,
-    aggregate(ms_index, ms_pias, dup_products = "sum")
+    aggregate(ms_index, ms_pias, duplicate_contrib = "sum")
   )
   expect_equal(
     contrib(aggregate(ms_index, ms_pias)),
@@ -194,7 +194,7 @@ test_that("a weird index aggregates correctly", {
     colSums(contrib(aggregate(ms_index, ms_pias, r = -1.7)), na.rm = TRUE) + 1
   )
   expect_equal(
-    aggregate(ms_index, ms_pias, r = -1.7, dup_products = "sum"),
+    aggregate(ms_index, ms_pias, r = -1.7, duplicate_contrib = "sum"),
     ms_index
   )
 
