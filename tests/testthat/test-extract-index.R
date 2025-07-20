@@ -103,7 +103,7 @@ test_that("replacement methods work with a vector", {
     contrib(epr),
     matrix(c(0, 0, 2.5962965079607, 2.88444419044716),
       2, 2,
-      dimnames = list(levels = c("11.1", "11.2"), time = 1:2)
+      dimnames = list(product = c("11.1", "11.2"), time = 1:2)
     )
   )
 
@@ -116,7 +116,7 @@ test_that("replacement methods work with a vector", {
   )
   expect_equal(
     contrib(epr),
-    matrix(0, 0, 2, dimnames = list(levels = NULL, time = 1:2))
+    matrix(0, 0, 2, dimnames = list(product = NULL, time = 1:2))
   )
 
   # recycling should still happen
@@ -141,7 +141,7 @@ test_that("replacement methods work with a vector", {
   )
   expect_equal(
     contrib(epr, "14"),
-    matrix(0, 0, 2, dimnames = list(levels = NULL, time = 1:2))
+    matrix(0, 0, 2, dimnames = list(product = NULL, time = 1:2))
   )
 
   # Replacing nothing

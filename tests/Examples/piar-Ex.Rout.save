@@ -404,12 +404,12 @@ levels         1 2 3
 > # Percent-change contributions for the top-level index
 > 
 > contrib(index)
-      time
-levels         1         2
-   a.1 0.0000000 0.5081686
-   a.2 0.2440169 0.6442213
-   b.1 0.3905243 2.0513858
-   b.2 0.8284271 2.4871732
+       time
+product        1         2
+    a.1 0.0000000 0.5081686
+    a.2 0.2440169 0.6442213
+    b.1 0.3905243 2.0513858
+    b.2 0.8284271 2.4871732
 > 
 > contrib2DF(index)
   period level product     value

@@ -20,23 +20,23 @@ test_that("contrib works", {
     contrib(epr),
     matrix(c(0, 0.414213562373095, 2.5962965079607, 2.88444419044716),
       2, 2,
-      dimnames = list(levels = c("1", "2"), time = 1:2)
+      dimnames = list(product = c("1", "2"), time = 1:2)
     )
   )
   expect_equal(
     contrib(epr, "14"),
     matrix(c(0, 7),
       1, 2,
-      dimnames = list(levels = "6", time = 1:2)
+      dimnames = list(product = "6", time = 1:2)
     )
   )
   expect_equal(
     contrib(epr2),
-    matrix(numeric(0), 0, 2, dimnames = list(levels = NULL, time = 1:2))
+    matrix(numeric(0), 0, 2, dimnames = list(product = NULL, time = 1:2))
   )
   expect_equal(
     contrib(epr, 12, 2),
-    matrix(NA_real_, 1, 1, dimnames = list(levels = 3, time = 2))
+    matrix(NA_real_, 1, 1, dimnames = list(product = 3, time = 2))
   )
 })
 
@@ -78,7 +78,7 @@ test_that("padding work", {
   expect_equal(
     contrib(epr, 12, pad = -99),
     matrix(c(1.07179676972449, 1.39230484541326, NA, -99), 2, 2,
-      dimnames = list(levels = 3:4, time = 1:2)
+      dimnames = list(product = 3:4, time = 1:2)
     )
   )
   expect_error(contrib(epr, 12, pad = 1:2))
@@ -101,7 +101,7 @@ test_that("product names are correct", {
       ))
     ),
     matrix(c(0, 0, 1 / 3, 2 / 3, 1.5, 2, 0, 0), 4, 2,
-      dimnames = list(levels = c("a", "a.1", "b", "c"), time = 1:2)
+      dimnames = list(product = c("a", "a.1", "b", "c"), time = 1:2)
     )
   )
 
@@ -127,7 +127,7 @@ test_that("replacement works", {
   contrib(epr) <- matrix(as.numeric(epr[1]) - 1, 1)
   expect_equal(
     contrib(epr),
-    matrix(as.numeric(epr[1]) - 1, 1, dimnames = list(levels = 1, time = 1:2))
+    matrix(as.numeric(epr[1]) - 1, 1, dimnames = list(product = 1, time = 1:2))
   )
 
   # Deleting contributions, used to be give an error.
@@ -146,14 +146,14 @@ test_that("replacement works", {
   contrib(epr, 14) <- matrix(
     c(NA, 2:3, 6, 1, NA),
     3,
-    dimnames = list(levels = letters[1:3], time = NULL)
+    dimnames = list(product = letters[1:3], time = NULL)
   )
   expect_equal(
     contrib(epr, 14),
     matrix(
       c(NA, 2:3, 6, 1, NA),
       3,
-      dimnames = list(levels = letters[1:3], time = 1:2)
+      dimnames = list(product = letters[1:3], time = 1:2)
     )
   )
 

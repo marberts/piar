@@ -235,7 +235,7 @@ aggregate_index <- function(
     )
     if (has_contrib) {
       res$contrib <- Map(
-        super_aggregate_contrib(),
+        super_aggregate_contrib(0),
         res$contrib,
         res2$contrib,
         res$index,
@@ -361,11 +361,10 @@ aggregate_contrib <- function(r, duplicate_contrib = c("make.unique", "sum")) {
   }
 }
 
-
 #' Aggregate product contributions for a superlative index
 #' @noRd
-super_aggregate_contrib <- function() {
-  arithmetic_weights <- gpindex::transmute_weights(0, 1)
+super_aggregate_contrib <- function(r) {
+  arithmetic_weights <- gpindex::transmute_weights(r, 1)
   Vectorize(
     function(x, y, rel1, rel2) {
       w <- arithmetic_weights(c(rel1, rel2))

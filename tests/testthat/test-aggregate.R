@@ -387,7 +387,13 @@ test_that("partial contributions are correct", {
 })
 
 test_that("duplicate products get unique names during aggregation", {
-  epr1 <- elemental_index(setNames(1:4, 1:4), ea = gl(2, 2), period = gl(1, 4), contrib = TRUE, r = 1)
+  epr1 <- elemental_index(
+    setNames(1:4, 1:4),
+    ea = gl(2, 2),
+    period = gl(1, 4),
+    contrib = TRUE,
+    r = 1
+  )
   epr2 <- epr1
   levels(epr2) <- 3:4
   index <- aggregate(
@@ -396,7 +402,7 @@ test_that("duplicate products get unique names during aggregation", {
   )
   expect_equal(
     contrib(index, "a"),
-    matrix(c(0, 0.25, 0.5, 0.75), 4, dimnames = list(levels = 1:4, time = 1))
+    matrix(c(0, 0.25, 0.5, 0.75), 4, dimnames = list(product = 1:4, time = 1))
   )
   expect_equal(
     contrib(index, "a"),
@@ -406,7 +412,7 @@ test_that("duplicate products get unique names during aggregation", {
     contrib(index),
     matrix(rep(c(0, 0.125, 0.25, 0.375), each = 2), 8,
       dimnames = list(
-        levels = c(1, "1.1", 2, "2.1", 3, "3.1", 4, "4.1"),
+        product = c(1, "1.1", 2, "2.1", 3, "3.1", 4, "4.1"),
         time = 1
       )
     )
@@ -629,5 +635,20 @@ test_that("superlative index aggregates correctly", {
   expect_equal(
     aggregate(epr, pias, r = 0, na.rm = TRUE),
     aggregate(epr, pias, pias2 = pias, r = 0, na.rm = TRUE)
+  )
+})
+
+test_that("duplicate product methods work with NAs", {
+  x <- as_index(c(1, 2, NA))
+  contrib(x, 1) <- c(0.5, -0.25, NA, -0.25)
+  contrib(x, 3) <- c(1, NA, NA)
+  pias <- list(c(0, 0, 0), 1:3)
+  expect_equal(
+    contrib(aggregate(x, pias, duplicate_contrib = "sum")),
+    matrix(c(0.25, -0.125, NA, -0.125), dimnames = list(product = 1:4, time = 1))
+  )
+  expect_equal(
+    contrib(aggregate(x, pias, duplicate_contrib = "sum", na.rm = TRUE)),
+    matrix(c(0.25, -0.125, NA, -0.125), dimnames = list(product = 1:4, time = 1))
   )
 })

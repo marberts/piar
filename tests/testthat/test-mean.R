@@ -18,19 +18,19 @@ test_that("aggregating over subperiods works", {
   w <- matrix(seq_len(4 * 4), 4)
   expect_equal(
     as.matrix(mean(ms_epr, weights = w, window = 2))[, 1],
-    diag(as.matrix(ms_epr)[, 1:2] %*% apply(w[, 1:2], 1, scale_weights)),
+    diag(as.matrix(ms_epr)[, 1:2] %*% apply(w[, 1:2], 1, gpindex::scale_weights)),
     ignore_attr = TRUE
   )
   expect_equal(
     as.matrix(mean(ms_epr, weights = w, window = 2))[, 2],
-    diag(as.matrix(ms_epr)[, 3:4] %*% apply(w[, 3:4], 1, scale_weights)),
+    diag(as.matrix(ms_epr)[, 3:4] %*% apply(w[, 3:4], 1, gpindex::scale_weights)),
     ignore_attr = TRUE
   )
 
   # Test contributions
   con <- matrix(0, 5, 2)
   dimnames(con) <- list(
-    levels = c("1", "2", "2.1", "3", "3.1"),
+    product = c("1", "2", "2.1", "3", "3.1"),
     time = c("202001", "202003")
   )
   con[c(2, 3, 9, 10)] <- NA
@@ -40,7 +40,7 @@ test_that("aggregating over subperiods works", {
     contrib(mean(ms_epr, window = 2, duplicate_contrib = "sum")),
     structure(
       rbind("1" = con[1, ], "2" = colSums(con[2:3, ]), "3" = colSums(con[4:5, ])),
-      dimnames = list(levels = 1:3, time = time(ms_epr)[c(1, 3)])
+      dimnames = list(product = 1:3, time = time(ms_epr)[c(1, 3)])
     )
   )
 
@@ -53,7 +53,8 @@ test_that("aggregating over subperiods works", {
   epr3 <- mean(ms_epr, weights = w, window = 2, r = 2.5, na.rm = TRUE, duplicate_contrib = "sum")
   expect_equal(
     colSums(contrib(epr3, "B1"), na.rm = TRUE),
-    as.matrix(epr3)["B1", ] - 1
+    as.matrix(epr3)["B1", ] - 1,
+    ignore_attr = TRUE
   )
   expect_equal(colSums(contrib(epr3, "B3")), as.matrix(epr3)["B3", ] - 1)
 })

@@ -1,6 +1,6 @@
 Package: piar
 Title: Price Index Aggregation
-Version: 0.8.2.9004
+Version: 0.8.2.9005
 Authors@R: c(
     person("Steve", "Martin", role = c("aut", "cre", "cph"),
            email = "marberts@protonmail.com",

@@ -92,9 +92,8 @@ contrib.piar_index <- function(x,
   # replace with the actual values so products that didn't sell have 0 and
   # not NA contributions.
   out[] <- list(structure(rep.int(pad, length(products)), names = products))
-  res <- Map(replace, out, con_names, con)
-  res <- do.call(cbind, res)
-  names(dimnames(res)) <- c("levels", "time")
+  res <- do.call(cbind, Map(replace, out, con_names, con))
+  names(dimnames(res)) <- c("product", "time")
   res
 }
 

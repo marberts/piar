@@ -34,11 +34,11 @@ test_that("merge returns the correct result", {
   expect_identical(time(epr3), time(epr1))
   expect_equal(
     contrib(epr3, "a"),
-    matrix(c(0, 4), 1, 2, dimnames = list(levels = "a.1", time = 1:2))
+    matrix(c(0, 4), 1, 2, dimnames = list(product = "a.1", time = 1:2))
   )
   expect_equal(
     contrib(epr3, "e"),
-    matrix(numeric(0), 0, 2, dimnames = list(levels = NULL, time = 1:2))
+    matrix(numeric(0), 0, 2, dimnames = list(product = NULL, time = 1:2))
   )
   res2 <- rbind(
     matrix(1:8, 4, 2, dimnames = list(levels = letters[5:8], 1:2)),

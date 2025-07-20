@@ -50,7 +50,8 @@
 #' A price index, averaged over subperiods, that inherits from the same
 #' class as `x`.
 #'
-#' @references Balk, B. M. (2008). *Price and Quantity Index Numbers*.
+#' @references
+#' Balk, B. M. (2008). *Price and Quantity Index Numbers*.
 #' Cambridge University Press.
 #'
 #' @examples
@@ -62,15 +63,14 @@
 #' @family index methods
 #' @export
 mean.chainable_piar_index <- function(
-  x,
-  ...,
-  weights = NULL,
-  window = ntime(x),
-  na.rm = FALSE,
-  contrib = TRUE,
-  r = 1,
-  duplicate_contrib = c("make.unique", "sum")
-) {
+    x,
+    ...,
+    weights = NULL,
+    window = ntime(x),
+    na.rm = FALSE,
+    contrib = TRUE,
+    r = 1,
+    duplicate_contrib = c("make.unique", "sum")) {
   chkDots(...)
   mean_index(
     x,
@@ -87,15 +87,14 @@ mean.chainable_piar_index <- function(
 #' @rdname mean.piar_index
 #' @export
 mean.direct_piar_index <- function(
-  x,
-  ...,
-  weights = NULL,
-  window = ntime(x),
-  na.rm = FALSE,
-  contrib = TRUE,
-  r = 1,
-  duplicate_contrib = c("make.unique", "sum")
-) {
+    x,
+    ...,
+    weights = NULL,
+    window = ntime(x),
+    na.rm = FALSE,
+    contrib = TRUE,
+    r = 1,
+    duplicate_contrib = c("make.unique", "sum")) {
   chkDots(...)
   mean_index(
     x,
@@ -112,15 +111,14 @@ mean.direct_piar_index <- function(
 #' Internal function to aggregate over subperiods
 #' @noRd
 mean_index <- function(
-  x,
-  weights,
-  window,
-  na.rm,
-  contrib,
-  r,
-  chainable,
-  duplicate_contrib
-) {
+    x,
+    weights,
+    window,
+    na.rm,
+    contrib,
+    r,
+    chainable,
+    duplicate_contrib) {
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
     if (length(weights) != length(x$time) * length(x$levels)) {

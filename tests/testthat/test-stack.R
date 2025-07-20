@@ -40,7 +40,7 @@ test_that("stacking returns the correct result", {
   expect_identical(time(epr3), as.character(1:4))
   expect_equal(
     contrib(epr3),
-    matrix(c(0, 4, 0, 0), 1, 4, dimnames = list(levels = "a.1", time = 1:4))
+    matrix(c(0, 4, 0, 0), 1, 4, dimnames = list(product = "a.1", time = 1:4))
   )
   expect_equal(
     as.matrix(stack(epr2, epr1)),

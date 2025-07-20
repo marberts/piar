@@ -9,17 +9,17 @@ padded_extract <- function(x, i, pad) {
 }
 
 #---- Replacing contributions ----
-near <- function(x, y, tol = .Machine$double.eps^0.5) {
-  abs(x - y) < tol
-}
-
-valid_replacement_contrib <- function(index, contrib) {
+valid_replacement_contrib <- function(index,
+                                      contrib,
+                                      tol = .Machine$double.eps^0.5) {
   if (length(contrib) == 0L) {
-    TRUE
-  } else if (is.na(index)) {
-    anyNA(contrib)
+    return(TRUE)
+  }
+  valid <- sum(contrib, na.rm = TRUE) <= index - 1 + tol
+  if (is.na(index)) {
+    anyNA(contrib) || valid
   } else {
-    near(sum(contrib, na.rm = TRUE), index - 1)
+    valid
   }
 }
 
