@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -233,11 +233,11 @@ contributions for the Fisher index using the default method.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="va">fisher_index</span>, <span class="st">"B1"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       time</span></span>
-<span><span class="co">## levels 1         2         3</span></span>
-<span><span class="co">##   B1.1 0 1.1024526 0.2899319</span></span>
-<span><span class="co">##   B1.2 0 1.0256151 0.2530718</span></span>
-<span><span class="co">##   B1.3 0 0.9487724 0.2162114</span></span></code></pre>
+<pre><code><span><span class="co">##        time</span></span>
+<span><span class="co">## product 1         2         3</span></span>
+<span><span class="co">##    B1.1 0 1.1024526 0.2899319</span></span>
+<span><span class="co">##    B1.2 0 1.0256151 0.2530718</span></span>
+<span><span class="co">##    B1.3 0 0.9487724 0.2162114</span></span></code></pre>
 <p>We can change the method used to make contributions for, say,
 business <code>B1</code> by making a function to compute contributions
 according to a different method</p>
@@ -262,11 +262,11 @@ according to a different method</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="va">fisher_index</span>, <span class="st">"B1"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       time</span></span>
-<span><span class="co">## levels 1         2         3</span></span>
-<span><span class="co">##      1 0 1.1124046 0.2937263</span></span>
-<span><span class="co">##      2 0 1.0256134 0.2530717</span></span>
-<span><span class="co">##      3 0 0.9388222 0.2124170</span></span></code></pre>
+<pre><code><span><span class="co">##        time</span></span>
+<span><span class="co">## product 1         2         3</span></span>
+<span><span class="co">##       1 0 1.1124046 0.2937263</span></span>
+<span><span class="co">##       2 0 1.0256134 0.2530717</span></span>
+<span><span class="co">##       3 0 0.9388222 0.2124170</span></span></code></pre>
 <p>Aggregating the elemental indexes will then consistently aggregate
 the contributions for both businesses, even though they use different
 methods.</p>
