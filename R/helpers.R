@@ -23,7 +23,7 @@ valid_replacement_contrib <- function(index,
   }
 }
 
-valid_contrib <- function(index, contrib) {
+valid_contrib <- function(contrib) {
   if (is.null(names(contrib))) {
     products <- if (length(contrib) > 0L) {
       as.character(seq_along(contrib))
@@ -33,18 +33,12 @@ valid_contrib <- function(index, contrib) {
   }
   contrib <- as.numeric(contrib)
   names(contrib) <- products
-  if (!valid_replacement_contrib(index, contrib)) {
-    stop(
-      "contributions do not add up for each level ",
-      "in each time period"
-    )
-  }
   contrib
 }
 
-valid_contrib_array <- function(index, contrib) {
+valid_contrib_array <- function(contrib) {
   for (i in seq_along(contrib)) {
-    contrib[[i]] <- valid_contrib(index[[i]], contrib[[i]])
+    contrib[[i]] <- valid_contrib(contrib[[i]])
   }
   contrib
 }

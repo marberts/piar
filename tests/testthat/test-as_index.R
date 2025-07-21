@@ -82,12 +82,15 @@ test_that("as_index works with contribs", {
   index2 <- aggregate(epr, pias, contrib = FALSE)
   index2df <- as.data.frame(index2, contrib = TRUE)
   expect_equal(
-    as_index(index2df[-1, ], contrib = TRUE),
+    as_index(index2df, contrib = TRUE),
     index2
   )
 
-  index2df[1, 4] <- list(a = 0)
-  expect_error(as_index(index2df, contrib = TRUE))
+  index2df[1, 4][[1]] <- list(c(a = 0))
+  expect_equal(
+    as.data.frame(as_index(index2df, contrib = TRUE), contrib = TRUE),
+    index2df
+  )
 
   index2df[1, 4][[1]] <- list(c(a = 2, a = 1, b = NA))
   expect_warning(index2 <- as_index(index2df, contrib = TRUE))

@@ -158,8 +158,6 @@ test_that("replacement works", {
   )
 
   # Errors work.
-  expect_error(contrib(epr, period = 1) <- 1)
-  expect_error(contrib(epr, 14, 1) <- 1:3)
   expect_error(contrib(epr) <- matrix(0, 0, 0))
   expect_warning(contrib(epr) <- matrix(c(as.numeric(epr[1]), 3) - 1, 1, 3))
   expect_warning(contrib(epr, 14, 1) <- c(a = 1, a = NA))

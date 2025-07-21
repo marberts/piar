@@ -16,6 +16,9 @@ names.
 - Fixed description of how product contributions are combined across subperiods
 in `?mean.piar_index` (#51).
 
+- Converting a data frame with partial product contributions to an index object
+no longer gives an error.
+
 # piar 0.8.2
 
 - The vignette has been re-written, split into small examples that cover more

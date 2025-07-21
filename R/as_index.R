@@ -122,11 +122,9 @@ as_index.data.frame <- function(x, ..., contrib = FALSE) {
     )
     contributions[as.matrix(x[2:1])] <- x[[4L]]
 
-    contributions <- valid_contrib_array(index, contributions)
     index <- as_index(index, ...)
-    # No need to explicitly validate contrib.
     for (t in seq_along(time)) {
-      index$contrib[[t]][] <- contributions[, t]
+      index$contrib[[t]][] <- valid_contrib_array(contributions[, t])
     }
   } else {
     index <- as_index(index, contrib = contrib, ...)
