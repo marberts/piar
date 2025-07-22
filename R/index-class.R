@@ -81,6 +81,9 @@ validate_index_values <- function(x) {
   if (any(lengths(x$index) != length(x$levels))) {
     stop("number of levels does not agree with number of index values")
   }
+  if (any(vapply(x$index, \(x) any(x <= 0, na.rm = TRUE), logical(1)))) {
+    stop("cannot make an index with non-positive values")
+  }
   invisible(x)
 }
 
@@ -177,8 +180,15 @@ Math.piar_index <- function(x, ...) {
 
 #' @export
 Ops.piar_index <- function(e1, e2) {
-  boolean <- switch(.Generic, `<` = , `>` = , `==` = , `!=` = ,
-                    `<=` = , `>=` = TRUE, FALSE)
+  boolean <- switch(.Generic,
+    `<` = ,
+    `>` = ,
+    `==` = ,
+    `!=` = ,
+    `<=` = ,
+    `>=` = TRUE,
+    FALSE
+  )
   if (!boolean) {
     stop(gettextf("'%s' not meaningful for index objects", .Generic))
   }

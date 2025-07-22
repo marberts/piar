@@ -92,10 +92,10 @@ test_that("replacement methods work with an index", {
 })
 
 test_that("replacement methods work with a vector", {
-  epr[, 1] <- 0
+  epr[, 1] <- 1
   expect_equal(
     as.matrix(epr),
-    matrix(c(0, 0, 0, 0, res[5:8]), 4, 2,
+    matrix(c(1, 1, 1, 1, res[5:8]), 4, 2,
       dimnames = list(levels = 11:14, time = 1:2)
     )
   )
@@ -107,10 +107,10 @@ test_that("replacement methods work with a vector", {
     )
   )
 
-  epr[1, c(FALSE, TRUE)] <- "0"
+  epr[1, c(FALSE, TRUE)] <- "2"
   expect_equal(
     as.matrix(epr),
-    matrix(c(0, 0, 0, 0, 0, res[6:8]), 4, 2,
+    matrix(c(1, 1, 1, 1, 2, res[6:8]), 4, 2,
       dimnames = list(levels = 11:14, time = 1:2)
     )
   )
@@ -135,7 +135,7 @@ test_that("replacement methods work with a vector", {
   epr["14"] <- 1
   expect_equal(
     as.matrix(epr),
-    matrix(c(3, 0, 0, 1, 2, res[6:7], 1), 4, 2,
+    matrix(c(3, 1, 1, 1, 2, res[6:7], 1), 4, 2,
       dimnames = list(levels = 11:14, time = 1:2)
     )
   )

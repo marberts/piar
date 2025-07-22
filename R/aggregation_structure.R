@@ -100,8 +100,8 @@ aggregation_structure <- function(x, weights = NULL) {
     weights <- rep.int(1, length(ea))
   } else {
     weights <- as.numeric(weights)
-    if (any(weights <= 0, na.rm = TRUE)) {
-      warning("some elements of 'w' are less than or equal to 0")
+    if (any(missing_weights(weights))) {
+      warning("some elements of 'weights' are NA or zero")
     }
   }
 

@@ -188,6 +188,9 @@ elemental_index.numeric <- function(x,
   chkDots(...)
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
+    if (any(weights < 0, na.rm = TRUE)) {
+      stop("all elements of 'weights' must be non-negative")
+    }
   }
   period <- as.factor(period)
   ea <- as.factor(ea) # ensures elemental aggregates are balanced
@@ -198,8 +201,8 @@ elemental_index.numeric <- function(x,
   if (different_length(x, period, ea, weights)) {
     stop("input vectors must be the same length")
   }
-  if (any(x <= 0, na.rm = TRUE) || any(weights <= 0, na.rm = TRUE)) {
-    warning("some elements of 'x' or 'weights' are less than or equal to 0")
+  if (any(x <= 0, na.rm = TRUE)) {
+    stop("all elements of 'x' must be strictly positive")
   }
 
   if (contrib) {
