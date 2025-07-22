@@ -11,13 +11,19 @@ names.
 - `expand_classification()` and `split_classification()` get a new argument
 `pad` to better manage unbalanced classifications.
 
+- It is no longer possible to make non-positive index values or use
+negative weights.
+
 ## Bug fixes
 
 - Fixed description of how product contributions are combined across subperiods
 in `?mean.piar_index` (#51).
 
 - Converting a data frame with partial product contributions to an index object
-no longer gives an error.
+no longer gives an error (#52).
+
+- It is now an error to construct product contributions for a superlative index
+when missing weights are mismatched (#59).
 
 # piar 0.8.2
 

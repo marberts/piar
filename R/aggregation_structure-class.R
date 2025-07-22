@@ -36,10 +36,10 @@ validate_pias_levels <- function(x) {
 validate_pias_structure <- function(x) {
   height <- length(x$levels)
   if (height != length(x$child) + 1L ||
-      height != length(x$parent) + 1L ||
-      anyNA(x$child, recursive = TRUE) ||
-      anyNA(x$parent, recursive = TRUE) ||
-      any(vapply(x$child, \(x) any(lengths(x) == 0L), logical(1L)))
+    height != length(x$parent) + 1L ||
+    anyNA(x$child, recursive = TRUE) ||
+    anyNA(x$parent, recursive = TRUE) ||
+    any(vapply(x$child, \(x) any(lengths(x) == 0L), logical(1L)))
   ) {
     stop(
       "invalid aggregation structure; the input is likely not a nested ",
@@ -55,6 +55,9 @@ validate_pias_weights <- function(x) {
       "cannot make an aggregation structure with a different number of ",
       "weights and elemental aggregates"
     )
+  }
+  if (any(x$weights < 0, na.rm = TRUE)) {
+    stop("cannot make an aggregation structure with negative weights")
   }
   invisible(x)
 }

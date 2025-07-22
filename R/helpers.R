@@ -8,6 +8,10 @@ padded_extract <- function(x, i, pad) {
   res
 }
 
+missing_weights <- function(x) {
+  is.na(x) | x == 0
+}
+
 #---- Replacing contributions ----
 valid_replacement_contrib <- function(index,
                                       contrib,

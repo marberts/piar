@@ -652,3 +652,25 @@ test_that("duplicate product methods work with NAs", {
     matrix(c(0.25, -0.125, NA, -0.125), dimnames = list(product = 1:4, time = 1))
   )
 })
+
+test_that("superlative contributions work with NA weights", {
+  x <- as_index(c("3" = 1, "4" = 2))
+  contrib(x, 3) <- 1:5
+  contrib(x, 4) <- 1:2
+  pias1 <- aggregation_structure(list(c(0, 0), 1:2, 3:4), c(1, 1))
+  weights(pias1)[1] <- NA
+  pias2 <- aggregation_structure(list(c(0, 0), 1:2, 3:4), c(2, 2))
+
+  expect_error(aggregate(x, pias1, pias2 = pias2, na.rm = TRUE))
+  weights(pias2)[1] <- 0
+  res <- aggregate(x, pias1, pias2 = pias2, na.rm = TRUE, duplicate_contrib = "sum")
+
+  expect_equal(
+    contrib(res),
+    matrix(
+      c(1, 2, NA, NA, NA),
+      nrow = 5,
+      dimnames = list(product = 1:5, time = 1)
+    )
+  )
+})

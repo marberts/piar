@@ -73,7 +73,8 @@ test_that("weights method works", {
 
 test_that("NAs move up the aggregation structure", {
   expect_equal(
-    weights(aggregation_structure(list(x1, x2, x3), c(NA, 2:4)),
+    weights(
+      suppressWarnings(aggregation_structure(list(x1, x2, x3), c(NA, 2:4))),
       ea_only = FALSE
     ),
     list(
@@ -84,7 +85,8 @@ test_that("NAs move up the aggregation structure", {
   )
 
   expect_equal(
-    weights(aggregation_structure(list(x1, x2, x3), c(NA, 2:4)),
+    weights(
+      suppressWarnings(aggregation_structure(list(x1, x2, x3), c(NA, 2:4))),
       ea_only = FALSE, na.rm = TRUE
     ),
     list(

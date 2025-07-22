@@ -121,6 +121,9 @@ mean_index <- function(
     duplicate_contrib) {
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
+    if (any(weights < 0, na.rm = TRUE)) {
+      stop("all elements of 'weights' must be non-negative")
+    }
     if (length(weights) != length(x$time) * length(x$levels)) {
       stop("'weights' must have a value for each index value in 'x'")
     }
