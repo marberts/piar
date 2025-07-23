@@ -121,7 +121,7 @@ as_index.data.frame <- function(x, ..., contrib = FALSE) {
 
     index <- as_index(index, ...)
     for (t in seq_along(time)) {
-      index$contrib[[t]][] <- valid_contrib_array(contributions[, t])
+      index$contrib[[t]][] <- lapply(contributions[, t], valid_contrib)
     }
   } else {
     index <- as_index(index, contrib = contrib, ...)

@@ -91,5 +91,5 @@ as.double.piar_index <- function(x, ...) {
 #' @family index methods
 #' @export
 as.ts.piar_index <- function(x, ...) {
-  ts(do.call(rbind, x$index), ..., names = x$levels)
+  ts(data = do.call(rbind, x$index), ..., names = x$levels)
 }

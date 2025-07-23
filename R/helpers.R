@@ -13,20 +13,6 @@ missing_weights <- function(x) {
 }
 
 #---- Replacing contributions ----
-valid_replacement_contrib <- function(index,
-                                      contrib,
-                                      tol = .Machine$double.eps^0.5) {
-  if (length(contrib) == 0L) {
-    return(TRUE)
-  }
-  valid <- sum(contrib, na.rm = TRUE) <= index - 1 + tol
-  if (is.na(index)) {
-    anyNA(contrib) || valid
-  } else {
-    valid
-  }
-}
-
 valid_contrib <- function(contrib) {
   if (is.null(names(contrib))) {
     products <- if (length(contrib) > 0L) {
@@ -37,13 +23,6 @@ valid_contrib <- function(contrib) {
   }
   contrib <- as.numeric(contrib)
   names(contrib) <- products
-  contrib
-}
-
-valid_contrib_array <- function(contrib) {
-  for (i in seq_along(contrib)) {
-    contrib[[i]] <- valid_contrib(contrib[[i]])
-  }
   contrib
 }
 
