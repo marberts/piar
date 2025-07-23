@@ -84,8 +84,8 @@
 #'   along with the aggregated indexes? By default, all index values are
 #'   returned.
 #' @param ... Not currently used.
-#' @param duplicate_contrib The method to deal with duplicate product contributions.
-#'   Either 'make.unique' to treat duplicate
+#' @param duplicate_contrib The method to deal with duplicate product
+#'   contributions. Either 'make.unique' to treat duplicate
 #'   products as distinct products and make their names unique
 #'   with [make.unique()] or 'sum' to add contributions for each product.
 #'

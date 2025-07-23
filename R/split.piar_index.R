@@ -33,7 +33,7 @@ split.piar_index <- function(x,
                              ...,
                              margin = c("levels", "time")) {
   margin <- match.arg(margin)
-  ix <- split(seq_along(x[[margin]]), f, drop = drop, ...)
+  ix <- split(seq_along(x[[margin]]), f = f, drop = drop, ...)
   if (margin == "levels") {
     lapply(ix, \(i) x[i, ])
   } else {
@@ -51,7 +51,7 @@ split.piar_index <- function(x,
                                  value) {
   value <- as.list(value)
   margin <- match.arg(margin)
-  ix <- split(seq_along(x[[margin]]), f, drop = drop, ...)
+  ix <- split(seq_along(x[[margin]]), f = f, drop = drop, ...)
   n <- length(value)
   if (n > 0L && length(ix) %% n != 0) {
     warning(

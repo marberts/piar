@@ -153,6 +153,14 @@ contrib2DF.piar_index <- function(x,
   period <- match_time(as.character(period), x$time, several = TRUE)
 
   value <- as.matrix(value)
+  if (ncol(value) == 0L) {
+    stop("replacement has length zero")
+  } else if (length(period) %% ncol(value) != 0) {
+    warning(
+      "number of items to replace is not a multiple of replacement length"
+    )
+  }
+
   if (nrow(value) > 0L) {
     if (is.null(rownames(value))) {
       products <- as.character(seq_len(nrow(value)))
@@ -161,14 +169,6 @@ contrib2DF.piar_index <- function(x,
     }
   } else {
     products <- NULL
-  }
-
-  if (ncol(value) == 0L) {
-    stop("replacement has length zero")
-  } else if (length(period) %% ncol(value) != 0) {
-    warning(
-      "number of items to replace is not a multiple of replacement length"
-    )
   }
 
   j <- 0

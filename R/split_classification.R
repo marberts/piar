@@ -44,7 +44,7 @@ split_classification <- function(x, split, ..., sep = ".", pad = NA) {
   if (length(x) == 0L) {
     return(list())
   }
-  x <- strsplit(x = x, split = split, ...)
+  x <- strsplit(x, split = split, ...)
   n <- max(lengths(x))
   if (n == 0L) {
     return(list(rep.int("", length(x))))

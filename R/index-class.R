@@ -81,7 +81,7 @@ validate_index_values <- function(x) {
   if (any(lengths(x$index) != length(x$levels))) {
     stop("number of levels does not agree with number of index values")
   }
-  if (any(vapply(x$index, \(x) any(x <= 0, na.rm = TRUE), logical(1)))) {
+  if (any(vapply(x$index, \(x) any(x <= 0, na.rm = TRUE), logical(1L)))) {
     stop("cannot make an index with non-positive values")
   }
   invisible(x)
