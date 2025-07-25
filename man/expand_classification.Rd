@@ -27,7 +27,7 @@ level of the classification, ordered so that moving down the list goes down
 the hierarchy (as made by \code{expand_classification()}).}
 
 \item{sep}{A character used to combine codes/labels across elements of \code{...}.
-The default uses ":".}
+The default uses ':'.}
 }
 \value{
 \code{expand_classification()} returns a list with a entry for each level

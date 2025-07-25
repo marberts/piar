@@ -54,7 +54,7 @@ sequential_names <- function(...) {
 valid_product_names <- function(x, period = NULL) {
   x <- as.character(x)
   if (anyNA(x) || any(x == "")) {
-    stop("each product must have a non-missing name")
+    stop("each product must have a non-missing or length-zero name")
   }
   if (is.null(period)) {
     if (anyDuplicated(x) > 0L) {

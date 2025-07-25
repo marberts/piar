@@ -59,8 +59,8 @@ index is aggregated with a quadratic mean of order \code{2*r}.}
 along with the aggregated indexes? By default, all index values are
 returned.}
 
-\item{duplicate_contrib}{The method to deal with duplicate product contributions.
-Either 'make.unique' to treat duplicate
+\item{duplicate_contrib}{The method to deal with duplicate product
+contributions. Either 'make.unique' to treat duplicate
 products as distinct products and make their names unique
 with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for each product.}
 }

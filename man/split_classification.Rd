@@ -17,7 +17,7 @@ See \code{\link[=strsplit]{strsplit()}}.}
 \item{...}{Additional argument to pass to \code{\link[=strsplit]{strsplit()}}.}
 
 \item{sep}{A character used to delineate levels in \code{x} in the result. The
-default separates levels by ".".}
+default separates levels by '.'.}
 
 \item{pad}{A string used to pad the shorter labels for an unbalanced
 classification. The default pads with NA.}

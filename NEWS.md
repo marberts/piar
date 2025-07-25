@@ -23,7 +23,7 @@ in `?mean.piar_index` (#51).
 no longer gives an error (#52).
 
 - It is now an error to construct product contributions for a superlative index
-when missing weights are mismatched (#59).
+when missing/zero weights are mismatched (#59).
 
 # piar 0.8.2
 

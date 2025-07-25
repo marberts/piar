@@ -25,7 +25,9 @@ piar_aggregation_structure <- function(child, parent, levels, weights) {
 validate_pias_levels <- function(x) {
   lev <- unlist(x$levels, use.names = FALSE)
   if (anyNA(lev) || any(lev == "")) {
-    stop("cannot make an aggregation structure with missing levels")
+    stop(
+      "cannot make an aggregation structure with missing or length-zero levels"
+    )
   }
   if (anyDuplicated(lev)) {
     stop("cannot make an aggregation structure with duplicated levels")

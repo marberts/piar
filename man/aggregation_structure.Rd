@@ -14,7 +14,7 @@ the hierarchy. The last vector gives the elemental aggregates, which should
 have no duplicates. All vectors should be the same length, without
 \code{NA}s, and there should be no duplicates across different levels of
 \code{x}. Names for \code{x} are used as level names; otherwise, levels are named
-level1, level2, ..., ea.}
+'level1', 'level2', ..., 'ea'.}
 
 \item{weights}{A numeric vector of aggregation weights for the elemental
 aggregates (i.e., the last vector in \code{x}), or something that can be coerced
