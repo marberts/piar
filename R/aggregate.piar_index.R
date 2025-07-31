@@ -353,7 +353,7 @@ aggregate_contrib <- function(r, duplicate_contrib = c("make.unique", "sum")) {
     }
     if (duplicate_contrib == "make.unique") {
       res <- unlist(res)
-      names(res) <- make.unique(as.character(names(res)))
+      names(res) <- make.unique(names(res))
     } else {
       products <- unlist(lapply(res, names), use.names = FALSE)
       if (anyDuplicated(products) > 0L) {
