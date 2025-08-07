@@ -3,5 +3,6 @@ linters: linters_with_defaults(
     object_length_linter = object_length_linter(length = 40)
   )
 exclusions: list(
-    "R/index-class.R"
+    "R/index-class.R",
+    "tests/test-making-price-indexes.R"
   )
