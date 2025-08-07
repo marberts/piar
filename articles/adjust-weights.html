@@ -163,10 +163,12 @@ converge to a fixed point. The following function shows how to do this
 adjustment using the tools in this package.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Function to adjust annual weights.</span></span>
-<span><span class="va">adjust_weights</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">index</span>,</span>
-<span>                           <span class="va">pias</span>,</span>
-<span>                           <span class="va">tol</span> <span class="op">=</span> <span class="va">.Machine</span><span class="op">$</span><span class="va">double.eps</span><span class="op">^</span><span class="fl">0.5</span>,</span>
-<span>                           <span class="va">max_iter</span> <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="va">adjust_weights</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span></span>
+<span>  <span class="va">index</span>,</span>
+<span>  <span class="va">pias</span>,</span>
+<span>  <span class="va">tol</span> <span class="op">=</span> <span class="va">.Machine</span><span class="op">$</span><span class="va">double.eps</span><span class="op">^</span><span class="fl">0.5</span>,</span>
+<span>  <span class="va">max_iter</span> <span class="op">=</span> <span class="fl">100</span></span>
+<span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">adj_pias</span> <span class="op">&lt;-</span> <span class="va">pias</span></span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">max_iter</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="co"># Parentally impute missing elemental indexes.</span></span>

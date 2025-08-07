@@ -97,7 +97,7 @@ detail.</p>
 <span>  quantity <span class="op">=</span> <span class="fl">18</span><span class="op">:</span><span class="fl">1</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">prices</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"back_price"</span>, <span class="st">"back_quantity"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> </span>
+<span><span class="va">prices</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"back_price"</span>, <span class="st">"back_quantity"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">prices</span><span class="op">[</span><span class="fu"><a href="https://marberts.github.io/gpindex/reference/back_period.html" class="external-link">back_period</a></span><span class="op">(</span><span class="va">prices</span><span class="op">$</span><span class="va">period</span>, <span class="va">prices</span><span class="op">$</span><span class="va">product</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"price"</span>, <span class="st">"quantity"</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">prices</span><span class="op">)</span></span></code></pre></div>
@@ -176,7 +176,10 @@ that is needed to make a Törnqvist index is the weights.</p>
 <span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span></span>
 <span>    <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>,</span>
 <span>    weights <span class="op">=</span> <span class="fu">tw</span><span class="op">(</span></span>
-<span>      <span class="va">price</span>, <span class="va">back_price</span>, <span class="va">quantity</span>, <span class="va">back_quantity</span>,</span>
+<span>      <span class="va">price</span>,</span>
+<span>      <span class="va">back_price</span>,</span>
+<span>      <span class="va">quantity</span>,</span>
+<span>      <span class="va">back_quantity</span>,</span>
 <span>      group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">period</span>, <span class="va">business</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
@@ -196,7 +199,9 @@ order.</p>
 <span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span></span>
 <span>    <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>,</span>
 <span>    weights <span class="op">=</span> <span class="fu">fw</span><span class="op">(</span></span>
-<span>      <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span>, <span class="va">back_price</span> <span class="op">*</span> <span class="va">back_quantity</span>, <span class="va">price</span> <span class="op">*</span> <span class="va">quantity</span>,</span>
+<span>      <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span>,</span>
+<span>      <span class="va">back_price</span> <span class="op">*</span> <span class="va">back_quantity</span>,</span>
+<span>      <span class="va">price</span> <span class="op">*</span> <span class="va">quantity</span>,</span>
 <span>      group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">period</span>, <span class="va">business</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
@@ -226,7 +231,9 @@ contributions for the Fisher index using the default method.</p>
 <span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span></span>
 <span>    <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>,</span>
 <span>    weights <span class="op">=</span> <span class="fu">fw</span><span class="op">(</span></span>
-<span>      <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span>, <span class="va">back_price</span> <span class="op">*</span> <span class="va">back_quantity</span>, <span class="va">price</span> <span class="op">*</span> <span class="va">quantity</span>,</span>
+<span>      <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span>,</span>
+<span>      <span class="va">back_price</span> <span class="op">*</span> <span class="va">back_quantity</span>,</span>
+<span>      <span class="va">price</span> <span class="op">*</span> <span class="va">quantity</span>,</span>
 <span>      group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/interaction.html" class="external-link">interaction</a></span><span class="op">(</span><span class="va">period</span>, <span class="va">business</span><span class="op">)</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    contrib <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -247,7 +254,7 @@ according to a different method</p>
 <span>  <span class="va">Pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/price_indexes.html" class="external-link">laspeyres_index</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q0</span><span class="op">)</span></span>
 <span>  <span class="va">wl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/scale_weights.html" class="external-link">scale_weights</a></span><span class="op">(</span><span class="fu"><a href="https://marberts.github.io/gpindex/reference/index_weights.html" class="external-link">index_weights</a></span><span class="op">(</span><span class="st">"Laspeyres"</span><span class="op">)</span><span class="op">(</span><span class="va">p0</span>, <span class="va">q0</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">wp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/scale_weights.html" class="external-link">scale_weights</a></span><span class="op">(</span><span class="fu"><a href="https://marberts.github.io/gpindex/reference/index_weights.html" class="external-link">index_weights</a></span><span class="op">(</span><span class="st">"HybridPaasche"</span><span class="op">)</span><span class="op">(</span><span class="va">p0</span>, <span class="va">q1</span><span class="op">)</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">Pf</span><span class="op">)</span> <span class="op">*</span> <span class="va">wl</span> <span class="op">+</span> <span class="va">Pl</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">Pf</span><span class="op">)</span> <span class="op">*</span> <span class="va">wp</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>and using this function to replace the contributions for business
@@ -256,9 +263,14 @@ according to a different method</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="va">fisher_index</span>, <span class="st">"B1"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">prices</span>, <span class="va">business</span> <span class="op">==</span> <span class="st">"B1"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="op">~</span><span class="va">period</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span></span>
-<span>    \<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu">diewert_contributions</span><span class="op">(</span></span>
-<span>      <span class="va">df</span><span class="op">$</span><span class="va">price</span>, <span class="va">df</span><span class="op">$</span><span class="va">back_price</span>, <span class="va">df</span><span class="op">$</span><span class="va">quantity</span>, <span class="va">df</span><span class="op">$</span><span class="va">back_quantity</span></span>
-<span>    <span class="op">)</span></span>
+<span>    \<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu">diewert_contributions</span><span class="op">(</span></span>
+<span>        <span class="va">df</span><span class="op">$</span><span class="va">price</span>,</span>
+<span>        <span class="va">df</span><span class="op">$</span><span class="va">back_price</span>,</span>
+<span>        <span class="va">df</span><span class="op">$</span><span class="va">quantity</span>,</span>
+<span>        <span class="va">df</span><span class="op">$</span><span class="va">back_quantity</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/contrib.html">contrib</a></span><span class="op">(</span><span class="va">fisher_index</span>, <span class="st">"B1"</span><span class="op">)</span></span></code></pre></div>
