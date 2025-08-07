@@ -66,10 +66,12 @@ to do this adjustment using the tools in this package.
 
 ```{r}
 # Function to adjust annual weights.
-adjust_weights <- function(index,
-                           pias,
-                           tol = .Machine$double.eps^0.5,
-                           max_iter = 100) {
+adjust_weights <- function(
+  index,
+  pias,
+  tol = .Machine$double.eps^0.5,
+  max_iter = 100
+) {
   adj_pias <- pias
   for (i in seq_len(max_iter)) {
     # Parentally impute missing elemental indexes.

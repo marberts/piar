@@ -65,7 +65,11 @@ test_that("as_index works for data frames", {
 test_that("as_index works for ts", {
   expect_identical(
     as_index(ts(matrix(1:6, 2))),
-    as_index(matrix(c(1, 3, 5, 2, 4, 6), 3, dimnames = list(paste("Series", 1:3), 1:2)))
+    as_index(matrix(
+      c(1, 3, 5, 2, 4, 6),
+      3,
+      dimnames = list(paste("Series", 1:3), 1:2)
+    ))
   )
 })
 

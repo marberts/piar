@@ -41,8 +41,8 @@
 #'   [gpindex::generalized_mean()] for details.
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
 #' @param ... Not currently used.
-#' @param duplicate_contrib The method to deal with duplicate product contributions.
-#'   Either 'make.unique' to make duplicate product names unique
+#' @param duplicate_contrib The method to deal with duplicate product
+#'   contributions. Either 'make.unique' to make duplicate product names unique
 #'   with [make.unique()] or 'sum' to add contributions for the same products
 #'   across subperiods.
 #'
@@ -63,14 +63,15 @@
 #' @family index methods
 #' @export
 mean.chainable_piar_index <- function(
-    x,
-    ...,
-    weights = NULL,
-    window = ntime(x),
-    na.rm = FALSE,
-    contrib = TRUE,
-    r = 1,
-    duplicate_contrib = c("make.unique", "sum")) {
+  x,
+  ...,
+  weights = NULL,
+  window = ntime(x),
+  na.rm = FALSE,
+  contrib = TRUE,
+  r = 1,
+  duplicate_contrib = c("make.unique", "sum")
+) {
   chkDots(...)
   mean_index(
     x,
@@ -87,14 +88,15 @@ mean.chainable_piar_index <- function(
 #' @rdname mean.piar_index
 #' @export
 mean.direct_piar_index <- function(
-    x,
-    ...,
-    weights = NULL,
-    window = ntime(x),
-    na.rm = FALSE,
-    contrib = TRUE,
-    r = 1,
-    duplicate_contrib = c("make.unique", "sum")) {
+  x,
+  ...,
+  weights = NULL,
+  window = ntime(x),
+  na.rm = FALSE,
+  contrib = TRUE,
+  r = 1,
+  duplicate_contrib = c("make.unique", "sum")
+) {
   chkDots(...)
   mean_index(
     x,
@@ -111,14 +113,15 @@ mean.direct_piar_index <- function(
 #' Internal function to aggregate over subperiods
 #' @noRd
 mean_index <- function(
-    x,
-    weights,
-    window,
-    na.rm,
-    contrib,
-    r,
-    chainable,
-    duplicate_contrib) {
+  x,
+  weights,
+  window,
+  na.rm,
+  contrib,
+  r,
+  chainable,
+  duplicate_contrib
+) {
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
     if (any(weights < 0, na.rm = TRUE)) {

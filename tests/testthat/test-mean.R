@@ -1,8 +1,10 @@
 test_that("aggregating over subperiods works", {
   ms_epr <- elemental_index(
     ms_prices,
-    price_relative(price, period = period, product = product) ~ period + business,
-    contrib = TRUE, na.rm = TRUE
+    price_relative(price, period = period, product = product) ~
+      period + business,
+    contrib = TRUE,
+    na.rm = TRUE
   )
 
   epr2 <- mean(ms_epr, window = 2)
@@ -18,12 +20,16 @@ test_that("aggregating over subperiods works", {
   w <- matrix(seq_len(4 * 4), 4)
   expect_equal(
     as.matrix(mean(ms_epr, weights = w, window = 2))[, 1],
-    diag(as.matrix(ms_epr)[, 1:2] %*% apply(w[, 1:2], 1, gpindex::scale_weights)),
+    diag(
+      as.matrix(ms_epr)[, 1:2] %*% apply(w[, 1:2], 1, gpindex::scale_weights)
+    ),
     ignore_attr = TRUE
   )
   expect_equal(
     as.matrix(mean(ms_epr, weights = w, window = 2))[, 2],
-    diag(as.matrix(ms_epr)[, 3:4] %*% apply(w[, 3:4], 1, gpindex::scale_weights)),
+    diag(
+      as.matrix(ms_epr)[, 3:4] %*% apply(w[, 3:4], 1, gpindex::scale_weights)
+    ),
     ignore_attr = TRUE
   )
 
@@ -39,7 +45,11 @@ test_that("aggregating over subperiods works", {
   expect_equal(
     contrib(mean(ms_epr, window = 2, duplicate_contrib = "sum")),
     structure(
-      rbind("1" = con[1, ], "2" = colSums(con[2:3, ]), "3" = colSums(con[4:5, ])),
+      rbind(
+        "1" = con[1, ],
+        "2" = colSums(con[2:3, ]),
+        "3" = colSums(con[4:5, ])
+      ),
       dimnames = list(product = 1:3, time = time(ms_epr)[c(1, 3)])
     )
   )
@@ -50,7 +60,14 @@ test_that("aggregating over subperiods works", {
   )
   expect_equal(colSums(contrib(epr2, "B3")), as.matrix(epr2)["B3", ] - 1)
 
-  epr3 <- mean(ms_epr, weights = w, window = 2, r = 2.5, na.rm = TRUE, duplicate_contrib = "sum")
+  epr3 <- mean(
+    ms_epr,
+    weights = w,
+    window = 2,
+    r = 2.5,
+    na.rm = TRUE,
+    duplicate_contrib = "sum"
+  )
   expect_equal(
     colSums(contrib(epr3, "B1"), na.rm = TRUE),
     as.matrix(epr3)["B1", ] - 1,
@@ -77,7 +94,8 @@ test_that("mean requires a suitable window", {
 test_that("mean is consistent in aggregation", {
   epr <- as_index(matrix(1:54 / 10, 6))
   pias <- aggregation_structure(
-    list(rep("a", 6), rep(c("b", "c"), each = 3), 1:6), 6:1
+    list(rep("a", 6), rep(c("b", "c"), each = 3), 1:6),
+    6:1
   )
 
   index <- aggregate(epr, pias)

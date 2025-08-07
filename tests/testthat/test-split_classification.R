@@ -24,7 +24,7 @@ test_that("split agrees with expand", {
 
 test_that("missing levels are padded correctly", {
   expect_identical(
-    split_classification(c("ab.c.d", "a.bc..e"), ".", fixed = T),
+    split_classification(c("ab.c.d", "a.bc..e"), ".", fixed = TRUE),
     list(
       c("ab", "a"),
       c("ab.c", "a.bc"),
@@ -33,7 +33,12 @@ test_that("missing levels are padded correctly", {
     )
   )
   expect_identical(
-    split_classification(c("ab.c.d", "a.bc..e"), ".", fixed = T, pad = "zz"),
+    split_classification(
+      c("ab.c.d", "a.bc..e"),
+      ".",
+      fixed = TRUE,
+      pad = "zz"
+    ),
     list(
       c("ab", "a"),
       c("ab.c", "a.bc"),

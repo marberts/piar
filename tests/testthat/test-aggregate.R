@@ -1,31 +1,60 @@
 test_that("a matched-sample index aggregates correctly", {
   ms_epr <- elemental_index(
     ms_prices,
-    price_relative(price, period = period, product = product) ~ period + business,
-    contrib = TRUE, na.rm = TRUE
+    price_relative(price, period = period, product = product) ~
+      period + business,
+    contrib = TRUE,
+    na.rm = TRUE
   )
 
   ms_pias <- with(
     ms_weights,
     aggregation_structure(
-      c(expand_classification(classification), list(business)), weight
+      c(expand_classification(classification), list(business)),
+      weight
     )
   )
 
   ms_index <- aggregate(ms_epr, ms_pias, na.rm = TRUE)
 
   res <- c(
-    1, 1, 1, 1, 1, 1, 1, 1, 1.30072391107879, 1.30072391107879,
-    1.30072391107879, 0.894909688013136, 1.30072391107879,
-    2.02000360773041, 1.30072391107879, 1.30072391107879,
-    1.06307432720167, 1.06307432720167, 1.06307432720167,
-    0.334293948126801, 1.06307432720167, 1.63533549062897,
-    1.06307432720167, 1.06307432720167, 2.73476132776126,
-    1.57451535678038, 4.57628618296306, 1.57451535678038,
-    2.77045633390764, 0.537995998322608, 4.57628618296306,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1.30072391107879,
+    1.30072391107879,
+    1.30072391107879,
+    0.894909688013136,
+    1.30072391107879,
+    2.02000360773041,
+    1.30072391107879,
+    1.30072391107879,
+    1.06307432720167,
+    1.06307432720167,
+    1.06307432720167,
+    0.334293948126801,
+    1.06307432720167,
+    1.63533549062897,
+    1.06307432720167,
+    1.06307432720167,
+    2.73476132776126,
+    1.57451535678038,
+    4.57628618296306,
+    1.57451535678038,
+    2.77045633390764,
+    0.537995998322608,
+    4.57628618296306,
     4.57628618296306
   )
-  res <- matrix(res, 8, 4,
+  res <- matrix(
+    res,
+    8,
+    4,
     dimnames = list(
       levels = c("1", "11", "12", paste0("B", 1:5)),
       time = sprintf("2020%02d", 1:4)
@@ -42,14 +71,18 @@ test_that("a matched-sample index aggregates correctly", {
   # Lower levels add up
   expect_equal(
     apply(
-      as.matrix(chain(ms_index)[4:8, ]), 2, weighted.mean,
+      as.matrix(chain(ms_index)[4:8, ]),
+      2,
+      weighted.mean,
       weights(ms_pias, ea_only = FALSE)[[3]]
     ),
     as.matrix(chain(ms_index))[1, ]
   )
   expect_equal(
     apply(
-      as.matrix(chain(ms_index)[2:3, ]), 2, weighted.mean,
+      as.matrix(chain(ms_index)[2:3, ]),
+      2,
+      weighted.mean,
       weights(ms_pias, ea_only = FALSE)[[2]]
     ),
     as.matrix(chain(ms_index))[1, ]
@@ -90,21 +123,61 @@ test_that("a matched-sample index aggregates correctly", {
 
   # Re-arranging the index shouldn't do anything
   s1 <- c(
-    14, 16, 26, 28, 24, 29, 11, 32, 36, 2, 22, 34, 6, 7, 10, 17, 8, 27, 37,
-    1, 12, 33, 20, 3, 9, 40, 13, 4, 38, 23, 31, 15, 25, 39, 21, 30, 35, 19,
-    18, 5
+    14,
+    16,
+    26,
+    28,
+    24,
+    29,
+    11,
+    32,
+    36,
+    2,
+    22,
+    34,
+    6,
+    7,
+    10,
+    17,
+    8,
+    27,
+    37,
+    1,
+    12,
+    33,
+    20,
+    3,
+    9,
+    40,
+    13,
+    4,
+    38,
+    23,
+    31,
+    15,
+    25,
+    39,
+    21,
+    30,
+    35,
+    19,
+    18,
+    5
   )
   s2 <- c(5, 3, 4, 1, 2)
   ms_epr <- elemental_index(
     ms_prices[s1, ],
-    price_relative(price, period = period, product = product) ~ period + business,
-    contrib = TRUE, na.rm = TRUE
+    price_relative(price, period = period, product = product) ~
+      period + business,
+    contrib = TRUE,
+    na.rm = TRUE
   )
 
   ms_pias <- with(
     ms_weights[s2, ],
     aggregation_structure(
-      c(expand_classification(classification), list(business)), weight
+      c(expand_classification(classification), list(business)),
+      weight
     )
   )
 
@@ -146,31 +219,60 @@ test_that("a matched-sample index aggregates correctly", {
 test_that("a weird index aggregates correctly", {
   ms_epr <- elemental_index(
     ms_prices,
-    price_relative(price, period = period, product = product) ~ period + business,
-    contrib = TRUE, r = 0.2
+    price_relative(price, period = period, product = product) ~
+      period + business,
+    contrib = TRUE,
+    r = 0.2
   )
 
   ms_pias <- with(
     ms_weights,
     aggregation_structure(
-      c(expand_classification(classification), list(business)), weight
+      c(expand_classification(classification), list(business)),
+      weight
     )
   )
 
   ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
 
   res <- c(
-    1, 1, 1, 1, 1, 1, 1, 1, 3.59790686240372, 3.59790686240372,
-    3.59790686240372, 3.59790686240372, 3.59790686240372,
-    3.59790686240372, 3.59790686240372, 3.59790686240372,
-    1.83344068593548, 1.83344068593548, 1.83344068593548,
-    1.83344068593548, 1.83344068593548, 1.83344068593548,
-    1.83344068593548, 1.83344068593548, 1.31335391535665,
-    1.00564223748248, 5.47029871913538, 1.00564223748248,
-    3.15295124015891, 0.551843416514059, 5.47029871913538,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3.59790686240372,
+    3.59790686240372,
+    3.59790686240372,
+    3.59790686240372,
+    3.59790686240372,
+    3.59790686240372,
+    3.59790686240372,
+    3.59790686240372,
+    1.83344068593548,
+    1.83344068593548,
+    1.83344068593548,
+    1.83344068593548,
+    1.83344068593548,
+    1.83344068593548,
+    1.83344068593548,
+    1.83344068593548,
+    1.31335391535665,
+    1.00564223748248,
+    5.47029871913538,
+    1.00564223748248,
+    3.15295124015891,
+    0.551843416514059,
+    5.47029871913538,
     5.47029871913538
   )
-  res <- matrix(res, 8, 4,
+  res <- matrix(
+    res,
+    8,
+    4,
     dimnames = list(
       levels = c("1", "11", "12", paste0("B", 1:5)),
       time = sprintf("2020%02d", 1:4)
@@ -200,7 +302,8 @@ test_that("a weird index aggregates correctly", {
 
   expect_equal(
     apply(
-      as.matrix(chain(ms_index)[2:3, ]), 2,
+      as.matrix(chain(ms_index)[2:3, ]),
+      2,
       gpindex::generalized_mean(-1.7),
       weights(ms_pias, ea_only = FALSE)[[2]]
     ),
@@ -208,8 +311,10 @@ test_that("a weird index aggregates correctly", {
   )
 
   expect_equal(
-    as.matrix(as.matrix(ms_pias, sparse = TRUE) %*%
-      as.matrix(chain(ms_index[paste0("B", 1:5)]))^(-1.7))^(1 / -1.7),
+    as.matrix(
+      as.matrix(ms_pias, sparse = TRUE) %*%
+        as.matrix(chain(ms_index[paste0("B", 1:5)]))^(-1.7)
+    )^(1 / -1.7),
     as.matrix(chain(ms_index[1:3, ]))
   )
 
@@ -229,7 +334,8 @@ test_that("a fixed-sample index aggregates correctly", {
     fs_prices,
     price_relative(price, period = period, product = business) ~
       period + classification,
-    weights = weight, contrib = TRUE
+    weights = weight,
+    contrib = TRUE
   )
 
   fs_pias <- with(
@@ -240,18 +346,47 @@ test_that("a fixed-sample index aggregates correctly", {
   fs_index <- aggregate(fs_epr, fs_pias, na.rm = TRUE)
 
   res <- c(
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 0.687039919074495, 0.935841069334005,
-    0.612229588412764, 0.611111111111111, 0.935841069334005,
-    0.935841069334005, 0.612229588412764, 0.612229588412764,
-    0.611111111111111, 2.45961303155833, 2.45961303155833,
-    2.48533513976043, 1.68506493506494, 2.45961303155833,
-    2.45961303155833, 2.48533513976043, 2.48533513976043,
-    1.68506493506494, 1.08265987174601, 1.08265987174601,
-    1.08265987174601, 1.08265987174601, 1.08265987174601,
-    1.08265987174601, 1.61372443582219, 0.860786536350297,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0.687039919074495,
+    0.935841069334005,
+    0.612229588412764,
+    0.611111111111111,
+    0.935841069334005,
+    0.935841069334005,
+    0.612229588412764,
+    0.612229588412764,
+    0.611111111111111,
+    2.45961303155833,
+    2.45961303155833,
+    2.48533513976043,
+    1.68506493506494,
+    2.45961303155833,
+    2.45961303155833,
+    2.48533513976043,
+    2.48533513976043,
+    1.68506493506494,
+    1.08265987174601,
+    1.08265987174601,
+    1.08265987174601,
+    1.08265987174601,
+    1.08265987174601,
+    1.08265987174601,
+    1.61372443582219,
+    0.860786536350297,
     1.08265987174601
   )
-  res <- matrix(res, 9, 4,
+  res <- matrix(
+    res,
+    9,
+    4,
     dimnames = list(
       levels = c(1, 11:13, 111, 112, 121, 122, 131),
       time = sprintf("2020%02d", 1:4)
@@ -271,16 +406,20 @@ test_that("a fixed-sample index aggregates correctly", {
   # Check adding up of lower level indexes
   expect_equal(
     apply(
-      as.matrix(chain(fs_index)[5:9, ]), 2,
-      weighted.mean, weights(fs_pias, ea_only = FALSE)[[3]]
+      as.matrix(chain(fs_index)[5:9, ]),
+      2,
+      weighted.mean,
+      weights(fs_pias, ea_only = FALSE)[[3]]
     ),
     as.matrix(chain(fs_index))[1, ]
   )
 
   expect_equal(
     apply(
-      as.matrix(chain(fs_index)[2:4, ]), 2,
-      weighted.mean, weights(fs_pias, ea_only = FALSE)[[2]]
+      as.matrix(chain(fs_index)[2:4, ]),
+      2,
+      weighted.mean,
+      weights(fs_pias, ea_only = FALSE)[[2]]
     ),
     as.matrix(chain(fs_index))[1, ]
   )
@@ -364,7 +503,8 @@ test_that("partial contributions are correct", {
   epr <- merge(epr, matrix(9:10, 1, dimnames = list("c", 1:2)))
 
   pias <- aggregation_structure(
-    list(c("top", "top", "top"), c("a", "b", "c")), 1:3
+    list(c("top", "top", "top"), c("a", "b", "c")),
+    1:3
   )
 
   index <- aggregate(epr, pias)
@@ -410,7 +550,9 @@ test_that("duplicate products get unique names during aggregation", {
   )
   expect_equal(
     contrib(index),
-    matrix(rep(c(0, 0.125, 0.25, 0.375), each = 2), 8,
+    matrix(
+      rep(c(0, 0.125, 0.25, 0.375), each = 2),
+      8,
       dimnames = list(
         product = c(1, "1.1", 2, "2.1", 3, "3.1", 4, "4.1"),
         time = 1
@@ -447,12 +589,14 @@ test_that("aggregating in parallel works", {
     c(3, 2, 1)
   )
 
-  epr1 <- elemental_index(1:18,
+  epr1 <- elemental_index(
+    1:18,
     period = rep(1:2, 9),
     ea = rep(c(111, 112, 121), each = 6),
     contrib = TRUE
   )
-  epr2 <- elemental_index(18:1,
+  epr2 <- elemental_index(
+    18:1,
     period = rep(1:2, 9),
     ea = rep(c(111, 112, 121), each = 6),
     contrib = TRUE
@@ -468,7 +612,8 @@ test_that("aggregating in parallel works", {
 })
 
 test_that("aggregating with a dead branch does nothing", {
-  epr <- elemental_index(1:18,
+  epr <- elemental_index(
+    1:18,
     period = rep(1:3, each = 6),
     ea = rep(1:2, 9),
     contrib = TRUE
@@ -491,8 +636,10 @@ test_that("aggregating with a dead branch does nothing", {
 })
 
 test_that("reaggregating doesn't introduce incorrect contributions", {
-  epr <- elemental_index(c(1:7, NA),
-    period = rep(1:2, each = 4), ea = rep(1:2, 4),
+  epr <- elemental_index(
+    c(1:7, NA),
+    period = rep(1:2, each = 4),
+    ea = rep(1:2, 4),
     contrib = TRUE
   )
   pias <- as_aggregation_structure(list(c(0, 0), c(1, 2)))
@@ -518,14 +665,16 @@ test_that("reaggregating doesn't introduce incorrect contributions", {
 test_that("skipping time periods works", {
   ms_epr <- elemental_index(
     ms_prices,
-    price_relative(price, period = period, product = product) ~ period + business,
+    price_relative(price, period = period, product = product) ~
+      period + business,
     na.rm = TRUE
   )
 
   ms_pias <- with(
     ms_weights,
     aggregation_structure(
-      c(expand_classification(classification), list(business)), weight
+      c(expand_classification(classification), list(business)),
+      weight
     )
   )
 
@@ -539,14 +688,17 @@ test_that("skipping time periods works", {
 test_that("skipping eas works", {
   ms_epr <- elemental_index(
     ms_prices,
-    price_relative(price, period = period, product = product) ~ period + business,
-    contrib = TRUE, na.rm = TRUE
+    price_relative(price, period = period, product = product) ~
+      period + business,
+    contrib = TRUE,
+    na.rm = TRUE
   )
 
   ms_pias <- with(
     ms_weights,
     aggregation_structure(
-      c(expand_classification(classification), list(business)), weight
+      c(expand_classification(classification), list(business)),
+      weight
     )
   )
 
@@ -557,7 +709,9 @@ test_that("skipping eas works", {
   )
 
   expect_error(
-    aggregate(ms_epr, aggregation_structure(ms_weights["business"]),
+    aggregate(
+      ms_epr,
+      aggregation_structure(ms_weights["business"]),
       include_ea = FALSE
     )
   )
@@ -571,7 +725,8 @@ test_that("missing weights ignores those index values", {
   )
 
   pias <- aggregation_structure(
-    list(c("top", "top"), c("a", "b")), 1:2
+    list(c("top", "top"), c("a", "b")),
+    1:2
   )
 
   elemental <- elemental_index(prices, rel ~ period + ea, contrib = TRUE)
@@ -593,10 +748,12 @@ test_that("superlative index aggregates correctly", {
   epr <- as_index(matrix(c(1:4, NA, 6:9), 3), contrib = TRUE)
   contrib(epr, 1, 1) <- c(-2, -1, 1, 1, 0.25, 0.75)
   pias <- aggregation_structure(
-    list(c("top", "top", "top"), 1:3), 1:3
+    list(c("top", "top", "top"), 1:3),
+    1:3
   )
   pias2 <- aggregation_structure(
-    list(c("top", "top", "top"), 1:3), c(3, 1, 2)
+    list(c("top", "top", "top"), 1:3),
+    c(3, 1, 2)
   )
   res <- aggregate(epr, pias, pias2 = pias2, na.rm = TRUE)
   res1 <- aggregate(epr, pias, na.rm = TRUE)
@@ -608,10 +765,12 @@ test_that("superlative index aggregates correctly", {
   )
 
   expect_equal(
-    colSums(contrib(res), na.rm = TRUE), as.matrix(res)[1, ] - 1
+    colSums(contrib(res), na.rm = TRUE),
+    as.matrix(res)[1, ] - 1
   )
   expect_equal(
-    colSums(contrib(res, 1)), as.matrix(res)[2, ] - 1
+    colSums(contrib(res, 1)),
+    as.matrix(res)[2, ] - 1
   )
 
   # Example from vignette.
@@ -626,7 +785,8 @@ test_that("superlative index aggregates correctly", {
   laspeyres_contrib <- contrib(res1)
   paasche_contrib <- contrib(res2)
 
-  fisher_contrib <- w[1, col(laspeyres_contrib)] * laspeyres_contrib +
+  fisher_contrib <- w[1, col(laspeyres_contrib)] *
+    laspeyres_contrib +
     w[2, col(paasche_contrib)] * paasche_contrib
 
   expect_equal(contrib(res), fisher_contrib)
@@ -645,11 +805,17 @@ test_that("duplicate product methods work with NAs", {
   pias <- list(c(0, 0, 0), 1:3)
   expect_equal(
     contrib(aggregate(x, pias, duplicate_contrib = "sum")),
-    matrix(c(0.25, -0.125, NA, -0.125), dimnames = list(product = 1:4, time = 1))
+    matrix(
+      c(0.25, -0.125, NA, -0.125),
+      dimnames = list(product = 1:4, time = 1)
+    )
   )
   expect_equal(
     contrib(aggregate(x, pias, duplicate_contrib = "sum", na.rm = TRUE)),
-    matrix(c(0.25, -0.125, NA, -0.125), dimnames = list(product = 1:4, time = 1))
+    matrix(
+      c(0.25, -0.125, NA, -0.125),
+      dimnames = list(product = 1:4, time = 1)
+    )
   )
 })
 
@@ -663,7 +829,13 @@ test_that("superlative contributions work with NA weights", {
 
   expect_error(aggregate(x, pias1, pias2 = pias2, na.rm = TRUE))
   weights(pias2)[1] <- 0
-  res <- aggregate(x, pias1, pias2 = pias2, na.rm = TRUE, duplicate_contrib = "sum")
+  res <- aggregate(
+    x,
+    pias1,
+    pias2 = pias2,
+    na.rm = TRUE,
+    duplicate_contrib = "sum"
+  )
 
   expect_equal(
     contrib(res),

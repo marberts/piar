@@ -175,16 +175,18 @@ elemental_index.default <- function(x, ...) {
 
 #' @rdname elemental_index
 #' @export
-elemental_index.numeric <- function(x,
-                                    ...,
-                                    period = gl(1, length(x)),
-                                    ea = gl(1, length(x)),
-                                    weights = NULL,
-                                    product = NULL,
-                                    chainable = TRUE,
-                                    na.rm = FALSE,
-                                    contrib = FALSE,
-                                    r = 0) {
+elemental_index.numeric <- function(
+  x,
+  ...,
+  period = gl(1, length(x)),
+  ea = gl(1, length(x)),
+  weights = NULL,
+  product = NULL,
+  chainable = TRUE,
+  na.rm = FALSE,
+  contrib = FALSE,
+  r = 0
+) {
   chkDots(...)
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
@@ -247,11 +249,13 @@ elemental_index.numeric <- function(x,
 
 #' @rdname elemental_index
 #' @export
-elemental_index.data.frame <- function(x,
-                                       formula,
-                                       ...,
-                                       weights = NULL,
-                                       product = NULL) {
+elemental_index.data.frame <- function(
+  x,
+  formula,
+  ...,
+  weights = NULL,
+  product = NULL
+) {
   vars <- formula_vars(formula, x)
   weights <- eval(substitute(weights), x, parent.frame())
   product <- eval(substitute(product), x, parent.frame())

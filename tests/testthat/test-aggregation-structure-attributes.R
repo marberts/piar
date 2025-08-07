@@ -31,9 +31,7 @@ test_that("weights method works", {
     c("111" = 1, "211" = 1, "121" = 1, "112" = 1)
   )
   expect_equal(
-    weights(aggregation_structure(list(x1, x2, x3), 1:4),
-      ea_only = FALSE
-    ),
+    weights(aggregation_structure(list(x1, x2, x3), 1:4), ea_only = FALSE),
     list(
       level1 = c("1" = 8, "2" = 2),
       level2 = c("11" = 5, "21" = 2, "12" = 3),
@@ -42,9 +40,7 @@ test_that("weights method works", {
   )
 
   expect_equal(
-    weights(as_aggregation_structure(1:5, weights = 2),
-      ea_only = FALSE
-    ),
+    weights(as_aggregation_structure(1:5, weights = 2), ea_only = FALSE),
     list(
       level1 = c("1" = 2),
       level2 = c("2" = 2),
@@ -58,15 +54,14 @@ test_that("weights method works", {
     c("5" = 2)
   )
   expect_equal(
-    weights(as_aggregation_structure(list(1:5), weights = 1:5),
+    weights(
+      as_aggregation_structure(list(1:5), weights = 1:5),
       ea_only = FALSE
     ),
     list(ea = c("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5))
   )
   expect_equal(
-    weights(as_aggregation_structure(list(1:5), weights = 1:5),
-      ea_only = TRUE
-    ),
+    weights(as_aggregation_structure(list(1:5), weights = 1:5), ea_only = TRUE),
     c("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5)
   )
 })
@@ -87,7 +82,8 @@ test_that("NAs move up the aggregation structure", {
   expect_equal(
     weights(
       suppressWarnings(aggregation_structure(list(x1, x2, x3), c(NA, 2:4))),
-      ea_only = FALSE, na.rm = TRUE
+      ea_only = FALSE,
+      na.rm = TRUE
     ),
     list(
       level1 = c("1" = 7, "2" = 2),

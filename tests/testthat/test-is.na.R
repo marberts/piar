@@ -9,7 +9,9 @@ epr <- elemental_index(dat, rel ~ period + ea, contrib = TRUE, na.rm = TRUE)
 test_that("is.na works", {
   expect_equal(
     is.na(epr),
-    matrix(c(FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE), 4,
+    matrix(
+      c(FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE),
+      4,
       dimnames = list(levels = levels(epr), time = time(epr))
     )
   )

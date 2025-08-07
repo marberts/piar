@@ -128,10 +128,12 @@ aggregation_structure <- function(x, weights = NULL) {
   # Produce a list for each level with all the parent and child nodes.
   for (i in seq_along(upper)) {
     child[[i]] <- lapply(
-      split(as.integer(lower[[len - i]]), upper[[len - i]]), unique
+      split(as.integer(lower[[len - i]]), upper[[len - i]]),
+      unique
     )
     parent[[i]] <- lapply(
-      split(as.integer(upper[[len - i]]), lower[[len - i]]), unique
+      split(as.integer(upper[[len - i]]), lower[[len - i]]),
+      unique
     )
   }
   if (any(lengths(unlist(parent, recursive = FALSE)) > 1L)) {

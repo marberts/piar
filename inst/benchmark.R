@@ -8,11 +8,13 @@ big_prices <- data.frame(
 
 big_weights <- data.frame(
   business = paste0("B", 1:5000),
-  classification = paste0(1,
-                          rep(1:2, each = 2500),
-                          rep(1:5, each = 500),
-                          rep(1:5, each = 100),
-                          rep(1:5, each = 20)),
+  classification = paste0(
+    1,
+    rep(1:2, each = 2500),
+    rep(1:5, each = 500),
+    rep(1:5, each = 100),
+    rep(1:5, each = 20)
+  ),
   weight = runif(5000, 10, 1000)
 )
 
@@ -25,11 +27,13 @@ big_prices2 <- data.frame(
 
 big_weights2 <- data.frame(
   business = paste0("B", 1:2500),
-  classification = paste0(1,
-                          rep(1:2, each = 1250),
-                          rep(1:5, each = 250),
-                          rep(1:5, each = 50),
-                          rep(1:5, each = 10)),
+  classification = paste0(
+    1,
+    rep(1:2, each = 1250),
+    rep(1:5, each = 250),
+    rep(1:5, each = 50),
+    rep(1:5, each = 10)
+  ),
   weight = runif(2500, 10, 1000)
 )
 
@@ -55,10 +59,10 @@ big_prices2$rel <- price_relative(big_prices2, price ~ period + product)
 
 elem <- with(
   big_prices2,
-  elemental_index(rel, period = period, ea = business, contrib = T)
+  elemental_index(rel, period = period, ea = business, contrib = TRUE)
 )
 
-index <- aggregate(elem, pias2, na.rm = T)
+index <- aggregate(elem, pias2, na.rm = TRUE)
 
 bench::mark(
   aggregate(index, pias),

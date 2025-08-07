@@ -68,11 +68,13 @@ contrib <- function(x, ...) {
 
 #' @rdname contrib
 #' @export
-contrib.piar_index <- function(x,
-                               level = levels(x)[1L],
-                               period = time(x),
-                               ...,
-                               pad = 0) {
+contrib.piar_index <- function(
+  x,
+  level = levels(x)[1L],
+  period = time(x),
+  ...,
+  pad = 0
+) {
   chkDots(...)
   level <- match_levels(as.character(level), x$levels)
   period <- match_time(as.character(period), x$time, several = TRUE)
@@ -105,10 +107,12 @@ contrib2DF <- function(x, ...) {
 
 #' @rdname contrib
 #' @export
-contrib2DF.piar_index <- function(x,
-                                  level = levels(x)[1L],
-                                  period = time(x),
-                                  ...) {
+contrib2DF.piar_index <- function(
+  x,
+  level = levels(x)[1L],
+  period = time(x),
+  ...
+) {
   chkDots(...)
   level <- match_levels(as.character(level), x$levels, several = TRUE)
   period <- match_time(as.character(period), x$time, several = TRUE)
@@ -143,11 +147,13 @@ contrib2DF.piar_index <- function(x,
 
 #' @rdname contrib
 #' @export
-`contrib<-.piar_index` <- function(x,
-                                   level = levels(x)[1L],
-                                   period = time(x),
-                                   ...,
-                                   value) {
+`contrib<-.piar_index` <- function(
+  x,
+  level = levels(x)[1L],
+  period = time(x),
+  ...,
+  value
+) {
   chkDots(...)
   level <- match_levels(as.character(level), x$levels)
   period <- match_time(as.character(period), x$time, several = TRUE)

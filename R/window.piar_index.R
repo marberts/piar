@@ -43,8 +43,12 @@ window.piar_index <- function(x, start = NULL, end = NULL, ...) {
 #' Get the indexes for a window of time periods
 #' @noRd
 index_window <- function(x, start, end) {
-  if (is.null(start)) start <- start(x)
-  if (is.null(end)) end <- end(x)
+  if (is.null(start)) {
+    start <- start(x)
+  }
+  if (is.null(end)) {
+    end <- end(x)
+  }
   start <- match_time(as.character(start), x$time)
   end <- match_time(as.character(end), x$time)
 

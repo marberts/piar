@@ -21,7 +21,7 @@ source of data for business `B5` that is always missing in the
 library(piar)
 
 # Make an aggregation structure.
-ms_weights[c("level1", "level2")] <- 
+ms_weights[c("level1", "level2")] <-
   expand_classification(ms_weights$classification)
 
 pias <- ms_weights[c("level1", "level2", "business", "weight")] |>

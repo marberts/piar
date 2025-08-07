@@ -99,7 +99,7 @@ digit-wise classification for each businesses that defines the
 hierarchy. That's the job of the `expand_classification()` function.
 
 ```{r}
-ms_weights[c("level1", "level2")] <- 
+ms_weights[c("level1", "level2")] <-
   expand_classification(ms_weights$classification)
 
 pias <- ms_weights[c("level1", "level2", "business", "weight")] |>

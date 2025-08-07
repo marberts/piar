@@ -1,5 +1,7 @@
-epr1 <- elemental_index(1:8,
-  period = rep(1:2, each = 4), ea = rep(letters[1:4], 2),
+epr1 <- elemental_index(
+  1:8,
+  period = rep(1:2, each = 4),
+  ea = rep(letters[1:4], 2),
   contrib = TRUE
 )
 epr2 <- as_index(matrix(1:8, 4, 2, dimnames = list(letters[5:8], 1:2)))

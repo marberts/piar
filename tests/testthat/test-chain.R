@@ -1,7 +1,8 @@
 epr1 <- elemental_index(
   ms_prices,
   price_relative(price, period = period, product = product) ~ period + business,
-  contrib = TRUE, na.rm = TRUE
+  contrib = TRUE,
+  na.rm = TRUE
 )
 
 epr2 <- elemental_index(
@@ -13,7 +14,8 @@ epr2 <- elemental_index(
 pias <- with(
   ms_weights,
   aggregation_structure(
-    c(expand_classification(classification), list(business)), weight
+    c(expand_classification(classification), list(business)),
+    weight
   )
 )
 

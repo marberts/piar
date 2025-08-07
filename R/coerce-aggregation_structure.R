@@ -110,10 +110,12 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
 
 #' @rdname as.matrix.piar_aggregation_structure
 #' @export
-as.data.frame.piar_aggregation_structure <- function(x,
-                                                     row.names = NULL,
-                                                     optional = FALSE,
-                                                     ...) {
+as.data.frame.piar_aggregation_structure <- function(
+  x,
+  row.names = NULL,
+  optional = FALSE,
+  ...
+) {
   res <- as.data.frame(
     as.list(x),
     row.names = row.names,

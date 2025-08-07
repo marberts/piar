@@ -56,8 +56,8 @@ averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
-\item{duplicate_contrib}{The method to deal with duplicate product contributions.
-Either 'make.unique' to make duplicate product names unique
+\item{duplicate_contrib}{The method to deal with duplicate product
+contributions. Either 'make.unique' to make duplicate product names unique
 with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for the same products
 across subperiods.}
 }

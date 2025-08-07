@@ -143,15 +143,16 @@
 #' @family index methods
 #' @export
 aggregate.chainable_piar_index <- function(
-    x,
-    pias,
-    ...,
-    pias2 = NULL,
-    na.rm = FALSE,
-    contrib = TRUE,
-    r = 1,
-    include_ea = TRUE,
-    duplicate_contrib = c("make.unique", "sum")) {
+  x,
+  pias,
+  ...,
+  pias2 = NULL,
+  na.rm = FALSE,
+  contrib = TRUE,
+  r = 1,
+  include_ea = TRUE,
+  duplicate_contrib = c("make.unique", "sum")
+) {
   chkDots(...)
   aggregate_index(
     x,
@@ -169,15 +170,16 @@ aggregate.chainable_piar_index <- function(
 #' @rdname aggregate.piar_index
 #' @export
 aggregate.direct_piar_index <- function(
-    x,
-    pias,
-    ...,
-    pias2 = NULL,
-    na.rm = FALSE,
-    contrib = TRUE,
-    r = 1,
-    include_ea = TRUE,
-    duplicate_contrib = c("make.unique", "sum")) {
+  x,
+  pias,
+  ...,
+  pias2 = NULL,
+  na.rm = FALSE,
+  contrib = TRUE,
+  r = 1,
+  include_ea = TRUE,
+  duplicate_contrib = c("make.unique", "sum")
+) {
   chkDots(...)
   aggregate_index(
     x,
@@ -195,15 +197,16 @@ aggregate.direct_piar_index <- function(
 #' Internal functions to aggregate a price index
 #' @noRd
 aggregate_index <- function(
-    x,
-    pias,
-    pias2,
-    na.rm,
-    contrib,
-    r,
-    include_ea,
-    chainable,
-    duplicate_contrib) {
+  x,
+  pias,
+  pias2,
+  na.rm,
+  contrib,
+  r,
+  include_ea,
+  chainable,
+  duplicate_contrib
+) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
   has_contrib <- has_contrib(x) && contrib
@@ -264,14 +267,15 @@ aggregate_index <- function(
 }
 
 aggregate_ <- function(
-    x,
-    pias,
-    na.rm,
-    has_contrib,
-    r,
-    include_ea,
-    chainable,
-    duplicate_contrib) {
+  x,
+  pias,
+  na.rm,
+  has_contrib,
+  r,
+  include_ea,
+  chainable,
+  duplicate_contrib
+) {
   # Helpful functions.
   price_update <- gpindex::factor_weights(r)
   gen_mean <- gpindex::generalized_mean(r)

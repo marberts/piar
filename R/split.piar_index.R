@@ -27,11 +27,13 @@
 #'
 #' @family index methods
 #' @export
-split.piar_index <- function(x,
-                             f,
-                             drop = FALSE,
-                             ...,
-                             margin = c("levels", "time")) {
+split.piar_index <- function(
+  x,
+  f,
+  drop = FALSE,
+  ...,
+  margin = c("levels", "time")
+) {
   margin <- match.arg(margin)
   ix <- split(seq_along(x[[margin]]), f = f, drop = drop, ...)
   if (margin == "levels") {
@@ -43,12 +45,14 @@ split.piar_index <- function(x,
 
 #' @rdname split.piar_index
 #' @export
-`split<-.piar_index` <- function(x,
-                                 f,
-                                 drop = FALSE,
-                                 ...,
-                                 margin = c("levels", "time"),
-                                 value) {
+`split<-.piar_index` <- function(
+  x,
+  f,
+  drop = FALSE,
+  ...,
+  margin = c("levels", "time"),
+  value
+) {
   value <- as.list(value)
   margin <- match.arg(margin)
   ix <- split(seq_along(x[[margin]]), f = f, drop = drop, ...)

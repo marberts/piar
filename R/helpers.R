@@ -164,7 +164,14 @@ has_contrib <- function(x) {
 # Backport Reduce
 # TODO: Remove once min R version gets bumped.
 if (getRversion() < "4.4.0") {
-  Reduce <- function(f, x, init, right = FALSE, accumulate = FALSE, simplify = TRUE) {
+  Reduce <- function(
+    f,
+    x,
+    init,
+    right = FALSE,
+    accumulate = FALSE,
+    simplify = TRUE
+  ) {
     mis <- missing(init)
     len <- length(x)
     if (len == 0L) {
@@ -188,12 +195,16 @@ if (getRversion() < "4.4.0") {
       if (right) {
         for (i in rev(ind)) {
           init <- forceAndCall(
-            2, f, x[[i]],
+            2,
+            f,
+            x[[i]],
             init
           )
         }
       } else {
-        for (i in ind) init <- forceAndCall(2, f, init, x[[i]])
+        for (i in ind) {
+          init <- forceAndCall(2, f, init, x[[i]])
+        }
       }
       init
     } else {

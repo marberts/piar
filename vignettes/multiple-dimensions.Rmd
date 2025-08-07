@@ -82,7 +82,9 @@ pias_sps2 <- lapply(
   \(x) aggregation_structure(c(x, list(ms_weights$business)), ms_weights$weight)
 )
 
-index_sps2 <- lapply(pias_sps2, \(x) aggregate(index_sps, x, include_ea = FALSE))
+index_sps2 <- lapply(pias_sps2, \(x) {
+  aggregate(index_sps, x, include_ea = FALSE)
+})
 ```
 
 The resulting indexes can be merged together to give an index that

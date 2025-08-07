@@ -116,8 +116,13 @@ str.piar_index <- function(object, ...) {
 summary.chainable_piar_index <- function(object, ...) {
   chkDots(...)
   cat(
-    "Period-over-period price index", "for", length(object$levels), "levels over",
-    length(object$time), "time periods", "\n"
+    "Period-over-period price index",
+    "for",
+    length(object$levels),
+    "levels over",
+    length(object$time),
+    "time periods",
+    "\n"
   )
   invisible()
 }
@@ -126,8 +131,13 @@ summary.chainable_piar_index <- function(object, ...) {
 summary.direct_piar_index <- function(object, ...) {
   chkDots(...)
   cat(
-    "Fixed-base price index", "for", length(object$levels), "levels over",
-    length(object$time), "time periods", "\n"
+    "Fixed-base price index",
+    "for",
+    length(object$levels),
+    "levels over",
+    length(object$time),
+    "time periods",
+    "\n"
   )
   invisible()
 }
@@ -180,7 +190,8 @@ Math.piar_index <- function(x, ...) {
 
 #' @export
 Ops.piar_index <- function(e1, e2) {
-  boolean <- switch(.Generic,
+  boolean <- switch(
+    .Generic,
     `<` = ,
     `>` = ,
     `==` = ,

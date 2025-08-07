@@ -90,15 +90,17 @@ shadow_price <- function(x, ...) {
 
 #' @rdname impute_prices
 #' @export
-shadow_price.default <- function(x,
-                                 ...,
-                                 period,
-                                 product,
-                                 ea,
-                                 pias = NULL,
-                                 weights = NULL,
-                                 r1 = 0,
-                                 r2 = 1) {
+shadow_price.default <- function(
+  x,
+  ...,
+  period,
+  product,
+  ea,
+  pias = NULL,
+  weights = NULL,
+  r1 = 0,
+  r2 = 1
+) {
   # This is mostly a combination of gpindex::back_period() and aggregate()
   # it just does it period-by-period and keeps track of prices to impute.
   chkDots(...)
@@ -143,7 +145,8 @@ shadow_price.default <- function(x,
       period = gl(1, length(price)),
       ea = ea[[t]],
       weights = w[[t]],
-      na.rm = TRUE, r = r1
+      na.rm = TRUE,
+      r = r1
     )
     if (!is.null(pias)) {
       epr <- aggregate(epr, pias, na.rm = TRUE, r = r2)
@@ -159,10 +162,7 @@ shadow_price.default <- function(x,
 
 #' @rdname impute_prices
 #' @export
-shadow_price.data.frame <- function(x,
-                                    formula,
-                                    ...,
-                                    weights = NULL) {
+shadow_price.data.frame <- function(x, formula, ..., weights = NULL) {
   vars <- formula_vars(formula, x, 3L)
   weights <- eval(substitute(weights), x, parent.frame())
 
@@ -205,7 +205,8 @@ carry_forward.default <- function(x, ..., period, product) {
   }
   for (t in seq_along(res)[-1L]) {
     impute <- is.na(res[[t]])
-    matches <- match(product[[t]][impute],
+    matches <- match(
+      product[[t]][impute],
       product[[t - 1L]],
       incomparables = NA
     )

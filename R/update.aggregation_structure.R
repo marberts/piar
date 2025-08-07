@@ -49,11 +49,13 @@
 #' @importFrom stats update
 #' @family aggregation structure methods
 #' @export
-update.piar_aggregation_structure <- function(object,
-                                              index,
-                                              period = end(index),
-                                              ...,
-                                              r = 1) {
+update.piar_aggregation_structure <- function(
+  object,
+  index,
+  period = end(index),
+  ...,
+  r = 1
+) {
   chkDots(...)
   price_update <- gpindex::factor_weights(r)
   index <- chain(as_index(index))

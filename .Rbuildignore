@@ -16,3 +16,5 @@
 ^paper$
 ^CONTRIBUTING\.md$
 ^CITATION\.cff$
+^[.]?air[.]toml$
+^\.vscode$

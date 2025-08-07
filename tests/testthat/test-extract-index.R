@@ -14,8 +14,14 @@ epr2 <- elemental_index(dat, rel ~ period + ea)
 index <- aggregate(epr, pias)
 
 res <- c(
-  1.41421356237309, 3.46410161513775, 5, NaN,
-  6.48074069840786, NaN, NaN, 8
+  1.41421356237309,
+  3.46410161513775,
+  5,
+  NaN,
+  6.48074069840786,
+  NaN,
+  NaN,
+  8
 )
 
 test_that("head and tail work", {
@@ -36,7 +42,9 @@ test_that("subscripting methods work", {
   expect_equal(index[], index)
   expect_equal(
     epr[c(TRUE, FALSE, TRUE, TRUE), 2:1],
-    elemental_index(dat, rel ~ factor(period, 2:1) + factor(ea, c(11, 13:14)),
+    elemental_index(
+      dat,
+      rel ~ factor(period, 2:1) + factor(ea, c(11, 13:14)),
       contrib = TRUE
     )
   )
@@ -65,7 +73,7 @@ test_that("replacement methods work with an index", {
   expect_equal(replace(epr, 1:4, epr2), epr2)
 
   epr3 <- epr2
-  epr3[c(T, F), 2] <- epr[1, 1]
+  epr3[c(TRUE, FALSE), 2] <- epr[1, 1]
   expect_equal(
     as.matrix(epr3),
     replace(as.matrix(epr), matrix(c(1, 3, 2, 2), 2), as.numeric(epr[1, 1]))
@@ -95,14 +103,19 @@ test_that("replacement methods work with a vector", {
   epr[, 1] <- 1
   expect_equal(
     as.matrix(epr),
-    matrix(c(1, 1, 1, 1, res[5:8]), 4, 2,
+    matrix(
+      c(1, 1, 1, 1, res[5:8]),
+      4,
+      2,
       dimnames = list(levels = 11:14, time = 1:2)
     )
   )
   expect_equal(
     contrib(epr),
-    matrix(c(0, 0, 2.5962965079607, 2.88444419044716),
-      2, 2,
+    matrix(
+      c(0, 0, 2.5962965079607, 2.88444419044716),
+      2,
+      2,
       dimnames = list(product = c("11.1", "11.2"), time = 1:2)
     )
   )
@@ -110,7 +123,10 @@ test_that("replacement methods work with a vector", {
   epr[1, c(FALSE, TRUE)] <- "2"
   expect_equal(
     as.matrix(epr),
-    matrix(c(1, 1, 1, 1, 2, res[6:8]), 4, 2,
+    matrix(
+      c(1, 1, 1, 1, 2, res[6:8]),
+      4,
+      2,
       dimnames = list(levels = 11:14, time = 1:2)
     )
   )
@@ -135,7 +151,10 @@ test_that("replacement methods work with a vector", {
   epr["14"] <- 1
   expect_equal(
     as.matrix(epr),
-    matrix(c(3, 1, 1, 1, 2, res[6:7], 1), 4, 2,
+    matrix(
+      c(3, 1, 1, 1, 2, res[6:7], 1),
+      4,
+      2,
       dimnames = list(levels = 11:14, time = 1:2)
     )
   )
@@ -160,7 +179,7 @@ test_that("replacement methods work with a vector", {
   expect_error(epr[1, c(TRUE, FALSE, FALSE)] <- 1)
   expect_error(epr[5] <- 1)
   expect_error(epr[1] <- numeric(0))
-  expect_warning(epr[c(T, F, T), ])
+  expect_warning(epr[c(TRUE, FALSE, TRUE), ])
 })
 
 test_that("replacement method works with a matrix", {
@@ -171,7 +190,9 @@ test_that("replacement method works with a matrix", {
   )
 
   epr4 <- replace(
-    epr3, matrix(c("11", "11", "12", "12", "2", "2", "2", "2"), 4), 1:2
+    epr3,
+    matrix(c("11", "11", "12", "12", "2", "2", "2", "2"), 4),
+    1:2
   )
   expect_equal(as.matrix(epr4), replace(as.matrix(epr3), 5:6, 2))
 

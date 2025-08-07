@@ -30,12 +30,14 @@
 #'
 #' @family index methods
 #' @export
-as.data.frame.piar_index <- function(x,
-                                     row.names = NULL,
-                                     optional = FALSE,
-                                     ...,
-                                     contrib = FALSE,
-                                     stringsAsFactors = FALSE) {
+as.data.frame.piar_index <- function(
+  x,
+  row.names = NULL,
+  optional = FALSE,
+  ...,
+  contrib = FALSE,
+  stringsAsFactors = FALSE
+) {
   chkDots(...)
   value <- unlist(x$index, use.names = FALSE)
   period <- rep(x$time, each = length(x$levels))

@@ -6,8 +6,10 @@ agg <- aggregation_structure(list(level1 = x1, level2 = x2, ea = x3))
 test_that("coercion methods works", {
   expect_equal(
     as.matrix(agg),
-    matrix(c(2, 0, 3, 0, 0, 0, 6, 0, 6, 0, 2, 0, 0, 0, 6, 2, 0, 3, 0, 0) / 6,
-      5, 4,
+    matrix(
+      c(2, 0, 3, 0, 0, 0, 6, 0, 6, 0, 2, 0, 0, 0, 6, 2, 0, 3, 0, 0) / 6,
+      5,
+      4,
       dimnames = list(
         levels = c("1", "2", "11", "21", "12"),
         c("111", "211", "121", "112")

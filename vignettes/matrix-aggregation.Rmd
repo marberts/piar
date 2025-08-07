@@ -18,7 +18,7 @@ Let's start by building the index in `vignette("piar")` again.
 library(piar)
 
 # Make an aggregation structure.
-ms_weights[c("level1", "level2")] <- 
+ms_weights[c("level1", "level2")] <-
   expand_classification(ms_weights$classification)
 
 pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
@@ -67,7 +67,7 @@ that gives the share of missing elemental indexes for each higher-level
 index.
 
 ```{r}
-pias_matrix <- as.matrix(pias) > 0 
+pias_matrix <- as.matrix(pias) > 0
 
 pias_matrix %*% is.na(elementals) / rowSums(pias_matrix)
 ```
