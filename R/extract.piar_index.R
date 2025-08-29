@@ -101,7 +101,7 @@
 #' @noRd
 replace_matrix <- function(x, i, value) {
   if (is.logical(i)) {
-    if (nrow(i) != length(x$levels) || ncol(i) != length(x$time)) {
+    if (nrow(i) != nlevels(x) || ncol(i) != ntime(x)) {
       stop(
         "'i' must have a row for each level and a column for each ",
         "time period in 'x'"

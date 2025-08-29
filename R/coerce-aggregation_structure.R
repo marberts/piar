@@ -71,7 +71,7 @@
 as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
   chkDots(...)
   nea <- length(x$weights)
-  height <- length(x$levels)
+  height <- nlevels(x)
   if (height == 1L) {
     res <- matrix(
       numeric(0L),
@@ -129,7 +129,7 @@ as.data.frame.piar_aggregation_structure <- function(
 #' @export
 as.list.piar_aggregation_structure <- function(x, ...) {
   chkDots(...)
-  if (length(x$levels) == 1L) {
+  if (nlevels(x) == 1L) {
     return(x$levels[1L])
   }
   res <- vector("list", length(x$parent))
@@ -138,7 +138,7 @@ as.list.piar_aggregation_structure <- function(x, ...) {
   for (i in seq_along(x$parent)[-1L]) {
     res[[i]] <- x$parent[[i]][res[[i - 1L]]]
   }
-  top <- names(x$child[[length(x$child)]])[res[[length(res)]]]
+  top <- names(last(x$child))[last(res)]
   res <- c(list(top), lapply(rev(res), names))
   names(res) <- names(x$levels)
   res

@@ -127,17 +127,17 @@ mean_index <- function(
     if (any(weights < 0, na.rm = TRUE)) {
       stop("all elements of 'weights' must be non-negative")
     }
-    if (length(weights) != length(x$time) * length(x$levels)) {
+    if (length(weights) != ntime(x) * nlevels(x)) {
       stop("'weights' must have a value for each index value in 'x'")
     }
-    w <- split(weights, gl(length(x$time), length(x$levels)))
+    w <- split(weights, gl(ntime(x), nlevels(x)))
   }
 
   window <- as.integer(window)
   if (length(window) > 1L || window < 1L) {
     stop("'window' must be a positive length 1 integer")
   }
-  if (window > length(x$time)) {
+  if (window > ntime(x)) {
     stop("'x' must have at least 'window' time periods")
   }
 
@@ -150,10 +150,10 @@ mean_index <- function(
   )
 
   # Get the starting location for each window.
-  if (length(x$time) %% window != 0) {
+  if (ntime(x) %% window != 0) {
     warning("'window' is not a multiple of the number of time periods in 'x'")
   }
-  len <- length(x$time) %/% window
+  len <- ntime(x) %/% window
   loc <- seq.int(1L, by = window, length.out = len)
   periods <- x$time[loc]
 

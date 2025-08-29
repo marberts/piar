@@ -72,7 +72,7 @@ as_aggregation_structure.default <- function(x, ..., weights = NULL) {
 as_aggregation_structure.data.frame <- function(x, ...) {
   chkDots(...)
   x <- as.list(x)
-  aggregation_structure(x[-length(x)], x[[length(x)]])
+  aggregation_structure(drop_last(x), last(x))
 }
 
 #' @rdname as_aggregation_structure

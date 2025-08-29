@@ -58,7 +58,7 @@ stack.direct_piar_index <- function(x, y, ...) {
 #' @export
 stack.piar_index <- function(x, y, ...) {
   chkDots(...)
-  if (length(x$levels) != length(y$levels) || !setequal(x$levels, y$levels)) {
+  if (nlevels(x) != nlevels(y) || !setequal(x$levels, y$levels)) {
     stop("'x' and 'y' must be indexes for the same levels")
   }
   if (any(x$time %in% y$time)) {
@@ -88,7 +88,7 @@ unstack.direct_piar_index <- function(x, ...) {
 
 #' @export
 unstack.piar_index <- function(x, ..., chainable) {
-  res <- vector("list", length(x$time))
+  res <- vector("list", ntime(x))
   names(res) <- x$time
   for (t in seq_along(res)) {
     res[[t]] <- new_piar_index(

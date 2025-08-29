@@ -54,7 +54,7 @@ start.piar_index <- function(x, ...) {
 #' @export
 end.piar_index <- function(x, ...) {
   chkDots(...)
-  x$time[length(x$time)]
+  last(x$time)
 }
 
 #' @rdname time.piar_index

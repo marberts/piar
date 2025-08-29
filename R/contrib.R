@@ -76,8 +76,8 @@ contrib.piar_index <- function(
   pad = 0
 ) {
   chkDots(...)
-  level <- match_levels(as.character(level), x$levels)
-  period <- match_time(as.character(period), x$time, several = TRUE)
+  level <- match_levels(as.character(level), x)
+  period <- match_time(as.character(period), x, several = TRUE)
   pad <- as.numeric(pad)
   if (length(pad) != 1L) {
     stop("'pad' must be a length 1 numeric value")
@@ -114,8 +114,8 @@ contrib2DF.piar_index <- function(
   ...
 ) {
   chkDots(...)
-  level <- match_levels(as.character(level), x$levels, several = TRUE)
-  period <- match_time(as.character(period), x$time, several = TRUE)
+  level <- match_levels(as.character(level), x, several = TRUE)
+  period <- match_time(as.character(period), x, several = TRUE)
 
   con <- lapply(x$contrib[period], `[`, level)
 
@@ -155,8 +155,8 @@ contrib2DF.piar_index <- function(
   value
 ) {
   chkDots(...)
-  level <- match_levels(as.character(level), x$levels)
-  period <- match_time(as.character(period), x$time, several = TRUE)
+  level <- match_levels(as.character(level), x)
+  period <- match_time(as.character(period), x, several = TRUE)
 
   value <- as.matrix(value)
   if (ncol(value) == 0L) {

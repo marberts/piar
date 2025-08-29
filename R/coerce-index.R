@@ -40,7 +40,7 @@ as.data.frame.piar_index <- function(
 ) {
   chkDots(...)
   value <- unlist(x$index, use.names = FALSE)
-  period <- rep(x$time, each = length(x$levels))
+  period <- rep(x$time, each = nlevels(x))
   if (stringsAsFactors) {
     res <- data.frame(
       period = factor(period, x$time),

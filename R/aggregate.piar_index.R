@@ -223,7 +223,7 @@ aggregate_index <- function(
 
   if (!is.null(pias2)) {
     pias2 <- as_aggregation_structure(pias2)
-    if (!identical(pias[1:3], pias2[1:3])) {
+    if (!same_hierarchy(pias, pias2)) {
       stop("'pias' and 'pias2' must represent the same aggregation structure")
     }
     if (
@@ -260,7 +260,7 @@ aggregate_index <- function(
   if (include_ea) {
     lev <- unlist(pias$levels, use.names = FALSE)
   } else {
-    lev <- unlist(pias$levels[-length(pias$levels)], use.names = FALSE)
+    lev <- unlist(drop_last(pias$levels), use.names = FALSE)
   }
 
   piar_index(res$index, res$contrib, lev, x$time, chainable)
@@ -284,12 +284,12 @@ aggregate_ <- function(
   # Put the aggregation weights upside down to line up with pias.
   w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
 
-  eas <- match(pias$levels[[length(pias$levels)]], x$levels)
+  eas <- match_eas(pias, x)
 
   # Loop over each time period.
-  index <- contrib <- vector("list", length(x$time))
+  index <- contrib <- vector("list", ntime(x))
   for (t in seq_along(x$time)) {
-    rel <- con <- vector("list", length(pias$levels))
+    rel <- con <- vector("list", nlevels(pias))
     # Align epr with weights so that positional indexing works.
     rel[[1L]] <- x$index[[t]][eas]
     con[[1L]] <- x$contrib[[t]][eas]
@@ -360,7 +360,7 @@ aggregate_contrib <- function(r, duplicate_contrib = c("make.unique", "sum")) {
       names(res) <- make.unique(names(res))
     } else {
       products <- unlist(lapply(res, names), use.names = FALSE)
-      if (anyDuplicated(products) > 0L) {
+      if (anyDuplicated(products)) {
         products <- unique(products)
         mat <- do.call(cbind, Map(`[`, res, list(products)))
         res <- rowSums(mat, na.rm = TRUE)

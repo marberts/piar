@@ -44,7 +44,7 @@ merge.direct_piar_index <- function(x, y, ...) {
 #' @export
 merge.piar_index <- function(x, y, ...) {
   chkDots(...)
-  if (length(x$time) != length(y$time) || any(x$time != y$time)) {
+  if (ntime(x) != ntime(y) || any(x$time != y$time)) {
     stop("'x' and 'y' must be indexes for the same time periods")
   }
   if (any(x$levels %in% y$levels)) {
