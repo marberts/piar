@@ -150,7 +150,7 @@ shadow_price.default <- function(
     )
     if (!is.null(pias)) {
       epr <- aggregate(epr, pias, na.rm = TRUE, r = r2)
-      pias <- update(pias, epr)
+      pias <- update(pias, epr, r = r2)
     }
     # Add shadow prices to 'x'.
     impute <- is.na(price)
