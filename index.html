@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,10 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"piar"</span><span class="op">)</span></span></code></pre></div>
 <p>The development version can be installed from R-Universe</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"piar"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://marberts.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
+<span>  <span class="st">"piar"</span>,</span>
+<span>  repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://marberts.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>or directly from Github.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"marberts/piar"</span><span class="op">)</span></span></code></pre></div>
@@ -127,12 +130,12 @@
 <span><span class="co"># industrial classifications</span></span>
 <span></span>
 <span><span class="va">ms_weights</span></span>
-<span><span class="co">#&gt;   business classification weight</span></span>
-<span><span class="co">#&gt; 1       B1             11    553</span></span>
-<span><span class="co">#&gt; 2       B2             11    646</span></span>
-<span><span class="co">#&gt; 3       B3             11    312</span></span>
-<span><span class="co">#&gt; 4       B4             12    622</span></span>
-<span><span class="co">#&gt; 5       B5             12    330</span></span>
+<span><span class="co">#&gt;   business classification weight level1 level2</span></span>
+<span><span class="co">#&gt; 1       B1             11    553      1     11</span></span>
+<span><span class="co">#&gt; 2       B2             11    646      1     11</span></span>
+<span><span class="co">#&gt; 3       B3             11    312      1     11</span></span>
+<span><span class="co">#&gt; 4       B4             12    622      1     12</span></span>
+<span><span class="co">#&gt; 5       B5             12    330      1     12</span></span>
 <span></span>
 <span><span class="va">ms_weights</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"level1"</span>, <span class="st">"level2"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="reference/expand_classification.html">expand_classification</a></span><span class="op">(</span><span class="va">ms_weights</span><span class="op">$</span><span class="va">classification</span><span class="op">)</span></span>
