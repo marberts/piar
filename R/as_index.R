@@ -143,7 +143,6 @@ as_index.direct_piar_index <- function(x, ..., chainable = FALSE) {
   if (chainable) unchain(x) else x
 }
 
-
 #' @rdname as_index
 #' @export
 as_index.mts <- function(x, ...) {

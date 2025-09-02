@@ -147,10 +147,10 @@ replace_index <- function(x, i, j, value) {
     return(x)
   }
 
-  if (length(value$time) != length(periods)) {
+  if (ntime(value) != length(periods)) {
     stop("'x' and 'value' must have the same number of time periods")
   }
-  if (length(levels) %% length(value$levels) != 0) {
+  if (length(levels) %% nlevels(value) != 0) {
     stop("number of items to replace is not a multiple of replacement length")
   }
   for (t in seq_along(periods)) {
