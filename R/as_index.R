@@ -74,8 +74,8 @@ as_index.default <- function(x, ...) {
 as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
   chkDots(...)
   storage.mode(x) <- "numeric"
-  levels <- if (is.null(rownames(x))) seq_len(nrow(x)) else rownames(x)
-  periods <- if (is.null(colnames(x))) seq_len(ncol(x)) else colnames(x)
+  levels <- rownames(x) %||% seq_len(nrow(x))
+  periods <- colnames(x) %||% seq_len(ncol(x))
 
   index <- index_skeleton(levels, periods)
   for (t in seq_along(periods)) {
@@ -142,7 +142,6 @@ as_index.direct_piar_index <- function(x, ..., chainable = FALSE) {
   chkDots(...)
   if (chainable) unchain(x) else x
 }
-
 
 #' @rdname as_index
 #' @export

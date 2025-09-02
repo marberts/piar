@@ -45,7 +45,10 @@ install.packages("piar")
 The development version can be installed from R-Universe
 
 ```{r, eval=FALSE}
-install.packages("piar", repos = c("https://marberts.r-universe.dev", "https://cloud.r-project.org"))
+install.packages(
+  "piar",
+  repos = c("https://marberts.r-universe.dev", "https://cloud.r-project.org")
+)
 ```
 
 or directly from Github.

@@ -80,7 +80,7 @@ chain.default <- function(x, ...) {
 chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
   chkDots(...)
   link <- as.numeric(link)
-  if (length(link) != length(x$levels)) {
+  if (length(link) != nlevels(x)) {
     stop("'link' must have a value for each level of 'x'")
   }
   x$index[[1L]] <- x$index[[1L]] * link
@@ -119,14 +119,14 @@ unchain.chainable_piar_index <- function(x, ...) {
 unchain.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   chkDots(...)
   if (length(base) == 1L && is.character(base)) {
-    base <- x$index[[match_time(base, x$time)]] / x$index[[1L]]
+    base <- x$index[[match_time(base, x)]] / x$index[[1L]]
   } else {
     base <- as.numeric(base)
-    if (length(base) != length(x$levels)) {
+    if (length(base) != nlevels(x)) {
       stop("'base' must have a value for each level of 'x'")
     }
   }
-  x$index[-1L] <- Map(`/`, x$index[-1L], x$index[-length(x$index)])
+  x$index[-1L] <- Map(`/`, x$index[-1L], drop_last(x$index))
   x$index[[1L]] <- x$index[[1L]] * base
   # Contributions are difficult to unchain, so remove them.
   x$contrib[] <- empty_contrib(x$levels)
@@ -156,10 +156,10 @@ rebase.chainable_piar_index <- function(x, ...) {
 rebase.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   chkDots(...)
   if (length(base) == 1L && is.character(base)) {
-    base <- x$index[[match_time(base, x$time)]]
+    base <- x$index[[match_time(base, x)]]
   } else {
     base <- as.numeric(base)
-    if (length(base) != length(x$levels)) {
+    if (length(base) != nlevels(x)) {
       stop("'base' must have a value for each level of 'x'")
     }
   }

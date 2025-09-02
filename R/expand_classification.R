@@ -113,7 +113,7 @@ interact_classifications <- function(..., sep = ":") {
     rapply(x, \(ix) lapply(y, \(iy) paste(ix, iy, sep = sep)), how = "replace")
   }
   res <- unlist(Reduce(interact, dots), use.names = FALSE)
-  m <- length(dots[[length(dots)]])
+  m <- length(last(dots))
   k <- m * n
   res <- unname(split(res, gl(length(res) / k, k)))
   lapply(res, \(x) unname(split(x, gl(m, n))))

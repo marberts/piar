@@ -49,7 +49,10 @@ install.packages("piar")
 The development version can be installed from R-Universe
 
 ``` r
-install.packages("piar", repos = c("https://marberts.r-universe.dev", "https://cloud.r-project.org"))
+install.packages(
+  "piar",
+  repos = c("https://marberts.r-universe.dev", "https://cloud.r-project.org")
+)
 ```
 
 or directly from Github.
@@ -103,12 +106,12 @@ And an aggregation structure.
 # industrial classifications
 
 ms_weights
-#>   business classification weight
-#> 1       B1             11    553
-#> 2       B2             11    646
-#> 3       B3             11    312
-#> 4       B4             12    622
-#> 5       B5             12    330
+#>   business classification weight level1 level2
+#> 1       B1             11    553      1     11
+#> 2       B2             11    646      1     11
+#> 3       B3             11    312      1     11
+#> 4       B4             12    622      1     12
+#> 5       B5             12    330      1     12
 
 ms_weights[c("level1", "level2")] <-
   expand_classification(ms_weights$classification)

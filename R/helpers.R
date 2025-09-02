@@ -1,3 +1,4 @@
+#---- Useful functions ----
 padded_extract <- function(x, i, pad) {
   pad <- as.character(pad)
   if (length(pad) != 1L) {
@@ -10,6 +11,26 @@ padded_extract <- function(x, i, pad) {
 
 missing_weights <- function(x) {
   is.na(x) | x == 0
+}
+
+missing_names <- function(x) {
+  anyNA(x) || any(x == "")
+}
+
+last <- function(x) {
+  x[[length(x)]]
+}
+
+drop_last <- function(x) {
+  x[-length(x)]
+}
+
+match_eas <- function(pias, index) {
+  match(last(pias$levels), index$levels)
+}
+
+same_hierarchy <- function(x, y) {
+  identical(x[1:2], x[1:2])
 }
 
 #---- Replacing contributions ----
@@ -53,11 +74,11 @@ sequential_names <- function(...) {
 
 valid_product_names <- function(x, period = NULL) {
   x <- as.character(x)
-  if (anyNA(x) || any(x == "")) {
+  if (missing_names(x)) {
     stop("each product must have a non-missing or length-zero name")
   }
   if (is.null(period)) {
-    if (anyDuplicated(x) > 0L) {
+    if (anyDuplicated(x)) {
       warning("product names are not unique")
       x <- make.unique(x)
     } else {
@@ -121,26 +142,27 @@ dim_indices <- function(x, i) {
   res
 }
 
-match_dim <- function(what) {
-  what <- as.character(what)
-  function(x, dim, several = FALSE) {
+match_dim <- function(what = c("time", "levels")) {
+  what <- match.arg(what)
+  dim <- switch(what, time = "time period", levels = "index level")
+  function(x, index, several = FALSE) {
     if (!several && length(x) != 1L) {
-      stop(gettextf("must supply exactly one %s", what))
+      stop(gettextf("must supply exactly one %s", dim))
     } else if (several && length(x) == 0L) {
-      stop(gettextf("must supply at least one %s", what))
+      stop(gettextf("must supply at least one %s", dim))
     }
-    i <- match(x, dim)
+    i <- match(x, index[[what]])
     no_match <- is.na(i)
     if (any(no_match)) {
-      stop(gettextf("'%s' is not a %s", x[no_match][1L], what))
+      stop(gettextf("'%s' is not a %s", x[no_match][1L], dim))
     }
     i
   }
 }
 
-match_levels <- match_dim("index level")
+match_levels <- match_dim("levels")
 
-match_time <- match_dim("time period")
+match_time <- match_dim("time")
 
 #---- Generate index ----
 index_skeleton <- function(levels, time) {
@@ -161,7 +183,7 @@ has_contrib <- function(x) {
   Position(\(x) any(lengths(x) > 0L), x$contrib, nomatch = 0L) > 0L
 }
 
-# Backport Reduce
+# Backport Reduce and %||%
 # TODO: Remove once min R version gets bumped.
 if (getRversion() < "4.4.0") {
   Reduce <- function(
@@ -244,5 +266,9 @@ if (getRversion() < "4.4.0") {
       }
       out
     }
+  }
+
+  `%||%` <- function(x, y) {
+    if (is.null(x)) y else x
   }
 }

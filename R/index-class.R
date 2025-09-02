@@ -52,7 +52,7 @@ validate_levels <- function(x) {
   if (length(x) == 0L) {
     stop("cannot make an index with no levels")
   }
-  if (anyNA(x) || any(x == "")) {
+  if (missing_names(x)) {
     stop("cannot make an index with missing or length-zero levels")
   }
   if (anyDuplicated(x)) {
@@ -65,7 +65,7 @@ validate_time <- function(x) {
   if (length(x) == 0L) {
     stop("cannot make an index with no time periods")
   }
-  if (anyNA(x) || any(x == "")) {
+  if (missing_names(x)) {
     stop("cannot make an index with missing or length-zero time periods")
   }
   if (anyDuplicated(x)) {
