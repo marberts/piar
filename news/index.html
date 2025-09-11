@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@
 <div class="section level3">
 <h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
 <ul><li><p>Both <code>aggregate(index)</code> and <code>mean(index)</code> get a new argument <code>duplicate_contrib</code> to control how product contributions are made when there are duplicate products.</p></li>
-<li><p>Coercing an index or an aggregation structure to a matrix now has dimension names.</p></li>
+<li><p>Coercing an index or an aggregation structure to a matrix now has dimension names. Same with the output from <code><a href="../reference/contrib.html">contrib()</a></code>.</p></li>
 <li><p><code><a href="../reference/expand_classification.html">expand_classification()</a></code> and <code><a href="../reference/split_classification.html">split_classification()</a></code> get a new argument <code>pad</code> to better manage unbalanced classifications.</p></li>
 <li><p>It is no longer possible to make non-positive index values or use negative weights.</p></li>
 </ul></div>
@@ -65,7 +65,7 @@
 <h3 id="improvements-0-8-2">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-2"></a></h3>
 <ul><li><p>Added <code><a href="../reference/levels.piar_index.html">set_levels()</a></code>, <code><a href="../reference/time.piar_index.html">set_time()</a></code>, and <code><a href="../reference/weights.piar_aggregation_structure.html">set_weights()</a></code> to make it easier to replace levels, times, and weights with pipes.</p></li>
 <li><p><code>contrib(index) &lt;- value</code> can now be used to replace product contributions. The alias <code><a href="../reference/contrib.html">set_contrib()</a></code> is easier to use with pipes.</p></li>
-<li><p><code><a href="../reference/elemental_index.html">elementary_index()</a></code> is now an alias for <code><a href="../reference/elemental_index.html">elemental_index()</a></code> as this is more common in the literature.</p></li>
+<li><p><code><a href="../reference/elementary_index.html">elementary_index()</a></code> is now an alias for <code><a href="../reference/elementary_index.html">elemental_index()</a></code> as this is more common in the literature.</p></li>
 <li><p><code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> can now use two aggregation structures to make a superlative index.</p></li>
 <li><p><code>cut(aggregation_structure)</code> can be used cut off the bottom/top of an aggregation structure. Works in conjunction with <code><a href="../reference/contrib.html">set_contrib_from_index()</a></code> to calculate index-level contributions.</p></li>
 <li><p>Aggregation structures now preserve the names of their levels to work with <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code>. This means that <code>as.data.frame(aggregation_structure)</code> can produce different column names.</p></li>
@@ -84,7 +84,7 @@
 <div class="section level3">
 <h3 id="significant-changes-0-8-1">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-8-1"></a></h3>
 <ul><li>
-<p><code><a href="../reference/elemental_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code><a href="../reference/impute_prices.html">shadow_price()</a></code>, <code><a href="../reference/impute_prices.html">carry_forward()</a></code>, and <code><a href="../reference/impute_prices.html">carry_backward()</a></code> now have a formula interface to select the relevant, e.g., price variables from a data frame instead of using <code><a href="https://rdrr.io/r/base/with.html" class="external-link">with()</a></code>. This changes the signature of these functions, and may break old code if argument were not named.</p>
+<p><code><a href="../reference/elementary_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code><a href="../reference/impute_prices.html">shadow_price()</a></code>, <code><a href="../reference/impute_prices.html">carry_forward()</a></code>, and <code><a href="../reference/impute_prices.html">carry_backward()</a></code> now have a formula interface to select the relevant, e.g., price variables from a data frame instead of using <code><a href="https://rdrr.io/r/base/with.html" class="external-link">with()</a></code>. This changes the signature of these functions, and may break old code if argument were not named.</p>
 <ul><li>
 <code>as_aggregation_structure(list)</code> and <code>mean(index)</code> now require the <code>weights</code> argument to be named to be consistent with other functions.</li>
 </ul></li>
@@ -96,7 +96,7 @@
 <h3 id="improvements-0-8-1">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-1"></a></h3>
 <ul><li><p><code><a href="../reference/as_index.html">as_index()</a></code> gains a new argument <code>contrib</code> to add contributions to pre-computed indexes.</p></li>
 <li><p>Added <code><a href="../reference/contrib.html">contrib2DF()</a></code> to extract percent-change contributions as a data frame.</p></li>
-<li><p><code><a href="../reference/elemental_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code><a href="../reference/impute_prices.html">shadow_price()</a></code>, <code><a href="../reference/impute_prices.html">carry_forward()</a></code>, and <code><a href="../reference/impute_prices.html">carry_backward()</a></code> now require the arguments for time periods, products, and elemental aggregates to be named so as to avoid accidentally changing the order of these arguments (<a href="https://github.com/marberts/piar/issues/7" class="external-link">#7</a>, <a href="https://github.com/schneiderpy" class="external-link">@schneiderpy</a>).</p></li>
+<li><p><code><a href="../reference/elementary_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code><a href="../reference/impute_prices.html">shadow_price()</a></code>, <code><a href="../reference/impute_prices.html">carry_forward()</a></code>, and <code><a href="../reference/impute_prices.html">carry_backward()</a></code> now require the arguments for time periods, products, and elemental aggregates to be named so as to avoid accidentally changing the order of these arguments (<a href="https://github.com/marberts/piar/issues/7" class="external-link">#7</a>, <a href="https://github.com/schneiderpy" class="external-link">@schneiderpy</a>).</p></li>
 <li><p>Added <code><a href="../reference/expand_classification.html">interact_classifications()</a></code> to get the interaction of different dimensions for a hierarchical classification.</p></li>
 <li><p><code><a href="../reference/chain.html">unchain()</a></code> gets an new argument <code>base</code> for better interaction with <code><a href="../reference/chain.html">chain()</a></code> and <code><a href="../reference/chain.html">rebase()</a></code>.</p></li>
 <li><p><code>aggregate(index)</code> gets a new argument <code>include_ea</code> to control whether elemental indexes are returned when aggregating.</p></li>
@@ -104,14 +104,14 @@
 <li><p><code>aggregate(index)</code> now imputes percent-change contributions for missing index values when <code>na.rm = TRUE</code>. The previously undocumented behavior was to simply drop them.</p></li>
 <li><p>Added <code>window(index)</code> to extract a window of price indexes and <code>window(index) &lt;- value</code> to replace them.</p></li>
 <li><p>The base period for <code><a href="../reference/chain.html">rebase()</a></code> can now be a time period specifying a new base period. This makes it easier to rebase with pipes; e.g., <code>index |&gt; mean() |&gt; rebase("202001")</code>.</p></li>
-<li><p><code><a href="../reference/elemental_index.html">elemental_index()</a></code> gets a new argument <code>product</code> to better control product names.</p></li>
+<li><p><code><a href="../reference/elementary_index.html">elemental_index()</a></code> gets a new argument <code>product</code> to better control product names.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.0" id="piar-070">piar 0.7.0<a class="anchor" aria-label="anchor" href="#piar-070"></a></h2><p class="text-muted">CRAN release: 2024-03-08</p>
 <div class="section level3">
 <h3 id="significant-changes-0-7-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-7-0"></a></h3>
-<ul><li><p>Some arguments for <code><a href="../reference/elemental_index.html">elemental_index()</a></code>, <code><a href="../reference/as_index.html">as_index()</a></code>, <code>aggregate(index)</code>, <code>mean(index)</code>, <code>vcov(index)</code>, <code>update(aggregation_structure)</code>, and <code>weights(aggregation_structure)</code> now need to be named (e.g., <code>na.rm</code>, <code>contrib</code>). This helps to unify the signatures for several functions that had similar arguments in different positions. In all cases these are arguments that are not near the beginning of the function and should have probably been named anyways.</p></li>
+<ul><li><p>Some arguments for <code><a href="../reference/elementary_index.html">elemental_index()</a></code>, <code><a href="../reference/as_index.html">as_index()</a></code>, <code>aggregate(index)</code>, <code>mean(index)</code>, <code>vcov(index)</code>, <code>update(aggregation_structure)</code>, and <code>weights(aggregation_structure)</code> now need to be named (e.g., <code>na.rm</code>, <code>contrib</code>). This helps to unify the signatures for several functions that had similar arguments in different positions. In all cases these are arguments that are not near the beginning of the function and should have probably been named anyways.</p></li>
 <li><p>There are several bug fixes in this version that make non-backwards compatible changes.</p></li>
 </ul></div>
 <div class="section level3">
@@ -145,8 +145,8 @@
 <li><p><code><a href="../reference/aggregation_structure.html">aggregation_structure()</a></code> now orders the levels of an aggregation according to the order they appear in the data. Previously the levels were ordered lexicographically, except for the elemental aggregates. This can affect the order in which index values appear for an aggregate index.</p></li>
 </ul><p>There are a number of changes to the way product names are handled when making an index and extracting percent-change contributions.</p>
 <ul><li>
-<p>Names for price relatives now need to be unique within a time period for <code><a href="../reference/elemental_index.html">elemental_index()</a></code>. The previous (undocumented) behavior was to only require that names be unique within a time period <em>and</em> elemental aggregate. This implies two non-backward compatible changes.</p>
-<ul><li><p>The default product names for <code><a href="../reference/elemental_index.html">elemental_index()</a></code> now include the name of the elemental aggregate to conform to the above requirement.</p></li>
+<p>Names for price relatives now need to be unique within a time period for <code><a href="../reference/elementary_index.html">elemental_index()</a></code>. The previous (undocumented) behavior was to only require that names be unique within a time period <em>and</em> elemental aggregate. This implies two non-backward compatible changes.</p>
+<ul><li><p>The default product names for <code><a href="../reference/elementary_index.html">elemental_index()</a></code> now include the name of the elemental aggregate to conform to the above requirement.</p></li>
 <li><p>Percent-change contributions from <code><a href="../reference/contrib.html">contrib()</a></code> have simplified row names, as there is now no need to include index-level names to make product names unique.</p></li>
 </ul></li>
 <li><p><code><a href="../reference/contrib.html">contrib()</a></code> now always returns a matrix. Previously it would return <code>NULL</code> if there were no contributions for each level of the index.</p></li>
@@ -176,7 +176,7 @@
 <h3 id="significant-changes-0-5-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-5-0"></a></h3>
 <ul><li><p><code>piar</code> now requires <strong>R</strong> &gt;= 4.0.</p></li>
 <li><p><code>is_chain_index()</code> has been removed; use <code><a href="../reference/is_index.html">is_chainable_index()</a></code> instead.</p></li>
-<li><p>The first argument to <code><a href="../reference/elemental_index.html">elemental_index()</a></code> is now <code>x</code>, not <code>rel</code>, to be consistent with the rest of the functions. Similarly, the first argument for <code><a href="../reference/expand_classification.html">expand_classification()</a></code> is now <code>x</code>, not <code>class</code>.</p></li>
+<li><p>The first argument to <code><a href="../reference/elementary_index.html">elemental_index()</a></code> is now <code>x</code>, not <code>rel</code>, to be consistent with the rest of the functions. Similarly, the first argument for <code><a href="../reference/expand_classification.html">expand_classification()</a></code> is now <code>x</code>, not <code>class</code>.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-0-5-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-5-0"></a></h3>
@@ -217,7 +217,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-0-4-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-4-0"></a></h3>
-<ul><li><p>The <code>chain</code> argument found in some of the methods for <code><a href="../reference/elemental_index.html">elemental_index()</a></code> and <code><a href="../reference/as_index.html">as_index()</a></code> to mark an index as chainable has been replaced by the more descriptive <code>chainable</code> argument. Partial matching of argument names means this is backwards compatible.</p></li>
+<ul><li><p>The <code>chain</code> argument found in some of the methods for <code><a href="../reference/elementary_index.html">elemental_index()</a></code> and <code><a href="../reference/as_index.html">as_index()</a></code> to mark an index as chainable has been replaced by the more descriptive <code>chainable</code> argument. Partial matching of argument names means this is backwards compatible.</p></li>
 <li><p>The <code><a href="../reference/price_relative.html">price_relative()</a></code> function no longer uses <code>gpindex::back_price()</code>, as this function is deprecated. This change will remove the harmless deprecation warning when using an older version of piar with a newer version of gpindex.</p></li>
 </ul></div>
 <div class="section level3">

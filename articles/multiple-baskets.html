@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,11 +77,11 @@
     
     
 <p>Most prices indexes use the same set of weights to aggregate
-elemental indexes for several years, periodically updating these weights
-and adding or removing elemental aggregates. The general approach to
-keep the time series going across baskets is to “chain” the index across
-baskets.</p>
-<p>Let’s start by making some quarterly elemental indexes and weights
+elementary indexes for several years, periodically updating these
+weights and adding or removing elementary aggregates. The general
+approach to keep the time series going across baskets is to “chain” the
+index across baskets.</p>
+<p>Let’s start by making some quarterly elementary indexes and weights
 for two baskets. Each basket has index values for two years, and there
 is a one year overlap between the baskets.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -89,7 +89,7 @@ is a one year overlap between the baskets.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Make quarterly elemental indexes for two baskets with a 1 year overlap.</span></span>
+<span><span class="co"># Make quarterly elementary indexes for two baskets with a 1 year overlap.</span></span>
 <span></span>
 <span><span class="va">elementals1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">5</span> <span class="op">*</span> <span class="fl">8</span>, <span class="fl">0.8</span>, <span class="fl">1.2</span><span class="op">)</span>,</span>
@@ -134,7 +134,7 @@ is a one year overlap between the baskets.</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Aggregating the indexes for both baskets involves simply mapping the
 usual workflow across both baskets, keeping only the higher-level
-indexes because the elemental indexes change across baskets.</p>
+indexes because the elementary indexes change across baskets.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Map</a></span><span class="op">(</span></span>
 <span>  <span class="va">aggregate</span>,</span>

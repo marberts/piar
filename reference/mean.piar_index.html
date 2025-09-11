@@ -9,7 +9,7 @@ of index values over consecutive windows of subperiods."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,7 +82,7 @@ of index values over consecutive windows of subperiods.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A price index, as made by, e.g., <code><a href="elemental_index.html">elemental_index()</a></code>.</p></dd>
+<dd><p>A price index, as made by, e.g., <code><a href="elementary_index.html">elementary_index()</a></code>.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -115,8 +115,8 @@ imputation.</p></dd>
 
 <dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
 <dd><p>Order of the generalized mean to aggregate index values. 0 for a
-geometric index (the default for making elemental indexes), 1 for an
-arithmetic index (the default for aggregating elemental indexes and
+geometric index (the default for making elementary indexes), 1 for an
+arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
@@ -175,11 +175,11 @@ Cambridge University Press.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="as_index.html">as_index</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, <span class="fl">12</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="as_index.html">as_index</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, <span class="fl">12</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span>, <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, chainable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Turn a monthly index into a quarterly index</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">index</span>, window <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Period-over-period price index for 2 levels over 4 time periods </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-base price index for 2 levels over 4 time periods </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       time</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> levels  1 4 7 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1  2 5 8 11</span>

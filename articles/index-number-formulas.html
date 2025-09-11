@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@
 <p>Price indexes based on a generalized mean of price relatives
 constitute a large family of bilateral index-number formulas that are
 consistent in aggregation, and any index based on the generalized mean
-can be used to make and aggregate elemental indexes. To see how to make
+can be used to make and aggregate elementary indexes. To see how to make
 superlative indexes as well, let’s start with a simple dataset of prices
 and quantities for two businesses over three periods. We’ll be making
 extensive use of the <em>gpindex</em> package for lower-level
@@ -112,18 +112,18 @@ detail.</p>
 <h2 id="basic-indexes">Basic indexes<a class="anchor" aria-label="anchor" href="#basic-indexes"></a>
 </h2>
 <p>As seen in <code><a href="../articles/piar.html">vignette("piar")</a></code>, by default the
-<code><a href="../reference/elemental_index.html">elemental_index()</a></code> function calculates a Jevons index
+<code><a href="../reference/elementary_index.html">elementary_index()</a></code> function calculates a Jevons index
 (equally-weighted geometric mean of price relatives). Although this is
-the standard index-number formula for making elemental indexes, many
+the standard index-number formula for making elementary indexes, many
 other types of index-numbers are possible. Among the unweighted
 index-number formulas, the Carli index (equally-weighted arithmetic mean
 of price relatives) is the historical competitor to the Jevons, and
 requires specifying the order of the generalized mean <code>r</code>
-when calling <code><a href="../reference/elemental_index.html">elemental_index()</a></code>. An order of 1 corresponds
+when calling <code><a href="../reference/elementary_index.html">elementary_index()</a></code>. An order of 1 corresponds
 to an arithmetic mean.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prices</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span><span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 2 levels over 3 time periods </span></span>
 <span><span class="co">##       time</span></span>
 <span><span class="co">## levels 1        2        3</span></span>
@@ -135,17 +135,17 @@ practice. Despite it being more exotic, it is just as easy to make by
 specifying an order <code>r</code> of -1.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prices</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, r <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span><span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, r <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 2 levels over 3 time periods </span></span>
 <span><span class="co">##       time</span></span>
 <span><span class="co">## levels 1        2        3</span></span>
 <span><span class="co">##     B1 1 4.131148 1.754499</span></span>
 <span><span class="co">##     B2 1 2.214765 1.547408</span></span></code></pre>
-<p>Weights can be added to make, for example, elemental indexes using
+<p>Weights can be added to make, for example, elementary indexes using
 the geometric Laspeyres formula.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prices</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span></span>
 <span>    <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>,</span>
 <span>    weights <span class="op">=</span> <span class="va">back_price</span> <span class="op">*</span> <span class="va">back_quantity</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
@@ -154,7 +154,7 @@ the geometric Laspeyres formula.</p>
 <span><span class="co">## levels 1        2        3</span></span>
 <span><span class="co">##     B1 1 3.853330 1.754015</span></span>
 <span><span class="co">##     B2 1 2.202496 1.549081</span></span></code></pre>
-<p>The type of mean used to aggregate elemental indexes can be
+<p>The type of mean used to aggregate elementary indexes can be
 controlled in the same way in the call to <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code>. The
 default makes an arithmetic index, but any type of generalized-mean
 index is possible.</p>
@@ -163,17 +163,17 @@ index is possible.</p>
 <h2 id="superlative-indexes">Superlative indexes<a class="anchor" aria-label="anchor" href="#superlative-indexes"></a>
 </h2>
 <p>Many superlative indexes can be made by supplying unequal and
-time-varying weights when making the elemental indexes, usually from
+time-varying weights when making the elementary indexes, usually from
 information about quantities. The Törnqvist index is a popular
 superlative index-number formula, using average period-over-period value
 shares as the weights in a geometric mean. As
-<code><a href="../reference/elemental_index.html">elemental_index()</a></code> makes a geometric index by default, all
+<code><a href="../reference/elementary_index.html">elementary_index()</a></code> makes a geometric index by default, all
 that is needed to make a Törnqvist index is the weights.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/grouped.html" class="external-link">grouped</a></span><span class="op">(</span><span class="fu"><a href="https://marberts.github.io/gpindex/reference/index_weights.html" class="external-link">index_weights</a></span><span class="op">(</span><span class="st">"Tornqvist"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">prices</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span></span>
 <span>    <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>,</span>
 <span>    weights <span class="op">=</span> <span class="fu">tw</span><span class="op">(</span></span>
 <span>      <span class="va">price</span>,</span>
@@ -196,7 +196,7 @@ order.</p>
 <code class="sourceCode R"><span><span class="va">fw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marberts.github.io/gpindex/reference/grouped.html" class="external-link">grouped</a></span><span class="op">(</span><span class="fu"><a href="https://marberts.github.io/gpindex/reference/transmute_weights.html" class="external-link">nested_transmute</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">prices</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span></span>
 <span>    <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>,</span>
 <span>    weights <span class="op">=</span> <span class="fu">fw</span><span class="op">(</span></span>
 <span>      <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span>,</span>
@@ -218,17 +218,17 @@ subject of <code><a href="../articles/superlative-aggregation.html">vignette("su
 </h2>
 <p>As shown in <code><a href="../articles/contributions.html">vignette("contributions")</a></code>, supplying
 <code>contrib = TRUE</code> in the call to
-<code><a href="../reference/elemental_index.html">elemental_index()</a></code> makes percent-change product
+<code><a href="../reference/elementary_index.html">elementary_index()</a></code> makes percent-change product
 contributions for each index value. The method used in this package is
 flexible and works well for a variety of different index-number
 formulas, but does not include all methods found in the literature. (See
-the help page for <code><a href="../reference/elemental_index.html">elemental_index()</a></code>, and the references
+the help page for <code><a href="../reference/elementary_index.html">elementary_index()</a></code>, and the references
 therein, for more detail about the exact methods.)</p>
 <p>Let’s extend the previous example by calculating product
 contributions for the Fisher index using the default method.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fisher_index</span> <span class="op">&lt;-</span> <span class="va">prices</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span></span>
 <span>    <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>,</span>
 <span>    weights <span class="op">=</span> <span class="fu">fw</span><span class="op">(</span></span>
 <span>      <span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span>,</span>
@@ -279,7 +279,7 @@ according to a different method</p>
 <span><span class="co">##       1 0 1.1124046 0.2937263</span></span>
 <span><span class="co">##       2 0 1.0256134 0.2530717</span></span>
 <span><span class="co">##       3 0 0.9388222 0.2124170</span></span></code></pre>
-<p>Aggregating the elemental indexes will then consistently aggregate
+<p>Aggregating the elementary indexes will then consistently aggregate
 the contributions for both businesses, even though they use different
 methods.</p>
 </div>

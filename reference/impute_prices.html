@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,13 +111,13 @@ the product associated with each price in <code>x</code>.</p></dd>
 
 <dt id="arg-ea">ea<a class="anchor" aria-label="anchor" href="#arg-ea"></a></dt>
 <dd><p>A factor, or something that can be coerced into one, giving the
-elemental aggregate associated with each price in <code>x</code>.</p></dd>
+elementary aggregate associated with each price in <code>x</code>.</p></dd>
 
 
 <dt id="arg-pias">pias<a class="anchor" aria-label="anchor" href="#arg-pias"></a></dt>
 <dd><p>A price index aggregation structure, or something that can be
 coerced into one, as made with <code><a href="aggregation_structure.html">aggregation_structure()</a></code>. The default
-imputes from elemental indexes only (i.e., not recursively).</p></dd>
+imputes from elementary indexes only (i.e., not recursively).</p></dd>
 
 
 <dt id="arg-weights">weights<a class="anchor" aria-label="anchor" href="#arg-weights"></a></dt>
@@ -129,16 +129,16 @@ frame method.</p></dd>
 
 <dt id="arg-r-">r1<a class="anchor" aria-label="anchor" href="#arg-r-"></a></dt>
 <dd><p>Order of the generalized-mean price index used to calculate the
-elemental price indexes: 0 for a geometric index (the default), 1 for an
+elementary price indexes: 0 for a geometric index (the default), 1 for an
 arithmetic index, or -1 for a harmonic index. Other values are possible;
 see <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
 
 
 <dt id="arg-r-">r2<a class="anchor" aria-label="anchor" href="#arg-r-"></a></dt>
 <dd><p>Order of the generalized-mean price index used to aggregate the
-elemental price indexes: 0 for a geometric index, 1 for an arithmetic index
-(the default), or -1 for a harmonic index. Other values are possible; see
-<code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
+elementary price indexes: 0 for a geometric index, 1 for an arithmetic
+index (the default), or -1 for a harmonic index. Other values are possible;
+see <code><a href="https://marberts.github.io/gpindex/reference/generalized_mean.html" class="external-link">gpindex::generalized_mean()</a></code> for details.</p></dd>
 
 
 <dt id="arg-formula">formula<a class="anchor" aria-label="anchor" href="#arg-formula"></a></dt>
@@ -146,7 +146,7 @@ elemental price indexes: 0 for a geometric index, 1 for an arithmetic index
 side. For <code>carry_forward()</code> and <code>carry_backward()</code>, the right-hand side
 should have time periods and products (in that order); for
 <code>shadow_price()</code>, the right-hand side should have time period, products,
-and elemental aggregates (in that order).</p></dd>
+and elementary aggregates (in that order).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -162,7 +162,7 @@ towards 1, and is usually avoided; see paragraph 6.61 in the CPI manual
 used in practice.</p>
 <p>The shadow price method recursively imputes a missing price by the value of
 the price for the same product in the previous period multiplied by the
-value of the period-over-period elemental index for the elemental aggregate
+value of the period-over-period elementary index for the elementary aggregate
 to which that product belongs. This requires computing and aggregating an
 index (according to <code>pias</code>, unless <code>pias</code> is not supplied) for
 each <code>period</code>, and so these imputations can take a while. The index

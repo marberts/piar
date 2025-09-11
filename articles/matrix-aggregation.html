@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@
 <p>Aggregating a price index can be done as a matrix operation. Although
 this approach is less flexible than the <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code> method
 used in <code><a href="../articles/piar.html">vignette("piar")</a></code> (i.e., there can be no missing
-elemental indexes), it can be considerably faster for larger
+elementary indexes), it can be considerably faster for larger
 indexes.</p>
 <p>Let’s start by building the index in <code><a href="../articles/piar.html">vignette("piar")</a></code>
 again.</p>
@@ -99,7 +99,7 @@ again.</p>
 <span>    relative <span class="op">=</span> <span class="fu"><a href="../reference/price_relative.html">price_relative</a></span><span class="op">(</span><span class="va">price</span>, period <span class="op">=</span> <span class="va">period</span>, product <span class="op">=</span> <span class="va">product</span><span class="op">)</span>,</span>
 <span>    business <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">business</span>, levels <span class="op">=</span> <span class="va">ms_weights</span><span class="op">$</span><span class="va">business</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">relative</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span><span class="va">relative</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">index</span> <span class="op">&lt;-</span> <span class="va">elementals</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -128,8 +128,8 @@ the aggregation structure into an aggregation matrix.</p>
 <span><span class="co">##     1  0.2245229 0.2622818 0.1266748 0.2525376 0.1339829</span></span>
 <span><span class="co">##     11 0.3659828 0.4275314 0.2064858 0.0000000 0.0000000</span></span>
 <span><span class="co">##     12 0.0000000 0.0000000 0.0000000 0.6533613 0.3466387</span></span></code></pre>
-<p>Multiplying this matrix with a matrix of fixed-base elemental indexes
-now computes the aggregate index in each time period.</p>
+<p>Multiplying this matrix with a matrix of fixed-base elementary
+indexes now computes the aggregate index in each time period.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pias_matrix</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">index</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">pias</span><span class="op">)</span><span class="op">$</span><span class="va">business</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##       time</span></span>
@@ -142,10 +142,10 @@ now computes the aggregate index in each time period.</p>
 </h2>
 <p>It’s often useful to determine which higher-level index values are
 missing, and subsequently get imputed during aggregation (i.e., compute
-the shadow of an index). This is simple to do if there’s an elemental
-index for each elemental aggregate in the aggregation structure.</p>
+the shadow of an index). This is simple to do if there’s an elementary
+index for each elementary aggregate in the aggregation structure.</p>
 <p>The idea is to aggregate an indicator for missingness to get a matrix
-that gives the share of missing elemental indexes for each higher-level
+that gives the share of missing elementary indexes for each higher-level
 index.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pias_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">pias</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span></span>
@@ -156,13 +156,13 @@ index.</p>
 <span><span class="co">##     1     0.4 0.6000000 0.6000000 0.4000000</span></span>
 <span><span class="co">##     11    0.0 0.3333333 0.3333333 0.3333333</span></span>
 <span><span class="co">##     12    1.0 1.0000000 1.0000000 0.5000000</span></span></code></pre>
-<p>A value of 1 means that there are no non-missing elemental indexes,
+<p>A value of 1 means that there are no non-missing elementary indexes,
 and that the value for this level of the index is imputed from its
 parent in the aggregation structure. A value below 1 but above zero
-means that some but not all elemental indexes are missing, and the index
-value for this level is based on the non-missing elemental indexes. A
-value of zero means there’s no imputation for this level of the
-index.</p>
+means that some but not all elementary indexes are missing, and the
+index value for this level is based on the non-missing elementary
+indexes. A value of zero means there’s no imputation for this level of
+the index.</p>
 </div>
 <div class="section level2">
 <h2 id="sparse-matrices">Sparse matrices<a class="anchor" aria-label="anchor" href="#sparse-matrices"></a>

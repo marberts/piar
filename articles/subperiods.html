@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,7 +106,7 @@ by adding an additional eight quarters to make three years of data.</p>
 <span>  <span class="fu"><a href="../reference/as_aggregation_structure.html">as_aggregation_structure</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pias</span></span></code></pre></div>
-<pre><code><span><span class="co">## Aggregation structure for 12 elemental aggregates with 3 levels above the elemental aggregates </span></span>
+<pre><code><span><span class="co">## Aggregation structure for 12 elementary aggregates with 3 levels above the elementary aggregates </span></span>
 <span><span class="co">##    level1 level2 level3  ea weight</span></span>
 <span><span class="co">## 1       1     11    111 B01      1</span></span>
 <span><span class="co">## 2       1     11    111 B02      2</span></span>
@@ -121,7 +121,7 @@ by adding an additional eight quarters to make three years of data.</p>
 <span><span class="co">## 11      1     13    132 B11     11</span></span>
 <span><span class="co">## 12      1     13    132 B12     12</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Make elemental indexes over 3 years and aggregate.</span></span>
+<code class="sourceCode R"><span><span class="co"># Make elementary indexes over 3 years and aggregate.</span></span>
 <span><span class="va">quarterly_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">12</span> <span class="op">*</span> <span class="fl">12</span>, <span class="fl">0.4</span>, <span class="fl">1.2</span><span class="op">)</span>,</span>
 <span>  nrow <span class="op">=</span> <span class="fl">12</span>,</span>

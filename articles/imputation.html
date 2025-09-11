@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,8 +77,8 @@
     
     
 <p>The example in <code><a href="../articles/piar.html">vignette("piar")</a></code> used parental imputation
-to both impute missing price relatives when calculating the elemental
-indexes and to impute missing elemental indexes during aggregation.
+to both impute missing price relatives when calculating the elementary
+indexes and to impute missing elementary indexes during aggregation.
 Although parental imputation is simple and transparent, it is not the
 only way to impute missing prices or index values.</p>
 <div class="section level2">
@@ -86,9 +86,9 @@ only way to impute missing prices or index values.</p>
 </h2>
 <p>Instead of implicitly imputing missing price relatives by ignoring
 missing values, a common explicit (but methodologically dubious)
-imputation strategy when making elemental indexes is to carry forward
+imputation strategy when making elementary indexes is to carry forward
 the previous price to impute for missing prices. As the
-<code><a href="../reference/elemental_index.html">elemental_index()</a></code> function accepts price relatives as its
+<code><a href="../reference/elementary_index.html">elementary_index()</a></code> function accepts price relatives as its
 input, any imputations can be done prior to passing price relatives to
 this function. (Missing values still need to be removed in this example
 because not all missing prices can be imputed.)</p>
@@ -99,7 +99,7 @@ because not all missing prices can be imputed.)</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span></span>
 <span>    imputed_price <span class="op">=</span> <span class="fu"><a href="../reference/impute_prices.html">carry_forward</a></span><span class="op">(</span><span class="va">price</span>, period <span class="op">=</span> <span class="va">period</span>, product <span class="op">=</span> <span class="va">product</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="../reference/price_relative.html">price_relative</a></span><span class="op">(</span><span class="va">imputed_price</span>, period <span class="op">=</span> <span class="va">period</span>, product <span class="op">=</span> <span class="va">product</span><span class="op">)</span> <span class="op">~</span></span>
 <span>      <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>,</span>
 <span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -117,13 +117,13 @@ because not all missing prices can be imputed.)</p>
 <div class="section level2">
 <h2 id="non-parental-imputation-during-aggregation">Non-parental imputation during aggregation<a class="anchor" aria-label="anchor" href="#non-parental-imputation-during-aggregation"></a>
 </h2>
-<p>Parental imputation is the usual way to impute missing elemental
+<p>Parental imputation is the usual way to impute missing elementary
 index values during aggregation, and it is simple to do with
-<code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code>. In some cases, however, an elemental index may
-get imputed with the value for, say, another elemental aggregate, rather
-than for an entire group of elemental aggregates. The simplest way to do
-this sort of imputation is to alter the elemental indexes prior to
-aggregation.</p>
+<code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code>. In some cases, however, an elementary index
+may get imputed with the value for, say, another elementary aggregate,
+rather than for an entire group of elementary aggregates. The simplest
+way to do this sort of imputation is to alter the elementary indexes
+prior to aggregation.</p>
 <p>As an example, suppose that missing index values for business B4
 should be imputed as 1, rather than the value for group 12. This
 replacement can be done as if the index was a matrix.</p>

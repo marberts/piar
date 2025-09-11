@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,7 +105,7 @@ inherits from <code><a href="piar_index.html">direct_piar_index</a></code>.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Numeric matrices are coerced into an index object by treating each column as
 a separate time period, and each row as a separate level of the index (e.g.,
-an elemental aggregate). Column names
+an elementary aggregate). Column names
 are used to denote time periods, and row names are used to denote levels
 (so they must be unique). This essentially reverses calling
 <code><a href="as.data.frame.piar_index.html">as.matrix()</a></code> on an index object. If a
@@ -140,7 +140,7 @@ into a tabular form.</p></div>
 <span class="r-in"><span>  ea <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">prices</span>, <span class="va">rel</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">ea</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="elementary_index.html">elementary_index</a></span><span class="op">(</span><span class="va">prices</span>, <span class="va">rel</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">ea</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal</a></span><span class="op">(</span><span class="fu">as_index</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span><span class="op">)</span>, <span class="va">index</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>

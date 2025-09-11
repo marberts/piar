@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@
     
 <p>Price indexes are usually made from several sources of data. An
 important benefit of the usual two-step workflow to make price indexes
-is that the elemental indexes can be built piecemeal—using different
+is that the elementary indexes can be built piecemeal—using different
 sources of data and different index-number formulas—and then aggregated
 with a consistent structure.</p>
 <p>Let’s extend the example in <code><a href="../articles/piar.html">vignette("piar")</a></code> by having
@@ -94,12 +94,12 @@ missing in the <code>ms_prices</code> dataset.</p>
 <span><span class="va">pias</span> <span class="op">&lt;-</span> <span class="va">ms_weights</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"level1"</span>, <span class="st">"level2"</span>, <span class="st">"business"</span>, <span class="st">"weight"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/as_aggregation_structure.html">as_aggregation_structure</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Make elemental index.</span></span>
+<span><span class="co"># Make elementary index.</span></span>
 <span><span class="va">elementals</span> <span class="op">&lt;-</span> <span class="va">ms_prices</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span></span>
 <span>    relative <span class="op">=</span> <span class="fu"><a href="../reference/price_relative.html">price_relative</a></span><span class="op">(</span><span class="va">price</span>, period <span class="op">=</span> <span class="va">period</span>, product <span class="op">=</span> <span class="va">product</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span><span class="va">relative</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span><span class="va">relative</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">elementals</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 4 levels over 4 time periods </span></span>
@@ -152,7 +152,7 @@ time series.</p>
 <span><span class="co">##       time</span></span>
 <span><span class="co">## levels 202001   202002   202003    202004</span></span>
 <span><span class="co">##     B5      1 1.012081 1.143009 0.8109263</span></span></code></pre>
-<p>These values can now be merged with the other elemental indexes,
+<p>These values can now be merged with the other elementary indexes,
 getting turned into a period-over-period index in the process, and then
 aggregated.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">

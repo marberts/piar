@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,7 @@
 contribution of each price relative, also known as the percent-change
 contribution. This can be done with the same work flow used in
 <code><a href="../articles/piar.html">vignette("piar")</a></code>, specifying <code>contrib = TRUE</code>
-when calling <code><a href="../reference/elemental_index.html">elemental_index()</a></code>.</p>
+when calling <code><a href="../reference/elementary_index.html">elementary_index()</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://marberts.github.io/piar/">piar</a></span><span class="op">)</span></span>
 <span></span>
@@ -94,12 +94,12 @@ when calling <code><a href="../reference/elemental_index.html">elemental_index()
 <span><span class="va">pias</span> <span class="op">&lt;-</span> <span class="va">ms_weights</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"level1"</span>, <span class="st">"level2"</span>, <span class="st">"business"</span>, <span class="st">"weight"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/as_aggregation_structure.html">as_aggregation_structure</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Make elemental index with contributions.</span></span>
+<span><span class="co"># Make elementary index with contributions.</span></span>
 <span><span class="va">elementals</span> <span class="op">&lt;-</span> <span class="va">ms_prices</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span></span>
 <span>    relative <span class="op">=</span> <span class="fu"><a href="../reference/price_relative.html">price_relative</a></span><span class="op">(</span><span class="va">price</span>, period <span class="op">=</span> <span class="va">period</span>, product <span class="op">=</span> <span class="va">product</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/elemental_index.html">elemental_index</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span></span>
 <span>    <span class="va">relative</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>,</span>
 <span>    product <span class="op">=</span> <span class="va">product</span>,</span>
 <span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -126,9 +126,9 @@ of the index can be extracted as a matrix.</p>
 <span><span class="co">## 6 202003    B1       2 -0.6657061</span></span>
 <span><span class="co">## 7 202003    B1       3         NA</span></span>
 <span><span class="co">## 8 202004    B1       3         NA</span></span></code></pre>
-<p>Aggregating the elemental indexes automatically aggregates
+<p>Aggregating the elementary indexes automatically aggregates
 percent-change contributions, so no extra steps are needed after the
-elemental indexes are made.</p>
+elementary indexes are made.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">elementals</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
