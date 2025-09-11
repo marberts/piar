@@ -24,14 +24,14 @@ set.seed(12345)
 
 # Make quarterly elementary indexes for two baskets with a 1 year overlap.
 
-elementarys1 <- matrix(
+elementals1 <- matrix(
   runif(5 * 8, 0.8, 1.2),
   nrow = 5,
   dimnames = list(paste0("B", 1:5), NULL)
 ) |>
   as_index()
 
-elementarys2 <- matrix(
+elementals2 <- matrix(
   runif(6 * 8, 0.8, 1.2),
   nrow = 6,
   dimnames = list(paste0("B", 1:6), 5:12)
@@ -48,7 +48,7 @@ elementarys2 <- matrix(
 weights1 <- data.frame(
   level1 = 1,
   level2 = c(11, 11, 11, 12, 12),
-  ea = levels(elementarys1),
+  ea = levels(elementals1),
   weights = runif(5, 100, 200)
 )
 
@@ -62,7 +62,7 @@ weights1 <- data.frame(
 weights2 <- data.frame(
   level1 = 1,
   level2 = c(11, 11, 11, 12, 12, 12),
-  ea = levels(elementarys2),
+  ea = levels(elementals2),
   weights = runif(6, 100, 200)
 )
 ```
@@ -74,7 +74,7 @@ indexes because the elementary indexes change across baskets.
 ```{r}
 index <- Map(
   aggregate,
-  list(elementarys1, elementarys2),
+  list(elementals1, elementals2),
   list(weights1, weights2),
   include_ea = FALSE
 )

@@ -26,11 +26,11 @@ library(piar)
 set.seed(12345)
 
 # Make 6 elementary indexes over 4 time periods.
-elementarys <- matrix(c(rep(1, 6), runif(6 * 3, 0.8, 1.2)), nrow = 6) |>
+elementals <- matrix(c(rep(1, 6), runif(6 * 3, 0.8, 1.2)), nrow = 6) |>
   as_index() |>
   set_levels(paste0("B", 1:6))
 
-head(elementarys)
+head(elementals)
 
 # Make aggregation weights over 4 time periods.
 #            1
@@ -42,7 +42,7 @@ head(elementarys)
 weights <- data.frame(
   level1 = 1,
   level2 = rep(11:12, each = 3),
-  ea = levels(elementarys),
+  ea = levels(elementals),
   weights = runif(4 * 6, 100, 200),
   period = rep(1:4, each = 6)
 )
@@ -63,7 +63,7 @@ make the elementary indexes period-by-period can be dangerous when there
 are missing values.)
 
 ```{r}
-elementarys <- unstack(elementarys)
+elementals <- unstack(elementals)
 ```
 
 This is followed by making a sequence of aggregation structures for each
@@ -85,7 +85,7 @@ function.
 ```{r}
 paasche <- Map(
   aggregate,
-  elementarys,
+  elementals,
   paasche_pias,
   na.rm = TRUE,
   include_ea = FALSE,
@@ -109,7 +109,7 @@ laspeyres_pias <- paasche_pias[c(1, 1, 2, 3)]
 
 fisher <- Map(
   aggregate,
-  elementarys,
+  elementals,
   pias = laspeyres_pias,
   pias2 = paasche_pias,
   na.rm = TRUE,
@@ -126,7 +126,7 @@ indexes individually, and then calculating the Fisher index manually.
 ```{r}
 laspeyres <- Map(
   aggregate,
-  elementarys,
+  elementals,
   pias = laspeyres_pias,
   na.rm = TRUE,
   include_ea = FALSE

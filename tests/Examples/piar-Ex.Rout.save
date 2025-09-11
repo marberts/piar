@@ -741,11 +741,11 @@ levels 1 2 3
 > 
 > ### ** Examples
 > 
-> index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE))
+> index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE), chainable = FALSE)
 > 
 > # Turn a monthly index into a quarterly index
 > mean(index, window = 3)
-Period-over-period price index for 2 levels over 4 time periods 
+Fixed-base price index for 2 levels over 4 time periods 
       time
 levels  1 4 7 10
      1  2 5 8 11

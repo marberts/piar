@@ -60,13 +60,13 @@ is that price data here are in levels, and not relatives, but the
 `price_relative()` function can make the necessary conversion.
 
 ```{r}
-elementarys <- ms_prices |>
+elementals <- ms_prices |>
   transform(
     relative = price_relative(price, period = period, product = product)
   ) |>
   elementary_index(relative ~ period + business, na.rm = TRUE)
 
-elementarys
+elementals
 ```
 
 As with most functions in **R**, missing values are contagious by
@@ -87,9 +87,9 @@ though it's not a matrix.[^1]
     for all five businesses to `elementary_index()`.
 
 ```{r}
-elementarys[, "202004"]
+elementals[, "202004"]
 
-elementarys[c("B1", "B3"), ]
+elementals[c("B1", "B3"), ]
 ```
 
 With the elementary indexes out of the way, it's time to make a
@@ -114,7 +114,7 @@ unlike the elementary indexes, missing values are filled in to ensure the
 index can be chained over time.
 
 ```{r}
-index <- aggregate(elementarys, pias, na.rm = TRUE)
+index <- aggregate(elementals, pias, na.rm = TRUE)
 
 index
 ```

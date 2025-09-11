@@ -86,7 +86,7 @@ over subperiods, which is often useful when aggregating a Paasche index; see
 section 4.3 of Balk (2008) for details.
 }
 \examples{
-index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE))
+index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE), chainable = FALSE)
 
 # Turn a monthly index into a quarterly index
 mean(index, window = 3)

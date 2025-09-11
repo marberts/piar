@@ -19,7 +19,7 @@ sampling stratum.
 ```{r}
 library(piar)
 
-elementarys <- ms_prices |>
+elementals <- ms_prices |>
   transform(
     relative = price_relative(price, period = period, product = product)
   ) |>
@@ -56,7 +56,7 @@ The elementary indexes can now be aggregated according to this new
 aggregation structure.
 
 ```{r}
-index_sps <- aggregate(elementarys, pias_sps, na.rm = TRUE)
+index_sps <- aggregate(elementals, pias_sps, na.rm = TRUE)
 
 index_sps
 ```

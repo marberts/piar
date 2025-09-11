@@ -26,7 +26,7 @@ pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
   as_aggregation_structure()
 
 # Make elementary index with contributions.
-elementarys <- ms_prices |>
+elementals <- ms_prices |>
   transform(
     relative = price_relative(price, period = period, product = product)
   ) |>
@@ -42,13 +42,13 @@ As with index values, percent-change contributions for a given level of
 the index can be extracted as a matrix.
 
 ```{r}
-contrib(elementarys, level = "B1")
+contrib(elementals, level = "B1")
 ```
 
 Or as a data frame.
 
 ```{r}
-contrib2DF(elementarys, level = "B1")
+contrib2DF(elementals, level = "B1")
 ```
 
 Aggregating the elementary indexes automatically aggregates
@@ -56,7 +56,7 @@ percent-change contributions, so no extra steps are needed after the
 elementary indexes are made.
 
 ```{r}
-index <- aggregate(elementarys, pias, na.rm = TRUE)
+index <- aggregate(elementals, pias, na.rm = TRUE)
 
 contrib(index)
 ```

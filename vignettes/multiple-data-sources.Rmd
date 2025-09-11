@@ -28,13 +28,13 @@ pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
   as_aggregation_structure()
 
 # Make elementary index.
-elementarys <- ms_prices |>
+elementals <- ms_prices |>
   transform(
     relative = price_relative(price, period = period, product = product)
   ) |>
   elementary_index(relative ~ period + business, na.rm = TRUE)
 
-elementarys
+elementals
 ```
 
 Instead of using survey-like data for the other businesses, `B5` is made
@@ -45,7 +45,7 @@ point in time.
 set.seed(12345)
 
 scanner_prices <- data.frame(
-  period = rep(c("201904", time(elementarys)), each = 200),
+  period = rep(c("201904", time(elementals)), each = 200),
   product = 1:200,
   price = round(rlnorm(5 * 200) * 10, 1),
   quantity = round(runif(5 * 200, 100, 1000))
@@ -62,7 +62,7 @@ time series.
 ```{r}
 library(gpindex)
 
-geks_elementarys <- with(
+geks_elementals <- with(
   scanner_prices,
   fisher_geks(price, quantity, period, product, window = 3)
 ) |>
@@ -72,7 +72,7 @@ geks_elementarys <- with(
   set_levels("B5") |>
   rebase("202001")
 
-geks_elementarys
+geks_elementals
 ```
 
 These values can now be merged with the other elementary indexes, getting
@@ -80,6 +80,6 @@ turned into a period-over-period index in the process, and then
 aggregated.
 
 ```{r}
-merge(elementarys, geks_elementarys) |>
+merge(elementals, geks_elementals) |>
   aggregate(pias, na.rm = TRUE)
 ```

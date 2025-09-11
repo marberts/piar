@@ -25,14 +25,14 @@ pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
   as_aggregation_structure()
 
 # Make a fixed-base index.
-elementarys <- ms_prices |>
+elementals <- ms_prices |>
   transform(
     relative = price_relative(price, period = period, product = product),
     business = factor(business, levels = ms_weights$business)
   ) |>
   elementary_index(relative ~ period + business, na.rm = TRUE)
 
-index <- elementarys |>
+index <- elementals |>
   aggregate(pias, na.rm = TRUE) |>
   chain()
 
@@ -69,7 +69,7 @@ index.
 ```{r}
 pias_matrix <- as.matrix(pias) > 0
 
-pias_matrix %*% is.na(elementarys) / rowSums(pias_matrix)
+pias_matrix %*% is.na(elementals) / rowSums(pias_matrix)
 ```
 
 A value of 1 means that there are no non-missing elementary indexes, and

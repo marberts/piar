@@ -39,14 +39,14 @@ pias <- data.frame(
 pias
 
 # Make elementary indexes over 4 quarters.
-elementarys <- matrix(
+elementals <- matrix(
   runif(12 * 4, 0.4, 1.2),
   nrow = 12,
   dimnames = list(sprintf("B%02d", 1:12), paste0("Q", 1:4))
 ) |>
   as_index()
 
-elementarys
+elementals
 ```
 
 Adjusting the weights is simple when there are no missing elementary indexes: the weight
@@ -54,7 +54,7 @@ for each elementary aggregate is just divided by the average (fixed-base) index
 for each quarter.
 
 ```{r}
-weights(pias) / rowMeans(as.matrix(chain(elementarys)))
+weights(pias) / rowMeans(as.matrix(chain(elementals)))
 ```
 
 The procedure is more complicated with missing elementary indexes
@@ -76,9 +76,9 @@ adjust_weights <- function(
   for (i in seq_len(max_iter)) {
     # Parentally impute missing elementary indexes.
     agg_index <- aggregate(index, adj_pias, na.rm = TRUE, contrib = FALSE)
-    elementarys <- chain(agg_index[levels(pias)[[nlevels(pias)]]])
+    elementals <- chain(agg_index[levels(pias)[[nlevels(pias)]]])
     # Compute annual elementary indexes.
-    pb <- rowMeans(as.matrix(elementarys))
+    pb <- rowMeans(as.matrix(elementals))
     # Stop if average price-update weights are within tolerance of original
     # weights; adjust otherwise.
     if (max(abs(pb * weights(adj_pias) - weights(pias))) < tol) {
@@ -94,7 +94,7 @@ adjust_weights <- function(
 ```
 
 ```{r}
-elementarys[11:12] <- NA
+elementals[11:12] <- NA
 
-adjust_weights(elementarys, pias)
+adjust_weights(elementals, pias)
 ```
