@@ -73,9 +73,9 @@ arithmetic index, or -1 for a harmonic index. Other values are possible;
 see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
 \item{r2}{Order of the generalized-mean price index used to aggregate the
-elementary price indexes: 0 for a geometric index, 1 for an arithmetic index
-(the default), or -1 for a harmonic index. Other values are possible; see
-\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+elementary price indexes: 0 for a geometric index, 1 for an arithmetic
+index (the default), or -1 for a harmonic index. Other values are possible;
+see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
 \item{formula}{A two-sided formula with prices on the left-hand
 side. For \code{carry_forward()} and \code{carry_backward()}, the right-hand side

@@ -10,8 +10,8 @@ aggregation_structure(x, weights = NULL)
 \arguments{
 \item{x}{A list of character vectors that give the codes/labels for each
 level of the classification, ordered so that moving down the list goes down
-the hierarchy. The last vector gives the elementary aggregates, which should
-have no duplicates. All vectors should be the same length, without
+the hierarchy. The last vector gives the elementary aggregates, which
+should have no duplicates. All vectors should be the same length, without
 \code{NA}s, and there should be no duplicates across different levels of
 \code{x}. Names for \code{x} are used as level names; otherwise, levels are named
 'level1', 'level2', ..., 'ea'.}

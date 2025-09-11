@@ -57,7 +57,12 @@ test_that("results agree with an alternate implementation", {
 })
 
 test_that("Fisher calculation agrees with manual calculation", {
-  l <- elementary_index(ms_prices2, rel ~ period + business, weights = w1, r = 1)
+  l <- elementary_index(
+    ms_prices2,
+    rel ~ period + business,
+    weights = w1,
+    r = 1
+  )
   p <- elementary_index(
     ms_prices2,
     rel ~ period + business,

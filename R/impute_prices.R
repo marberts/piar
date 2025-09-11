@@ -49,9 +49,9 @@
 #'   arithmetic index, or -1 for a harmonic index. Other values are possible;
 #'   see [gpindex::generalized_mean()] for details.
 #' @param r2 Order of the generalized-mean price index used to aggregate the
-#'   elementary price indexes: 0 for a geometric index, 1 for an arithmetic index
-#'   (the default), or -1 for a harmonic index. Other values are possible; see
-#'   [gpindex::generalized_mean()] for details.
+#'   elementary price indexes: 0 for a geometric index, 1 for an arithmetic
+#'   index (the default), or -1 for a harmonic index. Other values are possible;
+#'   see [gpindex::generalized_mean()] for details.
 #' @param formula A two-sided formula with prices on the left-hand
 #'   side. For `carry_forward()` and `carry_backward()`, the right-hand side
 #'   should have time periods and products (in that order); for

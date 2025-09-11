@@ -52,8 +52,8 @@ This is evaluated in \code{x} for the data frame method.}
 \item{product}{A character vector of product names, or something that can
 be coerced into one, for each price relative in \code{x} when making
 percent-change contributions. The default uses the names of \code{x}, if any;
-otherwise, elements of \code{x} are given sequential names within each elementary
-aggregate. This is evaluated in \code{x} for the data frame method.}
+otherwise, elements of \code{x} are given sequential names within each
+elementary aggregate. This is evaluated in \code{x} for the data frame method.}
 
 \item{chainable}{Are the price relatives in \code{x} period-over-period
 relatives that are suitable for a chained calculation (the default)? This

@@ -64,8 +64,8 @@
 #' @param product A character vector of product names, or something that can
 #'   be coerced into one, for each price relative in `x` when making
 #'   percent-change contributions. The default uses the names of `x`, if any;
-#'   otherwise, elements of `x` are given sequential names within each elementary
-#'   aggregate. This is evaluated in `x` for the data frame method.
+#'   otherwise, elements of `x` are given sequential names within each
+#'   elementary aggregate. This is evaluated in `x` for the data frame method.
 #' @param contrib Should percent-change contributions be calculated? The
 #'   default does not calculate contributions.
 #' @param chainable Are the price relatives in `x` period-over-period
