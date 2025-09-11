@@ -3,7 +3,7 @@
 #' Extract a matrix or data frame of percent-change contributions from a price
 #' index.
 #'
-#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param x A price index, as made by, e.g., [elementary_index()].
 #' @param level The level of an index for which percent-change contributions
 #'   are desired, defaulting to the first level (usually the top-level for an
 #'   aggregate index). `contrib2DF()` can accept multiple levels.
@@ -36,7 +36,7 @@
 #'   ea = rep(letters[1:2], 4)
 #' )
 #'
-#' index <- elemental_index(prices, rel ~ period + ea, contrib = TRUE)
+#' index <- elementary_index(prices, rel ~ period + ea, contrib = TRUE)
 #'
 #' pias <- aggregation_structure(
 #'   list(c("top", "top", "top"), c("a", "b", "c")),

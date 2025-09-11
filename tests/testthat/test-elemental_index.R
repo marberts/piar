@@ -4,9 +4,9 @@ ms_prices$rel <- price_relative(ms_prices, price ~ period + product)
 ms_prices$w1 <- 1:40
 ms_prices$w2 <- 40:1
 
-epr1 <- elemental_index(ms_prices, rel ~ period + business, contrib = TRUE)
+epr1 <- elementary_index(ms_prices, rel ~ period + business, contrib = TRUE)
 
-epr2 <- elemental_index(
+epr2 <- elementary_index(
   ms_prices,
   rel ~ period + business,
   r = -1,
@@ -28,7 +28,7 @@ w <- with(
   grouped(fw)(rel, w1, w2, group = interaction(period, business))
 )
 
-epr3 <- elemental_index(
+epr3 <- elementary_index(
   ms_prices2,
   rel ~ period + business,
   weights = w,
@@ -57,8 +57,8 @@ test_that("results agree with an alternate implementation", {
 })
 
 test_that("Fisher calculation agrees with manual calculation", {
-  l <- elemental_index(ms_prices2, rel ~ period + business, weights = w1, r = 1)
-  p <- elemental_index(
+  l <- elementary_index(ms_prices2, rel ~ period + business, weights = w1, r = 1)
+  p <- elementary_index(
     ms_prices2,
     rel ~ period + business,
     weights = w2,
@@ -78,10 +78,10 @@ test_that("Fisher calculation agrees with manual calculation", {
     grouped(fw)(rel, w1, w2, group = interaction(period, business))
   )
 
-  sepr <- elemental_index(ms_prices2, rel ~ period + business, weights = w)
+  sepr <- elementary_index(ms_prices2, rel ~ period + business, weights = w)
 
-  l <- elemental_index(ms_prices2, rel ~ period + business, r = 1.5)
-  p <- elemental_index(
+  l <- elementary_index(ms_prices2, rel ~ period + business, r = 1.5)
+  p <- elementary_index(
     ms_prices2,
     rel ~ period + business,
     weights = w2,
@@ -109,14 +109,14 @@ test_that("contributions add up", {
 })
 
 test_that("argument checking works", {
-  expect_error(elemental_index(1:3, period = 1:2, ea = 1:3))
-  expect_error(elemental_index(1:3, period = 1:3, ea = 1:4))
-  expect_error(elemental_index(1:3, period = 1:3, ea = 1:3, weights = 1:2))
-  expect_error(elemental_index(1:3, period = factor(1:3, levels = numeric(0))))
-  expect_error(elemental_index(1:3, ea = factor(1:3, levels = numeric(0))))
-  expect_error(elemental_index(setNames(1:3, c("", 1, 2)), contrib = TRUE))
-  expect_error(elemental_index(-1:1, period = 1:3, ea = 1:3, r = 1))
-  expect_warning(elemental_index(
+  expect_error(elementary_index(1:3, period = 1:2, ea = 1:3))
+  expect_error(elementary_index(1:3, period = 1:3, ea = 1:4))
+  expect_error(elementary_index(1:3, period = 1:3, ea = 1:3, weights = 1:2))
+  expect_error(elementary_index(1:3, period = factor(1:3, levels = numeric(0))))
+  expect_error(elementary_index(1:3, ea = factor(1:3, levels = numeric(0))))
+  expect_error(elementary_index(setNames(1:3, c("", 1, 2)), contrib = TRUE))
+  expect_error(elementary_index(-1:1, period = 1:3, ea = 1:3, r = 1))
+  expect_warning(elementary_index(
     setNames(1:3, rep(1, 3)),
     period = gl(1, 3),
     ea = gl(1, 3),
@@ -126,13 +126,13 @@ test_that("argument checking works", {
 
 test_that("nse works", {
   expect_equal(
-    elemental_index(ms_prices, rel ~ period:business, contrib = TRUE),
+    elementary_index(ms_prices, rel ~ period:business, contrib = TRUE),
     epr1
   )
   expect_equal(
-    elemental_index(ms_prices[c(1:2, 5)], rel ~ ., contrib = TRUE),
+    elementary_index(ms_prices[c(1:2, 5)], rel ~ ., contrib = TRUE),
     epr1
   )
-  expect_error(elemental_index(ms_prices, rel ~ .))
-  expect_error(elemental_index(ms_prices, ~ period + business))
+  expect_error(elementary_index(ms_prices, rel ~ .))
+  expect_error(elementary_index(ms_prices, ~ period + business))
 })

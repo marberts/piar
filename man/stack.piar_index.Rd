@@ -17,7 +17,7 @@
 \method{unstack}{direct_piar_index}(x, ...)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{y}{A price index, or something that can coerced into one. If \code{x}
 is a period-over-period index then \code{y} is coerced into a chainable

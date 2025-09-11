@@ -1,11 +1,11 @@
-epr1 <- elemental_index(
+epr1 <- elementary_index(
   ms_prices,
   price_relative(price, period = period, product = product) ~ period + business,
   contrib = TRUE,
   na.rm = TRUE
 )
 
-epr2 <- elemental_index(
+epr2 <- elementary_index(
   ms_prices,
   price_relative(price, period = period, product = product) ~ period + business,
   na.rm = TRUE

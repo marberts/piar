@@ -31,7 +31,7 @@ rebase(x, ...)
 \method{rebase}{direct_piar_index}(x, base = rep(1, nlevels(x)), ...)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{...}{Further arguments passed to or used by methods.}
 

@@ -13,7 +13,7 @@ It's often convenient to decompose an index into the (additive)
 contribution of each price relative, also known as the percent-change
 contribution. This can be done with the same work flow used in
 `vignette("piar")`, specifying `contrib = TRUE` when calling
-`elemental_index()`.
+`elementary_index()`.
 
 ```{r}
 library(piar)
@@ -25,12 +25,12 @@ ms_weights[c("level1", "level2")] <-
 pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
   as_aggregation_structure()
 
-# Make elemental index with contributions.
-elementals <- ms_prices |>
+# Make elementary index with contributions.
+elementarys <- ms_prices |>
   transform(
     relative = price_relative(price, period = period, product = product)
   ) |>
-  elemental_index(
+  elementary_index(
     relative ~ period + business,
     product = product,
     na.rm = TRUE,
@@ -42,21 +42,21 @@ As with index values, percent-change contributions for a given level of
 the index can be extracted as a matrix.
 
 ```{r}
-contrib(elementals, level = "B1")
+contrib(elementarys, level = "B1")
 ```
 
 Or as a data frame.
 
 ```{r}
-contrib2DF(elementals, level = "B1")
+contrib2DF(elementarys, level = "B1")
 ```
 
-Aggregating the elemental indexes automatically aggregates
+Aggregating the elementary indexes automatically aggregates
 percent-change contributions, so no extra steps are needed after the
-elemental indexes are made.
+elementary indexes are made.
 
 ```{r}
-index <- aggregate(elementals, pias, na.rm = TRUE)
+index <- aggregate(elementarys, pias, na.rm = TRUE)
 
 contrib(index)
 ```

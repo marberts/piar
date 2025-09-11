@@ -14,7 +14,7 @@ than one set of aggregation weights that change every period.
 
 ## Aggregating a Paasche index
 
-Let's start by making a chained Paasche index from 6 elemental indexes
+Let's start by making a chained Paasche index from 6 elementary indexes
 over 4 time periods to see how to deal with time-varying aggregation
 weights. This is similar to the example of building an index across
 multiple basket in `vignette("multiple-baskets")`, except that the
@@ -25,12 +25,12 @@ library(piar)
 
 set.seed(12345)
 
-# Make 6 elemental indexes over 4 time periods.
-elementals <- matrix(c(rep(1, 6), runif(6 * 3, 0.8, 1.2)), nrow = 6) |>
+# Make 6 elementary indexes over 4 time periods.
+elementarys <- matrix(c(rep(1, 6), runif(6 * 3, 0.8, 1.2)), nrow = 6) |>
   as_index() |>
   set_levels(paste0("B", 1:6))
 
-head(elementals)
+head(elementarys)
 
 # Make aggregation weights over 4 time periods.
 #            1
@@ -42,7 +42,7 @@ head(elementals)
 weights <- data.frame(
   level1 = 1,
   level2 = rep(11:12, each = 3),
-  ea = levels(elementals),
+  ea = levels(elementarys),
   weights = runif(4 * 6, 100, 200),
   period = rep(1:4, each = 6)
 )
@@ -57,13 +57,13 @@ pulls apart an index series for many periods into a collection of
 one-period indexes.^[`split()` can also be used for this.] These functions allow
 the aggregation to be done with a map-reduce.
 
-The first step to making a Paasche index is to unstack the elemental
-indexes into a list of elemental indexes for each period. (Trying to
-make the elemental indexes period-by-period can be dangerous when there
+The first step to making a Paasche index is to unstack the elementary
+indexes into a list of elementary indexes for each period. (Trying to
+make the elementary indexes period-by-period can be dangerous when there
 are missing values.)
 
 ```{r}
-elementals <- unstack(elementals)
+elementarys <- unstack(elementarys)
 ```
 
 This is followed by making a sequence of aggregation structures for each
@@ -78,14 +78,14 @@ paasche_pias <- split(
 ```
 
 Computing the Paasche index for each period is now just a case of
-mapping the `aggregate()` function to each elemental index and
+mapping the `aggregate()` function to each elementary index and
 aggregation structure, and then reducing the result with the `stack()`
 function.
 
 ```{r}
 paasche <- Map(
   aggregate,
-  elementals,
+  elementarys,
   paasche_pias,
   na.rm = TRUE,
   include_ea = FALSE,
@@ -109,7 +109,7 @@ laspeyres_pias <- paasche_pias[c(1, 1, 2, 3)]
 
 fisher <- Map(
   aggregate,
-  elementals,
+  elementarys,
   pias = laspeyres_pias,
   pias2 = paasche_pias,
   na.rm = TRUE,
@@ -126,7 +126,7 @@ indexes individually, and then calculating the Fisher index manually.
 ```{r}
 laspeyres <- Map(
   aggregate,
-  elementals,
+  elementarys,
   pias = laspeyres_pias,
   na.rm = TRUE,
   include_ea = FALSE

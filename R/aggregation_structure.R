@@ -2,19 +2,19 @@
 #'
 #' Create a price index aggregation structure from a hierarchical
 #' classification and aggregation weights that can be used to aggregate
-#' elemental indexes.
+#' elementary indexes.
 #'
 #' @aliases piar_aggregation_structure
 #' @param x A list of character vectors that give the codes/labels for each
 #'   level of the classification, ordered so that moving down the list goes down
-#'   the hierarchy. The last vector gives the elemental aggregates, which should
+#'   the hierarchy. The last vector gives the elementary aggregates, which should
 #'   have no duplicates. All vectors should be the same length, without
 #'   `NA`s, and there should be no duplicates across different levels of
 #'   `x`. Names for `x` are used as level names; otherwise, levels are named
 #'   'level1', 'level2', ..., 'ea'.
-#' @param weights A numeric vector of aggregation weights for the elemental
+#' @param weights A numeric vector of aggregation weights for the elementary
 #'   aggregates (i.e., the last vector in `x`), or something that can be coerced
-#'   into one. The default is to give each elemental aggregate the same weight.
+#'   into one. The default is to give each elementary aggregate the same weight.
 #'
 #' @returns
 #' A price index aggregation structure of class `piar_aggregation_structure`.
@@ -27,7 +27,7 @@
 #' immediate parent for each node of the aggregation structure below the
 #' initial nodes.}
 #' \item{levels}{A named list of character vectors that give the levels of `x`.}
-#' \item{weights}{A vector giving the weight for each elemental
+#' \item{weights}{A vector giving the weight for each elementary
 #' aggregate.}
 #'
 #' @section Warning: The `aggregation_structure()` function does its best
@@ -37,7 +37,7 @@
 #'
 #' @seealso
 #' [`aggregate()`][aggregate.piar_index] to aggregate price indexes made
-#' with [`elemental_index()`][elemental_index].
+#' with [`elementary_index()`][elementary_index].
 #'
 #' [expand_classification()] to make `x` from a character
 #' representation of a hierarchical aggregation structure.
@@ -77,7 +77,7 @@
 #' )
 #'
 #' # The aggregation structure can also be made by expanding the
-#' # elemental aggregates
+#' # elementary aggregates
 #'
 #' with(
 #'   aggregation_weights,
@@ -90,7 +90,7 @@ aggregation_structure <- function(x, weights = NULL) {
   len <- length(x)
   ea <- as.character(unlist(x[len], use.names = FALSE))
   if (length(ea) == 0L) {
-    stop("cannot make an aggregation structure with no elemental aggregates")
+    stop("cannot make an aggregation structure with no elementary aggregates")
   }
   if (anyNA(x, recursive = TRUE)) {
     stop("'x' cannot contain NAs")
@@ -112,7 +112,7 @@ aggregation_structure <- function(x, weights = NULL) {
   }
   if (anyDuplicated(ea)) {
     stop(
-      "there are duplicated elemental aggregates; the last vector in 'x' ",
+      "there are duplicated elementary aggregates; the last vector in 'x' ",
       "should not have duplicates"
     )
   }

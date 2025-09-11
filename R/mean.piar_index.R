@@ -21,7 +21,7 @@
 #' @name mean.piar_index
 #' @aliases mean.piar_index
 #'
-#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param x A price index, as made by, e.g., [elementary_index()].
 #' @param weights A numeric vector of weights for the index values in `x`, or
 #'   something that can be coerced into one. The
 #'   default is equal weights. It is usually easiest to specify these weights as
@@ -34,8 +34,8 @@
 #'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #'   imputation.
 #' @param r Order of the generalized mean to aggregate index values. 0 for a
-#'   geometric index (the default for making elemental indexes), 1 for an
-#'   arithmetic index (the default for aggregating elemental indexes and
+#'   geometric index (the default for making elementary indexes), 1 for an
+#'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #'   a Paasche index). Other values are possible; see
 #'   [gpindex::generalized_mean()] for details.

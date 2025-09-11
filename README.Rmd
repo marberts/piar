@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.06781/status.svg)](https://doi.org/10.21105/joss.06781)
 <!-- badges: end -->
 
-Most price indexes are made with a two-step procedure, where period-over-period *elemental indexes* are first calculated for a collection of *elemental aggregates* at each point in time, and then aggregated according to a *price index aggregation structure*. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. This package contains a collection of functions that revolve around this work flow, making it easy to build standard price indexes, and implement the methods described by Balk (2008), von der Lippe (2007), and the CPI manual (2020) / PPI manual (2004) for bilateral price indexes.
+Most price indexes are made with a two-step procedure, where period-over-period *elementary indexes* are first calculated for a collection of *elementary aggregates* at each point in time, and then aggregated according to a *price index aggregation structure*. These indexes can then be chained together to form a time series that gives the evolution of prices with respect to a fixed base period. This package contains a collection of functions that revolve around this work flow, making it easy to build standard price indexes, and implement the methods described by Balk (2008), von der Lippe (2007), and the CPI manual (2020) / PPI manual (2004) for bilateral price indexes.
 
 The tools in this package are designed to be useful for both researching new
 sources of data and methods to construct price indexes, and the regular
@@ -61,12 +61,12 @@ pak::pak("marberts/piar")
 
 There are several detailed vignette showing how to use **piar**: `browseVignettes("piar")`. But the basic work flow is fairly simple. 
 
-The starting point is to make period-over-period elemental price indexes with the `elemental_index()` function.
+The starting point is to make period-over-period elementary price indexes with the `elementary_index()` function.
 
 ```{r}
 library(piar)
 
-# Make Jevons business-level elemental indexes
+# Make Jevons business-level elementary indexes
 
 head(ms_prices)
 
@@ -74,7 +74,7 @@ elementals <- ms_prices |>
   transform(
     relative = price_relative(price, period = period, product = product)
   ) |>
-  elemental_index(relative ~ period + business, na.rm = TRUE)
+  elementary_index(relative ~ period + business, na.rm = TRUE)
 
 elementals
 ```
@@ -95,10 +95,10 @@ pias <- ms_weights[c("level1", "level2", "business", "weight")]
 pias
 ```
 
-The `aggregate()` method can then be used to aggregate the elemental indexes according to the aggregation structure (the first three rows below) and fill in missing elemental indexes while maintaining consistency in aggregation. There are a variety of methods to work with these index objects, such as chaining them over time.
+The `aggregate()` method can then be used to aggregate the elementary indexes according to the aggregation structure (the first three rows below) and fill in missing elementary indexes while maintaining consistency in aggregation. There are a variety of methods to work with these index objects, such as chaining them over time.
 
 ```{r}
-# Aggregate elemental indexes with an arithmetic index
+# Aggregate elementary indexes with an arithmetic index
 
 index <- aggregate(elementals, pias, na.rm = TRUE)
 

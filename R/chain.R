@@ -28,7 +28,7 @@
 #' Percent-change contributions are removed when chaining/unchaining/rebasing
 #' an index as it's not usually possible to update them correctly.
 #'
-#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param x A price index, as made by, e.g., [elementary_index()].
 #' @param link A numeric vector, or something that can coerced into one, of
 #'   link values for each level in `x`. The default is a vector of 1s so
 #'   that no linking is done.

@@ -38,28 +38,28 @@ pias <- data.frame(
 
 pias
 
-# Make elemental indexes over 4 quarters.
-elementals <- matrix(
+# Make elementary indexes over 4 quarters.
+elementarys <- matrix(
   runif(12 * 4, 0.4, 1.2),
   nrow = 12,
   dimnames = list(sprintf("B%02d", 1:12), paste0("Q", 1:4))
 ) |>
   as_index()
 
-elementals
+elementarys
 ```
 
-Adjusting the weights is simple when there are no missing elemental indexes: the weight
-for each elemental aggregate is just divided by the average (fixed-base) index
+Adjusting the weights is simple when there are no missing elementary indexes: the weight
+for each elementary aggregate is just divided by the average (fixed-base) index
 for each quarter.
 
 ```{r}
-weights(pias) / rowMeans(as.matrix(chain(elementals)))
+weights(pias) / rowMeans(as.matrix(chain(elementarys)))
 ```
 
-The procedure is more complicated with missing elemental indexes
+The procedure is more complicated with missing elementary indexes
 as reaggregating these indexes with the newly adjusted weights will generally result
-in different imputations for the missing elemental indexes, which in turn gives a
+in different imputations for the missing elementary indexes, which in turn gives a
 different adjustment for the weights. In practice this procedure is done a few times
 until the index values converge to a fixed point. The following function shows how
 to do this adjustment using the tools in this package.
@@ -74,11 +74,11 @@ adjust_weights <- function(
 ) {
   adj_pias <- pias
   for (i in seq_len(max_iter)) {
-    # Parentally impute missing elemental indexes.
+    # Parentally impute missing elementary indexes.
     agg_index <- aggregate(index, adj_pias, na.rm = TRUE, contrib = FALSE)
-    elementals <- chain(agg_index[levels(pias)[[nlevels(pias)]]])
-    # Compute annual elemental indexes.
-    pb <- rowMeans(as.matrix(elementals))
+    elementarys <- chain(agg_index[levels(pias)[[nlevels(pias)]]])
+    # Compute annual elementary indexes.
+    pb <- rowMeans(as.matrix(elementarys))
     # Stop if average price-update weights are within tolerance of original
     # weights; adjust otherwise.
     if (max(abs(pb * weights(adj_pias) - weights(pias))) < tol) {
@@ -94,7 +94,7 @@ adjust_weights <- function(
 ```
 
 ```{r}
-elementals[11:12] <- NA
+elementarys[11:12] <- NA
 
-adjust_weights(elementals, pias)
+adjust_weights(elementarys, pias)
 ```

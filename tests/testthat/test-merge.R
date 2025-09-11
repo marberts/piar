@@ -1,4 +1,4 @@
-epr1 <- elemental_index(
+epr1 <- elementary_index(
   1:8,
   period = rep(1:2, each = 4),
   ea = rep(letters[1:4], 2),

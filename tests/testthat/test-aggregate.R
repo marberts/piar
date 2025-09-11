@@ -1,5 +1,5 @@
 test_that("a matched-sample index aggregates correctly", {
-  ms_epr <- elemental_index(
+  ms_epr <- elementary_index(
     ms_prices,
     price_relative(price, period = period, product = product) ~
       period + business,
@@ -165,7 +165,7 @@ test_that("a matched-sample index aggregates correctly", {
     5
   )
   s2 <- c(5, 3, 4, 1, 2)
-  ms_epr <- elemental_index(
+  ms_epr <- elementary_index(
     ms_prices[s1, ],
     price_relative(price, period = period, product = product) ~
       period + business,
@@ -217,7 +217,7 @@ test_that("a matched-sample index aggregates correctly", {
 })
 
 test_that("a weird index aggregates correctly", {
-  ms_epr <- elemental_index(
+  ms_epr <- elementary_index(
     ms_prices,
     price_relative(price, period = period, product = product) ~
       period + business,
@@ -330,7 +330,7 @@ test_that("a weird index aggregates correctly", {
 })
 
 test_that("a fixed-sample index aggregates correctly", {
-  fs_epr <- elemental_index(
+  fs_epr <- elementary_index(
     fs_prices,
     price_relative(price, period = period, product = business) ~
       period + classification,
@@ -457,8 +457,8 @@ test_that("a fixed-based index aggregates correctly", {
 
   pias <- aggregation_structure(list(c("1", "1"), c("f1", "f2")), 1:2)
 
-  epr_pop <- elemental_index(prices, pop_rel ~ period + ea)
-  epr_fx <- elemental_index(prices, fx_rel ~ period + ea, chainable = FALSE)
+  epr_pop <- elementary_index(prices, pop_rel ~ period + ea)
+  epr_fx <- elementary_index(prices, fx_rel ~ period + ea, chainable = FALSE)
 
   index_pop <- aggregate(epr_pop, pias)
   index_fx <- aggregate(epr_fx, pias)
@@ -498,7 +498,7 @@ test_that("partial contributions are correct", {
     ea = rep(letters[1:2], 4)
   )
 
-  epr <- elemental_index(prices, rel ~ period + ea, contrib = TRUE)
+  epr <- elementary_index(prices, rel ~ period + ea, contrib = TRUE)
 
   epr <- merge(epr, matrix(9:10, 1, dimnames = list("c", 1:2)))
 
@@ -527,7 +527,7 @@ test_that("partial contributions are correct", {
 })
 
 test_that("duplicate products get unique names during aggregation", {
-  epr1 <- elemental_index(
+  epr1 <- elementary_index(
     setNames(1:4, 1:4),
     ea = gl(2, 2),
     period = gl(1, 4),
@@ -589,13 +589,13 @@ test_that("aggregating in parallel works", {
     c(3, 2, 1)
   )
 
-  epr1 <- elemental_index(
+  epr1 <- elementary_index(
     1:18,
     period = rep(1:2, 9),
     ea = rep(c(111, 112, 121), each = 6),
     contrib = TRUE
   )
-  epr2 <- elemental_index(
+  epr2 <- elementary_index(
     18:1,
     period = rep(1:2, 9),
     ea = rep(c(111, 112, 121), each = 6),
@@ -612,7 +612,7 @@ test_that("aggregating in parallel works", {
 })
 
 test_that("aggregating with a dead branch does nothing", {
-  epr <- elemental_index(
+  epr <- elementary_index(
     1:18,
     period = rep(1:3, each = 6),
     ea = rep(1:2, 9),
@@ -636,7 +636,7 @@ test_that("aggregating with a dead branch does nothing", {
 })
 
 test_that("reaggregating doesn't introduce incorrect contributions", {
-  epr <- elemental_index(
+  epr <- elementary_index(
     c(1:7, NA),
     period = rep(1:2, each = 4),
     ea = rep(1:2, 4),
@@ -663,7 +663,7 @@ test_that("reaggregating doesn't introduce incorrect contributions", {
 })
 
 test_that("skipping time periods works", {
-  ms_epr <- elemental_index(
+  ms_epr <- elementary_index(
     ms_prices,
     price_relative(price, period = period, product = product) ~
       period + business,
@@ -686,7 +686,7 @@ test_that("skipping time periods works", {
 })
 
 test_that("skipping eas works", {
-  ms_epr <- elemental_index(
+  ms_epr <- elementary_index(
     ms_prices,
     price_relative(price, period = period, product = product) ~
       period + business,
@@ -729,19 +729,19 @@ test_that("missing weights ignores those index values", {
     1:2
   )
 
-  elemental <- elemental_index(prices, rel ~ period + ea, contrib = TRUE)
+  elementary <- elementary_index(prices, rel ~ period + ea, contrib = TRUE)
 
-  index <- aggregate(elemental, pias)
+  index <- aggregate(elementary, pias)
 
   weights(pias)[1] <- NA
-  index2 <- aggregate(elemental, pias, na.rm = TRUE)
+  index2 <- aggregate(elementary, pias, na.rm = TRUE)
 
   expect_equal(as.numeric(index2[1]), as.numeric(index2[3]))
   expect_equal(
     as.numeric(colSums(contrib(index2), na.rm = TRUE) + 1),
     as.numeric(index2[1])
   )
-  expect_equal(contrib(index2), contrib(aggregate(elemental, pias)))
+  expect_equal(contrib(index2), contrib(aggregate(elementary, pias)))
 })
 
 test_that("superlative index aggregates correctly", {

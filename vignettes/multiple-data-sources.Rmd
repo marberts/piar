@@ -9,7 +9,7 @@ vignette: >
 
 Price indexes are usually made from several sources of data. An
 important benefit of the usual two-step workflow to make price indexes
-is that the elemental indexes can be built piecemeal---using different
+is that the elementary indexes can be built piecemeal---using different
 sources of data and different index-number formulas---and then
 aggregated with a consistent structure.
 
@@ -27,14 +27,14 @@ ms_weights[c("level1", "level2")] <-
 pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
   as_aggregation_structure()
 
-# Make elemental index.
-elementals <- ms_prices |>
+# Make elementary index.
+elementarys <- ms_prices |>
   transform(
     relative = price_relative(price, period = period, product = product)
   ) |>
-  elemental_index(relative ~ period + business, na.rm = TRUE)
+  elementary_index(relative ~ period + business, na.rm = TRUE)
 
-elementals
+elementarys
 ```
 
 Instead of using survey-like data for the other businesses, `B5` is made
@@ -45,7 +45,7 @@ point in time.
 set.seed(12345)
 
 scanner_prices <- data.frame(
-  period = rep(c("201904", time(elementals)), each = 200),
+  period = rep(c("201904", time(elementarys)), each = 200),
   product = 1:200,
   price = round(rlnorm(5 * 200) * 10, 1),
   quantity = round(runif(5 * 200, 100, 1000))
@@ -62,7 +62,7 @@ time series.
 ```{r}
 library(gpindex)
 
-geks_elementals <- with(
+geks_elementarys <- with(
   scanner_prices,
   fisher_geks(price, quantity, period, product, window = 3)
 ) |>
@@ -72,14 +72,14 @@ geks_elementals <- with(
   set_levels("B5") |>
   rebase("202001")
 
-geks_elementals
+geks_elementarys
 ```
 
-These values can now be merged with the other elemental indexes, getting
+These values can now be merged with the other elementary indexes, getting
 turned into a period-over-period index in the process, and then
 aggregated.
 
 ```{r}
-merge(elementals, geks_elementals) |>
+merge(elementarys, geks_elementarys) |>
   aggregate(pias, na.rm = TRUE)
 ```

@@ -4,7 +4,7 @@ dat <- data.frame(
   ea = c("11", "11", "12", "12", "13", "11", "12", "11", "14")
 )
 
-epr <- elemental_index(dat, rel ~ period + ea, contrib = TRUE, na.rm = TRUE)
+epr <- elementary_index(dat, rel ~ period + ea, contrib = TRUE, na.rm = TRUE)
 
 test_that("is.na works", {
   expect_equal(

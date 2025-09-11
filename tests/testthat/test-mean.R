@@ -1,5 +1,5 @@
 test_that("aggregating over subperiods works", {
-  ms_epr <- elemental_index(
+  ms_epr <- elementary_index(
     ms_prices,
     price_relative(price, period = period, product = product) ~
       period + business,

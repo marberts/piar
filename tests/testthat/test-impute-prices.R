@@ -47,14 +47,14 @@ test_that("imputing shadow prices does noting", {
 })
 
 test_that("sp imputation is the same are regular parental in periods 1, 2", {
-  epr <- elemental_index(
+  epr <- elementary_index(
     ms_prices,
     price_relative(price, period = period, product = product) ~
       period + business,
     na.rm = TRUE
   )
 
-  epr2 <- elemental_index(
+  epr2 <- elementary_index(
     ms_prices,
     price_relative(sp, period = period, product = product) ~ period + business,
     na.rm = TRUE

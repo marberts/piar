@@ -10,7 +10,7 @@
 \method{window}{piar_index}(x, start = NULL, end = NULL, ...) <- value
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{start}{The time period to start the window. The default in the first
 period of \code{x}.}

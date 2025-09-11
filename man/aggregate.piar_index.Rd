@@ -4,7 +4,7 @@
 \alias{aggregate.piar_index}
 \alias{aggregate.chainable_piar_index}
 \alias{aggregate.direct_piar_index}
-\title{Aggregate elemental price indexes}
+\title{Aggregate elementary price indexes}
 \usage{
 \method{aggregate}{chainable_piar_index}(
   x,
@@ -31,7 +31,7 @@
 )
 }
 \arguments{
-\item{x}{A price index, usually made by \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, usually made by \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{pias}{A price index aggregation structure or something that can be
 coerced into one. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
@@ -48,14 +48,14 @@ imputation.}
 \item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
 
 \item{r}{Order of the generalized mean to aggregate index values. 0 for a
-geometric index (the default for making elemental indexes), 1 for an
-arithmetic index (the default for aggregating elemental indexes and
+geometric index (the default for making elementary indexes), 1 for an
+arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details. If \code{pias2} is given then the
 index is aggregated with a quadratic mean of order \code{2*r}.}
 
-\item{include_ea}{Should indexes for the elemental aggregates be included
+\item{include_ea}{Should indexes for the elementary aggregates be included
 along with the aggregated indexes? By default, all index values are
 returned.}
 
@@ -68,30 +68,30 @@ with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for
 An aggregate price index that inherits from the class of \code{x}.
 }
 \description{
-Aggregate elemental price indexes with a price index aggregation structure.
+Aggregate elementary price indexes with a price index aggregation structure.
 }
 \details{
 The \code{aggregate()} method loops over each time period in \code{x} and
 \enumerate{
-\item aggregates the elemental indexes with
+\item aggregates the elementary indexes with
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean(r)()}} for each level
 of \code{pias};
 \item aggregates percent-change contributions for each level of
 \code{pias} (if there are any and \code{contrib = TRUE});
 \item price updates the weights in \code{pias} with
 \code{\link[gpindex:factor_weights]{gpindex::factor_weights(r)()}} (only for
-period-over-period elemental indexes).
+period-over-period elementary indexes).
 }
 
 The result is a collection of aggregated period-over-period indexes that
 can be chained together to get a fixed-base index when \code{x} are
-period-over-period elemental indexes. Otherwise, when \code{x} are fixed-base
-elemental indexes, the result is a collection of aggregated fixed-base
+period-over-period elementary indexes. Otherwise, when \code{x} are fixed-base
+elementary indexes, the result is a collection of aggregated fixed-base
 (direct) indexes.
 
-By default, missing elemental indexes will propagate when aggregating the
-index. Missing elemental indexes can be due to both missingness of these
-values in \code{x}, and the presence of elemental aggregates in \code{pias}
+By default, missing elementary indexes will propagate when aggregating the
+index. Missing elementary indexes can be due to both missingness of these
+values in \code{x}, and the presence of elementary aggregates in \code{pias}
 that are not part of \code{x}. Setting \code{na.rm = TRUE} ignores missing
 values, and is equivalent to parental (or overall mean) imputation. As an
 aggregated price index generally cannot have missing values (for otherwise
@@ -103,7 +103,7 @@ In most cases aggregation is done with an arithmetic mean (the default), and
 this is detailed in chapter 8 (pp. 190--198) of the CPI manual (2020), with
 analogous details in chapter 9 of the PPI manual (2004).
 Aggregating with a non-arithmetic mean follows the same steps, except that
-the elemental indexes are aggregated with a mean of a different order (e.g.,
+the elementary indexes are aggregated with a mean of a different order (e.g.,
 harmonic for a Paasche index), and the method for price updating the weights
 is slightly different. Note that, because aggregation is done with a
 generalized mean, the resulting index is consistent-in-aggregation at each
@@ -115,8 +115,8 @@ mean. With a non-arithmetic mean, arithmetic weights are constructed using
 \code{\link[gpindex:transmute_weights]{gpindex::transmute_weights(r, 1)()}} in order
 to apply this method.
 
-There may not be contributions for all prices relatives in an elemental
-aggregate if the elemental indexes are built from several sources (as with
+There may not be contributions for all prices relatives in an elementary
+aggregate if the elementary indexes are built from several sources (as with
 \code{\link[=merge.piar_index]{merge()}}). In this case the contribution for
 a price relative in the aggregated index will be correct, but the sum of all
 contributions will not equal the change in the value of the index. This can
@@ -136,7 +136,7 @@ decomposition; see \code{\link[gpindex:transmute_weights]{gpindex::nested_transm
 For large indexes it can be much faster to turn the aggregation structure
 into an aggregation matrix with
 \code{\link[=as.matrix.piar_aggregation_structure]{as.matrix()}}, then aggregate
-elemental indexes as a matrix operation when there are no missing
+elementary indexes as a matrix operation when there are no missing
 values. See the examples for details.
 }
 \examples{
@@ -153,13 +153,13 @@ pias <- aggregation_structure(
   weights = 1:3
 )
 
-# Calculate Jevons elemental indexes
+# Calculate Jevons elementary indexes
 
-(elemental <- elemental_index(prices, rel ~ period + ea))
+(elementary <- elementary_index(prices, rel ~ period + ea))
 
-# Aggregate (note the imputation for elemental index 'c')
+# Aggregate (note the imputation for elementary index 'c')
 
-(index <- aggregate(elemental, pias, na.rm = TRUE))
+(index <- aggregate(elementary, pias, na.rm = TRUE))
 
 # Aggregation can equivalently be done as matrix multiplication
 

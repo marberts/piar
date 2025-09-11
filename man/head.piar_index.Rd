@@ -10,7 +10,7 @@
 \method{tail}{piar_index}(x, n = 6L, ...)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{n}{See \code{\link[=head]{head()}}/\code{\link[=tail]{tail()}}. The default takes the
 first/last 6 levels of \code{x}.}

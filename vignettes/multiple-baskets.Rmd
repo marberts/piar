@@ -7,13 +7,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Most prices indexes use the same set of weights to aggregate elemental
+Most prices indexes use the same set of weights to aggregate elementary
 indexes for several years, periodically updating these weights and
-adding or removing elemental aggregates. The general approach to keep
+adding or removing elementary aggregates. The general approach to keep
 the time series going across baskets is to "chain" the index across
 baskets.
 
-Let's start by making some quarterly elemental indexes and weights for
+Let's start by making some quarterly elementary indexes and weights for
 two baskets. Each basket has index values for two years, and there is a
 one year overlap between the baskets.
 
@@ -22,16 +22,16 @@ library(piar)
 
 set.seed(12345)
 
-# Make quarterly elemental indexes for two baskets with a 1 year overlap.
+# Make quarterly elementary indexes for two baskets with a 1 year overlap.
 
-elementals1 <- matrix(
+elementarys1 <- matrix(
   runif(5 * 8, 0.8, 1.2),
   nrow = 5,
   dimnames = list(paste0("B", 1:5), NULL)
 ) |>
   as_index()
 
-elementals2 <- matrix(
+elementarys2 <- matrix(
   runif(6 * 8, 0.8, 1.2),
   nrow = 6,
   dimnames = list(paste0("B", 1:6), 5:12)
@@ -48,7 +48,7 @@ elementals2 <- matrix(
 weights1 <- data.frame(
   level1 = 1,
   level2 = c(11, 11, 11, 12, 12),
-  ea = levels(elementals1),
+  ea = levels(elementarys1),
   weights = runif(5, 100, 200)
 )
 
@@ -62,19 +62,19 @@ weights1 <- data.frame(
 weights2 <- data.frame(
   level1 = 1,
   level2 = c(11, 11, 11, 12, 12, 12),
-  ea = levels(elementals2),
+  ea = levels(elementarys2),
   weights = runif(6, 100, 200)
 )
 ```
 
 Aggregating the indexes for both baskets involves simply mapping the
 usual workflow across both baskets, keeping only the higher-level
-indexes because the elemental indexes change across baskets.
+indexes because the elementary indexes change across baskets.
 
 ```{r}
 index <- Map(
   aggregate,
-  list(elementals1, elementals2),
+  list(elementarys1, elementarys2),
   list(weights1, weights2),
   include_ea = FALSE
 )

@@ -26,7 +26,7 @@ dense matrix.}
 }
 \value{
 \code{as.matrix()} represents an aggregation structure as a matrix,
-such that multiplying with a (column) vector of elemental indexes gives the
+such that multiplying with a (column) vector of elementary indexes gives the
 aggregated index.
 
 \code{as.data.frame()} takes an aggregation structure and returns a data

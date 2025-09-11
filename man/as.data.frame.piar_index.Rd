@@ -17,7 +17,7 @@
 \method{as.matrix}{piar_index}(x, ...)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{row.names, stringsAsFactors}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
 

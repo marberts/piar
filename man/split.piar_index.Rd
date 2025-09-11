@@ -10,7 +10,7 @@
 \method{split}{piar_index}(x, f, drop = FALSE, ..., margin = c("levels", "time")) <- value
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{f}{A factor or list of factors to group elements of \code{x}.}
 
