@@ -6,7 +6,7 @@
 to control how product contributions are made when there are duplicate products.
 
 - Coercing an index or an aggregation structure to a matrix now has dimension
-names.
+names. Same with the output from `contrib()`.
 
 - `expand_classification()` and `split_classification()` get a new argument
 `pad` to better manage unbalanced classifications.

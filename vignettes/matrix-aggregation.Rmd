@@ -9,7 +9,7 @@ vignette: >
 
 Aggregating a price index can be done as a matrix operation. Although
 this approach is less flexible than the `aggregate()` method used in
-`vignette("piar")` (i.e., there can be no missing elemental indexes), it
+`vignette("piar")` (i.e., there can be no missing elementary indexes), it
 can be considerably faster for larger indexes.
 
 Let's start by building the index in `vignette("piar")` again.
@@ -30,7 +30,7 @@ elementals <- ms_prices |>
     relative = price_relative(price, period = period, product = product),
     business = factor(business, levels = ms_weights$business)
   ) |>
-  elemental_index(relative ~ period + business, na.rm = TRUE)
+  elementary_index(relative ~ period + business, na.rm = TRUE)
 
 index <- elementals |>
   aggregate(pias, na.rm = TRUE) |>
@@ -48,7 +48,7 @@ pias_matrix <- as.matrix(pias)
 pias_matrix
 ```
 
-Multiplying this matrix with a matrix of fixed-base elemental indexes
+Multiplying this matrix with a matrix of fixed-base elementary indexes
 now computes the aggregate index in each time period.
 
 ```{r}
@@ -59,11 +59,11 @@ pias_matrix %*% as.matrix(index[levels(pias)$business])
 
 It's often useful to determine which higher-level index values are
 missing, and subsequently get imputed during aggregation (i.e., compute
-the shadow of an index). This is simple to do if there's an elemental
-index for each elemental aggregate in the aggregation structure.
+the shadow of an index). This is simple to do if there's an elementary
+index for each elementary aggregate in the aggregation structure.
 
 The idea is to aggregate an indicator for missingness to get a matrix
-that gives the share of missing elemental indexes for each higher-level
+that gives the share of missing elementary indexes for each higher-level
 index.
 
 ```{r}
@@ -72,11 +72,11 @@ pias_matrix <- as.matrix(pias) > 0
 pias_matrix %*% is.na(elementals) / rowSums(pias_matrix)
 ```
 
-A value of 1 means that there are no non-missing elemental indexes, and
+A value of 1 means that there are no non-missing elementary indexes, and
 that the value for this level of the index is imputed from its parent in
 the aggregation structure. A value below 1 but above zero means that
-some but not all elemental indexes are missing, and the index value for
-this level is based on the non-missing elemental indexes. A value of
+some but not all elementary indexes are missing, and the index value for
+this level is based on the non-missing elementary indexes. A value of
 zero means there's no imputation for this level of the index.
 
 ## Sparse matrices

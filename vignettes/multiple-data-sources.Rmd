@@ -9,7 +9,7 @@ vignette: >
 
 Price indexes are usually made from several sources of data. An
 important benefit of the usual two-step workflow to make price indexes
-is that the elemental indexes can be built piecemeal---using different
+is that the elementary indexes can be built piecemeal---using different
 sources of data and different index-number formulas---and then
 aggregated with a consistent structure.
 
@@ -27,12 +27,12 @@ ms_weights[c("level1", "level2")] <-
 pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
   as_aggregation_structure()
 
-# Make elemental index.
+# Make elementary index.
 elementals <- ms_prices |>
   transform(
     relative = price_relative(price, period = period, product = product)
   ) |>
-  elemental_index(relative ~ period + business, na.rm = TRUE)
+  elementary_index(relative ~ period + business, na.rm = TRUE)
 
 elementals
 ```
@@ -75,7 +75,7 @@ geks_elementals <- with(
 geks_elementals
 ```
 
-These values can now be merged with the other elemental indexes, getting
+These values can now be merged with the other elementary indexes, getting
 turned into a period-over-period index in the process, and then
 aggregated.
 

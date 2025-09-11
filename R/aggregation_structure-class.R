@@ -56,7 +56,7 @@ validate_pias_weights <- function(x) {
   if (length(x$weights) != length(last(x$levels))) {
     stop(
       "cannot make an aggregation structure with a different number of ",
-      "weights and elemental aggregates"
+      "weights and elementary aggregates"
     )
   }
   if (any(x$weights < 0, na.rm = TRUE)) {
@@ -79,9 +79,9 @@ summary.piar_aggregation_structure <- function(object, ...) {
   cat(
     "Aggregation structure for",
     length(last(object$levels)),
-    "elemental aggregates with",
+    "elementary aggregates with",
     length(object$levels) - 1L,
-    "levels above the elemental aggregates",
+    "levels above the elementary aggregates",
     "\n"
   )
   invisible()

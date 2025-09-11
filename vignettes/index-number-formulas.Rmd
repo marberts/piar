@@ -10,7 +10,7 @@ vignette: >
 Price indexes based on a generalized mean of price relatives constitute
 a large family of bilateral index-number formulas that are consistent in
 aggregation, and any index based on the generalized mean can be used to
-make and aggregate elemental indexes. To see how to make superlative
+make and aggregate elementary indexes. To see how to make superlative
 indexes as well, let's start with a simple dataset of prices and
 quantities for two businesses over three periods. We'll be making
 extensive use of the *gpindex* package for lower-level price-index
@@ -36,19 +36,19 @@ head(prices)
 
 ## Basic indexes
 
-As seen in `vignette("piar")`, by default the `elemental_index()`
+As seen in `vignette("piar")`, by default the `elementary_index()`
 function calculates a Jevons index (equally-weighted geometric mean of
 price relatives). Although this is the standard index-number formula for
-making elemental indexes, many other types of index-numbers are
+making elementary indexes, many other types of index-numbers are
 possible. Among the unweighted index-number formulas, the Carli index
 (equally-weighted arithmetic mean of price relatives) is the historical
 competitor to the Jevons, and requires specifying the order of the
-generalized mean `r` when calling `elemental_index()`. An order of 1
+generalized mean `r` when calling `elementary_index()`. An order of 1
 corresponds to an arithmetic mean.
 
 ```{r}
 prices |>
-  elemental_index(price / back_price ~ period + business, r = 1)
+  elementary_index(price / back_price ~ period + business, r = 1)
 ```
 
 The Coggeshall index (equally-weighted harmonic mean of price relatives)
@@ -58,31 +58,31 @@ an order `r` of -1.
 
 ```{r}
 prices |>
-  elemental_index(price / back_price ~ period + business, r = -1)
+  elementary_index(price / back_price ~ period + business, r = -1)
 ```
 
-Weights can be added to make, for example, elemental indexes using the
+Weights can be added to make, for example, elementary indexes using the
 geometric Laspeyres formula.
 
 ```{r}
 prices |>
-  elemental_index(
+  elementary_index(
     price / back_price ~ period + business,
     weights = back_price * back_quantity
   )
 ```
 
-The type of mean used to aggregate elemental indexes can be controlled
+The type of mean used to aggregate elementary indexes can be controlled
 in the same way in the call to `aggregate()`. The default makes an
 arithmetic index, but any type of generalized-mean index is possible.
 
 ## Superlative indexes
 
 Many superlative indexes can be made by supplying unequal and
-time-varying weights when making the elemental indexes, usually from
+time-varying weights when making the elementary indexes, usually from
 information about quantities. The Törnqvist index is a popular superlative
 index-number formula, using average period-over-period value shares as
-the weights in a geometric mean. As `elemental_index()` makes a
+the weights in a geometric mean. As `elementary_index()` makes a
 geometric index by default, all that is needed to make a Törnqvist index
 is the weights.
 
@@ -90,7 +90,7 @@ is the weights.
 tw <- grouped(index_weights("Tornqvist"))
 
 prices |>
-  elemental_index(
+  elementary_index(
     price / back_price ~ period + business,
     weights = tw(
       price,
@@ -110,7 +110,7 @@ represent a Fisher index as a generalized mean of any order.
 fw <- grouped(nested_transmute(0, c(1, -1), 0))
 
 prices |>
-  elemental_index(
+  elementary_index(
     price / back_price ~ period + business,
     weights = fw(
       price / back_price,
@@ -127,10 +127,10 @@ of `vignette("superlative-aggregation")`.
 ## Product contributions
 
 As shown in `vignette("contributions")`, supplying `contrib = TRUE` in the call
-to `elemental_index()` makes percent-change product contributions for each index
+to `elementary_index()` makes percent-change product contributions for each index
 value. The method used in this package is flexible and works well for a variety 
 of different index-number formulas, but does not include all methods found in the
-literature. (See the help page for `elemental_index()`, and the references therein,
+literature. (See the help page for `elementary_index()`, and the references therein,
 for more detail about the exact methods.)
 
 Let's extend the previous example by calculating product contributions for the
@@ -138,7 +138,7 @@ Fisher index using the default method.
 
 ```{r}
 fisher_index <- prices |>
-  elemental_index(
+  elementary_index(
     price / back_price ~ period + business,
     weights = fw(
       price / back_price,
@@ -185,5 +185,5 @@ contrib(fisher_index, "B1") <- subset(prices, business == "B1") |>
 contrib(fisher_index, "B1")
 ```
 
-Aggregating the elemental indexes will then consistently aggregate the contributions
+Aggregating the elementary indexes will then consistently aggregate the contributions
 for both businesses, even though they use different methods.

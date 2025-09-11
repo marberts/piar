@@ -14,7 +14,7 @@ than one set of aggregation weights that change every period.
 
 ## Aggregating a Paasche index
 
-Let's start by making a chained Paasche index from 6 elemental indexes
+Let's start by making a chained Paasche index from 6 elementary indexes
 over 4 time periods to see how to deal with time-varying aggregation
 weights. This is similar to the example of building an index across
 multiple basket in `vignette("multiple-baskets")`, except that the
@@ -25,7 +25,7 @@ library(piar)
 
 set.seed(12345)
 
-# Make 6 elemental indexes over 4 time periods.
+# Make 6 elementary indexes over 4 time periods.
 elementals <- matrix(c(rep(1, 6), runif(6 * 3, 0.8, 1.2)), nrow = 6) |>
   as_index() |>
   set_levels(paste0("B", 1:6))
@@ -57,9 +57,9 @@ pulls apart an index series for many periods into a collection of
 one-period indexes.^[`split()` can also be used for this.] These functions allow
 the aggregation to be done with a map-reduce.
 
-The first step to making a Paasche index is to unstack the elemental
-indexes into a list of elemental indexes for each period. (Trying to
-make the elemental indexes period-by-period can be dangerous when there
+The first step to making a Paasche index is to unstack the elementary
+indexes into a list of elementary indexes for each period. (Trying to
+make the elementary indexes period-by-period can be dangerous when there
 are missing values.)
 
 ```{r}
@@ -78,7 +78,7 @@ paasche_pias <- split(
 ```
 
 Computing the Paasche index for each period is now just a case of
-mapping the `aggregate()` function to each elemental index and
+mapping the `aggregate()` function to each elementary index and
 aggregation structure, and then reducing the result with the `stack()`
 function.
 

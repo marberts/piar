@@ -29,7 +29,7 @@
 )
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{...}{Not currently used.}
 
@@ -50,8 +50,8 @@ imputation.}
 \item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
 
 \item{r}{Order of the generalized mean to aggregate index values. 0 for a
-geometric index (the default for making elemental indexes), 1 for an
-arithmetic index (the default for aggregating elemental indexes and
+geometric index (the default for making elementary indexes), 1 for an
+arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
@@ -86,7 +86,7 @@ over subperiods, which is often useful when aggregating a Paasche index; see
 section 4.3 of Balk (2008) for details.
 }
 \examples{
-index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE))
+index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE), chainable = FALSE)
 
 # Turn a monthly index into a quarterly index
 mean(index, window = 3)

@@ -21,7 +21,7 @@ set_weights(object, value)
 
 \item{...}{Not currently used.}
 
-\item{ea_only}{Should weights be returned for only the elemental aggregates
+\item{ea_only}{Should weights be returned for only the elementary aggregates
 (the default)? Setting to \code{FALSE} gives the weights for the entire
 aggregation structure.}
 
@@ -29,11 +29,11 @@ aggregation structure.}
 weights (i.e., when \code{ea_only = FALSE})? By default, missing values are
 not removed.}
 
-\item{value}{A numeric vector of weights for the elemental aggregates of
+\item{value}{A numeric vector of weights for the elementary aggregates of
 \code{object}.}
 }
 \value{
-\code{weights()} returns a named vector of weights for the elemental aggregates.
+\code{weights()} returns a named vector of weights for the elementary aggregates.
 The replacement method replaces these values without changing the
 aggregation structure. (\code{set_weights()} is an alias that's easier to use with
 pipes.)

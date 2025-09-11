@@ -4,13 +4,13 @@
 #' Combine two price indexes with common time periods, merging together the
 #' index values and percent-change contributions for each time period.
 #'
-#' This is useful for building up an index when different elemental aggregates
+#' This is useful for building up an index when different elementary aggregates
 #' come from different sources of data, or use different index-number formulas.
 #'
 #' @name merge.piar_index
 #' @aliases merge.piar_index
 #'
-#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param x A price index, as made by, e.g., [elementary_index()].
 #' @param y A price index, or something that can coerced into one. If `x`
 #'   is a period-over-period index then `y` is coerced into a chainable
 #'   index; otherwise, `y` is coerced into a direct index.

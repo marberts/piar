@@ -11,7 +11,7 @@
 \method{merge}{direct_piar_index}(x, y, ...)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{y}{A price index, or something that can coerced into one. If \code{x}
 is a period-over-period index then \code{y} is coerced into a chainable
@@ -26,7 +26,7 @@ A combined price index that inherits from the same class as \code{x}.
 Combine two price indexes with common time periods, merging together the
 index values and percent-change contributions for each time period.
 
-This is useful for building up an index when different elemental aggregates
+This is useful for building up an index when different elementary aggregates
 come from different sources of data, or use different index-number formulas.
 }
 \examples{

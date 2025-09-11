@@ -21,7 +21,7 @@
 #' is possible to replace value in `x` using a logical matrix or a two-column
 #' matrix of indices.
 #'
-#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param x A price index, as made by, e.g., [elementary_index()].
 #' @param i,j Indices for the levels and time periods of a price index. See
 #'   details.
 #' @param value A numeric vector or price index. See details.

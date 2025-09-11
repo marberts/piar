@@ -2,7 +2,7 @@
 #'
 #' Turn an index into a data frame or a matrix.
 #'
-#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param x A price index, as made by, e.g., [elementary_index()].
 #' @param row.names,stringsAsFactors See [as.data.frame()].
 #' @param optional Not currently used.
 #' @param ... Not currently used.
@@ -82,7 +82,7 @@ as.double.piar_index <- function(x, ...) {
 #'
 #' Turn an index into a regular time series, represented as a [`ts`] object.
 #'
-#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param x A price index, as made by, e.g., [elementary_index()].
 #' @param ... Additional arguments passed to [`ts()`].
 #'
 #' @returns A time series object.

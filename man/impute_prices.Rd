@@ -56,11 +56,11 @@ periods follows of the levels of \code{period}, to agree with
 the product associated with each price in \code{x}.}
 
 \item{ea}{A factor, or something that can be coerced into one, giving the
-elemental aggregate associated with each price in \code{x}.}
+elementary aggregate associated with each price in \code{x}.}
 
 \item{pias}{A price index aggregation structure, or something that can be
 coerced into one, as made with \code{\link[=aggregation_structure]{aggregation_structure()}}. The default
-imputes from elemental indexes only (i.e., not recursively).}
+imputes from elementary indexes only (i.e., not recursively).}
 
 \item{weights}{A numeric vector of weights for the prices in \code{x} (i.e.,
 product weights), or something that can be coerced into one. The default is
@@ -68,20 +68,20 @@ to give each price equal weight. This is evaluated in \code{x} for the data
 frame method.}
 
 \item{r1}{Order of the generalized-mean price index used to calculate the
-elemental price indexes: 0 for a geometric index (the default), 1 for an
+elementary price indexes: 0 for a geometric index (the default), 1 for an
 arithmetic index, or -1 for a harmonic index. Other values are possible;
 see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
 \item{r2}{Order of the generalized-mean price index used to aggregate the
-elemental price indexes: 0 for a geometric index, 1 for an arithmetic index
-(the default), or -1 for a harmonic index. Other values are possible; see
-\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+elementary price indexes: 0 for a geometric index, 1 for an arithmetic
+index (the default), or -1 for a harmonic index. Other values are possible;
+see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
 \item{formula}{A two-sided formula with prices on the left-hand
 side. For \code{carry_forward()} and \code{carry_backward()}, the right-hand side
 should have time periods and products (in that order); for
 \code{shadow_price()}, the right-hand side should have time period, products,
-and elemental aggregates (in that order).}
+and elementary aggregates (in that order).}
 }
 \value{
 A numeric vector of prices with missing values replaced (where possible).
@@ -98,7 +98,7 @@ used in practice.
 
 The shadow price method recursively imputes a missing price by the value of
 the price for the same product in the previous period multiplied by the
-value of the period-over-period elemental index for the elemental aggregate
+value of the period-over-period elementary index for the elementary aggregate
 to which that product belongs. This requires computing and aggregating an
 index (according to \code{pias}, unless \code{pias} is not supplied) for
 each \code{period}, and so these imputations can take a while. The index

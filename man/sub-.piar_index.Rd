@@ -10,7 +10,7 @@
 \method{[}{piar_index}(x, i, j, ...) <- value
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{i, j}{Indices for the levels and time periods of a price index. See
 details.}

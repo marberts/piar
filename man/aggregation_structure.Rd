@@ -10,15 +10,15 @@ aggregation_structure(x, weights = NULL)
 \arguments{
 \item{x}{A list of character vectors that give the codes/labels for each
 level of the classification, ordered so that moving down the list goes down
-the hierarchy. The last vector gives the elemental aggregates, which should
-have no duplicates. All vectors should be the same length, without
+the hierarchy. The last vector gives the elementary aggregates, which
+should have no duplicates. All vectors should be the same length, without
 \code{NA}s, and there should be no duplicates across different levels of
 \code{x}. Names for \code{x} are used as level names; otherwise, levels are named
 'level1', 'level2', ..., 'ea'.}
 
-\item{weights}{A numeric vector of aggregation weights for the elemental
+\item{weights}{A numeric vector of aggregation weights for the elementary
 aggregates (i.e., the last vector in \code{x}), or something that can be coerced
-into one. The default is to give each elemental aggregate the same weight.}
+into one. The default is to give each elementary aggregate the same weight.}
 }
 \value{
 A price index aggregation structure of class \code{piar_aggregation_structure}.
@@ -31,13 +31,13 @@ terminal nodes.}
 immediate parent for each node of the aggregation structure below the
 initial nodes.}
 \item{levels}{A named list of character vectors that give the levels of \code{x}.}
-\item{weights}{A vector giving the weight for each elemental
+\item{weights}{A vector giving the weight for each elementary
 aggregate.}
 }
 \description{
 Create a price index aggregation structure from a hierarchical
 classification and aggregation weights that can be used to aggregate
-elemental indexes.
+elementary indexes.
 }
 \section{Warning}{
  The \code{aggregation_structure()} function does its best
@@ -68,7 +68,7 @@ aggregation_structure(
 )
 
 # The aggregation structure can also be made by expanding the
-# elemental aggregates
+# elementary aggregates
 
 with(
   aggregation_weights,
@@ -78,7 +78,7 @@ with(
 }
 \seealso{
 \code{\link[=aggregate.piar_index]{aggregate()}} to aggregate price indexes made
-with \code{\link[=elemental_index]{elemental_index()}}.
+with \code{\link[=elementary_index]{elementary_index()}}.
 
 \code{\link[=expand_classification]{expand_classification()}} to make \code{x} from a character
 representation of a hierarchical aggregation structure.

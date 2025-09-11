@@ -20,8 +20,8 @@ as_aggregation_structure(x, ...)
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{weights}{A numeric vector of aggregation weights for the elemental
-aggregates. The default is to give each elemental aggregate the same
+\item{weights}{A numeric vector of aggregation weights for the elementary
+aggregates. The default is to give each elementary aggregate the same
 weight.}
 }
 \value{
@@ -36,8 +36,8 @@ The default method attempts to coerce \code{x} into a list prior to calling
 \code{\link[=aggregation_structure]{aggregation_structure()}}.
 
 The data frame and matrix methods treat \code{x} as a table with a row for
-each elemental aggregate, a column of labels for each level in the
-aggregation structure, and a column of weights for the elemental aggregates.
+each elementary aggregate, a column of labels for each level in the
+aggregation structure, and a column of weights for the elementary aggregates.
 }
 \examples{
 # A simple aggregation structure

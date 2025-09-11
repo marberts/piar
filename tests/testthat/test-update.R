@@ -4,7 +4,7 @@ x3 <- c("111", "211", "121", "112")
 agg <- aggregation_structure(list(x1, x2, x3))
 
 test_that("updating with a length-0 index makes the weights NA", {
-  epr <- elemental_index(integer(0), period = gl(1, 0), ea = gl(1, 0))
+  epr <- elementary_index(integer(0), period = gl(1, 0), ea = gl(1, 0))
   index <- aggregate(epr, agg)
   expect_equal(update(agg, index)[-4], agg[-4])
 
@@ -19,7 +19,7 @@ test_that("updating with a length-0 index makes the weights NA", {
 })
 
 test_that("an index that doesn't line up with the pias introduces NA", {
-  epr <- elemental_index(1:2, ea = c("111", "121"), period = gl(1, 2))
+  epr <- elementary_index(1:2, ea = c("111", "121"), period = gl(1, 2))
   index <- aggregate(epr, agg)
   expect_equal(
     weights(update(agg, index), ea_only = FALSE),
@@ -41,7 +41,7 @@ test_that("an index that doesn't line up with the pias introduces NA", {
 
 test_that("updating works with only EAs", {
   # This used to not work
-  epr <- elemental_index(1:2, ea = c("111", "121"), period = gl(1, 2))
+  epr <- elementary_index(1:2, ea = c("111", "121"), period = gl(1, 2))
   pias <- aggregation_structure(111)
   index <- aggregate(epr, pias)
   expect_equal(update(pias, index), pias)

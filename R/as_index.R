@@ -4,7 +4,7 @@
 #'
 #' Numeric matrices are coerced into an index object by treating each column as
 #' a separate time period, and each row as a separate level of the index (e.g.,
-#' an elemental aggregate). Column names
+#' an elementary aggregate). Column names
 #' are used to denote time periods, and row names are used to denote levels
 #' (so they must be unique). This essentially reverses calling
 #' [`as.matrix()`][as.matrix.piar_index] on an index object. If a
@@ -53,7 +53,7 @@
 #'   ea = rep(letters[1:2], 4)
 #' )
 #'
-#' index <- elemental_index(prices, rel ~ period + ea)
+#' index <- elementary_index(prices, rel ~ period + ea)
 #'
 #' all.equal(as_index(as.data.frame(index)), index)
 #' all.equal(as_index(as.matrix(index)), index)
@@ -101,7 +101,7 @@ as_index.data.frame <- function(x, ..., contrib = FALSE) {
   x[1:2] <- lapply(x[1:2], as.factor)
   time <- levels(x[[1L]])
   levels <- levels(x[[2L]])
-  # elemental_index() usually gives NaN for missing cells.
+  # elementary_index() usually gives NaN for missing cells.
   index <- matrix(
     NA_real_,
     nrow = length(levels),

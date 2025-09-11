@@ -1,43 +1,43 @@
-#' Make elemental/elementary price indexes
+#' Make elementary/elemental price indexes
 #'
-#' Compute period-over-period (chainable) or fixed-base (direct) elemental
+#' Compute period-over-period (chainable) or fixed-base (direct) elementary
 #' price indexes, with optional percent-change contributions for each
 #' product.
 #'
-#' When supplied with a numeric vector, `elemental_index()` is a simple
+#' When supplied with a numeric vector, `elementary_index()` is a simple
 #' wrapper that applies
 #' [`gpindex::generalized_mean(r)()`][gpindex::generalized_mean] and
 #' [`gpindex::contributions(r)()`][gpindex::contributions] (if `contrib = TRUE`)
 #' to `x` and `weights` grouped by `ea` and `period`. That
-#' is, for every combination of elemental aggregate and time period,
-#' `elemental_index()` calculates an index based on a generalized mean of
+#' is, for every combination of elementary aggregate and time period,
+#' `elementary_index()` calculates an index based on a generalized mean of
 #' order `r` and, optionally, percent-change contributions. Product names should
 #' be unique within each time period when making contributions, and, if not, are
 #' passed to [make.unique()] with a warning. The default
-#' (\code{r = 0} and no weights) makes Jevons elemental indexes. See chapter 8
+#' (\code{r = 0} and no weights) makes Jevons elementary indexes. See chapter 8
 #' (pp. 175--190) of the CPI manual (2020) for more detail about making
-#' elemental indexes, or chapter 9 of the PPI manual (2004), and chapter 5 of
+#' elementary indexes, or chapter 9 of the PPI manual (2004), and chapter 5 of
 #' Balk (2008).
 #'
 #' The default method simply coerces `x` to a numeric vector prior to
 #' calling the method above. The data frame method provides a formula interface
-#' to specify columns of price relatives, time periods, and elemental
+#' to specify columns of price relatives, time periods, and elementary
 #' aggregates and call the method above.
 #'
 #' The interpretation of the index depends on how the price relatives in
 #' `x` are made. If these are period-over-period relatives, then the
-#' result is a collection of period-over-period (chainable) elemental indexes;
+#' result is a collection of period-over-period (chainable) elementary indexes;
 #' if these are fixed-base relatives, then the result is a collection of
-#' fixed-base (direct) elemental indexes. For the latter, `chainable`
+#' fixed-base (direct) elementary indexes. For the latter, `chainable`
 #' should be set to `FALSE` so that no subsequent methods assume that a
 #' chained calculation should be used.
 #'
 #' By default, missing price relatives in `x` will propagate throughout
 #' the index calculation. Ignoring missing values with `na.rm = TRUE` is
 #' the same as overall mean (parental) imputation, and needs to be explicitly
-#' set in the call to `elemental_index()`. Explicit imputation of missing
+#' set in the call to `elementary_index()`. Explicit imputation of missing
 #' relatives, and especially imputation of missing prices, should be done prior
-#' to calling `elemental_index()`.
+#' to calling `elementary_index()`.
 #'
 #' Indexes based on nested generalized means, like the Fisher index (and
 #' superlative quadratic mean indexes more generally), can be calculated by
@@ -46,8 +46,7 @@
 #' make these weights, and this affects how percent-change contributions
 #' are calculated.
 #'
-#' `elementary_index()` is an alias for `elemental_index()` as this is more
-#' common in the literature.
+#' `elemental_index()` is an alias for `elementary_index()`.
 #'
 #' @param x Period-over-period or fixed-base price relatives. Currently there
 #'   are methods for numeric vectors (which can be made with
@@ -57,16 +56,16 @@
 #'   ordering of time periods follows of the levels of `period`, to agree
 #'   with [`cut()`][cut.Date]. The default makes an index for one time period.
 #' @param ea A factor, or something that can be coerced into one, giving the
-#'   elemental aggregate associated with each price relative in `x`. The
-#'   default makes an index for one elemental aggregate.
+#'   elementary aggregate associated with each price relative in `x`. The
+#'   default makes an index for one elementary aggregate.
 #' @param weights A numeric vector of weights for the price relatives in `x`,
 #'   or something that can be coerced into one. The default is equal weights.
 #'   This is evaluated in `x` for the data frame method.
 #' @param product A character vector of product names, or something that can
 #'   be coerced into one, for each price relative in `x` when making
 #'   percent-change contributions. The default uses the names of `x`, if any;
-#'   otherwise, elements of `x` are given sequential names within each elemental
-#'   aggregate. This is evaluated in `x` for the data frame method.
+#'   otherwise, elements of `x` are given sequential names within each
+#'   elementary aggregate. This is evaluated in `x` for the data frame method.
 #' @param contrib Should percent-change contributions be calculated? The
 #'   default does not calculate contributions.
 #' @param chainable Are the price relatives in `x` period-over-period
@@ -76,14 +75,14 @@
 #'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #'   imputation.
 #' @param r Order of the generalized mean to aggregate price relatives. 0 for a
-#'   geometric index (the default for making elemental indexes), 1 for an
-#'   arithmetic index (the default for aggregating elemental indexes and
+#'   geometric index (the default for making elementary indexes), 1 for an
+#'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #'   a Paasche index). Other values are possible; see
 #'   [gpindex::generalized_mean()] for details.
 #' @param ... Further arguments passed to or used by methods.
 #' @param formula A two-sided formula with price relatives on the left-hand
-#'   side, and time periods and elemental aggregates (in that order) on the
+#'   side, and time periods and elementary aggregates (in that order) on the
 #'   right-hand side.
 #'
 #' @returns
@@ -97,13 +96,13 @@
 #' time, and [carry_forward()] and [shadow_price()] for
 #' imputation of missing prices.
 #'
-#' [as_index()] to turn pre-computed (elemental) index values into an
+#' [as_index()] to turn pre-computed (elementary) index values into an
 #' index object.
 #'
 #' [chain()] for chaining period-over-period indexes, and
 #' [rebase()] for rebasing an index.
 #'
-#' [`aggregate()`][aggregate.piar_index] to aggregate elemental indexes
+#' [`aggregate()`][aggregate.piar_index] to aggregate elementary indexes
 #' according to an aggregation structure.
 #'
 #' [`as.matrix()`][as.matrix.piar_index] and
@@ -133,9 +132,9 @@
 #'   ea = rep(letters[1:2], 4)
 #' )
 #'
-#' # Calculate Jevons elemental indexes
+#' # Calculate Jevons elementary indexes
 #'
-#' elemental_index(prices, rel ~ period + ea)
+#' elementary_index(prices, rel ~ period + ea)
 #'
 #' # Same as using lm() or tapply()
 #'
@@ -155,7 +154,7 @@
 #' # Calculate a CSWD index (same as the Jevons in this example)
 #' # as an arithmetic index by using the appropriate weights
 #'
-#' elemental_index(
+#' elementary_index(
 #'   prices,
 #'   rel ~ period + ea,
 #'   weights = fw(rel, group = interaction(period, ea)),
@@ -163,19 +162,19 @@
 #' )
 #'
 #' @export
-elemental_index <- function(x, ...) {
-  UseMethod("elemental_index")
+elementary_index <- function(x, ...) {
+  UseMethod("elementary_index")
 }
 
-#' @rdname elemental_index
+#' @rdname elementary_index
 #' @export
-elemental_index.default <- function(x, ...) {
-  elemental_index(as.numeric(x), ...)
+elementary_index.default <- function(x, ...) {
+  elementary_index(as.numeric(x), ...)
 }
 
-#' @rdname elemental_index
+#' @rdname elementary_index
 #' @export
-elemental_index.numeric <- function(
+elementary_index.numeric <- function(
   x,
   ...,
   period = gl(1, length(x)),
@@ -195,7 +194,7 @@ elemental_index.numeric <- function(
     }
   }
   period <- as.factor(period)
-  ea <- as.factor(ea) # ensures elemental aggregates are balanced
+  ea <- as.factor(ea) # ensures elementary aggregates are balanced
 
   time <- levels(period)
   levels <- levels(ea)
@@ -247,9 +246,9 @@ elemental_index.numeric <- function(
 }
 
 
-#' @rdname elemental_index
+#' @rdname elementary_index
 #' @export
-elemental_index.data.frame <- function(
+elementary_index.data.frame <- function(
   x,
   formula,
   ...,
@@ -260,7 +259,7 @@ elemental_index.data.frame <- function(
   weights <- eval(substitute(weights), x, parent.frame())
   product <- eval(substitute(product), x, parent.frame())
 
-  elemental_index(
+  elementary_index(
     vars[[1L]],
     period = vars[[2L]],
     ea = vars[[3L]],
@@ -270,6 +269,6 @@ elemental_index.data.frame <- function(
   )
 }
 
-#' @rdname elemental_index
+#' @rdname elementary_index
 #' @export
-elementary_index <- elemental_index
+elemental_index <- elementary_index

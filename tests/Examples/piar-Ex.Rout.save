@@ -31,7 +31,7 @@ Type 'q()' to quit R.
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: aggregate.piar_index
-> ### Title: Aggregate elemental price indexes
+> ### Title: Aggregate elementary price indexes
 > ### Aliases: aggregate.piar_index aggregate.chainable_piar_index
 > ###   aggregate.direct_piar_index
 > 
@@ -50,18 +50,18 @@ Type 'q()' to quit R.
 +   weights = 1:3
 + )
 > 
-> # Calculate Jevons elemental indexes
+> # Calculate Jevons elementary indexes
 > 
-> (elemental <- elemental_index(prices, rel ~ period + ea))
+> (elementary <- elementary_index(prices, rel ~ period + ea))
 Period-over-period price index for 2 levels over 2 time periods 
       time
 levels        1        2
      a 1.732051 5.916080
      b 2.828427 6.928203
 > 
-> # Aggregate (note the imputation for elemental index 'c')
+> # Aggregate (note the imputation for elementary index 'c')
 > 
-> (index <- aggregate(elemental, pias, na.rm = TRUE))
+> (index <- aggregate(elementary, pias, na.rm = TRUE))
 Period-over-period price index for 4 levels over 2 time periods 
       time
 levels        1        2
@@ -111,20 +111,20 @@ levels        1       2
 +   aggregation_weights[1:3],
 +   weights = aggregation_weights[[4]]
 + )
-Aggregation structure for 3 elemental aggregates with 2 levels above the elemental aggregates 
+Aggregation structure for 3 elementary aggregates with 2 levels above the elementary aggregates 
   level1 level2  ea weight
 1      1     11 111      1
 2      1     11 112      3
 3      1     12 121      4
 > 
 > # The aggregation structure can also be made by expanding the
-> # elemental aggregates
+> # elementary aggregates
 > 
 > with(
 +   aggregation_weights,
 +   aggregation_structure(expand_classification(ea), weight)
 + )
-Aggregation structure for 3 elemental aggregates with 2 levels above the elemental aggregates 
+Aggregation structure for 3 elementary aggregates with 2 levels above the elementary aggregates 
   level1 level2  ea weight
 1      1     11 111      1
 2      1     11 112      3
@@ -317,7 +317,7 @@ Frequency = 1
 +   ea = rep(letters[1:2], 4)
 + )
 > 
-> index <- elemental_index(prices, rel ~ period + ea)
+> index <- elementary_index(prices, rel ~ period + ea)
 > 
 > all.equal(as_index(as.data.frame(index)), index)
 [1] TRUE
@@ -392,7 +392,7 @@ levels         1 2 3
 +   ea = rep(letters[1:2], 4)
 + )
 > 
-> index <- elemental_index(prices, rel ~ period + ea, contrib = TRUE)
+> index <- elementary_index(prices, rel ~ period + ea, contrib = TRUE)
 > 
 > pias <- aggregation_structure(
 +   list(c("top", "top", "top"), c("a", "b", "c")),
@@ -478,7 +478,7 @@ detaching ‘package:gpindex’
 > #     (4)         (4)
 > 
 > cut(pias, 2)
-Aggregation structure for 2 elemental aggregates with 1 levels above the elemental aggregates 
+Aggregation structure for 2 elementary aggregates with 1 levels above the elementary aggregates 
   level1 level2 weight
 1      1     11      4
 2      1     12      4
@@ -487,15 +487,15 @@ Aggregation structure for 2 elemental aggregates with 1 levels above the element
 > 
 > 
 > cleanEx()
-> nameEx("elemental_index")
-> ### * elemental_index
+> nameEx("elementary_index")
+> ### * elementary_index
 > 
 > flush(stderr()); flush(stdout())
 > 
-> ### Name: elemental_index
-> ### Title: Make elemental/elementary price indexes
-> ### Aliases: elemental_index elemental_index.default
-> ###   elemental_index.numeric elemental_index.data.frame elementary_index
+> ### Name: elementary_index
+> ### Title: Make elementary/elemental price indexes
+> ### Aliases: elementary_index elementary_index.default
+> ###   elementary_index.numeric elementary_index.data.frame elemental_index
 > 
 > ### ** Examples
 > 
@@ -507,9 +507,9 @@ Aggregation structure for 2 elemental aggregates with 1 levels above the element
 +   ea = rep(letters[1:2], 4)
 + )
 > 
-> # Calculate Jevons elemental indexes
+> # Calculate Jevons elementary indexes
 > 
-> elemental_index(prices, rel ~ period + ea)
+> elementary_index(prices, rel ~ period + ea)
 Period-over-period price index for 2 levels over 2 time periods 
       time
 levels        1        2
@@ -539,7 +539,7 @@ b 2.828427 6.928203
 > # Calculate a CSWD index (same as the Jevons in this example)
 > # as an arithmetic index by using the appropriate weights
 > 
-> elemental_index(
+> elementary_index(
 +   prices,
 +   rel ~ period + ea,
 +   weights = fw(rel, group = interaction(period, ea)),
@@ -741,11 +741,11 @@ levels 1 2 3
 > 
 > ### ** Examples
 > 
-> index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE))
+> index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE), chainable = FALSE)
 > 
 > # Turn a monthly index into a quarterly index
 > mean(index, window = 3)
-Period-over-period price index for 2 levels over 4 time periods 
+Fixed-base price index for 2 levels over 4 time periods 
       time
 levels  1 4 7 10
      1  2 5 8 11

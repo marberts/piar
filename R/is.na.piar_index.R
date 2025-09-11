@@ -2,7 +2,7 @@
 #'
 #' Identify missing values in a price index.
 #'
-#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param x A price index, as made by, e.g., [elementary_index()].
 #' @param recursive Check if `x` also has missing percent-change
 #'   contributions. By default only index values are checked for missingness.
 #'

@@ -31,9 +31,9 @@ articles:
   
 reference:
 - title: Calculate price indexes
-  desc: Functions to make elemental and aggregated price indexes.
+  desc: Functions to make elementary and aggregated price indexes.
   contents:
-  - elemental_index
+  - elementary_index
   - as_index
   - aggregate.piar_index
   - mean.piar_index

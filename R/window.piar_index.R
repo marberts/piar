@@ -2,7 +2,7 @@
 #'
 #' Extract and replace index values over a window of time periods.
 #'
-#' @param x A price index, as made by, e.g., [elemental_index()].
+#' @param x A price index, as made by, e.g., [elementary_index()].
 #' @param start The time period to start the window. The default in the first
 #'   period of `x`.
 #' @param end The time period to end the window. The default is the last period

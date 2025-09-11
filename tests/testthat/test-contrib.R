@@ -8,13 +8,13 @@ pias <- as_aggregation_structure(
   data.frame(level1 = 1, level2 = c(11, 12, 13, 14), weight = 1)
 )
 
-epr <- elemental_index(
+epr <- elementary_index(
   dat,
   setNames(rel, c(1:5, 1, 3, 2, 6)) ~ period + ea,
   contrib = TRUE
 )
 index <- aggregate(epr, pias, na.rm = TRUE)
-epr2 <- elemental_index(dat, rel ~ period + ea)
+epr2 <- elementary_index(dat, rel ~ period + ea)
 
 test_that("contrib works", {
   expect_equal(
@@ -101,7 +101,7 @@ test_that("aggregate contributions have the right form", {
 test_that("product names are correct", {
   expect_equal(
     suppressWarnings(
-      contrib(elemental_index(
+      contrib(elementary_index(
         c(a = 1, b = 2, c = 3, a = 4, a = 5),
         period = c(1, 1, 1, 2, 2),
         ea = gl(1, 5),
@@ -121,7 +121,7 @@ test_that("product names are correct", {
   expect_equal(
     contrib(epr),
     contrib(
-      elemental_index(
+      elementary_index(
         dat,
         rel ~ period + ea,
         weights = w,

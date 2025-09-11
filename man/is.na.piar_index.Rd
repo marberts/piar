@@ -10,7 +10,7 @@
 \method{anyNA}{piar_index}(x, recursive = FALSE)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elemental_index]{elemental_index()}}.}
+\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{recursive}{Check if \code{x} also has missing percent-change
 contributions. By default only index values are checked for missingness.}
