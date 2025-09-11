@@ -79,11 +79,7 @@ summary.piar_aggregation_structure <- function(object, ...) {
   cat(
     "Aggregation structure for",
     length(last(object$levels)),
-<<<<<<< HEAD
-    "elemental aggregates with",
-=======
     "elementary aggregates with",
->>>>>>> refactor
     length(object$levels) - 1L,
     "levels above the elementary aggregates",
     "\n"
