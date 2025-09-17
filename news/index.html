@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.2.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,16 +43,16 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="piar-development-version">piar (development version)<a class="anchor" aria-label="anchor" href="#piar-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.8.3" id="piar-083">piar 0.8.3<a class="anchor" aria-label="anchor" href="#piar-083"></a></h2>
 <div class="section level3">
-<h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
+<h3 id="improvements-0-8-3">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-3"></a></h3>
 <ul><li><p>Both <code>aggregate(index)</code> and <code>mean(index)</code> get a new argument <code>duplicate_contrib</code> to control how product contributions are made when there are duplicate products.</p></li>
 <li><p>Coercing an index or an aggregation structure to a matrix now has dimension names. Same with the output from <code><a href="../reference/contrib.html">contrib()</a></code>.</p></li>
 <li><p><code><a href="../reference/expand_classification.html">expand_classification()</a></code> and <code><a href="../reference/split_classification.html">split_classification()</a></code> get a new argument <code>pad</code> to better manage unbalanced classifications.</p></li>
 <li><p>It is no longer possible to make non-positive index values or use negative weights.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-0-8-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-3"></a></h3>
 <ul><li><p>Fixed description of how product contributions are combined across subperiods in <code><a href="../reference/mean.piar_index.html">?mean.piar_index</a></code> (<a href="https://github.com/marberts/piar/issues/51" class="external-link">#51</a>).</p></li>
 <li><p>Converting a data frame with partial product contributions to an index object no longer gives an error (<a href="https://github.com/marberts/piar/issues/52" class="external-link">#52</a>).</p></li>
 <li><p>It is now an error to construct product contributions for a superlative index when missing/zero weights are mismatched (<a href="https://github.com/marberts/piar/issues/59" class="external-link">#59</a>).</p></li>
