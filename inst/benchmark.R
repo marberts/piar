@@ -1,9 +1,9 @@
 #---- Make some data ----
 big_prices <- data.frame(
   period = sprintf("%d%02d", 2020, 1:12),
-  business = rep(paste0("B", 1:5000), each = 120),
-  product = rep(1:50000, each = 12),
-  price = runif(6e5, 0.5, 2)
+  business = rep(paste0("B", 1:5000), each = 1200),
+  product = rep(1:500000, each = 12),
+  price = runif(6e6, 0.5, 2)
 )
 
 big_weights <- data.frame(
@@ -55,14 +55,14 @@ pias2 <- with(
 )
 
 #---- Benchmarks ----
-big_prices2$rel <- price_relative(big_prices2, price ~ period + product)
+big_prices$rel <- price_relative(big_prices, price ~ period + product)
 
 elem <- with(
-  big_prices2,
+  big_prices,
   elemental_index(rel, period = period, ea = business, contrib = TRUE)
 )
 
-index <- aggregate(elem, pias2, na.rm = TRUE)
+index <- aggregate(elem, pias, na.rm = TRUE)
 
 bench::mark(
   aggregate(index, pias),

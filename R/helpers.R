@@ -53,7 +53,7 @@ index2contrib <- function(index, levels, time) {
   for (t in seq_along(time)) {
     con <- index[[t]] - 1
     names(con) <- levels
-    contrib[[t]][] <- lapply(i, \(x) con[x])
+    contrib[[t]] <- lapply(i, \(x) con[x])
   }
   contrib
 }

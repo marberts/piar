@@ -73,13 +73,12 @@ as_index.default <- function(x, ...) {
 #' @export
 as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
   chkDots(...)
-  storage.mode(x) <- "numeric"
   levels <- rownames(x) %||% seq_len(nrow(x))
   periods <- colnames(x) %||% seq_len(ncol(x))
 
   index <- index_skeleton(levels, periods)
   for (t in seq_along(periods)) {
-    index[[t]][] <- x[, t]
+    index[[t]] <- as.numeric(x[, t])
   }
 
   if (contrib) {
