@@ -1,0 +1,334 @@
+# Price Index Aggregation in R
+
+Most price indexes are made with a two-step procedure, where
+period-over-period *elementary indexes* are first calculated for a
+collection of *elementary aggregates* at each point in time, and then
+aggregated according to a *price index aggregation structure*. These
+indexes can then be chained together to form a time series that gives
+the evolution of prices with respect to a fixed base period. This
+package contains a collection of functions that revolve around this work
+flow, making it easy to build standard price indexes, and implement the
+methods described by Balk (2008), von der Lippe (2007), and the CPI
+manual (2020) / PPI manual (2004) for bilateral price indexes.
+
+The tools in this package are designed to be useful for both researching
+new sources of data and methods to construct price indexes, and the
+regular production of price statistics. It is targeted towards
+economists, statisticians, and data scientists working at national
+statistical agencies, central banks, financial institutions, and in
+academia that want to measure and study the evolution of prices over
+time.
+
+## Installation
+
+Get the stable version from CRAN.
+
+``` r
+install.packages("piar")
+```
+
+The development version can be installed from R-Universe
+
+``` r
+install.packages(
+  "piar",
+  repos = c("https://marberts.r-universe.dev", "https://cloud.r-project.org")
+)
+```
+
+or directly from Github.
+
+``` r
+pak::pak("marberts/piar")
+```
+
+## Usage
+
+There are several detailed vignette showing how to use **piar**:
+`browseVignettes("piar")`. But the basic work flow is fairly simple.
+
+The starting point is to make period-over-period elementary price
+indexes with the
+[`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md)
+function.
+
+``` r
+library(piar)
+
+# Make Jevons business-level elementary indexes
+
+head(ms_prices)
+#>   period business product price
+#> 1 202001       B1       1  1.14
+#> 2 202001       B1       2    NA
+#> 3 202001       B1       3  6.09
+#> 4 202001       B2       4  6.23
+#> 5 202001       B2       5  8.61
+#> 6 202001       B2       6  6.40
+
+elementals <- ms_prices |>
+  transform(
+    relative = price_relative(price, period = period, product = product)
+  ) |>
+  elementary_index(relative ~ period + business, na.rm = TRUE)
+
+elementals
+#> Period-over-period price index for 4 levels over 4 time periods 
+#>       time
+#> levels 202001    202002    202003   202004
+#>     B1      1 0.8949097 0.3342939      NaN
+#>     B2      1       NaN       NaN 2.770456
+#>     B3      1 2.0200036 1.6353355 0.537996
+#>     B4    NaN       NaN       NaN 4.576286
+```
+
+And an aggregation structure.
+
+``` r
+# Make an aggregation structure from businesses to higher-level
+# industrial classifications
+
+ms_weights
+#>   business classification weight level1 level2
+#> 1       B1             11    553      1     11
+#> 2       B2             11    646      1     11
+#> 3       B3             11    312      1     11
+#> 4       B4             12    622      1     12
+#> 5       B5             12    330      1     12
+
+ms_weights[c("level1", "level2")] <-
+  expand_classification(ms_weights$classification)
+
+pias <- ms_weights[c("level1", "level2", "business", "weight")]
+
+pias
+#>   level1 level2 business weight
+#> 1      1     11       B1    553
+#> 2      1     11       B2    646
+#> 3      1     11       B3    312
+#> 4      1     12       B4    622
+#> 5      1     12       B5    330
+```
+
+The [`aggregate()`](https://rdrr.io/r/stats/aggregate.html) method can
+then be used to aggregate the elementary indexes according to the
+aggregation structure (the first three rows below) and fill in missing
+elementary indexes while maintaining consistency in aggregation. There
+are a variety of methods to work with these index objects, such as
+chaining them over time.
+
+``` r
+# Aggregate elementary indexes with an arithmetic index
+
+index <- aggregate(elementals, pias, na.rm = TRUE)
+
+# Chain them to get a time series
+
+chain(index)
+#> Fixed-base price index for 8 levels over 4 time periods 
+#>       time
+#> levels 202001    202002    202003    202004
+#>     1       1 1.3007239 1.3827662 3.7815355
+#>     11      1 1.3007239 1.3827662 2.1771866
+#>     12      1 1.3007239 1.3827662 6.3279338
+#>     B1      1 0.8949097 0.2991629 0.4710366
+#>     B2      1 1.3007239 1.3827662 3.8308934
+#>     B3      1 2.0200036 3.3033836 1.7772072
+#>     B4      1 1.3007239 1.3827662 6.3279338
+#>     B5      1 1.3007239 1.3827662 6.3279338
+```
+
+## Contributing
+
+All contributions are welcome. Please start by opening an issue on
+GitHub to report any bugs or suggest improvements and new features. See
+the contribution guidelines for this project for more information.
+
+## References
+
+Balk, B. M. (2008). *Price and Quantity Index Numbers*. Cambridge
+University Press.
+
+Chiru, R., Huang, N., Lequain, M. Smith, P., and Wright, A. (2015). *The
+Canadian Consumer Price Index Reference Paper*, Statistics Canada
+catalogue 62-553-X. Statistics Canada.
+
+ILO, IMF, UNECE, OECD, and World Bank. (2004). *Producer Price Index
+Manual: Theory and Practice*. International Monetary Fund.
+
+IMF, ILO, Eurostat, UNECE, OECD, and World Bank. (2020). *Consumer Price
+Index Manual: Concepts and Methods*. International Monetary Fund.
+
+von der Lippe, P. (2007). *Index Theory and Price Statistics*. Peter
+Lang.
+
+# Package index
+
+## Calculate price indexes
+
+Functions to make elementary and aggregated price indexes.
+
+- [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md)
+  [`elemental_index()`](https://marberts.github.io/piar/reference/elementary_index.md)
+  : Make elementary/elemental price indexes
+- [`as_index()`](https://marberts.github.io/piar/reference/as_index.md)
+  : Coerce to a price index
+- [`aggregate(`*`<chainable_piar_index>`*`)`](https://marberts.github.io/piar/reference/aggregate.piar_index.md)
+  [`aggregate(`*`<direct_piar_index>`*`)`](https://marberts.github.io/piar/reference/aggregate.piar_index.md)
+  : Aggregate elementary price indexes
+- [`mean(`*`<chainable_piar_index>`*`)`](https://marberts.github.io/piar/reference/mean.piar_index.md)
+  [`mean(`*`<direct_piar_index>`*`)`](https://marberts.github.io/piar/reference/mean.piar_index.md)
+  : Aggregate a price index over subperiods
+
+## Manipulate price indexes
+
+Helpful functions for working with price indexes.
+
+- [`chain()`](https://marberts.github.io/piar/reference/chain.md)
+  [`unchain()`](https://marberts.github.io/piar/reference/chain.md)
+  [`rebase()`](https://marberts.github.io/piar/reference/chain.md) :
+  Chain and rebase a price index
+- [`merge(`*`<chainable_piar_index>`*`)`](https://marberts.github.io/piar/reference/merge.piar_index.md)
+  [`merge(`*`<direct_piar_index>`*`)`](https://marberts.github.io/piar/reference/merge.piar_index.md)
+  : Merge price indexes
+- [`stack(`*`<chainable_piar_index>`*`)`](https://marberts.github.io/piar/reference/stack.piar_index.md)
+  [`stack(`*`<direct_piar_index>`*`)`](https://marberts.github.io/piar/reference/stack.piar_index.md)
+  [`unstack(`*`<chainable_piar_index>`*`)`](https://marberts.github.io/piar/reference/stack.piar_index.md)
+  [`unstack(`*`<direct_piar_index>`*`)`](https://marberts.github.io/piar/reference/stack.piar_index.md)
+  : Stack price indexes
+- [`` `[`( ``*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/sub-.piar_index.md)
+  [`` `[<-`( ``*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/sub-.piar_index.md)
+  : Extract and replace index values
+- [`window(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/window.piar_index.md)
+  [`` `window<-`( ``*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/window.piar_index.md)
+  : Index window
+- [`head(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/head.piar_index.md)
+  [`tail(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/head.piar_index.md)
+  : Return the first/last parts of an index
+- [`contrib()`](https://marberts.github.io/piar/reference/contrib.md)
+  [`contrib2DF()`](https://marberts.github.io/piar/reference/contrib.md)
+  [`` `contrib<-`() ``](https://marberts.github.io/piar/reference/contrib.md)
+  [`set_contrib()`](https://marberts.github.io/piar/reference/contrib.md)
+  [`set_contrib_from_index()`](https://marberts.github.io/piar/reference/contrib.md)
+  : Extract percent-change contributions
+- [`split(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/split.piar_index.md)
+  [`` `split<-`( ``*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/split.piar_index.md)
+  : Split an index into groups
+- [`levels(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/levels.piar_index.md)
+  [`` `levels<-`( ``*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/levels.piar_index.md)
+  [`set_levels()`](https://marberts.github.io/piar/reference/levels.piar_index.md)
+  : Get the levels for a price index
+- [`time(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/time.piar_index.md)
+  [`` `time<-`() ``](https://marberts.github.io/piar/reference/time.piar_index.md)
+  [`set_time()`](https://marberts.github.io/piar/reference/time.piar_index.md)
+  [`start(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/time.piar_index.md)
+  [`end(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/time.piar_index.md)
+  [`ntime()`](https://marberts.github.io/piar/reference/time.piar_index.md)
+  : Get the time periods for a price index
+- [`as.data.frame(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/as.data.frame.piar_index.md)
+  [`as.matrix(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/as.data.frame.piar_index.md)
+  : Coerce an index into a tabular form
+- [`as.ts(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/as.ts.piar_index.md)
+  : Coerce an index into a time series
+- [`is.na(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/is.na.piar_index.md)
+  [`anyNA(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/is.na.piar_index.md)
+  : Missing values in a price index
+
+## Manipulate prices
+
+Helpful functions for working with prices.
+
+- [`shadow_price()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  [`carry_forward()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  [`carry_backward()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  : Impute missing prices
+- [`price_relative()`](https://marberts.github.io/piar/reference/price_relative.md)
+  : Calculate period-over-period price relatives
+
+## Aggregation structure
+
+Functions to make and work with price-index aggregation structures.
+
+- [`aggregation_structure()`](https://marberts.github.io/piar/reference/aggregation_structure.md)
+  : Make a price index aggregation structure
+- [`expand_classification()`](https://marberts.github.io/piar/reference/expand_classification.md)
+  [`interact_classifications()`](https://marberts.github.io/piar/reference/expand_classification.md)
+  : Expand a hierarchical classification
+- [`split_classification()`](https://marberts.github.io/piar/reference/split_classification.md)
+  : Split a hierarchical classification
+- [`as_aggregation_structure()`](https://marberts.github.io/piar/reference/as_aggregation_structure.md)
+  : Coerce to an aggregation structure
+- [`as.matrix(`*`<piar_aggregation_structure>`*`)`](https://marberts.github.io/piar/reference/as.matrix.piar_aggregation_structure.md)
+  [`as.data.frame(`*`<piar_aggregation_structure>`*`)`](https://marberts.github.io/piar/reference/as.matrix.piar_aggregation_structure.md)
+  : Coerce an aggregation structure into a tabular form
+- [`weights(`*`<piar_aggregation_structure>`*`)`](https://marberts.github.io/piar/reference/weights.piar_aggregation_structure.md)
+  [`` `weights<-`() ``](https://marberts.github.io/piar/reference/weights.piar_aggregation_structure.md)
+  [`set_weights()`](https://marberts.github.io/piar/reference/weights.piar_aggregation_structure.md)
+  : Get the weights for an aggregation structure
+- [`levels(`*`<piar_aggregation_structure>`*`)`](https://marberts.github.io/piar/reference/levels.piar_aggregation_structure.md)
+  : Get the levels for an aggregation structure
+- [`update(`*`<piar_aggregation_structure>`*`)`](https://marberts.github.io/piar/reference/update.piar_aggregation_structure.md)
+  : Update an aggregation structure
+- [`cut(`*`<piar_aggregation_structure>`*`)`](https://marberts.github.io/piar/reference/cut.piar_aggregation_structure.md)
+  : Cut an aggregation structure
+- [`is_aggregation_structure()`](https://marberts.github.io/piar/reference/is_aggregation_structure.md)
+  : Test if an object is an aggregation structure
+
+## Index objects
+
+The model used to represent price indexes.
+
+- [`piar_index`](https://marberts.github.io/piar/reference/piar_index.md)
+  [`chainable_piar_index`](https://marberts.github.io/piar/reference/piar_index.md)
+  [`direct_piar_index`](https://marberts.github.io/piar/reference/piar_index.md)
+  : Price index objects
+- [`is_index()`](https://marberts.github.io/piar/reference/is_index.md)
+  [`is_chainable_index()`](https://marberts.github.io/piar/reference/is_index.md)
+  [`is_direct_index()`](https://marberts.github.io/piar/reference/is_index.md)
+  : Test if an object is a price index
+
+## Sample data
+
+- [`price_data`](https://marberts.github.io/piar/reference/price_data.md)
+  [`ms_prices`](https://marberts.github.io/piar/reference/price_data.md)
+  [`ms_weights`](https://marberts.github.io/piar/reference/price_data.md)
+  [`fs_prices`](https://marberts.github.io/piar/reference/price_data.md)
+  [`fs_weights`](https://marberts.github.io/piar/reference/price_data.md)
+  : Price data
+
+# Articles
+
+### Aggregation
+
+Core workflows for aggregating price indexes.
+
+- [Aggregating across
+  baskets](https://marberts.github.io/piar/articles/multiple-baskets.md):
+- [Aggregating across
+  dimensions](https://marberts.github.io/piar/articles/multiple-dimensions.md):
+- [Matrix
+  aggregation](https://marberts.github.io/piar/articles/matrix-aggregation.md):
+- [Superlative
+  aggregation](https://marberts.github.io/piar/articles/superlative-aggregation.md):
+- [Aggregating over
+  subperiods](https://marberts.github.io/piar/articles/subperiods.md):
+
+### Advanced methods
+
+More advanced price-index methods.
+
+- [Index-number
+  formulas](https://marberts.github.io/piar/articles/index-number-formulas.md):
+- [Contributions](https://marberts.github.io/piar/articles/contributions.md):
+- [Adjusting annual
+  weights](https://marberts.github.io/piar/articles/adjust-weights.md):
+
+### Other topics
+
+Miscellaneous articles showing useful features.
+
+- [Multiple sources of
+  data](https://marberts.github.io/piar/articles/multiple-data-sources.md):
+- [Imputation](https://marberts.github.io/piar/articles/imputation.md):
+- [Spatial price
+  indexes](https://marberts.github.io/piar/articles/spatial-price-index.md):
