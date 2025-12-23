@@ -246,7 +246,7 @@ aggregate_index <- function(
       duplicate_contrib
     )
     if (has_contrib) {
-      res$contrib <- Map(
+      res$contrib[] <- Map(
         super_aggregate_contrib(0),
         res$contrib,
         res2$contrib,
@@ -254,7 +254,7 @@ aggregate_index <- function(
         res2$index
       )
     }
-    res$index <- Map(\(x, y) (x * y)^0.5, res$index, res2$index)
+    res$index[] <- (res$index * res2$index)^0.5
   }
 
   if (include_ea) {
@@ -291,8 +291,8 @@ aggregate_ <- function(
   for (t in seq_along(x$time)) {
     rel <- con <- vector("list", nlevels(pias))
     # Align epr with weights so that positional indexing works.
-    rel[[1L]] <- x$index[[t]][eas]
-    con[[1L]] <- x$contrib[[t]][eas]
+    rel[[1L]] <- x$index[, t][eas]
+    con[[1L]] <- x$contrib[, t][eas]
 
     # Get rid of any NULL contributions.
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
@@ -339,7 +339,7 @@ aggregate_ <- function(
     contrib[[t]] <- unlist(rev(con), recursive = FALSE, use.names = FALSE)
   }
 
-  list(index = index, contrib = contrib)
+  list(index = do.call(cbind, index), contrib = do.call(cbind, contrib))
 }
 
 #' Aggregate product contributions
@@ -378,11 +378,8 @@ aggregate_contrib <- function(r, duplicate_contrib = c("make.unique", "sum")) {
 #' @noRd
 super_aggregate_contrib <- function(r) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
-  Vectorize(
-    function(x, y, rel1, rel2) {
-      w <- arithmetic_weights(c(rel1, rel2))
-      w[1L] * x + w[2L] * y
-    },
-    SIMPLIFY = FALSE
-  )
+  function(x, y, rel1, rel2) {
+    w <- arithmetic_weights(c(rel1, rel2))
+    w[1L] * x + w[2L] * y
+  }
 }

@@ -30,8 +30,8 @@ NULL
 
 #---- Class generator ----
 new_piar_index <- function(index, contrib, levels, time, chainable) {
-  stopifnot(is.list(index))
-  stopifnot(is.list(contrib))
+  stopifnot(is.matrix(index))
+  stopifnot(is.matrix(contrib))
   stopifnot(is.character(levels))
   stopifnot(is.character(time))
   res <- list(index = index, contrib = contrib, levels = levels, time = time)
@@ -75,23 +75,23 @@ validate_time <- function(x) {
 }
 
 validate_index_values <- function(x) {
-  if (length(x$index) != length(x$time)) {
+  if (ncol(x$index) != length(x$time)) {
     stop("number of time periods does not agree with number of index values")
   }
-  if (any(lengths(x$index) != length(x$levels))) {
+  if (nrow(x$index) != length(x$levels)) {
     stop("number of levels does not agree with number of index values")
   }
-  if (any(vapply(x$index, \(x) any(x <= 0, na.rm = TRUE), logical(1L)))) {
+  if (any(x$index <= 0, na.rm = TRUE)) {
     stop("cannot make an index with non-positive values")
   }
   invisible(x)
 }
 
 validate_contrib <- function(x) {
-  if (length(x$contrib) != length(x$time)) {
+  if (ncol(x$contrib) != length(x$time)) {
     stop("number of time periods does not agree with number of contributions")
   }
-  if (any(lengths(x$contrib) != length(x$levels))) {
+  if (nrow(x$contrib) != length(x$levels)) {
     stop("number of levels does not agree with number of contributions")
   }
   invisible(x)

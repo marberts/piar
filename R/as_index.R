@@ -76,10 +76,8 @@ as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
   levels <- rownames(x) %||% seq_len(nrow(x))
   periods <- colnames(x) %||% seq_len(ncol(x))
 
-  index <- index_skeleton(levels, periods)
-  for (t in seq_along(periods)) {
-    index[[t]] <- as.numeric(x[, t])
-  }
+  index <- as.numeric(x)
+  dim(index) <- c(length(levels), length(periods))
 
   if (contrib) {
     contributions <- index2contrib(index, levels, periods)
@@ -119,9 +117,8 @@ as_index.data.frame <- function(x, ..., contrib = FALSE) {
     contributions[as.matrix(x[2:1])] <- x[[4L]]
 
     index <- as_index(index, ...)
-    for (t in seq_along(time)) {
-      index$contrib[[t]][] <- lapply(contributions[, t], valid_contrib)
-    }
+    # FIXME: I don't like adding the contributions after making the index.
+    index$contrib <- unname(contributions)
   } else {
     index <- as_index(index, contrib = contrib, ...)
   }

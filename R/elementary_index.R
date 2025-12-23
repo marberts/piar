@@ -194,8 +194,7 @@ elementary_index.numeric <- function(
     }
   }
   period <- as.factor(period)
-  ea <- as.factor(ea) # ensures elementary aggregates are balanced
-
+  ea <- as.factor(ea)
   time <- levels(period)
   levels <- levels(ea)
 
@@ -216,27 +215,33 @@ elementary_index.numeric <- function(
       names(x) <- valid_product_names(names(x), period)
     }
   }
-  # Splitting 'x' into a nested list by period then ea is the same as
-  # using interaction(), but makes it easier to get the results as
-  # a list.
-  ea <- split(ea, period)
-  x <- Map(split, split(x, period), ea)
+
+  ea_by_period <- period:ea
+  x <- split(x, ea_by_period)
   if (is.null(weights)) {
-    weights <- list(list(NULL))
+    weights <- list(NULL)
   } else {
-    weights <- Map(split, split(weights, period), ea)
+    weights <- split(weights, ea_by_period)
   }
 
-  index_fun <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
-  contrib_fun <- Vectorize(
-    gpindex::contributions(r),
-    SIMPLIFY = FALSE,
+  index <- mapply(
+    gpindex::generalized_mean(r),
+    x,
+    weights,
+    na.rm = na.rm,
     USE.NAMES = FALSE
   )
+  dim(index) <- c(nlevels(ea), nlevels(period))
 
-  index <- Map(index_fun, x, weights, na.rm = na.rm, USE.NAMES = FALSE)
   if (contrib) {
-    contributions <- Map(contrib_fun, x, weights, USE.NAMES = FALSE)
+    contributions <- mapply(
+      gpindex::contributions(r),
+      x,
+      weights,
+      SIMPLIFY = FALSE,
+      USE.NAMES = FALSE
+    )
+    dim(contributions) <- c(nlevels(ea), nlevels(period))
   } else {
     # Mimic contributions structure instead of a NULL.
     contributions <- contrib_skeleton(levels, time)

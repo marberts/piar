@@ -83,10 +83,10 @@ chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
   if (length(link) != nlevels(x)) {
     stop("'link' must have a value for each level of 'x'")
   }
-  x$index[[1L]] <- x$index[[1L]] * link
-  x$index <- Reduce(`*`, x$index, accumulate = TRUE, simplify = FALSE)
+  x$index[, 1L] <- x$index[, 1L] * link
+  x$index <- t(apply(x$index, 1L, cumprod))
   # Contributions are difficult to chain, so remove them.
-  x$contrib[] <- empty_contrib(x$levels)
+  x$contrib[] <- list(numeric(0L))
   new_piar_index(x$index, x$contrib, x$levels, x$time, chainable = FALSE)
 }
 
@@ -119,17 +119,17 @@ unchain.chainable_piar_index <- function(x, ...) {
 unchain.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   chkDots(...)
   if (length(base) == 1L && is.character(base)) {
-    base <- x$index[[match_time(base, x)]] / x$index[[1L]]
+    base <- x$index[, match_time(base, x)] / x$index[, 1L]
   } else {
     base <- as.numeric(base)
     if (length(base) != nlevels(x)) {
       stop("'base' must have a value for each level of 'x'")
     }
   }
-  x$index[-1L] <- Map(`/`, x$index[-1L], drop_last(x$index))
-  x$index[[1L]] <- x$index[[1L]] * base
+  x$index[, -1L] <- x$index[, -1L] / x$index[, -ncol(x$index)]
+  x$index[, 1L] <- x$index[, 1L] * base
   # Contributions are difficult to unchain, so remove them.
-  x$contrib[] <- empty_contrib(x$levels)
+  x$contrib[] <- list(numeric(0L))
   new_piar_index(x$index, x$contrib, x$levels, x$time, chainable = TRUE)
 }
 
@@ -156,15 +156,15 @@ rebase.chainable_piar_index <- function(x, ...) {
 rebase.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   chkDots(...)
   if (length(base) == 1L && is.character(base)) {
-    base <- x$index[[match_time(base, x)]]
+    base <- x$index[, match_time(base, x)]
   } else {
     base <- as.numeric(base)
     if (length(base) != nlevels(x)) {
       stop("'base' must have a value for each level of 'x'")
     }
   }
-  x$index <- Map(`/`, x$index, list(base))
+  x$index[] <- x$index / base
   # Contributions are difficult to rebase, so remove them.
-  x$contrib[] <- empty_contrib(x$levels)
+  x$contrib[] <- list(numeric(0L))
   x
 }

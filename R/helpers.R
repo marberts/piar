@@ -48,13 +48,8 @@ valid_contrib <- function(contrib) {
 }
 
 index2contrib <- function(index, levels, time) {
-  contrib <- contrib_skeleton(levels, time)
-  i <- seq_along(levels)
-  for (t in seq_along(time)) {
-    con <- index[[t]] - 1
-    names(con) <- levels
-    contrib[[t]] <- lapply(i, \(x) con[x])
-  }
+  contrib <- Map(stats::setNames, index - 1, levels)
+  dim(contrib) <- c(length(levels), length(time))
   contrib
 }
 
@@ -166,8 +161,7 @@ match_time <- match_dim("time")
 
 #---- Generate index ----
 index_skeleton <- function(levels, time) {
-  index <- rep.int(NA_real_, length(levels))
-  rep.int(list(index), length(time))
+  matrix(NA_real_, length(levels), length(time))
 }
 
 empty_contrib <- function(x) {
@@ -176,7 +170,7 @@ empty_contrib <- function(x) {
 }
 
 contrib_skeleton <- function(levels, time) {
-  rep.int(empty_contrib(levels), length(time))
+  matrix(list(numeric(0L)), length(levels), length(time))
 }
 
 has_contrib <- function(x) {

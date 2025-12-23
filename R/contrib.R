@@ -82,7 +82,7 @@ contrib.piar_index <- function(
   if (length(pad) != 1L) {
     stop("'pad' must be a length 1 numeric value")
   }
-  con <- lapply(x$contrib[period], `[[`, level)
+  con <- x$contrib[level, period]
 
   con_names <- lapply(con, names)
   products <- sort.int(unique(unlist(con_names, use.names = FALSE)))
@@ -117,9 +117,9 @@ contrib2DF.piar_index <- function(
   level <- match_levels(as.character(level), x, several = TRUE)
   period <- match_time(as.character(period), x, several = TRUE)
 
-  con <- lapply(x$contrib[period], `[`, level)
+  con <- x$contrib[level, period, drop = FALSE]
 
-  products <- lapply(con, lengths)
+  products <- apply(con, 2L, lengths, simplify = FALSE)
 
   levels <- x$levels[level]
   levels <- unlist(
@@ -182,7 +182,7 @@ contrib2DF.piar_index <- function(
     j <- j %% ncol(value) + 1
     con <- as.numeric(value[, j])
     names(con) <- products
-    x$contrib[[t]][level] <- list(con)
+    x$contrib[level, t] <- list(con)
   }
   validate_piar_index(x)
 }
