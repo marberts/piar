@@ -45,23 +45,15 @@
 #' @export
 `[.piar_index` <- function(x, i, j, ...) {
   chkDots(...)
-  periods <- dim_indices(x$time, j)
-  # Optimize for extracting by time period.
-  if (missing(i)) {
-    x$index <- x$index[periods]
-    x$contrib <- x$contrib[periods]
-  } else {
-    levels <- dim_indices(x$levels, i)
-    x$index <- lapply(x$index[periods], `[`, levels)
-    x$contrib <- lapply(x$contrib[periods], `[`, levels)
-    x$levels <- x$levels[levels]
-  }
+  periods <- subscript_index(x$time, j)
+  levels <- subscript_index(x$levels, i)
+  x$index <- x$index[levels, periods, drop = FALSE]
+  x$contrib <- x$contrib[levels, periods, drop = FALSE]
+  x$levels <- x$levels[levels]
   x$time <- x$time[periods]
   validate_piar_index(x)
 }
 
-# FIXME: Does it make sense to bundle the contributions with the index values
-# as a list with a dim?
 #' @rdname sub-.piar_index
 #' @export
 `[<-.piar_index` <- function(x, i, j, ..., value) {
@@ -116,33 +108,19 @@ replace_matrix <- function(x, i, value) {
   if (ncol(i) != 2L) {
     stop("'i' must have exactly two columns")
   }
-  if (nrow(i) == 0L) {
-    return(x)
-  }
 
-  value <- as.numeric(value)
-  n <- length(value)
-  if (n == 0L) {
-    stop("replacement has length zero")
-  }
-
-  levels <- dim_indices(x$levels, i[, 1L])
-  periods <- dim_indices(x$time, i[, 2L])
-  if (length(levels) %% n != 0L) {
-    stop("number of items to replace is not a multiple of replacement length")
-  }
-
-  for (i in seq_along(levels)) {
-    x$index[[periods[i]]][levels[i]] <- value[(i - 1L) %% n + 1]
-    # Drop contributions for replaced values.
-    x$contrib[[periods[i]]][levels[i]] <- list(numeric(0L))
-  }
+  dims <- cbind(
+    subscript_index(x$levels, i[, 1L]),
+    subscript_index(x$time, i[, 2L])
+  )
+  x$index[dims] <- as.numeric(value)
+  x$contrib[dims] <- list(numeric(0L))
   x
 }
 
 replace_index <- function(x, i, j, value) {
-  levels <- dim_indices(x$levels, i)
-  periods <- dim_indices(x$time, j)
+  levels <- subscript_index(x$levels, i)
+  periods <- subscript_index(x$time, j)
   if (length(levels) == 0L || length(periods) == 0L) {
     return(x)
   }
@@ -154,34 +132,17 @@ replace_index <- function(x, i, j, value) {
     stop("number of items to replace is not a multiple of replacement length")
   }
   for (t in seq_along(periods)) {
-    x$index[[periods[t]]][levels] <- value$index[[t]]
-    x$contrib[[periods[t]]][levels] <- value$contrib[[t]]
+    x$index[levels, periods[t]] <- value$index[, t]
+    x$contrib[levels, periods[t]] <- value$contrib[, t]
   }
   x
 }
 
 replace_numeric <- function(x, i, j, value) {
-  levels <- dim_indices(x$levels, i)
-  periods <- dim_indices(x$time, j)
-  if (length(levels) == 0L || length(periods) == 0L) {
-    return(x)
-  }
+  levels <- subscript_index(x$levels, i)
+  periods <- subscript_index(x$time, j)
 
-  value <- as.numeric(value)
-  n <- length(value)
-  if (n == 0L) {
-    stop("replacement has length zero")
-  }
-
-  m <- length(levels)
-  if ((m * length(periods)) %% n != 0) {
-    stop("number of items to replace is not a multiple of replacement length")
-  }
-
-  s <- seq.int(0L, m - 1L)
-  for (t in seq_along(periods)) {
-    x$index[[periods[t]]][levels] <- value[(s + (t - 1L) * m) %% n + 1]
-    x$contrib[[periods[t]]][levels] <- list(numeric(0L))
-  }
+  x$index[levels, periods] <- as.numeric(value)
+  x$contrib[levels, periods] <- list(numeric(0L))
   x
 }

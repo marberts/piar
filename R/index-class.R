@@ -9,12 +9,11 @@
 #' The `piar_index` object is a list-S3 class with the following
 #' components:
 #' \describe{
-#' \item{index}{A list with an entry for each period in `time` that gives
-#' a vector of index values for each level in `levels`.}
-#' \item{contrib}{A list with an entry for each period in `time`, which
-#' itself contains a list with an entry for each level in `levels` with
-#' a named vector that gives the percent-change contribution for each price
-#' relative.}
+#' \item{index}{A matrix of index values with a column for each period in `time`
+#' and a row for each level in `levels`.}
+#' \item{contrib}{A list-matrix containing named vectors that give the
+#' percent-change contributions for each price relative with a column for each
+#' time period in `time` and a row for each level in `levels`.}
 #' \item{levels}{A character vector giving the levels of the index.}
 #' \item{time}{A character vector giving the time periods for the index.}
 #' }

@@ -112,7 +112,7 @@ formula_vars <- function(formula, x, n = 2L) {
 }
 
 #---- Subscript indexes ----
-dim_indices <- function(x, i) {
+subscript_index <- function(x, i) {
   if (missing(i)) {
     return(seq_along(x))
   }

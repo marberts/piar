@@ -281,7 +281,7 @@ aggregate_ <- function(
   gen_mean <- gpindex::generalized_mean(r)
   agg_contrib <- aggregate_contrib(r, duplicate_contrib)
 
-  # Put the aggregation weights upside down to line up with pias.
+  # Put the aggregation weights upside down to line up with `pias`.
   w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
 
   eas <- match_eas(pias, x)
@@ -290,14 +290,14 @@ aggregate_ <- function(
   index <- contrib <- vector("list", ntime(x))
   for (t in seq_along(x$time)) {
     rel <- con <- vector("list", nlevels(pias))
-    # Align epr with weights so that positional indexing works.
+    # Align with weights so that positional indexing works.
     rel[[1L]] <- x$index[, t][eas]
     con[[1L]] <- x$contrib[, t][eas]
 
-    # Get rid of any NULL contributions.
+    # Replace NULL contributions for subscripting with empty contributions.
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
 
-    # Loop over each level in pias from the bottom up and aggregate.
+    # Loop over each level in `pias` from the bottom up and aggregate.
     for (i in seq_along(rel)[-1L]) {
       nodes <- unname(pias$child[[i - 1L]])
       rel[[i]] <- vapply(

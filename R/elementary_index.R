@@ -243,7 +243,6 @@ elementary_index.numeric <- function(
     )
     dim(contributions) <- c(nlevels(ea), nlevels(period))
   } else {
-    # Mimic contributions structure instead of a NULL.
     contributions <- contrib_skeleton(levels, time)
   }
 
