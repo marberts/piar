@@ -123,8 +123,8 @@ mean_index <- function(
   duplicate_contrib
 ) {
   col_split <- gl(ntime(x), nlevels(x))
-  index <- split(x$index, col_split)
-  contributions <- split(x$contrib, col_split)
+  index <- unname(split(x$index, col_split))
+  contributions <- unname(split(x$contrib, col_split))
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
     if (any(weights < 0, na.rm = TRUE)) {

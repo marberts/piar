@@ -98,22 +98,13 @@ as_index.data.frame <- function(x, ..., contrib = FALSE) {
   x[1:2] <- lapply(x[1:2], as.factor)
   time <- levels(x[[1L]])
   levels <- levels(x[[2L]])
-  # elementary_index() usually gives NaN for missing cells.
-  index <- matrix(
-    NA_real_,
-    nrow = length(levels),
-    ncol = length(time),
-    dimnames = list(levels, time)
-  )
+  index <- index_skeleton(levels, time)
+  dimnames(index) <- list(levels, time)
   index[as.matrix(x[2:1])] <- as.numeric(x[[3L]])
 
   if (contrib && length(x) > 3L) {
-    contributions <- matrix(
-      list(numeric(0L)),
-      nrow = length(levels),
-      ncol = length(time),
-      dimnames = list(levels, time)
-    )
+    contributions <- contrib_skeleton(levels, time)
+    dimnames(contributions) <- list(levels, time)
     contributions[as.matrix(x[2:1])] <- x[[4L]]
 
     index <- as_index(index, ...)

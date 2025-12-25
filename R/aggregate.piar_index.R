@@ -364,7 +364,7 @@ aggregate_contrib <- function(r, duplicate_contrib = c("make.unique", "sum")) {
         products <- unique(products)
         mat <- do.call(cbind, Map(`[`, res, list(products)))
         res <- rowSums(mat, na.rm = TRUE)
-        res[apply(is.na(mat), 1, all)] <- NA
+        res[apply(is.na(mat), 1L, all)] <- NA_real_
         names(res) <- products
       } else {
         res <- unlist(res)

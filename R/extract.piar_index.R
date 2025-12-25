@@ -141,7 +141,6 @@ replace_index <- function(x, i, j, value) {
 replace_numeric <- function(x, i, j, value) {
   levels <- subscript_index(x$levels, i)
   periods <- subscript_index(x$time, j)
-
   x$index[levels, periods] <- as.numeric(value)
   x$contrib[levels, periods] <- list(numeric(0L))
   x
