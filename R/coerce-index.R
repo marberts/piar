@@ -39,7 +39,8 @@ as.data.frame.piar_index <- function(
   stringsAsFactors = FALSE
 ) {
   chkDots(...)
-  value <- unlist(x$index, use.names = FALSE)
+  value <- x$index
+  dim(value) <- NULL
   period <- rep(x$time, each = nlevels(x))
   if (stringsAsFactors) {
     res <- data.frame(
@@ -58,7 +59,9 @@ as.data.frame.piar_index <- function(
     )
   }
   if (contrib) {
-    res$contrib <- unlist(x$contrib, use.names = FALSE, recursive = FALSE)
+    contributions <- x$contrib
+    dim(contributions) <- NULL
+    res$contrib <- contributions
   }
   res
 }
@@ -67,7 +70,7 @@ as.data.frame.piar_index <- function(
 #' @export
 as.matrix.piar_index <- function(x, ...) {
   chkDots(...)
-  res <- do.call(cbind, x$index)
+  res <- x$index
   dimnames(res) <- list(levels = x$levels, time = x$time)
   res
 }
@@ -75,7 +78,7 @@ as.matrix.piar_index <- function(x, ...) {
 #' @export
 as.double.piar_index <- function(x, ...) {
   chkDots(...)
-  as.double(as.matrix(x))
+  as.double(x$index)
 }
 
 #' Coerce an index into a time series
@@ -93,5 +96,5 @@ as.double.piar_index <- function(x, ...) {
 #' @family index methods
 #' @export
 as.ts.piar_index <- function(x, ...) {
-  ts(data = do.call(rbind, x$index), ..., names = x$levels)
+  ts(data = t(x$index), ..., names = x$levels)
 }

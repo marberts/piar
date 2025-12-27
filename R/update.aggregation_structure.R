@@ -64,6 +64,6 @@ update.piar_aggregation_structure <- function(
   if (anyNA(eas)) {
     warning("not all weights in 'object' have a corresponding index value")
   }
-  weights(object) <- price_update(index$index[[period]][eas], object$weights)
+  weights(object) <- price_update(index$index[, period][eas], object$weights)
   object
 }

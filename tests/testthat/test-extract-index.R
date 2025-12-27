@@ -202,5 +202,5 @@ test_that("replacement method works with a matrix", {
   expect_error(epr[is.na(epr)] <- numeric(0))
   expect_error(epr[matrix(TRUE, 3, 3)] <- 1)
   expect_error(epr[matrix(1, nrow = 1, ncol = 3)] <- 1)
-  expect_error(epr[is.na(epr)] <- 1:2)
+  expect_warning(epr[is.na(epr)] <- 1:2)
 })
