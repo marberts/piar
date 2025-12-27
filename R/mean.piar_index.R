@@ -122,9 +122,6 @@ mean_index <- function(
   chainable,
   duplicate_contrib
 ) {
-  col_split <- gl(ntime(x), nlevels(x))
-  index <- unname(split(x$index, col_split))
-  contributions <- unname(split(x$contrib, col_split))
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
     if (any(weights < 0, na.rm = TRUE)) {
@@ -133,7 +130,7 @@ mean_index <- function(
     if (length(weights) != ntime(x) * nlevels(x)) {
       stop("'weights' must have a value for each index value in 'x'")
     }
-    w <- split(weights, col_split)
+    dim(weights) <- c(nlevels(x), ntime(x))
   }
 
   window <- as.integer(window)
@@ -161,17 +158,20 @@ mean_index <- function(
   periods <- x$time[loc]
 
   has_contrib <- has_contrib(x) && contrib
-
   # Loop over each window and calculate the mean for each level.
   res <- contrib <- vector("list", length(periods))
+  rows <- seq_len(nlevels(x))
+  w <- list(NULL)
   for (i in seq_along(loc)) {
     j <- seq(loc[i], length.out = window)
-    rel <- .mapply(c, index[j], list())
-    weight <- if (is.null(weights)) list(NULL) else .mapply(c, w[j], list())
-    res[[i]] <- gen_mean(rel, weight, na.rm = na.rm)
+    rel <- split_rows(x$index[, j, drop = FALSE], rows)
+    if (!is.null(weights)) {
+      w <- split_rows(weights[, j, drop = FALSE], rows)
+    }
+    res[[i]] <- gen_mean(rel, w, na.rm = na.rm)
     if (has_contrib) {
-      con <- .mapply(\(...) c(list(...)), contributions[j], list())
-      contrib[[i]] <- agg_contrib(con, rel, weight)
+      con <- split_rows(x$contrib[, j, drop = FALSE], rows)
+      contrib[[i]] <- agg_contrib(con, rel, w)
     } else {
       contrib[i] <- empty_contrib(x$levels)
     }

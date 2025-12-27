@@ -25,6 +25,10 @@ drop_last <- function(x) {
   x[-length(x)]
 }
 
+split_rows <- function(x, rows) {
+  lapply(rows, \(i) x[i, ])
+}
+
 match_eas <- function(pias, index) {
   match(last(pias$levels), index$levels)
 }
@@ -174,7 +178,7 @@ contrib_skeleton <- function(levels, time) {
 }
 
 has_contrib <- function(x) {
-  Position(\(x) any(lengths(x) > 0L), x$contrib, nomatch = 0L) > 0L
+  any(lengths(x$contrib) > 0L)
 }
 
 # Backport Reduce and %||%
