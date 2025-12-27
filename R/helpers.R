@@ -55,7 +55,7 @@ index2contrib <- function(index, levels, time) {
 
 #---- Product names ----
 which_duplicate_products <- function(x) {
-  vapply(x, anyDuplicated, numeric(1L), incomparables = NA) > 0
+  vapply(x, anyDuplicated, integer(1L), incomparables = NA) > 0L
 }
 
 duplicate_products <- function(x) {
