@@ -22,23 +22,15 @@
 #' @export
 head.piar_index <- function(x, n = 6L, ...) {
   chkDots(...)
-  nl <- levels <- nlevels(x)
-  np <- periods <- ntime(x)
+  x$index <- head(x$index, n)
+  x$contrib <- head(x$contrib, n)
   if (!is.na(n[1L])) {
-    if (n[1L] < 0L) {
-      nl <- max(levels + n[1L], 0L)
-    } else {
-      nl <- min(n[1L], levels)
-    }
+    x$levels <- head(x$levels, n[1L])
   }
   if (!is.na(n[2L])) {
-    if (n[2L] < 0L) {
-      np <- max(periods + n[2L], 0L)
-    } else {
-      np <- min(n[2L], periods)
-    }
+    x$time <- head(x$time, n[2L])
   }
-  x[seq_len(nl), seq_len(np)]
+  validate_piar_index(x)
 }
 
 #' @rdname head.piar_index
@@ -46,23 +38,13 @@ head.piar_index <- function(x, n = 6L, ...) {
 #' @export
 tail.piar_index <- function(x, n = 6L, ...) {
   chkDots(...)
-  nl <- levels <- nlevels(x)
-  np <- periods <- ntime(x)
+  x$index <- tail(x$index, n, keepnums = FALSE)
+  x$contrib <- tail(x$contrib, n, keepnums = FALSE)
   if (!is.na(n[1L])) {
-    if (n[1L] < 0L) {
-      nl <- max(levels + n[1L], 0L)
-    } else {
-      nl <- min(n[1L], levels)
-    }
+    x$levels <- tail(x$levels, n[1L])
   }
   if (!is.na(n[2L])) {
-    if (n[2L] < 0L) {
-      np <- max(periods + n[2L], 0L)
-    } else {
-      np <- min(n[2L], periods)
-    }
+    x$time <- tail(x$time, n[2L])
   }
-  i <- seq.int(to = levels, length.out = nl)
-  j <- seq.int(to = periods, length.out = np)
-  x[i, j]
+  validate_piar_index(x)
 }
