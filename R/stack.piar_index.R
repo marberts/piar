@@ -67,8 +67,8 @@ stack.piar_index <- function(x, y, ...) {
   if (any(x$levels != y$levels)) {
     y <- y[x$levels]
   }
-  x$index <- c(x$index, y$index)
-  x$contrib <- c(x$contrib, y$contrib)
+  x$index <- cbind(x$index, y$index)
+  x$contrib <- cbind(x$contrib, y$contrib)
   x$time <- c(x$time, y$time)
   x
 }
@@ -92,8 +92,8 @@ unstack.piar_index <- function(x, ..., chainable) {
   names(res) <- x$time
   for (t in seq_along(res)) {
     res[[t]] <- new_piar_index(
-      x$index[t],
-      x$contrib[t],
+      x$index[, t, drop = FALSE],
+      x$contrib[, t, drop = FALSE],
       x$levels,
       x$time[t],
       chainable

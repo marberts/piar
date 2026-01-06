@@ -9,12 +9,11 @@
 #' The `piar_index` object is a list-S3 class with the following
 #' components:
 #' \describe{
-#' \item{index}{A list with an entry for each period in `time` that gives
-#' a vector of index values for each level in `levels`.}
-#' \item{contrib}{A list with an entry for each period in `time`, which
-#' itself contains a list with an entry for each level in `levels` with
-#' a named vector that gives the percent-change contribution for each price
-#' relative.}
+#' \item{index}{A matrix of index values with a column for each period in `time`
+#' and a row for each level in `levels`.}
+#' \item{contrib}{A list-matrix containing named vectors that give the
+#' percent-change contributions for each price relative with a column for each
+#' time period in `time` and a row for each level in `levels`.}
 #' \item{levels}{A character vector giving the levels of the index.}
 #' \item{time}{A character vector giving the time periods for the index.}
 #' }
@@ -30,8 +29,8 @@ NULL
 
 #---- Class generator ----
 new_piar_index <- function(index, contrib, levels, time, chainable) {
-  stopifnot(is.list(index))
-  stopifnot(is.list(contrib))
+  stopifnot(is.matrix(index))
+  stopifnot(is.matrix(contrib))
   stopifnot(is.character(levels))
   stopifnot(is.character(time))
   res <- list(index = index, contrib = contrib, levels = levels, time = time)
@@ -40,6 +39,8 @@ new_piar_index <- function(index, contrib, levels, time, chainable) {
 }
 
 piar_index <- function(index, contrib, levels, time, chainable) {
+  index <- unname(index)
+  contrib <- unname(contrib)
   levels <- as.character(levels)
   time <- as.character(time)
   validate_piar_index(
@@ -75,23 +76,23 @@ validate_time <- function(x) {
 }
 
 validate_index_values <- function(x) {
-  if (length(x$index) != length(x$time)) {
+  if (ncol(x$index) != length(x$time)) {
     stop("number of time periods does not agree with number of index values")
   }
-  if (any(lengths(x$index) != length(x$levels))) {
+  if (nrow(x$index) != length(x$levels)) {
     stop("number of levels does not agree with number of index values")
   }
-  if (any(vapply(x$index, \(x) any(x <= 0, na.rm = TRUE), logical(1L)))) {
+  if (any(x$index <= 0, na.rm = TRUE)) {
     stop("cannot make an index with non-positive values")
   }
   invisible(x)
 }
 
 validate_contrib <- function(x) {
-  if (length(x$contrib) != length(x$time)) {
+  if (ncol(x$contrib) != length(x$time)) {
     stop("number of time periods does not agree with number of contributions")
   }
-  if (any(lengths(x$contrib) != length(x$levels))) {
+  if (nrow(x$contrib) != length(x$levels)) {
     stop("number of levels does not agree with number of contributions")
   }
   invisible(x)

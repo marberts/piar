@@ -33,7 +33,7 @@ is.na.piar_index <- function(x) {
 #' @rdname is.na.piar_index
 #' @export
 anyNA.piar_index <- function(x, recursive = FALSE) {
-  res <- anyNA(as.matrix(x))
+  res <- anyNA(x$index)
   if (recursive && !res) {
     anyNA(x$contrib, recursive = TRUE)
   } else {

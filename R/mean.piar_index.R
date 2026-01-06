@@ -130,7 +130,7 @@ mean_index <- function(
     if (length(weights) != ntime(x) * nlevels(x)) {
       stop("'weights' must have a value for each index value in 'x'")
     }
-    w <- split(weights, gl(ntime(x), nlevels(x)))
+    dim(weights) <- c(nlevels(x), ntime(x))
   }
 
   window <- as.integer(window)
@@ -158,20 +158,30 @@ mean_index <- function(
   periods <- x$time[loc]
 
   has_contrib <- has_contrib(x) && contrib
-
   # Loop over each window and calculate the mean for each level.
-  index <- index_skeleton(x$levels, periods)
-  contrib <- contrib_skeleton(x$levels, periods)
+  res <- contrib <- vector("list", length(periods))
+  rows <- seq_len(nlevels(x))
+  w <- list(NULL)
   for (i in seq_along(loc)) {
     j <- seq(loc[i], length.out = window)
-    rel <- .mapply(c, x$index[j], list())
-    weight <- if (is.null(weights)) list(NULL) else .mapply(c, w[j], list())
-    index[[i]][] <- gen_mean(rel, weight, na.rm = na.rm)
+    rel <- split_rows(x$index[, j, drop = FALSE], rows)
+    if (!is.null(weights)) {
+      w <- split_rows(weights[, j, drop = FALSE], rows)
+    }
+    res[[i]] <- gen_mean(rel, w, na.rm = na.rm)
     if (has_contrib) {
-      con <- .mapply(\(...) c(list(...)), x$contrib[j], list())
-      contrib[[i]][] <- agg_contrib(con, rel, weight)
+      con <- split_rows(x$contrib[, j, drop = FALSE], rows)
+      contrib[[i]] <- agg_contrib(con, rel, w)
+    } else {
+      contrib[i] <- empty_contrib(x$levels)
     }
   }
 
-  piar_index(index, contrib, x$levels, periods, chainable)
+  piar_index(
+    do.call(cbind, res),
+    do.call(cbind, contrib),
+    x$levels,
+    periods,
+    chainable
+  )
 }

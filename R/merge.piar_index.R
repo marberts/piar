@@ -50,8 +50,8 @@ merge.piar_index <- function(x, y, ...) {
   if (any(x$levels %in% y$levels)) {
     stop("the same levels cannot appear in both 'x' and 'y'")
   }
-  x$index <- Map(c, x$index, y$index)
-  x$contrib <- Map(c, x$contrib, y$contrib)
+  x$index <- rbind(x$index, y$index)
+  x$contrib <- rbind(x$contrib, y$contrib)
   x$levels <- c(x$levels, y$levels)
   x
 }
