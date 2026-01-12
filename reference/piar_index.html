@@ -19,7 +19,7 @@ Fixed-base indexes inherit from direct_piar_index.
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,14 +67,13 @@ Fixed-base indexes inherit from direct_piar_index.
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The <code>piar_index</code> object is a list-S3 class with the following
 components:</p><dl><dt>index</dt>
-<dd><p>A list with an entry for each period in <code>time</code> that gives
-a vector of index values for each level in <code>levels</code>.</p></dd>
+<dd><p>A matrix of index values with a column for each period in <code>time</code>
+and a row for each level in <code>levels</code>.</p></dd>
 
 <dt>contrib</dt>
-<dd><p>A list with an entry for each period in <code>time</code>, which
-itself contains a list with an entry for each level in <code>levels</code> with
-a named vector that gives the percent-change contribution for each price
-relative.</p></dd>
+<dd><p>A list-matrix containing named vectors that give the
+percent-change contributions for each price relative with a column for each
+time period in <code>time</code> and a row for each level in <code>levels</code>.</p></dd>
 
 <dt>levels</dt>
 <dd><p>A character vector giving the levels of the index.</p></dd>

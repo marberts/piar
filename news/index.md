@@ -1,5 +1,15 @@
 # Changelog
 
+## piar (development version)
+
+### Significant changes
+
+- The internal representation of index objects has changed so that both
+  the `index` and `contrib` components of an index are now matrices
+  instead of lists. This simplifies the codebase and in some cases
+  improves performance, but will break any coding that directly uses the
+  internal components of an index.
+
 ## piar 0.8.3
 
 CRAN release: 2025-09-17
