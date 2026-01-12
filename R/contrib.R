@@ -82,7 +82,7 @@ contrib.piar_index <- function(
   if (length(pad) != 1L) {
     stop("'pad' must be a length 1 numeric value")
   }
-  con <- lapply(x$contrib[period], `[[`, level)
+  con <- x$contrib[level, period]
 
   con_names <- lapply(con, names)
   products <- sort.int(unique(unlist(con_names, use.names = FALSE)))
@@ -90,8 +90,8 @@ contrib.piar_index <- function(
   out <- vector("list", length(con))
   names(out) <- x$time[period]
 
-  # Initialize 0 contributions for all products in all time periods, then
-  # replace with the actual values so products that didn't sell have 0 and
+  # Initialize `pad` contributions for all products in all time periods, then
+  # replace with the actual values so products that didn't sell have `pad` and
   # not NA contributions.
   out[] <- list(structure(rep.int(pad, length(products)), names = products))
   res <- do.call(cbind, Map(replace, out, con_names, con))
@@ -117,9 +117,9 @@ contrib2DF.piar_index <- function(
   level <- match_levels(as.character(level), x, several = TRUE)
   period <- match_time(as.character(period), x, several = TRUE)
 
-  con <- lapply(x$contrib[period], `[`, level)
+  con <- x$contrib[level, period, drop = FALSE]
 
-  products <- lapply(con, lengths)
+  products <- apply(con, 2L, lengths, simplify = FALSE)
 
   levels <- x$levels[level]
   levels <- unlist(
@@ -166,6 +166,7 @@ contrib2DF.piar_index <- function(
       "number of items to replace is not a multiple of replacement length"
     )
   }
+  value[] <- as.numeric(value)
 
   if (nrow(value) > 0L) {
     if (is.null(rownames(value))) {
@@ -180,9 +181,9 @@ contrib2DF.piar_index <- function(
   j <- 0
   for (t in period) {
     j <- j %% ncol(value) + 1
-    con <- as.numeric(value[, j])
+    con <- value[, j]
     names(con) <- products
-    x$contrib[[t]][level] <- list(con)
+    x$contrib[level, t] <- list(con)
   }
   validate_piar_index(x)
 }

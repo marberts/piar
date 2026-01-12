@@ -246,7 +246,7 @@ aggregate_index <- function(
       duplicate_contrib
     )
     if (has_contrib) {
-      res$contrib <- Map(
+      res$contrib[] <- Map(
         super_aggregate_contrib(0),
         res$contrib,
         res2$contrib,
@@ -254,7 +254,7 @@ aggregate_index <- function(
         res2$index
       )
     }
-    res$index <- Map(\(x, y) (x * y)^0.5, res$index, res2$index)
+    res$index[] <- (res$index * res2$index)^0.5
   }
 
   if (include_ea) {
@@ -281,7 +281,7 @@ aggregate_ <- function(
   gen_mean <- gpindex::generalized_mean(r)
   agg_contrib <- aggregate_contrib(r, duplicate_contrib)
 
-  # Put the aggregation weights upside down to line up with pias.
+  # Put the aggregation weights upside down to line up with `pias`.
   w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
 
   eas <- match_eas(pias, x)
@@ -290,14 +290,14 @@ aggregate_ <- function(
   index <- contrib <- vector("list", ntime(x))
   for (t in seq_along(x$time)) {
     rel <- con <- vector("list", nlevels(pias))
-    # Align epr with weights so that positional indexing works.
-    rel[[1L]] <- x$index[[t]][eas]
-    con[[1L]] <- x$contrib[[t]][eas]
+    # Align with weights so that positional indexing works.
+    rel[[1L]] <- x$index[, t][eas]
+    con[[1L]] <- x$contrib[, t][eas]
 
-    # Get rid of any NULL contributions.
+    # Replace NULL contributions for subscripting with empty contributions.
     con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
 
-    # Loop over each level in pias from the bottom up and aggregate.
+    # Loop over each level in `pias` from the bottom up and aggregate.
     for (i in seq_along(rel)[-1L]) {
       nodes <- unname(pias$child[[i - 1L]])
       rel[[i]] <- vapply(
@@ -339,7 +339,7 @@ aggregate_ <- function(
     contrib[[t]] <- unlist(rev(con), recursive = FALSE, use.names = FALSE)
   }
 
-  list(index = index, contrib = contrib)
+  list(index = do.call(cbind, index), contrib = do.call(cbind, contrib))
 }
 
 #' Aggregate product contributions
@@ -364,7 +364,7 @@ aggregate_contrib <- function(r, duplicate_contrib = c("make.unique", "sum")) {
         products <- unique(products)
         mat <- do.call(cbind, Map(`[`, res, list(products)))
         res <- rowSums(mat, na.rm = TRUE)
-        res[apply(is.na(mat), 1, all)] <- NA
+        res[apply(is.na(mat), 1L, all)] <- NA_real_
         names(res) <- products
       } else {
         res <- unlist(res)
@@ -378,11 +378,8 @@ aggregate_contrib <- function(r, duplicate_contrib = c("make.unique", "sum")) {
 #' @noRd
 super_aggregate_contrib <- function(r) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
-  Vectorize(
-    function(x, y, rel1, rel2) {
-      w <- arithmetic_weights(c(rel1, rel2))
-      w[1L] * x + w[2L] * y
-    },
-    SIMPLIFY = FALSE
-  )
+  function(x, y, rel1, rel2) {
+    w <- arithmetic_weights(c(rel1, rel2))
+    w[1L] * x + w[2L] * y
+  }
 }
