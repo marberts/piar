@@ -70,6 +70,7 @@
   } else {
     x <- replace_numeric(x, i, j, value)
   }
+  # Replacement value should be validated; e.g., x[1] <- -1.
   validate_piar_index(x)
 }
 

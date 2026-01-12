@@ -50,26 +50,26 @@ piar_index <- function(index, contrib, levels, time, chainable) {
 
 #---- Validator ----
 validate_levels <- function(x) {
-  if (length(x) == 0L) {
+  if (length(x$levels) == 0L) {
     stop("cannot make an index with no levels")
   }
-  if (missing_names(x)) {
+  if (missing_names(x$levels)) {
     stop("cannot make an index with missing or length-zero levels")
   }
-  if (anyDuplicated(x)) {
+  if (anyDuplicated(x$levels)) {
     stop("cannot make an index with duplicate levels")
   }
   invisible(x)
 }
 
 validate_time <- function(x) {
-  if (length(x) == 0L) {
+  if (length(x$time) == 0L) {
     stop("cannot make an index with no time periods")
   }
-  if (missing_names(x)) {
+  if (missing_names(x$time)) {
     stop("cannot make an index with missing or length-zero time periods")
   }
-  if (anyDuplicated(x)) {
+  if (anyDuplicated(x$time)) {
     stop("cannot make an index with duplicate time periods")
   }
   invisible(x)
@@ -99,8 +99,8 @@ validate_contrib <- function(x) {
 }
 
 validate_piar_index <- function(x) {
-  validate_levels(x$levels)
-  validate_time(x$time)
+  validate_levels(x)
+  validate_time(x)
   validate_index_values(x)
   validate_contrib(x)
   x

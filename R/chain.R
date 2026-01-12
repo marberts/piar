@@ -84,7 +84,7 @@ chain.chainable_piar_index <- function(x, link = rep(1, nlevels(x)), ...) {
     stop("'link' must have a value for each level of 'x'")
   }
   x$index[, 1L] <- x$index[, 1L] * link
-  x$index <- do.call(rbind, apply(x$index, 1L, cumprod, simplify = FALSE))
+  x$index[] <- do.call(rbind, apply(x$index, 1L, cumprod, simplify = FALSE))
   # Contributions are difficult to chain, so remove them.
   x$contrib[] <- list(numeric(0L))
   new_piar_index(x$index, x$contrib, x$levels, x$time, chainable = FALSE)
@@ -166,5 +166,6 @@ rebase.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   x$index[] <- x$index / base
   # Contributions are difficult to rebase, so remove them.
   x$contrib[] <- list(numeric(0L))
+  # Alternatively call validate_piar_index(x), but this is not necessary.
   x
 }

@@ -166,6 +166,7 @@ contrib2DF.piar_index <- function(
       "number of items to replace is not a multiple of replacement length"
     )
   }
+  value[] <- as.numeric(value)
 
   if (nrow(value) > 0L) {
     if (is.null(rownames(value))) {
@@ -180,7 +181,7 @@ contrib2DF.piar_index <- function(
   j <- 0
   for (t in period) {
     j <- j %% ncol(value) + 1
-    con <- as.numeric(value[, j])
+    con <- value[, j]
     names(con) <- products
     x$contrib[level, t] <- list(con)
   }

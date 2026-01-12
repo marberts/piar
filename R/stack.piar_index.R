@@ -70,6 +70,7 @@ stack.piar_index <- function(x, y, ...) {
   x$index <- cbind(x$index, y$index)
   x$contrib <- cbind(x$contrib, y$contrib)
   x$time <- c(x$time, y$time)
+  # Alternatively call validate_piar_index(x), but this is not necessary.
   x
 }
 

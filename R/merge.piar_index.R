@@ -53,5 +53,6 @@ merge.piar_index <- function(x, y, ...) {
   x$index <- rbind(x$index, y$index)
   x$contrib <- rbind(x$contrib, y$contrib)
   x$levels <- c(x$levels, y$levels)
+  # Alternatively call validate_piar_index(x), but this is not necessary.
   x
 }
