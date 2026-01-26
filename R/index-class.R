@@ -30,10 +30,14 @@ NULL
 #---- Class generator ----
 new_piar_index <- function(index, contrib, levels, time, chainable) {
   stopifnot(is.matrix(index))
-  stopifnot(is.matrix(contrib))
+  stopifnot(is.matrix(contrib) || is.null(contrib))
   stopifnot(is.character(levels))
   stopifnot(is.character(time))
-  res <- list(index = index, contrib = contrib, levels = levels, time = time)
+  if (is.null(contrib)) {
+    res <- list(index = index, levels = levels, time = time)
+  } else {
+    res <- list(index = index, contrib = contrib, levels = levels, time = time)
+  }
   type <- if (chainable) "chainable_piar_index" else "direct_piar_index"
   structure(res, class = c(type, "piar_index"))
 }
@@ -89,11 +93,13 @@ validate_index_values <- function(x) {
 }
 
 validate_contrib <- function(x) {
-  if (ncol(x$contrib) != length(x$time)) {
-    stop("number of time periods does not agree with number of contributions")
-  }
-  if (nrow(x$contrib) != length(x$levels)) {
-    stop("number of levels does not agree with number of contributions")
+  if (!is.null(x$contrib)) {
+    if (ncol(x$contrib) != length(x$time)) {
+      stop("number of time periods does not agree with number of contributions")
+    }
+    if (nrow(x$contrib) != length(x$levels)) {
+      stop("number of levels does not agree with number of contributions")
+    }
   }
   invisible(x)
 }

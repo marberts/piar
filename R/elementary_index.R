@@ -233,8 +233,8 @@ elementary_index.numeric <- function(
   )
   dim(index) <- c(nlevels(ea), nlevels(period))
 
-  if (contrib) {
-    contributions <- mapply(
+  contributions <- if (contrib) {
+    mapply(
       gpindex::contributions(r),
       x,
       weights,
@@ -242,8 +242,6 @@ elementary_index.numeric <- function(
       USE.NAMES = FALSE
     )
     dim(contributions) <- c(nlevels(ea), nlevels(period))
-  } else {
-    contributions <- contrib_skeleton(levels, time)
   }
 
   piar_index(index, contributions, levels, time, chainable)

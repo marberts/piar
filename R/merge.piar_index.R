@@ -51,6 +51,11 @@ merge.piar_index <- function(x, y, ...) {
     stop("the same levels cannot appear in both 'x' and 'y'")
   }
   x$index <- rbind(x$index, y$index)
+  if (is.null(x$contrib) && !is.null(y$contrib)) {
+    x$contrib <- contrib_skeleton(x$levels, x$time)
+  } else if (!is.null(x$contrib) && is.null(y$contrib)) {
+    y$contrib <- contrib_skeleton(y$levels, y$time)
+  }
   x$contrib <- rbind(x$contrib, y$contrib)
   x$levels <- c(x$levels, y$levels)
   # Alternatively call validate_piar_index(x), but this is not necessary.

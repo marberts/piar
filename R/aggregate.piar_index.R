@@ -209,7 +209,7 @@ aggregate_index <- function(
 ) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
-  has_contrib <- has_contrib(x) && contrib
+  has_contrib <- !is.null(x$contrib) && contrib
   res <- aggregate_(
     x,
     pias,
@@ -292,10 +292,12 @@ aggregate_ <- function(
     rel <- con <- vector("list", nlevels(pias))
     # Align with weights so that positional indexing works.
     rel[[1L]] <- x$index[, t][eas]
-    con[[1L]] <- x$contrib[, t][eas]
 
-    # Replace NULL contributions for subscripting with empty contributions.
-    con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
+    if (!is.null(x$contrib)) {
+      con[[1L]] <- x$contrib[, t][eas]
+      # Replace NULL contributions for subscripting with empty contributions.
+      con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
+    }
 
     # Loop over each level in `pias` from the bottom up and aggregate.
     for (i in seq_along(rel)[-1L]) {
@@ -310,8 +312,6 @@ aggregate_ <- function(
           nodes,
           \(z) agg_contrib(con[[i - 1L]][z], rel[[i - 1L]][z], w[[i - 1L]][z])
         )
-      } else {
-        con[i] <- empty_contrib(nodes)
       }
     }
 
