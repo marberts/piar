@@ -29,8 +29,8 @@ NULL
 
 #---- Class generator ----
 new_piar_index <- function(index, contrib, levels, time, chainable) {
-  stopifnot(is.matrix(index))
-  stopifnot(is.matrix(contrib))
+  stopifnot(is.double(index) && is.matrix(index))
+  stopifnot(is.list(contrib) && is.matrix(contrib))
   stopifnot(is.character(levels))
   stopifnot(is.character(time))
   res <- list(index = index, contrib = contrib, levels = levels, time = time)

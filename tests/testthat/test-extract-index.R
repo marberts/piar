@@ -165,10 +165,10 @@ test_that("replacement methods work with a vector", {
 
   # Replacing nothing
   epr2 <- epr
-  epr[FALSE] <- "a"
+  suppressWarnings(epr[FALSE] <- "a")
   expect_identical(epr, epr2)
 
-  epr[1, 0] <- "a"
+  suppressWarnings(epr[1, 0] <- "a")
   expect_identical(epr, epr2)
 
   # Errors
