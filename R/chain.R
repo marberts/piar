@@ -128,7 +128,6 @@ unchain.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   x$index[, -1L] <- x$index[, -1L] / x$index[, -ncol(x$index)]
   x$index[, 1L] <- x$index[, 1L] * base
   # Contributions are difficult to unchain, so remove them.
-  x$contrib[] <- list(numeric(0L))
   new_piar_index(x$index, NULL, x$levels, x$time, chainable = TRUE)
 }
 
@@ -164,7 +163,5 @@ rebase.direct_piar_index <- function(x, base = rep(1, nlevels(x)), ...) {
   }
   x$index[] <- x$index / base
   # Contributions are difficult to rebase, so remove them.
-  x$contrib <- NULL
-  # Alternatively call validate_piar_index(x), but this is not necessary.
-  x
+  new_piar_index(x$index, NULL, x$levels, x$time, chainable = FALSE)
 }

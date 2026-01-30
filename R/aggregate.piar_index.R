@@ -293,9 +293,9 @@ aggregate_ <- function(
     # Align with weights so that positional indexing works.
     rel[[1L]] <- x$index[, t][eas]
 
-    if (!is.null(x$contrib)) {
+    if (has_contrib) {
       con[[1L]] <- x$contrib[, t][eas]
-      # Replace NULL contributions for subscripting with empty contributions.
+      # Replace NULL contributions from subscripting with empty contributions.
       con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     }
 

@@ -29,15 +29,11 @@ NULL
 
 #---- Class generator ----
 new_piar_index <- function(index, contrib, levels, time, chainable) {
-  stopifnot(is.matrix(index))
-  stopifnot(is.matrix(contrib) || is.null(contrib))
+  stopifnot(is.numeric(index) && is.matrix(index))
+  stopifnot(is.list(contrib) && is.matrix(contrib) || is.null(contrib))
   stopifnot(is.character(levels))
   stopifnot(is.character(time))
-  if (is.null(contrib)) {
-    res <- list(index = index, levels = levels, time = time)
-  } else {
-    res <- list(index = index, contrib = contrib, levels = levels, time = time)
-  }
+  res <- list(index = index, contrib = contrib, levels = levels, time = time)
   type <- if (chainable) "chainable_piar_index" else "direct_piar_index"
   structure(res, class = c(type, "piar_index"))
 }

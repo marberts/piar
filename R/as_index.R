@@ -106,7 +106,8 @@ as_index.data.frame <- function(x, ..., contrib = FALSE) {
 
     index <- as_index(index, ...)
     # FIXME: I don't like adding the contributions after making the index.
-    index$contrib[] <- lapply(contributions, valid_contrib)
+    index$contrib <- lapply(contributions, valid_contrib)
+    dim(index$contrib) <- dim(contributions)
   } else {
     index <- as_index(index, contrib = contrib, ...)
   }

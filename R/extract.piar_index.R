@@ -48,7 +48,9 @@
   periods <- subscript_index(x$time, j)
   levels <- subscript_index(x$levels, i)
   x$index <- x$index[levels, periods, drop = FALSE]
-  x$contrib <- x$contrib[levels, periods, drop = FALSE]
+  if (!is.null(x$contrib)) {
+    x$contrib <- x$contrib[levels, periods, drop = FALSE]
+  }
   x$levels <- x$levels[levels]
   x$time <- x$time[periods]
   validate_piar_index(x)
@@ -141,7 +143,9 @@ replace_index <- function(x, i, j, value) {
   }
   for (t in seq_along(periods)) {
     x$index[levels, periods[t]] <- value$index[, t]
-    x$contrib[levels, periods[t]] <- value$contrib[, t]
+    if (!is.null(x$contrib)) {
+      x$contrib[levels, periods[t]] <- value$contrib[, t]
+    }
   }
   x
 }

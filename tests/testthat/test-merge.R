@@ -53,6 +53,7 @@ test_that("merge returns the correct result", {
 test_that("merge works with [", {
   epr3 <- merge(epr1, epr2)
   expect_equal(epr3[1:4], epr1)
+  contrib(epr2) <- numeric(0)
   expect_equal(epr3[5:8], epr2)
 })
 

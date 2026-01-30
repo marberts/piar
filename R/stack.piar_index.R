@@ -45,14 +45,16 @@
 #' @export
 stack.chainable_piar_index <- function(x, y, ...) {
   y <- as_index(y, chainable = TRUE)
-  NextMethod("stack")
+  res <- NextMethod("stack")
+  new_piar_index(res$index, res$contrib, res$levels, res$time, TRUE)
 }
 
 #' @rdname stack.piar_index
 #' @export
 stack.direct_piar_index <- function(x, y, ...) {
   y <- as_index(y, chainable = FALSE)
-  NextMethod("stack")
+  res <- NextMethod("stack")
+  new_piar_index(res$index, res$contrib, res$levels, res$time, FALSE)
 }
 
 #' @export
@@ -73,7 +75,9 @@ stack.piar_index <- function(x, y, ...) {
   } else if (!is.null(x$contrib) && is.null(y$contrib)) {
     y$contrib <- contrib_skeleton(y$levels, y$time)
   }
-  x$contrib <- cbind(x$contrib, y$contrib)
+  if (!is.null(x$contrib)) {
+    x$contrib <- cbind(x$contrib, y$contrib)
+  }
   x$time <- c(x$time, y$time)
   # Alternatively call validate_piar_index(x), but this is not necessary.
   x
