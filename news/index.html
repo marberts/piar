@@ -46,7 +46,12 @@
 <h2 class="pkg-version" data-toc-text="development version" id="piar-development-version">piar (development version)<a class="anchor" aria-label="anchor" href="#piar-development-version"></a></h2>
 <div class="section level3">
 <h3 id="significant-changes-development-version">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
-<ul><li>The internal representation of index objects has changed so that both the <code>index</code> and <code>contrib</code> components of an index are now matrices instead of lists. This simplifies the codebase and in some cases improves performance, but will break any coding that directly uses the internal components of an index.</li>
+<ul><li><p>The internal representation of index objects has changed so that both the <code>index</code> and <code>contrib</code> components of an index are now matrices instead of lists. This simplifies the codebase and in some cases improves performance, but will break any coding that directly uses the internal components of an index.</p></li>
+<li><p>Index objects without contributions now consume about half as much memory.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<ul><li>Setting <code>contrib = FALSE</code> in <code>aggregate(index)</code> always returns an index with no contributions.</li>
 </ul></div>
 </div>
     <div class="section level2">

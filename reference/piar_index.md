@@ -23,7 +23,7 @@ components:
 
   A list-matrix containing named vectors that give the percent-change
   contributions for each price relative with a column for each time
-  period in `time` and a row for each level in `levels`.
+  period in `time` and a row for each level in `levels`, or `NULL`.
 
 - levels:
 

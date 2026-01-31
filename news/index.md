@@ -10,6 +10,14 @@
   improves performance, but will break any coding that directly uses the
   internal components of an index.
 
+- Index objects without contributions now consume about half as much
+  memory.
+
+### Bug fixes
+
+- Setting `contrib = FALSE` in `aggregate(index)` always returns an
+  index with no contributions.
+
 ## piar 0.8.3
 
 CRAN release: 2025-09-17
