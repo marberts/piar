@@ -70,7 +70,7 @@ test_that("replacement methods work with an index", {
   # Adds contributions
   expect_equal(replace(epr2, 1:4, epr), epr)
   # Removes contributions
-  expect_equal(replace(epr, 1:4, epr2), epr2)
+  expect_equal(replace(epr, 1:4, epr2), set_contrib(epr2, value = numeric(0)))
 
   epr3 <- epr2
   epr3[c(TRUE, FALSE), 2] <- epr[1, 1]
@@ -145,7 +145,10 @@ test_that("replacement methods work with a vector", {
   epr[1, c(1, 2, 1)] <- setNames(1:3, letters[1:3])
   expect_equal(
     epr[1, ],
-    as_index(matrix(3:2, 1, dimnames = list(levels = "11", time = 1:2)))
+    set_contrib(
+      as_index(matrix(3:2, 1, dimnames = list(levels = "11", time = 1:2))),
+      value = numeric(0)
+    )
   )
 
   epr["14"] <- 1
@@ -165,10 +168,10 @@ test_that("replacement methods work with a vector", {
 
   # Replacing nothing
   epr2 <- epr
-  epr[FALSE] <- "a"
+  suppressWarnings(epr[FALSE] <- "a")
   expect_identical(epr, epr2)
 
-  epr[1, 0] <- "a"
+  suppressWarnings(epr[1, 0] <- "a")
   expect_identical(epr, epr2)
 
   # Errors

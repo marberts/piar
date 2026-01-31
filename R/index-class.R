@@ -13,7 +13,7 @@
 #' and a row for each level in `levels`.}
 #' \item{contrib}{A list-matrix containing named vectors that give the
 #' percent-change contributions for each price relative with a column for each
-#' time period in `time` and a row for each level in `levels`.}
+#' time period in `time` and a row for each level in `levels`, or `NULL`.}
 #' \item{levels}{A character vector giving the levels of the index.}
 #' \item{time}{A character vector giving the time periods for the index.}
 #' }

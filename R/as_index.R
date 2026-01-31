@@ -73,8 +73,8 @@ as_index.default <- function(x, ...) {
 #' @export
 as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
   chkDots(...)
-  levels <- rownames(x) %||% seq_len(nrow(x))
-  periods <- colnames(x) %||% seq_len(ncol(x))
+  levels <- as.character(rownames(x) %||% seq_len(nrow(x)))
+  periods <- as.character(colnames(x) %||% seq_len(ncol(x)))
 
   index <- as.numeric(x)
   dim(index) <- c(length(levels), length(periods))

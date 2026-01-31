@@ -78,6 +78,8 @@ test_that("as_index works with contribs", {
     as_index(as.data.frame(epr, contrib = TRUE), contrib = TRUE),
     epr
   )
+
+  contrib(epr2) <- numeric(0)
   expect_equal(
     as_index(as.data.frame(epr2, contrib = TRUE), contrib = TRUE),
     epr2
@@ -85,6 +87,7 @@ test_that("as_index works with contribs", {
 
   index2 <- aggregate(epr, pias, contrib = FALSE)
   index2df <- as.data.frame(index2, contrib = TRUE)
+  contrib(index2) <- numeric(0)
   expect_equal(
     as_index(index2df, contrib = TRUE),
     index2
