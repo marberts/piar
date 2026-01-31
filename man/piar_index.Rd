@@ -22,7 +22,7 @@ components:
 and a row for each level in \code{levels}.}
 \item{contrib}{A list-matrix containing named vectors that give the
 percent-change contributions for each price relative with a column for each
-time period in \code{time} and a row for each level in \code{levels}.}
+time period in \code{time} and a row for each level in \code{levels}, or \code{NULL}.}
 \item{levels}{A character vector giving the levels of the index.}
 \item{time}{A character vector giving the time periods for the index.}
 }

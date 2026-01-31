@@ -82,6 +82,16 @@ contrib.piar_index <- function(
   if (length(pad) != 1L) {
     stop("'pad' must be a length 1 numeric value")
   }
+  if (is.null(x$contrib)) {
+    return(
+      matrix(
+        numeric(0L),
+        nrow = 0L,
+        ncol = length(period),
+        dimnames = list(product = character(0L), time = period)
+      )
+    )
+  }
   con <- x$contrib[level, period]
 
   con_names <- lapply(con, names)
@@ -116,6 +126,16 @@ contrib2DF.piar_index <- function(
   chkDots(...)
   level <- match_levels(as.character(level), x, several = TRUE)
   period <- match_time(as.character(period), x, several = TRUE)
+  if (is.null(x$contrib)) {
+    return(
+      data.frame(
+        period = character(0L),
+        level = character(0L),
+        product = character(0L),
+        value = numeric(0L)
+      )
+    )
+  }
 
   con <- x$contrib[level, period, drop = FALSE]
 
@@ -158,6 +178,10 @@ contrib2DF.piar_index <- function(
   level <- match_levels(as.character(level), x)
   period <- match_time(as.character(period), x, several = TRUE)
 
+  if (is.null(x$contrib)) {
+    x$contrib <- contrib_skeleton(x$levels, x$time)
+  }
+
   value <- as.matrix(value)
   if (ncol(value) == 0L) {
     stop("replacement has length zero")
@@ -168,14 +192,12 @@ contrib2DF.piar_index <- function(
   }
   value[] <- as.numeric(value)
 
-  if (nrow(value) > 0L) {
+  products <- if (nrow(value) > 0L) {
     if (is.null(rownames(value))) {
-      products <- as.character(seq_len(nrow(value)))
+      as.character(seq_len(nrow(value)))
     } else {
-      products <- valid_product_names(rownames(value))
+      valid_product_names(rownames(value))
     }
-  } else {
-    products <- NULL
   }
 
   j <- 0

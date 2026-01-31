@@ -48,7 +48,9 @@
   periods <- subscript_index(x$time, j)
   levels <- subscript_index(x$levels, i)
   x$index <- x$index[levels, periods, drop = FALSE]
-  x$contrib <- x$contrib[levels, periods, drop = FALSE]
+  if (!is.null(x$contrib)) {
+    x$contrib <- x$contrib[levels, periods, drop = FALSE]
+  }
   x$levels <- x$levels[levels]
   x$time <- x$time[periods]
   validate_piar_index(x)
@@ -115,7 +117,9 @@ replace_matrix <- function(x, i, value) {
     subscript_index(x$time, i[, 2L])
   )
   x$index[dims] <- as.numeric(value)
-  x$contrib[dims] <- list(numeric(0L))
+  if (!is.null(x$contrib)) {
+    x$contrib[dims] <- list(numeric(0L))
+  }
   x
 }
 
@@ -132,9 +136,16 @@ replace_index <- function(x, i, j, value) {
   if (length(levels) %% nlevels(value) != 0) {
     stop("number of items to replace is not a multiple of replacement length")
   }
+  if (is.null(x$contrib) && !is.null(value$contrib)) {
+    x$contrib <- contrib_skeleton(x$levels, x$time)
+  } else if (!is.null(x$contrib) && is.null(value$contrib)) {
+    value$contrib <- contrib_skeleton(value$levels, value$time)
+  }
   for (t in seq_along(periods)) {
     x$index[levels, periods[t]] <- value$index[, t]
-    x$contrib[levels, periods[t]] <- value$contrib[, t]
+    if (!is.null(x$contrib)) {
+      x$contrib[levels, periods[t]] <- value$contrib[, t]
+    }
   }
   x
 }
@@ -143,6 +154,8 @@ replace_numeric <- function(x, i, j, value) {
   levels <- subscript_index(x$levels, i)
   periods <- subscript_index(x$time, j)
   x$index[levels, periods] <- as.numeric(value)
-  x$contrib[levels, periods] <- list(numeric(0L))
+  if (!is.null(x$contrib)) {
+    x$contrib[levels, periods] <- list(numeric(0L))
+  }
   x
 }

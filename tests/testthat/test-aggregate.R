@@ -652,14 +652,6 @@ test_that("reaggregating doesn't introduce incorrect contributions", {
     sum(contrib(index, period = 2), na.rm = TRUE),
     sum(contrib(aggregate(index, pias), period = 2), na.rm = TRUE)
   )
-
-  index2 <- aggregate(epr, pias, na.rm = TRUE, contrib = FALSE)
-  r <- as.numeric(index[2:3, 1])
-  r <- (r / sum(r))[1]
-  expect_equal(
-    contrib(index, period = 2)[1:2, , drop = FALSE] * r,
-    contrib(aggregate(index2, pias), period = 2)
-  )
 })
 
 test_that("skipping time periods works", {

@@ -59,7 +59,7 @@ as.data.frame.piar_index <- function(
     )
   }
   if (contrib) {
-    contributions <- x$contrib
+    contributions <- x$contrib %||% contrib_skeleton(x$levels, x$time)
     dim(contributions) <- NULL
     res$contrib <- contributions
   }

@@ -157,7 +157,7 @@ mean_index <- function(
   loc <- seq.int(1L, by = window, length.out = len)
   periods <- x$time[loc]
 
-  has_contrib <- has_contrib(x) && contrib
+  has_contrib <- !is.null(x$contrib) && contrib
   # Loop over each window and calculate the mean for each level.
   res <- contrib <- vector("list", length(periods))
   rows <- seq_len(nlevels(x))
@@ -172,8 +172,6 @@ mean_index <- function(
     if (has_contrib) {
       con <- split_rows(x$contrib[, j, drop = FALSE], rows)
       contrib[[i]] <- agg_contrib(con, rel, w)
-    } else {
-      contrib[i] <- empty_contrib(x$levels)
     }
   }
 

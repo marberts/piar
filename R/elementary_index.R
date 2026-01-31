@@ -242,11 +242,10 @@ elementary_index.numeric <- function(
       USE.NAMES = FALSE
     )
     dim(contributions) <- c(nlevels(ea), nlevels(period))
+    piar_index(index, contributions, levels, time, chainable)
   } else {
-    contributions <- contrib_skeleton(levels, time)
+    piar_index(index, NULL, levels, time, chainable)
   }
-
-  piar_index(index, contributions, levels, time, chainable)
 }
 
 

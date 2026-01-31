@@ -13,7 +13,7 @@
 #' and a row for each level in `levels`.}
 #' \item{contrib}{A list-matrix containing named vectors that give the
 #' percent-change contributions for each price relative with a column for each
-#' time period in `time` and a row for each level in `levels`.}
+#' time period in `time` and a row for each level in `levels`, or `NULL`.}
 #' \item{levels}{A character vector giving the levels of the index.}
 #' \item{time}{A character vector giving the time periods for the index.}
 #' }
@@ -30,7 +30,7 @@ NULL
 #---- Class generator ----
 new_piar_index <- function(index, contrib, levels, time, chainable) {
   stopifnot(is.double(index) && is.matrix(index))
-  stopifnot(is.list(contrib) && is.matrix(contrib))
+  stopifnot(is.list(contrib) && is.matrix(contrib) || is.null(contrib))
   stopifnot(is.character(levels))
   stopifnot(is.character(time))
   res <- list(index = index, contrib = contrib, levels = levels, time = time)
@@ -89,11 +89,13 @@ validate_index_values <- function(x) {
 }
 
 validate_contrib <- function(x) {
-  if (ncol(x$contrib) != length(x$time)) {
-    stop("number of time periods does not agree with number of contributions")
-  }
-  if (nrow(x$contrib) != length(x$levels)) {
-    stop("number of levels does not agree with number of contributions")
+  if (!is.null(x$contrib)) {
+    if (ncol(x$contrib) != length(x$time)) {
+      stop("number of time periods does not agree with number of contributions")
+    }
+    if (nrow(x$contrib) != length(x$levels)) {
+      stop("number of levels does not agree with number of contributions")
+    }
   }
   invisible(x)
 }

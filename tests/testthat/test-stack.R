@@ -58,6 +58,7 @@ test_that("stacking returns the correct result", {
 test_that("stack works with [", {
   epr3 <- stack(epr1, epr2)
   expect_equal(epr3[, 1:2], epr1)
+  contrib(epr2) <- numeric(0)
   expect_equal(epr3[, 3:4], epr2)
 })
 

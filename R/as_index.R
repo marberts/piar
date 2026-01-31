@@ -73,17 +73,14 @@ as_index.default <- function(x, ...) {
 #' @export
 as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
   chkDots(...)
-  levels <- rownames(x) %||% seq_len(nrow(x))
-  periods <- colnames(x) %||% seq_len(ncol(x))
+  levels <- as.character(rownames(x) %||% seq_len(nrow(x)))
+  periods <- as.character(colnames(x) %||% seq_len(ncol(x)))
 
   index <- as.numeric(x)
   dim(index) <- c(length(levels), length(periods))
 
-  if (contrib) {
-    contributions <- index2contrib(index, levels, periods)
-  } else {
-    contributions <- contrib_skeleton(levels, periods)
-  }
+  contributions <- if (contrib) index2contrib(index, levels, periods)
+
   piar_index(index, contributions, levels, periods, chainable)
 }
 
@@ -109,7 +106,8 @@ as_index.data.frame <- function(x, ..., contrib = FALSE) {
 
     index <- as_index(index, ...)
     # FIXME: I don't like adding the contributions after making the index.
-    index$contrib[] <- lapply(contributions, valid_contrib)
+    index$contrib <- lapply(contributions, valid_contrib)
+    dim(index$contrib) <- dim(contributions)
   } else {
     index <- as_index(index, contrib = contrib, ...)
   }
