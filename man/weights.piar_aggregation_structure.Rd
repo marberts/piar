@@ -7,7 +7,7 @@
 \alias{set_weights}
 \title{Get the weights for an aggregation structure}
 \usage{
-\method{weights}{piar_aggregation_structure}(object, ..., ea_only = TRUE, na.rm = FALSE)
+\method{weights}{piar_aggregation_structure}(object, ..., ea_only = TRUE, na_action = c("pass", "omit", "fail"))
 
 weights(object) <- value
 
@@ -25,9 +25,9 @@ set_weights(object, value)
 (the default)? Setting to \code{FALSE} gives the weights for the entire
 aggregation structure.}
 
-\item{na.rm}{Should missing values be removed when aggregating the
-weights (i.e., when \code{ea_only = FALSE})? By default, missing values are
-not removed.}
+\item{na_action}{Approach for missing values be when aggregating the
+weights (i.e., when \code{ea_only = FALSE})? One of \code{"pass"}, \code{"omit"},
+or \code{"fail"}. By default, missing values are passed over and not removed.}
 
 \item{value}{A numeric vector of weights for the elementary aggregates of
 \code{object}.}

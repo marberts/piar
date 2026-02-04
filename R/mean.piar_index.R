@@ -30,9 +30,9 @@
 #' @param window A positive integer giving the size of the window used to
 #'   average index values across subperiods. The default averages over all
 #'   periods in `x`. Non-integers are truncated towards 0.
-#' @param na.rm Should missing values be removed? By default, missing values
-#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
-#'   imputation.
+#' @param na_action Approach for missing values be when aggregating the
+#'   across subperiods. One of `"pass"`, `"omit"`, or `"fail"`. By default,
+#'   missing values are passed over and not removed.
 #' @param r Order of the generalized mean to aggregate index values. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
@@ -42,9 +42,9 @@
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
 #' @param ... Not currently used.
 #' @param duplicate_contrib The method to deal with duplicate product
-#'   contributions. Either 'make.unique' to make duplicate product names unique
-#'   with [make.unique()] or 'sum' to add contributions for the same products
-#'   across subperiods.
+#'   contributions. Either `"sum"` to add contributions for the same products
+#'   across subperiods (the default) or `"make.unique"` to make duplicate
+#'   product names unique with [make.unique()].
 #'
 #' @returns
 #' A price index, averaged over subperiods, that inherits from the same
@@ -67,17 +67,17 @@ mean.chainable_piar_index <- function(
   ...,
   weights = NULL,
   window = ntime(x),
-  na.rm = FALSE,
+  na_action = c("pass", "omit", "fail"),
   contrib = TRUE,
   r = 1,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 ) {
   chkDots(...)
   mean_index(
     x,
     weights,
     window = window,
-    na.rm = na.rm,
+    na_action = na_action,
     contrib = contrib,
     r = r,
     chainable = TRUE,
@@ -92,7 +92,7 @@ mean.direct_piar_index <- function(
   ...,
   weights = NULL,
   window = ntime(x),
-  na.rm = FALSE,
+  na_action = c("pass", "omit", "fail"),
   contrib = TRUE,
   r = 1,
   duplicate_contrib = c("make.unique", "sum")
@@ -102,7 +102,7 @@ mean.direct_piar_index <- function(
     x,
     weights,
     window = window,
-    na.rm = na.rm,
+    na_action = na_action,
     contrib = contrib,
     r = r,
     chainable = FALSE,
@@ -116,12 +116,13 @@ mean_index <- function(
   x,
   weights,
   window,
-  na.rm,
+  na_action,
   contrib,
   r,
   chainable,
   duplicate_contrib
 ) {
+  na_action <- match.arg(na_action)
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
     if (any(weights < 0, na.rm = TRUE)) {
@@ -157,6 +158,14 @@ mean_index <- function(
   loc <- seq.int(1L, by = window, length.out = len)
   periods <- x$time[loc]
 
+  if (na_action == "fail") {
+    if (anyNA(x$index)) {
+      stop("'x' contains missing values")
+    } else if (anyNA(weights)) {
+      stop("'weights' contains missing values")
+    }
+  }
+
   has_contrib <- !is.null(x$contrib) && contrib
   # Loop over each window and calculate the mean for each level.
   res <- contrib <- vector("list", length(periods))
@@ -168,7 +177,7 @@ mean_index <- function(
     if (!is.null(weights)) {
       w <- split_rows(weights[, j, drop = FALSE], rows)
     }
-    res[[i]] <- gen_mean(rel, w, na.rm = na.rm)
+    res[[i]] <- gen_mean(rel, w, na.rm = na_action == "omit")
     if (has_contrib) {
       con <- split_rows(x$contrib[, j, drop = FALSE], rows)
       contrib[[i]] <- agg_contrib(con, rel, w)

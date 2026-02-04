@@ -51,11 +51,11 @@
 #' @param x Period-over-period or fixed-base price relatives. Currently there
 #'   are methods for numeric vectors (which can be made with
 #'   [price_relative()]) and data frames.
-#' @param period A factor, or something that can be coerced into one, giving
+#' @param time A factor, or something that can be coerced into one, giving
 #'   the time period associated with each price relative in `x`. The
 #'   ordering of time periods follows of the levels of `period`, to agree
 #'   with [`cut()`][cut.Date]. The default makes an index for one time period.
-#' @param ea A factor, or something that can be coerced into one, giving the
+#' @param levels A factor, or something that can be coerced into one, giving the
 #'   elementary aggregate associated with each price relative in `x`. The
 #'   default makes an index for one elementary aggregate.
 #' @param weights A numeric vector of weights for the price relatives in `x`,
@@ -71,9 +71,9 @@
 #' @param chainable Are the price relatives in `x` period-over-period
 #'   relatives that are suitable for a chained calculation (the default)? This
 #'   should be `FALSE` when `x` contains fixed-base relatives.
-#' @param na.rm Should missing values be removed? By default, missing values
-#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
-#'   imputation.
+#' @param na_action Approach for missing values when making elementary indexes.
+#'   One of `"pass"`, `"omit"`, or `"fail"`. By default,
+#'   missing values are passed over and not removed.
 #' @param r Order of the generalized mean to aggregate price relatives. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
@@ -177,12 +177,12 @@ elementary_index.default <- function(x, ...) {
 elementary_index.numeric <- function(
   x,
   ...,
-  period = gl(1, length(x)),
-  ea = gl(1, length(x)),
+  time = NULL,
+  levels = NULL,
   weights = NULL,
   product = NULL,
   chainable = TRUE,
-  na.rm = FALSE,
+  na_action = "pass",
   contrib = FALSE,
   r = 0
 ) {
@@ -193,16 +193,22 @@ elementary_index.numeric <- function(
       stop("all elements of 'weights' must be non-negative")
     }
   }
-  period <- as.factor(period)
-  ea <- as.factor(ea)
-  time <- levels(period)
-  levels <- levels(ea)
+  time <- as.factor(time %||% gl(1, length(x)))
+  levels <- as.factor(levels %||% gl(1, length(x)))
 
-  if (different_length(x, period, ea, weights)) {
+  if (different_length(x, time, levels, weights)) {
     stop("input vectors must be the same length")
   }
   if (any(x <= 0, na.rm = TRUE)) {
     stop("all elements of 'x' must be strictly positive")
+  }
+
+  if (na_action == "fail") {
+    if (anyNA(x)) {
+      stop("'x' contains missing values")
+    } else if (anyNA(weights)) {
+      stop("'weights' contains missing values")
+    }
   }
 
   if (contrib) {
@@ -210,13 +216,13 @@ elementary_index.numeric <- function(
       names(x) <- as.character(product)
     }
     if (is.null(names(x))) {
-      names(x) <- paste(ea, sequential_names(period, ea), sep = ".")
+      names(x) <- paste(levels, sequential_names(time, levels), sep = ".")
     } else {
-      names(x) <- valid_product_names(names(x), period)
+      names(x) <- valid_product_names(names(x), time)
     }
   }
 
-  ea_by_period <- period:ea
+  ea_by_period <- time:levels
   x <- split(x, ea_by_period)
   if (is.null(weights)) {
     weights <- list(NULL)
@@ -228,10 +234,10 @@ elementary_index.numeric <- function(
     gpindex::generalized_mean(r),
     x,
     weights,
-    na.rm = na.rm,
+    na.rm = na_action == "omit",
     USE.NAMES = FALSE
   )
-  dim(index) <- c(nlevels(ea), nlevels(period))
+  dim(index) <- c(nlevels(levels), nlevels(time))
 
   if (contrib) {
     contributions <- mapply(
@@ -241,10 +247,10 @@ elementary_index.numeric <- function(
       SIMPLIFY = FALSE,
       USE.NAMES = FALSE
     )
-    dim(contributions) <- c(nlevels(ea), nlevels(period))
-    piar_index(index, contributions, levels, time, chainable)
+    dim(contributions) <- c(nlevels(levels), nlevels(time))
+    piar_index(index, contributions, levels(levels), levels(time), chainable)
   } else {
-    piar_index(index, NULL, levels, time, chainable)
+    piar_index(index, NULL, levels(levels), levels(time), chainable)
   }
 }
 
@@ -264,8 +270,8 @@ elementary_index.data.frame <- function(
 
   elementary_index(
     vars[[1L]],
-    period = vars[[2L]],
-    ea = vars[[3L]],
+    time = vars[[2L]],
+    levels = vars[[3L]],
     weights = weights,
     product = product,
     ...

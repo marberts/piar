@@ -7,7 +7,7 @@
 #' @param level The level of an index for which percent-change contributions
 #'   are desired, defaulting to the first level (usually the top-level for an
 #'   aggregate index). `contrib2DF()` can accept multiple levels.
-#' @param period The time periods for which percent-change contributions are
+#' @param time The time periods for which percent-change contributions are
 #'   desired, defaulting to all time periods.
 #' @param pad A numeric value to pad contributions so that they fit into a
 #'   rectangular array when products differ over time. The default is 0.
@@ -18,7 +18,7 @@
 #'
 #' @returns
 #' `contrib()` returns a matrix of percent-change contributions with a column
-#' for each `period` and a row for each product (sorted) for which there are
+#' for each `time` and a row for each product (sorted) for which there are
 #' contributions in `level`. Contributions are padded with `pad` to fit into a
 #' rectangular array when products differ over time. The replacement methods
 #' returns a copy of `x` with contributions given by the matrix `value`.
@@ -27,7 +27,7 @@
 #' contributions set to the corresponding index value minus 1.
 #'
 #' `contrib2DF()` returns a data frame of contributions with four
-#' columns: `period`, `level`, `product`, and `value`.
+#' columns: `time`, `level`, `product`, and `value`.
 #'
 #' @examples
 #' prices <- data.frame(
@@ -62,22 +62,14 @@
 #'
 #' @export contrib
 #' @family index methods
-contrib <- function(x, ...) {
-  UseMethod("contrib")
-}
-
-#' @rdname contrib
-#' @export
-contrib.piar_index <- function(
+contrib <- function(
   x,
-  level = levels(x)[1L],
-  period = time(x),
-  ...,
+  time = NULL,
+  level = NULL,
   pad = 0
 ) {
-  chkDots(...)
-  level <- match_levels(as.character(level), x)
-  period <- match_time(as.character(period), x, several = TRUE)
+  level <- match_levels(as.character(level %||% x$levels[1L]), x)
+  time <- match_time(as.character(time %||% x$time), x, several = TRUE)
   pad <- as.numeric(pad)
   if (length(pad) != 1L) {
     stop("'pad' must be a length 1 numeric value")
@@ -87,18 +79,18 @@ contrib.piar_index <- function(
       matrix(
         numeric(0L),
         nrow = 0L,
-        ncol = length(period),
-        dimnames = list(product = character(0L), time = period)
+        ncol = length(time),
+        dimnames = list(product = character(0L), time = time)
       )
     )
   }
-  con <- x$contrib[level, period]
+  con <- x$contrib[level, time]
 
   con_names <- lapply(con, names)
   products <- sort.int(unique(unlist(con_names, use.names = FALSE)))
 
   out <- vector("list", length(con))
-  names(out) <- x$time[period]
+  names(out) <- x$time[time]
 
   # Initialize `pad` contributions for all products in all time periods, then
   # replace with the actual values so products that didn't sell have `pad` and
@@ -111,25 +103,21 @@ contrib.piar_index <- function(
 
 #' @rdname contrib
 #' @export
-contrib2DF <- function(x, ...) {
-  UseMethod("contrib2DF")
-}
-
-#' @rdname contrib
-#' @export
-contrib2DF.piar_index <- function(
+contrib2DF <- function(
   x,
-  level = levels(x)[1L],
-  period = time(x),
-  ...
+  time = NULL,
+  level = NULL
 ) {
-  chkDots(...)
-  level <- match_levels(as.character(level), x, several = TRUE)
-  period <- match_time(as.character(period), x, several = TRUE)
+  level <- match_levels(
+    as.character(level %||% x$levels[1L]),
+    x,
+    several = TRUE
+  )
+  period <- match_time(as.character(time %||% x$time), x, several = TRUE)
   if (is.null(x$contrib)) {
     return(
       data.frame(
-        period = character(0L),
+        time = character(0L),
         level = character(0L),
         product = character(0L),
         value = numeric(0L)
@@ -151,7 +139,7 @@ contrib2DF.piar_index <- function(
 
   contributions <- unlist(con)
   data.frame(
-    period = periods,
+    time = periods,
     level = levels,
     # NULL if there are no contributions.
     product = as.character(names(contributions)),
@@ -161,22 +149,14 @@ contrib2DF.piar_index <- function(
 
 #' @rdname contrib
 #' @export
-`contrib<-` <- function(x, ..., value) {
-  UseMethod("contrib<-")
-}
-
-#' @rdname contrib
-#' @export
-`contrib<-.piar_index` <- function(
+`contrib<-` <- function(
   x,
-  level = levels(x)[1L],
-  period = time(x),
-  ...,
+  time = NULL,
+  level = NULL,
   value
 ) {
-  chkDots(...)
-  level <- match_levels(as.character(level), x)
-  period <- match_time(as.character(period), x, several = TRUE)
+  level <- match_levels(as.character(level %||% x$levels[1L]), x)
+  time <- match_time(as.character(time %||% x$time), x, several = TRUE)
 
   if (is.null(x$contrib)) {
     x$contrib <- contrib_skeleton(x$levels, x$time)
@@ -185,7 +165,7 @@ contrib2DF.piar_index <- function(
   value <- as.matrix(value)
   if (ncol(value) == 0L) {
     stop("replacement has length zero")
-  } else if (length(period) %% ncol(value) != 0) {
+  } else if (length(time) %% ncol(value) != 0) {
     warning(
       "number of items to replace is not a multiple of replacement length"
     )
@@ -201,7 +181,7 @@ contrib2DF.piar_index <- function(
   }
 
   j <- 0
-  for (t in period) {
+  for (t in time) {
     j <- j %% ncol(value) + 1
     con <- value[, j]
     names(con) <- products

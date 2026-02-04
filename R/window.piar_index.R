@@ -26,6 +26,8 @@
 #' @family index methods
 #' @importFrom stats window
 #' @export
+# Default arguments appear before the dots to agree with default method
+# in stats.
 window.piar_index <- function(x, start = NULL, end = NULL, ...) {
   chkDots(...)
   x[, index_window(x, start, end)]

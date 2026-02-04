@@ -69,9 +69,9 @@
 #'   coerced into one. This can be made with [aggregation_structure()].
 #' @param pias2 An optional secondary aggregation structure, usually with
 #'   current-period weights, to make a superlative index. See details.
-#' @param na.rm Should missing values be removed? By default, missing values
-#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
-#'   imputation.
+#' @param na_action Approach for missing values when aggregating. One
+#'   of `"pass"`, `"fill"`, or `"fail"`. By default,
+#'   missing values are passed over and not removed.
 #' @param r Order of the generalized mean to aggregate index values. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
@@ -85,9 +85,10 @@
 #'   returned.
 #' @param ... Not currently used.
 #' @param duplicate_contrib The method to deal with duplicate product
-#'   contributions. Either 'make.unique' to treat duplicate
+#'   contributions. Either `"sum"` to add contributions for each product
+#'   or `"make.unique"` to treat duplicate
 #'   products as distinct products and make their names unique
-#'   with [make.unique()] or 'sum' to add contributions for each product.
+#'   with [make.unique()].
 #'
 #' @returns
 #' An aggregate price index that inherits from the class of `x`.
@@ -147,18 +148,18 @@ aggregate.chainable_piar_index <- function(
   pias,
   ...,
   pias2 = NULL,
-  na.rm = FALSE,
+  na_action = "pass",
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = "sum"
 ) {
   chkDots(...)
   aggregate_index(
     x,
     pias,
     pias2,
-    na.rm = na.rm,
+    na_action = na_action,
     contrib = contrib,
     r = r,
     include_ea = include_ea,
@@ -174,18 +175,18 @@ aggregate.direct_piar_index <- function(
   pias,
   ...,
   pias2 = NULL,
-  na.rm = FALSE,
+  na_action = "pass",
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = "sum"
 ) {
   chkDots(...)
   aggregate_index(
     x,
     pias,
     pias2,
-    na.rm = na.rm,
+    na_action = na_action,
     contrib = contrib,
     r = r,
     include_ea = include_ea,
@@ -200,20 +201,21 @@ aggregate_index <- function(
   x,
   pias,
   pias2,
-  na.rm,
+  na_action,
   contrib,
   r,
   include_ea,
   chainable,
   duplicate_contrib
 ) {
+  na_action <- match.arg(na_action, c("pass", "fill", "fail"))
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
   has_contrib <- !is.null(x$contrib) && contrib
   res <- aggregate_(
     x,
     pias,
-    na.rm,
+    na_action,
     has_contrib,
     r,
     include_ea,
@@ -238,7 +240,7 @@ aggregate_index <- function(
     res2 <- aggregate_(
       x,
       pias2,
-      na.rm,
+      na_action,
       has_contrib,
       -r,
       include_ea,
@@ -269,7 +271,7 @@ aggregate_index <- function(
 aggregate_ <- function(
   x,
   pias,
-  na.rm,
+  na_action,
   has_contrib,
   r,
   include_ea,
@@ -282,9 +284,22 @@ aggregate_ <- function(
   agg_contrib <- aggregate_contrib(r, duplicate_contrib)
 
   # Put the aggregation weights upside down to line up with `pias`.
-  w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
+  w <- rev(
+    weights(
+      pias,
+      ea_only = FALSE,
+      na_action = if (na_action == "fill") "omit" else na_action
+    )
+  )
 
   eas <- match_eas(pias, x)
+  if (na_action == "fail") {
+    if (anyNA(x$index)) {
+      stop("'x' contains missing values")
+    } else if (length(eas) < nlevels(x)) {
+      stop("'pias' contains levels that are not in 'x'")
+    }
+  }
 
   # Loop over each time period.
   index <- contrib <- vector("list", ntime(x))
@@ -304,7 +319,13 @@ aggregate_ <- function(
       nodes <- unname(pias$child[[i - 1L]])
       rel[[i]] <- vapply(
         nodes,
-        \(z) gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm),
+        \(z) {
+          gen_mean(
+            rel[[i - 1L]][z],
+            w[[i - 1L]][z],
+            na.rm = na_action == "fill"
+          )
+        },
         numeric(1L)
       )
       if (has_contrib) {
@@ -316,7 +337,7 @@ aggregate_ <- function(
     }
 
     # Parental imputation.
-    if (na.rm) {
+    if (na_action == "fill") {
       for (i in rev(seq_along(rel))[-1L]) {
         impute <- which(is.na(rel[[i]]))
         parent <- pias$parent[[i]][impute]
@@ -328,7 +349,13 @@ aggregate_ <- function(
     # Price update weights for all periods after the first.
     if (chainable) {
       pias$weights <- price_update(rel[[1L]], w[[1L]])
-      w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
+      w <- rev(
+        weights(
+          pias,
+          ea_only = FALSE,
+          na_action = if (na_action == "fill") "omit" else na_action
+        )
+      )
     }
 
     if (!include_ea) {
@@ -346,9 +373,9 @@ aggregate_ <- function(
 #' @noRd
 # This function is inefficient because it recalculates the mean, but this
 # ensures that contributions are still produced with missing index values.
-aggregate_contrib <- function(r, duplicate_contrib = c("make.unique", "sum")) {
+aggregate_contrib <- function(r, duplicate_contrib) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
-  duplicate_contrib <- match.arg(duplicate_contrib)
+  duplicate_contrib <- match.arg(duplicate_contrib, c("sum", "make.unique"))
   function(x, rel, w) {
     w <- arithmetic_weights(rel, w)
     res <- Map(`*`, x, w)

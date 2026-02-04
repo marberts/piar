@@ -7,9 +7,9 @@
 #' @param ea_only Should weights be returned for only the elementary aggregates
 #'   (the default)? Setting to `FALSE` gives the weights for the entire
 #'   aggregation structure.
-#' @param na.rm Should missing values be removed when aggregating the
-#'   weights (i.e., when `ea_only = FALSE`)? By default, missing values are
-#'   not removed.
+#' @param na_action Approach for missing values be when aggregating the
+#'   weights (i.e., when `ea_only = FALSE`)? One of `"pass"`, `"omit"`,
+#'   or `"fail"`. By default, missing values are passed over and not removed.
 #' @param value A numeric vector of weights for the elementary aggregates of
 #'   `object`.
 #' @param ... Not currently used.
@@ -57,9 +57,10 @@ weights.piar_aggregation_structure <- function(
   object,
   ...,
   ea_only = TRUE,
-  na.rm = FALSE
+  na_action = c("pass", "omit", "fail")
 ) {
   chkDots(...)
+  na_action <- match.arg(na_action)
   names(object$weights) <- last(object$levels)
   if (ea_only) {
     return(object$weights)
@@ -67,11 +68,14 @@ weights.piar_aggregation_structure <- function(
   res <- vector("list", nlevels(object))
   names(res) <- rev(names(object$levels))
   res[[1L]] <- object$weights
+  if (na_action == "fail" && anyNA(res[[1L]])) {
+    stop("weights have missing values")
+  }
 
   for (i in seq_along(res)[-1L]) {
     res[[i]] <- vapply(
       object$child[[i - 1L]],
-      \(z) sum(res[[i - 1L]][z], na.rm = na.rm),
+      \(z) sum(res[[i - 1L]][z], na.rm = na_action == "omit"),
       numeric(1L)
     )
   }

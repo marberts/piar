@@ -7,7 +7,7 @@
 #' @param index A fixed-base (direct) price index, or something that can be
 #'   coerced into one. Usually an aggregate price index as made by
 #'   [`aggregate()`][aggregate.piar_index].
-#' @param period The time period used to price update the weights. The default
+#' @param time The time period used to price update the weights. The default
 #'   uses the last period in `index`.
 #' @param r Order of the generalized mean to update the weights. The default is
 #'   1 for an arithmetic index.
@@ -52,18 +52,18 @@
 update.piar_aggregation_structure <- function(
   object,
   index,
-  period = end(index),
   ...,
+  time = NULL,
   r = 1
 ) {
   chkDots(...)
   price_update <- gpindex::factor_weights(r)
   index <- chain(as_index(index))
-  period <- match_time(as.character(period), index)
+  time <- match_time(as.character(time %||% index$time), index)
   eas <- match_eas(object, index)
   if (anyNA(eas)) {
     warning("not all weights in 'object' have a corresponding index value")
   }
-  weights(object) <- price_update(index$index[, period][eas], object$weights)
+  weights(object) <- price_update(index$index[, time][eas], object$weights)
   object
 }

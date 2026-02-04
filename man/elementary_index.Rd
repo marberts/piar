@@ -15,12 +15,12 @@ elementary_index(x, ...)
 \method{elementary_index}{numeric}(
   x,
   ...,
-  period = gl(1, length(x)),
-  ea = gl(1, length(x)),
+  time = NULL,
+  levels = NULL,
   weights = NULL,
   product = NULL,
   chainable = TRUE,
-  na.rm = FALSE,
+  na_action = "pass",
   contrib = FALSE,
   r = 0
 )
@@ -36,12 +36,12 @@ are methods for numeric vectors (which can be made with
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{period}{A factor, or something that can be coerced into one, giving
+\item{time}{A factor, or something that can be coerced into one, giving
 the time period associated with each price relative in \code{x}. The
 ordering of time periods follows of the levels of \code{period}, to agree
 with \code{\link[=cut.Date]{cut()}}. The default makes an index for one time period.}
 
-\item{ea}{A factor, or something that can be coerced into one, giving the
+\item{levels}{A factor, or something that can be coerced into one, giving the
 elementary aggregate associated with each price relative in \code{x}. The
 default makes an index for one elementary aggregate.}
 
@@ -59,9 +59,9 @@ elementary aggregate. This is evaluated in \code{x} for the data frame method.}
 relatives that are suitable for a chained calculation (the default)? This
 should be \code{FALSE} when \code{x} contains fixed-base relatives.}
 
-\item{na.rm}{Should missing values be removed? By default, missing values
-are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
-imputation.}
+\item{na_action}{Approach for missing values when making elementary indexes.
+One of \code{"pass"}, \code{"omit"}, or \code{"fail"}. By default,
+missing values are passed over and not removed.}
 
 \item{contrib}{Should percent-change contributions be calculated? The
 default does not calculate contributions.}

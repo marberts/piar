@@ -2,42 +2,31 @@
 % Please edit documentation in R/contrib.R
 \name{contrib}
 \alias{contrib}
-\alias{contrib.piar_index}
 \alias{contrib2DF}
-\alias{contrib2DF.piar_index}
 \alias{contrib<-}
-\alias{contrib<-.piar_index}
 \alias{set_contrib}
 \alias{set_contrib_from_index}
 \title{Extract percent-change contributions}
 \usage{
-contrib(x, ...)
+contrib(x, time = NULL, level = NULL, pad = 0)
 
-\method{contrib}{piar_index}(x, level = levels(x)[1L], period = time(x), ..., pad = 0)
+contrib2DF(x, time = NULL, level = NULL)
 
-contrib2DF(x, ...)
+contrib(x, time = NULL, level = NULL) <- value
 
-\method{contrib2DF}{piar_index}(x, level = levels(x)[1L], period = time(x), ...)
-
-contrib(x, ...) <- value
-
-\method{contrib}{piar_index}(x, level = levels(x)[1L], period = time(x), ...) <- value
-
-set_contrib(x, ..., value)
+set_contrib(x, time = NULL, level = NULL, value)
 
 set_contrib_from_index(x)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{...}{Further arguments passed to or used by methods.}
+\item{time}{The time periods for which percent-change contributions are
+desired, defaulting to all time periods.}
 
 \item{level}{The level of an index for which percent-change contributions
 are desired, defaulting to the first level (usually the top-level for an
 aggregate index). \code{contrib2DF()} can accept multiple levels.}
-
-\item{period}{The time periods for which percent-change contributions are
-desired, defaulting to all time periods.}
 
 \item{pad}{A numeric value to pad contributions so that they fit into a
 rectangular array when products differ over time. The default is 0.}
@@ -45,10 +34,12 @@ rectangular array when products differ over time. The default is 0.}
 \item{value}{A numeric matrix of replacement contributions with a row for
 each product and a column for each time period. Recycling occurs along time
 periods.}
+
+\item{...}{Further arguments passed to or used by methods.}
 }
 \value{
 \code{contrib()} returns a matrix of percent-change contributions with a column
-for each \code{period} and a row for each product (sorted) for which there are
+for each \code{time} and a row for each product (sorted) for which there are
 contributions in \code{level}. Contributions are padded with \code{pad} to fit into a
 rectangular array when products differ over time. The replacement methods
 returns a copy of \code{x} with contributions given by the matrix \code{value}.
@@ -57,7 +48,7 @@ returns a copy of \code{x} with contributions given by the matrix \code{value}.
 contributions set to the corresponding index value minus 1.
 
 \code{contrib2DF()} returns a data frame of contributions with four
-columns: \code{period}, \code{level}, \code{product}, and \code{value}.
+columns: \code{time}, \code{level}, \code{product}, and \code{value}.
 }
 \description{
 Extract a matrix or data frame of percent-change contributions from a price

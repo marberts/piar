@@ -11,11 +11,11 @@
   pias,
   ...,
   pias2 = NULL,
-  na.rm = FALSE,
+  na_action = "pass",
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = "sum"
 )
 
 \method{aggregate}{direct_piar_index}(
@@ -23,11 +23,11 @@
   pias,
   ...,
   pias2 = NULL,
-  na.rm = FALSE,
+  na_action = "pass",
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = "sum"
 )
 }
 \arguments{
@@ -41,9 +41,9 @@ coerced into one. This can be made with \code{\link[=aggregation_structure]{aggr
 \item{pias2}{An optional secondary aggregation structure, usually with
 current-period weights, to make a superlative index. See details.}
 
-\item{na.rm}{Should missing values be removed? By default, missing values
-are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
-imputation.}
+\item{na_action}{Approach for missing values when aggregating. One
+of \code{"pass"}, \code{"fill"}, or \code{"fail"}. By default,
+missing values are passed over and not removed.}
 
 \item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
 
@@ -60,9 +60,10 @@ along with the aggregated indexes? By default, all index values are
 returned.}
 
 \item{duplicate_contrib}{The method to deal with duplicate product
-contributions. Either 'make.unique' to treat duplicate
+contributions. Either \code{"sum"} to add contributions for each product
+or \code{"make.unique"} to treat duplicate
 products as distinct products and make their names unique
-with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for each product.}
+with \code{\link[=make.unique]{make.unique()}}.}
 }
 \value{
 An aggregate price index that inherits from the class of \code{x}.

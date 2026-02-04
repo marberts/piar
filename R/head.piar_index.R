@@ -20,6 +20,7 @@
 #' @family index methods
 #' @importFrom utils head
 #' @export
+# Default arguments preceed ... to agree with default method in utils.
 head.piar_index <- function(x, n = 6L, ...) {
   chkDots(...)
   x$index <- head(x$index, n)
