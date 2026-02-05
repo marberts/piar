@@ -7,7 +7,12 @@ the `index` and `contrib` components of an index are now matrices instead of
 lists. This simplifies the codebase and in some cases improves performance, but
 will break any coding that directly uses the internal components of an index.
 
-- Index objects without contributions now consume about half as much memory.
+- An internal optimization means that index objects without contributions now
+consume about half as much memory.
+
+- `contrib()` and `contrib2DF()` are no longer generic functions. (They were
+originally generic to allow for the possibility of an index subclass without
+contributions, but that is no longer required.)
 
 ## Bug fixes
 

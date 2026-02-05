@@ -2,37 +2,26 @@
 % Please edit documentation in R/contrib.R
 \name{contrib}
 \alias{contrib}
-\alias{contrib.piar_index}
 \alias{contrib2DF}
-\alias{contrib2DF.piar_index}
 \alias{contrib<-}
-\alias{contrib<-.piar_index}
 \alias{set_contrib}
 \alias{set_contrib_from_index}
 \title{Extract percent-change contributions}
 \usage{
-contrib(x, ...)
+contrib(x, level = NULL, period = NULL, pad = 0)
 
-\method{contrib}{piar_index}(x, level = levels(x)[1L], period = time(x), ..., pad = 0)
+contrib2DF(x, levels = NULL, period = NULL)
 
-contrib2DF(x, ...)
+contrib(x, level = NULL, period = NULL) <- value
 
-\method{contrib2DF}{piar_index}(x, level = levels(x)[1L], period = time(x), ...)
-
-contrib(x, ...) <- value
-
-\method{contrib}{piar_index}(x, level = levels(x)[1L], period = time(x), ...) <- value
-
-set_contrib(x, ..., value)
+set_contrib(x, level = NULL, period = NULL, value)
 
 set_contrib_from_index(x)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{...}{Further arguments passed to or used by methods.}
-
-\item{level}{The level of an index for which percent-change contributions
+\item{level, levels}{The level of an index for which percent-change contributions
 are desired, defaulting to the first level (usually the top-level for an
 aggregate index). \code{contrib2DF()} can accept multiple levels.}
 
