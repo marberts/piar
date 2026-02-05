@@ -92,10 +92,10 @@ shadow_price <- function(x, ...) {
 #' @export
 shadow_price.default <- function(
   x,
-  ...,
   period,
   product,
   ea,
+  ...,
   pias = NULL,
   weights = NULL,
   r1 = 0,
@@ -184,7 +184,7 @@ carry_forward <- function(x, ...) {
 
 #' @rdname impute_prices
 #' @export
-carry_forward.default <- function(x, ..., period, product) {
+carry_forward.default <- function(x, period, product, ...) {
   chkDots(...)
   x <- as.numeric(x)
   period <- as.factor(period)
@@ -232,7 +232,7 @@ carry_backward <- function(x, ...) {
 
 #' @rdname impute_prices
 #' @export
-carry_backward.default <- function(x, ..., period, product) {
+carry_backward.default <- function(x, period, product, ...) {
   chkDots(...)
   period <- as.factor(period)
   levels <- rev(levels(period))

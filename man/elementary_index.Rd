@@ -97,7 +97,8 @@ to \code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
 is, for every combination of elementary aggregate and time period,
 \code{elementary_index()} calculates an index based on a generalized mean of
 order \code{r} and, optionally, percent-change contributions. Product names should
-be unique within each time period when making contributions, and, if not, are
+be unique within each elementary aggregate at each time period when making
+contributions, and, if not, are
 passed to \code{\link[=make.unique]{make.unique()}} with a warning. The default
 (\code{r = 0} and no weights) makes Jevons elementary indexes. See chapter 8
 (pp. 175--190) of the CPI manual (2020) for more detail about making

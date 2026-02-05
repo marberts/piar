@@ -7,7 +7,7 @@ test_that("aggregating over subperiods works", {
     na.rm = TRUE
   )
 
-  epr2 <- mean(ms_epr, window = 2)
+  epr2 <- mean(ms_epr, window = 2, duplicate_contrib = "make.unique")
   expect_identical(levels(epr2), levels(ms_epr))
   expect_identical(time(epr2), c("202001", "202003"))
 

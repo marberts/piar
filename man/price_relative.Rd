@@ -8,7 +8,7 @@
 \usage{
 price_relative(x, ...)
 
-\method{price_relative}{default}(x, ..., period, product)
+\method{price_relative}{default}(x, period, product, ...)
 
 \method{price_relative}{data.frame}(x, formula, ...)
 }

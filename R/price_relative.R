@@ -42,7 +42,7 @@ price_relative <- function(x, ...) {
 
 #' @rdname price_relative
 #' @export
-price_relative.default <- function(x, ..., period, product) {
+price_relative.default <- function(x, period, product, ...) {
   chkDots(...)
   x <- as.numeric(x)
   period <- as.factor(period)

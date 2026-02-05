@@ -62,7 +62,7 @@
 #' # loss of information for period 0)
 #'
 #' index <- chain(index)
-#' rebase(index, index[, 2])
+#' rebase(index, base = index[, 2])
 #'
 #' @family index methods
 #' @export chain

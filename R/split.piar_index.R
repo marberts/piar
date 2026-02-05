@@ -7,7 +7,7 @@
 #' @param f A factor or list of factors to group elements of `x`.
 #' @param drop Should levels that do not occur in `f` be dropped? By default
 #'   all levels are kept.
-#' @param margin Either 'levels' to split over the levels of `x` (the default),
+#' @param along Either 'levels' to split over the levels of `x` (the default),
 #'   or 'time' to split over the time periods of `x`.
 #' @param value A list of values compatible with the splitting of `x`, or
 #'   something that can be coerced into one, recycled if necessary.
@@ -23,7 +23,7 @@
 #'
 #' split(index, 1:2)
 #'
-#' split(index, c(1, 1, 2), margin = "time")
+#' split(index, c(1, 1, 2), along = "time")
 #'
 #' @family index methods
 #' @export
@@ -32,11 +32,11 @@ split.piar_index <- function(
   f,
   drop = FALSE,
   ...,
-  margin = c("levels", "time")
+  along = c("levels", "time")
 ) {
-  margin <- match.arg(margin)
-  ix <- split(seq_along(x[[margin]]), f = f, drop = drop, ...)
-  if (margin == "levels") {
+  along <- match.arg(along)
+  ix <- split(seq_along(x[[along]]), f = f, drop = drop, ...)
+  if (along == "levels") {
     lapply(ix, \(i) x[i, ])
   } else {
     lapply(ix, \(i) x[, i])
@@ -50,12 +50,12 @@ split.piar_index <- function(
   f,
   drop = FALSE,
   ...,
-  margin = c("levels", "time"),
+  along = c("levels", "time"),
   value
 ) {
   value <- as.list(value)
-  margin <- match.arg(margin)
-  ix <- split(seq_along(x[[margin]]), f = f, drop = drop, ...)
+  along <- match.arg(along)
+  ix <- split(seq_along(x[[along]]), f = f, drop = drop, ...)
   n <- length(value)
   if (n > 0L && length(ix) %% n != 0) {
     warning(
@@ -63,7 +63,7 @@ split.piar_index <- function(
     )
   }
   j <- 0
-  if (margin == "levels") {
+  if (along == "levels") {
     for (i in ix) {
       j <- j %% n + 1
       x[i, ] <- value[[j]]

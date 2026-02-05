@@ -544,7 +544,8 @@ test_that("duplicate products get unique names during aggregation", {
   levels(epr2) <- 3:4
   index <- aggregate(
     merge(epr1, epr2),
-    list(c(0, 0, 0, 0), c("a", "a", "b", "b"), 1:4)
+    list(c(0, 0, 0, 0), c("a", "a", "b", "b"), 1:4),
+    duplicate_contrib = "make.unique"
   )
   expect_equal(
     contrib(index, "a"),

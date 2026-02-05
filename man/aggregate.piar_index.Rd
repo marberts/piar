@@ -15,7 +15,7 @@
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 )
 
 \method{aggregate}{direct_piar_index}(
@@ -27,7 +27,7 @@
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 )
 }
 \arguments{
@@ -60,9 +60,10 @@ along with the aggregated indexes? By default, all index values are
 returned.}
 
 \item{duplicate_contrib}{The method to deal with duplicate product
-contributions. Either 'make.unique' to treat duplicate
+contributions. Either \code{"make.unique"} to treat duplicate
 products as distinct products and make their names unique
-with \code{\link[=make.unique]{make.unique()}} or 'sum' to add contributions for each product.}
+with \code{\link[=make.unique]{make.unique()}} or \code{"sum"} to add contributions for each product
+(the default).}
 }
 \value{
 An aggregate price index that inherits from the class of \code{x}.
@@ -119,10 +120,7 @@ There may not be contributions for all prices relatives in an elementary
 aggregate if the elementary indexes are built from several sources (as with
 \code{\link[=merge.piar_index]{merge()}}). In this case the contribution for
 a price relative in the aggregated index will be correct, but the sum of all
-contributions will not equal the change in the value of the index. This can
-also happen when aggregating an already aggregated index in which missing
-index values have been imputed (i.e., when \code{na.rm = TRUE} and
-\code{contrib = FALSE}).
+contributions will not equal the change in the value of the index.
 
 If two aggregation structures are given then the steps above are done for
 each aggregation structure, with the aggregation for \code{pias} done with a
