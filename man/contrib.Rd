@@ -21,7 +21,8 @@ set_contrib_from_index(x)
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{level, levels}{The level of an index for which percent-change contributions
+\item{level, levels}{The level of an index for which percent-change
+contributions
 are desired, defaulting to the first level (usually the top-level for an
 aggregate index). \code{contrib2DF()} can accept multiple levels.}
 

@@ -4,7 +4,8 @@
 #' index.
 #'
 #' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param level,levels The level of an index for which percent-change contributions
+#' @param level,levels The level of an index for which percent-change
+#'   contributions
 #'   are desired, defaulting to the first level (usually the top-level for an
 #'   aggregate index). `contrib2DF()` can accept multiple levels.
 #' @param period The time periods for which percent-change contributions are
