@@ -52,14 +52,14 @@
 update.piar_aggregation_structure <- function(
   object,
   index,
-  period = end(index),
   ...,
+  period = NULL,
   r = 1
 ) {
   chkDots(...)
   price_update <- gpindex::factor_weights(r)
   index <- chain(as_index(index))
-  period <- match_time(as.character(period), index)
+  period <- match_time(as.character(period %||% last(index$time)), index)
   eas <- match_eas(object, index)
   if (anyNA(eas)) {
     warning("not all weights in 'object' have a corresponding index value")

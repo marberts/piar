@@ -14,6 +14,12 @@ consume about half as much memory.
 originally generic to allow for the possibility of an index subclass without
 contributions, but that is no longer required.)
 
+- In most cases methods have optional arguments after the `...`. This means that
+in some cases arguments need to be named that previously could be passes by position.
+
+   - `link` and `base` in `chain()`, `unchain()`, and `rebase()`.
+   - `period` in `update()`.
+
 ## Bug fixes
 
 - Setting `contrib = FALSE` in `aggregate(index)` always returns an index with

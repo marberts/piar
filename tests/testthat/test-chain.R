@@ -39,8 +39,8 @@ test_that("chain is the same as apply", {
 
 test_that("unchain and chain are inverses with no NAs", {
   expect_equal(unchain(chain(index2)), index2)
-  expect_equal(unchain(rebase(chain(index2), 1:8), 1:8), index2)
-  expect_equal(unchain(chain(index2, 1:8), 1 / 1:8), index2)
+  expect_equal(unchain(rebase(chain(index2), base = 1:8), base = 1:8), index2)
+  expect_equal(unchain(chain(index2, link = 1:8), base = 1 / 1:8), index2)
   expect_failure(expect_equal(unchain(chain(epr2)), epr2))
 })
 
@@ -58,11 +58,11 @@ test_that("chaining a fixed-base index does nothing", {
 
 test_that("rebase should be the same as division", {
   expect_equal(
-    as.matrix(rebase(chain(epr2), 1:4)),
+    as.matrix(rebase(chain(epr2), base = 1:4)),
     as.matrix(chain(epr2)) / 1:4
   )
   expect_equal(
-    as.matrix(rebase(chain(index2), 1:8)),
+    as.matrix(rebase(chain(index2), base = 1:8)),
     as.matrix(chain(index2)) / 1:8
   )
 })
@@ -70,13 +70,13 @@ test_that("rebase should be the same as division", {
 test_that("rebase works with mean", {
   index2 <- chain(index2)
   expect_equal(
-    rebase(index2, mean(index2, window = 2)[, 1]),
-    rebase(index2, rowMeans(as.matrix(index2[, 1:2])))
+    rebase(index2, base = mean(index2, window = 2)[, 1]),
+    rebase(index2, base = rowMeans(as.matrix(index2[, 1:2])))
   )
 
   expect_equal(
-    rebase(index2, mean(index2, window = 4)),
-    rebase(index2, rowMeans(as.matrix(index2)))
+    rebase(index2, base = mean(index2, window = 4)),
+    rebase(index2, base = rowMeans(as.matrix(index2)))
   )
 })
 
@@ -104,7 +104,10 @@ test_that("link and base values are the right length", {
 
 test_that("rebasing with a character vector works", {
   index1_chain <- chain(index1)
-  index1_rebase <- rebase(index1_chain, index1_chain[, end(index1_chain)])
-  expect_equal(index1_rebase, rebase(index1_chain, end(index1_chain)))
-  expect_equal(index2, unchain(index1_rebase, end(index1_rebase)))
+  index1_rebase <- rebase(
+    index1_chain,
+    base = index1_chain[, end(index1_chain)]
+  )
+  expect_equal(index1_rebase, rebase(index1_chain, base = end(index1_chain)))
+  expect_equal(index2, unchain(index1_rebase, base = end(index1_rebase)))
 })

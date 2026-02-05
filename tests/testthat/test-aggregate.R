@@ -211,7 +211,7 @@ test_that("a matched-sample index aggregates correctly", {
   expect_equal(weights(update(ms_pias, ms_index), ea_only = TRUE), w[s2, 4])
 
   expect_equal(
-    weights(update(ms_pias, ms_index, "202003"), ea_only = TRUE),
+    weights(update(ms_pias, ms_index, period = "202003"), ea_only = TRUE),
     w[s2, 3]
   )
 })
@@ -465,7 +465,10 @@ test_that("a fixed-based index aggregates correctly", {
 
   # Chained calculation and fixed-base calculation should be the same
   expect_equal(index_fx, chain(index_pop))
-  expect_equal(chain(index_pop[, -1], as.matrix(index_fx[, 1])), index_fx[, -1])
+  expect_equal(
+    chain(index_pop[, -1], link = as.matrix(index_fx[, 1])),
+    index_fx[, -1]
+  )
 
   # Should work for a non-arithmetic index
   expect_equal(
@@ -475,8 +478,11 @@ test_that("a fixed-based index aggregates correctly", {
 
   # Consistency in aggregation holds with a change in base period
   expect_equal(
-    rebase(index_fx, index_fx[, 2]),
-    aggregate(rebase(index_fx, index_fx[, 2]), update(pias, index_fx, "b"))
+    rebase(index_fx, base = index_fx[, 2]),
+    aggregate(
+      rebase(index_fx, base = index_fx[, 2]),
+      update(pias, index_fx, period = "b")
+    )
   )
 })
 

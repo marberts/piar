@@ -16,19 +16,19 @@ chain(x, ...)
 
 \method{chain}{default}(x, ...)
 
-\method{chain}{chainable_piar_index}(x, link = rep(1, nlevels(x)), ...)
+\method{chain}{chainable_piar_index}(x, ..., link = NULL)
 
 unchain(x, ...)
 
 \method{unchain}{default}(x, ...)
 
-\method{unchain}{direct_piar_index}(x, base = rep(1, nlevels(x)), ...)
+\method{unchain}{direct_piar_index}(x, ..., base = NULL)
 
 rebase(x, ...)
 
 \method{rebase}{default}(x, ...)
 
-\method{rebase}{direct_piar_index}(x, base = rep(1, nlevels(x)), ...)
+\method{rebase}{direct_piar_index}(x, ..., base = NULL)
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
@@ -36,11 +36,12 @@ rebase(x, ...)
 \item{...}{Further arguments passed to or used by methods.}
 
 \item{link}{A numeric vector, or something that can coerced into one, of
-link values for each level in \code{x}. The default is a vector of 1s so
-that no linking is done.}
+link values for each level in \code{x}. The default is equivalent to a vector
+of 1s so that no linking is done.}
 
 \item{base}{A numeric vector, or something that can coerced into one, of
-base-period index values for each level in \code{x}. The default is a vector
+base-period index values for each level in \code{x}. The default is a equivalent
+to a vector
 of 1s so that the base period remains the same. If \code{base} is a length-one
 character vector giving a time period of \code{x} then the index values for this
 time period are used as the base-period values.}
