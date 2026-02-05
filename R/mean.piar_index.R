@@ -66,7 +66,7 @@ mean.chainable_piar_index <- function(
   x,
   ...,
   weights = NULL,
-  window = ntime(x),
+  window = NULL,
   na.rm = FALSE,
   contrib = TRUE,
   r = 1,
@@ -91,7 +91,7 @@ mean.direct_piar_index <- function(
   x,
   ...,
   weights = NULL,
-  window = ntime(x),
+  window = NULL,
   na.rm = FALSE,
   contrib = TRUE,
   r = 1,
@@ -133,7 +133,7 @@ mean_index <- function(
     dim(weights) <- c(nlevels(x), ntime(x))
   }
 
-  window <- as.integer(window)
+  window <- as.integer(window %||% ntime(x))
   if (length(window) > 1L || window < 1L) {
     stop("'window' must be a positive length 1 integer")
   }

@@ -177,8 +177,8 @@ elementary_index.default <- function(x, ...) {
 elementary_index.numeric <- function(
   x,
   ...,
-  period = gl(1, length(x)),
-  ea = gl(1, length(x)),
+  period = NULL,
+  ea = NULL,
   weights = NULL,
   product = NULL,
   chainable = TRUE,
@@ -193,8 +193,8 @@ elementary_index.numeric <- function(
       stop("all elements of 'weights' must be non-negative")
     }
   }
-  period <- as.factor(period)
-  ea <- as.factor(ea)
+  period <- as.factor(period %||% gl(1, length(x)))
+  ea <- as.factor(ea %||% gl(1, length(x)))
   time <- levels(period)
   levels <- levels(ea)
 

@@ -26,6 +26,7 @@
 #' @family index methods
 #' @importFrom stats window
 #' @export
+# Optional arguments are before ... to agree with default in stats::window().
 window.piar_index <- function(x, start = NULL, end = NULL, ...) {
   chkDots(...)
   x[, index_window(x, start, end)]

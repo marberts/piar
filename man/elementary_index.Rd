@@ -15,8 +15,8 @@ elementary_index(x, ...)
 \method{elementary_index}{numeric}(
   x,
   ...,
-  period = gl(1, length(x)),
-  ea = gl(1, length(x)),
+  period = NULL,
+  ea = NULL,
   weights = NULL,
   product = NULL,
   chainable = TRUE,
