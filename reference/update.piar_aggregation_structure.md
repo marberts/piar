@@ -6,7 +6,7 @@ Price update the weights in a price index aggregation structure.
 
 ``` r
 # S3 method for class 'piar_aggregation_structure'
-update(object, index, period = end(index), ..., r = 1)
+update(object, index, ..., period = NULL, r = 1)
 ```
 
 ## Arguments
@@ -22,14 +22,14 @@ update(object, index, period = end(index), ..., r = 1)
   into one. Usually an aggregate price index as made by
   [`aggregate()`](https://marberts.github.io/piar/reference/aggregate.piar_index.md).
 
+- ...:
+
+  Not currently used.
+
 - period:
 
   The time period used to price update the weights. The default uses the
   last period in `index`.
-
-- ...:
-
-  Not currently used.
 
 - r:
 

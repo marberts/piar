@@ -6,22 +6,13 @@ price index.
 ## Usage
 
 ``` r
-contrib(x, ...)
+contrib(x, level = NULL, period = NULL, pad = 0)
 
-# S3 method for class 'piar_index'
-contrib(x, level = levels(x)[1L], period = time(x), ..., pad = 0)
+contrib2DF(x, levels = NULL, period = NULL)
 
-contrib2DF(x, ...)
+contrib(x, level = NULL, period = NULL) <- value
 
-# S3 method for class 'piar_index'
-contrib2DF(x, level = levels(x)[1L], period = time(x), ...)
-
-contrib(x, ...) <- value
-
-# S3 method for class 'piar_index'
-contrib(x, level = levels(x)[1L], period = time(x), ...) <- value
-
-set_contrib(x, ..., value)
+set_contrib(x, level = NULL, period = NULL, value)
 
 set_contrib_from_index(x)
 ```
@@ -33,11 +24,7 @@ set_contrib_from_index(x)
   A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
-- ...:
-
-  Further arguments passed to or used by methods.
-
-- level:
+- level, levels:
 
   The level of an index for which percent-change contributions are
   desired, defaulting to the first level (usually the top-level for an

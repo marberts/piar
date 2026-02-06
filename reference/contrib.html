@@ -9,7 +9,7 @@ index."><meta property="og:image" content="https://marberts.github.io/piar/logo.
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,22 +52,13 @@ index.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">contrib</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">contrib</span><span class="op">(</span><span class="va">x</span>, level <span class="op">=</span> <span class="cn">NULL</span>, period <span class="op">=</span> <span class="cn">NULL</span>, pad <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for class 'piar_index'</span></span>
-<span><span class="fu">contrib</span><span class="op">(</span><span class="va">x</span>, level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">time</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">...</span>, pad <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="fu">contrib2DF</span><span class="op">(</span><span class="va">x</span>, levels <span class="op">=</span> <span class="cn">NULL</span>, period <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">contrib2DF</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">contrib</span><span class="op">(</span><span class="va">x</span>, level <span class="op">=</span> <span class="cn">NULL</span>, period <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
 <span></span>
-<span><span class="co"># S3 method for class 'piar_index'</span></span>
-<span><span class="fu">contrib2DF</span><span class="op">(</span><span class="va">x</span>, level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">time</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">contrib</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
-<span></span>
-<span><span class="co"># S3 method for class 'piar_index'</span></span>
-<span><span class="fu">contrib</span><span class="op">(</span><span class="va">x</span>, level <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1L</span><span class="op">]</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">time</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">value</span></span>
-<span></span>
-<span><span class="fu">set_contrib</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, <span class="va">value</span><span class="op">)</span></span>
+<span><span class="fu">set_contrib</span><span class="op">(</span><span class="va">x</span>, level <span class="op">=</span> <span class="cn">NULL</span>, period <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">value</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">set_contrib_from_index</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -80,12 +71,9 @@ index.</p>
 <dd><p>A price index, as made by, e.g., <code><a href="elementary_index.html">elementary_index()</a></code>.</p></dd>
 
 
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Further arguments passed to or used by methods.</p></dd>
-
-
-<dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
-<dd><p>The level of an index for which percent-change contributions
+<dt id="arg-level-levels">level, levels<a class="anchor" aria-label="anchor" href="#arg-level-levels"></a></dt>
+<dd><p>The level of an index for which percent-change
+contributions
 are desired, defaulting to the first level (usually the top-level for an
 aggregate index). <code>contrib2DF()</code> can accept multiple levels.</p></dd>
 

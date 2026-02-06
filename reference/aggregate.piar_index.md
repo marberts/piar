@@ -16,7 +16,7 @@ aggregate(
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 )
 
 # S3 method for class 'direct_piar_index'
@@ -29,7 +29,7 @@ aggregate(
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 )
 ```
 
@@ -84,10 +84,10 @@ aggregate(
 - duplicate_contrib:
 
   The method to deal with duplicate product contributions. Either
-  'make.unique' to treat duplicate products as distinct products and
+  `"make.unique"` to treat duplicate products as distinct products and
   make their names unique with
-  [`make.unique()`](https://rdrr.io/r/base/make.unique.html) or 'sum' to
-  add contributions for each product.
+  [`make.unique()`](https://rdrr.io/r/base/make.unique.html) or `"sum"`
+  to add contributions for each product (the default).
 
 ## Value
 
@@ -148,9 +148,7 @@ with
 [`merge()`](https://marberts.github.io/piar/reference/merge.piar_index.md)).
 In this case the contribution for a price relative in the aggregated
 index will be correct, but the sum of all contributions will not equal
-the change in the value of the index. This can also happen when
-aggregating an already aggregated index in which missing index values
-have been imputed (i.e., when `na.rm = TRUE` and `contrib = FALSE`).
+the change in the value of the index.
 
 If two aggregation structures are given then the steps above are done
 for each aggregation structure, with the aggregation for `pias` done

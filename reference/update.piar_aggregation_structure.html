@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'piar_aggregation_structure'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">index</span>, period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/start.html" class="external-link">end</a></span><span class="op">(</span><span class="va">index</span><span class="op">)</span>, <span class="va">...</span>, r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">index</span>, <span class="va">...</span>, period <span class="op">=</span> <span class="cn">NULL</span>, r <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,13 +68,13 @@ coerced into one. Usually an aggregate price index as made by
 <code><a href="aggregate.piar_index.html">aggregate()</a></code>.</p></dd>
 
 
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Not currently used.</p></dd>
+
+
 <dt id="arg-period">period<a class="anchor" aria-label="anchor" href="#arg-period"></a></dt>
 <dd><p>The time period used to price update the weights. The default
 uses the last period in <code>index</code>.</p></dd>
-
-
-<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Not currently used.</p></dd>
 
 
 <dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>

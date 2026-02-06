@@ -10,10 +10,10 @@ shadow_price(x, ...)
 # Default S3 method
 shadow_price(
   x,
-  ...,
   period,
   product,
   ea,
+  ...,
   pias = NULL,
   weights = NULL,
   r1 = 0,
@@ -26,7 +26,7 @@ shadow_price(x, formula, ..., weights = NULL)
 carry_forward(x, ...)
 
 # Default S3 method
-carry_forward(x, ..., period, product)
+carry_forward(x, period, product, ...)
 
 # S3 method for class 'data.frame'
 carry_forward(x, formula, ...)
@@ -34,7 +34,7 @@ carry_forward(x, formula, ...)
 carry_backward(x, ...)
 
 # Default S3 method
-carry_backward(x, ..., period, product)
+carry_backward(x, period, product, ...)
 
 # S3 method for class 'data.frame'
 carry_backward(x, formula, ...)

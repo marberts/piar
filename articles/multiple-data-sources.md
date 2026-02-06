@@ -80,7 +80,7 @@ geks_elementals <- with(
   t() |>
   as_index(chainable = FALSE) |>
   set_levels("B5") |>
-  rebase("202001")
+  rebase(base = "202001")
 
 geks_elementals
 ```

@@ -7,10 +7,10 @@ either the levels or time periods of the index.
 
 ``` r
 # S3 method for class 'piar_index'
-split(x, f, drop = FALSE, ..., margin = c("levels", "time"))
+split(x, f, drop = FALSE, ..., along = c("levels", "time"))
 
 # S3 method for class 'piar_index'
-split(x, f, drop = FALSE, ..., margin = c("levels", "time")) <- value
+split(x, f, drop = FALSE, ..., along = c("levels", "time")) <- value
 ```
 
 ## Arguments
@@ -34,10 +34,10 @@ split(x, f, drop = FALSE, ..., margin = c("levels", "time")) <- value
   Further arguments passed to
   [`split.default()`](https://rdrr.io/r/base/split.html).
 
-- margin:
+- along:
 
-  Either 'levels' to split over the levels of `x` (the default), or
-  'time' to split over the time periods of `x`.
+  Either `"levels"` to split over the levels of `x` (the default), or
+  `"time"` to split over the time periods of `x`.
 
 - value:
 
@@ -87,7 +87,7 @@ split(index, 1:2)
 #>      2 2 4 6
 #> 
 
-split(index, c(1, 1, 2), margin = "time")
+split(index, c(1, 1, 2), along = "time")
 #> $`1`
 #> Period-over-period price index for 2 levels over 2 time periods 
 #>       time

@@ -129,7 +129,7 @@ link factors when the index series have an annual base period.
 ``` r
 index <- index |>
   lapply(chain) |>
-  lapply(\(x) rebase(x, mean(x[, 1:4])))
+  lapply(\(x) rebase(x, base = mean(x[, 1:4])))
 ```
 
 Keeping the base year of the old basket can be done by simply rebasing
@@ -162,7 +162,7 @@ Updating the reference year to that of the new basket involves rebasing
 the series for both the old basket and the new basket.
 
 ``` r
-index[[1]] <- rebase(index[[1]], mean(window(index[[1]], start = "5")))
+index[[1]] <- rebase(index[[1]], base = mean(window(index[[1]], start = "5")))
 
 link_factor <- as.numeric(index[[1]][, "8"]) / as.numeric(index[[2]][, "8"])
 

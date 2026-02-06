@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@
 <span>  contrib <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  r <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  include_ea <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  duplicate_contrib <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"make.unique"</span>, <span class="st">"sum"</span><span class="op">)</span></span>
+<span>  duplicate_contrib <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sum"</span>, <span class="st">"make.unique"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'direct_piar_index'</span></span>
@@ -72,7 +72,7 @@
 <span>  contrib <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  r <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  include_ea <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  duplicate_contrib <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"make.unique"</span>, <span class="st">"sum"</span><span class="op">)</span></span>
+<span>  duplicate_contrib <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sum"</span>, <span class="st">"make.unique"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -126,9 +126,10 @@ returned.</p></dd>
 
 <dt id="arg-duplicate-contrib">duplicate_contrib<a class="anchor" aria-label="anchor" href="#arg-duplicate-contrib"></a></dt>
 <dd><p>The method to deal with duplicate product
-contributions. Either 'make.unique' to treat duplicate
+contributions. Either <code>"make.unique"</code> to treat duplicate
 products as distinct products and make their names unique
-with <code><a href="https://rdrr.io/r/base/make.unique.html" class="external-link">make.unique()</a></code> or 'sum' to add contributions for each product.</p></dd>
+with <code><a href="https://rdrr.io/r/base/make.unique.html" class="external-link">make.unique()</a></code> or <code>"sum"</code> to add contributions for each product
+(the default).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -177,10 +178,7 @@ to apply this method.</p>
 aggregate if the elementary indexes are built from several sources (as with
 <code><a href="merge.piar_index.html">merge()</a></code>). In this case the contribution for
 a price relative in the aggregated index will be correct, but the sum of all
-contributions will not equal the change in the value of the index. This can
-also happen when aggregating an already aggregated index in which missing
-index values have been imputed (i.e., when <code>na.rm = TRUE</code> and
-<code>contrib = FALSE</code>).</p>
+contributions will not equal the change in the value of the index.</p>
 <p>If two aggregation structures are given then the steps above are done for
 each aggregation structure, with the aggregation for <code>pias</code> done with a
 generalized mean of order <code>r</code> the aggregation for <code>pias2</code> done with a

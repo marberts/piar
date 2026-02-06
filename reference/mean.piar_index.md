@@ -11,11 +11,11 @@ mean(
   x,
   ...,
   weights = NULL,
-  window = ntime(x),
+  window = NULL,
   na.rm = FALSE,
   contrib = TRUE,
   r = 1,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 )
 
 # S3 method for class 'direct_piar_index'
@@ -23,11 +23,11 @@ mean(
   x,
   ...,
   weights = NULL,
-  window = ntime(x),
+  window = NULL,
   na.rm = FALSE,
   contrib = TRUE,
   r = 1,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 )
 ```
 
@@ -78,9 +78,10 @@ mean(
 - duplicate_contrib:
 
   The method to deal with duplicate product contributions. Either
-  'make.unique' to make duplicate product names unique with
-  [`make.unique()`](https://rdrr.io/r/base/make.unique.html) or 'sum' to
-  add contributions for the same products across subperiods.
+  `"make.unique"` to make duplicate product names unique with
+  [`make.unique()`](https://rdrr.io/r/base/make.unique.html) or `"sum"`
+  to add contributions for the same products across subperiods (the
+  default).
 
 ## Value
 

@@ -18,7 +18,7 @@ chain(x, ...)
 chain(x, ...)
 
 # S3 method for class 'chainable_piar_index'
-chain(x, link = rep(1, nlevels(x)), ...)
+chain(x, ..., link = NULL)
 
 unchain(x, ...)
 
@@ -26,7 +26,7 @@ unchain(x, ...)
 unchain(x, ...)
 
 # S3 method for class 'direct_piar_index'
-unchain(x, base = rep(1, nlevels(x)), ...)
+unchain(x, ..., base = NULL)
 
 rebase(x, ...)
 
@@ -34,7 +34,7 @@ rebase(x, ...)
 rebase(x, ...)
 
 # S3 method for class 'direct_piar_index'
-rebase(x, base = rep(1, nlevels(x)), ...)
+rebase(x, ..., base = NULL)
 ```
 
 ## Arguments
@@ -51,16 +51,17 @@ rebase(x, base = rep(1, nlevels(x)), ...)
 - link:
 
   A numeric vector, or something that can coerced into one, of link
-  values for each level in `x`. The default is a vector of 1s so that no
-  linking is done.
+  values for each level in `x`. The default is equivalent to a vector of
+  1s so that no linking is done.
 
 - base:
 
   A numeric vector, or something that can coerced into one, of
   base-period index values for each level in `x`. The default is a
-  vector of 1s so that the base period remains the same. If `base` is a
-  length-one character vector giving a time period of `x` then the index
-  values for this time period are used as the base-period values.
+  equivalent to a vector of 1s so that the base period remains the same.
+  If `base` is a length-one character vector giving a time period of `x`
+  then the index values for this time period are used as the base-period
+  values.
 
 ## Value
 
@@ -134,7 +135,7 @@ all.equal(index, unchain(chain(index)))
 # loss of information for period 0)
 
 index <- chain(index)
-rebase(index, index[, 2])
+rebase(index, base = index[, 2])
 #> Fixed-base price index for 3 levels over 3 time periods 
 #>       time
 #> levels         1 2 3

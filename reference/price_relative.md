@@ -9,7 +9,7 @@ and products over time.
 price_relative(x, ...)
 
 # Default S3 method
-price_relative(x, ..., period, product)
+price_relative(x, period, product, ...)
 
 # S3 method for class 'data.frame'
 price_relative(x, formula, ...)
