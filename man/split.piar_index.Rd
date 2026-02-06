@@ -19,8 +19,8 @@ all levels are kept.}
 
 \item{...}{Further arguments passed to \code{\link[=split.default]{split.default()}}.}
 
-\item{along}{Either 'levels' to split over the levels of \code{x} (the default),
-or 'time' to split over the time periods of \code{x}.}
+\item{along}{Either \code{"levels"} to split over the levels of \code{x} (the default),
+or \code{"time"} to split over the time periods of \code{x}.}
 
 \item{value}{A list of values compatible with the splitting of \code{x}, or
 something that can be coerced into one, recycled if necessary.}

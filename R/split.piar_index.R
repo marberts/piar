@@ -7,8 +7,8 @@
 #' @param f A factor or list of factors to group elements of `x`.
 #' @param drop Should levels that do not occur in `f` be dropped? By default
 #'   all levels are kept.
-#' @param along Either 'levels' to split over the levels of `x` (the default),
-#'   or 'time' to split over the time periods of `x`.
+#' @param along Either `"levels"` to split over the levels of `x` (the default),
+#'   or `"time"` to split over the time periods of `x`.
 #' @param value A list of values compatible with the splitting of `x`, or
 #'   something that can be coerced into one, recycled if necessary.
 #' @param ... Further arguments passed to [`split.default()`].
