@@ -17,10 +17,10 @@ shadow_price(x, ...)
 
 \method{shadow_price}{default}(
   x,
-  ...,
   period,
   product,
   ea,
+  ...,
   pias = NULL,
   weights = NULL,
   r1 = 0,
@@ -31,13 +31,13 @@ shadow_price(x, ...)
 
 carry_forward(x, ...)
 
-\method{carry_forward}{default}(x, ..., period, product)
+\method{carry_forward}{default}(x, period, product, ...)
 
 \method{carry_forward}{data.frame}(x, formula, ...)
 
 carry_backward(x, ...)
 
-\method{carry_backward}{default}(x, ..., period, product)
+\method{carry_backward}{default}(x, period, product, ...)
 
 \method{carry_backward}{data.frame}(x, formula, ...)
 }

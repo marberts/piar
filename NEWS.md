@@ -4,10 +4,27 @@
 
 - The internal representation of index objects has changed so that both
 the `index` and `contrib` components of an index are now matrices instead of
-lists. This simplifies the codebase and in some cases improves performance, but
+lists. This simplifies the code base and in some cases improves performance, but
 will break any coding that directly uses the internal components of an index.
 
-- Index objects without contributions now consume about half as much memory.
+- A new internal optimization means that index objects without contributions now
+consume about half as much memory.
+
+- `contrib()` and `contrib2DF()` are no longer generic functions. (They were
+originally generic to allow for the possibility of an index subclass without
+contributions, but that is no longer required.)
+
+- In most cases methods have optional arguments after the `...`. This means that
+in some cases arguments need to be named that previously could be passes by position.
+
+   - `link` and `base` in `chain()`, `unchain()`, and `rebase()`.
+   - `period` in `update()`.
+   
+- The default behavior for aggregating duplicate contributions is to sum them.
+This means that it is now possible to have duplicate products across levels
+in `elementary_index()`.
+
+- The `margin` argument in `split(index)` has been renamed to `along`.
 
 ## Bug fixes
 

@@ -4,14 +4,14 @@
 #' index.
 #'
 #' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param level The level of an index for which percent-change contributions
+#' @param level,levels The level of an index for which percent-change
+#'   contributions
 #'   are desired, defaulting to the first level (usually the top-level for an
 #'   aggregate index). `contrib2DF()` can accept multiple levels.
 #' @param period The time periods for which percent-change contributions are
 #'   desired, defaulting to all time periods.
 #' @param pad A numeric value to pad contributions so that they fit into a
 #'   rectangular array when products differ over time. The default is 0.
-#' @param ... Further arguments passed to or used by methods.
 #' @param value A numeric matrix of replacement contributions with a row for
 #'   each product and a column for each time period. Recycling occurs along time
 #'   periods.
@@ -62,22 +62,9 @@
 #'
 #' @export contrib
 #' @family index methods
-contrib <- function(x, ...) {
-  UseMethod("contrib")
-}
-
-#' @rdname contrib
-#' @export
-contrib.piar_index <- function(
-  x,
-  level = levels(x)[1L],
-  period = time(x),
-  ...,
-  pad = 0
-) {
-  chkDots(...)
-  level <- match_levels(as.character(level), x)
-  period <- match_time(as.character(period), x, several = TRUE)
+contrib <- function(x, level = NULL, period = NULL, pad = 0) {
+  level <- match_levels(as.character(level %||% x$levels[1L]), x)
+  period <- match_time(as.character(period %||% x$time), x, several = TRUE)
   pad <- as.numeric(pad)
   if (length(pad) != 1L) {
     stop("'pad' must be a length 1 numeric value")
@@ -111,21 +98,13 @@ contrib.piar_index <- function(
 
 #' @rdname contrib
 #' @export
-contrib2DF <- function(x, ...) {
-  UseMethod("contrib2DF")
-}
-
-#' @rdname contrib
-#' @export
-contrib2DF.piar_index <- function(
-  x,
-  level = levels(x)[1L],
-  period = time(x),
-  ...
-) {
-  chkDots(...)
-  level <- match_levels(as.character(level), x, several = TRUE)
-  period <- match_time(as.character(period), x, several = TRUE)
+contrib2DF <- function(x, levels = NULL, period = NULL) {
+  level <- match_levels(
+    as.character(levels %||% x$levels[1L]),
+    x,
+    several = TRUE
+  )
+  period <- match_time(as.character(period %||% x$time), x, several = TRUE)
   if (is.null(x$contrib)) {
     return(
       data.frame(
@@ -161,22 +140,9 @@ contrib2DF.piar_index <- function(
 
 #' @rdname contrib
 #' @export
-`contrib<-` <- function(x, ..., value) {
-  UseMethod("contrib<-")
-}
-
-#' @rdname contrib
-#' @export
-`contrib<-.piar_index` <- function(
-  x,
-  level = levels(x)[1L],
-  period = time(x),
-  ...,
-  value
-) {
-  chkDots(...)
-  level <- match_levels(as.character(level), x)
-  period <- match_time(as.character(period), x, several = TRUE)
+`contrib<-` <- function(x, level = NULL, period = NULL, value) {
+  level <- match_levels(as.character(level %||% x$levels[1L]), x)
+  period <- match_time(as.character(period %||% x$time), x, several = TRUE)
 
   if (is.null(x$contrib)) {
     x$contrib <- contrib_skeleton(x$levels, x$time)

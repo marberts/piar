@@ -5,9 +5,9 @@
 \alias{split<-.piar_index}
 \title{Split an index into groups}
 \usage{
-\method{split}{piar_index}(x, f, drop = FALSE, ..., margin = c("levels", "time"))
+\method{split}{piar_index}(x, f, drop = FALSE, ..., along = c("levels", "time"))
 
-\method{split}{piar_index}(x, f, drop = FALSE, ..., margin = c("levels", "time")) <- value
+\method{split}{piar_index}(x, f, drop = FALSE, ..., along = c("levels", "time")) <- value
 }
 \arguments{
 \item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
@@ -19,8 +19,8 @@ all levels are kept.}
 
 \item{...}{Further arguments passed to \code{\link[=split.default]{split.default()}}.}
 
-\item{margin}{Either 'levels' to split over the levels of \code{x} (the default),
-or 'time' to split over the time periods of \code{x}.}
+\item{along}{Either \code{"levels"} to split over the levels of \code{x} (the default),
+or \code{"time"} to split over the time periods of \code{x}.}
 
 \item{value}{A list of values compatible with the splitting of \code{x}, or
 something that can be coerced into one, recycled if necessary.}
@@ -39,7 +39,7 @@ index <- as_index(matrix(1:6, 2))
 
 split(index, 1:2)
 
-split(index, c(1, 1, 2), margin = "time")
+split(index, c(1, 1, 2), along = "time")
 
 }
 \seealso{

@@ -42,9 +42,9 @@
 #' @param contrib Aggregate percent-change contributions in `x` (if any)?
 #' @param ... Not currently used.
 #' @param duplicate_contrib The method to deal with duplicate product
-#'   contributions. Either 'make.unique' to make duplicate product names unique
-#'   with [make.unique()] or 'sum' to add contributions for the same products
-#'   across subperiods.
+#'   contributions. Either `"make.unique"` to make duplicate product names
+#'   unique with [make.unique()] or `"sum"` to add contributions for the same
+#'   products across subperiods (the default).
 #'
 #' @returns
 #' A price index, averaged over subperiods, that inherits from the same
@@ -66,11 +66,11 @@ mean.chainable_piar_index <- function(
   x,
   ...,
   weights = NULL,
-  window = ntime(x),
+  window = NULL,
   na.rm = FALSE,
   contrib = TRUE,
   r = 1,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 ) {
   chkDots(...)
   mean_index(
@@ -81,7 +81,7 @@ mean.chainable_piar_index <- function(
     contrib = contrib,
     r = r,
     chainable = TRUE,
-    duplicate_contrib = duplicate_contrib
+    duplicate_contrib = match.arg(duplicate_contrib)
   )
 }
 
@@ -91,11 +91,11 @@ mean.direct_piar_index <- function(
   x,
   ...,
   weights = NULL,
-  window = ntime(x),
+  window = NULL,
   na.rm = FALSE,
   contrib = TRUE,
   r = 1,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 ) {
   chkDots(...)
   mean_index(
@@ -106,7 +106,7 @@ mean.direct_piar_index <- function(
     contrib = contrib,
     r = r,
     chainable = FALSE,
-    duplicate_contrib = duplicate_contrib
+    duplicate_contrib = match.arg(duplicate_contrib)
   )
 }
 
@@ -133,7 +133,7 @@ mean_index <- function(
     dim(weights) <- c(nlevels(x), ntime(x))
   }
 
-  window <- as.integer(window)
+  window <- as.integer(window %||% ntime(x))
   if (length(window) > 1L || window < 1L) {
     stop("'window' must be a positive length 1 integer")
   }

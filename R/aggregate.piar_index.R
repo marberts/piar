@@ -48,10 +48,7 @@
 #' aggregate if the elementary indexes are built from several sources (as with
 #' [`merge()`][merge.piar_index]). In this case the contribution for
 #' a price relative in the aggregated index will be correct, but the sum of all
-#' contributions will not equal the change in the value of the index. This can
-#' also happen when aggregating an already aggregated index in which missing
-#' index values have been imputed (i.e., when `na.rm = TRUE` and
-#' `contrib = FALSE`).
+#' contributions will not equal the change in the value of the index.
 #'
 #' If two aggregation structures are given then the steps above are done for
 #' each aggregation structure, with the aggregation for `pias` done with a
@@ -85,9 +82,10 @@
 #'   returned.
 #' @param ... Not currently used.
 #' @param duplicate_contrib The method to deal with duplicate product
-#'   contributions. Either 'make.unique' to treat duplicate
+#'   contributions. Either `"make.unique"` to treat duplicate
 #'   products as distinct products and make their names unique
-#'   with [make.unique()] or 'sum' to add contributions for each product.
+#'   with [make.unique()] or `"sum"` to add contributions for each product
+#'   (the default).
 #'
 #' @returns
 #' An aggregate price index that inherits from the class of `x`.
@@ -151,7 +149,7 @@ aggregate.chainable_piar_index <- function(
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 ) {
   chkDots(...)
   aggregate_index(
@@ -163,7 +161,7 @@ aggregate.chainable_piar_index <- function(
     r = r,
     include_ea = include_ea,
     chainable = TRUE,
-    duplicate_contrib = duplicate_contrib
+    duplicate_contrib = match.arg(duplicate_contrib)
   )
 }
 
@@ -178,7 +176,7 @@ aggregate.direct_piar_index <- function(
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("make.unique", "sum")
+  duplicate_contrib = c("sum", "make.unique")
 ) {
   chkDots(...)
   aggregate_index(
@@ -190,7 +188,7 @@ aggregate.direct_piar_index <- function(
     r = r,
     include_ea = include_ea,
     chainable = FALSE,
-    duplicate_contrib = duplicate_contrib
+    duplicate_contrib = match.arg(duplicate_contrib)
   )
 }
 
@@ -346,9 +344,9 @@ aggregate_ <- function(
 #' @noRd
 # This function is inefficient because it recalculates the mean, but this
 # ensures that contributions are still produced with missing index values.
-aggregate_contrib <- function(r, duplicate_contrib = c("make.unique", "sum")) {
+aggregate_contrib <- function(r, duplicate_contrib) {
   arithmetic_weights <- gpindex::transmute_weights(r, 1)
-  duplicate_contrib <- match.arg(duplicate_contrib)
+  force(duplicate_contrib)
   function(x, rel, w) {
     w <- arithmetic_weights(rel, w)
     res <- Map(`*`, x, w)

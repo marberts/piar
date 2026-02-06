@@ -31,7 +31,7 @@ ms_elementary["B1", ]
 
 ## -----------------------------------------------------------------------------
 hierarchy <- with(
-  ms_weights, 
+  ms_weights,
   c(expand_classification(classification), list(business))
 )
 
@@ -51,12 +51,12 @@ ms_index_chained
 t(apply(as.matrix(ms_index), 1, cumprod))
 
 ## -----------------------------------------------------------------------------
-rebase(ms_index_chained, ms_index_chained[, "202004"])
+rebase(ms_index_chained, base = ms_index_chained[, "202004"])
 
 ## -----------------------------------------------------------------------------
 rebase(
   ms_index_chained,
-  mean(window(ms_index_chained, "202003"))
+  base = mean(window(ms_index_chained, "202003"))
 )
 
 ## -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ classification_sps <- expand_classification(
 )
 
 pias_sps <- with(
-  ms_weights, 
+  ms_weights,
   aggregation_structure(c(classification_sps, list(business)), weight)
 )
 
@@ -98,7 +98,9 @@ pias_sps2 <- lapply(
   \(x) aggregation_structure(c(x, list(ms_weights$business)), ms_weights$weight)
 )
 
-index_sps2 <- lapply(pias_sps2, \(x) aggregate(index_sps, x, include_ea = FALSE))
+index_sps2 <- lapply(pias_sps2, \(x) {
+  aggregate(index_sps, x, include_ea = FALSE)
+})
 
 ## -----------------------------------------------------------------------------
 Reduce(merge, index_sps2)
@@ -118,7 +120,7 @@ ms_elementary2 <- elementary_index(
 )
 
 ## -----------------------------------------------------------------------------
-pias_matrix <- as.matrix(pias) > 0 
+pias_matrix <- as.matrix(pias) > 0
 pias_matrix %*% is.na(ms_elementary2) / rowSums(pias_matrix)
 
 ## -----------------------------------------------------------------------------
@@ -143,16 +145,21 @@ library(gpindex)
 
 tw <- grouped(index_weights("Tornqvist"))
 
-ms_prices2[c("back_price", "back_quantity")] <- 
-  ms_prices2[back_period(ms_prices2$period, ms_prices2$product),
-             c("price", "quantity")]
+ms_prices2[c("back_price", "back_quantity")] <-
+  ms_prices2[
+    back_period(ms_prices2$period, ms_prices2$product),
+    c("price", "quantity")
+  ]
 
 ms_prices2 <- na.omit(ms_prices2) # can't have NAs for Tornqvist weights
 
 ms_prices2$weight <- with(
   ms_prices2,
   tw(
-    price, back_price, quantity, back_quantity,
+    price,
+    back_price,
+    quantity,
+    back_quantity,
     group = interaction(period, business)
   )
 )
@@ -168,7 +175,8 @@ elementary_index(
 ms_elementary <- elementary_index(
   ms_prices,
   relatives ~ period + business,
-  contrib = TRUE, na.rm = TRUE
+  contrib = TRUE,
+  na.rm = TRUE
 )
 
 ## -----------------------------------------------------------------------------
@@ -183,7 +191,7 @@ ms_prices2 <- subset(ms_prices, period >= "202003")
 
 ## -----------------------------------------------------------------------------
 ms_elementary1 <- elementary_index(
-  ms_prices1, 
+  ms_prices1,
   price_relative(price, period = period, product = product) ~ period + business,
   na.rm = TRUE
 )
@@ -208,7 +216,9 @@ chain(stack(ms_index1, ms_index2))
 
 ## -----------------------------------------------------------------------------
 ms_elementary2 <- ms_prices |>
-  transform(imputed_price = carry_forward(price, period = period, product = product)) |>
+  transform(
+    imputed_price = carry_forward(price, period = period, product = product)
+  ) |>
   elementary_index(
     price_relative(imputed_price, period = period, product = product) ~
       period + business,
@@ -219,7 +229,7 @@ ms_elementary2
 
 ## -----------------------------------------------------------------------------
 ms_index <- aggregate(ms_elementary2, pias, na.rm = TRUE)
- 
+
 ms_index
 
 ## -----------------------------------------------------------------------------
@@ -238,7 +248,8 @@ ms_elementary1
 ms_elementary2 <- ms_prices2 |>
   transform(period = factor(period, levels = time(ms_elementary1))) |>
   elementary_index(
-    price_relative(price, period = period, product = product) ~ period + business,
+    price_relative(price, period = period, product = product) ~ period +
+      business,
     na.rm = TRUE
   )
 
@@ -276,7 +287,7 @@ ms_elementary
 
 ## -----------------------------------------------------------------------------
 pias <- with(
-  weights, 
+  weights,
   Map(aggregation_structure, list(hierarchy), split(weight, period))
 )
 
@@ -310,7 +321,8 @@ w <- mapply(
 laspeyres_contrib <- contrib(laspeyres)
 paasche_contrib <- contrib(paasche)
 
-fisher_contrib <- w[1, col(laspeyres_contrib)] * laspeyres_contrib +
+fisher_contrib <- w[1, col(laspeyres_contrib)] *
+  laspeyres_contrib +
   w[2, col(paasche_contrib)] * paasche_contrib
 
 fisher_contrib
@@ -320,4 +332,3 @@ chain(fisher)
 
 ## -----------------------------------------------------------------------------
 sqrt(as.matrix(chain(laspeyres)) * as.matrix(chain(paasche)))
-

@@ -8,7 +8,7 @@ test_that("splitting works", {
     )
   )
   expect_equal(
-    split(x, c(1, 1, 2), margin = "time"),
+    split(x, c(1, 1, 2), along = "time"),
     list(
       "1" = as_index(matrix(1:4, 2)),
       "2" = as_index(matrix(5:6, 2, dimnames = list(1:2, 3)))
@@ -22,12 +22,12 @@ test_that("replacement works", {
   expect_equal(x, as_index(matrix(c(1, 2), 2, 3)))
 
   x <- as_index(matrix(1:6, 2))
-  split(x, c(1, 1, 2), margin = "time") <- 1:2
+  split(x, c(1, 1, 2), along = "time") <- 1:2
   expect_equal(x, as_index(matrix(c(1, 1, 1, 1, 2, 2), 2)))
 
   y <- x
-  split(y, factor(c(1, 1, 2), levels = character(0)), margin = "time") <- list()
+  split(y, factor(c(1, 1, 2), levels = character(0)), along = "time") <- list()
   expect_identical(x, y)
 
-  expect_warning(split(x, 1:3, margin = "time") <- 1:2)
+  expect_warning(split(x, 1:3, along = "time") <- 1:2)
 })

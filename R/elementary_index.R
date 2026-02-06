@@ -12,7 +12,8 @@
 #' is, for every combination of elementary aggregate and time period,
 #' `elementary_index()` calculates an index based on a generalized mean of
 #' order `r` and, optionally, percent-change contributions. Product names should
-#' be unique within each time period when making contributions, and, if not, are
+#' be unique within each elementary aggregate at each time period when making
+#' contributions, and, if not, are
 #' passed to [make.unique()] with a warning. The default
 #' (\code{r = 0} and no weights) makes Jevons elementary indexes. See chapter 8
 #' (pp. 175--190) of the CPI manual (2020) for more detail about making
@@ -177,8 +178,8 @@ elementary_index.default <- function(x, ...) {
 elementary_index.numeric <- function(
   x,
   ...,
-  period = gl(1, length(x)),
-  ea = gl(1, length(x)),
+  period = NULL,
+  ea = NULL,
   weights = NULL,
   product = NULL,
   chainable = TRUE,
@@ -193,8 +194,9 @@ elementary_index.numeric <- function(
       stop("all elements of 'weights' must be non-negative")
     }
   }
-  period <- as.factor(period)
-  ea <- as.factor(ea)
+  period <- as.factor(period %||% gl(1, length(x)))
+  ea <- as.factor(ea %||% gl(1, length(x)))
+  ea_by_period <- period:ea
   time <- levels(period)
   levels <- levels(ea)
 
@@ -212,11 +214,10 @@ elementary_index.numeric <- function(
     if (is.null(names(x))) {
       names(x) <- paste(ea, sequential_names(period, ea), sep = ".")
     } else {
-      names(x) <- valid_product_names(names(x), period)
+      names(x) <- valid_product_names(names(x), ea_by_period)
     }
   }
 
-  ea_by_period <- period:ea
   x <- split(x, ea_by_period)
   if (is.null(weights)) {
     weights <- list(NULL)

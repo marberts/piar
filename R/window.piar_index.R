@@ -26,6 +26,7 @@
 #' @family index methods
 #' @importFrom stats window
 #' @export
+# Optional arguments are before ... to agree with default in stats::window().
 window.piar_index <- function(x, start = NULL, end = NULL, ...) {
   chkDots(...)
   x[, index_window(x, start, end)]
@@ -43,8 +44,8 @@ window.piar_index <- function(x, start = NULL, end = NULL, ...) {
 #' Get the indexes for a window of time periods
 #' @noRd
 index_window <- function(x, start, end) {
-  start <- match_time(as.character(start %||% start(x)), x)
-  end <- match_time(as.character(end %||% end(x)), x)
+  start <- match_time(as.character(start %||% x$time[1L]), x)
+  end <- match_time(as.character(end %||% last(x$time)), x)
 
   if (start > end) {
     stop("'start' must refer to a time period before 'end'")
