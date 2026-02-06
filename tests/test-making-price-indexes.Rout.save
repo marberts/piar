@@ -1,5 +1,5 @@
 
-R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
+R version 4.5.2 (2025-10-31) -- "[Not] Part in a Rumble"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -79,7 +79,7 @@ levels 202001    202002    202003 202004
 > 
 > ## -----------------------------------------------------------------------------
 > hierarchy <- with(
-+   ms_weights, 
++   ms_weights,
 +   c(expand_classification(classification), list(business))
 + )
 > 
@@ -131,7 +131,7 @@ levels 202001    202002    202003    202004
     B5      1 1.3007239 1.3827662 6.3279338
 > 
 > ## -----------------------------------------------------------------------------
-> rebase(ms_index_chained, ms_index_chained[, "202004"])
+> rebase(ms_index_chained, base = ms_index_chained[, "202004"])
 Fixed-base price index for 8 levels over 4 time periods 
       time
 levels    202001    202002    202003 202004
@@ -147,7 +147,7 @@ levels    202001    202002    202003 202004
 > ## -----------------------------------------------------------------------------
 > rebase(
 +   ms_index_chained,
-+   mean(window(ms_index_chained, "202003"))
++   base = mean(window(ms_index_chained, "202003"))
 + )
 Fixed-base price index for 8 levels over 4 time periods 
       time
@@ -185,7 +185,7 @@ levels    202001    202002    202003    202004
 + )
 > 
 > pias_sps <- with(
-+   ms_weights, 
++   ms_weights,
 +   aggregation_structure(c(classification_sps, list(business)), weight)
 + )
 > 
@@ -221,7 +221,9 @@ levels 202001    202002    202003   202004
 +   \(x) aggregation_structure(c(x, list(ms_weights$business)), ms_weights$weight)
 + )
 > 
-> index_sps2 <- lapply(pias_sps2, \(x) aggregate(index_sps, x, include_ea = FALSE))
+> index_sps2 <- lapply(pias_sps2, \(x) {
++   aggregate(index_sps, x, include_ea = FALSE)
++ })
 > 
 > ## -----------------------------------------------------------------------------
 > Reduce(merge, index_sps2)
@@ -262,7 +264,7 @@ levels 202001   202002   202003   202004
 + )
 > 
 > ## -----------------------------------------------------------------------------
-> pias_matrix <- as.matrix(pias) > 0 
+> pias_matrix <- as.matrix(pias) > 0
 > pias_matrix %*% is.na(ms_elementary2) / rowSums(pias_matrix)
       time
 levels 202001    202002    202003    202004
@@ -324,16 +326,21 @@ levels 202001    202002    202003    202004
 > 
 > tw <- grouped(index_weights("Tornqvist"))
 > 
-> ms_prices2[c("back_price", "back_quantity")] <- 
-+   ms_prices2[back_period(ms_prices2$period, ms_prices2$product),
-+              c("price", "quantity")]
+> ms_prices2[c("back_price", "back_quantity")] <-
++   ms_prices2[
++     back_period(ms_prices2$period, ms_prices2$product),
++     c("price", "quantity")
++   ]
 > 
 > ms_prices2 <- na.omit(ms_prices2) # can't have NAs for Tornqvist weights
 > 
 > ms_prices2$weight <- with(
 +   ms_prices2,
 +   tw(
-+     price, back_price, quantity, back_quantity,
++     price,
++     back_price,
++     quantity,
++     back_quantity,
 +     group = interaction(period, business)
 +   )
 + )
@@ -356,7 +363,8 @@ levels 202001    202002    202003   202004
 > ms_elementary <- elementary_index(
 +   ms_prices,
 +   relatives ~ period + business,
-+   contrib = TRUE, na.rm = TRUE
++   contrib = TRUE,
++   na.rm = TRUE
 + )
 > 
 > ## -----------------------------------------------------------------------------
@@ -390,7 +398,7 @@ product 202001      202002     202003       202004
 > 
 > ## -----------------------------------------------------------------------------
 > ms_elementary1 <- elementary_index(
-+   ms_prices1, 
++   ms_prices1,
 +   price_relative(price, period = period, product = product) ~ period + business,
 +   na.rm = TRUE
 + )
@@ -448,7 +456,9 @@ levels 202001    202002    202003    202004
 > 
 > ## -----------------------------------------------------------------------------
 > ms_elementary2 <- ms_prices |>
-+   transform(imputed_price = carry_forward(price, period = period, product = product)) |>
++   transform(
++     imputed_price = carry_forward(price, period = period, product = product)
++   ) |>
 +   elementary_index(
 +     price_relative(imputed_price, period = period, product = product) ~
 +       period + business,
@@ -466,7 +476,7 @@ levels 202001    202002    202003   202004
 > 
 > ## -----------------------------------------------------------------------------
 > ms_index <- aggregate(ms_elementary2, pias, na.rm = TRUE)
->  
+> 
 > ms_index
 Period-over-period price index for 8 levels over 4 time periods 
       time
@@ -502,7 +512,8 @@ levels 202001    202002    202003   202004
 > ms_elementary2 <- ms_prices2 |>
 +   transform(period = factor(period, levels = time(ms_elementary1))) |>
 +   elementary_index(
-+     price_relative(price, period = period, product = product) ~ period + business,
++     price_relative(price, period = period, product = product) ~ period +
++       business,
 +     na.rm = TRUE
 +   )
 > 
@@ -618,7 +629,7 @@ levels   202004
 > 
 > ## -----------------------------------------------------------------------------
 > pias <- with(
-+   weights, 
++   weights,
 +   Map(aggregation_structure, list(hierarchy), split(weight, period))
 + )
 > 
@@ -673,7 +684,8 @@ levels 202001    202002    202003   202004
 > laspeyres_contrib <- contrib(laspeyres)
 > paasche_contrib <- contrib(paasche)
 > 
-> fisher_contrib <- w[1, col(laspeyres_contrib)] * laspeyres_contrib +
+> fisher_contrib <- w[1, col(laspeyres_contrib)] *
++   laspeyres_contrib +
 +   w[2, col(paasche_contrib)] * paasche_contrib
 > 
 > fisher_contrib
@@ -719,7 +731,6 @@ levels 202001    202002    202003    202004
     B4      1 1.5107763 1.2021080 5.5011904
     B5      1 1.5107763 1.2021080 5.5011904
 > 
-> 
 > proc.time()
    user  system elapsed 
-  0.313   0.062   0.356 
+  0.327   0.063   0.380 
