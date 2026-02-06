@@ -27,7 +27,7 @@ level of the classification, ordered so that moving down the list goes down
 the hierarchy (as made by \code{expand_classification()}).}
 
 \item{sep}{A character used to combine codes/labels across elements of \code{...}.
-The default uses ':'.}
+The default uses \code{":"}.}
 }
 \value{
 \code{expand_classification()} returns a list with a entry for each level
@@ -73,6 +73,9 @@ expand_classification(c("01.1.1", "01.1.2", "01.2.1"), width = 2)
 
 \code{\link[=split_classification]{split_classification()}} to expand a classification by splitting along
 a delimiter.
+
+\code{\link[=combine_classifications]{combine_classifications()}} for combining multiple hierarchical
+classifications.
 
 \code{csh_from_digits()} in the \pkg{accumulate} package for different handling
 of unbalanced classifications.
