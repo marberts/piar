@@ -17,7 +17,7 @@ See \code{\link[=strsplit]{strsplit()}}.}
 \item{...}{Additional argument to pass to \code{\link[=strsplit]{strsplit()}}.}
 
 \item{sep}{A character used to delineate levels in \code{x} in the result. The
-default separates levels by '.'.}
+default separates levels by \code{"."}.}
 
 \item{pad}{A string used to pad the shorter labels for an unbalanced
 classification. The default pads with NA.}
@@ -50,4 +50,7 @@ split_classification(c("01.1.1", "01.1.2", "01.2.1"), ".", fixed = TRUE)
 
 \code{\link[=expand_classification]{expand_classification()}} to expand a classification by the width of the
 levels.
+
+\code{\link[=combine_classifications]{combine_classifications()}} for combining multiple hierarchical
+classifications.
 }
