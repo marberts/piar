@@ -30,7 +30,7 @@ split_classification(x, split, ..., sep = ".", pad = NA)
 - sep:
 
   A character used to delineate levels in `x` in the result. The default
-  separates levels by '.'.
+  separates levels by `"."`.
 
 - pad:
 
@@ -49,6 +49,9 @@ to make a price-index aggregation structure.
 
 [`expand_classification()`](https://marberts.github.io/piar/reference/expand_classification.md)
 to expand a classification by the width of the levels.
+
+[`combine_classifications()`](https://marberts.github.io/piar/reference/combine_classifications.md)
+for combining multiple hierarchical classifications.
 
 ## Examples
 

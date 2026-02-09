@@ -41,7 +41,7 @@ interact_classifications(..., sep = ":")
 - sep:
 
   A character used to combine codes/labels across elements of `...`. The
-  default uses ':'.
+  default uses `":"`.
 
 ## Value
 
@@ -58,6 +58,9 @@ to make a price-index aggregation structure.
 
 [`split_classification()`](https://marberts.github.io/piar/reference/split_classification.md)
 to expand a classification by splitting along a delimiter.
+
+[`combine_classifications()`](https://marberts.github.io/piar/reference/combine_classifications.md)
+for combining multiple hierarchical classifications.
 
 `csh_from_digits()` in the accumulate package for different handling of
 unbalanced classifications.

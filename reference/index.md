@@ -34,10 +34,10 @@ Helpful functions for working with price indexes.
   : Stack price indexes
 - [`` `[`( ``*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/sub-.piar_index.md)
   [`` `[<-`( ``*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/sub-.piar_index.md)
-  : Extract and replace index values
+  : Extract index values
 - [`window(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/window.piar_index.md)
   [`` `window<-`( ``*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/window.piar_index.md)
-  : Index window
+  : Window a price index
 - [`head(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/head.piar_index.md)
   [`tail(`*`<piar_index>`*`)`](https://marberts.github.io/piar/reference/head.piar_index.md)
   : Return the first/last parts of an index
@@ -92,6 +92,8 @@ Functions to make and work with price-index aggregation structures.
   : Expand a hierarchical classification
 - [`split_classification()`](https://marberts.github.io/piar/reference/split_classification.md)
   : Split a hierarchical classification
+- [`combine_classifications()`](https://marberts.github.io/piar/reference/combine_classifications.md)
+  : Combine hierarchical classifications
 - [`as_aggregation_structure()`](https://marberts.github.io/piar/reference/as_aggregation_structure.md)
   : Coerce to an aggregation structure
 - [`as.matrix(`*`<piar_aggregation_structure>`*`)`](https://marberts.github.io/piar/reference/as.matrix.piar_aggregation_structure.md)

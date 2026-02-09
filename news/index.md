@@ -38,6 +38,13 @@
 
 - The `margin` argument in `split(index)` has been renamed to `along`.
 
+### Improvements
+
+- Added a new function
+  [`combine_classifications()`](https://marberts.github.io/piar/reference/combine_classifications.md)
+  to more easily build an aggregation structure that spans multiple
+  hierarchical classifications.
+
 ### Bug fixes
 
 - Setting `contrib = FALSE` in `aggregate(index)` always returns an
