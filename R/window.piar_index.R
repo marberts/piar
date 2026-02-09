@@ -1,4 +1,4 @@
-#' Index window
+#' Window a price index
 #'
 #' Extract and replace index values over a window of time periods.
 #'

@@ -3,7 +3,7 @@
 \name{window.piar_index}
 \alias{window.piar_index}
 \alias{window<-.piar_index}
-\title{Index window}
+\title{Window a price index}
 \usage{
 \method{window}{piar_index}(x, start = NULL, end = NULL, ...)
 

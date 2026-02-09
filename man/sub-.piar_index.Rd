@@ -3,7 +3,7 @@
 \name{[.piar_index}
 \alias{[.piar_index}
 \alias{[<-.piar_index}
-\title{Extract and replace index values}
+\title{Extract index values}
 \usage{
 \method{[}{piar_index}(x, i, j, ...)
 

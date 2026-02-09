@@ -26,6 +26,11 @@ in `elementary_index()`.
 
 - The `margin` argument in `split(index)` has been renamed to `along`.
 
+## Improvements
+
+- Added a new function `combine_classifications()` to more easily build an
+aggregation structure that spans multiple hierarchical classifications.
+
 ## Bug fixes
 
 - Setting `contrib = FALSE` in `aggregate(index)` always returns an index with

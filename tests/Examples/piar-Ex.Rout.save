@@ -1,5 +1,5 @@
 
-R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
+R version 4.5.2 (2025-10-31) -- "[Not] Part in a Rumble"
 Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
@@ -374,6 +374,46 @@ levels         1 2 3
 > 
 > 
 > cleanEx()
+> nameEx("combine_classifications")
+> ### * combine_classifications
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: combine_classifications
+> ### Title: Combine hierarchical classifications
+> ### Aliases: combine_classifications
+> 
+> ### ** Examples
+> 
+> # Combine an unbalanced industry classification with a balanced
+> # geographic classification
+> 
+> industry <- c("111", "112", "12")
+> region <- c("11", "21", "22")
+> 
+> combine_classifications(
++   expand_classification(industry, pad = "0"),
++   expand_classification(region)
++ )
+[[1]]
+[1] "1" "1" "1"
+
+[[2]]
+[1] "11" "11" "12"
+
+[[3]]
+[1] "111" "112" "120"
+
+[[4]]
+[1] "111.1" "112.2" "120.2"
+
+[[5]]
+[1] "111.11" "112.21" "120.22"
+
+> 
+> 
+> 
+> cleanEx()
 > nameEx("contrib")
 > ### * contrib
 > 
@@ -405,7 +445,7 @@ levels         1 2 3
 > 
 > contrib(index)
        time
-product        1         2
+product         1         2
     a.1 0.0000000 0.5081686
     a.2 0.2440169 0.6442213
     b.1 0.3905243 2.0513858
@@ -945,7 +985,7 @@ levels 1 2 3 4 5 6
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: [.piar_index
-> ### Title: Extract and replace index values
+> ### Title: Extract index values
 > ### Aliases: [.piar_index [<-.piar_index
 > 
 > ### ** Examples
@@ -1094,7 +1134,7 @@ $ea
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: window.piar_index
-> ### Title: Index window
+> ### Title: Window a price index
 > ### Aliases: window.piar_index window<-.piar_index
 > 
 > ### ** Examples
@@ -1126,7 +1166,7 @@ levels 1 2 3
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.126 0.008 0.134 0 0 
+Time elapsed:  0.277 0.027 0.316 0 0 
 > grDevices::dev.off()
 null device 
           1 

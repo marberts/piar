@@ -10,7 +10,7 @@
 #'   See [strsplit()].
 #' @param ... Additional argument to pass to [strsplit()].
 #' @param sep A character used to delineate levels in `x` in the result. The
-#'   default separates levels by '.'.
+#'   default separates levels by `"."`.
 #' @param pad A string used to pad the shorter labels for an unbalanced
 #'   classification. The default pads with NA.
 #'
@@ -23,6 +23,9 @@
 #'
 #' [expand_classification()] to expand a classification by the width of the
 #' levels.
+#'
+#' [combine_classifications()] for combining multiple hierarchical
+#' classifications.
 #'
 #' @examples
 #' #' # A simple classification structure

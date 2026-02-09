@@ -67,6 +67,7 @@ reference:
   - aggregation_structure
   - expand_classification
   - split_classification
+  - combine_classifications
   - as_aggregation_structure
   - as.matrix.piar_aggregation_structure
   - weights.piar_aggregation_structure

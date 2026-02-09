@@ -15,7 +15,7 @@
 #'   level of the classification, ordered so that moving down the list goes down
 #'   the hierarchy (as made by `expand_classification()`).
 #' @param sep A character used to combine codes/labels across elements of `...`.
-#'   The default uses ':'.
+#'   The default uses `":"`.
 #' @param pad A string used to pad the shorter labels for an unbalanced
 #'   classification. The default pads with NA.
 #'
@@ -31,6 +31,9 @@
 #'
 #' [split_classification()] to expand a classification by splitting along
 #' a delimiter.
+#'
+#' [combine_classifications()] for combining multiple hierarchical
+#' classifications.
 #'
 #' `csh_from_digits()` in the \pkg{accumulate} package for different handling
 #' of unbalanced classifications.

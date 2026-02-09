@@ -106,12 +106,12 @@ And an aggregation structure.
 # industrial classifications
 
 ms_weights
-#>   business classification weight level1 level2
-#> 1       B1             11    553      1     11
-#> 2       B2             11    646      1     11
-#> 3       B3             11    312      1     11
-#> 4       B4             12    622      1     12
-#> 5       B5             12    330      1     12
+#>   business classification weight
+#> 1       B1             11    553
+#> 2       B2             11    646
+#> 3       B3             11    312
+#> 4       B4             12    622
+#> 5       B5             12    330
 
 ms_weights[c("level1", "level2")] <-
   expand_classification(ms_weights$classification)
@@ -164,10 +164,6 @@ the contribution guidelines for this project for more information.
 
 Balk, B. M. (2008). *Price and Quantity Index Numbers*. Cambridge
 University Press.
-
-Chiru, R., Huang, N., Lequain, M. Smith, P., and Wright, A. (2015). *The
-Canadian Consumer Price Index Reference Paper*, Statistics Canada
-catalogue 62-553-X. Statistics Canada.
 
 ILO, IMF, UNECE, OECD, and World Bank. (2004). *Producer Price Index
 Manual: Theory and Practice*. International Monetary Fund.
