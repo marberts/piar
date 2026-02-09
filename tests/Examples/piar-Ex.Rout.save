@@ -985,7 +985,7 @@ levels 1 2 3 4 5 6
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: [.piar_index
-> ### Title: Extract and replace index values
+> ### Title: Extract index values
 > ### Aliases: [.piar_index [<-.piar_index
 > 
 > ### ** Examples
@@ -1134,7 +1134,7 @@ $ea
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: window.piar_index
-> ### Title: Index window
+> ### Title: Window a price index
 > ### Aliases: window.piar_index window<-.piar_index
 > 
 > ### ** Examples

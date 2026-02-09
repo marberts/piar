@@ -1,4 +1,4 @@
-#' Extract and replace index values
+#' Extract index values
 #'
 #' Methods to extract and replace index values like a matrix.
 #'
