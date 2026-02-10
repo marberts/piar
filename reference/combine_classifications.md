@@ -6,14 +6,14 @@ after another.
 ## Usage
 
 ``` r
-combine_classifications(x, y, sep = ".")
+combine_classifications(..., sep = ".")
 ```
 
 ## Arguments
 
-- x, y:
+- ...:
 
-  A list with a entry for each level in classification giving the
+  A collection of lists, one for each classification, each giving the
   "digits" that represent each level in the hierarchy, as made by
   [`expand_classification()`](https://marberts.github.io/piar/reference/expand_classification.md)
   or
@@ -21,8 +21,8 @@ combine_classifications(x, y, sep = ".")
 
 - sep:
 
-  A character used to separate `x` and `y`. The default separates levels
-  across classifications by `"."`.
+  A character used to separate the classifications in `...`. The default
+  separates levels across classifications by `"."`.
 
 ## Value
 
