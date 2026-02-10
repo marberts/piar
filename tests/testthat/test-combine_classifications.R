@@ -14,6 +14,7 @@ test_that("corner cases work", {
   x <- list(c("11", "12"), c("111", "121"))
   expect_identical(combine_classifications(x, list()), x)
   expect_identical(combine_classifications(list(), x), x)
+  expect_identical(combine_classifications(list(), list()), list())
 })
 
 test_that("combining classifications errors with unequal length", {

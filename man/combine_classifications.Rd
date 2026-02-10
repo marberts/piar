@@ -4,14 +4,14 @@
 \alias{combine_classifications}
 \title{Combine hierarchical classifications}
 \usage{
-combine_classifications(x, y, sep = ".")
+combine_classifications(..., sep = ".")
 }
 \arguments{
-\item{x, y}{A list with a entry for each level in classification giving the
-"digits" that represent each level in the hierarchy, as made
+\item{...}{A collection of lists, one for each classification, each giving
+the "digits" that represent each level in the hierarchy, as made
 by \code{\link[=expand_classification]{expand_classification()}} or \code{\link[=split_classification]{split_classification()}}.}
 
-\item{sep}{A character used to separate \code{x} and \code{y}. The
+\item{sep}{A character used to separate the classifications in \code{...}. The
 default separates levels across classifications by \code{"."}.}
 }
 \value{
