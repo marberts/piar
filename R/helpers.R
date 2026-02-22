@@ -121,7 +121,7 @@ subscript_index <- function(x, i) {
     return(seq_along(x))
   }
   if (anyNA(i)) {
-    stop("cannot subscript with missing values")
+    stop("cannot subscript an index with missing values")
   }
   if (is.character(i)) {
     res <- match(i, x)
@@ -136,9 +136,36 @@ subscript_index <- function(x, i) {
     res <- match(x[i], x)
   }
   if (anyNA(res)) {
-    stop("subscript out of bounds")
+    stop("subscript out of bounds for index")
   }
   res
+}
+
+subscript_index_matrix <- function(x, i) {
+  if (is.logical(i)) {
+    if (nrow(i) != nlevels(x) || ncol(i) != ntime(x)) {
+      stop(
+        "'i' must have a row for each level and a column for each ",
+        "time period in 'x'"
+      )
+    }
+    if (anyNA(i)) {
+      stop("cannot subscript an index with missing values")
+    }
+    i <- which(i, arr.ind = TRUE)
+  }
+
+  if (ncol(i) != 2L) {
+    stop("'i' must have exactly two columns")
+  }
+  if (is.numeric(i) && any(i < 0L, na.rm = TRUE)) {
+    stop("cannot subscript an index using a matrix with negative values")
+  }
+
+  cbind(
+    subscript_index(x$levels, i[, 1L]),
+    subscript_index(x$time, i[, 2L])
+  )
 }
 
 match_dim <- function(what = c("time", "levels")) {
