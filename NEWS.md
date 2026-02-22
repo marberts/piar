@@ -31,6 +31,9 @@ in `elementary_index()`.
 - Added a new function `combine_classifications()` to more easily build an
 aggregation structure that spans multiple hierarchical classifications.
 
+- Subscripting an index object with a matrix is now more flexible and can
+return/replace a list of index objects.
+
 ## Bug fixes
 
 - Setting `contrib = FALSE` in `aggregate(index)` always returns an index with

@@ -17,7 +17,8 @@ details.}
 
 \item{...}{Not currently used.}
 
-\item{value}{A numeric vector or price index. See details.}
+\item{value}{A numeric vector, price index, or list of price indexes.
+See details.}
 }
 \value{
 A price index that inherits from the same class as \code{x}.
@@ -29,8 +30,8 @@ Methods to extract and replace index values like a matrix.
 The extraction method treats \code{x} like a matrix of index values with
 (named) rows for each level and columns for each time period in
 \code{x}. Unlike a matrix, dimensions are never dropped as subscripting
-\code{x} always returns an index object. This means that subscripting with a
-matrix is not possible, and only a "submatrix" can be extracted. As \code{x}
+\code{x} always returns an index object. The one exception is when subscripting
+with a matrix, in which case a list of index values is returned. As \code{x}
 is not an atomic vector, subscripting with a single index like \code{x[1]}
 extracts all time periods for that level.
 
@@ -41,9 +42,8 @@ percent-change contributions of \code{x[i, j]} are replaced with those for the
 corresponding levels of \code{value}. If \code{value} is not an index, then it is
 coerced to a numeric vector and behaves the same as replacing values in a
 matrix. Note that replacing the values of an index will remove the
-corresponding percent-change contributions (if any). Unlike extraction, it
-is possible to replace value in \code{x} using a logical matrix or a two-column
-matrix of indices.
+corresponding percent-change contributions (if any). When replacing with a
+matrix, \code{value} can be a list of index objects.
 }
 \examples{
 index <- as_index(matrix(1:6, 2))
