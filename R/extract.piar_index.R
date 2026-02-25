@@ -86,7 +86,11 @@ extract_index <- function(x, levels, periods) {
     if (is_index(value)) {
       value <- list(value)
     }
-    x <- replace_matrix(x, i, value)
+    if (is.list(value)) {
+      x <- replace_matrix_list(x, i, value)
+    } else {
+      x <- replace_matrix_numeric(x, i, value)
+    }
   } else {
     levels <- subscript_index(x$levels, i)
     periods <- subscript_index(x$time, j)
@@ -130,27 +134,44 @@ extract_index <- function(x, levels, periods) {
 
 #' Internal replacement functions
 #' @noRd
-replace_matrix <- function(x, i, value) {
-  if (is.list(value)) {
-    n <- length(value)
-    if (n == 0L) {
-      stop("replacement has length zero")
-    }
-    if (nrow(i) %% n != 0) {
-      warning(
-        "number of items to replace is not a multiple of replacement length"
-      )
-    }
-    j <- 0
-    for (k in seq_len(nrow(i))) {
-      j <- j %% n + 1
-      x <- replace_index(x, i[k, 1L], i[k, 2L], value[[j]])
-    }
-  } else {
-    x$index[i] <- as.numeric(value)
-    if (!is.null(x$contrib)) {
-      x$contrib[i] <- list(numeric(0L))
-    }
+replace_matrix_list <- function(x, i, value) {
+  if (nrow(i) == 0L) {
+    return(x)
+  }
+  n <- length(value)
+  if (n == 0L) {
+    stop("replacement has length zero")
+  }
+  if (nrow(i) %% n != 0) {
+    warning(
+      "number of items to replace is not a multiple of replacement length"
+    )
+  }
+  if (any(vapply(value, \(x) ntime(x) * nlevels(x), integer(1L)) > 1L)) {
+    stop("'value' must be a list of indexes with one level and time period")
+  }
+  value <- rep_len(value, nrow(i))
+  index <- vapply(value, \(x) x$index, numeric(1L))
+  contributions <- unlist(lapply(value, \(x) x$contrib), recursive = FALSE)
+  has_contrib <- any(vapply(contributions, Negate(is.null), logical(1L)))
+  # It's possible that only some elements of `value` have contributions.
+  if (has_contrib || !is.null(x$contrib)) {
+    contributions[lengths(contributions) == 0L] <- list(numeric(0L))
+  }
+  if (is.null(x$contrib) && has_contrib) {
+    x$contrib <- contrib_skeleton(x$levels, x$time)
+  }
+  x$index[i] <- index
+  if (!is.null(x$contrib)) {
+    x$contrib[i] <- contributions
+  }
+  x
+}
+
+replace_matrix_numeric <- function(x, i, value) {
+  x$index[i] <- as.numeric(value)
+  if (!is.null(x$contrib)) {
+    x$contrib[i] <- list(numeric(0L))
   }
   x
 }

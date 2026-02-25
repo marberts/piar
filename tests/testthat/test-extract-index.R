@@ -213,11 +213,19 @@ test_that("replacement method works with a matrix", {
   )
   expect_equal(contrib(epr5[4, 1]), contrib(epr[1, 1]))
 
+  # Works when there are no contributions.
+  epr5 <- replace(epr2, is.na(epr), epr[1, 1])
+  expect_equal(
+    as.matrix(epr5),
+    replace(as.matrix(epr2), c(4, 6, 7), sqrt(2))
+  )
+  expect_equal(contrib(epr5[4, 1]), contrib(epr[1, 1]))
+
   expect_error(replace(epr, matrix(NA, 4, 2), 0))
   expect_error(epr[is.na(epr)] <- numeric(0))
   expect_error(epr[matrix(TRUE, 3, 3)] <- 1)
   expect_error(epr[matrix(1, nrow = 1, ncol = 3)] <- 1)
   expect_warning(epr[is.na(epr)] <- 1:2)
-  expect_error(epr[is.na(epr)] <- list())
   expect_error(epr[is.na(epr)] <- list(1))
+  expect_error(epr[!is.na(epr)] <- epr[1])
 })
