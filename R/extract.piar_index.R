@@ -150,6 +150,7 @@ replace_matrix_list <- function(x, i, value) {
   if (any(vapply(value, \(x) ntime(x) * nlevels(x), integer(1L)) > 1L)) {
     stop("'value' must be a list of indexes with one level and time period")
   }
+  # Make `value` the same length as replacement to avoid two warnings.
   value <- rep_len(value, nrow(i))
   index <- vapply(value, \(x) x$index, numeric(1L))
   contributions <- unlist(lapply(value, \(x) x$contrib), recursive = FALSE)
