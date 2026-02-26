@@ -7,7 +7,7 @@
 - The internal representation of index objects has changed so that both
   the `index` and `contrib` components of an index are now matrices
   instead of lists. This simplifies the code base and in some cases
-  improves performance, but will break any coding that directly uses the
+  improves performance, but will break any code that directly uses the
   internal components of an index.
 
 - A new internal optimization means that index objects without
@@ -44,6 +44,9 @@
   [`combine_classifications()`](https://marberts.github.io/piar/reference/combine_classifications.md)
   to more easily build an aggregation structure that spans multiple
   hierarchical classifications.
+
+- Subscripting an index object with a matrix is now more flexible and
+  can return/replace a list of index objects.
 
 ### Bug fixes
 

@@ -27,7 +27,7 @@ Source Software*, **9**(101), 6781.
 
 Martin S (2025). *piar: Price Index Aggregation*.
 [doi:10.5281/zenodo.10110046](https://doi.org/10.5281/zenodo.10110046),
-R package version 0.8.3.9004, <https://cran.r-project.org/package=piar>.
+R package version 0.8.3.9005, <https://cran.r-project.org/package=piar>.
 
     @Manual{,
       title = {{piar}: Price Index Aggregation},
@@ -35,5 +35,5 @@ R package version 0.8.3.9004, <https://cran.r-project.org/package=piar>.
       year = {2025},
       doi = {10.5281/zenodo.10110046},
       url = {https://cran.r-project.org/package=piar},
-      note = {R package version 0.8.3.9004},
+      note = {R package version 0.8.3.9005},
     }

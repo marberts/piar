@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,8 @@ details.</p></dd>
 
 
 <dt id="arg-value">value<a class="anchor" aria-label="anchor" href="#arg-value"></a></dt>
-<dd><p>A numeric vector or price index. See details.</p></dd>
+<dd><p>A numeric vector, price index, or list of price indexes.
+See details.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -86,8 +87,8 @@ details.</p></dd>
     <p>The extraction method treats <code>x</code> like a matrix of index values with
 (named) rows for each level and columns for each time period in
 <code>x</code>. Unlike a matrix, dimensions are never dropped as subscripting
-<code>x</code> always returns an index object. This means that subscripting with a
-matrix is not possible, and only a "submatrix" can be extracted. As <code>x</code>
+<code>x</code> always returns an index object. The one exception is when subscripting
+with a matrix, in which case a list of index values is returned. As <code>x</code>
 is not an atomic vector, subscripting with a single index like <code>x[1]</code>
 extracts all time periods for that level.</p>
 <p>The replacement method similarly treat <code>x</code> like a matrix. If <code>value</code> is
@@ -97,9 +98,8 @@ percent-change contributions of <code>x[i, j]</code> are replaced with those for
 corresponding levels of <code>value</code>. If <code>value</code> is not an index, then it is
 coerced to a numeric vector and behaves the same as replacing values in a
 matrix. Note that replacing the values of an index will remove the
-corresponding percent-change contributions (if any). Unlike extraction, it
-is possible to replace value in <code>x</code> using a logical matrix or a two-column
-matrix of indices.</p>
+corresponding percent-change contributions (if any). When replacing with a
+matrix, <code>value</code> can be a list of index objects.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

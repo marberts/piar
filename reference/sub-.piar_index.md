@@ -29,7 +29,7 @@ x[i, j, ...] <- value
 
 - value:
 
-  A numeric vector or price index. See details.
+  A numeric vector, price index, or list of price indexes. See details.
 
 ## Value
 
@@ -40,10 +40,10 @@ A price index that inherits from the same class as `x`.
 The extraction method treats `x` like a matrix of index values with
 (named) rows for each level and columns for each time period in `x`.
 Unlike a matrix, dimensions are never dropped as subscripting `x` always
-returns an index object. This means that subscripting with a matrix is
-not possible, and only a "submatrix" can be extracted. As `x` is not an
-atomic vector, subscripting with a single index like `x[1]` extracts all
-time periods for that level.
+returns an index object. The one exception is when subscripting with a
+matrix, in which case a list of index values is returned. As `x` is not
+an atomic vector, subscripting with a single index like `x[1]` extracts
+all time periods for that level.
 
 The replacement method similarly treat `x` like a matrix. If `value` is
 an index object with the same number of time periods as `x[i, j]` and it
@@ -52,9 +52,8 @@ percent-change contributions of `x[i, j]` are replaced with those for
 the corresponding levels of `value`. If `value` is not an index, then it
 is coerced to a numeric vector and behaves the same as replacing values
 in a matrix. Note that replacing the values of an index will remove the
-corresponding percent-change contributions (if any). Unlike extraction,
-it is possible to replace value in `x` using a logical matrix or a
-two-column matrix of indices.
+corresponding percent-change contributions (if any). When replacing with
+a matrix, `value` can be a list of index objects.
 
 ## See also
 

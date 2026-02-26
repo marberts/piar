@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@
 <h2 class="pkg-version" data-toc-text="development version" id="piar-development-version">piar (development version)<a class="anchor" aria-label="anchor" href="#piar-development-version"></a></h2>
 <div class="section level3">
 <h3 id="significant-changes-development-version">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
-<ul><li><p>The internal representation of index objects has changed so that both the <code>index</code> and <code>contrib</code> components of an index are now matrices instead of lists. This simplifies the code base and in some cases improves performance, but will break any coding that directly uses the internal components of an index.</p></li>
+<ul><li><p>The internal representation of index objects has changed so that both the <code>index</code> and <code>contrib</code> components of an index are now matrices instead of lists. This simplifies the code base and in some cases improves performance, but will break any code that directly uses the internal components of an index.</p></li>
 <li><p>A new internal optimization means that index objects without contributions now consume about half as much memory.</p></li>
 <li><p><code><a href="../reference/contrib.html">contrib()</a></code> and <code><a href="../reference/contrib.html">contrib2DF()</a></code> are no longer generic functions. (They were originally generic to allow for the possibility of an index subclass without contributions, but that is no longer required.)</p></li>
 <li>
@@ -61,7 +61,8 @@
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
-<ul><li>Added a new function <code><a href="../reference/combine_classifications.html">combine_classifications()</a></code> to more easily build an aggregation structure that spans multiple hierarchical classifications.</li>
+<ul><li><p>Added a new function <code><a href="../reference/combine_classifications.html">combine_classifications()</a></code> to more easily build an aggregation structure that spans multiple hierarchical classifications.</p></li>
+<li><p>Subscripting an index object with a matrix is now more flexible and can return/replace a list of index objects.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
