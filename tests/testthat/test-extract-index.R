@@ -52,6 +52,8 @@ test_that("subscripting methods work", {
     epr[c("14", "12"), TRUE],
     elementary_index(dat, rel ~ period + factor(ea, c(14, 12)), contrib = TRUE)
   )
+  expect_equal(epr[matrix(c(1, 2, 1, 2), 2)], list(epr[1, 1], epr[2, 2]))
+  expect_equal(epr[matrix(0, 2, 2)], list())
 })
 
 test_that("subscripting methods give errors where expected", {
@@ -61,12 +63,14 @@ test_that("subscripting methods give errors where expected", {
   expect_error(epr[, NULL])
   expect_error(epr[integer(0)])
   expect_error(epr[NA])
+  expect_error(epr[matrix(c(-1, 2), 1, 2)])
 })
 
 test_that("replacement methods work with an index", {
   # No op
   expect_equal(replace(epr, 1:4, epr), epr)
   expect_equal(replace(epr, integer(0), epr[1]), epr)
+  expect_equal(replace(epr, matrix(0, 2, 2), epr[1]), epr)
   # Adds contributions
   expect_equal(replace(epr2, 1:4, epr), epr)
   # Removes contributions
@@ -97,6 +101,7 @@ test_that("replacement methods work with an index", {
   expect_error(epr[1] <- chain(epr[1]))
   epr <- chain(epr)
   expect_error(epr[1] <- epr2[1])
+  expect_error(epr[matrix(c(1, 2), 1)] <- unchain(epr[1, 1]))
 })
 
 test_that("replacement methods work with a vector", {
@@ -201,9 +206,26 @@ test_that("replacement method works with a matrix", {
 
   expect_identical(replace(epr, matrix(FALSE, 4, 2), 0), epr)
 
+  epr5 <- replace(epr3, is.na(epr), epr[1, 1])
+  expect_equal(
+    as.matrix(epr5),
+    replace(as.matrix(epr), c(4, 6, 7), sqrt(2))
+  )
+  expect_equal(contrib(epr5[4, 1]), contrib(epr[1, 1]))
+
+  # Works when there are no contributions.
+  epr5 <- replace(epr2, is.na(epr), epr[1, 1])
+  expect_equal(
+    as.matrix(epr5),
+    replace(as.matrix(epr2), c(4, 6, 7), sqrt(2))
+  )
+  expect_equal(contrib(epr5[4, 1]), contrib(epr[1, 1]))
+
   expect_error(replace(epr, matrix(NA, 4, 2), 0))
   expect_error(epr[is.na(epr)] <- numeric(0))
   expect_error(epr[matrix(TRUE, 3, 3)] <- 1)
   expect_error(epr[matrix(1, nrow = 1, ncol = 3)] <- 1)
   expect_warning(epr[is.na(epr)] <- 1:2)
+  expect_error(epr[is.na(epr)] <- list(1))
+  expect_error(epr[!is.na(epr)] <- epr[1])
 })

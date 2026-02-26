@@ -5,8 +5,8 @@
 #' The extraction method treats `x` like a matrix of index values with
 #' (named) rows for each level and columns for each time period in
 #' `x`. Unlike a matrix, dimensions are never dropped as subscripting
-#' `x` always returns an index object. This means that subscripting with a
-#' matrix is not possible, and only a "submatrix" can be extracted. As `x`
+#' `x` always returns an index object. The one exception is when subscripting
+#' with a matrix, in which case a list of index values is returned. As `x`
 #' is not an atomic vector, subscripting with a single index like `x[1]`
 #' extracts all time periods for that level.
 #'
@@ -17,14 +17,14 @@
 #' corresponding levels of `value`. If `value` is not an index, then it is
 #' coerced to a numeric vector and behaves the same as replacing values in a
 #' matrix. Note that replacing the values of an index will remove the
-#' corresponding percent-change contributions (if any). Unlike extraction, it
-#' is possible to replace value in `x` using a logical matrix or a two-column
-#' matrix of indices.
+#' corresponding percent-change contributions (if any). When replacing with a
+#' matrix, `value` can be a list of index objects.
 #'
 #' @param x A price index, as made by, e.g., [elementary_index()].
 #' @param i,j Indices for the levels and time periods of a price index. See
 #'   details.
-#' @param value A numeric vector or price index. See details.
+#' @param value A numeric vector, price index, or list of price indexes.
+#'   See details.
 #' @param ... Not currently used.
 #'
 #' @returns
@@ -45,8 +45,24 @@
 #' @export
 `[.piar_index` <- function(x, i, j, ...) {
   chkDots(...)
-  periods <- subscript_index(x$time, j)
-  levels <- subscript_index(x$levels, i)
+  if (!missing(i) && is.matrix(i)) {
+    if (!missing(j)) {
+      warning(
+        "indices for time periods do nothing when subscripting with a matrix"
+      )
+    }
+    i <- subscript_index_matrix(x, i)
+    lapply(seq_len(nrow(i)), \(j) extract_index(x, i[j, 1L], i[j, 2L]))
+  } else {
+    levels <- subscript_index(x$levels, i)
+    periods <- subscript_index(x$time, j)
+    extract_index(x, levels, periods)
+  }
+}
+
+#' Internal extraction function
+#' @noRd
+extract_index <- function(x, levels, periods) {
   x$index <- x$index[levels, periods, drop = FALSE]
   if (!is.null(x$contrib)) {
     x$contrib <- x$contrib[levels, periods, drop = FALSE]
@@ -66,11 +82,23 @@
         "indices for time periods do nothing when subscripting with a matrix"
       )
     }
-    x <- replace_matrix(x, i, value)
-  } else if (is_index(value)) {
-    x <- replace_index(x, i, j, value)
+    i <- subscript_index_matrix(x, i)
+    if (is_index(value)) {
+      value <- list(value)
+    }
+    if (is.list(value)) {
+      x <- replace_matrix_list(x, i, value)
+    } else {
+      x <- replace_matrix_numeric(x, i, value)
+    }
   } else {
-    x <- replace_numeric(x, i, j, value)
+    levels <- subscript_index(x$levels, i)
+    periods <- subscript_index(x$time, j)
+    if (is_index(value)) {
+      x <- replace_index(x, levels, periods, value)
+    } else {
+      x <- replace_numeric(x, levels, periods, value)
+    }
   }
   # Replacement value should be validated; e.g., x[1] <- -1.
   validate_piar_index(x)
@@ -78,54 +106,78 @@
 
 #' @export
 `[<-.chainable_piar_index` <- function(x, i, j, ..., value) {
-  if (is_index(value) && !is_chainable_index(value)) {
-    stop("'value' must be a period-over-period index")
+  if (is_index(value)) {
+    if (!is_chainable_index(value)) {
+      stop("'value' must be a period-over-period index")
+    }
+  } else if (is.list(value)) {
+    if (!all(vapply(value, is_chainable_index, logical(1L)))) {
+      stop("all elements of 'value' must be period-over-period indexes")
+    }
   }
   NextMethod("[<-")
 }
 
 #' @export
 `[<-.direct_piar_index` <- function(x, i, j, ..., value) {
-  if (is_index(value) && !is_direct_index(value)) {
-    stop("'value' must be a fixed-base index")
+  if (is_index(value)) {
+    if (!is_direct_index(value)) {
+      stop("'value' must be a fixed-base index")
+    }
+  } else if (is.list(value)) {
+    if (!all(vapply(value, is_direct_index, logical(1L)))) {
+      stop("all elements of 'value' must be fixed-base indexes")
+    }
   }
   NextMethod("[<-")
 }
 
 #' Internal replacement functions
 #' @noRd
-replace_matrix <- function(x, i, value) {
-  if (is.logical(i)) {
-    if (nrow(i) != nlevels(x) || ncol(i) != ntime(x)) {
-      stop(
-        "'i' must have a row for each level and a column for each ",
-        "time period in 'x'"
-      )
-    }
-    if (anyNA(i)) {
-      stop("cannot subscript with missing values")
-    }
-    i <- which(i, arr.ind = TRUE)
+replace_matrix_list <- function(x, i, value) {
+  if (nrow(i) == 0L) {
+    return(x)
   }
-
-  if (ncol(i) != 2L) {
-    stop("'i' must have exactly two columns")
+  n <- length(value)
+  if (n == 0L) {
+    stop("replacement has length zero")
   }
-
-  dims <- cbind(
-    subscript_index(x$levels, i[, 1L]),
-    subscript_index(x$time, i[, 2L])
-  )
-  x$index[dims] <- as.numeric(value)
+  if (nrow(i) %% n != 0) {
+    warning(
+      "number of items to replace is not a multiple of replacement length"
+    )
+  }
+  if (any(vapply(value, \(x) ntime(x) * nlevels(x), integer(1L)) > 1L)) {
+    stop("'value' must be a list of indexes with one level and time period")
+  }
+  # Make `value` the same length as replacement to avoid two warnings.
+  value <- rep_len(value, nrow(i))
+  index <- vapply(value, \(x) x$index, numeric(1L))
+  contributions <- unlist(lapply(value, \(x) x$contrib), recursive = FALSE)
+  has_contrib <- any(vapply(contributions, Negate(is.null), logical(1L)))
+  # It's possible that only some elements of `value` have contributions.
+  if (has_contrib || !is.null(x$contrib)) {
+    contributions[lengths(contributions) == 0L] <- list(numeric(0L))
+  }
+  if (is.null(x$contrib) && has_contrib) {
+    x$contrib <- contrib_skeleton(x$levels, x$time)
+  }
+  x$index[i] <- index
   if (!is.null(x$contrib)) {
-    x$contrib[dims] <- list(numeric(0L))
+    x$contrib[i] <- contributions
   }
   x
 }
 
-replace_index <- function(x, i, j, value) {
-  levels <- subscript_index(x$levels, i)
-  periods <- subscript_index(x$time, j)
+replace_matrix_numeric <- function(x, i, value) {
+  x$index[i] <- as.numeric(value)
+  if (!is.null(x$contrib)) {
+    x$contrib[i] <- list(numeric(0L))
+  }
+  x
+}
+
+replace_index <- function(x, levels, periods, value) {
   if (length(levels) == 0L || length(periods) == 0L) {
     return(x)
   }
@@ -150,9 +202,7 @@ replace_index <- function(x, i, j, value) {
   x
 }
 
-replace_numeric <- function(x, i, j, value) {
-  levels <- subscript_index(x$levels, i)
-  periods <- subscript_index(x$time, j)
+replace_numeric <- function(x, levels, periods, value) {
   x$index[levels, periods] <- as.numeric(value)
   if (!is.null(x$contrib)) {
     x$contrib[levels, periods] <- list(numeric(0L))
