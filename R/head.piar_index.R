@@ -31,7 +31,7 @@ head.piar_index <- function(x, n = 6L, ...) {
   if (!is.na(n[2L])) {
     x$time <- head(x$time, n[2L])
   }
-  validate_piar_index(x)
+  validate_index_structure(x)
 }
 
 #' @rdname head.piar_index
@@ -47,5 +47,5 @@ tail.piar_index <- function(x, n = 6L, ...) {
   if (!is.na(n[2L])) {
     x$time <- tail(x$time, n[2L])
   }
-  validate_piar_index(x)
+  validate_index_structure(x)
 }

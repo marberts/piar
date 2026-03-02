@@ -59,6 +59,9 @@ validate_levels <- function(x) {
   if (anyDuplicated(x$levels)) {
     stop("cannot make an index with duplicate levels")
   }
+  if (nrow(x$index) != length(x$levels)) {
+    stop("number of levels does not agree with number of index values")
+  }
   invisible(x)
 }
 
@@ -72,16 +75,13 @@ validate_time <- function(x) {
   if (anyDuplicated(x$time)) {
     stop("cannot make an index with duplicate time periods")
   }
+  if (ncol(x$index) != length(x$time)) {
+    stop("number of time periods does not agree with number of index values")
+  }
   invisible(x)
 }
 
 validate_index_values <- function(x) {
-  if (ncol(x$index) != length(x$time)) {
-    stop("number of time periods does not agree with number of index values")
-  }
-  if (nrow(x$index) != length(x$levels)) {
-    stop("number of levels does not agree with number of index values")
-  }
   if (any(x$index <= 0, na.rm = TRUE)) {
     stop("cannot make an index with non-positive values")
   }
@@ -100,12 +100,16 @@ validate_contrib <- function(x) {
   invisible(x)
 }
 
-validate_piar_index <- function(x) {
+validate_index_structure <- function(x) {
   validate_levels(x)
   validate_time(x)
-  validate_index_values(x)
   validate_contrib(x)
   x
+}
+
+validate_piar_index <- function(x) {
+  validate_index_values(x)
+  validate_index_structure(x)
 }
 
 #---- Undocumented methods ----

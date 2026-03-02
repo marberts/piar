@@ -175,11 +175,13 @@ mean_index <- function(
     }
   }
 
-  piar_index(
-    do.call(cbind, res),
-    do.call(cbind, contrib),
-    x$levels,
-    periods,
-    chainable
+  validate_index_structure(
+    new_piar_index(
+      do.call(cbind, res),
+      do.call(cbind, contrib),
+      x$levels,
+      periods,
+      chainable
+    )
   )
 }

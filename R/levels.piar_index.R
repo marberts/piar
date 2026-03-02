@@ -22,7 +22,7 @@ levels.piar_index <- function(x) {
 #' @export
 `levels<-.piar_index` <- function(x, value) {
   x$levels <- as.character(value)
-  validate_piar_index(x)
+  validate_levels(x)
 }
 
 #' @rdname levels.piar_index
