@@ -173,7 +173,7 @@ contrib2DF <- function(x, levels = NULL, period = NULL) {
     names(con) <- products
     x$contrib[level, t] <- list(con)
   }
-  validate_piar_index(x)
+  validate_index_structure(x)
 }
 
 #' @rdname contrib

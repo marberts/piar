@@ -34,7 +34,7 @@ time.piar_index <- function(x, ...) {
 #' @export
 `time<-.piar_index` <- function(x, value) {
   x$time <- as.character(value)
-  validate_piar_index(x)
+  validate_time(x)
 }
 
 #' @rdname time.piar_index
