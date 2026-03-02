@@ -261,7 +261,9 @@ aggregate_index <- function(
     lev <- unlist(drop_last(pias$levels), use.names = FALSE)
   }
 
-  piar_index(res$index, res$contrib, lev, x$time, chainable)
+  validate_index_structure(
+    new_piar_index(res$index, res$contrib, lev, x$time, chainable)
+  )
 }
 
 aggregate_ <- function(

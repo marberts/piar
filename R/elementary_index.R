@@ -243,9 +243,13 @@ elementary_index.numeric <- function(
       USE.NAMES = FALSE
     )
     dim(contributions) <- c(nlevels(ea), nlevels(period))
-    piar_index(index, contributions, levels, time, chainable)
+    validate_index_structure(
+      new_piar_index(index, contributions, levels, time, chainable)
+    )
   } else {
-    piar_index(index, NULL, levels, time, chainable)
+    validate_index_structure(
+      new_piar_index(index, NULL, levels, time, chainable)
+    )
   }
 }
 
