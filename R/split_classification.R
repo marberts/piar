@@ -12,7 +12,7 @@
 #' @param sep A character used to delineate levels in `x` in the result. The
 #'   default separates levels by `"."`.
 #' @param pad A string used to pad the shorter labels for an unbalanced
-#'   classification. The default pads with NA.
+#'   classification. The default pads with `NA`.
 #'
 #' @returns
 #' A list with a entry for each level in `x` giving the "digits" that

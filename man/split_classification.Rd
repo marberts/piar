@@ -20,7 +20,7 @@ See \code{\link[=strsplit]{strsplit()}}.}
 default separates levels by \code{"."}.}
 
 \item{pad}{A string used to pad the shorter labels for an unbalanced
-classification. The default pads with NA.}
+classification. The default pads with \code{NA}.}
 }
 \value{
 A list with a entry for each level in \code{x} giving the "digits" that

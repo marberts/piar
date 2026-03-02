@@ -98,6 +98,7 @@ unstack.direct_piar_index <- function(x, ...) {
 
 #' @export
 unstack.piar_index <- function(x, ..., chainable) {
+  chkDots(...)
   res <- vector("list", ntime(x))
   names(res) <- x$time
   for (t in seq_along(res)) {
