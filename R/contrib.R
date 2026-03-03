@@ -63,8 +63,12 @@
 #' @export contrib
 #' @family index methods
 contrib <- function(x, level = NULL, period = NULL, pad = 0) {
-  level <- match_levels(as.character(level %||% x$levels[1L]), x)
-  period <- match_time(as.character(period %||% x$time), x, several = TRUE)
+  level <- if (!is.null(level)) match_levels(as.character(level), x) else 1L
+  period <- if (!is.null(period)) {
+    match_time(as.character(period), x, several = TRUE)
+  } else {
+    seq_along(x$time)
+  }
   pad <- as.numeric(pad)
   if (length(pad) != 1L) {
     stop("'pad' must be a length 1 numeric value")
@@ -99,12 +103,16 @@ contrib <- function(x, level = NULL, period = NULL, pad = 0) {
 #' @rdname contrib
 #' @export
 contrib2DF <- function(x, levels = NULL, period = NULL) {
-  level <- match_levels(
-    as.character(levels %||% x$levels[1L]),
-    x,
-    several = TRUE
-  )
-  period <- match_time(as.character(period %||% x$time), x, several = TRUE)
+  level <- if (!is.null(levels)) {
+    match_levels(as.character(levels), x, several = TRUE)
+  } else {
+    1L
+  }
+  period <- if (!is.null(period)) {
+    match_time(as.character(period), x, several = TRUE)
+  } else {
+    seq_along(x$time)
+  }
   if (is.null(x$contrib)) {
     return(
       data.frame(
@@ -141,8 +149,12 @@ contrib2DF <- function(x, levels = NULL, period = NULL) {
 #' @rdname contrib
 #' @export
 `contrib<-` <- function(x, level = NULL, period = NULL, value) {
-  level <- match_levels(as.character(level %||% x$levels[1L]), x)
-  period <- match_time(as.character(period %||% x$time), x, several = TRUE)
+  level <- if (!is.null(level)) match_levels(as.character(level), x) else 1L
+  period <- if (!is.null(period)) {
+    match_time(as.character(period), x, several = TRUE)
+  } else {
+    seq_along(x$time)
+  }
 
   if (is.null(x$contrib)) {
     x$contrib <- contrib_skeleton(x$levels, x$time)
