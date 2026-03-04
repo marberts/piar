@@ -168,9 +168,12 @@ contrib2DF <- function(x, levels = NULL, period = NULL) {
       "number of items to replace is not a multiple of replacement length"
     )
   }
-  dx <- dim(value)
-  value <- as.numeric(value)
-  dim(value) <- dx
+  value <- matrix(
+    as.numeric(value),
+    nrow = nrow(value),
+    ncol = ncol(value),
+    dimnames = dimnames(value)
+  )
 
   products <- if (nrow(value) > 0L) {
     if (is.null(rownames(value))) {
