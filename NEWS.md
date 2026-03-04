@@ -34,10 +34,20 @@ aggregation structure that spans multiple hierarchical classifications.
 - Subscripting an index object with a matrix is now more flexible and can
 return/replace a list of index objects.
 
+- Added a new function `impute_prices()` to consolidate the different
+price-imputation functions.
+
 ## Bug fixes
 
 - Setting `contrib = FALSE` in `aggregate(index)` always returns an index with
 no contributions.
+
+- `set_weights()` no longer returns its result invisibly.
+
+## Deprecations
+
+- `carry_forward()`, `carry_backward()`, and `shadow_price()` are deprecated.
+Use `impute_prices()` instead.
 
 # piar 0.8.3
 

@@ -710,10 +710,8 @@ levels 1 2 3
 > 
 > ### Name: impute_prices
 > ### Title: Impute missing prices
-> ### Aliases: impute_prices shadow_price shadow_price.default
-> ###   shadow_price.data.frame carry_forward carry_forward.default
-> ###   carry_forward.data.frame carry_backward carry_backward.default
-> ###   carry_backward.data.frame
+> ### Aliases: impute_prices impute_prices.default impute_prices.data.frame
+> ###   carry_forward carry_backward shadow_price
 > 
 > ### ** Examples
 > 
@@ -724,10 +722,15 @@ levels 1 2 3
 +   ea = rep(letters[1:2], 4)
 + )
 > 
-> carry_forward(prices, price ~ period + product)
+> impute_prices(prices, price ~ period + product, method = "carry-forward")
 [1] 1 2 3 4 5 6 7 4
-> 
-> shadow_price(prices, price ~ period + product + ea)
+>
+> impute_prices(
++   prices,
++   price ~ period + product,
++   ea = ea,
++   method = "overall-mean"
++ )
 [1]  1  2  3  4  5  6  7 12
 > 
 > 

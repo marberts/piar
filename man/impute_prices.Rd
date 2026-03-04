@@ -2,44 +2,34 @@
 % Please edit documentation in R/impute_prices.R
 \name{impute_prices}
 \alias{impute_prices}
-\alias{shadow_price}
-\alias{shadow_price.default}
-\alias{shadow_price.data.frame}
+\alias{impute_prices.default}
+\alias{impute_prices.data.frame}
 \alias{carry_forward}
-\alias{carry_forward.default}
-\alias{carry_forward.data.frame}
 \alias{carry_backward}
-\alias{carry_backward.default}
-\alias{carry_backward.data.frame}
+\alias{shadow_price}
 \title{Impute missing prices}
 \usage{
-shadow_price(x, ...)
+impute_prices(x, ...)
 
-\method{shadow_price}{default}(
+\method{impute_prices}{default}(
   x,
   period,
   product,
-  ea,
   ...,
-  pias = NULL,
+  ea = NULL,
   weights = NULL,
-  r1 = 0,
-  r2 = 1
+  pias = NULL,
+  r = c(0, 1),
+  method = c("overall-mean", "carry-forward", "carry-backward")
 )
 
-\method{shadow_price}{data.frame}(x, formula, ..., weights = NULL)
+\method{impute_prices}{data.frame}(x, formula, ..., ea = NULL, weights = NULL)
 
 carry_forward(x, ...)
 
-\method{carry_forward}{default}(x, period, product, ...)
-
-\method{carry_forward}{data.frame}(x, formula, ...)
-
 carry_backward(x, ...)
 
-\method{carry_backward}{default}(x, period, product, ...)
-
-\method{carry_backward}{data.frame}(x, formula, ...)
+shadow_price(x, ...)
 }
 \arguments{
 \item{x}{Either a numeric vector (or something that can be coerced into one)
@@ -56,38 +46,38 @@ periods follows of the levels of \code{period}, to agree with
 the product associated with each price in \code{x}.}
 
 \item{ea}{A factor, or something that can be coerced into one, giving the
-elementary aggregate associated with each price in \code{x}.}
-
-\item{pias}{A price index aggregation structure, or something that can be
-coerced into one, as made with \code{\link[=aggregation_structure]{aggregation_structure()}}. The default
-imputes from elementary indexes only (i.e., not recursively).}
+elementary aggregate associated with each price in \code{x}. This is evaluated
+in \code{x} for the data frame method.}
 
 \item{weights}{A numeric vector of weights for the prices in \code{x} (i.e.,
 product weights), or something that can be coerced into one. The default is
 to give each price equal weight. This is evaluated in \code{x} for the data
 frame method.}
 
-\item{r1}{Order of the generalized-mean price index used to calculate the
-elementary price indexes: 0 for a geometric index (the default), 1 for an
-arithmetic index, or -1 for a harmonic index. Other values are possible;
+\item{pias}{A price index aggregation structure, or something that can be
+coerced into one, as made with \code{\link[=aggregation_structure]{aggregation_structure()}}. The default
+imputes from elementary indexes only (i.e., not recursively).}
+
+\item{r}{A pair of numeric values. The first gives the order of the
+generalized-mean price index used to calculate the
+elementary price indexes, defaulting to a geometric index. The second
+gives the order of the generalized-mean price index used to aggregate the
+elementary price indexes, defaulting to an arithmetic index. Other values
+are possible;
 see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
-\item{r2}{Order of the generalized-mean price index used to aggregate the
-elementary price indexes: 0 for a geometric index, 1 for an arithmetic
-index (the default), or -1 for a harmonic index. Other values are possible;
-see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+\item{method}{Name of the imputation method, one of \code{"overall-mean"},
+\code{"carry-forward"}, or \code{"carry-backward"}.}
 
 \item{formula}{A two-sided formula with prices on the left-hand
-side. For \code{carry_forward()} and \code{carry_backward()}, the right-hand side
-should have time periods and products (in that order); for
-\code{shadow_price()}, the right-hand side should have time period, products,
-and elementary aggregates (in that order).}
+side and time periods and products on the right-hand side (in that order).}
 }
 \value{
 A numeric vector of prices with missing values replaced (where possible).
 }
 \description{
-Impute missing prices using the carry forward or shadow price method.
+Impute missing prices using the carry forward/backward or the
+self-correcting overall mean method.
 }
 \details{
 The carry forward method replaces a missing price for a product by the price
@@ -96,17 +86,16 @@ towards 1, and is usually avoided; see paragraph 6.61 in the CPI manual
 (2020). The carry backwards method does the opposite, but this is rarely
 used in practice.
 
-The shadow price method recursively imputes a missing price by the value of
+The self-correcting overall mean method recursively imputes a missing price
+by the value of
 the price for the same product in the previous period multiplied by the
 value of the period-over-period elementary index for the elementary aggregate
 to which that product belongs. This requires computing and aggregating an
 index (according to \code{pias}, unless \code{pias} is not supplied) for
-each \code{period}, and so these imputations can take a while. The index
+each \code{period}. The index
 values used to do the imputations are not returned because the index needs
-to be recalculated to get correct percent-change contributions.
-
-Shadow price imputation is referred to as self-correcting overall mean
-imputation in chapter 6 of the CPI manual (2020). It is identical to simply
+to be recalculated to get correct percent-change contributions. It is
+identical to simply
 excluding missing price relatives in the index calculation, except in the
 period that a missing product returns. For this reason care is needed when
 using this method. It is sensitive to the assumption that a product does not
@@ -121,9 +110,14 @@ prices <- data.frame(
   ea = rep(letters[1:2], 4)
 )
 
-carry_forward(prices, price ~ period + product)
+impute_prices(prices, price ~ period + product, method = "carry-forward")
 
-shadow_price(prices, price ~ period + product + ea)
+impute_prices(
+  prices,
+  price ~ period + product,
+  ea = ea,
+  method = "overall-mean"
+)
 
 }
 \references{

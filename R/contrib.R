@@ -185,7 +185,7 @@ contrib2DF <- function(x, levels = NULL, period = NULL) {
     names(con) <- products
     x$contrib[level, t] <- list(con)
   }
-  validate_index_structure(x)
+  validate_contrib(x)
 }
 
 #' @rdname contrib
