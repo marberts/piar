@@ -178,3 +178,27 @@ test_that("carrying forward/backwards imputation works", {
     c(1, 1, 2, 3, 3)
   )
 })
+
+test_that("imputing with a matrix works", {
+  ms_prices$back_price <- with(
+    ms_prices,
+    price[gpindex::back_period(period, product)]
+  )
+  sp2 <- impute_prices(
+    ms_prices,
+    cbind(price, back_price) ~ period + product,
+    ea = business,
+    pias = pias,
+    method = "overall-mean"
+  )
+  expect_equal(sp2[, 1L], sp)
+  expect_equal(
+    impute_prices(
+      matrix(c(1, NA, NA, 4, 5, 6, 3, 2, 1, 1, NA, 3), ncol = 2),
+      rep(1:2, each = 3),
+      rep(1:3, 2),
+      method = "carry-forward"
+    ),
+    matrix(c(1, 2, 1, 4, 5, 6, 3, 2, 1, 1, 2, 3), ncol = 2)
+  )
+})

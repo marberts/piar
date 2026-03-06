@@ -3,6 +3,8 @@
 \name{impute_prices}
 \alias{impute_prices}
 \alias{impute_prices.default}
+\alias{impute_prices.matrix}
+\alias{impute_prices.numeric}
 \alias{impute_prices.data.frame}
 \alias{carry_forward}
 \alias{carry_backward}
@@ -11,7 +13,21 @@
 \usage{
 impute_prices(x, ...)
 
-\method{impute_prices}{default}(
+\method{impute_prices}{default}(x, ...)
+
+\method{impute_prices}{matrix}(
+  x,
+  period,
+  product,
+  ...,
+  ea = NULL,
+  weights = NULL,
+  pias = NULL,
+  r = c(0, 1),
+  method = c("overall-mean", "carry-forward")
+)
+
+\method{impute_prices}{numeric}(
   x,
   period,
   product,
@@ -32,8 +48,9 @@ carry_backward(x, ...)
 shadow_price(x, ...)
 }
 \arguments{
-\item{x}{Either a numeric vector (or something that can be coerced into one)
-or data frame of prices.}
+\item{x}{Either a numeric vector (or something that can be coerced into one),
+a data frame of prices, or a two-column matrix of current prices
+and back prices (in that order).}
 
 \item{...}{Further arguments passed to or used by methods.}
 
@@ -47,7 +64,8 @@ the product associated with each price in \code{x}.}
 
 \item{ea}{A factor, or something that can be coerced into one, giving the
 elementary aggregate associated with each price in \code{x}. This is evaluated
-in \code{x} for the data frame method.}
+in \code{x} for the data frame method. The default pools all data into one
+elementary aggregate.}
 
 \item{weights}{A numeric vector of weights for the prices in \code{x} (i.e.,
 product weights), or something that can be coerced into one. The default is
@@ -73,7 +91,8 @@ see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for deta
 side and time periods and products on the right-hand side (in that order).}
 }
 \value{
-A numeric vector of prices with missing values replaced (where possible).
+A numeric vector or matrix of prices with missing values replaced
+(where possible).
 }
 \description{
 Impute missing prices using the carry forward/backward or the
@@ -101,6 +120,12 @@ period that a missing product returns. For this reason care is needed when
 using this method. It is sensitive to the assumption that a product does not
 change over time, and in some cases it is safer to simply omit the missing
 price relatives instead of imputing the missing prices.
+
+Imputation works slightly differently depending on whether data are in a long
+or wide format. When \code{x} is a two-column of matrix of current and back prices
+(in that order), then imputation is done separately on the current price
+at a point in time and the back price at the next point in time. When \code{x} is
+a numeric vector then these two prices are necessarily the same.
 }
 \examples{
 prices <- data.frame(
@@ -115,6 +140,19 @@ impute_prices(prices, price ~ period + product, method = "carry-forward")
 impute_prices(
   prices,
   price ~ period + product,
+  ea = ea,
+  method = "overall-mean"
+)
+
+# Can also be done with current price-back price formulation.
+prices$back_price <- with(
+  prices,
+  price[gpindex::back_period(period, product)]
+)
+
+impute_prices(
+  prices,
+  cbind(price, back_price) ~ period + product,
   ea = ea,
   method = "overall-mean"
 )

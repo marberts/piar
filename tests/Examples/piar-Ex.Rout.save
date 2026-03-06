@@ -710,8 +710,9 @@ levels 1 2 3
 > 
 > ### Name: impute_prices
 > ### Title: Impute missing prices
-> ### Aliases: impute_prices impute_prices.default impute_prices.data.frame
-> ###   carry_forward carry_backward shadow_price
+> ### Aliases: impute_prices impute_prices.default impute_prices.matrix
+> ###   impute_prices.numeric impute_prices.data.frame carry_forward
+> ###   carry_backward shadow_price
 > 
 > ### ** Examples
 > 
@@ -732,6 +733,28 @@ levels 1 2 3
 +   method = "overall-mean"
 + )
 [1]  1  2  3  4  5  6  7 12
+>
+> # Can also be done with current price-back price formulation.
+> prices$back_price <- with(
++   prices,
++   price[gpindex::back_period(period, product)]
++ )
+> 
+> impute_prices(
++   prices,
++   cbind(price, back_price) ~ period + product,
++   ea = ea,
++   method = "overall-mean"
++ )
+     price back_price
+[1,]     1          1
+[2,]     2          2
+[3,]     3          3
+[4,]     4          4
+[5,]     5          1
+[6,]     6          2
+[7,]     7          3
+[8,]    12          4
 > 
 > 
 > 
