@@ -180,6 +180,6 @@ mean_index <- function(
     do.call(cbind, contrib),
     x$levels,
     periods,
-    chainable
+    chainable = chainable
   )
 }

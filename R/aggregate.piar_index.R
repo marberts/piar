@@ -261,7 +261,7 @@ aggregate_index <- function(
     lev <- unlist(drop_last(pias$levels), use.names = FALSE)
   }
 
-  piar_index(res$index, res$contrib, lev, x$time, chainable)
+  piar_index(res$index, res$contrib, lev, x$time, chainable = chainable)
 }
 
 aggregate_ <- function(

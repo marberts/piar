@@ -204,10 +204,6 @@ contrib_skeleton <- function(levels, time) {
   matrix(list(numeric(0L)), length(levels), length(time))
 }
 
-has_contrib <- function(x) {
-  any(lengths(x$contrib) > 0L)
-}
-
 # Backport Reduce and %||%
 # TODO: Remove once min R version gets bumped.
 if (getRversion() < "4.4.0") {

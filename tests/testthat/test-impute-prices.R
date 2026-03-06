@@ -6,24 +6,32 @@ pias <- with(
   )
 )
 
-sp <- shadow_price(ms_prices, price ~ period + product + business, pias = pias)
+sp <- impute_prices(
+  ms_prices,
+  price ~ period + product,
+  ea = business,
+  pias = pias,
+  method = "overall-mean"
+)
 
 test_that("a length 0 inputs returns a length 0 output", {
   expect_length(
-    carry_forward(
+    impute_prices(
       integer(0),
       period = factor(integer(0), 1:5),
-      product = integer(0)
+      product = integer(0),
+      method = "carry-forward"
     ),
     0
   )
   expect_length(
-    shadow_price(
+    impute_prices(
       integer(0),
       period = integer(0),
       product = integer(0),
       ea = integer(0),
-      pias = pias
+      pias = pias,
+      method = "overall-mean"
     ),
     0
   )
@@ -32,16 +40,24 @@ test_that("a length 0 inputs returns a length 0 output", {
 test_that("imputing shadow prices does noting", {
   expect_equal(
     sp,
-    shadow_price(ms_prices, sp ~ period + product + business, pias = pias)
+    impute_prices(
+      ms_prices,
+      sp ~ period + product,
+      ea = business,
+      pias = pias,
+      method = "overall-mean"
+    )
   )
 
   expect_equal(
     sp,
-    shadow_price(
+    impute_prices(
       ms_prices,
-      sp ~ period + product + business,
+      sp ~ period + product,
+      ea = business,
       pias = pias,
-      weights = price
+      weights = price,
+      method = "overall-mean"
     )
   )
 })
@@ -81,7 +97,13 @@ test_that("imputing with an improper pias does nothing", {
 
   expect_equal(
     ms_prices$price,
-    shadow_price(ms_prices, price ~ period + product + business, pias = pias2)
+    impute_prices(
+      ms_prices,
+      price ~ period + product,
+      ea = business,
+      pias = pias2,
+      method = "overall-mean"
+    )
   )
 })
 
@@ -130,7 +152,13 @@ test_that("jumbling prices does nothing", {
   )
   ms_prices <- ms_prices[jumble, ]
   expect_equal(
-    shadow_price(ms_prices, price ~ period + product + business, pias = pias),
+    impute_prices(
+      ms_prices,
+      price ~ period + product,
+      ea = business,
+      pias = pias,
+      method = "overall-mean"
+    ),
     sp[jumble]
   )
 })
@@ -141,6 +169,36 @@ test_that("carrying forward/backwards imputation works", {
     period = gl(5, 1),
     product = gl(1, 5)
   )
-  expect_equal(carry_forward(df, price ~ period + product), c(NA, 1, 2, 2, 3))
-  expect_equal(carry_backward(df, price ~ period + product), c(1, 1, 2, 3, 3))
+  expect_equal(
+    impute_prices(df, price ~ period + product, method = "carry-forward"),
+    c(NA, 1, 2, 2, 3)
+  )
+  expect_equal(
+    impute_prices(df, price ~ period + product, method = "carry-backward"),
+    c(1, 1, 2, 3, 3)
+  )
+})
+
+test_that("imputing with a matrix works", {
+  ms_prices$back_price <- with(
+    ms_prices,
+    price[gpindex::back_period(period, product)]
+  )
+  sp2 <- impute_prices(
+    ms_prices,
+    cbind(price, back_price) ~ period + product,
+    ea = business,
+    pias = pias,
+    method = "overall-mean"
+  )
+  expect_equal(sp2[, 1L], sp)
+  expect_equal(
+    impute_prices(
+      matrix(c(1, NA, NA, 4, 5, 6, 3, 2, 1, 1, NA, 3), ncol = 2),
+      rep(1:2, each = 3),
+      rep(1:3, 2),
+      method = "carry-forward"
+    ),
+    matrix(c(1, 2, 1, 4, 5, 6, 3, 2, 1, 1, 2, 3), ncol = 2)
+  )
 })

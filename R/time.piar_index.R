@@ -34,7 +34,7 @@ time.piar_index <- function(x, ...) {
 #' @export
 `time<-.piar_index` <- function(x, value) {
   x$time <- as.character(value)
-  validate_piar_index(x)
+  validate_time(x)
 }
 
 #' @rdname time.piar_index
@@ -46,7 +46,7 @@ set_time <- `time<-`
 #' @export
 start.piar_index <- function(x, ...) {
   chkDots(...)
-  x$time[1L]
+  x$time[[1L]]
 }
 
 #' @rdname time.piar_index

@@ -69,7 +69,7 @@ extract_index <- function(x, levels, periods) {
   }
   x$levels <- x$levels[levels]
   x$time <- x$time[periods]
-  validate_piar_index(x)
+  validate_index_structure(x)
 }
 
 #' @rdname sub-.piar_index
