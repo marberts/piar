@@ -150,7 +150,7 @@ impute_prices.matrix <- function(
     stop("input vectors must be the same length")
   }
   if (nlevels(period) == 0L) {
-    return(matrix(NA_real_, length(period), 2))
+    return(matrix(NA_real_, nrow = length(period), ncol = 2))
   }
 
   res <- split.data.frame(x, period)
@@ -175,11 +175,11 @@ impute_prices.matrix <- function(
         ea = ea[[t]],
         weights = weights[[t]],
         na.rm = TRUE,
-        r = r[1]
+        r = r[1L]
       )
       if (!is.null(pias)) {
-        index <- aggregate(index, pias, na.rm = TRUE, r = r[2])
-        pias <- update(pias, index, r = r[2])
+        index <- aggregate(index, pias, na.rm = TRUE, r = r[2L])
+        pias <- update(pias, index, r = r[2L])
       }
       eas <- if (!is.null(ea)) {
         match(as.character(ea[[t]][impute]), index$levels)
@@ -263,11 +263,11 @@ impute_prices.numeric <- function(
         ea = ea[[t]],
         weights = weights[[t]],
         na.rm = TRUE,
-        r = r[1]
+        r = r[1L]
       )
       if (!is.null(pias)) {
-        index <- aggregate(index, pias, na.rm = TRUE, r = r[2])
-        pias <- update(pias, index, r = r[2])
+        index <- aggregate(index, pias, na.rm = TRUE, r = r[2L])
+        pias <- update(pias, index, r = r[2L])
       }
       eas <- if (!is.null(ea)) {
         match(as.character(ea[[t]][impute]), index$levels)

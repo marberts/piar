@@ -104,6 +104,9 @@ different_length <- function(...) {
 }
 
 formula_vars <- function(formula, x, n = 2L) {
+  if (!inherits(formula, "formula")) {
+    stop("'formula' must be a formula")
+  }
   if (length(formula) != 3L) {
     stop("'formula' must have a left-hand and right-hand side")
   }
@@ -193,11 +196,6 @@ match_time <- match_dim("time")
 #---- Generate index ----
 index_skeleton <- function(levels, time) {
   matrix(NA_real_, length(levels), length(time))
-}
-
-empty_contrib <- function(x) {
-  res <- rep.int(list(numeric(0L)), length(x))
-  list(res)
 }
 
 contrib_skeleton <- function(levels, time) {

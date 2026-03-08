@@ -225,8 +225,8 @@ aggregate_index <- function(
       stop("'pias' and 'pias2' must represent the same aggregation structure")
     }
     if (
-      any(missing_weights(pias$weights) != missing_weights(pias2$weights)) &&
-        contrib
+      contrib &&
+        any(missing_weights(pias$weights) != missing_weights(pias2$weights))
     ) {
       stop(
         "any NA or zero weights must appear in both 'pias' and 'pias2' when",

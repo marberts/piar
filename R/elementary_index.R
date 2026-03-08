@@ -196,9 +196,6 @@ elementary_index.numeric <- function(
   }
   period <- as.factor(period %||% gl(1, length(x)))
   ea <- as.factor(ea %||% gl(1, length(x)))
-  ea_by_period <- period:ea
-  time <- levels(period)
-  levels <- levels(ea)
 
   if (different_length(x, period, ea, weights)) {
     stop("input vectors must be the same length")
@@ -206,6 +203,9 @@ elementary_index.numeric <- function(
   if (any(x <= 0, na.rm = TRUE)) {
     stop("all elements of 'x' must be strictly positive")
   }
+  ea_by_period <- period:ea
+  time <- levels(period)
+  levels <- levels(ea)
 
   if (contrib) {
     if (!is.null(product)) {
@@ -219,11 +219,7 @@ elementary_index.numeric <- function(
   }
 
   x <- split(x, ea_by_period)
-  if (is.null(weights)) {
-    weights <- list(NULL)
-  } else {
-    weights <- split(weights, ea_by_period)
-  }
+  weights <- if (is.null(weights)) list(NULL) else split(weights, ea_by_period)
 
   index <- mapply(
     gpindex::generalized_mean(r),
