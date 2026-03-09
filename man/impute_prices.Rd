@@ -87,7 +87,8 @@ see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for deta
 \item{method}{Name of the imputation method, one of \code{"overall-mean"},
 \code{"carry-forward"}, or \code{"carry-backward"}.}
 
-\item{formula}{A two-sided formula with prices on the left-hand
+\item{formula}{A two-sided formula, or something that can be coerced into
+one, with prices on the left-hand
 side and time periods and products on the right-hand side (in that order).}
 }
 \value{

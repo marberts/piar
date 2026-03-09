@@ -59,7 +59,8 @@
 #'   elementary price indexes, defaulting to an arithmetic index. Other values
 #'   are possible;
 #'   see [gpindex::generalized_mean()] for details.
-#' @param formula A two-sided formula with prices on the left-hand
+#' @param formula A two-sided formula, or something that can be coerced into
+#'   one, with prices on the left-hand
 #'   side and time periods and products on the right-hand side (in that order).
 #' @param method Name of the imputation method, one of `"overall-mean"`,
 #'   `"carry-forward"`, or `"carry-backward"`.

@@ -14,7 +14,7 @@ missing_weights <- function(x) {
 }
 
 missing_names <- function(x) {
-  anyNA(x) || any(x == "")
+  anyNA(x) || !all(nzchar(x))
 }
 
 last <- function(x) {
@@ -104,9 +104,7 @@ different_length <- function(...) {
 }
 
 formula_vars <- function(formula, x, n = 2L) {
-  if (!inherits(formula, "formula")) {
-    stop("'formula' must be a formula")
-  }
+  formula <- stats::as.formula(formula)
   if (length(formula) != 3L) {
     stop("'formula' must have a left-hand and right-hand side")
   }

@@ -82,8 +82,9 @@
 #'   a Paasche index). Other values are possible; see
 #'   [gpindex::generalized_mean()] for details.
 #' @param ... Further arguments passed to or used by methods.
-#' @param formula A two-sided formula with price relatives on the left-hand
-#'   side, and time periods and elementary aggregates (in that order) on the
+#' @param formula A two-sided formula, or something that can be coerced into
+#'   one, with price relatives on the left-hand
+#'   side and time periods and elementary aggregates (in that order) on the
 #'   right-hand side.
 #'
 #' @returns
