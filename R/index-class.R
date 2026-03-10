@@ -39,8 +39,10 @@ new_piar_index <- function(index, contrib, levels, time, chainable) {
 }
 
 piar_index <- function(index, contrib, levels, time, chainable) {
-  index <- unname(index)
-  contrib <- unname(contrib)
+  index <- structure(as.numeric(index), dim = dim(index))
+  if (!is.null(contrib)) {
+    contrib <- structure(as.list(contrib), dim = dim(contrib))
+  }
   levels <- as.character(levels)
   time <- as.character(time)
   validate_piar_index(
