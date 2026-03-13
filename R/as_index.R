@@ -79,9 +79,13 @@ as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
   index <- as.numeric(x)
   dim(index) <- c(length(levels), length(periods))
 
-  contributions <- if (contrib) index2contrib(index, levels, periods)
-
-  piar_index(index, contributions, levels, periods, chainable)
+  piar_index(
+    index,
+    if (contrib) index2contrib(index, levels, periods),
+    levels,
+    periods,
+    chainable = chainable
+  )
 }
 
 #' @rdname as_index
