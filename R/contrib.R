@@ -201,5 +201,5 @@ set_contrib <- `contrib<-`
 #' @export
 set_contrib_from_index <- function(x) {
   x$contrib <- index2contrib(x$index, x$levels, x$time)
-  x
+  validate_contrib(x)
 }
