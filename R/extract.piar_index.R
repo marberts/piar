@@ -86,18 +86,18 @@ extract_index <- function(x, levels, periods) {
     if (is_index(value)) {
       value <- list(value)
     }
-    if (is.list(value)) {
-      x <- replace_matrix_list(x, i, value)
+    x <- if (is.list(value)) {
+      replace_matrix_list(x, i, value)
     } else {
-      x <- replace_matrix_numeric(x, i, value)
+      replace_matrix_numeric(x, i, value)
     }
   } else {
     levels <- subscript_index(x$levels, i)
     periods <- subscript_index(x$time, j)
-    if (is_index(value)) {
-      x <- replace_index(x, levels, periods, value)
+    x <- if (is_index(value)) {
+      replace_index(x, levels, periods, value)
     } else {
-      x <- replace_numeric(x, levels, periods, value)
+      replace_numeric(x, levels, periods, value)
     }
   }
   # Replacement value should be validated; e.g., x[1] <- -1.
@@ -152,8 +152,8 @@ replace_matrix_list <- function(x, i, value) {
   }
   # Make `value` the same length as replacement to avoid two warnings.
   value <- rep_len(value, nrow(i))
-  index <- vapply(value, \(x) x$index, numeric(1L))
-  contributions <- unlist(lapply(value, \(x) x$contrib), recursive = FALSE)
+  index <- vapply(value, \(x) x$index[[1]], numeric(1L))
+  contributions <- lapply(value, \(x) x$contrib[[1]])
   has_contrib <- any(vapply(contributions, Negate(is.null), logical(1L)))
   # It's possible that only some elements of `value` have contributions.
   if (has_contrib || !is.null(x$contrib)) {

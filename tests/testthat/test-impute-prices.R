@@ -35,6 +35,17 @@ test_that("a length 0 inputs returns a length 0 output", {
     ),
     0
   )
+  expect_equal(
+    impute_prices(
+      cbind(integer(0), integer(0)),
+      period = integer(0),
+      product = integer(0),
+      ea = integer(0),
+      pias = pias,
+      method = "overall-mean"
+    ),
+    matrix(numeric(0), 0, 2)
+  )
 })
 
 test_that("imputing shadow prices does noting", {
