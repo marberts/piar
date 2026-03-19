@@ -73,8 +73,9 @@ averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
 
-\item{formula}{A two-sided formula with price relatives on the left-hand
-side, and time periods and elementary aggregates (in that order) on the
+\item{formula}{A two-sided formula, or something that can be coerced into
+one, with price relatives on the left-hand
+side and time periods and elementary aggregates (in that order) on the
 right-hand side.}
 }
 \value{

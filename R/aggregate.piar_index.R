@@ -225,8 +225,8 @@ aggregate_index <- function(
       stop("'pias' and 'pias2' must represent the same aggregation structure")
     }
     if (
-      any(missing_weights(pias$weights) != missing_weights(pias2$weights)) &&
-        contrib
+      contrib &&
+        any(missing_weights(pias$weights) != missing_weights(pias2$weights))
     ) {
       stop(
         "any NA or zero weights must appear in both 'pias' and 'pias2' when",
@@ -261,7 +261,7 @@ aggregate_index <- function(
     lev <- unlist(drop_last(pias$levels), use.names = FALSE)
   }
 
-  piar_index(res$index, res$contrib, lev, x$time, chainable)
+  piar_index(res$index, res$contrib, lev, x$time, chainable = chainable)
 }
 
 aggregate_ <- function(

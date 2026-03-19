@@ -63,8 +63,12 @@
 #' @export contrib
 #' @family index methods
 contrib <- function(x, level = NULL, period = NULL, pad = 0) {
-  level <- match_levels(as.character(level %||% x$levels[1L]), x)
-  period <- match_time(as.character(period %||% x$time), x, several = TRUE)
+  level <- if (!is.null(level)) match_levels(as.character(level), x) else 1L
+  period <- if (!is.null(period)) {
+    match_time(as.character(period), x, several = TRUE)
+  } else {
+    seq_along(x$time)
+  }
   pad <- as.numeric(pad)
   if (length(pad) != 1L) {
     stop("'pad' must be a length 1 numeric value")
@@ -99,12 +103,16 @@ contrib <- function(x, level = NULL, period = NULL, pad = 0) {
 #' @rdname contrib
 #' @export
 contrib2DF <- function(x, levels = NULL, period = NULL) {
-  level <- match_levels(
-    as.character(levels %||% x$levels[1L]),
-    x,
-    several = TRUE
-  )
-  period <- match_time(as.character(period %||% x$time), x, several = TRUE)
+  level <- if (!is.null(levels)) {
+    match_levels(as.character(levels), x, several = TRUE)
+  } else {
+    1L
+  }
+  period <- if (!is.null(period)) {
+    match_time(as.character(period), x, several = TRUE)
+  } else {
+    seq_along(x$time)
+  }
   if (is.null(x$contrib)) {
     return(
       data.frame(
@@ -141,8 +149,12 @@ contrib2DF <- function(x, levels = NULL, period = NULL) {
 #' @rdname contrib
 #' @export
 `contrib<-` <- function(x, level = NULL, period = NULL, value) {
-  level <- match_levels(as.character(level %||% x$levels[1L]), x)
-  period <- match_time(as.character(period %||% x$time), x, several = TRUE)
+  level <- if (!is.null(level)) match_levels(as.character(level), x) else 1L
+  period <- if (!is.null(period)) {
+    match_time(as.character(period), x, several = TRUE)
+  } else {
+    seq_along(x$time)
+  }
 
   if (is.null(x$contrib)) {
     x$contrib <- contrib_skeleton(x$levels, x$time)
@@ -156,7 +168,12 @@ contrib2DF <- function(x, levels = NULL, period = NULL) {
       "number of items to replace is not a multiple of replacement length"
     )
   }
-  value[] <- as.numeric(value)
+  value <- matrix(
+    as.numeric(value),
+    nrow = nrow(value),
+    ncol = ncol(value),
+    dimnames = dimnames(value)
+  )
 
   products <- if (nrow(value) > 0L) {
     if (is.null(rownames(value))) {
@@ -173,7 +190,7 @@ contrib2DF <- function(x, levels = NULL, period = NULL) {
     names(con) <- products
     x$contrib[level, t] <- list(con)
   }
-  validate_piar_index(x)
+  validate_contrib(x)
 }
 
 #' @rdname contrib
@@ -184,5 +201,5 @@ set_contrib <- `contrib<-`
 #' @export
 set_contrib_from_index <- function(x) {
   x$contrib <- index2contrib(x$index, x$levels, x$time)
-  x
+  validate_contrib(x)
 }

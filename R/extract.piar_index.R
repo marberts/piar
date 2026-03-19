@@ -69,7 +69,7 @@ extract_index <- function(x, levels, periods) {
   }
   x$levels <- x$levels[levels]
   x$time <- x$time[periods]
-  validate_piar_index(x)
+  validate_index_structure(x)
 }
 
 #' @rdname sub-.piar_index
@@ -86,18 +86,18 @@ extract_index <- function(x, levels, periods) {
     if (is_index(value)) {
       value <- list(value)
     }
-    if (is.list(value)) {
-      x <- replace_matrix_list(x, i, value)
+    x <- if (is.list(value)) {
+      replace_matrix_list(x, i, value)
     } else {
-      x <- replace_matrix_numeric(x, i, value)
+      replace_matrix_numeric(x, i, value)
     }
   } else {
     levels <- subscript_index(x$levels, i)
     periods <- subscript_index(x$time, j)
-    if (is_index(value)) {
-      x <- replace_index(x, levels, periods, value)
+    x <- if (is_index(value)) {
+      replace_index(x, levels, periods, value)
     } else {
-      x <- replace_numeric(x, levels, periods, value)
+      replace_numeric(x, levels, periods, value)
     }
   }
   # Replacement value should be validated; e.g., x[1] <- -1.
@@ -151,9 +151,8 @@ replace_matrix_list <- function(x, i, value) {
     stop("'value' must be a list of indexes with one level and time period")
   }
   # Make `value` the same length as replacement to avoid two warnings.
-  value <- rep_len(value, nrow(i))
-  index <- vapply(value, \(x) x$index, numeric(1L))
-  contributions <- unlist(lapply(value, \(x) x$contrib), recursive = FALSE)
+  index <- rep_len(vapply(value, \(x) x$index[[1]], numeric(1L)), nrow(i))
+  contributions <- rep_len(lapply(value, \(x) x$contrib[[1]]), nrow(i))
   has_contrib <- any(vapply(contributions, Negate(is.null), logical(1L)))
   # It's possible that only some elements of `value` have contributions.
   if (has_contrib || !is.null(x$contrib)) {
