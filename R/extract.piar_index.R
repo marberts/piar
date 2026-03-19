@@ -151,9 +151,8 @@ replace_matrix_list <- function(x, i, value) {
     stop("'value' must be a list of indexes with one level and time period")
   }
   # Make `value` the same length as replacement to avoid two warnings.
-  value <- rep_len(value, nrow(i))
-  index <- vapply(value, \(x) x$index[[1]], numeric(1L))
-  contributions <- lapply(value, \(x) x$contrib[[1]])
+  index <- rep_len(vapply(value, \(x) x$index[[1]], numeric(1L)), nrow(i))
+  contributions <- rep_len(lapply(value, \(x) x$contrib[[1]]), nrow(i))
   has_contrib <- any(vapply(contributions, Negate(is.null), logical(1L)))
   # It's possible that only some elements of `value` have contributions.
   if (has_contrib || !is.null(x$contrib)) {
