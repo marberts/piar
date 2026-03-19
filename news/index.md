@@ -48,10 +48,27 @@
 - Subscripting an index object with a matrix is now more flexible and
   can return/replace a list of index objects.
 
+- Added a new function
+  [`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  to consolidate the different price-imputation functions.
+
 ### Bug fixes
 
 - Setting `contrib = FALSE` in `aggregate(index)` always returns an
   index with no contributions.
+
+- [`set_weights()`](https://marberts.github.io/piar/reference/weights.piar_aggregation_structure.md)
+  no longer returns its result invisibly.
+
+### Deprecations
+
+- [`carry_forward()`](https://marberts.github.io/piar/reference/impute_prices.md),
+  [`carry_backward()`](https://marberts.github.io/piar/reference/impute_prices.md),
+  and
+  [`shadow_price()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  are deprecated. Use
+  [`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  instead.
 
 ## piar 0.8.3
 

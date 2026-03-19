@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.3.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,10 +63,17 @@
 <h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
 <ul><li><p>Added a new function <code><a href="../reference/combine_classifications.html">combine_classifications()</a></code> to more easily build an aggregation structure that spans multiple hierarchical classifications.</p></li>
 <li><p>Subscripting an index object with a matrix is now more flexible and can return/replace a list of index objects.</p></li>
+<li><p>Added a new function <code><a href="../reference/impute_prices.html">impute_prices()</a></code> to consolidate the different price-imputation functions.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>Setting <code>contrib = FALSE</code> in <code>aggregate(index)</code> always returns an index with no contributions.</li>
+<ul><li><p>Setting <code>contrib = FALSE</code> in <code>aggregate(index)</code> always returns an index with no contributions.</p></li>
+<li><p><code><a href="../reference/weights.piar_aggregation_structure.html">set_weights()</a></code> no longer returns its result invisibly.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecations-development-version">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-development-version"></a></h3>
+<ul><li>
+<code><a href="../reference/impute_prices.html">carry_forward()</a></code>, <code><a href="../reference/impute_prices.html">carry_backward()</a></code>, and <code><a href="../reference/impute_prices.html">shadow_price()</a></code> are deprecated. Use <code><a href="../reference/impute_prices.html">impute_prices()</a></code> instead.</li>
 </ul></div>
 </div>
     <div class="section level2">

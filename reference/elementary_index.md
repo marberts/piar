@@ -102,9 +102,9 @@ elemental_index(x, ...)
 
 - formula:
 
-  A two-sided formula with price relatives on the left-hand side, and
-  time periods and elementary aggregates (in that order) on the
-  right-hand side.
+  A two-sided formula, or something that can be coerced into one, with
+  price relatives on the left-hand side and time periods and elementary
+  aggregates (in that order) on the right-hand side.
 
 ## Value
 

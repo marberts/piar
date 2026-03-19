@@ -35,7 +35,7 @@ split_classification(x, split, ..., sep = ".", pad = NA)
 - pad:
 
   A string used to pad the shorter labels for an unbalanced
-  classification. The default pads with NA.
+  classification. The default pads with `NA`.
 
 ## Value
 

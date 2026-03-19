@@ -234,9 +234,10 @@ Helpful functions for working with price indexes.
 
 Helpful functions for working with prices.
 
-- [`shadow_price()`](https://marberts.github.io/piar/reference/impute_prices.md)
+- [`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
   [`carry_forward()`](https://marberts.github.io/piar/reference/impute_prices.md)
   [`carry_backward()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  [`shadow_price()`](https://marberts.github.io/piar/reference/impute_prices.md)
   : Impute missing prices
 - [`price_relative()`](https://marberts.github.io/piar/reference/price_relative.md)
   : Calculate period-over-period price relatives

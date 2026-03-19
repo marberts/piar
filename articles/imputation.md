@@ -32,7 +32,12 @@ elementals <- ms_prices |>
       period + business,
     na.rm = TRUE
   )
+```
 
+    ## Warning in carry_forward(price, period = period, product = product):
+    ## 'carry_forward() is deprecated; use 'impute_prices()' instead
+
+``` r
 elementals
 ```
 

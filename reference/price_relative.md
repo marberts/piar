@@ -40,8 +40,9 @@ price_relative(x, formula, ...)
 
 - formula:
 
-  A two-sided formula with prices on the left-hand side, and time
-  periods and products (in that order) on the right-hand side.
+  A two-sided formula, or something that can be coerced into one, with
+  prices on the left-hand side and time periods and products (in that
+  order) on the right-hand side.
 
 ## Value
 
