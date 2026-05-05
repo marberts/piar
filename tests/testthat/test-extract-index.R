@@ -39,7 +39,7 @@ test_that("head and tail work", {
 
 test_that("subscripting methods work", {
   expect_equal(epr[], epr)
-  expect_equal(index[], index)
+  expect_equal(index[1:5], index)
   expect_equal(
     epr[c(TRUE, FALSE, TRUE, TRUE), 2:1],
     elementary_index(

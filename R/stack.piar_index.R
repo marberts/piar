@@ -46,7 +46,7 @@
 stack.chainable_piar_index <- function(x, y, ...) {
   y <- as_index(y, chainable = TRUE)
   res <- NextMethod("stack")
-  new_piar_index(res$index, res$contrib, res$levels, res$time, TRUE)
+  new_piar_index(res$index, res$contrib, res$levels, res$time, chainable = TRUE)
 }
 
 #' @rdname stack.piar_index
@@ -54,7 +54,13 @@ stack.chainable_piar_index <- function(x, y, ...) {
 stack.direct_piar_index <- function(x, y, ...) {
   y <- as_index(y, chainable = FALSE)
   res <- NextMethod("stack")
-  new_piar_index(res$index, res$contrib, res$levels, res$time, FALSE)
+  new_piar_index(
+    res$index,
+    res$contrib,
+    res$levels,
+    res$time,
+    chainable = FALSE
+  )
 }
 
 #' @export
@@ -107,7 +113,7 @@ unstack.piar_index <- function(x, ..., chainable) {
       x$contrib[, t, drop = FALSE],
       x$levels,
       x$time[t],
-      chainable
+      chainable = chainable
     )
   }
   res

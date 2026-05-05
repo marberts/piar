@@ -46,7 +46,7 @@ set_time <- `time<-`
 #' @export
 start.piar_index <- function(x, ...) {
   chkDots(...)
-  x$time[1L]
+  x$time[[1L]]
 }
 
 #' @rdname time.piar_index

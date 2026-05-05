@@ -45,10 +45,12 @@ test_that("matched-sample index works", {
     )
   )
 
-  sp <- shadow_price(
+  sp <- impute_prices(
     ms_prices,
-    price ~ period + product + business,
-    pias = pias
+    price ~ period + product,
+    ea = business,
+    pias = pias,
+    method = "overall-mean"
   )
 
   rel <- price_relative(ms_prices, sp ~ period + product)

@@ -14,7 +14,7 @@ missing_weights <- function(x) {
 }
 
 missing_names <- function(x) {
-  anyNA(x) || any(x == "")
+  anyNA(x) || !all(nzchar(x))
 }
 
 last <- function(x) {
@@ -104,6 +104,7 @@ different_length <- function(...) {
 }
 
 formula_vars <- function(formula, x, n = 2L) {
+  formula <- stats::as.formula(formula)
   if (length(formula) != 3L) {
     stop("'formula' must have a left-hand and right-hand side")
   }
@@ -193,11 +194,6 @@ match_time <- match_dim("time")
 #---- Generate index ----
 index_skeleton <- function(levels, time) {
   matrix(NA_real_, length(levels), length(time))
-}
-
-empty_contrib <- function(x) {
-  res <- rep.int(list(numeric(0L)), length(x))
-  list(res)
 }
 
 contrib_skeleton <- function(levels, time) {

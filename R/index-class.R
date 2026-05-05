@@ -39,8 +39,10 @@ new_piar_index <- function(index, contrib, levels, time, chainable) {
 }
 
 piar_index <- function(index, contrib, levels, time, chainable) {
-  index <- unname(index)
-  contrib <- unname(contrib)
+  index <- structure(as.numeric(index), dim = dim(index))
+  if (!is.null(contrib)) {
+    contrib <- structure(as.list(contrib), dim = dim(contrib))
+  }
   levels <- as.character(levels)
   time <- as.character(time)
   validate_piar_index(
@@ -62,7 +64,7 @@ validate_levels <- function(x) {
   if (nrow(x$index) != length(x$levels)) {
     stop("number of levels does not agree with number of index values")
   }
-  invisible(x)
+  x
 }
 
 validate_time <- function(x) {
@@ -78,14 +80,14 @@ validate_time <- function(x) {
   if (ncol(x$index) != length(x$time)) {
     stop("number of time periods does not agree with number of index values")
   }
-  invisible(x)
+  x
 }
 
 validate_index_values <- function(x) {
   if (any(x$index <= 0, na.rm = TRUE)) {
     stop("cannot make an index with non-positive values")
   }
-  invisible(x)
+  x
 }
 
 validate_contrib <- function(x) {
@@ -97,14 +99,13 @@ validate_contrib <- function(x) {
       stop("number of levels does not agree with number of contributions")
     }
   }
-  invisible(x)
+  x
 }
 
 validate_index_structure <- function(x) {
   validate_levels(x)
   validate_time(x)
   validate_contrib(x)
-  x
 }
 
 validate_piar_index <- function(x) {

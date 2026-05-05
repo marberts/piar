@@ -32,7 +32,7 @@ validate_pias_levels <- function(x) {
   if (anyDuplicated(lev)) {
     stop("cannot make an aggregation structure with duplicated levels")
   }
-  invisible(x)
+  x
 }
 
 validate_pias_structure <- function(x) {
@@ -49,7 +49,7 @@ validate_pias_structure <- function(x) {
       "hierachy"
     )
   }
-  invisible(x)
+  x
 }
 
 validate_pias_weights <- function(x) {
@@ -62,14 +62,13 @@ validate_pias_weights <- function(x) {
   if (any(x$weights < 0, na.rm = TRUE)) {
     stop("cannot make an aggregation structure with negative weights")
   }
-  invisible(x)
+  x
 }
 
 validate_piar_aggregation_structure <- function(x) {
   validate_pias_levels(x)
   validate_pias_structure(x)
   validate_pias_weights(x)
-  x
 }
 
 #---- Undocumented methods ----

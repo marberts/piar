@@ -82,8 +82,9 @@
 #'   a Paasche index). Other values are possible; see
 #'   [gpindex::generalized_mean()] for details.
 #' @param ... Further arguments passed to or used by methods.
-#' @param formula A two-sided formula with price relatives on the left-hand
-#'   side, and time periods and elementary aggregates (in that order) on the
+#' @param formula A two-sided formula, or something that can be coerced into
+#'   one, with price relatives on the left-hand
+#'   side and time periods and elementary aggregates (in that order) on the
 #'   right-hand side.
 #'
 #' @returns
@@ -196,9 +197,6 @@ elementary_index.numeric <- function(
   }
   period <- as.factor(period %||% gl(1, length(x)))
   ea <- as.factor(ea %||% gl(1, length(x)))
-  ea_by_period <- period:ea
-  time <- levels(period)
-  levels <- levels(ea)
 
   if (different_length(x, period, ea, weights)) {
     stop("input vectors must be the same length")
@@ -206,6 +204,9 @@ elementary_index.numeric <- function(
   if (any(x <= 0, na.rm = TRUE)) {
     stop("all elements of 'x' must be strictly positive")
   }
+  ea_by_period <- period:ea
+  time <- levels(period)
+  levels <- levels(ea)
 
   if (contrib) {
     if (!is.null(product)) {
@@ -219,11 +220,7 @@ elementary_index.numeric <- function(
   }
 
   x <- split(x, ea_by_period)
-  if (is.null(weights)) {
-    weights <- list(NULL)
-  } else {
-    weights <- split(weights, ea_by_period)
-  }
+  weights <- if (is.null(weights)) list(NULL) else split(weights, ea_by_period)
 
   index <- mapply(
     gpindex::generalized_mean(r),
@@ -243,9 +240,9 @@ elementary_index.numeric <- function(
       USE.NAMES = FALSE
     )
     dim(contributions) <- c(nlevels(ea), nlevels(period))
-    piar_index(index, contributions, levels, time, chainable)
+    piar_index(index, contributions, levels, time, chainable = chainable)
   } else {
-    piar_index(index, NULL, levels, time, chainable)
+    piar_index(index, NULL, levels, time, chainable = chainable)
   }
 }
 

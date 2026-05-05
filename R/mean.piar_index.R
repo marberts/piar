@@ -134,8 +134,8 @@ mean_index <- function(
   }
 
   window <- as.integer(window %||% ntime(x))
-  if (length(window) > 1L || window < 1L) {
-    stop("'window' must be a positive length 1 integer")
+  if (window < 1L) {
+    stop("'window' must be a positive integer")
   }
   if (window > ntime(x)) {
     stop("'x' must have at least 'window' time periods")
@@ -180,6 +180,6 @@ mean_index <- function(
     do.call(cbind, contrib),
     x$levels,
     periods,
-    chainable
+    chainable = chainable
   )
 }
