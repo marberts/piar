@@ -58,7 +58,7 @@ update.piar_aggregation_structure <- function(
 ) {
   chkDots(...)
   price_update <- gpindex::factor_weights(r)
-  index <- chain(as_index(index))
+  index <- as_index(index, chainable = FALSE)
   period <- if (!is.null(period)) {
     match_time(as.character(period), index)
   } else {

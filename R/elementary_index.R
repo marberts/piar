@@ -95,8 +95,7 @@
 #'
 #' @seealso
 #' [price_relative()] for making price relatives for the same products over
-#' time, and [carry_forward()] and [shadow_price()] for
-#' imputation of missing prices.
+#' time, and [impute_prices()] for imputation of missing prices.
 #'
 #' [as_index()] to turn pre-computed (elementary) index values into an
 #' index object.

@@ -44,6 +44,9 @@ no contributions.
 
 - `set_weights()` no longer returns its result invisibly.
 
+- `update(pias, index)` now correctly coerces `index` to a fixed-base index when
+it is not an index object, as documented.
+
 ## Deprecations
 
 - `carry_forward()`, `carry_backward()`, and `shadow_price()` are deprecated.

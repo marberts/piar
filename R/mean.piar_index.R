@@ -39,7 +39,8 @@
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #'   a Paasche index). Other values are possible; see
 #'   [gpindex::generalized_mean()] for details.
-#' @param contrib Aggregate percent-change contributions in `x` (if any)?
+#' @param contrib Aggregate percent-change contributions in `x`? By default
+#'   contributions are aggregated.
 #' @param ... Not currently used.
 #' @param duplicate_contrib The method to deal with duplicate product
 #'   contributions. Either `"make.unique"` to make duplicate product names

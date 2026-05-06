@@ -51,7 +51,7 @@ price_relative(
 
 \code{\link[gpindex:back_period]{gpindex::base_period()}} for making fixed-base price relatives.
 
-\code{\link[=carry_forward]{carry_forward()}} and \code{\link[=shadow_price]{shadow_price()}} to impute missing prices.
+\code{\link[=impute_prices]{impute_prices()}} to impute missing prices.
 
 \code{\link[gpindex:outliers]{gpindex::outliers}} for methods to identify outliers with price relatives.
 }
