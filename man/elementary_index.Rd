@@ -190,7 +190,7 @@ von der Lippe, P. (2007). \emph{Index Theory and Price Statistics}. Peter Lang.
 }
 \seealso{
 \code{\link[=price_relative]{price_relative()}} for making price relatives for the same products over
-time, and \code{\link[=impute_prices]{impute_prices()}} for simputation of missing prices.
+time, and \code{\link[=impute_prices]{impute_prices()}} for imputation of missing prices.
 
 \code{\link[=as_index]{as_index()}} to turn pre-computed (elementary) index values into an
 index object.

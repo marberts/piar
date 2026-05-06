@@ -84,7 +84,7 @@ expand_classification <- function(x, width = 1L, pad = NA) {
   }
   w <- cumsum(width)
   x <- strsplit(x, character(0L), fixed = TRUE)
-  lapply(w, function(i) {
+  lapply(w, \(i) {
     vapply(
       x,
       \(x) paste(padded_extract(x, i, pad), collapse = ""),
