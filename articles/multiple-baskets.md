@@ -11,6 +11,7 @@ two baskets. Each basket has index values for two years, and there is a
 one year overlap between the baskets.
 
 ``` r
+
 library(piar)
 
 set.seed(12345)
@@ -65,6 +66,7 @@ usual workflow across both baskets, keeping only the higher-level
 indexes because the elementary indexes change across baskets.
 
 ``` r
+
 index <- Map(
   aggregate,
   list(elementals1, elementals2),
@@ -80,6 +82,7 @@ overlap period and stack the upper-level period-over-period indexes for
 the new basket onto the those in the old basket.
 
 ``` r
+
 stack(index[[1]], window(index[[2]], start = "9")) |>
   chain()
 ```
@@ -101,6 +104,7 @@ the values in the last period of the first basket as a link factor and
 combined with the chained index values from the old basket.
 
 ``` r
+
 link_factor <- chain(index[[1]]) |>
   window(start = end(index[[1]])) |>
   as.numeric()
@@ -127,6 +131,7 @@ The index values for the overlap period can be used to make more complex
 link factors when the index series have an annual base period.
 
 ``` r
+
 index <- index |>
   lapply(chain) |>
   lapply(\(x) rebase(x, base = mean(x[, 1:4])))
@@ -136,6 +141,7 @@ Keeping the base year of the old basket can be done by simply rebasing
 the index series for the new basket.
 
 ``` r
+
 link_factor <- window(index[[1]], start = "5") |>
   mean() |>
   as.numeric()
@@ -162,6 +168,7 @@ Updating the reference year to that of the new basket involves rebasing
 the series for both the old basket and the new basket.
 
 ``` r
+
 index[[1]] <- rebase(index[[1]], base = mean(window(index[[1]], start = "5")))
 
 link_factor <- as.numeric(index[[1]][, "8"]) / as.numeric(index[[2]][, "8"])

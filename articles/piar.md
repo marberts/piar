@@ -38,6 +38,7 @@ these data have fairly realistic patterns of missing data and are
 emblematic of the kinds of survey data used to make price indexes.
 
 ``` r
+
 library(piar)
 
 head(ms_prices)
@@ -52,6 +53,7 @@ head(ms_prices)
     ## 6 202001       B2       6  6.40
 
 ``` r
+
 ms_weights
 ```
 
@@ -75,6 +77,7 @@ levels, and not relatives, but the
 function can make the necessary conversion.
 
 ``` r
+
 elementals <- ms_prices |>
   transform(
     relative = price_relative(price, period = period, product = product)
@@ -105,10 +108,10 @@ The
 [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md)
 function returns a special index object, and there are a number of
 methods for working with these objects. For example, the resulting
-indexes to be extracted like a matrix even though it’s not a
-matrix.[¹](#fn1)
+indexes to be extracted like a matrix even though it’s not a matrix.[^1]
 
 ``` r
+
 elementals[, "202004"]
 ```
 
@@ -121,6 +124,7 @@ elementals[, "202004"]
     ##     B4 4.576286
 
 ``` r
+
 elementals[c("B1", "B3"), ]
 ```
 
@@ -139,6 +143,7 @@ hierarchy. That’s the job of the
 function.
 
 ``` r
+
 ms_weights[c("level1", "level2")] <-
   expand_classification(ms_weights$classification)
 
@@ -155,6 +160,7 @@ values. Note that, unlike the elementary indexes, missing values are
 filled in to ensure the index can be chained over time.
 
 ``` r
+
 index <- aggregate(elementals, pias, na.rm = TRUE)
 
 index
@@ -186,6 +192,7 @@ The [`chain()`](https://marberts.github.io/piar/reference/chain.md)
 function can be used to chain the values in an index object.
 
 ``` r
+
 chained_index <- chain(index)
 
 chained_index
@@ -212,6 +219,7 @@ function. For example, rebasing the index so that 202004 is the base
 period just requires dividing the chained index by the slice for 202004.
 
 ``` r
+
 rebase(chained_index, chained_index[, "202004"])
 ```
 
@@ -237,6 +245,7 @@ table of index values. This can be done by either coercing an index into
 a matrix
 
 ``` r
+
 as.matrix(chained_index)
 ```
 
@@ -254,6 +263,7 @@ as.matrix(chained_index)
 or a data frame
 
 ``` r
+
 as.data.frame(chained_index)
 ```
 
@@ -296,6 +306,7 @@ aggregate the index; these can be calculated by first updating the
 aggregation structure with the aggregated index, then made into a table.
 
 ``` r
+
 update(pias, index) |>
   as.data.frame()
 ```
@@ -307,9 +318,7 @@ update(pias, index) |>
     ## 4      1     12       B4 3935.9748
     ## 5      1     12       B5 2088.2182
 
-------------------------------------------------------------------------
-
-1.  Note that there are only indexes for four businesses, not five,
+[^1]: Note that there are only indexes for four businesses, not five,
     because the fifth business never reports any prices. An elementary
     index can be made for this business by passing a factor with a level
     for all five businesses to

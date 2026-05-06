@@ -12,6 +12,7 @@ Let’s start by building the index in
 again.
 
 ``` r
+
 library(piar)
 
 # Make an aggregation structure.
@@ -52,6 +53,7 @@ The key to do this aggregation as a matrix operation is to first turn
 the aggregation structure into an aggregation matrix.
 
 ``` r
+
 pias_matrix <- as.matrix(pias)
 
 pias_matrix
@@ -67,6 +69,7 @@ Multiplying this matrix with a matrix of fixed-base elementary indexes
 now computes the aggregate index in each time period.
 
 ``` r
+
 pias_matrix %*% as.matrix(index[levels(pias)$business])
 ```
 
@@ -88,6 +91,7 @@ that gives the share of missing elementary indexes for each higher-level
 index.
 
 ``` r
+
 pias_matrix <- as.matrix(pias) > 0
 
 pias_matrix %*% is.na(elementals) / rowSums(pias_matrix)
@@ -114,6 +118,7 @@ inefficient for large indexes—in this case it is better to make a sparse
 aggregation matrix.
 
 ``` r
+
 as.matrix(pias, sparse = TRUE)
 ```
 

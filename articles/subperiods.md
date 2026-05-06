@@ -13,6 +13,7 @@ Let’s modify the example in
 by adding an additional eight quarters to make three years of data.
 
 ``` r
+
 set.seed(54321)
 
 library(piar)
@@ -52,6 +53,7 @@ pias
     ## 12      1     13    132 B12     12
 
 ``` r
+
 # Make elementary indexes over 3 years and aggregate.
 quarterly_index <- matrix(
   runif(12 * 12, 0.4, 1.2),
@@ -87,6 +89,7 @@ one is to take the (unweighted) arithmetic mean of the index values over
 each year and rebase to a new base year.
 
 ``` r
+
 annual_index <- chain(quarterly_index) |>
   mean(window = 4)
 
@@ -110,6 +113,7 @@ aggregation properties of the index continue to hold after
 price-updating the weights.
 
 ``` r
+
 annual_pias <- pias |>
   update(annual_index, period = "Q1")
 
@@ -129,6 +133,7 @@ for determining, say, the quarter-over-quarter contribution of the level
 2 indexes to top-level index remains the same.
 
 ``` r
+
 annual_index |>
   unchain() |>
   set_contrib_from_index() |>

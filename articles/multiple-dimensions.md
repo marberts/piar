@@ -11,6 +11,7 @@ by adding another dimension to the classification to say if a business
 belongs to the take-all or take-some sampling stratum.
 
 ``` r
+
 library(piar)
 
 elementals <- ms_prices |>
@@ -21,6 +22,7 @@ elementals <- ms_prices |>
 ```
 
 ``` r
+
 ms_weights$stratum <- c("TS", "TA", "TS", "TS", "TS")
 
 ms_weights
@@ -42,6 +44,7 @@ function as before, just with an extra instruction to say that the last
 “digit” in the classification is two characters wide, not one.
 
 ``` r
+
 classification_sps <- paste0(ms_weights$classification, ms_weights$stratum) |>
   expand_classification(width = c(1, 1, 2))
 
@@ -65,6 +68,7 @@ The elementary indexes can now be aggregated according to this new
 aggregation structure.
 
 ``` r
+
 index_sps <- aggregate(elementals, pias_sps, na.rm = TRUE)
 
 index_sps
@@ -96,6 +100,7 @@ be interacted to get two aggregation structures that can be used to
 re-aggregate `index_sps`.
 
 ``` r
+
 interacted_hierarchy <- interact_classifications(
   expand_classification(ms_weights$classification),
   expand_classification(ms_weights$stratum)
@@ -115,6 +120,7 @@ The resulting indexes can be merged together to give an index that
 includes all combinations of industry and sampling stratum.
 
 ``` r
+
 Reduce(merge, index_sps2)
 ```
 

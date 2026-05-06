@@ -25,15 +25,15 @@ Source Software*, **9**(101), 6781.
       pages = {6781},
     }
 
-Martin S (2025). *piar: Price Index Aggregation*.
-[doi:10.5281/zenodo.10110046](https://doi.org/10.5281/zenodo.10110046),
-R package version 0.8.3.9006, <https://cran.r-project.org/package=piar>.
+Martin S (2026). *piar: Price Index Aggregation*.
+[doi:10.5281/zenodo.10110046](https://doi.org/10.5281/zenodo.10110046).
+R package version 0.9.0, <https://cran.r-project.org/package=piar>.
 
     @Manual{,
       title = {{piar}: Price Index Aggregation},
       author = {Steve Martin},
-      year = {2025},
+      year = {2026},
       doi = {10.5281/zenodo.10110046},
       url = {https://cran.r-project.org/package=piar},
-      note = {R package version 0.8.3.9006},
+      note = {R package version 0.9.0},
     }

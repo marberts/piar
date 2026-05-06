@@ -183,9 +183,7 @@ Lang.
 
 [`price_relative()`](https://marberts.github.io/piar/reference/price_relative.md)
 for making price relatives for the same products over time, and
-[`carry_forward()`](https://marberts.github.io/piar/reference/impute_prices.md)
-and
-[`shadow_price()`](https://marberts.github.io/piar/reference/impute_prices.md)
+[`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
 for imputation of missing prices.
 
 [`as_index()`](https://marberts.github.io/piar/reference/as_index.md) to

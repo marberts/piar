@@ -63,7 +63,8 @@ aggregate(
 
 - contrib:
 
-  Aggregate percent-change contributions in `x` (if any)?
+  Aggregate percent-change contributions in `x`? By default
+  contributions are aggregated.
 
 - r:
 

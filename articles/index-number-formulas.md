@@ -10,6 +10,7 @@ extensive use of the *gpindex* package for lower-level price-index
 functions; see the help pages for that package to get more detail.
 
 ``` r
+
 library(piar)
 library(gpindex)
 
@@ -52,6 +53,7 @@ generalized mean `r` when calling
 An order of 1 corresponds to an arithmetic mean.
 
 ``` r
+
 prices |>
   elementary_index(price / back_price ~ period + business, r = 1)
 ```
@@ -68,6 +70,7 @@ Despite it being more exotic, it is just as easy to make by specifying
 an order `r` of -1.
 
 ``` r
+
 prices |>
   elementary_index(price / back_price ~ period + business, r = -1)
 ```
@@ -82,6 +85,7 @@ Weights can be added to make, for example, elementary indexes using the
 geometric Laspeyres formula.
 
 ``` r
+
 prices |>
   elementary_index(
     price / back_price ~ period + business,
@@ -113,6 +117,7 @@ makes a geometric index by default, all that is needed to make a
 Törnqvist index is the weights.
 
 ``` r
+
 tw <- grouped(index_weights("Tornqvist"))
 
 prices |>
@@ -139,6 +144,7 @@ generalized-mean family. Despite this, it is possible to make weights to
 represent a Fisher index as a generalized mean of any order.
 
 ``` r
+
 fw <- grouped(nested_transmute(0, c(1, -1), 0))
 
 prices |>
@@ -180,6 +186,7 @@ Let’s extend the previous example by calculating product contributions
 for the Fisher index using the default method.
 
 ``` r
+
 fisher_index <- prices |>
   elementary_index(
     price / back_price ~ period + business,
@@ -206,6 +213,7 @@ We can change the method used to make contributions for, say, business
 different method
 
 ``` r
+
 diewert_contributions <- function(p1, p0, q1, q0) {
   Pf <- fisher_index(p1, p0, q1, q0)
   Pl <- laspeyres_index(p1, p0, q0)
@@ -219,6 +227,7 @@ diewert_contributions <- function(p1, p0, q1, q0) {
 and using this function to replace the contributions for business `B1`.
 
 ``` r
+
 contrib(fisher_index, "B1") <- subset(prices, business == "B1") |>
   split(~period) |>
   sapply(

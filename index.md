@@ -24,12 +24,14 @@ time.
 Get the stable version from CRAN.
 
 ``` r
+
 install.packages("piar")
 ```
 
 The development version can be installed from R-Universe
 
 ``` r
+
 install.packages(
   "piar",
   repos = c("https://marberts.r-universe.dev", "https://cloud.r-project.org")
@@ -39,6 +41,7 @@ install.packages(
 or directly from Github.
 
 ``` r
+
 pak::pak("marberts/piar")
 ```
 
@@ -53,6 +56,7 @@ indexes with the
 function.
 
 ``` r
+
 library(piar)
 
 # Make Jevons business-level elementary indexes
@@ -85,6 +89,7 @@ elementals
 And an aggregation structure.
 
 ``` r
+
 # Make an aggregation structure from businesses to higher-level
 # industrial classifications
 
@@ -118,6 +123,7 @@ are a variety of methods to work with these index objects, such as
 chaining them over time.
 
 ``` r
+
 # Aggregate elementary indexes with an arithmetic index
 
 index <- aggregate(elementals, pias, na.rm = TRUE)

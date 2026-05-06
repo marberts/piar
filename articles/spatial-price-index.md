@@ -14,6 +14,7 @@ The basic workflow is the same as with a temporal index, just treating
 each country as a different “time period” in a fixed-based index.
 
 ``` r
+
 library(piar)
 
 set.seed(12345)
@@ -43,6 +44,7 @@ head(bh_index)
     ##    BH6         1 0.8665487 0.8609494 0.9609941
 
 ``` r
+
 # Make fixed aggregation weights.
 #            1
 #      |-----+-----|
@@ -75,6 +77,7 @@ choices for weights make different assumptions about how people change
 their spending patterns between each country and the base country.
 
 ``` r
+
 index <- aggregate(bh_index, weights)
 ```
 
@@ -83,6 +86,7 @@ regular basis, these sorts of indexes are often updated over time by
 changes in exchange rates and inflation rates for each country.
 
 ``` r
+
 as.matrix(index[1, -1])
 ```
 
@@ -91,6 +95,7 @@ as.matrix(index[1, -1])
     ##      1  1.051349 0.9701244 0.9461596
 
 ``` r
+
 update_factors <- runif(3, 0.8, 1.2)
 
 as.matrix(index[1, -1]) * update_factors

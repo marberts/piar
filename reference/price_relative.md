@@ -56,9 +56,7 @@ to get only the back price.
 [`gpindex::base_period()`](https://marberts.github.io/gpindex/reference/back_period.html)
 for making fixed-base price relatives.
 
-[`carry_forward()`](https://marberts.github.io/piar/reference/impute_prices.md)
-and
-[`shadow_price()`](https://marberts.github.io/piar/reference/impute_prices.md)
+[`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
 to impute missing prices.
 
 [`gpindex::outliers`](https://marberts.github.io/gpindex/reference/outliers.html)

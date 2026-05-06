@@ -21,23 +21,24 @@ still need to be removed in this example because not all missing prices
 can be imputed.)
 
 ``` r
+
 library(piar)
 
 elementals <- ms_prices |>
   transform(
-    imputed_price = carry_forward(price, period = period, product = product)
+    imputed_price = impute_prices(
+      price,
+      period = period,
+      product = product,
+      method = "carry-forward"
+    )
   ) |>
   elementary_index(
     price_relative(imputed_price, period = period, product = product) ~
       period + business,
     na.rm = TRUE
   )
-```
 
-    ## Warning in carry_forward(price, period = period, product = product):
-    ## 'carry_forward() is deprecated; use 'impute_prices()' instead
-
-``` r
 elementals
 ```
 
@@ -64,6 +65,7 @@ be imputed as 1, rather than the value for group 12. This replacement
 can be done as if the index was a matrix.
 
 ``` r
+
 elementals["B4", 1:3] <- 1
 
 elementals

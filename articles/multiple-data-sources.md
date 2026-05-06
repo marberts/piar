@@ -12,6 +12,7 @@ by having an alternate source of data for business `B5` that is always
 missing in the `ms_prices` dataset.
 
 ``` r
+
 library(piar)
 
 # Make an aggregation structure.
@@ -44,6 +45,7 @@ from scanner-like data with many price and quantity observations at each
 point in time.
 
 ``` r
+
 set.seed(12345)
 
 scanner_prices <- data.frame(
@@ -70,6 +72,7 @@ over a 3 quarter rolling window and use a mean splice to make a single
 time series.
 
 ``` r
+
 library(gpindex)
 
 geks_elementals <- with(
@@ -95,6 +98,7 @@ getting turned into a period-over-period index in the process, and then
 aggregated.
 
 ``` r
+
 merge(elementals, geks_elementals) |>
   aggregate(pias, na.rm = TRUE)
 ```

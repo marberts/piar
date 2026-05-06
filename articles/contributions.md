@@ -10,6 +10,7 @@ specifying `contrib = TRUE` when calling
 [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 ``` r
+
 library(piar)
 
 # Make an aggregation structure.
@@ -36,6 +37,7 @@ As with index values, percent-change contributions for a given level of
 the index can be extracted as a matrix.
 
 ``` r
+
 contrib(elementals, level = "B1")
 ```
 
@@ -48,6 +50,7 @@ contrib(elementals, level = "B1")
 Or as a data frame.
 
 ``` r
+
 contrib2DF(elementals, level = "B1")
 ```
 
@@ -66,6 +69,7 @@ percent-change contributions, so no extra steps are needed after the
 elementary indexes are made.
 
 ``` r
+
 index <- aggregate(elementals, pias, na.rm = TRUE)
 
 contrib(index)
@@ -95,6 +99,7 @@ to simply coerce them into an index object with the index values as
 contributions and reaggregate with a restricted aggregation structure.
 
 ``` r
+
 index <- as_index(as.matrix(index), contrib = TRUE)
 ```
 
@@ -106,6 +111,7 @@ two levels and reaggregate to get the contribution of the second-level
 indexes to the top level index.
 
 ``` r
+
 set_contrib_from_index(index) |>
   aggregate(cut(pias, 2)) |>
   contrib()
@@ -119,6 +125,7 @@ set_contrib_from_index(index) |>
 The same approach works with a fixed-base index as well.
 
 ``` r
+
 chain(index) |>
   set_contrib_from_index() |>
   aggregate(cut(pias, 2)) |>

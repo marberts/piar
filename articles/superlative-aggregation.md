@@ -15,6 +15,7 @@ multiple basket in
 except that the weights change each period.
 
 ``` r
+
 library(piar)
 
 set.seed(12345)
@@ -38,6 +39,7 @@ head(elementals)
     ##     B6 1 0.8665487 0.8609494 0.9609941
 
 ``` r
+
 # Make aggregation weights over 4 time periods.
 #            1
 #      |-----+-----|
@@ -70,9 +72,8 @@ The key tools to deal with time-varying aggregation weights are the
 [`stack()`](https://rdrr.io/r/utils/stack.html) appends a later index
 series onto an earlier one for the same levels, whereas
 [`unstack()`](https://rdrr.io/r/utils/stack.html) pulls apart an index
-series for many periods into a collection of one-period
-indexes.[¹](#fn1) These functions allow the aggregation to be done with
-a map-reduce.
+series for many periods into a collection of one-period indexes.[^1]
+These functions allow the aggregation to be done with a map-reduce.
 
 The first step to making a Paasche index is to unstack the elementary
 indexes into a list of elementary indexes for each period. (Trying to
@@ -80,6 +81,7 @@ make the elementary indexes period-by-period can be dangerous when there
 are missing values.)
 
 ``` r
+
 elementals <- unstack(elementals)
 ```
 
@@ -87,6 +89,7 @@ This is followed by making a sequence of aggregation structures for each
 set of weights.
 
 ``` r
+
 paasche_pias <- split(
   weights[c("level1", "level2", "ea", "weights")],
   weights[["period"]]
@@ -101,6 +104,7 @@ reducing the result with the
 [`stack()`](https://rdrr.io/r/utils/stack.html) function.
 
 ``` r
+
 paasche <- Map(
   aggregate,
   elementals,
@@ -131,6 +135,7 @@ map-reduce, except now by passing two aggregation structures to the
 of one.
 
 ``` r
+
 laspeyres_pias <- paasche_pias[c(1, 1, 2, 3)]
 
 fisher <- Map(
@@ -157,6 +162,7 @@ This gives the same result as calculating the Laspeyres and Paasche
 indexes individually, and then calculating the Fisher index manually.
 
 ``` r
+
 laspeyres <- Map(
   aggregate,
   elementals,
@@ -175,7 +181,5 @@ sqrt(as.matrix(laspeyres) * as.matrix(paasche))
     ##     11 1 1.1157686 1.0007074 0.9557479
     ##     12 1 0.9891911 0.9567760 0.9665552
 
-------------------------------------------------------------------------
-
-1.  [`split()`](https://rdrr.io/r/base/split.html) can also be used for
-    this.
+[^1]: [`split()`](https://rdrr.io/r/base/split.html) can also be used
+    for this.

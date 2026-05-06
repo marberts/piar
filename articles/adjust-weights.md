@@ -11,6 +11,7 @@ Let’s start by making some annual weights and quarterly indexes for a
 year.
 
 ``` r
+
 set.seed(54321)
 
 library(piar)
@@ -50,6 +51,7 @@ pias
     ## 12      1     13    132 B12     12
 
 ``` r
+
 # Make elementary indexes over 4 quarters.
 elementals <- matrix(
   runif(12 * 4, 0.4, 1.2),
@@ -82,6 +84,7 @@ indexes: the weight for each elementary aggregate is just divided by the
 average (fixed-base) index for each quarter.
 
 ``` r
+
 weights(pias) / rowMeans(as.matrix(chain(elementals)))
 ```
 
@@ -99,6 +102,7 @@ converge to a fixed point. The following function shows how to do this
 adjustment using the tools in this package.
 
 ``` r
+
 # Function to adjust annual weights.
 adjust_weights <- function(
   index,
@@ -128,6 +132,7 @@ adjust_weights <- function(
 ```
 
 ``` r
+
 elementals[11:12] <- NA
 
 adjust_weights(elementals, pias)

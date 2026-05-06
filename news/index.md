@@ -60,6 +60,9 @@
 - [`set_weights()`](https://marberts.github.io/piar/reference/weights.piar_aggregation_structure.md)
   no longer returns its result invisibly.
 
+- `update(pias, index)` now correctly coerces `index` to a fixed-base
+  index when it is not an index object, as documented.
+
 ### Deprecations
 
 - [`carry_forward()`](https://marberts.github.io/piar/reference/impute_prices.md),
