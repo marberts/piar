@@ -25,7 +25,7 @@
 #'
 #' [gpindex::base_period()] for making fixed-base price relatives.
 #'
-#' [carry_forward()] and [shadow_price()] to impute missing prices.
+#' [impute_prices()] to impute missing prices.
 #'
 #' [`gpindex::outliers`] for methods to identify outliers with price relatives.
 #'

@@ -76,7 +76,8 @@
 #'   a Paasche index). Other values are possible; see
 #'   [gpindex::generalized_mean()] for details. If `pias2` is given then the
 #'   index is aggregated with a quadratic mean of order `2*r`.
-#' @param contrib Aggregate percent-change contributions in `x` (if any)?
+#' @param contrib Aggregate percent-change contributions in `x`? By default
+#'   contributions are aggregated.
 #' @param include_ea Should indexes for the elementary aggregates be included
 #'   along with the aggregated indexes? By default, all index values are
 #'   returned.

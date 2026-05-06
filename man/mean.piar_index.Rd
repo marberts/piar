@@ -47,7 +47,8 @@ periods in \code{x}. Non-integers are truncated towards 0.}
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
 imputation.}
 
-\item{contrib}{Aggregate percent-change contributions in \code{x} (if any)?}
+\item{contrib}{Aggregate percent-change contributions in \code{x}? By default
+contributions are aggregated.}
 
 \item{r}{Order of the generalized mean to aggregate index values. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
