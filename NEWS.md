@@ -1,4 +1,4 @@
-# piar (development version)
+# piar 0.9.0
 
 ## Significant changes
 
