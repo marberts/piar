@@ -35,6 +35,9 @@ test_that("head and tail work", {
   expect_equal(tail(epr, 2:1), epr[3:4, 2])
   expect_equal(head(epr, c(NA, -1)), epr[, 1])
   expect_equal(tail(epr, c(NA, -1)), epr[, 2])
+  # #72
+  expect_equal(head(epr2, c(1, 1)), epr2[1, 1])
+  expect_equal(tail(epr2, c(1, 1)), epr2[4, 2])
 })
 
 test_that("subscripting methods work", {

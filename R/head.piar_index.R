@@ -24,7 +24,9 @@
 head.piar_index <- function(x, n = 6L, ...) {
   chkDots(...)
   x$index <- head(x$index, n)
-  x$contrib <- head(x$contrib, n)
+  if (!is.null(x$contrib)) {
+    x$contrib <- head(x$contrib, n)
+  }
   if (!is.na(n[1L])) {
     x$levels <- head(x$levels, n[1L])
   }
@@ -40,7 +42,9 @@ head.piar_index <- function(x, n = 6L, ...) {
 tail.piar_index <- function(x, n = 6L, ...) {
   chkDots(...)
   x$index <- tail(x$index, n, keepnums = FALSE)
-  x$contrib <- tail(x$contrib, n, keepnums = FALSE)
+  if (!is.null(x$contrib)) {
+    x$contrib <- tail(x$contrib, n, keepnums = FALSE)
+  }
   if (!is.na(n[1L])) {
     x$levels <- tail(x$levels, n[1L])
   }
