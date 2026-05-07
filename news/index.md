@@ -1,6 +1,15 @@
 # Changelog
 
+## piar (development version)
+
+### Bugs fixes
+
+- `head(index)` and `tail(index)` now work correctly if there are no
+  product contributions.
+
 ## piar 0.9.0
+
+CRAN release: 2026-05-06
 
 ### Significant changes
 

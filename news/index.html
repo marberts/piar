@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9001</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.9.0" id="piar-090">piar 0.9.0<a class="anchor" aria-label="anchor" href="#piar-090"></a></h2>
+<h2 class="pkg-version" data-toc-text="development version" id="piar-development-version">piar (development version)<a class="anchor" aria-label="anchor" href="#piar-development-version"></a></h2>
+<div class="section level3">
+<h3 id="bugs-fixes-development-version">Bugs fixes<a class="anchor" aria-label="anchor" href="#bugs-fixes-development-version"></a></h3>
+<ul><li>
+<code>head(index)</code> and <code>tail(index)</code> now work correctly if there are no product contributions.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.9.0" id="piar-090">piar 0.9.0<a class="anchor" aria-label="anchor" href="#piar-090"></a></h2><p class="text-muted">CRAN release: 2026-05-06</p>
 <div class="section level3">
 <h3 id="significant-changes-0-9-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-9-0"></a></h3>
 <ul><li><p>The internal representation of index objects has changed so that both the <code>index</code> and <code>contrib</code> components of an index are now matrices instead of lists. This simplifies the code base and in some cases improves performance, but will break any code that directly uses the internal components of an index.</p></li>
