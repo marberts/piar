@@ -59,10 +59,10 @@ weights(update(pias, index), ea_only = FALSE)
 \seealso{
 \code{\link[=aggregate.piar_index]{aggregate()}} to make an aggregated price index.
 
-Other aggregation structure methods: 
-\code{\link{as.matrix.piar_aggregation_structure}()},
-\code{\link{cut.piar_aggregation_structure}()},
-\code{\link{levels.piar_aggregation_structure}()},
-\code{\link{weights.piar_aggregation_structure}()}
+Other aggregation structure methods:
+\code{\link[=as.matrix.piar_aggregation_structure]{as.matrix.piar_aggregation_structure()}},
+\code{\link[=cut.piar_aggregation_structure]{cut.piar_aggregation_structure()}},
+\code{\link[=levels.piar_aggregation_structure]{levels.piar_aggregation_structure()}},
+\code{\link[=weights.piar_aggregation_structure]{weights.piar_aggregation_structure()}}
 }
 \concept{aggregation structure methods}

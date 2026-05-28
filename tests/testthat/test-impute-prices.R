@@ -213,3 +213,24 @@ test_that("imputing with a matrix works", {
     matrix(c(1, 2, 1, 4, 5, 6, 3, 2, 1, 1, 2, 3), ncol = 2)
   )
 })
+
+test_that("NA products don't get imputed", {
+  df <- data.frame(
+    period = c(1, 1, 1, 2, 2, 2, 3, 3, 3),
+    product = c(1, 2, 3, 1, 2, NA, 1, NA, NA),
+    price = c(1, 2, 3, 4, 5, NA, 7, NA, NA),
+    back_price = c(1, 2, 3, 1, 2, 3, 4, 5, NA)
+  )
+
+  expect_equal(
+    impute_prices(
+      df,
+      cbind(price, back_price) ~ period + product,
+      method = "carry-forward"
+    ),
+    cbind(
+      price = replace(df$price, c(6, 8), c(3, 5)),
+      back_price = df$back_price
+    )
+  )
+})

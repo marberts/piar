@@ -82,10 +82,10 @@ plot(data.tree::as.Node(aggregation_weights))
 \code{\link[treemap:treemap]{treemap::treemap()}} and \code{\link[data.tree:as.Node]{data.tree::as.Node()}} for visualizing an
 aggregation structure.
 
-Other aggregation structure methods: 
-\code{\link{cut.piar_aggregation_structure}()},
-\code{\link{levels.piar_aggregation_structure}()},
-\code{\link{update.piar_aggregation_structure}()},
-\code{\link{weights.piar_aggregation_structure}()}
+Other aggregation structure methods:
+\code{\link[=cut.piar_aggregation_structure]{cut.piar_aggregation_structure()}},
+\code{\link[=levels.piar_aggregation_structure]{levels.piar_aggregation_structure()}},
+\code{\link[=update.piar_aggregation_structure]{update.piar_aggregation_structure()}},
+\code{\link[=weights.piar_aggregation_structure]{weights.piar_aggregation_structure()}}
 }
 \concept{aggregation structure methods}

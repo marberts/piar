@@ -59,10 +59,10 @@ cut(pias, 2)
 
 }
 \seealso{
-Other aggregation structure methods: 
-\code{\link{as.matrix.piar_aggregation_structure}()},
-\code{\link{levels.piar_aggregation_structure}()},
-\code{\link{update.piar_aggregation_structure}()},
-\code{\link{weights.piar_aggregation_structure}()}
+Other aggregation structure methods:
+\code{\link[=as.matrix.piar_aggregation_structure]{as.matrix.piar_aggregation_structure()}},
+\code{\link[=levels.piar_aggregation_structure]{levels.piar_aggregation_structure()}},
+\code{\link[=update.piar_aggregation_structure]{update.piar_aggregation_structure()}},
+\code{\link[=weights.piar_aggregation_structure]{weights.piar_aggregation_structure()}}
 }
 \concept{aggregation structure methods}
