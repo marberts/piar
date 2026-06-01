@@ -7,6 +7,10 @@
 - `head(index)` and `tail(index)` now work correctly if there are no
   product contributions.
 
+- [`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  no longer matches missing products across consecutive time periods
+  when passed a matrix.
+
 ## piar 0.9.0
 
 CRAN release: 2026-05-06

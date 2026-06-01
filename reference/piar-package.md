@@ -30,3 +30,8 @@ Useful links:
 
 **Maintainer**: Steve Martin <marberts@protonmail.com>
 ([ORCID](https://orcid.org/0000-0003-2544-9480)) \[copyright holder\]
+
+Authors:
+
+- Steve Martin <marberts@protonmail.com>
+  ([ORCID](https://orcid.org/0000-0003-2544-9480)) \[copyright holder\]
