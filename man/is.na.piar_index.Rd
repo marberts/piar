@@ -38,20 +38,20 @@ index
 
 }
 \seealso{
-Other index methods: 
-\code{\link{[.piar_index}()},
+Other index methods:
+\code{\link[=[.piar_index]{[.piar_index()}},
 \code{\link{aggregate.piar_index}},
-\code{\link{as.data.frame.piar_index}()},
-\code{\link{as.ts.piar_index}()},
-\code{\link{chain}()},
-\code{\link{contrib}()},
-\code{\link{head.piar_index}()},
-\code{\link{levels.piar_index}()},
+\code{\link[=as.data.frame.piar_index]{as.data.frame.piar_index()}},
+\code{\link[=as.ts.piar_index]{as.ts.piar_index()}},
+\code{\link[=chain]{chain()}},
+\code{\link[=contrib]{contrib()}},
+\code{\link[=head.piar_index]{head.piar_index()}},
+\code{\link[=levels.piar_index]{levels.piar_index()}},
 \code{\link{mean.piar_index}},
-\code{\link{merge.piar_index}()},
-\code{\link{split.piar_index}()},
-\code{\link{stack.piar_index}()},
-\code{\link{time.piar_index}()},
-\code{\link{window.piar_index}()}
+\code{\link[=merge.piar_index]{merge.piar_index()}},
+\code{\link[=split.piar_index]{split.piar_index()}},
+\code{\link[=stack.piar_index]{stack.piar_index()}},
+\code{\link[=time.piar_index]{time.piar_index()}},
+\code{\link[=window.piar_index]{window.piar_index()}}
 }
 \concept{index methods}

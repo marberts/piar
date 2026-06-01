@@ -193,7 +193,11 @@ impute_prices.matrix <- function(
     }
     if (t < length(res)) {
       impute2 <- which(is.na(res[[t + 1L]][, 2L]))
-      matches <- match(product[[t + 1L]][impute2], product[[t]][impute])
+      matches <- match(
+        product[[t + 1L]][impute2],
+        product[[t]][impute],
+        incomparables = NA
+      )
       res[[t + 1L]][impute2, 2L] <- res[[t]][impute, 1L][matches]
     }
   }

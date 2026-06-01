@@ -129,7 +129,7 @@ generalized mean of order \code{r} the aggregation for \code{pias2} done with a
 generalized mean of order \code{-r}. The resulting indexes are combined with a
 geometric mean to make a superlative quadratic mean of order \code{2*r} index.
 Percent-change contributions are combined using a generalized van IJzeren
-decomposition; see \code{\link[gpindex:transmute_weights]{gpindex::nested_transmute()}} for details.
+decomposition; see \code{\link[gpindex:nested_transmute]{gpindex::nested_transmute()}} for details.
 }
 \note{
 For large indexes it can be much faster to turn the aggregation structure
@@ -180,20 +180,20 @@ International Monetary Fund.
 von der Lippe, P. (2007). \emph{Index Theory and Price Statistics}. Peter Lang.
 }
 \seealso{
-Other index methods: 
-\code{\link{[.piar_index}()},
-\code{\link{as.data.frame.piar_index}()},
-\code{\link{as.ts.piar_index}()},
-\code{\link{chain}()},
-\code{\link{contrib}()},
-\code{\link{head.piar_index}()},
-\code{\link{is.na.piar_index}()},
-\code{\link{levels.piar_index}()},
+Other index methods:
+\code{\link[=[.piar_index]{[.piar_index()}},
+\code{\link[=as.data.frame.piar_index]{as.data.frame.piar_index()}},
+\code{\link[=as.ts.piar_index]{as.ts.piar_index()}},
+\code{\link[=chain]{chain()}},
+\code{\link[=contrib]{contrib()}},
+\code{\link[=head.piar_index]{head.piar_index()}},
+\code{\link[=is.na.piar_index]{is.na.piar_index()}},
+\code{\link[=levels.piar_index]{levels.piar_index()}},
 \code{\link{mean.piar_index}},
-\code{\link{merge.piar_index}()},
-\code{\link{split.piar_index}()},
-\code{\link{stack.piar_index}()},
-\code{\link{time.piar_index}()},
-\code{\link{window.piar_index}()}
+\code{\link[=merge.piar_index]{merge.piar_index()}},
+\code{\link[=split.piar_index]{split.piar_index()}},
+\code{\link[=stack.piar_index]{stack.piar_index()}},
+\code{\link[=time.piar_index]{time.piar_index()}},
+\code{\link[=window.piar_index]{window.piar_index()}}
 }
 \concept{index methods}

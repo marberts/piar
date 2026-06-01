@@ -5,6 +5,9 @@
 - `head(index)` and `tail(index)` now work correctly if there are no product
 contributions.
 
+- `impute_prices()` no longer matches missing products across consecutive time
+periods when passed a matrix.
+
 # piar 0.9.0
 
 ## Significant changes

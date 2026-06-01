@@ -49,7 +49,7 @@ price_relative(
 \seealso{
 \code{\link[gpindex:back_period]{gpindex::back_period()}} to get only the back price.
 
-\code{\link[gpindex:back_period]{gpindex::base_period()}} for making fixed-base price relatives.
+\code{\link[gpindex:base_period]{gpindex::base_period()}} for making fixed-base price relatives.
 
 \code{\link[=impute_prices]{impute_prices()}} to impute missing prices.
 

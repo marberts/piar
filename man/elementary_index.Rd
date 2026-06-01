@@ -128,7 +128,7 @@ to calling \code{elementary_index()}.
 
 Indexes based on nested generalized means, like the Fisher index (and
 superlative quadratic mean indexes more generally), can be calculated by
-supplying the appropriate weights with \code{\link[gpindex:transmute_weights]{gpindex::nested_transmute()}}; see the
+supplying the appropriate weights with \code{\link[gpindex:nested_transmute]{gpindex::nested_transmute()}}; see the
 example below. It is important to note that there are several ways to
 make these weights, and this affects how percent-change contributions
 are calculated.
