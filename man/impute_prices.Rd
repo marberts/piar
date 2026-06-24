@@ -24,7 +24,8 @@ impute_prices(x, ...)
   weights = NULL,
   pias = NULL,
   r = c(0, 1),
-  method = c("overall-mean", "carry-forward")
+  method = c("overall-mean", "carry-forward"),
+  impute_rules = NULL
 )
 
 \method{impute_prices}{numeric}(
@@ -36,7 +37,8 @@ impute_prices(x, ...)
   weights = NULL,
   pias = NULL,
   r = c(0, 1),
-  method = c("overall-mean", "carry-forward", "carry-backward")
+  method = c("overall-mean", "carry-forward", "carry-backward"),
+  impute_rules = NULL
 )
 
 \method{impute_prices}{data.frame}(x, formula, ..., ea = NULL, weights = NULL)
@@ -86,6 +88,12 @@ see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for deta
 
 \item{method}{Name of the imputation method, one of \code{"overall-mean"},
 \code{"carry-forward"}, or \code{"carry-backward"}.}
+
+\item{impute_rules}{(Experimental) A function that applies imputation
+rules to the elementary indexes in each time period prior to aggregation.
+It takes two arguments, the elementary indexes for a given time period and
+the (price updated) aggregation structure, and must return back the
+elementary indexes in the same order.}
 
 \item{formula}{A two-sided formula, or something that can be coerced into
 one, with prices on the left-hand

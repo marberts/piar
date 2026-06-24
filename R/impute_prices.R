@@ -65,6 +65,11 @@
 #' @param method Name of the imputation method, one of `"overall-mean"`,
 #'   `"carry-forward"`, or `"carry-backward"`.
 #' @param ... Further arguments passed to or used by methods.
+#' @param impute_rules (Experimental) A function that applies imputation
+#'   rules to the elementary indexes in each time period prior to aggregation.
+#'   It takes two arguments, the elementary indexes for a given time period and
+#'   the (price updated) aggregation structure, and must return back the
+#'   elementary indexes in the same order.
 #'
 #' @returns
 #' A numeric vector or matrix of prices with missing values replaced
@@ -131,7 +136,8 @@ impute_prices.matrix <- function(
   weights = NULL,
   pias = NULL,
   r = c(0, 1),
-  method = c("overall-mean", "carry-forward")
+  method = c("overall-mean", "carry-forward"),
+  impute_rules = NULL
 ) {
   # This is mostly a combination of gpindex::back_period() and aggregate()
   # it just does it period-by-period and keeps track of prices to impute.
@@ -179,7 +185,13 @@ impute_prices.matrix <- function(
         r = r[1L]
       )
       if (!is.null(pias)) {
-        index <- aggregate(index, pias, na.rm = TRUE, r = r[2L])
+        index <- aggregate(
+          index,
+          pias,
+          na.rm = TRUE,
+          r = r[2L],
+          impute_rules = impute_rules
+        )
         pias <- update(pias, index, r = r[2L])
       }
       eas <- if (!is.null(ea)) {
@@ -217,7 +229,8 @@ impute_prices.numeric <- function(
   weights = NULL,
   pias = NULL,
   r = c(0, 1),
-  method = c("overall-mean", "carry-forward", "carry-backward")
+  method = c("overall-mean", "carry-forward", "carry-backward"),
+  impute_rules = NULL
 ) {
   # This is mostly a combination of gpindex::back_period() and aggregate()
   # it just does it period-by-period and keeps track of prices to impute.
@@ -271,7 +284,13 @@ impute_prices.numeric <- function(
         r = r[1L]
       )
       if (!is.null(pias)) {
-        index <- aggregate(index, pias, na.rm = TRUE, r = r[2L])
+        index <- aggregate(
+          index,
+          pias,
+          na.rm = TRUE,
+          r = r[2L],
+          impute_rules = impute_rules
+        )
         pias <- update(pias, index, r = r[2L])
       }
       eas <- if (!is.null(ea)) {

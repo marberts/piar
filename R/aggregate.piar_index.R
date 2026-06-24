@@ -87,6 +87,11 @@
 #'   products as distinct products and make their names unique
 #'   with [make.unique()] or `"sum"` to add contributions for each product
 #'   (the default).
+#' @param impute_rules (Experimental) A function that applies imputation
+#'   rules to the elementary indexes in each time period prior to aggregation.
+#'   It takes two arguments, the elementary indexes for a given time period and
+#'   the (price updated) aggregation structure, and must return back the
+#'   elementary indexes in the same order.
 #'
 #' @returns
 #' An aggregate price index that inherits from the class of `x`.
@@ -150,7 +155,8 @@ aggregate.chainable_piar_index <- function(
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("sum", "make.unique")
+  duplicate_contrib = c("sum", "make.unique"),
+  impute_rules = NULL
 ) {
   chkDots(...)
   aggregate_index(
@@ -162,7 +168,8 @@ aggregate.chainable_piar_index <- function(
     r = r,
     include_ea = include_ea,
     chainable = TRUE,
-    duplicate_contrib = match.arg(duplicate_contrib)
+    duplicate_contrib = match.arg(duplicate_contrib),
+    impute_rules
   )
 }
 
@@ -177,7 +184,8 @@ aggregate.direct_piar_index <- function(
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("sum", "make.unique")
+  duplicate_contrib = c("sum", "make.unique"),
+  impute_rules = NULL
 ) {
   chkDots(...)
   aggregate_index(
@@ -189,7 +197,8 @@ aggregate.direct_piar_index <- function(
     r = r,
     include_ea = include_ea,
     chainable = FALSE,
-    duplicate_contrib = match.arg(duplicate_contrib)
+    duplicate_contrib = match.arg(duplicate_contrib),
+    impute_rules
   )
 }
 
@@ -204,7 +213,8 @@ aggregate_index <- function(
   r,
   include_ea,
   chainable,
-  duplicate_contrib
+  duplicate_contrib,
+  impute_rules
 ) {
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
@@ -217,7 +227,8 @@ aggregate_index <- function(
     r,
     include_ea,
     chainable,
-    duplicate_contrib
+    duplicate_contrib,
+    impute_rules
   )
 
   if (!is.null(pias2)) {
@@ -242,7 +253,8 @@ aggregate_index <- function(
       -r,
       include_ea,
       chainable,
-      duplicate_contrib
+      duplicate_contrib,
+      impute_rules
     )
     if (has_contrib) {
       res$contrib[] <- Map(
@@ -273,15 +285,13 @@ aggregate_ <- function(
   r,
   include_ea,
   chainable,
-  duplicate_contrib
+  duplicate_contrib,
+  impute_rules
 ) {
   # Helpful functions.
   price_update <- gpindex::factor_weights(r)
   gen_mean <- gpindex::generalized_mean(r)
   agg_contrib <- aggregate_contrib(r, duplicate_contrib)
-
-  # Put the aggregation weights upside down to line up with `pias`.
-  w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
 
   eas <- match_eas(pias, x)
 
@@ -289,6 +299,9 @@ aggregate_ <- function(
   index <- contrib <- vector("list", ntime(x))
   for (t in seq_along(x$time)) {
     rel <- con <- vector("list", nlevels(pias))
+    if (!is.null(impute_rules)) {
+      x[, t] <- impute_rules(x[, t], pias)
+    }
     # Align with weights so that positional indexing works.
     rel[[1L]] <- x$index[, t][eas]
 
@@ -297,6 +310,9 @@ aggregate_ <- function(
       # Replace NULL contributions from subscripting with empty contributions.
       con[[1L]][lengths(con[[1L]]) == 0L] <- list(numeric(0L))
     }
+
+    # Put the aggregation weights upside down to line up with `pias`.
+    w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
 
     # Loop over each level in `pias` from the bottom up and aggregate.
     for (i in seq_along(rel)[-1L]) {
@@ -327,7 +343,6 @@ aggregate_ <- function(
     # Price update weights for all periods after the first.
     if (chainable) {
       pias$weights <- price_update(rel[[1L]], w[[1L]])
-      w <- rev(weights(pias, ea_only = FALSE, na.rm = na.rm))
     }
 
     if (!include_ea) {
