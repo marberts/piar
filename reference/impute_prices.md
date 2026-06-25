@@ -21,7 +21,8 @@ impute_prices(
   weights = NULL,
   pias = NULL,
   r = c(0, 1),
-  method = c("overall-mean", "carry-forward")
+  method = c("overall-mean", "carry-forward"),
+  impute_rules = NULL
 )
 
 # S3 method for class 'numeric'
@@ -34,7 +35,8 @@ impute_prices(
   weights = NULL,
   pias = NULL,
   r = c(0, 1),
-  method = c("overall-mean", "carry-forward", "carry-backward")
+  method = c("overall-mean", "carry-forward", "carry-backward"),
+  impute_rules = NULL
 )
 
 # S3 method for class 'data.frame'
@@ -109,6 +111,14 @@ shadow_price(x, ...)
   Name of the imputation method, one of `"overall-mean"`,
   `"carry-forward"`, or `"carry-backward"`.
 
+- impute_rules:
+
+  (Experimental) A function that applies imputation rules to the
+  elementary indexes in each time period prior to aggregation. It takes
+  two arguments, the elementary indexes for a given time period and the
+  (price updated) aggregation structure, and must return back the
+  elementary indexes.
+
 - formula:
 
   A two-sided formula, or something that can be coerced into one, with
@@ -144,8 +154,8 @@ cases it is safer to simply omit the missing price relatives instead of
 imputing the missing prices.
 
 Imputation works slightly differently depending on whether data are in a
-long or wide format. When `x` is a two-column of matrix of current and
-back prices (in that order), then imputation is done separately on the
+long or wide format. When `x` is a two-column matrix of current and back
+prices (in that order), then imputation is done separately on the
 current price at a point in time and the back price at the next point in
 time. When `x` is a numeric vector then these two prices are necessarily
 the same.

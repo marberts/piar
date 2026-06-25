@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9003</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -133,9 +133,10 @@ prior to aggregation.</p>
 should be imputed as 1, rather than the value for group 12. This
 replacement can be done as if the index was a matrix.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">elementals</span><span class="op">[</span><span class="st">"B4"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<code class="sourceCode R"><span><span class="va">elementals2</span> <span class="op">&lt;-</span> <span class="va">elementals</span></span>
+<span><span class="va">elementals2</span><span class="op">[</span><span class="st">"B4"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
-<span><span class="va">elementals</span></span></code></pre></div>
+<span><span class="va">elementals2</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 4 levels over 4 time periods </span></span>
 <span><span class="co">##       time</span></span>
 <span><span class="co">## levels 202001    202002    202003   202004</span></span>
@@ -143,6 +144,47 @@ replacement can be done as if the index was a matrix.</p>
 <span><span class="co">##     B2      1 1.0000000 0.1777227 2.770456</span></span>
 <span><span class="co">##     B3      1 2.0200036 1.6353355 0.537996</span></span>
 <span><span class="co">##     B4      1 1.0000000 1.0000000 4.576286</span></span></code></pre>
+<p>Aggregating these elementary indexes now incorporates this
+imputation.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ms_weights</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"level1"</span>, <span class="st">"level2"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/expand_classification.html">expand_classification</a></span><span class="op">(</span><span class="va">ms_weights</span><span class="op">$</span><span class="va">classification</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pias</span> <span class="op">&lt;-</span> <span class="va">ms_weights</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"level1"</span>, <span class="st">"level2"</span>, <span class="st">"business"</span>, <span class="st">"weight"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/as_aggregation_structure.html">as_aggregation_structure</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">elementals2</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Period-over-period price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels 202001    202002    202003    202004</span></span>
+<span><span class="co">##     1       1 1.1056136 0.8753168 2.3138631</span></span>
+<span><span class="co">##     11      1 1.1721550 0.8082981 0.8093718</span></span>
+<span><span class="co">##     12      1 1.0000000 1.0000000 4.5762862</span></span>
+<span><span class="co">##     B1      1 0.8949097 0.5781816 1.0000000</span></span>
+<span><span class="co">##     B2      1 1.0000000 0.1777227 2.7704563</span></span>
+<span><span class="co">##     B3      1 2.0200036 1.6353355 0.5379960</span></span>
+<span><span class="co">##     B4      1 1.0000000 1.0000000 4.5762862</span></span>
+<span><span class="co">##     B5      1 1.0000000 1.0000000 4.5762862</span></span></code></pre>
+<p>It is also possible to supply a function with these rules that can be
+used by <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">impute</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">pias</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="st">"B4"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="va">x</span><span class="op">[</span><span class="st">"B4"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>  <span class="va">x</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">elementals</span>, <span class="va">pias</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, impute_rules <span class="op">=</span> <span class="va">impute</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Period-over-period price index for 8 levels over 4 time periods </span></span>
+<span><span class="co">##       time</span></span>
+<span><span class="co">## levels 202001    202002    202003    202004</span></span>
+<span><span class="co">##     1       1 1.1056136 0.8753168 2.3138631</span></span>
+<span><span class="co">##     11      1 1.1721550 0.8082981 0.8093718</span></span>
+<span><span class="co">##     12      1 1.0000000 1.0000000 4.5762862</span></span>
+<span><span class="co">##     B1      1 0.8949097 0.5781816 1.0000000</span></span>
+<span><span class="co">##     B2      1 1.0000000 0.1777227 2.7704563</span></span>
+<span><span class="co">##     B3      1 2.0200036 1.6353355 0.5379960</span></span>
+<span><span class="co">##     B4      1 1.0000000 1.0000000 4.5762862</span></span>
+<span><span class="co">##     B5      1 1.0000000 1.0000000 4.5762862</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

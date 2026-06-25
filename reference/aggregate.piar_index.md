@@ -16,7 +16,8 @@ aggregate(
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("sum", "make.unique")
+  duplicate_contrib = c("sum", "make.unique"),
+  impute_rules = NULL
 )
 
 # S3 method for class 'direct_piar_index'
@@ -29,7 +30,8 @@ aggregate(
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("sum", "make.unique")
+  duplicate_contrib = c("sum", "make.unique"),
+  impute_rules = NULL
 )
 ```
 
@@ -89,6 +91,14 @@ aggregate(
   make their names unique with
   [`make.unique()`](https://rdrr.io/r/base/make.unique.html) or `"sum"`
   to add contributions for each product (the default).
+
+- impute_rules:
+
+  (Experimental) A function that applies imputation rules to the
+  elementary indexes in each time period prior to aggregation. It takes
+  two arguments, the elementary indexes for a given time period and the
+  (price updated) aggregation structure, and must return back the
+  elementary indexes.
 
 ## Value
 
