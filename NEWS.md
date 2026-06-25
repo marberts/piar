@@ -2,7 +2,7 @@
 
 ## Improvements
 
-- `aggregate(index)` gets a new argument `impute_rules` to specify specific
+- `aggregate(index)` gets am experimental new argument `impute_rules` to specify specific
 imputation rules during aggregation.
 
 ## Bugs fixes
