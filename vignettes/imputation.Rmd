@@ -83,7 +83,7 @@ by `aggregate()`.
 ```{r}
 impute <- function(x, pias) {
   if (is.na(x["B4"])) x["B4"] <- 1
-  x  
+  x
 }
 
 aggregate(elementals, pias, na.rm = TRUE, impute_rules = impute)
