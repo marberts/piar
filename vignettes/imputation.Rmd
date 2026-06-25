@@ -59,7 +59,32 @@ be imputed as 1, rather than the value for group 12. This replacement
 can be done as if the index was a matrix.
 
 ```{r}
-elementals["B4", 1:3] <- 1
+elementals2 <- elementals
+elementals2["B4", 1:3] <- 1
 
-elementals
+elementals2
+```
+
+Aggregating these elementary indexes now incorporates this imputation.
+
+```{r}
+ms_weights[c("level1", "level2")] <-
+  expand_classification(ms_weights$classification)
+
+pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
+  as_aggregation_structure()
+
+aggregate(elementals2, pias, na.rm = TRUE)
+```
+
+It is also possible to supply a function with these rules that can be used
+by `aggregate()`.
+
+```{r}
+impute <- function(x, pias) {
+  if (is.na(x["B4"])) x["B4"] <- 1
+  x
+}
+
+aggregate(elementals, pias, na.rm = TRUE, impute_rules = impute)
 ```

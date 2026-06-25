@@ -15,7 +15,8 @@
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("sum", "make.unique")
+  duplicate_contrib = c("sum", "make.unique"),
+  impute_rules = NULL
 )
 
 \method{aggregate}{direct_piar_index}(
@@ -27,7 +28,8 @@
   contrib = TRUE,
   r = 1,
   include_ea = TRUE,
-  duplicate_contrib = c("sum", "make.unique")
+  duplicate_contrib = c("sum", "make.unique"),
+  impute_rules = NULL
 )
 }
 \arguments{
@@ -65,6 +67,12 @@ contributions. Either \code{"make.unique"} to treat duplicate
 products as distinct products and make their names unique
 with \code{\link[=make.unique]{make.unique()}} or \code{"sum"} to add contributions for each product
 (the default).}
+
+\item{impute_rules}{(Experimental) A function that applies imputation
+rules to the elementary indexes in each time period prior to aggregation.
+It takes two arguments, the elementary indexes for a given time period and
+the (price updated) aggregation structure, and must return back the
+elementary indexes.}
 }
 \value{
 An aggregate price index that inherits from the class of \code{x}.

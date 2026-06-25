@@ -234,3 +234,52 @@ test_that("NA products don't get imputed", {
     )
   )
 })
+
+test_that("impute rules work", {
+  prices <- data.frame(
+    period = rep(1:3, each = 3),
+    product = 1:3,
+    price = c(2:3, NA, 5:6, NA, 8:9, NA),
+    back_price = c(1:3, 2:3, NA, 5:6, NA),
+    ea = 1:3
+  )
+
+  rules <- function(x, pias) {
+    if (time(x) == "1") {
+      if (is.na(x["3"])) x["3"] <- x["1"]
+    }
+    if (time(x) == "2") {
+      if (is.na(x["3"])) x["3"] <- 1
+    }
+    x
+  }
+
+  imputed <- impute_prices(
+    prices,
+    cbind(price, back_price) ~ period + product,
+    ea = ea,
+    pias = list(c(0, 0, 0), 1:3),
+    impute_rules = rules
+  )
+
+  res <- as.matrix(prices[c("price", "back_price")])
+  res[3, 1] <- 6
+  res[6, ] <- c(6, 6)
+  res[9, ] <- c(gpindex::arithmetic_mean(c(8 / 5, 9 / 6), c(5, 3)) * 6, 6)
+
+  expect_equal(imputed, res)
+
+  prices_long <- prices[-4]
+  prices_long[10:12, ] <- prices[1:3, c(1, 2, 4, 5)]
+  prices_long$period[10:12] <- 0
+
+  imputed2 <- impute_prices(
+    prices_long,
+    price ~ period + product,
+    ea = ea,
+    pias = list(c(0, 0, 0), 1:3),
+    impute_rules = rules
+  )
+
+  expect_equal(imputed2[1:9], imputed[1:9, 1])
+})

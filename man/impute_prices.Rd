@@ -24,7 +24,8 @@ impute_prices(x, ...)
   weights = NULL,
   pias = NULL,
   r = c(0, 1),
-  method = c("overall-mean", "carry-forward")
+  method = c("overall-mean", "carry-forward"),
+  impute_rules = NULL
 )
 
 \method{impute_prices}{numeric}(
@@ -36,7 +37,8 @@ impute_prices(x, ...)
   weights = NULL,
   pias = NULL,
   r = c(0, 1),
-  method = c("overall-mean", "carry-forward", "carry-backward")
+  method = c("overall-mean", "carry-forward", "carry-backward"),
+  impute_rules = NULL
 )
 
 \method{impute_prices}{data.frame}(x, formula, ..., ea = NULL, weights = NULL)
@@ -87,6 +89,12 @@ see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for deta
 \item{method}{Name of the imputation method, one of \code{"overall-mean"},
 \code{"carry-forward"}, or \code{"carry-backward"}.}
 
+\item{impute_rules}{(Experimental) A function that applies imputation
+rules to the elementary indexes in each time period prior to aggregation.
+It takes two arguments, the elementary indexes for a given time period and
+the (price updated) aggregation structure, and must return back the
+elementary indexes.}
+
 \item{formula}{A two-sided formula, or something that can be coerced into
 one, with prices on the left-hand
 side and time periods and products on the right-hand side (in that order).}
@@ -123,7 +131,7 @@ change over time, and in some cases it is safer to simply omit the missing
 price relatives instead of imputing the missing prices.
 
 Imputation works slightly differently depending on whether data are in a long
-or wide format. When \code{x} is a two-column of matrix of current and back prices
+or wide format. When \code{x} is a two-column matrix of current and back prices
 (in that order), then imputation is done separately on the current price
 at a point in time and the back price at the next point in time. When \code{x} is
 a numeric vector then these two prices are necessarily the same.
