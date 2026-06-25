@@ -93,7 +93,7 @@ see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for deta
 rules to the elementary indexes in each time period prior to aggregation.
 It takes two arguments, the elementary indexes for a given time period and
 the (price updated) aggregation structure, and must return back the
-elementary indexes in the same order.}
+elementary indexes.}
 
 \item{formula}{A two-sided formula, or something that can be coerced into
 one, with prices on the left-hand
@@ -131,7 +131,7 @@ change over time, and in some cases it is safer to simply omit the missing
 price relatives instead of imputing the missing prices.
 
 Imputation works slightly differently depending on whether data are in a long
-or wide format. When \code{x} is a two-column of matrix of current and back prices
+or wide format. When \code{x} is a two-column matrix of current and back prices
 (in that order), then imputation is done separately on the current price
 at a point in time and the back price at the next point in time. When \code{x} is
 a numeric vector then these two prices are necessarily the same.

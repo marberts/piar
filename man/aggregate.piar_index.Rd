@@ -72,7 +72,7 @@ with \code{\link[=make.unique]{make.unique()}} or \code{"sum"} to add contributi
 rules to the elementary indexes in each time period prior to aggregation.
 It takes two arguments, the elementary indexes for a given time period and
 the (price updated) aggregation structure, and must return back the
-elementary indexes in the same order.}
+elementary indexes.}
 }
 \value{
 An aggregate price index that inherits from the class of \code{x}.

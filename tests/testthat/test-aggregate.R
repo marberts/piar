@@ -845,3 +845,25 @@ test_that("superlative contributions work with NA weights", {
     )
   )
 })
+
+test_that("impute rules work", {
+  x <- as_index(matrix(1:9, 3))
+  x[1, 1:2] <- NA
+
+  rules <- function(x, pias) {
+    if (time(x) == "2") {
+      x[is.na(x)] <- 1
+    }
+    x[3:1]
+  }
+
+  res <- aggregate(x, list(c(0, 0, 0), 1:3), na.rm = TRUE, impute_rules = rules)
+  expect_equal(
+    as.numeric(res[1]),
+    c(
+      2.5,
+      gpindex::arithmetic_mean(c(1, 5, 6), c(2.5, 2, 3)),
+      gpindex::arithmetic_mean(7:9, c(2.5, 10, 18))
+    )
+  )
+})

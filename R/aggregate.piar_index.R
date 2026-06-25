@@ -91,7 +91,7 @@
 #'   rules to the elementary indexes in each time period prior to aggregation.
 #'   It takes two arguments, the elementary indexes for a given time period and
 #'   the (price updated) aggregation structure, and must return back the
-#'   elementary indexes in the same order.
+#'   elementary indexes.
 #'
 #' @returns
 #' An aggregate price index that inherits from the class of `x`.
@@ -300,7 +300,7 @@ aggregate_ <- function(
   for (t in seq_along(x$time)) {
     rel <- con <- vector("list", nlevels(pias))
     if (!is.null(impute_rules)) {
-      x[, t] <- impute_rules(x[, t], pias)
+      x[, t] <- impute_rules(x[, t], pias)[x$levels]
     }
     # Align with weights so that positional indexing works.
     rel[[1L]] <- x$index[, t][eas]
