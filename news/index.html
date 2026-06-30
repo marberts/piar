@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,7 @@
 <h3 id="bugs-fixes-development-version">Bugs fixes<a class="anchor" aria-label="anchor" href="#bugs-fixes-development-version"></a></h3>
 <ul><li><p><code>head(index)</code> and <code>tail(index)</code> now work correctly if there are no product contributions.</p></li>
 <li><p><code><a href="../reference/impute_prices.html">impute_prices()</a></code> no longer matches missing products across consecutive time periods when passed a matrix.</p></li>
+<li><p>Setting <code>include_ea = FALSE</code> in <code>aggregate(index)</code> no longer gives an error with a one-level aggregation structure.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
