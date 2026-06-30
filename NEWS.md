@@ -13,6 +13,9 @@ contributions.
 - `impute_prices()` no longer matches missing products across consecutive time
 periods when passed a matrix.
 
+- Setting `include_ea = FALSE` in `aggregate(index)` no longer gives an error with
+a one-level aggregation structure.
+
 # piar 0.9.0
 
 ## Significant changes

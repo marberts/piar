@@ -268,10 +268,10 @@ aggregate_index <- function(
     res$index[] <- (res$index * res2$index)^0.5
   }
 
-  if (include_ea) {
-    lev <- unlist(pias$levels, use.names = FALSE)
-  } else {
+  if (!include_ea && nlevels(pias) > 1L) {
     lev <- unlist(drop_last(pias$levels), use.names = FALSE)
+  } else {
+    lev <- unlist(pias$levels, use.names = FALSE)
   }
 
   piar_index(res$index, res$contrib, lev, x$time, chainable = chainable)
@@ -345,7 +345,7 @@ aggregate_ <- function(
       pias$weights <- price_update(rel[[1L]], w[[1L]])
     }
 
-    if (!include_ea) {
+    if (!include_ea && length(rel) > 1L) {
       rel <- rel[-1L]
       con <- con[-1L]
     }

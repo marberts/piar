@@ -707,11 +707,16 @@ test_that("skipping eas works", {
     aggregate(ms_epr, ms_pias, na.rm = TRUE, include_ea = FALSE)
   )
 
-  expect_error(
+  expect_equal(
     aggregate(
       ms_epr,
       aggregation_structure(ms_weights["business"]),
       include_ea = FALSE
+    ),
+    aggregate(
+      ms_epr,
+      aggregation_structure(ms_weights["business"]),
+      include_ea = TRUE
     )
   )
 })
