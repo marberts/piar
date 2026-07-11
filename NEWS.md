@@ -2,8 +2,14 @@
 
 ## Improvements
 
-- `aggregate(index)` gets am experimental new argument `impute_rules` to specify specific
+- `aggregate(index)` gets an experimental new argument `impute_rules` to specify specific
 imputation rules during aggregation.
+
+- A new function `outliers()` to find extreme price relatives.
+
+- A new function `back_period()` to find back/base prices and quantities.
+
+- Several lower-level functions that implement the core mathematical machinery of the package.
 
 ## Bugs fixes
 

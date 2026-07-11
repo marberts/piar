@@ -6,7 +6,7 @@
 #'
 #' When supplied with a numeric vector, `elementary_index()` is a simple
 #' wrapper that applies
-#' [`gpindex::generalized_mean(r)()`][gpindex::generalized_mean] and
+#' `gmean()` and
 #' [`gpindex::contributions(r)()`][gpindex::contributions] (if `contrib = TRUE`)
 #' to `x` and `weights` grouped by `ea` and `period`. That
 #' is, for every combination of elementary aggregate and time period,
@@ -80,7 +80,7 @@
 #'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #'   a Paasche index). Other values are possible; see
-#'   [gpindex::generalized_mean()] for details.
+#'   [gmean()] for details.
 #' @param ... Further arguments passed to or used by methods.
 #' @param formula A two-sided formula, or something that can be coerced into
 #'   one, with price relatives on the left-hand
@@ -222,9 +222,10 @@ elementary_index.numeric <- function(
   weights <- if (is.null(weights)) list(NULL) else split(weights, ea_by_period)
 
   index <- mapply(
-    gpindex::generalized_mean(r),
+    gmean,
     x,
     weights,
+    r = r,
     na.rm = na.rm,
     USE.NAMES = FALSE
   )

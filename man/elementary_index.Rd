@@ -71,7 +71,7 @@ geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
-\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+\code{\link[=gmean]{gmean()}} for details.}
 
 \item{formula}{A two-sided formula, or something that can be coerced into
 one, with price relatives on the left-hand
@@ -92,7 +92,7 @@ product.
 \details{
 When supplied with a numeric vector, \code{elementary_index()} is a simple
 wrapper that applies
-\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean(r)()}} and
+\code{gmean()} and
 \code{\link[gpindex:contributions]{gpindex::contributions(r)()}} (if \code{contrib = TRUE})
 to \code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
 is, for every combination of elementary aggregate and time period,

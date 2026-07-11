@@ -21,13 +21,11 @@
 #' A numeric vector of price relatives, with `product` as names.
 #'
 #' @seealso
-#' [gpindex::back_period()] to get only the back price.
-#'
-#' [gpindex::base_period()] for making fixed-base price relatives.
+#' [back_period()] to get only the back price or base price.
 #'
 #' [impute_prices()] to impute missing prices.
 #'
-#' [`gpindex::outliers`] for methods to identify outliers with price relatives.
+#' [outliers()] for methods to identify outliers with price relatives.
 #'
 #' @examples
 #' price_relative(
@@ -53,7 +51,7 @@ price_relative.default <- function(x, period, product, ...) {
     stop("'x', 'period', and 'product' must be the same length")
   }
 
-  res <- x / x[gpindex::back_period(period, product)]
+  res <- x / x[back_period(period, product)]
   names(res) <- as.character(product)
   res
 }

@@ -38,7 +38,7 @@
 #'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #'   a Paasche index). Other values are possible; see
-#'   [gpindex::generalized_mean()] for details.
+#'   [gmean()] for details.
 #' @param contrib Aggregate percent-change contributions in `x`? By default
 #'   contributions are aggregated.
 #' @param ... Not currently used.
@@ -143,7 +143,6 @@ mean_index <- function(
   }
 
   # Helpful functions.
-  gen_mean <- Vectorize(gpindex::generalized_mean(r), USE.NAMES = FALSE)
   agg_contrib <- Vectorize(
     aggregate_contrib(r, duplicate_contrib),
     SIMPLIFY = FALSE,
@@ -169,7 +168,7 @@ mean_index <- function(
     if (!is.null(weights)) {
       w <- split_rows(weights[, j, drop = FALSE], rows)
     }
-    res[[i]] <- gen_mean(rel, w, na.rm = na.rm)
+    res[[i]] <- mapply(gmean, rel, w, r = r, na.rm = na.rm, USE.NAMES = FALSE)
     if (has_contrib) {
       con <- split_rows(x$contrib[, j, drop = FALSE], rows)
       contrib[[i]] <- agg_contrib(con, rel, w)

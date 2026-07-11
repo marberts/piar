@@ -60,6 +60,8 @@ reference:
   contents:
   - impute_prices
   - price_relative
+  - back_period
+  - outliers
 
 - title: Aggregation structure
   desc: Functions to make and work with price-index aggregation structures.
@@ -85,3 +87,9 @@ reference:
 - title: Sample data
   contents:
   - price_data
+
+- title: Mathematical machinery
+  desc: Lower-level functions to implement the core tools for calculating price indexes.
+  contents:
+  - gmean
+  - update_weights

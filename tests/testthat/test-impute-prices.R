@@ -193,7 +193,7 @@ test_that("carrying forward/backwards imputation works", {
 test_that("imputing with a matrix works", {
   ms_prices$back_price <- with(
     ms_prices,
-    price[gpindex::back_period(period, product)]
+    price[back_period(period, product)]
   )
   sp2 <- impute_prices(
     ms_prices,

@@ -55,7 +55,7 @@ geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
-\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+\code{\link[=gmean]{gmean()}} for details.}
 
 \item{duplicate_contrib}{The method to deal with duplicate product
 contributions. Either \code{"make.unique"} to make duplicate product names

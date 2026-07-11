@@ -3,13 +3,10 @@
 #' Aggregate elementary price indexes with a price index aggregation structure.
 #'
 #' The `aggregate()` method loops over each time period in `x` and
-#' 1. aggregates the elementary indexes with
-#' [`gpindex::generalized_mean(r)()`][gpindex::generalized_mean] for each level
-#' of `pias`;
+#' 1. aggregates the elementary indexes with `gmean()` for each level of `pias`;
 #' 2. aggregates percent-change contributions for each level of
 #' `pias` (if there are any and `contrib = TRUE`);
-#' 3. price updates the weights in `pias` with
-#' [`gpindex::factor_weights(r)()`][gpindex::factor_weights] (only for
+#' 3. price updates the weights in `pias` with `update_weights()` (only for
 #' period-over-period elementary indexes).
 #'
 #' The result is a collection of aggregated period-over-period indexes that
@@ -74,7 +71,7 @@
 #'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #'   a Paasche index). Other values are possible; see
-#'   [gpindex::generalized_mean()] for details. If `pias2` is given then the
+#'   [gmean()] for details. If `pias2` is given then the
 #'   index is aggregated with a quadratic mean of order `2*r`.
 #' @param contrib Aggregate percent-change contributions in `x`? By default
 #'   contributions are aggregated.
@@ -290,7 +287,6 @@ aggregate_ <- function(
 ) {
   # Helpful functions.
   price_update <- gpindex::factor_weights(r)
-  gen_mean <- gpindex::generalized_mean(r)
   agg_contrib <- aggregate_contrib(r, duplicate_contrib)
 
   eas <- match_eas(pias, x)
@@ -319,7 +315,7 @@ aggregate_ <- function(
       nodes <- unname(pias$child[[i - 1L]])
       rel[[i]] <- vapply(
         nodes,
-        \(z) gen_mean(rel[[i - 1L]][z], w[[i - 1L]][z], na.rm = na.rm),
+        \(z) gmean(rel[[i - 1L]][z], w[[i - 1L]][z], r, na.rm),
         numeric(1L)
       )
       if (has_contrib) {
@@ -342,7 +338,7 @@ aggregate_ <- function(
 
     # Price update weights for all periods after the first.
     if (chainable) {
-      pias$weights <- price_update(rel[[1L]], w[[1L]])
+      pias$weights <- update_weights(rel[[1L]], w[[1L]], r)
     }
 
     if (!include_ea && length(rel) > 1L) {

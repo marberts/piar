@@ -84,7 +84,7 @@ elementary price indexes, defaulting to a geometric index. The second
 gives the order of the generalized-mean price index used to aggregate the
 elementary price indexes, defaulting to an arithmetic index. Other values
 are possible;
-see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+see \code{\link[=gmean]{gmean()}} for details.}
 
 \item{method}{Name of the imputation method, one of \code{"overall-mean"},
 \code{"carry-forward"}, or \code{"carry-backward"}.}
@@ -156,7 +156,7 @@ impute_prices(
 # Can also be done with current price-back price formulation.
 prices$back_price <- with(
   prices,
-  price[gpindex::back_period(period, product)]
+  price[back_period(period, product)]
 )
 
 impute_prices(

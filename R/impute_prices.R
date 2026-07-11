@@ -58,7 +58,7 @@
 #'   gives the order of the generalized-mean price index used to aggregate the
 #'   elementary price indexes, defaulting to an arithmetic index. Other values
 #'   are possible;
-#'   see [gpindex::generalized_mean()] for details.
+#'   see [gmean()] for details.
 #' @param formula A two-sided formula, or something that can be coerced into
 #'   one, with prices on the left-hand
 #'   side and time periods and products on the right-hand side (in that order).
@@ -104,7 +104,7 @@
 #' # Can also be done with current price-back price formulation.
 #' prices$back_price <- with(
 #'   prices,
-#'   price[gpindex::back_period(period, product)]
+#'   price[back_period(period, product)]
 #' )
 #'
 #' impute_prices(

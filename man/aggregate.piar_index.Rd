@@ -55,7 +55,7 @@ geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
-\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details. If \code{pias2} is given then the
+\code{\link[=gmean]{gmean()}} for details. If \code{pias2} is given then the
 index is aggregated with a quadratic mean of order \code{2*r}.}
 
 \item{include_ea}{Should indexes for the elementary aggregates be included
@@ -83,13 +83,10 @@ Aggregate elementary price indexes with a price index aggregation structure.
 \details{
 The \code{aggregate()} method loops over each time period in \code{x} and
 \enumerate{
-\item aggregates the elementary indexes with
-\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean(r)()}} for each level
-of \code{pias};
+\item aggregates the elementary indexes with \code{gmean()} for each level of \code{pias};
 \item aggregates percent-change contributions for each level of
 \code{pias} (if there are any and \code{contrib = TRUE});
-\item price updates the weights in \code{pias} with
-\code{\link[gpindex:factor_weights]{gpindex::factor_weights(r)()}} (only for
+\item price updates the weights in \code{pias} with \code{update_weights()} (only for
 period-over-period elementary indexes).
 }
 

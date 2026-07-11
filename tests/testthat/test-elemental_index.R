@@ -1,5 +1,3 @@
-library(gpindex)
-
 ms_prices$rel <- price_relative(ms_prices, price ~ period + product)
 ms_prices$w1 <- 1:40
 ms_prices$w2 <- 40:1
@@ -16,8 +14,8 @@ epr2 <- elementary_index(
 
 # Test a Fisher calculation
 fw <- function(x, w1, w2) {
-  v1 <- scale_weights(transmute_weights(1, 0)(x, w1))
-  v2 <- scale_weights(transmute_weights(-1, 0)(x, w2))
+  v1 <- gpindex::transmute_weights(1, 0)(x, w1)
+  v2 <- gpindex::transmute_weights(-1, 0)(x, w2)
   v1 + v2
 }
 
@@ -25,7 +23,7 @@ ms_prices2 <- na.omit(ms_prices)
 
 w <- with(
   ms_prices2,
-  grouped(fw)(rel, w1, w2, group = interaction(period, business))
+  gpindex::grouped(fw)(rel, w1, w2, group = interaction(period, business))
 )
 
 epr3 <- elementary_index(
@@ -73,14 +71,14 @@ test_that("Fisher calculation agrees with manual calculation", {
 
   # Should work for other kinds of superlative indexes
   fw <- function(x, w1, w2) {
-    v1 <- scale_weights(transmute_weights(1.5, 0)(x))
-    v2 <- scale_weights(transmute_weights(-1.5, 0)(x, w2))
+    v1 <- gpindex::transmute_weights(1.5, 0)(x)
+    v2 <- gpindex::transmute_weights(-1.5, 0)(x, w2)
     v1 + v2
   }
 
   w <- with(
     ms_prices2,
-    grouped(fw)(rel, w1, w2, group = interaction(period, business))
+    gpindex::grouped(fw)(rel, w1, w2, group = interaction(period, business))
   )
 
   sepr <- elementary_index(ms_prices2, rel ~ period + business, weights = w)
