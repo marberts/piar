@@ -142,13 +142,6 @@ mean_index <- function(
     stop("'x' must have at least 'window' time periods")
   }
 
-  # Helpful functions.
-  agg_contrib <- Vectorize(
-    aggregate_contrib(r, duplicate_contrib),
-    SIMPLIFY = FALSE,
-    USE.NAMES = FALSE
-  )
-
   # Get the starting location for each window.
   if (ntime(x) %% window != 0) {
     warning("'window' is not a multiple of the number of time periods in 'x'")
@@ -171,7 +164,16 @@ mean_index <- function(
     res[[i]] <- mapply(gmean, rel, w, r = r, na.rm = na.rm, USE.NAMES = FALSE)
     if (has_contrib) {
       con <- split_rows(x$contrib[, j, drop = FALSE], rows)
-      contrib[[i]] <- agg_contrib(con, rel, w)
+      contrib[[i]] <- mapply(
+        aggregate_contrib,
+        con,
+        rel,
+        w,
+        r,
+        duplicate_contrib,
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE
+      )
     }
   }
 

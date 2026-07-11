@@ -20,9 +20,6 @@
 #' @returns
 #' A numeric vector the same length as `x`.
 #'
-#' @seealso
-#' [gmean()] for the generalized mean.
-#'
 #' @references
 #' ILO, IMF, OECD, UNECE, and World Bank. (2004).
 #' *Producer Price Index Manual: Theory and Practice*.
@@ -42,7 +39,7 @@
 #' # inequality implies that the chained calculation is too small.
 #'
 #' gmean(x * y, w) > gmean(x, w) * gmean(y, w)
-#'
+#' @family math functions
 #' @export
 update_weights <- function(x, weights = NULL, r = 1) {
   if (!is.finite(r)) {

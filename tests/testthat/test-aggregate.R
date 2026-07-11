@@ -304,7 +304,7 @@ test_that("a weird index aggregates correctly", {
     apply(
       as.matrix(chain(ms_index)[2:3, ]),
       2,
-      gpindex::generalized_mean(-1.7),
+      \(x, w) gmean(x, w, r = -1.7),
       weights(ms_pias, ea_only = FALSE)[[2]]
     ),
     as.matrix(chain(ms_index))[1, ]

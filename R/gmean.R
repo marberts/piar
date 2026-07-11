@@ -1,23 +1,86 @@
 #' Generalized mean
 #'
-#' Calculated a weighted generalized mean
+#' Calculated a weighted generalized mean.
+#'
+#' The generalized mean is also called the power mean, Hölder mean, or \eqn{l_p}
+#' mean; see Bullen (2003, p. 175) for details.
+#'
+#' Both `x` and `weights` should be strictly positive
+#' (and finite), especially for the purpose of making a price index. This is not
+#' enforced, but the results may not make sense if the generalized mean is not
+#' defined.
+#'
+#' There are two exceptions to this.
+#' 1. The convention by Hardy et al. (1952, p. 13) is used in cases where `x`
+#' has zeros: the generalized mean is 0 whenever the weights are strictly positive
+#' and \code{r < 0}. The analogous convention holds whenever at least one
+#' element of `x` is `Inf`: the generalized mean is `Inf` whenever the weights are
+#' strictly positive and \code{r > 0}.
+#'
+#' 2. Some authors let the weighs be non-negative and sum to 1. If there are zero
+#' weights then the corresponding element
+#' of `x` has no impact on the result whenever `x` is strictly
+#' positive. Unlike [weighted.mean()], however,
+#' zero weights are not strong zeros, so infinite values in `x` will
+#' propagate.
+#'
+#' The weights are scaled to sum to 1 to satisfy the definition of a
+#' generalized mean.
 #'
 #' @param x A strictly positive numeric vector.
 #' @param weights A strictly positive numeric vector of weights, the same length
 #'   as `x`. The default is to equally weight each element of `x`.
 #' @param r A finite number giving the order of the generalized mean.
 #'
-#' @returns A number.
+#' @returns
+#' A numeric value for the generalized mean.
 #'
+#' @note
+#' The generalized mean can be defined on the extended real line, so
+#' that \code{orderr = -Inf / Inf} returns [min()]/[max()], to agree with the
+#' definition by Bullen (2003). This is not implemented, and the order of the
+#' generalized mean must be finite.
+#'
+#' @references
+#' Bullen, P. S. (2003). *Handbook of Means and Their Inequalities*.
+#' Springer Science+Business Media.
+#'
+#' Hardy, G., Littlewood, J. E., and Polya, G. (1952). *Inequalities* (2nd
+#' edition). Cambridge University Press.
+#'
+#' @examples
+#' x <- 1:3
+#' w <- c(0.25, 0.25, 0.5)
+#'
+#' # Arithmetic mean.
+#' gmean(x, w)
+#'
+#' # Geometric mean.
+#' gmean(x, w, r = 0)
+#'
+#' # The Lehmer mean is a generalized mean with specific weights.
+#' gmean(x, w * x, r = 2)
+#' @family math functions
 #' @export
 gmean <- function(x, weights = NULL, r = 1, na.rm = FALSE) {
   if (!is.finite(r)) {
     stop("`r` must be a finite number")
   }
+  if (!is.null(weights) && length(x) != length(weights)) {
+    stop("`x` and `weights` must be the same length")
+  }
+  if (na.rm && (anyNA(x) || anyNA(weights))) {
+    keep <- stats::complete.cases(x, weights)
+    x <- x[keep]
+    weights <- weights[keep]
+  }
+  .gmean(x, weights, r)
+}
+
+#' Internal generalized mean
+#' @noRd
+.gmean <- function(x, weights, r) {
   if (is.null(weights)) {
-    if (na.rm && anyNA(x)) {
-      x <- x[!is.na(x)]
-    }
     if (r == 0) {
       exp(sum(log(x)) / length(x))
     } else if (r == 1) {
@@ -30,14 +93,6 @@ gmean <- function(x, weights = NULL, r = 1, na.rm = FALSE) {
       (sum(x^r) / length(x))^(1 / r)
     }
   } else {
-    if (length(x) != length(weights)) {
-      stop("`x` and `weights` must be the same length")
-    }
-    if (na.rm && (anyNA(x) || anyNA(weights))) {
-      keep <- !(is.na(x) | is.na(weights))
-      x <- x[keep]
-      weights <- weights[keep]
-    }
     if (r == 0) {
       exp(sum(log(x) * weights) / sum(weights))
     } else if (r == 1) {

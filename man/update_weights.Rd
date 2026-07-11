@@ -48,7 +48,6 @@ gmean(x, w) * gmean(y, update_weights(x, w))
 # inequality implies that the chained calculation is too small.
 
 gmean(x * y, w) > gmean(x, w) * gmean(y, w)
-
 }
 \references{
 ILO, IMF, OECD, UNECE, and World Bank. (2004).
@@ -56,5 +55,7 @@ ILO, IMF, OECD, UNECE, and World Bank. (2004).
 International Monetary Fund.
 }
 \seealso{
-\code{\link[=gmean]{gmean()}} for the generalized mean.
+Other math functions:
+\code{\link[=gmean]{gmean()}}
 }
+\concept{math functions}

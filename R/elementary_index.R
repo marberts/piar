@@ -6,7 +6,7 @@
 #'
 #' When supplied with a numeric vector, `elementary_index()` is a simple
 #' wrapper that applies
-#' `gmean()` and
+#' [gmean()] and
 #' [`gpindex::contributions(r)()`][gpindex::contributions] (if `contrib = TRUE`)
 #' to `x` and `weights` grouped by `ea` and `period`. That
 #' is, for every combination of elementary aggregate and time period,

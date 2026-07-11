@@ -15,8 +15,72 @@ as \code{x}. The default is to equally weight each element of \code{x}.}
 \item{r}{A finite number giving the order of the generalized mean.}
 }
 \value{
-A number.
+A numeric value for the generalized mean.
 }
 \description{
-Calculated a weighted generalized mean
+Calculated a weighted generalized mean.
 }
+\details{
+The generalized mean is also called the power mean, Hölder mean, or \eqn{l_p}
+mean; see Bullen (2003, p. 175) for details.
+
+Both \code{x} and \code{weights} should be strictly positive
+(and finite), especially for the purpose of making a price index. This is not
+enforced, but the results may not make sense if the generalized mean is not
+defined.
+
+There are two exceptions to this.
+\enumerate{
+\item The convention by Hardy et al. (1952, p. 13) is used in cases where \code{x}
+has zeros: the generalized mean is 0 whenever the weights are strictly positive
+and \code{r < 0}. The analogous convention holds whenever at least one
+element of \code{x} is \code{Inf}: the generalized mean is \code{Inf} whenever the weights are
+strictly positive and \code{r > 0}.
+\item Some authors let the weighs be non-negative and sum to 1. If there are zero
+weights then the corresponding element
+of \code{x} has no impact on the result whenever \code{x} is strictly
+positive. Unlike \code{\link[=weighted.mean]{weighted.mean()}}, however,
+zero weights are not strong zeros, so infinite values in \code{x} will
+propagate.
+}
+
+The weights are scaled to sum to 1 to satisfy the definition of a
+generalized mean.
+}
+\note{
+The generalized mean can be defined on the extended real line, so
+that \code{orderr = -Inf / Inf} returns \code{\link[=min]{min()}}/\code{\link[=max]{max()}}, to agree with the
+definition by Bullen (2003). This is not implemented, and the order of the
+generalized mean must be finite.
+}
+\examples{
+x <- 1:3
+w <- c(0.25, 0.25, 0.5)
+
+# Arithmetic mean.
+gmean(x, w)
+
+# Geometric mean.
+gmean(x, w, r = 0)
+
+# The Lehmer mean is a generalized mean with specific weights.
+gmean(x, w * x, r = 2)
+}
+\references{
+Bullen, P. S. (2003). \emph{Handbook of Means and Their Inequalities}.
+Springer Science+Business Media.
+
+Hardy, G., Littlewood, J. E., and Polya, G. (1952). \emph{Inequalities} (2nd
+edition). Cambridge University Press.
+}
+\seealso{
+\code{\link[gpindex:transmute_weights]{transmute_weights()}} transforms the weights to turn a generalized
+mean of a given order into a generalized mean of any other order.
+
+\code{\link[=update_weights]{update_weights()}} calculates the weights to factor a generalized mean of
+products into a product of means.
+
+Other math functions:
+\code{\link[=update_weights]{update_weights()}}
+}
+\concept{math functions}

@@ -38,8 +38,7 @@
 #' Aggregating percent-change contributions uses the method in chapter 9 of the
 #' CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic
 #' mean. With a non-arithmetic mean, arithmetic weights are constructed using
-#' [`gpindex::transmute_weights(r, 1)()`][gpindex::transmute_weights] in order
-#' to apply this method.
+#' [`transmute_weights()`] in order to apply this method.
 #'
 #' There may not be contributions for all prices relatives in an elementary
 #' aggregate if the elementary indexes are built from several sources (as with
@@ -255,11 +254,12 @@ aggregate_index <- function(
     )
     if (has_contrib) {
       res$contrib[] <- Map(
-        super_aggregate_contrib(0),
+        super_aggregate_contrib,
         res$contrib,
         res2$contrib,
         res$index,
-        res2$index
+        res2$index,
+        r = 0
       )
     }
     res$index[] <- (res$index * res2$index)^0.5
@@ -285,10 +285,6 @@ aggregate_ <- function(
   duplicate_contrib,
   impute_rules
 ) {
-  # Helpful functions.
-  price_update <- gpindex::factor_weights(r)
-  agg_contrib <- aggregate_contrib(r, duplicate_contrib)
-
   eas <- match_eas(pias, x)
 
   # Loop over each time period.
@@ -321,7 +317,15 @@ aggregate_ <- function(
       if (has_contrib) {
         con[[i]] <- lapply(
           nodes,
-          \(z) agg_contrib(con[[i - 1L]][z], rel[[i - 1L]][z], w[[i - 1L]][z])
+          \(z) {
+            aggregate_contrib(
+              con[[i - 1L]][z],
+              rel[[i - 1L]][z],
+              w[[i - 1L]][z],
+              r,
+              duplicate_contrib
+            )
+          }
         )
       }
     }
@@ -356,40 +360,33 @@ aggregate_ <- function(
 #' @noRd
 # This function is inefficient because it recalculates the mean, but this
 # ensures that contributions are still produced with missing index values.
-aggregate_contrib <- function(r, duplicate_contrib) {
-  arithmetic_weights <- gpindex::transmute_weights(r, 1)
-  force(duplicate_contrib)
-  function(x, rel, w) {
-    w <- arithmetic_weights(rel, w)
-    res <- Map(`*`, x, w)
-    if (all(lengths(res) == 0L)) {
-      return(numeric(0L))
-    }
-    if (duplicate_contrib == "make.unique") {
-      res <- unlist(res)
-      names(res) <- make.unique(names(res))
-    } else {
-      products <- unlist(lapply(res, names), use.names = FALSE)
-      if (anyDuplicated(products)) {
-        products <- unique(products)
-        mat <- do.call(cbind, Map(`[`, res, list(products)))
-        res <- rowSums(mat, na.rm = TRUE)
-        res[apply(is.na(mat), 1L, all)] <- NA_real_
-        names(res) <- products
-      } else {
-        res <- unlist(res)
-      }
-    }
-    res
+aggregate_contrib <- function(x, rel, w, r, duplicate_contrib) {
+  w <- transmute_weights(rel, w, r, to = 1)
+  res <- Map(`*`, x, w)
+  if (all(lengths(res) == 0L)) {
+    return(numeric(0L))
   }
+  if (duplicate_contrib == "make.unique") {
+    res <- unlist(res)
+    names(res) <- make.unique(names(res))
+  } else {
+    products <- unlist(lapply(res, names), use.names = FALSE)
+    if (anyDuplicated(products)) {
+      products <- unique(products)
+      mat <- do.call(cbind, Map(`[`, res, list(products)))
+      res <- rowSums(mat, na.rm = TRUE)
+      res[apply(is.na(mat), 1L, all)] <- NA_real_
+      names(res) <- products
+    } else {
+      res <- unlist(res)
+    }
+  }
+  res
 }
 
 #' Aggregate product contributions for a superlative index
 #' @noRd
-super_aggregate_contrib <- function(r) {
-  arithmetic_weights <- gpindex::transmute_weights(r, 1)
-  function(x, y, rel1, rel2) {
-    w <- arithmetic_weights(c(rel1, rel2))
-    w[1L] * x + w[2L] * y
-  }
+super_aggregate_contrib <- function(x, y, rel1, rel2, r) {
+  w <- transmute_weights(c(rel1, rel2), r = r, to = 1)
+  w[1L] * x + w[2L] * y
 }
