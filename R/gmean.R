@@ -75,6 +75,61 @@ gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
   .gmean(x, weights, order, na_mask)
 }
 
+#' Nested generalized means
+#'
+#' Calculate a weighted (outer) generalized mean of two (inner) generalized
+#' means.
+#'
+#' @param x A strictly positive numeric vector.
+#' @param weights A list of strictly positive numeric vector of weights, each
+#'   the same length as `x`, for each of the inner generalized means. `NULL`
+#'   elements of `weights` equally weight each element of `x`. The default
+#'   uses equal weights for each inner generalized mean.
+#' @param order A finite numeric vector giving the order of each of the inner
+#'   generalized means. The default computes an arithmetic mean and a harmonic
+#'   mean.
+#' @param outer_weights A strictly positive numeric vector weights for each of
+#'   the inner generalized means as used in the outer generalized mean. The
+#'   default weights each inner generalized mean equally.
+#' @param outer_order A finite number giving the order of the outer generalized
+#'   mean.
+#' @param na.rm Should missing values in `x` and `weights` be removed? By
+#'   default missing values in `x` or `weights` return a missing value.
+#'
+#' @returns
+#' A numeric value for the nested generalized mean.
+#'
+#' @examples
+#' # example code
+#'
+#' @family math functions
+#' @export
+nested_gmean <- function(
+  x,
+  weights = list(NULL, NULL),
+  order = c(1, -1),
+  outer_weights = NULL,
+  outer_order = 0,
+  na.rm = FALSE
+) {
+  if (different_length(x, weights[[1]], weights[[2]])) {
+    stop("`x` and non-NULL components of `weights` must be the same length")
+  }
+  if (length(order) != 2L && !all(is.finite(order))) {
+    stop("`order` must be a pair of finite numbers")
+  }
+  na_mask <- if (
+    na.rm && (anyNA(x) || anyNA(weights[[1]]) || anyNA(weights[[2]]))
+  ) {
+    stats::complete.cases(x, weights)
+  }
+  inner_mean <- c(
+    .gmean(x, weights[[1]], order[1], na_mask),
+    .gmean(x, weights[[2]], order[2], na_mask)
+  )
+  gmean(inner_mean, outer_weights, outer_order, na.rm = na.rm)
+}
+
 #' Internal generalized mean
 #' @noRd
 .gmean <- function(x, weights, r, na_mask) {

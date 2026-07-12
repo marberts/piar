@@ -316,13 +316,14 @@ aggregate_ <- function(
       )
       if (has_contrib) {
         con[[i]] <- lapply(
-          nodes,
-          \(z) {
+          seq_along(nodes),
+          \(j) {
             aggregate_contrib(
-              con[[i - 1L]][z],
-              rel[[i - 1L]][z],
-              w[[i - 1L]][z],
+              con[[i - 1L]][nodes[[j]]],
+              rel[[i - 1L]][nodes[[j]]],
+              w[[i - 1L]][nodes[[j]]],
               r,
+              rel[[i]][j],
               duplicate_contrib
             )
           }
@@ -358,10 +359,8 @@ aggregate_ <- function(
 
 #' Aggregate product contributions
 #' @noRd
-# This function is inefficient because it recalculates the mean, but this
-# ensures that contributions are still produced with missing index values.
-aggregate_contrib <- function(x, rel, w, r, duplicate_contrib) {
-  w <- transmute_weights(rel, w, r, to = 1)
+aggregate_contrib <- function(x, rel, w, r, index, duplicate_contrib) {
+  w <- transmute_weights(rel, w, r, to = 1, mean = index)
   res <- Map(`*`, x, w)
   if (all(lengths(res) == 0L)) {
     return(numeric(0L))

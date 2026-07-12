@@ -47,7 +47,7 @@ transmute_weights <- function(x, weights = NULL, order = 0, to = 1, mean = NA) {
 #' multiplicative decompositions for an index made
 #' of nested generalized means (e.g., Fisher index).
 #'
-#' @inheritParams nested_mean
+#' @inheritParams nested_gmean
 #' @param to A finite number giving the order of the target generalized mean for
 #'   the transmuted weights. The default constructs weights for an arithmetic
 #'   mean.
@@ -90,6 +90,8 @@ transmute_weights2 <- function(
   }
   na_mask <- if (anyNA(x) || anyNA(weights[[1]]) || anyNA(weights[[2]])) {
     stats::complete.cases(x, weights)
+  }
+  if (!is.null(na_mask)) {
     x[!na_mask] <- NA_real_
   }
   inner_mean <- c(

@@ -92,4 +92,8 @@ reference:
   desc: Lower-level functions to implement the core tools for calculating price indexes.
   contents:
   - gmean
+  - nested_gmean
+  - transmute_weights
+  - transmute_weights2
+  - scale_weights
   - update_weights

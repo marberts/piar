@@ -170,6 +170,7 @@ mean_index <- function(
         rel,
         w,
         r,
+        res[[i]],
         duplicate_contrib,
         SIMPLIFY = FALSE,
         USE.NAMES = FALSE

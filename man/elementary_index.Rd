@@ -91,7 +91,7 @@ product.
 }
 \details{
 When supplied with a numeric vector, \code{elementary_index()} is a simple
-wrapper that applies \code{\link[=gmean]{gmean()}} and \code{\link[gpindex:transmute_weights]{transmute_weights()}}
+wrapper that applies \code{\link[=gmean]{gmean()}} and \code{\link[=transmute_weights]{transmute_weights()}}
 (if \code{contrib = TRUE}) to \code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
 is, for every combination of elementary aggregate and time period,
 \code{elementary_index()} calculates an index based on a generalized mean of
