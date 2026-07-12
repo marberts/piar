@@ -13,9 +13,9 @@
 #' There are two exceptions to this.
 #' 1. The convention by Hardy et al. (1952, p. 13) is used in cases where `x`
 #' has zeros: the generalized mean is 0 whenever the weights are strictly positive
-#' and \code{r < 0}. The analogous convention holds whenever at least one
+#' and `order < 0`. The analogous convention holds whenever at least one
 #' element of `x` is `Inf`: the generalized mean is `Inf` whenever the weights are
-#' strictly positive and \code{r > 0}.
+#' strictly positive and `order > 0`.
 #'
 #' 2. Some authors let the weighs be non-negative and sum to 1. If there are zero
 #' weights then the corresponding element
@@ -30,14 +30,14 @@
 #' @param x A strictly positive numeric vector.
 #' @param weights A strictly positive numeric vector of weights, the same length
 #'   as `x`. The default is to equally weight each element of `x`.
-#' @param r A finite number giving the order of the generalized mean.
+#' @param order A finite number giving the order of the generalized mean.
 #'
 #' @returns
 #' A numeric value for the generalized mean.
 #'
 #' @note
 #' The generalized mean can be defined on the extended real line, so
-#' that \code{orderr = -Inf / Inf} returns [min()]/[max()], to agree with the
+#' that `order = -Inf / Inf` returns [min()]/[max()], to agree with the
 #' definition by Bullen (2003). This is not implemented, and the order of the
 #' generalized mean must be finite.
 #'
@@ -62,24 +62,26 @@
 #' gmean(x, w * x, r = 2)
 #' @family math functions
 #' @export
-gmean <- function(x, weights = NULL, r = 1, na.rm = FALSE) {
-  if (!is.finite(r)) {
-    stop("`r` must be a finite number")
+gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
+  if (!is.finite(order)) {
+    stop("`order` must be a finite number")
   }
   if (!is.null(weights) && length(x) != length(weights)) {
     stop("`x` and `weights` must be the same length")
   }
-  if (na.rm && (anyNA(x) || anyNA(weights))) {
-    keep <- stats::complete.cases(x, weights)
-    x <- x[keep]
-    weights <- weights[keep]
+  na_mask <- if (na.rm && (anyNA(x) || anyNA(weights))) {
+    stats::complete.cases(x, weights)
   }
-  .gmean(x, weights, r)
+  .gmean(x, weights, order, na_mask)
 }
 
 #' Internal generalized mean
 #' @noRd
-.gmean <- function(x, weights, r) {
+.gmean <- function(x, weights, r, na_mask) {
+  if (!is.null(na_mask)) {
+    x <- x[na_mask]
+    weights <- weights[na_mask]
+  }
   if (is.null(weights)) {
     if (r == 0) {
       exp(sum(log(x)) / length(x))

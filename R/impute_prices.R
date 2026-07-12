@@ -139,7 +139,7 @@ impute_prices.matrix <- function(
   method = c("overall-mean", "carry-forward"),
   impute_rules = NULL
 ) {
-  # This is mostly a combination of gpindex::back_period() and aggregate()
+  # This is mostly a combination of back_period() and aggregate()
   # it just does it period-by-period and keeps track of prices to impute.
   chkDots(...)
   method <- match.arg(method)
@@ -234,7 +234,7 @@ impute_prices.numeric <- function(
   method = c("overall-mean", "carry-forward", "carry-backward"),
   impute_rules = NULL
 ) {
-  # This is mostly a combination of gpindex::back_period() and aggregate()
+  # This is mostly a combination of back_period() and aggregate()
   # it just does it period-by-period and keeps track of prices to impute.
   chkDots(...)
   method <- match.arg(method)

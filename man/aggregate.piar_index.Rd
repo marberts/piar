@@ -119,8 +119,7 @@ point in time.
 Aggregating percent-change contributions uses the method in chapter 9 of the
 CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic
 mean. With a non-arithmetic mean, arithmetic weights are constructed using
-\code{\link[gpindex:transmute_weights]{gpindex::transmute_weights(r, 1)()}} in order
-to apply this method.
+\code{\link[gpindex:transmute_weights]{transmute_weights()}} in order to apply this method.
 
 There may not be contributions for all prices relatives in an elementary
 aggregate if the elementary indexes are built from several sources (as with

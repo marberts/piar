@@ -5,10 +5,8 @@
 #' product.
 #'
 #' When supplied with a numeric vector, `elementary_index()` is a simple
-#' wrapper that applies
-#' [gmean()] and
-#' [`gpindex::contributions(r)()`][gpindex::contributions] (if `contrib = TRUE`)
-#' to `x` and `weights` grouped by `ea` and `period`. That
+#' wrapper that applies [gmean()] and [`transmute_weights()`]
+#' (if `contrib = TRUE`) to `x` and `weights` grouped by `ea` and `period`. That
 #' is, for every combination of elementary aggregate and time period,
 #' `elementary_index()` calculates an index based on a generalized mean of
 #' order `r` and, optionally, percent-change contributions. Product names should
@@ -42,7 +40,7 @@
 #'
 #' Indexes based on nested generalized means, like the Fisher index (and
 #' superlative quadratic mean indexes more generally), can be calculated by
-#' supplying the appropriate weights with [gpindex::nested_transmute()]; see the
+#' supplying the appropriate weights with [transmute_weights2()]; see the
 #' example below. It is important to note that there are several ways to
 #' make these weights, and this affects how percent-change contributions
 #' are calculated.
@@ -125,8 +123,6 @@
 #' von der Lippe, P. (2007). *Index Theory and Price Statistics*. Peter Lang.
 #'
 #' @examples
-#' library(gpindex)
-#'
 #' prices <- data.frame(
 #'   rel = 1:8,
 #'   period = rep(1:2, each = 4),
@@ -143,22 +139,21 @@
 #'
 #' with(
 #'   prices,
-#'   t(tapply(rel, list(period, ea), geometric_mean, na.rm = TRUE))
+#'   t(tapply(rel, list(period, ea), \(x) gmean(x, order = 0, na.rm = TRUE)))
 #' )
-#'
-#' # A general function to calculate weights to turn the geometric
-#' # mean of the arithmetic and harmonic mean (i.e., Fisher mean)
-#' # into an arithmetic mean
-#'
-#' fw <- grouped(nested_transmute(0, c(1, -1), 1))
 #'
 #' # Calculate a CSWD index (same as the Jevons in this example)
 #' # as an arithmetic index by using the appropriate weights
 #'
+#' cswd_weights <- with(
+#'   prices,
+#'   lapply(split(rel, list(period, ea)), transmute_weights2)
+#' )
+#'
 #' elementary_index(
 #'   prices,
 #'   rel ~ period + ea,
-#'   weights = fw(rel, group = interaction(period, ea)),
+#'   weights = unsplit(cswd_weights, interaction(period, ea)),
 #'   r = 1
 #' )
 #'
@@ -225,7 +220,7 @@ elementary_index.numeric <- function(
     gmean,
     x,
     weights,
-    r = r,
+    r,
     na.rm = na.rm,
     USE.NAMES = FALSE
   )
@@ -233,9 +228,11 @@ elementary_index.numeric <- function(
 
   if (contrib) {
     contributions <- mapply(
-      gpindex::contributions(r),
+      \(x, w, r, m) (x - 1) * transmute_weights(x, w, r, mean = m),
       x,
       weights,
+      r,
+      index,
       SIMPLIFY = FALSE,
       USE.NAMES = FALSE
     )

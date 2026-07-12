@@ -161,7 +161,7 @@ mean_index <- function(
     if (!is.null(weights)) {
       w <- split_rows(weights[, j, drop = FALSE], rows)
     }
-    res[[i]] <- mapply(gmean, rel, w, r = r, na.rm = na.rm, USE.NAMES = FALSE)
+    res[[i]] <- mapply(gmean, rel, w, r, na.rm = na.rm, USE.NAMES = FALSE)
     if (has_contrib) {
       con <- split_rows(x$contrib[, j, drop = FALSE], rows)
       contrib[[i]] <- mapply(

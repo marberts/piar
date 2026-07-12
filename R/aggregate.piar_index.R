@@ -387,6 +387,6 @@ aggregate_contrib <- function(x, rel, w, r, duplicate_contrib) {
 #' Aggregate product contributions for a superlative index
 #' @noRd
 super_aggregate_contrib <- function(x, y, rel1, rel2, r) {
-  w <- transmute_weights(c(rel1, rel2), r = r, to = 1)
+  w <- transmute_weights(c(rel1, rel2), order = r, to = 1)
   w[1L] * x + w[2L] * y
 }

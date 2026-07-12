@@ -4,7 +4,7 @@
 \alias{gmean}
 \title{Generalized mean}
 \usage{
-gmean(x, weights = NULL, r = 1, na.rm = FALSE)
+gmean(x, weights = NULL, order = 1, na.rm = FALSE)
 }
 \arguments{
 \item{x}{A strictly positive numeric vector.}
@@ -12,7 +12,7 @@ gmean(x, weights = NULL, r = 1, na.rm = FALSE)
 \item{weights}{A strictly positive numeric vector of weights, the same length
 as \code{x}. The default is to equally weight each element of \code{x}.}
 
-\item{r}{A finite number giving the order of the generalized mean.}
+\item{order}{A finite number giving the order of the generalized mean.}
 }
 \value{
 A numeric value for the generalized mean.
@@ -33,9 +33,9 @@ There are two exceptions to this.
 \enumerate{
 \item The convention by Hardy et al. (1952, p. 13) is used in cases where \code{x}
 has zeros: the generalized mean is 0 whenever the weights are strictly positive
-and \code{r < 0}. The analogous convention holds whenever at least one
+and \code{order < 0}. The analogous convention holds whenever at least one
 element of \code{x} is \code{Inf}: the generalized mean is \code{Inf} whenever the weights are
-strictly positive and \code{r > 0}.
+strictly positive and \code{order > 0}.
 \item Some authors let the weighs be non-negative and sum to 1. If there are zero
 weights then the corresponding element
 of \code{x} has no impact on the result whenever \code{x} is strictly
@@ -49,7 +49,7 @@ generalized mean.
 }
 \note{
 The generalized mean can be defined on the extended real line, so
-that \code{orderr = -Inf / Inf} returns \code{\link[=min]{min()}}/\code{\link[=max]{max()}}, to agree with the
+that \code{order = -Inf / Inf} returns \code{\link[=min]{min()}}/\code{\link[=max]{max()}}, to agree with the
 definition by Bullen (2003). This is not implemented, and the order of the
 generalized mean must be finite.
 }
@@ -74,13 +74,8 @@ Hardy, G., Littlewood, J. E., and Polya, G. (1952). \emph{Inequalities} (2nd
 edition). Cambridge University Press.
 }
 \seealso{
-\code{\link[gpindex:transmute_weights]{transmute_weights()}} transforms the weights to turn a generalized
-mean of a given order into a generalized mean of any other order.
-
-\code{\link[=update_weights]{update_weights()}} calculates the weights to factor a generalized mean of
-products into a product of means.
-
 Other math functions:
+\code{\link[=scale_weights]{scale_weights()}},
 \code{\link[=update_weights]{update_weights()}}
 }
 \concept{math functions}

@@ -91,10 +91,8 @@ product.
 }
 \details{
 When supplied with a numeric vector, \code{elementary_index()} is a simple
-wrapper that applies
-\code{gmean()} and
-\code{\link[gpindex:contributions]{gpindex::contributions(r)()}} (if \code{contrib = TRUE})
-to \code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
+wrapper that applies \code{\link[=gmean]{gmean()}} and \code{\link[gpindex:transmute_weights]{transmute_weights()}}
+(if \code{contrib = TRUE}) to \code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
 is, for every combination of elementary aggregate and time period,
 \code{elementary_index()} calculates an index based on a generalized mean of
 order \code{r} and, optionally, percent-change contributions. Product names should
@@ -128,7 +126,7 @@ to calling \code{elementary_index()}.
 
 Indexes based on nested generalized means, like the Fisher index (and
 superlative quadratic mean indexes more generally), can be calculated by
-supplying the appropriate weights with \code{\link[gpindex:nested_transmute]{gpindex::nested_transmute()}}; see the
+supplying the appropriate weights with \code{\link[=transmute_weights2]{transmute_weights2()}}; see the
 example below. It is important to note that there are several ways to
 make these weights, and this affects how percent-change contributions
 are calculated.
@@ -136,8 +134,6 @@ are calculated.
 \code{elemental_index()} is an alias for \code{elementary_index()}.
 }
 \examples{
-library(gpindex)
-
 prices <- data.frame(
   rel = 1:8,
   period = rep(1:2, each = 4),
@@ -154,22 +150,21 @@ exp(coef(lm(log(rel) ~ ea:factor(period) - 1, prices)))
 
 with(
   prices,
-  t(tapply(rel, list(period, ea), geometric_mean, na.rm = TRUE))
+  t(tapply(rel, list(period, ea), \(x) gmean(x, order = 0, na.rm = TRUE)))
 )
-
-# A general function to calculate weights to turn the geometric
-# mean of the arithmetic and harmonic mean (i.e., Fisher mean)
-# into an arithmetic mean
-
-fw <- grouped(nested_transmute(0, c(1, -1), 1))
 
 # Calculate a CSWD index (same as the Jevons in this example)
 # as an arithmetic index by using the appropriate weights
 
+cswd_weights <- with(
+  prices,
+  lapply(split(rel, list(period, ea)), transmute_weights2)
+)
+
 elementary_index(
   prices,
   rel ~ period + ea,
-  weights = fw(rel, group = interaction(period, ea)),
+  weights = unsplit(cswd_weights, interaction(period, ea)),
   r = 1
 )
 

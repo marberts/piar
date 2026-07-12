@@ -11,8 +11,6 @@ update_weights(x, weights = NULL, r = 1)
 
 \item{weights}{A strictly positive numeric vector of weights, the same length
 as \code{x}. The default is to equally weight each element of \code{x}.}
-
-\item{r}{A finite number giving the order of the generalized mean.}
 }
 \value{
 A numeric vector the same length as \code{x}.
@@ -56,6 +54,7 @@ International Monetary Fund.
 }
 \seealso{
 Other math functions:
-\code{\link[=gmean]{gmean()}}
+\code{\link[=gmean]{gmean()}},
+\code{\link[=scale_weights]{scale_weights()}}
 }
 \concept{math functions}
