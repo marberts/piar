@@ -59,7 +59,7 @@
 #' gmean(x, w, r = 0)
 #'
 #' # The Lehmer mean is a generalized mean with specific weights.
-#' gmean(x, w * x, r = 2)
+#' gmean(x, w * x)
 #' @family math functions
 #' @export
 gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {

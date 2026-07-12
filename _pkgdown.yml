@@ -3,6 +3,7 @@ url: https://marberts.github.io/piar
 template:
   bootstrap: 5
   bootswatch: united
+  math-rendering: mathjax
   
 articles:
 - title: Aggregation
@@ -21,6 +22,7 @@ articles:
   - index-number-formulas
   - contributions
   - adjust-weights
+  - decomposing-indexes
 
 - title: Other topics
   desc: Miscellaneous articles showing useful features.
