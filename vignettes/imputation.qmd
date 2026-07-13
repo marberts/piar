@@ -1,10 +1,13 @@
 ---
 title: "Imputation"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Imputation}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
 ---
 
 The example in `vignette("piar")` used parental imputation to both

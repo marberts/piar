@@ -21,14 +21,14 @@ test_that("aggregating over subperiods works", {
   expect_equal(
     as.matrix(mean(ms_epr, weights = w, window = 2))[, 1],
     diag(
-      as.matrix(ms_epr)[, 1:2] %*% apply(w[, 1:2], 1, gpindex::scale_weights)
+      as.matrix(ms_epr)[, 1:2] %*% apply(w[, 1:2], 1, scale_weights)
     ),
     ignore_attr = TRUE
   )
   expect_equal(
     as.matrix(mean(ms_epr, weights = w, window = 2))[, 2],
     diag(
-      as.matrix(ms_epr)[, 3:4] %*% apply(w[, 3:4], 1, gpindex::scale_weights)
+      as.matrix(ms_epr)[, 3:4] %*% apply(w[, 3:4], 1, scale_weights)
     ),
     ignore_attr = TRUE
   )

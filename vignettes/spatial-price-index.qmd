@@ -1,10 +1,13 @@
 ---
 title: "Spatial price indexes"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Spatial price indexes}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
 ---
 
 It is possible to rework the functions in this package to make a spatial, rather

@@ -265,7 +265,7 @@ test_that("impute rules work", {
   res <- as.matrix(prices[c("price", "back_price")])
   res[3, 1] <- 6
   res[6, ] <- c(6, 6)
-  res[9, ] <- c(gpindex::arithmetic_mean(c(8 / 5, 9 / 6), c(5, 3)) * 6, 6)
+  res[9, ] <- c(gmean(c(8 / 5, 9 / 6), c(5, 3)) * 6, 6)
 
   expect_equal(imputed, res)
 

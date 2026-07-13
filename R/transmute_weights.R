@@ -69,8 +69,8 @@ transmute_weights <- function(x, weights = NULL, order = 0, to = 1, mean = NA) {
 #'
 #' # Calculate the geometric mean of the arithmetic and harmonic means
 #' # as an arithmetic mean.
-#' nested_mean(x, list(w1, w2))
-#' generalized_mean(x, transmute_weights(x, list(w1, w2), to = 1))
+#' nested_gmean(x, list(w1, w2))
+#' gmean(x, transmute_weights2(x, list(w1, w2), to = 1))
 #' @family math functions
 #' @export
 transmute_weights2 <- function(

@@ -1,10 +1,12 @@
 ---
 title: "Decomposing price indexes"
+format: 
+  html:
+    html-math-method: mathjax
 vignette: >
   %\VignetteIndexEntry{Decomposing price indexes}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
-output: bookdown::html_document2
 knitr:
   opts_chunk: 
     collapse: true
@@ -21,7 +23,7 @@ There are several well-known decompositions for the most common types of bilater
 
 [^1]: There are decompositions with "weights" that do not sum to one, such as those for the Fisher index by @reinsdorf2002[section 2] and @hallerbach2005, and for other superlative indexes by @diewert2002. @balk2008 [equation 4.28] gives the original multiplicative decomposition of the Fisher index, due to Vartia, for which the weights also do not sum to one. @webster2019 consider several decompositions for multilateral indexes, although again the "weights" do not sum to one.
 
-I show how the additive and multiplicative decompositions for geometric, arithmetic, and Fisher indexes that use the logarithmic mean can be consolidated and made more general by switching out the logarithmic mean for the more general extended mean. The main result is a function that transmutes the weights in a generalized mean of a given order so that it can be represented as a generalized mean of any other order. This covers additive and multiplicative decompositions for indexes that do not belong to the arithmetic or geometric families, like harmonic indexes or the Lloyd-Moulton index, and allows both additive and multiplicative decompositions to be covered by a single equation, rather than treating them as different cases. Expressing a generalized index as a generalized mean of any other order also allows for the decomposition of indexes that are nested generalized means, like the family of superlative quadratic mean indexes that includes the Fisher index or the AG mean index by @lent2009. I demonstrate some useful properties of this general decomposition and show how it can be used to decompose indexes based on other types on means and decompose deflating a change in aggregate values with a price index. Throughout I show how the tools in the *piar* package can be used to decompose a price index.
+I show how the additive and multiplicative decompositions for geometric, arithmetic, and Fisher indexes that use the logarithmic mean can be consolidated and made more general by switching out the logarithmic mean for the more general extended mean. The main result is a function that transmutes the weights in a generalized mean of a given order so that it can be represented as a generalized mean of any other order. This covers additive and multiplicative decompositions for indexes that do not belong to the arithmetic or geometric families, like harmonic indexes or the Lloyd-Moulton index, and allows both additive and multiplicative decompositions to be covered by a single equation, rather than treating them as different cases. Expressing a generalized index as a generalized mean of any other order also allows for the decomposition of indexes that are nested generalized means, like the family of superlative quadratic mean indexes that includes the Fisher index or the AG mean index by @lent2009. I demonstrate some useful properties of this general decomposition and show how it can be used to decompose indexes based on other types on means and decompose deflating a change in aggregate values with a price index. See @martin2026 for an application of these methods to multilateral indexes. Throughout I show how the tools in the *piar* package can be used to decompose a price index.
 
 ## Decomposing generalized-mean indexes {#sec-decompose}
 
@@ -47,7 +49,7 @@ $$
 \mathfrak{M}_{\rho}(\mathbf{r}, \mathbf{w}) = 1 / \left(\sum_{i=1}^{n} v_i(\mathbf{r}, \mathbf{w}; \rho, -1) / r_{i}\right),
 $$
 
-that will be useful in \@sec-harmonic.
+that will be useful in @sec-harmonic.
 
 @balk2008 and @reinsdorf2002 show how to derive $\mathbf{v}(\mathbf{r}, \mathbf{w}; \rho, \varsigma)$ when $\rho = 1$ and $\varsigma = 0$ (multiplicative decomposition of an arithmetic index) $$
 v_{i}(\mathbf{r}, \mathbf{w}; 1, 0) = \frac{w_{i} \mathfrak{L}(r_{i}, \mathfrak{M}_{1}(\mathbf{r}, \mathbf{w}))}{\sum_{j=1}^{n} w_{j} \mathfrak{L}(r_{j}, \mathfrak{M}_{1}(\mathbf{r}, \mathbf{w}))}
@@ -175,7 +177,7 @@ An alternative approach to decompose @eq-superlative is to generalize the (addit
 v_{1}(\mathfrak{N}_{\rho_{1}\rho_{2}}(\mathbf{r}, \mathbf{w}_{1}, \mathbf{w}_{2}), \mathbf{\omega}; \rho, \varsigma) \mathbf{v}(\mathbf{r}, \mathbf{w}_1; \rho_1, \varsigma) + v_{2}(\mathfrak{N}_{\rho_{1}\rho_{2}}(\mathbf{r}, \mathbf{w}_{1}, \mathbf{w}_{2}), \mathbf{\omega}; \rho, \varsigma) \mathbf{v}(\mathbf{r}, \mathbf{w}_2; \rho_2, \varsigma).  
 $$ {#eq-res3} Note that for a Fisher index, if $\varsigma=1$ then $\mathbf{v}(\mathbf{r}, \mathbf{w}_1; \rho_1, \varsigma)$ is a vector of base-period expenditure/revenue shares, $\mathbf{v}(\mathbf{r}, \mathbf{w}_2; \rho_2, \varsigma)$ is a vector of hybrid Paasche weights, and $\mathbf{v}(\mathfrak{N}_{\rho_{1}\rho_{2}}(\mathbf{r}, \mathbf{w}_{1}, \mathbf{w}_{2}), \mathbf{\omega}; \rho, \varsigma)$ are the unique weights that decompose the geometric mean of the Laspeyres and Paasche indexes, which equals the van IJzeren decomposition. The idea here is to transmute the weights for both the inner and outer generalized means so that they are means of order $\varsigma$, then take the product of these weights. @eq-res2 and @eq-res3 generally give different decompositions, as the latter is not transitive, but reduce to @eq-res1 when $\rho = \rho_{1} = \rho_{2}$ and $\mathbf{w}_{1} = \mathbf{w}_{2}$.
 
-These two approaches for decomposing @eq-superlative can be generalized with a pivot value $\psi$ that acts as the link between the inner and outer generalized means. More generally, an index of the from @eq-superlative can be decomposed into a generalized mean of order $\rho$ with weights
+These two approaches for decomposing @eq-superlative can be generalized with a pivot value $\psi$ that acts as the link between the inner and outer generalized means. More generally, an index of the form in @eq-superlative can be decomposed into a generalized mean of order $\rho$ with weights
 $$\mathbf{v}(\mathbf{r},
 v_{1}(\mathfrak{N}_{\rho_{1}\rho_{2}}(\mathbf{r}, \mathbf{w}_{1}, \mathbf{w}_{2}), \mathbf{\omega}; \rho, \psi) \mathbf{v}(\mathbf{r}, \mathbf{w}_1; \rho_1, \psi) + v_{2}(\mathfrak{N}_{\rho_{1}\rho_{2}}(\mathbf{r}, \mathbf{w}_{1}, \mathbf{w}_{2}), \mathbf{\omega}; \rho, \psi) \mathbf{v}(\mathbf{r}, \mathbf{w}_2; \rho_2, \psi); \psi, \varsigma).  
 $$ Setting $\psi=\rho$ gives @eq-res2, whereas setting $\psi=\varsigma$ gives @eq-res3.
@@ -231,7 +233,9 @@ v <- Map(
 gmean(rel, v)
 ```
 
-### Decomposing deflators {\#sec-harmonic}
+This approach to decomposing aggregate indexes also has the benefit that contributions for different groups can be made using different methods and combined in a way that decomposes the aggregated index. For example, the percent-change decomposition by @diewert2002 can be used to decompose the Fisher index for one group, whereas percent-change contributions from the additive decomposition of a Jevons index can be used to decompose another group, and combined in a consistent way to get percent-change contributions for the aggregated index.
+
+### Decomposing deflators {#sec-harmonic}
 
 The decomposition in @eq-res1 can be used to construct a decomposition for how a price index deflates a change in aggregate value over time to get a quantity index. Letting $V$ be the change in total value between two periods, the implicit quantity index for a price index based on the generalized mean of order $\rho$ is
 

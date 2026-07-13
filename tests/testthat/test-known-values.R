@@ -108,7 +108,7 @@ test_that("fixed-sample index works", {
   weights <- fs_prices[1:11, c(2:3, 5)]
   weights$weight <- with(
     weights,
-    ave(weight, classification, FUN = gpindex::scale_weights) *
+    ave(weight, classification, FUN = scale_weights) *
       fs_weights$weight[match(classification, fs_weights$classification)]
   )
 

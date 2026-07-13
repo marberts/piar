@@ -1,10 +1,13 @@
 ---
 title: "Aggregating over subperiods"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Aggregating over subperiods}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
 ---
 
 With the exception of `vignette("spatial-price-index")`, all the examples so far

@@ -1,10 +1,13 @@
 ---
 title: "Making price indexes"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Making price indexes}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
 ---
 
 Most price indexes are made with a two-step procedure, where

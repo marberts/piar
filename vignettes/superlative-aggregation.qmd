@@ -1,10 +1,13 @@
 ---
 title: "Superlative aggregation"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Superlative aggregation}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
 ---
 
 All of the examples so far have used a single set of weights to

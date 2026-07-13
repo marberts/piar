@@ -52,7 +52,7 @@
 #' generalized mean of order `-r`. The resulting indexes are combined with a
 #' geometric mean to make a superlative quadratic mean of order `2*r` index.
 #' Percent-change contributions are combined using a generalized van IJzeren
-#' decomposition; see [`gpindex::nested_transmute()`] for details.
+#' decomposition; see [`transmute_weights2()`] for details.
 #'
 #' @name aggregate.piar_index
 #' @aliases aggregate.piar_index

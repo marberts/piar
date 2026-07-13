@@ -1,10 +1,13 @@
 ---
 title: "Matrix aggregation"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Matrix aggregation}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
 ---
 
 Aggregating a price index can be done as a matrix operation. Although

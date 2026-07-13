@@ -14,8 +14,8 @@ epr2 <- elementary_index(
 
 # Test a Fisher calculation
 fw <- function(x, w1, w2) {
-  v1 <- gpindex::transmute_weights(1, 0)(x, w1)
-  v2 <- gpindex::transmute_weights(-1, 0)(x, w2)
+  v1 <- transmute_weights(x, w1, 1, 0)
+  v2 <- transmute_weights(x, w2, -1, 0)
   v1 + v2
 }
 
@@ -71,8 +71,8 @@ test_that("Fisher calculation agrees with manual calculation", {
 
   # Should work for other kinds of superlative indexes
   fw <- function(x, w1, w2) {
-    v1 <- gpindex::transmute_weights(1.5, 0)(x)
-    v2 <- gpindex::transmute_weights(-1.5, 0)(x, w2)
+    v1 <- transmute_weights(x, order = 1.5, to = 0)
+    v2 <- transmute_weights(x, w2, order = -1.5, to = 0)
     v1 + v2
   }
 

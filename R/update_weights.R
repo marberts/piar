@@ -41,14 +41,14 @@
 #' gmean(x * y, w) > gmean(x, w) * gmean(y, w)
 #' @family math functions
 #' @export
-update_weights <- function(x, weights = NULL, r = 1) {
-  if (!is.finite(r)) {
-    stop("`r` must be a finite number")
+update_weights <- function(x, weights = NULL, order = 1) {
+  if (!is.finite(order)) {
+    stop("`order` must be a finite number")
   }
   if (!is.null(weights) && length(x) != length(weights)) {
     stop("`x` and `weights` must be the same length")
   }
-  if (r == 0) {
+  if (order == 0) {
     if (is.null(weights)) {
       weights <- rep.int(1, length(x))
     }
@@ -57,6 +57,6 @@ update_weights <- function(x, weights = NULL, r = 1) {
     }
     weights
   } else {
-    if (is.null(weights)) x^r else weights * x^r
+    if (is.null(weights)) x^order else weights * x^order
   }
 }

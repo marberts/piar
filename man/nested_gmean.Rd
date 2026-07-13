@@ -33,7 +33,8 @@ default weights each inner generalized mean equally.}
 mean.}
 
 \item{na.rm}{Should missing values in \code{x} and \code{weights} be removed? By
-default missing values in \code{x} or \code{weights} return a missing value.}
+default missing values are not removed. Note that removal of missing values
+is balanced across \code{x} and both elements of \code{weights}.}
 }
 \value{
 A numeric value for the nested generalized mean.

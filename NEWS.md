@@ -9,7 +9,8 @@ imputation rules during aggregation.
 
 - A new function `back_period()` to find back/base prices and quantities.
 
-- Several lower-level functions that implement the core mathematical machinery of the package.
+- Several lower-level functions that implement the core mathematical machinery of
+the package are no longer imported from {gpindex}.
 
 ## Bugs fixes
 

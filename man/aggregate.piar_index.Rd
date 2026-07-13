@@ -133,7 +133,7 @@ generalized mean of order \code{r} the aggregation for \code{pias2} done with a
 generalized mean of order \code{-r}. The resulting indexes are combined with a
 geometric mean to make a superlative quadratic mean of order \code{2*r} index.
 Percent-change contributions are combined using a generalized van IJzeren
-decomposition; see \code{\link[gpindex:nested_transmute]{gpindex::nested_transmute()}} for details.
+decomposition; see \code{\link[=transmute_weights2]{transmute_weights2()}} for details.
 }
 \note{
 For large indexes it can be much faster to turn the aggregation structure

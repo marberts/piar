@@ -4,13 +4,15 @@
 \alias{update_weights}
 \title{Update weights}
 \usage{
-update_weights(x, weights = NULL, r = 1)
+update_weights(x, weights = NULL, order = 1)
 }
 \arguments{
 \item{x}{A strictly positive numeric vector.}
 
 \item{weights}{A strictly positive numeric vector of weights, the same length
 as \code{x}. The default is to equally weight each element of \code{x}.}
+
+\item{order}{A finite number giving the order of the generalized mean.}
 }
 \value{
 A numeric vector the same length as \code{x}.

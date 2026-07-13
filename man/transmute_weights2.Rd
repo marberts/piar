@@ -58,8 +58,8 @@ w2 <- c(1, 2, 1)
 
 # Calculate the geometric mean of the arithmetic and harmonic means
 # as an arithmetic mean.
-nested_mean(x, list(w1, w2))
-generalized_mean(x, transmute_weights(x, list(w1, w2), to = 1))
+nested_gmean(x, list(w1, w2))
+gmean(x, transmute_weights2(x, list(w1, w2), to = 1))
 }
 \references{
 See \code{vignette("decomposing-indexes")} for more details.

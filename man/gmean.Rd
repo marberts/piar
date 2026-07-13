@@ -13,6 +13,9 @@ gmean(x, weights = NULL, order = 1, na.rm = FALSE)
 as \code{x}. The default is to equally weight each element of \code{x}.}
 
 \item{order}{A finite number giving the order of the generalized mean.}
+
+\item{na.rm}{Should missing values be removed? By default, missing values are
+not removed.}
 }
 \value{
 A numeric value for the generalized mean.
@@ -61,10 +64,10 @@ w <- c(0.25, 0.25, 0.5)
 gmean(x, w)
 
 # Geometric mean.
-gmean(x, w, r = 0)
+gmean(x, w, order = 0)
 
 # The Lehmer mean is a generalized mean with specific weights.
-gmean(x, w * x, r = 2)
+gmean(x, w * x)
 }
 \references{
 Bullen, P. S. (2003). \emph{Handbook of Means and Their Inequalities}.

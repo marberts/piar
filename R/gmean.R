@@ -31,6 +31,8 @@
 #' @param weights A strictly positive numeric vector of weights, the same length
 #'   as `x`. The default is to equally weight each element of `x`.
 #' @param order A finite number giving the order of the generalized mean.
+#' @param na.rm Should missing values be removed? By default, missing values are
+#'   not removed.
 #'
 #' @returns
 #' A numeric value for the generalized mean.
@@ -56,7 +58,7 @@
 #' gmean(x, w)
 #'
 #' # Geometric mean.
-#' gmean(x, w, r = 0)
+#' gmean(x, w, order = 0)
 #'
 #' # The Lehmer mean is a generalized mean with specific weights.
 #' gmean(x, w * x)
@@ -94,7 +96,8 @@ gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
 #' @param outer_order A finite number giving the order of the outer generalized
 #'   mean.
 #' @param na.rm Should missing values in `x` and `weights` be removed? By
-#'   default missing values in `x` or `weights` return a missing value.
+#'   default missing values are not removed. Note that removal of missing values
+#'   is balanced across `x` and both elements of `weights`.
 #'
 #' @returns
 #' A numeric value for the nested generalized mean.
@@ -121,7 +124,7 @@ nested_gmean <- function(
   na_mask <- if (
     na.rm && (anyNA(x) || anyNA(weights[[1]]) || anyNA(weights[[2]]))
   ) {
-    stats::complete.cases(x, weights)
+    stats::complete.cases(x, weights[[1]], weights[[2]])
   }
   inner_mean <- c(
     .gmean(x, weights[[1]], order[1], na_mask),

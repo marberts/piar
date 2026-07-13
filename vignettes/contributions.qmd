@@ -1,10 +1,13 @@
 ---
 title: "Contributions"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Contributions}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
 ---
 
 ## Product contributions
@@ -13,7 +16,8 @@ It's often convenient to decompose an index into the (additive)
 contribution of each price relative, also known as the percent-change
 contribution. This can be done with the same work flow used in
 `vignette("piar")`, specifying `contrib = TRUE` when calling
-`elementary_index()`.
+`elementary_index()`. (See `vignette("decomposing-indexes")` for the underlying
+theory.)
 
 ```{r}
 library(piar)

@@ -1,10 +1,13 @@
 ---
 title: "Aggregating across baskets"
-output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Aggregating across baskets}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: '#>'
 ---
 
 Most prices indexes use the same set of weights to aggregate elementary
