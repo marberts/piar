@@ -10,13 +10,13 @@
 #' enforced, but the results may not make sense if the generalized mean is not
 #' defined. There are two exceptions to this.
 #' 1. The convention by Hardy et al. (1952, p. 13) is used in cases where `x`
-#' has zeros: the generalized mean is 0 whenever the weights are strictly positive
-#' and `order < 0`. The analogous convention holds whenever at least one
-#' element of `x` is `Inf`: the generalized mean is `Inf` whenever the weights are
-#' strictly positive and `order > 0`.
+#' has zeros: the generalized mean is 0 whenever the weights are strictly
+#' positive and `order < 0`. The analogous convention holds whenever at least
+#' one element of `x` is `Inf`: the generalized mean is `Inf` whenever the
+#' weights are strictly positive and `order > 0`.
 #'
-#' 2. Some authors let the weighs be non-negative and sum to 1. If there are zero
-#' weights then the corresponding element
+#' 2. Some authors let the weighs be non-negative and sum to 1. If there are
+#' zero weights then the corresponding element
 #' of `x` has no impact on the result whenever `x` is strictly
 #' positive. Unlike [weighted.mean()], however,
 #' zero weights are not strong zeros, so infinite values in `x` will

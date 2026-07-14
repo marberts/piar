@@ -3,7 +3,8 @@
 #' Aggregate elementary price indexes with a price index aggregation structure.
 #'
 #' The `aggregate()` method loops over each time period in `x` and
-#' 1. aggregates the elementary indexes with [`gmean()`] for each level of `pias`;
+#' 1. aggregates the elementary indexes with [`gmean()`] for each level
+#' of `pias`;
 #' 2. aggregates percent-change contributions for each level of
 #' `pias` (if there are any and `contrib = TRUE`);
 #' 3. price updates the weights in `pias` with [`update_weights()`] (only for

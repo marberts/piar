@@ -34,12 +34,12 @@ enforced, but the results may not make sense if the generalized mean is not
 defined. There are two exceptions to this.
 \enumerate{
 \item The convention by Hardy et al. (1952, p. 13) is used in cases where \code{x}
-has zeros: the generalized mean is 0 whenever the weights are strictly positive
-and \code{order < 0}. The analogous convention holds whenever at least one
-element of \code{x} is \code{Inf}: the generalized mean is \code{Inf} whenever the weights are
-strictly positive and \code{order > 0}.
-\item Some authors let the weighs be non-negative and sum to 1. If there are zero
-weights then the corresponding element
+has zeros: the generalized mean is 0 whenever the weights are strictly
+positive and \code{order < 0}. The analogous convention holds whenever at least
+one element of \code{x} is \code{Inf}: the generalized mean is \code{Inf} whenever the
+weights are strictly positive and \code{order > 0}.
+\item Some authors let the weighs be non-negative and sum to 1. If there are
+zero weights then the corresponding element
 of \code{x} has no impact on the result whenever \code{x} is strictly
 positive. Unlike \code{\link[=weighted.mean]{weighted.mean()}}, however,
 zero weights are not strong zeros, so infinite values in \code{x} will

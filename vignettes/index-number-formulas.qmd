@@ -96,7 +96,7 @@ tornqvist_weights <- split(prices, ~period_by_business) |>
   lapply(\(df) {
     0.5 * scale_weights(df$price * df$quantity) +
       0.5 * scale_weights(df$back_price * df$back_quantity)
-    }
+  }
   ) |>
   unsplit(period_by_business)
 
@@ -165,7 +165,7 @@ diewert_contributions <- function(p1, p0, q1, q0) {
   v1 <- scale_weights(p0 * q1)
   laspeyres <- gmean(rel, v0)
   fisher <- nested_gmean(rel, list(v0, v1), order = c(1, 1))
-  
+
   (v0 + laspeyres * v1) / (1 + fisher) * (rel - 1)
 }
 ```

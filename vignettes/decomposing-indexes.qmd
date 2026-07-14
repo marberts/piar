@@ -169,7 +169,11 @@ all.equal(nested_gmean(rel, list(s1, s2)), gmean(rel, v1))
 
 all.equal(
   v1,
-  transmute_weights(rel, transmute_weights2(rel, list(s1, s2), to = 2), order = 2)
+  transmute_weights(
+    rel,
+    transmute_weights2(rel, list(s1, s2), to = 2),
+    order = 2
+  )
 )
 ```
 
@@ -189,7 +193,11 @@ all.equal(nested_gmean(rel, list(s1, s2)), gmean(rel, v2))
 
 all.equal(
   v2,
-  transmute_weights(rel, transmute_weights2(rel, list(s1, s2), to = 2, pivot = 1), order = 2)
+  transmute_weights(
+    rel,
+    transmute_weights2(rel, list(s1, s2), to = 2, pivot = 1),
+    order = 2
+  )
 )
 ```
 

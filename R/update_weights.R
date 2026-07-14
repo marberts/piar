@@ -8,7 +8,8 @@
 #' Manual for chaining the Young index, and gives a way to chain
 #' generalized-mean price indexes over time. It returns a value such that
 #'
-#' \preformatted{gmean(x * y, w) == gmean(x, w) * gmean(y, update_weights(x, w))}
+#' \preformatted{gmean(x * y, w) ==
+#'     gmean(x, w) * gmean(y, update_weights(x, w))}
 #'
 #' Factoring weights returns a value that is the same length as `x`,
 #' so any missing values in `x` or `weights` will return `NA`.
