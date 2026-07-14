@@ -7,21 +7,23 @@
 back_period(period, product = NULL, match_first = TRUE, offset = 1L)
 }
 \arguments{
-\item{period}{A factor, or something that can be coerced into one, that
+\item{period}{\verb{[factor]} A factor, or something that can be coerced into one,
+that
 gives the time period for each transaction. The ordering of time periods
 follows the levels of \code{period} to agree with
 \code{\link[=cut.Date]{cut()}}.}
 
-\item{product}{A factor, or something that can be coerced into one, that
+\item{product}{\verb{[factor]} A factor, or something that can be coerced into
+one, that
 gives the product identifier for each transaction. The default is to
 assume that all transactions are for the same product.}
 
-\item{match_first}{Should products in the first period match with
-themselves (the default)?}
+\item{match_first}{\verb{[logical(1)]} Should products in the first period match
+with themselves (the default)?}
 
-\item{offset}{The number of periods to offset. The default offsets by one
-period (back period). Setting to \code{nlevels(period)} gives the the base
-period.}
+\item{offset}{\verb{[integer(1)]} The number of periods to offset. The default
+offsets by one period (back period). Setting to \code{nlevels(period)} gives
+the the base period.}
 }
 \value{
 A numeric vector of indices giving the position of the the back periods.
@@ -46,21 +48,18 @@ prices <- data.frame(
 with(prices, back_period(period, product))
 
 # Make fixed-base price relatives.
-
 with(
   prices,
   price / price[back_period(period, product, offset = nlevels(period))]
 )
 
 # Change the base period with relevel().
-
 with(
   prices,
   price / price[
     back_period(relevel(period, "2"), product, offset = nlevels(period))
   ]
 )
-
 }
 \seealso{
 \code{\link[=outliers]{outliers()}} for common methods to detect outliers for price relatives.

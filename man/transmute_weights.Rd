@@ -7,19 +7,19 @@
 transmute_weights(x, weights = NULL, order = 0, to = 1, mean = NA)
 }
 \arguments{
-\item{x}{A strictly positive numeric vector.}
+\item{x}{\verb{[numeric > 0]} A strictly positive numeric vector.}
 
-\item{weights}{A strictly positive numeric vector of weights, the same length
-as \code{x}. The default is to equally weight each element of \code{x}.}
+\item{weights}{\verb{[numeric >= 0]} A positive numeric vector of weights, the
+same length as \code{x}. The default is to equally weight each element of \code{x}.}
 
-\item{order}{A finite number giving the order of the generalized mean. The
-default transmutes the weights for a geometric mean.}
+\item{order}{\verb{[numeric(1)]} A finite number giving the order of the
+generalized mean. The default transmutes the weights for a geometric mean.}
 
-\item{to}{A finite number giving the order of the target generalized mean.
-The default computes weights for an arithmetic mean.}
+\item{to}{\verb{[numeric(1)]} A finite number giving the order of the target
+generalized mean. The default computes weights for an arithmetic mean.}
 
-\item{mean}{A finite number giving the generalized mean of \code{x} and \code{weights},
-if known. The default computes this values.}
+\item{mean}{\verb{[numeric(1)]} A finite number giving the generalized mean of
+\code{x} and \code{weights}, if known. The default computes this values.}
 }
 \value{
 A numeric vector, the same length as \code{x}, that sums to 1.

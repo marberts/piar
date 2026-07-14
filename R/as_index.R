@@ -26,12 +26,16 @@
 #' fixed-base index then it is returned unchanged when
 #' `chainable = FALSE` and unchain otherwise.
 #'
-#' @param x An object to coerce into a price index.
-#' @param chainable Are the index values in `x` period-over-period
+#' @export
+#'
+#' @param x `[object]` An object to coerce into a price index.
+#' @param chainable `[logical(1)]` Are the index values in `x`
+#'   period-over-period
 #'   indexes, suitable for a chained calculation (the default)? This should be
 #'   `FALSE` when `x` contains fixed-base (direct) index values.
-#' @param contrib Should the index values in `x` be used to construct
-#'   percent-change contributions? The default does not make contributions.
+#' @param contrib `[logical(1)]` Should the index values in `x` be used to
+#'   construct percent-change contributions? The default does not make
+#'   contributions.
 #' @param ... Further arguments passed to or used by methods.
 #'
 #' @returns
@@ -57,8 +61,6 @@
 #'
 #' all.equal(as_index(as.data.frame(index)), index)
 #' all.equal(as_index(as.matrix(index)), index)
-#'
-#' @export
 as_index <- function(x, ...) {
   UseMethod("as_index")
 }

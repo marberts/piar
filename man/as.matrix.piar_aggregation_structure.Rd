@@ -10,17 +10,17 @@
 \method{as.data.frame}{piar_aggregation_structure}(x, row.names = NULL, optional = FALSE, ...)
 }
 \arguments{
-\item{x}{A price index aggregation structure, as made by
-\code{\link[=aggregation_structure]{aggregation_structure()}}.}
+\item{x}{\verb{[piar_agregation_structure]} A price index aggregation structure,
+as made by \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
 \item{...}{Not currently used for the matrix method. Extra arguments to
 \code{\link[=as.data.frame.list]{as.data.frame.list()}} for the data frame method.}
 
-\item{sparse}{Should the result be a sparse matrix from \pkg{Matrix}? This
-is faster for large aggregation structures. The default returns an ordinary
-dense matrix.}
+\item{sparse}{\verb{[logical(1)]} Should the result be a sparse matrix from
+\pkg{Matrix}? This is faster for large aggregation structures. The default
+returns an ordinary dense matrix.}
 
-\item{row.names}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
+\item{row.names}{\verb{[character | NULL]} See \code{\link[=as.data.frame]{as.data.frame()}}.}
 
 \item{optional}{Not currently used.}
 }
@@ -37,14 +37,13 @@ Coerce a price index aggregation structure into an aggregation matrix, or a
 data frame.
 }
 \examples{
-# A simple aggregation structure
+# A simple aggregation structure.
 #            1
 #      |-----+-----|
 #      11          12
 #  |---+---|       |
 #  111     112     121
 #  (1)     (3)     (4)
-
 aggregation_weights <- data.frame(
   level1 = c("1", "1", "1"),
   level2 = c("11", "11", "12"),
@@ -74,7 +73,6 @@ aggregation_weights$pathString <- do.call(
 )
 plot(data.tree::as.Node(aggregation_weights))
 }
-
 }
 \seealso{
 \code{\link[=as_aggregation_structure]{as_aggregation_structure()}} for coercing into an aggregation structure.

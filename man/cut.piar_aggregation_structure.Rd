@@ -7,36 +7,35 @@
 \method{cut}{piar_aggregation_structure}(x, level, ..., na.rm = FALSE, upper = TRUE)
 }
 \arguments{
-\item{x}{A price index aggregation structure, as made by
-\code{\link[=aggregation_structure]{aggregation_structure()}}.}
+\item{x}{\verb{[piar_aggregation_structure]} A price index aggregation structure,
+as made by \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{level}{A positive integer, or something that can be coerced into one,
-giving the level at which to cut \code{x}.}
+\item{level}{\verb{[integer(1)]} A positive integer, or something that can be
+coerced into one, giving the level at which to cut \code{x}.}
 
 \item{...}{Not currently used.}
 
-\item{na.rm}{Should missing values be removed when aggregating the
-weights? By default, missing values are not removed.}
+\item{na.rm}{\verb{[logical(1)]} Should missing values be removed when aggregating
+the weights? By default, missing values are not removed.}
 
-\item{upper}{Keep only the part of \code{x} above \code{level} (the default);
-otherwise, return the part of \code{x} below \code{level}.}
+\item{upper}{\verb{[logical(1)]} Keep only the part of \code{x} above \code{level}
+(the default); otherwise, return the part of \code{x} below \code{level}.}
 }
 \value{
-A price index aggregation structure.
+A price index aggregation structure of class \verb{[piar_aggregation_structure]}.
 }
 \description{
 Keep only the part of an aggregation structure above or below a certain
 level.
 }
 \examples{
-# A simple aggregation structure
+# A simple aggregation structure.
 #            1
 #      |-----+-----|
 #      11          12
 #  |---+---|       |
 #  111     112     121
 #  (1)     (3)     (4)
-
 aggregation_weights <- data.frame(
   level1 = c("1", "1", "1"),
   level2 = c("11", "11", "12"),
@@ -54,9 +53,7 @@ pias <- aggregation_structure(
 #      |-----+-----|
 #      11          12
 #     (4)         (4)
-
 cut(pias, 2)
-
 }
 \seealso{
 Other aggregation structure methods:

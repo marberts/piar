@@ -20,32 +20,39 @@
 #'
 #' @name mean.piar_index
 #' @aliases mean.piar_index
+#' @family index methods
+#' @export
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param weights A numeric vector of weights for the index values in `x`, or
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param weights `[numeric >= 0]` A numeric vector of weights for the index
+#'   values in `x`, or
 #'   something that can be coerced into one. The
 #'   default is equal weights. It is usually easiest to specify these weights as
 #'   a matrix with a row for each index value in `x` and a column for each
 #'   time period.
-#' @param window A positive integer giving the size of the window used to
+#' @param window `[integer(1) > 0]` A positive integer giving the size of the
+#'   window used to
 #'   average index values across subperiods. The default averages over all
 #'   periods in `x`. Non-integers are truncated towards 0.
-#' @param na.rm Should missing values be removed? By default, missing values
+#' @param na.rm `[logical(1)]` Should missing values be removed? By default,
+#'   missing values
 #'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #'   imputation.
-#' @param r Order of the generalized mean to aggregate index values. 0 for a
+#' @param r `[numeric(1)]` Order of the generalized mean to aggregate index
+#'   values. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #'   a Paasche index). Other values are possible; see
 #'   [gmean()] for details.
-#' @param contrib Aggregate percent-change contributions in `x`? By default
-#'   contributions are aggregated.
+#' @param contrib `[logical(1)]` Aggregate percent-change contributions in `x`?
+#'   By default contributions are aggregated.
 #' @param ... Not currently used.
-#' @param duplicate_contrib The method to deal with duplicate product
-#'   contributions. Either `"make.unique"` to make duplicate product names
-#'   unique with [make.unique()] or `"sum"` to add contributions for the same
-#'   products across subperiods (the default).
+#' @param duplicate_contrib `[character(1)]` The method to deal with duplicate
+#'   product contributions. Either `"make.unique"` to make duplicate product
+#'   names unique with [make.unique()] or `"sum"` to add contributions for the
+#'   same products across subperiods (the default).
 #'
 #' @returns
 #' A price index, averaged over subperiods, that inherits from the same
@@ -58,11 +65,8 @@
 #' @examples
 #' index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE), chainable = FALSE)
 #'
-#' # Turn a monthly index into a quarterly index
+#' # Turn a monthly index into a quarterly index.
 #' mean(index, window = 3)
-#'
-#' @family index methods
-#' @export
 mean.chainable_piar_index <- function(
   x,
   ...,

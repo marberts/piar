@@ -2,13 +2,14 @@
 #'
 #' Extract and replace index values over a window of time periods.
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param start The time period to start the window. The default in the first
-#'   period of `x`.
-#' @param end The time period to end the window. The default is the last period
-#'   of `x`.
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param start `[character(1)]` The time period to start the window.
+#'   The default in the first period of `x`.
+#' @param end `[character(1)]` The time period to end the window. The default
+#'   is the last period of `x`.
 #' @param ... Not currently used.
-#' @param value A numeric vector or price index.
+#' @param value `[numeric > 0 | piar_index]` A numeric vector or price index.
 #'
 #' @returns
 #' `window()` extracts a price index over a window of time periods that

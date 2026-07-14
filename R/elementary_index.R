@@ -47,41 +47,50 @@
 #'
 #' `elemental_index()` is an alias for `elementary_index()`.
 #'
-#' @param x Period-over-period or fixed-base price relatives. Currently there
-#'   are methods for numeric vectors (which can be made with
-#'   [price_relative()]) and data frames.
-#' @param period A factor, or something that can be coerced into one, giving
+#' @export
+#'
+#' @param x `[object]` Period-over-period or fixed-base price
+#'   relatives. Currently there are methods for numeric vectors (which can be
+#'   made with [price_relative()]) and data frames.
+#' @param period `[factor]` A factor, or something that can be coerced into one,
+#'   giving
 #'   the time period associated with each price relative in `x`. The
 #'   ordering of time periods follows of the levels of `period`, to agree
 #'   with [`cut()`][cut.Date]. The default makes an index for one time period.
-#' @param ea A factor, or something that can be coerced into one, giving the
+#' @param ea `[factor]` A factor, or something that can be coerced into one,
+#'   giving the
 #'   elementary aggregate associated with each price relative in `x`. The
 #'   default makes an index for one elementary aggregate.
-#' @param weights A numeric vector of weights for the price relatives in `x`,
+#' @param weights `[numeric >= 0]` A numeric vector of weights for the price
+#'   relatives in `x`,
 #'   or something that can be coerced into one. The default is equal weights.
 #'   This is evaluated in `x` for the data frame method.
-#' @param product A character vector of product names, or something that can
+#' @param product `[character]` A character vector of product names, or
+#'   something that can
 #'   be coerced into one, for each price relative in `x` when making
 #'   percent-change contributions. The default uses the names of `x`, if any;
 #'   otherwise, elements of `x` are given sequential names within each
 #'   elementary aggregate. This is evaluated in `x` for the data frame method.
-#' @param contrib Should percent-change contributions be calculated? The
-#'   default does not calculate contributions.
-#' @param chainable Are the price relatives in `x` period-over-period
+#' @param contrib `[logical(1)]` Should percent-change contributions be
+#'   calculated? The default does not calculate contributions.
+#' @param chainable `[logical(1)]` Are the price relatives in `x`
+#'   period-over-period
 #'   relatives that are suitable for a chained calculation (the default)? This
 #'   should be `FALSE` when `x` contains fixed-base relatives.
-#' @param na.rm Should missing values be removed? By default, missing values
+#' @param na.rm `[logical(1)]` Should missing values be removed? By default,
+#'   missing values
 #'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #'   imputation.
-#' @param r Order of the generalized mean to aggregate price relatives. 0 for a
+#' @param r `[numeric(1)]` Order of the generalized mean to aggregate price
+#'   relatives. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #'   a Paasche index). Other values are possible; see
 #'   [gmean()] for details.
 #' @param ... Further arguments passed to or used by methods.
-#' @param formula A two-sided formula, or something that can be coerced into
-#'   one, with price relatives on the left-hand
+#' @param formula `[formula]` A two-sided formula, or something that can be
+#'   coerced into one, with price relatives on the left-hand
 #'   side and time periods and elementary aggregates (in that order) on the
 #'   right-hand side.
 #'
@@ -129,12 +138,10 @@
 #'   ea = rep(letters[1:2], 4)
 #' )
 #'
-#' # Calculate Jevons elementary indexes
-#'
+#' # Calculate Jevons elementary indexes.
 #' elementary_index(prices, rel ~ period + ea)
 #'
-#' # Same as using lm() or tapply()
-#'
+#' # Same as using lm() or tapply().
 #' exp(coef(lm(log(rel) ~ ea:factor(period) - 1, prices)))
 #'
 #' with(
@@ -143,8 +150,7 @@
 #' )
 #'
 #' # Calculate a CSWD index (same as the Jevons in this example)
-#' # as an arithmetic index by using the appropriate weights
-#'
+#' # as an arithmetic index by using the appropriate weights.
 #' cswd_weights <- with(
 #'   prices,
 #'   lapply(split(rel, list(period, ea)), transmute_weights2)
@@ -156,8 +162,6 @@
 #'   weights = unsplit(cswd_weights, interaction(period, ea)),
 #'   r = 1
 #' )
-#'
-#' @export
 elementary_index <- function(x, ...) {
   UseMethod("elementary_index")
 }

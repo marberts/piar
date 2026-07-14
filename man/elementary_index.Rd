@@ -30,51 +30,58 @@ elementary_index(x, ...)
 elemental_index(x, ...)
 }
 \arguments{
-\item{x}{Period-over-period or fixed-base price relatives. Currently there
-are methods for numeric vectors (which can be made with
-\code{\link[=price_relative]{price_relative()}}) and data frames.}
+\item{x}{\verb{[object]} Period-over-period or fixed-base price
+relatives. Currently there are methods for numeric vectors (which can be
+made with \code{\link[=price_relative]{price_relative()}}) and data frames.}
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{period}{A factor, or something that can be coerced into one, giving
+\item{period}{\verb{[factor]} A factor, or something that can be coerced into one,
+giving
 the time period associated with each price relative in \code{x}. The
 ordering of time periods follows of the levels of \code{period}, to agree
 with \code{\link[=cut.Date]{cut()}}. The default makes an index for one time period.}
 
-\item{ea}{A factor, or something that can be coerced into one, giving the
+\item{ea}{\verb{[factor]} A factor, or something that can be coerced into one,
+giving the
 elementary aggregate associated with each price relative in \code{x}. The
 default makes an index for one elementary aggregate.}
 
-\item{weights}{A numeric vector of weights for the price relatives in \code{x},
+\item{weights}{\verb{[numeric >= 0]} A numeric vector of weights for the price
+relatives in \code{x},
 or something that can be coerced into one. The default is equal weights.
 This is evaluated in \code{x} for the data frame method.}
 
-\item{product}{A character vector of product names, or something that can
+\item{product}{\verb{[character]} A character vector of product names, or
+something that can
 be coerced into one, for each price relative in \code{x} when making
 percent-change contributions. The default uses the names of \code{x}, if any;
 otherwise, elements of \code{x} are given sequential names within each
 elementary aggregate. This is evaluated in \code{x} for the data frame method.}
 
-\item{chainable}{Are the price relatives in \code{x} period-over-period
+\item{chainable}{\verb{[logical(1)]} Are the price relatives in \code{x}
+period-over-period
 relatives that are suitable for a chained calculation (the default)? This
 should be \code{FALSE} when \code{x} contains fixed-base relatives.}
 
-\item{na.rm}{Should missing values be removed? By default, missing values
+\item{na.rm}{\verb{[logical(1)]} Should missing values be removed? By default,
+missing values
 are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
 imputation.}
 
-\item{contrib}{Should percent-change contributions be calculated? The
-default does not calculate contributions.}
+\item{contrib}{\verb{[logical(1)]} Should percent-change contributions be
+calculated? The default does not calculate contributions.}
 
-\item{r}{Order of the generalized mean to aggregate price relatives. 0 for a
+\item{r}{\verb{[numeric(1)]} Order of the generalized mean to aggregate price
+relatives. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[=gmean]{gmean()}} for details.}
 
-\item{formula}{A two-sided formula, or something that can be coerced into
-one, with price relatives on the left-hand
+\item{formula}{\verb{[formula]} A two-sided formula, or something that can be
+coerced into one, with price relatives on the left-hand
 side and time periods and elementary aggregates (in that order) on the
 right-hand side.}
 }
@@ -140,12 +147,10 @@ prices <- data.frame(
   ea = rep(letters[1:2], 4)
 )
 
-# Calculate Jevons elementary indexes
-
+# Calculate Jevons elementary indexes.
 elementary_index(prices, rel ~ period + ea)
 
-# Same as using lm() or tapply()
-
+# Same as using lm() or tapply().
 exp(coef(lm(log(rel) ~ ea:factor(period) - 1, prices)))
 
 with(
@@ -154,8 +159,7 @@ with(
 )
 
 # Calculate a CSWD index (same as the Jevons in this example)
-# as an arithmetic index by using the appropriate weights
-
+# as an arithmetic index by using the appropriate weights.
 cswd_weights <- with(
   prices,
   lapply(split(rel, list(period, ea)), transmute_weights2)
@@ -167,7 +171,6 @@ elementary_index(
   weights = unsplit(cswd_weights, interaction(period, ea)),
   r = 1
 )
-
 }
 \references{
 Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}.

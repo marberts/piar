@@ -2,9 +2,14 @@
 #'
 #' Methods to get and set the time periods for a price index.
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param value A character vector, or something that can be coerced into one,
-#'   giving the replacement time periods for `x`.
+#' @importFrom stats time
+#' @family index methods
+#' @export
+#'
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param value `[character]` A character vector, or something that can be
+#'   coerced into one, giving the replacement time periods for `x`.
 #' @param ... Not currently used.
 #'
 #' @returns
@@ -15,10 +20,6 @@
 #'
 #' The replacement method returns a copy of `x` with the time periods in
 #' `value`. (`set_time()` is an alias that's easier to use with pipes.)
-#'
-#' @importFrom stats time
-#' @family index methods
-#' @export
 time.piar_index <- function(x, ...) {
   chkDots(...)
   x$time

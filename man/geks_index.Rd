@@ -20,39 +20,47 @@ geks_index(
 )
 }
 \arguments{
-\item{price}{A numeric vector of prices, the same length as \code{quantity}.}
+\item{price}{\verb{[numeric > 0]} A numeric vector of prices, the same length
+as \code{quantity}.}
 
-\item{quantity}{A numeric vector of quantities, the same length as \code{price}.}
+\item{quantity}{\verb{[numeric >= 0]} A numeric vector of quantities, the same
+length as \code{price}.}
 
-\item{period}{A factor, or something that can be coerced into one, that
-gives the corresponding time period for each element in \code{price} and
+\item{period}{\verb{[factor]} A factor, or something that can be coerced into one,
+that gives the corresponding time period for each element in \code{price} and
 \code{quantity}. The ordering of time periods follows the levels of \code{period}
 to agree with \code{\link[=cut.Date]{cut()}}.}
 
-\item{product}{A factor, or something that can be coerced into one, that
+\item{product}{\verb{[factor]} A factor, or something that can be coerced into
+one, that
 gives the corresponding product identifier for each element in \code{price} and
 \code{quantity}.}
 
-\item{index_number}{A function giving the index-number formula in the GEKS
+\item{index_number}{\verb{[function]} A function giving the index-number formula
+in the GEKS
 index. Usually a Törnqvist, Fisher (the default), or Walsh index.
 It must have arguments \code{p1}, \code{p0}, \code{q1}, and \code{q0}, and satisfy the
 time-reversal test.}
 
-\item{window}{A positive integer giving the length of the rolling window.
+\item{window}{\verb{[integer(1) > 0]} A positive integer giving the length of the
+rolling window.
 The default is a window that encompasses all periods in \code{period}.
 Non-integers are truncated towards zero.}
 
-\item{n}{A positive integer giving the length of the index series for each
+\item{n}{\verb{[integer(1) > 0]} A positive integer giving the length of the index
+series for each
 window, starting from the end of the window. For example, if there are 13
 periods in \code{window}, setting \code{n = 1} gives the index for period 13. The
 default gives an index for each period in \code{window}. Non-integers are
 truncated towards zero.}
 
-\item{order}{A finite number giving the order of the generalized mean used to
+\item{order}{\verb{[numeric(1)} A finite number giving the order of the
+generalized mean used to
 average price indexes over the rolling window. The default uses a
 geometric mean.}
 
-\item{match_method}{Either \code{"all"} to match all products against each other
+\item{match_method}{\verb{[character(1)]} Either \code{"all"} to match all products
+against each other
 (the default) or \code{"back-price"} to match only back prices. The later can be
 faster when there is lots of product imbalanced.}
 }
@@ -114,8 +122,4 @@ aggregation and the construction of price indexes.
 GEKS index with more options.
 
 \code{\link[=splice_index]{splice_index()}} to splice the rolling-window indexes together.
-
-Other price index functions:
-\code{\link[=splice_index]{splice_index()}}
 }
-\concept{price index functions}

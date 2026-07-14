@@ -9,9 +9,13 @@
 #'
 #' @name merge.piar_index
 #' @aliases merge.piar_index
+#' @family index methods
+#' @export
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param y A price index, or something that can coerced into one. If `x`
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param y `[piar_index]` A price index, or something that can coerced into
+#'   one. If `x`
 #'   is a period-over-period index then `y` is coerced into a chainable
 #'   index; otherwise, `y` is coerced into a direct index.
 #' @param ... Not currently used.
@@ -26,9 +30,6 @@
 #' levels(index2) <- 3:4
 #'
 #' merge(index1, index2)
-#'
-#' @family index methods
-#' @export
 merge.chainable_piar_index <- function(x, y, ...) {
   y <- as_index(y, chainable = TRUE)
   res <- NextMethod("merge")

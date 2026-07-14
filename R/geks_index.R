@@ -3,31 +3,41 @@
 #' Calculate a generalized inter-temporal GEKS price index over a rolling
 #' window.
 #'
-#' @param index_number A function giving the index-number formula in the GEKS
+#' @export
+#'
+#' @param index_number `[function]` A function giving the index-number formula
+#'   in the GEKS
 #'   index. Usually a Törnqvist, Fisher (the default), or Walsh index.
 #'   It must have arguments `p1`, `p0`, `q1`, and `q0`, and satisfy the
 #'   time-reversal test.
-#' @param order A finite number giving the order of the generalized mean used to
+#' @param order `[numeric(1)` A finite number giving the order of the
+#'   generalized mean used to
 #'   average price indexes over the rolling window. The default uses a
 #'   geometric mean.
-#' @param price A numeric vector of prices, the same length as `quantity`.
-#' @param quantity A numeric vector of quantities, the same length as `price`.
-#' @param period A factor, or something that can be coerced into one, that
-#'   gives the corresponding time period for each element in `price` and
+#' @param price `[numeric > 0]` A numeric vector of prices, the same length
+#'   as `quantity`.
+#' @param quantity `[numeric >= 0]` A numeric vector of quantities, the same
+#'   length as `price`.
+#' @param period `[factor]` A factor, or something that can be coerced into one,
+#'   that gives the corresponding time period for each element in `price` and
 #'   `quantity`. The ordering of time periods follows the levels of `period`
 #'   to agree with [`cut()`][cut.Date].
-#' @param product A factor, or something that can be coerced into one, that
+#' @param product `[factor]` A factor, or something that can be coerced into
+#'   one, that
 #'   gives the corresponding product identifier for each element in `price` and
 #'   `quantity`.
-#' @param window A positive integer giving the length of the rolling window.
+#' @param window `[integer(1) > 0]` A positive integer giving the length of the
+#'   rolling window.
 #'   The default is a window that encompasses all periods in `period`.
 #'   Non-integers are truncated towards zero.
-#' @param n A positive integer giving the length of the index series for each
+#' @param n `[integer(1) > 0]` A positive integer giving the length of the index
+#'   series for each
 #'   window, starting from the end of the window. For example, if there are 13
 #'   periods in `window`, setting `n = 1` gives the index for period 13. The
 #'   default gives an index for each period in `window`. Non-integers are
 #'   truncated towards zero.
-#' @param match_method Either `"all"` to match all products against each other
+#' @param match_method `[character(1)]` Either `"all"` to match all products
+#'   against each other
 #'   (the default) or `"back-price"` to match only back prices. The later can be
 #'   faster when there is lots of product imbalanced.
 #'
@@ -85,8 +95,6 @@
 #'   product,
 #'   index_number = \(p1, p0, ...) gmean(p1 / p0, na.rm = TRUE, order = 0)
 #' )
-#' @family price index functions
-#' @export
 geks_index <- function(
   price,
   quantity,

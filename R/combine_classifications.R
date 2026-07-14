@@ -3,18 +3,22 @@
 #' Combine hierarchical classifications by stacking one classification after
 #' another.
 #'
-#' @param ... A collection of lists, one for each classification, each giving
+#' @export
+#'
+#' @param ... `[list]` A collection of lists, one for each classification,
+#'   each giving
 #'   the "digits" that represent each level in the hierarchy, as made
 #'   by [expand_classification()] or [split_classification()].
-#' @param sep A character used to separate the classifications in `...`. The
+#' @param sep `[character(1)]` A character used to separate the classifications
+#'   in `...`. The
 #'   default separates levels across classifications by `"."`.
+#'
 #' @returns
 #' A list with a entry for each level in the combined classification.
 #'
 #' @examples
 #' # Combine an unbalanced industry classification with a balanced
-#' # geographic classification
-#'
+#' # geographic classification.
 #' industry <- c("111", "112", "12")
 #' region <- c("11", "21", "22")
 #'
@@ -22,7 +26,6 @@
 #'   expand_classification(industry, pad = "0"),
 #'   expand_classification(region)
 #' )
-#' @export
 combine_classifications <- function(..., sep = ".") {
   dots <- lapply(list(...), \(x) lapply(x, as.character))
   Reduce(

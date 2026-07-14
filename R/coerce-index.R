@@ -2,12 +2,17 @@
 #'
 #' Turn an index into a data frame or a matrix.
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param row.names,stringsAsFactors See [as.data.frame()].
+#' @family index methods
+#' @export
+#'
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param row.names `[character | NULL]` See [as.data.frame()].
+#' @param stringsAsFactors `[logical(1)]` See [as.data.frame()].
 #' @param optional Not currently used.
 #' @param ... Not currently used.
-#' @param contrib Include percent-change contributions (the default does not
-#'   include them).
+#' @param contrib `[logical(1)]` Include percent-change contributions
+#'   (the default does not include them).
 #'
 #' @returns
 #' `as.data.frame()` returns the index values in `x` as a data frame with three
@@ -27,9 +32,6 @@
 #' as.data.frame(index)
 #'
 #' as.matrix(index)
-#'
-#' @family index methods
-#' @export
 as.data.frame.piar_index <- function(
   x,
   row.names = NULL,

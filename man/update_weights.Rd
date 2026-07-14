@@ -7,13 +7,13 @@
 update_weights(x, weights = NULL, order = 1)
 }
 \arguments{
-\item{x}{A strictly positive numeric vector.}
+\item{x}{\verb{[numeric > 0]} A strictly positive numeric vector.}
 
-\item{weights}{A strictly positive numeric vector of weights, the same length
-as \code{x}. The default is to equally weight each element of \code{x}.}
+\item{weights}{\verb{[numeric >= 0]} A positive numeric vector of weights, the
+same length as \code{x}. The default is to equally weight each element of \code{x}.}
 
-\item{order}{A finite number giving the order of the generalized mean. The
-default calculates an arithmetic mean.}
+\item{order}{\verb{[numeric(1)]} A finite number giving the order of the
+generalized mean. The default calculates an arithmetic mean.}
 }
 \value{
 A numeric vector the same length as \code{x}.
@@ -42,13 +42,11 @@ y <- 4:6
 w <- 3:1
 
 # Factor the arithmetic mean by chaining the calculation.
-
 gmean(x * y, w)
 gmean(x, w) * gmean(y, update_weights(x, w))
 
 # In cases where x and y have the same order, Chebyshev's
 # inequality implies that the chained calculation is too small.
-
 gmean(x * y, w) > gmean(x, w) * gmean(y, w)
 }
 \references{

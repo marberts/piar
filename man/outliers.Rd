@@ -17,21 +17,24 @@ outliers(
 hb_transform(x)
 }
 \arguments{
-\item{x}{A numeric vector, usually of price relatives. These can be
-made with, e.g., \code{\link[=back_period]{back_period()}}.}
+\item{x}{\verb{[numeric > 0]} A numeric vector, usually of price relatives.
+These can be made with, e.g., \code{\link[=back_period]{back_period()}}.}
 
-\item{upper, lower}{A number giving the upper and lower cutoffs for
+\item{upper, lower}{\verb{[numeric(1) > 0]} A number giving the upper and lower
+cutoffs for
 each element of \code{x}. By default the lower cutoff is the same as the upper
 cutoff}
 
-\item{method}{The outlier detection method, one \code{"quartile"} (the default),
-\code{"resistant-fences"}, \code{"kimber"}, \code{"robust-z"}, or \code{"tukey"}.}
+\item{method}{\verb{[character(1)]} The outlier detection method, one \code{"quartile"}
+(the default), \code{"resistant-fences"}, \code{"kimber"}, \code{"robust-z"},
+or \code{"tukey"}.}
 
-\item{scale}{A number between 0 and 1 giving the scale factor for the
+\item{scale}{\verb{[0 <= numeric(1) <= 1]} A number between 0 and 1 giving the
+scale factor for the
 median to establish the minimum dispersion between quartiles for each
 element of \code{x}. The default does not set a minimum dispersion.}
 
-\item{quantile_type}{See \code{\link[=quantile]{quantile()}}.}
+\item{quantile_type}{\verb{[integer(1)]} See \code{\link[=quantile]{quantile()}}.}
 }
 \value{
 A logical vector, the same length as \code{x}, that is \code{TRUE} if the
@@ -88,7 +91,6 @@ outliers(x, upper = 2.5, method = "quartile")
 
 # Always identifies fewer outliers than above.
 outliers(x, upper = 2.5, method = "resistant-fences")
-
 }
 \references{
 Hutton, H. (2008). Dynamic outlier detection in price index surveys.

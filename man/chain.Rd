@@ -31,15 +31,18 @@ rebase(x, ...)
 \method{rebase}{direct_piar_index}(x, ..., base = NULL)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{link}{A numeric vector, or something that can coerced into one, of
+\item{link}{\verb{[numeric > 0]} A numeric vector, or something that can coerced
+into one, of
 link values for each level in \code{x}. The default is equivalent to a vector
 of 1s so that no linking is done.}
 
-\item{base}{A numeric vector, or something that can coerced into one, of
+\item{base}{\verb{[numeric > 0 | character(1)]} A numeric vector, or something
+that can coerced into one, of
 base-period index values for each level in \code{x}. The default is a equivalent
 to a vector
 of 1s so that the base period remains the same. If \code{base} is a length-one
@@ -84,20 +87,16 @@ an index as it's not usually possible to update them correctly.
 \examples{
 index <- as_index(matrix(1:9, 3))
 
-# Make period 0 the fixed base period
-
+# Make period 0 the fixed base period.
 chain(index)
 
-# Chaining and unchaining reverse each other
-
+# Chaining and unchaining reverse each other.
 all.equal(index, unchain(chain(index)))
 
 # Change the base period to period 2 (note the
-# loss of information for period 0)
-
+# loss of information for period 0).
 index <- chain(index)
 rebase(index, base = index[, 2])
-
 }
 \seealso{
 Other index methods:

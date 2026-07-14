@@ -57,35 +57,42 @@
 #'
 #' @name aggregate.piar_index
 #' @aliases aggregate.piar_index
+#' @importFrom stats aggregate
+#' @family index methods
+#' @export
 #'
-#' @param x A price index, usually made by [elementary_index()].
-#' @param pias A price index aggregation structure or something that can be
-#'   coerced into one. This can be made with [aggregation_structure()].
-#' @param pias2 An optional secondary aggregation structure, usually with
-#'   current-period weights, to make a superlative index. See details.
-#' @param na.rm Should missing values be removed? By default, missing values
-#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
-#'   imputation.
-#' @param r Order of the generalized mean to aggregate index values. 0 for a
+#' @param x `[piar_index]` A price index, usually made by [elementary_index()].
+#' @param pias `[piar_aggregation_structure]` A price index
+#'   aggregation structure or something that can be coerced into one. This can
+#'   be made with [aggregation_structure()].
+#' @param pias2 `[piar_aggregation_structure]` An optional secondary
+#'   aggregation structure, usually with current-period weights, to make a
+#'   superlative index. See details.
+#' @param na.rm `[logical(1)]` Should missing values be removed? By default,
+#'   missing values are not removed. Setting `na.rm = TRUE` is equivalent to
+#'   overall mean imputation.
+#' @param r `[numeric(1)]` Order of the generalized mean to aggregate index
+#'   values. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
 #'   a Paasche index). Other values are possible; see
 #'   [gmean()] for details. If `pias2` is given then the
 #'   index is aggregated with a quadratic mean of order `2*r`.
-#' @param contrib Aggregate percent-change contributions in `x`? By default
-#'   contributions are aggregated.
-#' @param include_ea Should indexes for the elementary aggregates be included
-#'   along with the aggregated indexes? By default, all index values are
-#'   returned.
+#' @param contrib `[logical(1)]` Aggregate percent-change contributions in `x`?
+#'   By default contributions are aggregated.
+#' @param include_ea `[logical(1)]` Should indexes for the elementary aggregates
+#'   be included along with the aggregated indexes? By default, all index values
+#'   are returned.
 #' @param ... Not currently used.
-#' @param duplicate_contrib The method to deal with duplicate product
-#'   contributions. Either `"make.unique"` to treat duplicate
+#' @param duplicate_contrib `[character(1)]` The method to deal with duplicate
+#'   product contributions. Either `"make.unique"` to treat duplicate
 #'   products as distinct products and make their names unique
 #'   with [make.unique()] or `"sum"` to add contributions for each product
 #'   (the default).
-#' @param impute_rules (Experimental) A function that applies imputation
-#'   rules to the elementary indexes in each time period prior to aggregation.
+#' @param impute_rules `[function]` (Experimental) A function that applies
+#'   imputation rules to the elementary indexes in each time period prior to
+#'   aggregation.
 #'   It takes two arguments, the elementary indexes for a given time period and
 #'   the (price updated) aggregation structure, and must return back the
 #'   elementary indexes.
@@ -121,28 +128,20 @@
 #'   ea = rep(letters[1:2], 4)
 #' )
 #'
-#' # A two-level aggregation structure
-#'
+#' # A two-level aggregation structure.
 #' pias <- aggregation_structure(
 #'   list(c("top", "top", "top"), c("a", "b", "c")),
 #'   weights = 1:3
 #' )
 #'
-#' # Calculate Jevons elementary indexes
-#'
+#' # Calculate Jevons elementary indexes.
 #' (elementary <- elementary_index(prices, rel ~ period + ea))
 #'
-#' # Aggregate (note the imputation for elementary index 'c')
-#'
+#' # Aggregate (note the imputation for elementary index 'c').
 #' (index <- aggregate(elementary, pias, na.rm = TRUE))
 #'
-#' # Aggregation can equivalently be done as matrix multiplication
-#'
+#' # Aggregation can equivalently be done as matrix multiplication.
 #' as.matrix(pias) %*% as.matrix(chain(index[letters[1:3]]))
-#'
-#' @importFrom stats aggregate
-#' @family index methods
-#' @export
 aggregate.chainable_piar_index <- function(
   x,
   pias,

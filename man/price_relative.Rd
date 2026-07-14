@@ -13,21 +13,22 @@ price_relative(x, ...)
 \method{price_relative}{data.frame}(x, formula, ...)
 }
 \arguments{
-\item{x}{Either a numeric vector (or something that can be coerced into one)
-or data frame of prices.}
+\item{x}{\verb{[object]} Either a numeric vector (or something that can be coerced
+into one) or data frame of prices.}
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{period}{A factor, or something that can be coerced into one, that
-gives the corresponding time period for each element in \code{x}. The
+\item{period}{\verb{[factor]} A factor, or something that can be coerced into one,
+that gives the corresponding time period for each element in \code{x}. The
 ordering of time periods follows the levels of \code{period} to agree with
 \code{\link[=cut.Date]{cut()}}.}
 
-\item{product}{A factor, or something that can be coerced into one, that
+\item{product}{\verb{[factor]} A factor, or something that can be coerced into
+one, that
 gives the corresponding product identifier for each element in \code{x}.}
 
-\item{formula}{A two-sided formula, or something that can be coerced into
-one, with prices on the left-hand
+\item{formula}{\verb{[formula]} A two-sided formula, or something that can be
+coerced into one, with prices on the left-hand
 side and time periods and products (in that order) on the
 right-hand side.}
 }
@@ -44,7 +45,6 @@ price_relative(
   period = rep(1:2, each = 3),
   product = rep(letters[1:3], 2)
 )
-
 }
 \seealso{
 \code{\link[=back_period]{back_period()}} to get only the back price or base price.

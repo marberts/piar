@@ -16,13 +16,16 @@
 #' Unless all values are `NA`, however, the result will still satisfy
 #' the above identity when `na.rm = TRUE`.
 #'
+#' @family math functions
+#' @export
+#'
 #' @inheritParams gmean
-#' @param order A finite number giving the order of the generalized mean. The
-#'   default transmutes the weights for a geometric mean.
-#' @param to A finite number giving the order of the target generalized mean.
-#'   The default computes weights for an arithmetic mean.
-#' @param mean A finite number giving the generalized mean of `x` and `weights`,
-#'   if known. The default computes this values.
+#' @param order `[numeric(1)]` A finite number giving the order of the
+#'   generalized mean. The default transmutes the weights for a geometric mean.
+#' @param to `[numeric(1)]` A finite number giving the order of the target
+#'   generalized mean. The default computes weights for an arithmetic mean.
+#' @param mean `[numeric(1)]` A finite number giving the generalized mean of
+#'   `x` and `weights`, if known. The default computes this values.
 #'
 #' @returns
 #' A numeric vector, the same length as `x`, that sums to 1.
@@ -38,8 +41,6 @@
 #' # Calculate the geometric mean as an arithmetic mean.
 #' gmean(x, order = 0)
 #' gmean(x, transmute_weights(x, order = 0, to = 1), order = 1)
-#' @family math functions
-#' @export
 transmute_weights <- function(x, weights = NULL, order = 0, to = 1, mean = NA) {
   if (not_finite_scalar(order)) {
     stop("`order` must be a finite number")

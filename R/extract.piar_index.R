@@ -20,11 +20,15 @@
 #' corresponding percent-change contributions (if any). When replacing with a
 #' matrix, `value` can be a list of index objects.
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param i,j Indices for the levels and time periods of a price index. See
-#'   details.
-#' @param value A numeric vector, price index, or list of price indexes.
-#'   See details.
+#' @family index methods
+#' @export
+#'
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param i,j `[integer | logical | character | matrix]` Indices for the levels
+#'   and time periods of a price index. See details.
+#' @param value `[numeric > 0 | piar_index | list]` A numeric vector,
+#'   price index, or list of price indexes. See details.
 #' @param ... Not currently used.
 #'
 #' @returns
@@ -40,9 +44,6 @@
 #' index[1, ] <- 1 # can be useful for doing specific imputations
 #'
 #' index
-#'
-#' @family index methods
-#' @export
 `[.piar_index` <- function(x, i, j, ...) {
   chkDots(...)
   if (!missing(i) && is.matrix(i)) {

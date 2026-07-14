@@ -15,23 +15,26 @@ transmute_weights2(
 )
 }
 \arguments{
-\item{x}{A strictly positive numeric vector.}
+\item{x}{\verb{[numeric > 0]} A strictly positive numeric vector.}
 
-\item{weights}{A list of strictly positive numeric vector of weights, each
+\item{weights}{\verb{[list]} A list of strictly positive numeric vector of
+weights, each
 the same length as \code{x}, for both of the inner generalized means. \code{NULL}
 elements of \code{weights} equally weight each element of \code{x}. The default
 uses equal weights for both inner generalized mean.}
 
-\item{order}{A finite numeric vector giving the order of each of the inner
+\item{order}{\verb{[numeric(2)]} A finite numeric vector giving the order of each
+of the inner
 generalized means. The default computes an arithmetic mean and a harmonic
 mean.}
 
-\item{outer_weights}{A strictly positive numeric vector weights for each of
+\item{outer_weights}{\verb{[numeric(2)]} A strictly positive numeric vector
+weights for each of
 the inner generalized means as used in the outer generalized mean. The
 default weights each inner generalized mean equally.}
 
-\item{outer_order}{A finite number giving the order of the outer generalized
-mean. The default uses a geometric mean.}
+\item{outer_order}{\verb{[numeric(1)]} A finite number giving the order of the
+outer generalized mean. The default uses a geometric mean.}
 
 \item{to}{A finite number giving the order of the target generalized mean for
 the transmuted weights. The default constructs weights for an arithmetic

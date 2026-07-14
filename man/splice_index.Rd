@@ -7,18 +7,19 @@
 splice_index(x, periods = NULL, initial = NULL, published = FALSE)
 }
 \arguments{
-\item{x}{A list of equal-length numeric vectors giving the period-over-period
-indexes for each window.}
+\item{x}{\verb{[list]} A list of equal-length numeric vectors giving the
+period-over-period indexes for each window.}
 
-\item{periods}{An integer vector giving the splice points for each window.
-The default splices on each point in the window.}
+\item{periods}{\verb{[integer]} An integer vector giving the splice points for
+each window. The default splices on each point in the window.}
 
-\item{initial}{A numeric vector giving an initial period-over-period index
+\item{initial}{\verb{[numeric]} A numeric vector giving an initial
+period-over-period index
 series onto which the elements of \code{x} are spliced. The default uses the
 first element of \code{x}.}
 
-\item{published}{Should the splice be done against the published series? The
-default splices using the recalculated index series.}
+\item{published}{\verb{[logical(1)]} Should the splice be done against the
+published series? The default splices using the recalculated index series.}
 }
 \value{
 A numeric vector giving the spliced (fixed-base) index series.
@@ -53,9 +54,5 @@ presented at the 16th Meeting of the Ottawa Group on Price Indices,
 
 Krsinich, F. (2016). The FEWS index: Fixed effects with a window splice.
 \emph{Journal of Official Statistics}, 32(2), 375-404.
-}
-\seealso{
-Other price index functions:
-\code{\link[=geks_index]{geks_index()}}
 }
 \concept{price index functions}

@@ -32,40 +32,48 @@
 #' a numeric vector then these two prices are necessarily the same.
 #'
 #' @name impute_prices
-#' @param x Either a numeric vector (or something that can be coerced into one),
+#' @export
+#'
+#' @param x `[object]` Either a numeric vector (or something that can be
+#'   coerced into one),
 #'   a data frame of prices, or a two-column matrix of current prices
 #'   and back prices (in that order).
-#' @param period A factor, or something that can be coerced into one, giving
+#' @param period `[factor]` A factor, or something that can be coerced into one,
+#'   giving
 #'   the time period associated with each price in `x`. The ordering of time
 #'   periods follows of the levels of `period`, to agree with
 #'   [`cut()`][cut.Date].
-#' @param product A factor, or something that can be coerced into one, giving
-#'   the product associated with each price in `x`.
-#' @param ea A factor, or something that can be coerced into one, giving the
+#' @param product `[factor]` A factor, or something that can be coerced into
+#'   one, giving the product associated with each price in `x`.
+#' @param ea `[factor]` A factor, or something that can be coerced into one,
+#'   giving the
 #'   elementary aggregate associated with each price in `x`. This is evaluated
 #'   in `x` for the data frame method. The default pools all data into one
 #'   elementary aggregate.
-#' @param pias A price index aggregation structure, or something that can be
+#' @param pias `[piar_aggregation_structure]` A price index aggregation
+#'   structure, or something that can be
 #'   coerced into one, as made with [aggregation_structure()]. The default
 #'   imputes from elementary indexes only (i.e., not recursively).
-#' @param weights A numeric vector of weights for the prices in `x` (i.e.,
+#' @param weights `[numeric >= 0]` A numeric vector of weights for the prices
+#'   in `x` (i.e.,
 #'   product weights), or something that can be coerced into one. The default is
 #'   to give each price equal weight. This is evaluated in `x` for the data
 #'   frame method.
-#' @param r A pair of numeric values. The first gives the order of the
-#'   generalized-mean price index used to calculate the
+#' @param r `[numeric(1)]` A pair of numeric values. The first gives the order
+#'   of the generalized-mean price index used to calculate the
 #'   elementary price indexes, defaulting to a geometric index. The second
 #'   gives the order of the generalized-mean price index used to aggregate the
 #'   elementary price indexes, defaulting to an arithmetic index. Other values
 #'   are possible;
 #'   see [gmean()] for details.
-#' @param formula A two-sided formula, or something that can be coerced into
-#'   one, with prices on the left-hand
+#' @param formula `[formula]` A two-sided formula, or something that can be
+#'   coerced into one, with prices on the left-hand
 #'   side and time periods and products on the right-hand side (in that order).
-#' @param method Name of the imputation method, one of `"overall-mean"`,
-#'   `"carry-forward"`, or `"carry-backward"`.
+#' @param method `[character(1)]` Name of the imputation method, one
+#'   of `"overall-mean"`, `"carry-forward"`, or `"carry-backward"`.
 #' @param ... Further arguments passed to or used by methods.
-#' @param impute_rules (Experimental) A function that applies imputation
+#' @param impute_rules `[function]` (Experimental) A function that applies
+#'   imputation
 #'   rules to the elementary indexes in each time period prior to aggregation.
 #'   It takes two arguments, the elementary indexes for a given time period and
 #'   the (price updated) aggregation structure, and must return back the
@@ -113,8 +121,6 @@
 #'   ea = ea,
 #'   method = "overall-mean"
 #' )
-#'
-#' @export
 impute_prices <- function(x, ...) {
   UseMethod("impute_prices")
 }

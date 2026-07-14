@@ -7,16 +7,16 @@
 gmean(x, weights = NULL, order = 1, na.rm = FALSE)
 }
 \arguments{
-\item{x}{A strictly positive numeric vector.}
+\item{x}{\verb{[numeric > 0]} A strictly positive numeric vector.}
 
-\item{weights}{A strictly positive numeric vector of weights, the same length
-as \code{x}. The default is to equally weight each element of \code{x}.}
+\item{weights}{\verb{[numeric >= 0]} A positive numeric vector of weights, the
+same length as \code{x}. The default is to equally weight each element of \code{x}.}
 
-\item{order}{A finite number giving the order of the generalized mean. The
-default calculates an arithmetic mean.}
+\item{order}{\verb{[numeric(1)]} A finite number giving the order of the
+generalized mean. The default calculates an arithmetic mean.}
 
-\item{na.rm}{Should missing values be removed? By default, missing values are
-not removed.}
+\item{na.rm}{\verb{[logical(1)]} Should missing values be removed? By default,
+missing values are not removed.}
 }
 \value{
 A numeric value for the generalized mean.

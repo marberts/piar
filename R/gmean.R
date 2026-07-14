@@ -25,13 +25,16 @@
 #' The weights are scaled to sum to 1 to satisfy the definition of a
 #' generalized mean.
 #'
-#' @param x A strictly positive numeric vector.
-#' @param weights A strictly positive numeric vector of weights, the same length
-#'   as `x`. The default is to equally weight each element of `x`.
-#' @param order A finite number giving the order of the generalized mean. The
-#'   default calculates an arithmetic mean.
-#' @param na.rm Should missing values be removed? By default, missing values are
-#'   not removed.
+#' @family math functions
+#' @export
+#'
+#' @param x `[numeric > 0]` A strictly positive numeric vector.
+#' @param weights `[numeric >= 0]` A positive numeric vector of weights, the
+#'   same length as `x`. The default is to equally weight each element of `x`.
+#' @param order `[numeric(1)]` A finite number giving the order of the
+#'   generalized mean. The default calculates an arithmetic mean.
+#' @param na.rm `[logical(1)]` Should missing values be removed? By default,
+#'   missing values are not removed.
 #'
 #' @returns
 #' A numeric value for the generalized mean.
@@ -61,8 +64,6 @@
 #'
 #' # The Lehmer mean is a generalized mean with specific weights.
 #' gmean(x, w * x)
-#' @family math functions
-#' @export
 gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
   if (not_finite_scalar(order)) {
     stop("`order` must be a finite number")
@@ -81,20 +82,24 @@ gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
 #' Calculate a weighted (outer) generalized mean of two (inner) generalized
 #' means (i.e., crossing means).
 #'
-#' @param x A strictly positive numeric vector.
-#' @param weights A list of strictly positive numeric vector of weights, each
+#' @param x `[numeric > 0]` A strictly positive numeric vector.
+#' @param weights `[list]` A list of strictly positive numeric vector of
+#'   weights, each
 #'   the same length as `x`, for both of the inner generalized means. `NULL`
 #'   elements of `weights` equally weight each element of `x`. The default
 #'   uses equal weights for both inner generalized mean.
-#' @param order A finite numeric vector giving the order of each of the inner
+#' @param order `[numeric(2)]` A finite numeric vector giving the order of each
+#'   of the inner
 #'   generalized means. The default computes an arithmetic mean and a harmonic
 #'   mean.
-#' @param outer_weights A strictly positive numeric vector weights for each of
+#' @param outer_weights `[numeric(2)]` A strictly positive numeric vector
+#'   weights for each of
 #'   the inner generalized means as used in the outer generalized mean. The
 #'   default weights each inner generalized mean equally.
-#' @param outer_order A finite number giving the order of the outer generalized
-#'   mean. The default uses a geometric mean.
-#' @param na.rm Should missing values in `x` and `weights` be removed? By
+#' @param outer_order `[numeric(1)]` A finite number giving the order of the
+#'   outer generalized mean. The default uses a geometric mean.
+#' @param na.rm `[logical(1)]` Should missing values in `x` and `weights` be
+#'   removed? By
 #'   default missing values are not removed. Note that removal of missing values
 #'   is balanced across `x` and both elements of `weights`.
 #'

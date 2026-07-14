@@ -16,6 +16,9 @@
 #' Unless all values are `NA`, however, the result will still satisfy
 #' the above identity when `na.rm = TRUE`.
 #'
+#' @family math functions
+#' @export
+#'
 #' @inheritParams gmean
 #'
 #' @returns
@@ -32,16 +35,12 @@
 #' w <- 3:1
 #'
 #' # Factor the arithmetic mean by chaining the calculation.
-#'
 #' gmean(x * y, w)
 #' gmean(x, w) * gmean(y, update_weights(x, w))
 #'
 #' # In cases where x and y have the same order, Chebyshev's
 #' # inequality implies that the chained calculation is too small.
-#'
 #' gmean(x * y, w) > gmean(x, w) * gmean(y, w)
-#' @family math functions
-#' @export
 update_weights <- function(x, weights = NULL, order = 1) {
   if (not_finite_scalar(order)) {
     stop("`order` must be a finite number")

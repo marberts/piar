@@ -12,6 +12,9 @@
 #'
 #' @name stack.piar_index
 #' @aliases stack.piar_index
+#' @importFrom utils stack
+#' @family index methods
+#' @export
 #'
 #' @inheritParams merge.piar_index
 #'
@@ -33,16 +36,11 @@
 #'
 #' stack(index1, index2)
 #'
-#' # Unstack does the reverse
-#'
+#' # Unstack does the reverse.
 #' all.equal(
 #'   c(unstack(index1), unstack(index2)),
 #'   unstack(stack(index1, index2))
 #' )
-#'
-#' @family index methods
-#' @importFrom utils stack
-#' @export
 stack.chainable_piar_index <- function(x, y, ...) {
   y <- as_index(y, chainable = TRUE)
   res <- NextMethod("stack")

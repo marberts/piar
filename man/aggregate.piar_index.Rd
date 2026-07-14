@@ -33,24 +33,27 @@
 )
 }
 \arguments{
-\item{x}{A price index, usually made by \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, usually made by \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{pias}{A price index aggregation structure or something that can be
-coerced into one. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
+\item{pias}{\verb{[piar_aggregation_structure]} A price index
+aggregation structure or something that can be coerced into one. This can
+be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
 \item{...}{Not currently used.}
 
-\item{pias2}{An optional secondary aggregation structure, usually with
-current-period weights, to make a superlative index. See details.}
+\item{pias2}{\verb{[piar_aggregation_structure]} An optional secondary
+aggregation structure, usually with current-period weights, to make a
+superlative index. See details.}
 
-\item{na.rm}{Should missing values be removed? By default, missing values
-are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
-imputation.}
+\item{na.rm}{\verb{[logical(1)]} Should missing values be removed? By default,
+missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to
+overall mean imputation.}
 
-\item{contrib}{Aggregate percent-change contributions in \code{x}? By default
-contributions are aggregated.}
+\item{contrib}{\verb{[logical(1)]} Aggregate percent-change contributions in \code{x}?
+By default contributions are aggregated.}
 
-\item{r}{Order of the generalized mean to aggregate index values. 0 for a
+\item{r}{\verb{[numeric(1)]} Order of the generalized mean to aggregate index
+values. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
@@ -58,18 +61,19 @@ a Paasche index). Other values are possible; see
 \code{\link[=gmean]{gmean()}} for details. If \code{pias2} is given then the
 index is aggregated with a quadratic mean of order \code{2*r}.}
 
-\item{include_ea}{Should indexes for the elementary aggregates be included
-along with the aggregated indexes? By default, all index values are
-returned.}
+\item{include_ea}{\verb{[logical(1)]} Should indexes for the elementary aggregates
+be included along with the aggregated indexes? By default, all index values
+are returned.}
 
-\item{duplicate_contrib}{The method to deal with duplicate product
-contributions. Either \code{"make.unique"} to treat duplicate
+\item{duplicate_contrib}{\verb{[character(1)]} The method to deal with duplicate
+product contributions. Either \code{"make.unique"} to treat duplicate
 products as distinct products and make their names unique
 with \code{\link[=make.unique]{make.unique()}} or \code{"sum"} to add contributions for each product
 (the default).}
 
-\item{impute_rules}{(Experimental) A function that applies imputation
-rules to the elementary indexes in each time period prior to aggregation.
+\item{impute_rules}{\verb{[function]} (Experimental) A function that applies
+imputation rules to the elementary indexes in each time period prior to
+aggregation.
 It takes two arguments, the elementary indexes for a given time period and
 the (price updated) aggregation structure, and must return back the
 elementary indexes.}
@@ -150,25 +154,20 @@ prices <- data.frame(
   ea = rep(letters[1:2], 4)
 )
 
-# A two-level aggregation structure
-
+# A two-level aggregation structure.
 pias <- aggregation_structure(
   list(c("top", "top", "top"), c("a", "b", "c")),
   weights = 1:3
 )
 
-# Calculate Jevons elementary indexes
-
+# Calculate Jevons elementary indexes.
 (elementary <- elementary_index(prices, rel ~ period + ea))
 
-# Aggregate (note the imputation for elementary index 'c')
-
+# Aggregate (note the imputation for elementary index 'c').
 (index <- aggregate(elementary, pias, na.rm = TRUE))
 
-# Aggregation can equivalently be done as matrix multiplication
-
+# Aggregation can equivalently be done as matrix multiplication.
 as.matrix(pias) \%*\% as.matrix(chain(index[letters[1:3]]))
-
 }
 \references{
 Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}.

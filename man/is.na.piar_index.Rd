@@ -10,9 +10,10 @@
 \method{anyNA}{piar_index}(x, recursive = FALSE)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{recursive}{Check if \code{x} also has missing percent-change
+\item{recursive}{\verb{[logical(1)]} Check if \code{x} also has missing percent-change
 contributions. By default only index values are checked for missingness.}
 }
 \value{
@@ -31,11 +32,9 @@ index <- as_index(matrix(c(1, 2, 3, NA, 5, NA), 2))
 anyNA(index)
 is.na(index)
 
-# Carry forward imputation
-
+# Carry forward imputation.
 index[is.na(index)] <- 1
 index
-
 }
 \seealso{
 Other index methods:

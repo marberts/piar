@@ -10,9 +10,10 @@
 \method{tail}{piar_index}(x, n = 6L, ...)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{n}{See \code{\link[=head]{head()}}/\code{\link[=tail]{tail()}}. The default takes the
+\item{n}{\verb{[integer]} See \code{\link[=head]{head()}}/\code{\link[=tail]{tail()}}. The default takes the
 first/last 6 levels of \code{x}.}
 
 \item{...}{Not currently used.}
@@ -29,7 +30,6 @@ index <- as_index(matrix(1:9, 3))
 head(index, 1)
 
 tail(index, 1)
-
 }
 \seealso{
 Other index methods:

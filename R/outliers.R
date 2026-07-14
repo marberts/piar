@@ -43,17 +43,22 @@
 #' \eqn{0 \le u \le 1}{0 <= u <= 1}, so that products with a larger price
 #' get flagged as outliers (par. 5.128).)
 #'
-#' @param x A numeric vector, usually of price relatives. These can be
-#'   made with, e.g., [back_period()].
-#' @param upper,lower A number giving the upper and lower cutoffs for
+#' @export
+#'
+#' @param x `[numeric > 0]` A numeric vector, usually of price relatives.
+#'   These can be made with, e.g., [back_period()].
+#' @param upper,lower `[numeric(1) > 0]` A number giving the upper and lower
+#'   cutoffs for
 #'   each element of `x`. By default the lower cutoff is the same as the upper
 #'   cutoff
-#' @param method The outlier detection method, one `"quartile"` (the default),
-#'   `"resistant-fences"`, `"kimber"`, `"robust-z"`, or `"tukey"`.
-#' @param scale A number between 0 and 1 giving the scale factor for the
+#' @param method `[character(1)]` The outlier detection method, one `"quartile"`
+#'   (the default), `"resistant-fences"`, `"kimber"`, `"robust-z"`,
+#'   or `"tukey"`.
+#' @param scale `[0 <= numeric(1) <= 1]` A number between 0 and 1 giving the
+#'   scale factor for the
 #'   median to establish the minimum dispersion between quartiles for each
 #'   element of `x`. The default does not set a minimum dispersion.
-#' @param quantile_type See [quantile()].
+#' @param quantile_type `[integer(1)]` See [quantile()].
 #'
 #' @returns
 #' A logical vector, the same length as `x`, that is `TRUE` if the
@@ -87,8 +92,6 @@
 #'
 #' # Always identifies fewer outliers than above.
 #' outliers(x, upper = 2.5, method = "resistant-fences")
-#'
-#' @export
 outliers <- function(
   x,
   upper,

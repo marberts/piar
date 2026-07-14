@@ -17,9 +17,11 @@
 \method{unstack}{direct_piar_index}(x, ...)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{y}{A price index, or something that can coerced into one. If \code{x}
+\item{y}{\verb{[piar_index]} A price index, or something that can coerced into
+one. If \code{x}
 is a period-over-period index then \code{y} is coerced into a chainable
 index; otherwise, \code{y} is coerced into a direct index.}
 
@@ -53,13 +55,11 @@ time(index2) <- 4:6
 
 stack(index1, index2)
 
-# Unstack does the reverse
-
+# Unstack does the reverse.
 all.equal(
   c(unstack(index1), unstack(index2)),
   unstack(stack(index1, index2))
 )
-
 }
 \seealso{
 Other index methods:

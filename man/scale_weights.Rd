@@ -7,7 +7,8 @@
 scale_weights(x)
 }
 \arguments{
-\item{x}{A positive numeric vector with at least one non-zero element.}
+\item{x}{\verb{[numeric >= 0]} A positive numeric vector with at least one
+non-zero element.}
 }
 \value{
 A numeric vector that sums to 1. If there are \code{NA}s in \code{x} then the result
@@ -20,7 +21,6 @@ Scale a vector of weights so that they sum to 1.
 scale_weights(1:5)
 
 scale_weights(c(1:5, NA))
-
 }
 \seealso{
 Other math functions:

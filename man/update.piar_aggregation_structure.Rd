@@ -7,20 +7,20 @@
 \method{update}{piar_aggregation_structure}(object, index, ..., period = NULL, r = 1)
 }
 \arguments{
-\item{object}{A price index aggregation structure, as made by
-\code{\link[=aggregation_structure]{aggregation_structure()}}.}
+\item{object}{\verb{[piar_aggregation_structure]} A price index aggregation
+structure, as made by \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{index}{A fixed-base (direct) price index, or something that can be
-coerced into one. Usually an aggregate price index as made by
+\item{index}{\verb{[piar_index]} A fixed-base (direct) price index, or something
+that can be coerced into one. Usually an aggregate price index as made by
 \code{\link[=aggregate.piar_index]{aggregate()}}.}
 
 \item{...}{Not currently used.}
 
-\item{period}{The time period used to price update the weights. The default
-uses the last period in \code{index}.}
+\item{period}{\verb{[character(1)]} The time period used to price update the
+weights. The default uses the last period in \code{index}.}
 
-\item{r}{Order of the generalized mean to update the weights. The default is
-1 for an arithmetic index.}
+\item{r}{\verb{[numeric(1)]} Order of the generalized mean to update the weights.
+The default is 1 for an arithmetic index.}
 }
 \value{
 A copy of \code{object} with price-updated weights using the index
@@ -30,14 +30,13 @@ values in \code{index}.
 Price update the weights in a price index aggregation structure.
 }
 \examples{
-# A simple aggregation structure
+# A simple aggregation structure.
 #            1
 #      |-----+-----|
 #      11          12
 #  |---+---|       |
 #  111     112     121
 #  (1)     (3)     (4)
-
 aggregation_weights <- data.frame(
   level1 = c("1", "1", "1"),
   level2 = c("11", "11", "12"),
@@ -54,7 +53,6 @@ index <- as_index(
 weights(pias, ea_only = FALSE)
 
 weights(update(pias, index), ea_only = FALSE)
-
 }
 \seealso{
 \code{\link[=aggregate.piar_index]{aggregate()}} to make an aggregated price index.

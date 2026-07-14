@@ -11,9 +11,11 @@
 \method{merge}{direct_piar_index}(x, y, ...)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{y}{A price index, or something that can coerced into one. If \code{x}
+\item{y}{\verb{[piar_index]} A price index, or something that can coerced into
+one. If \code{x}
 is a period-over-period index then \code{y} is coerced into a chainable
 index; otherwise, \code{y} is coerced into a direct index.}
 
@@ -36,7 +38,6 @@ index2 <- index1
 levels(index2) <- 3:4
 
 merge(index1, index2)
-
 }
 \seealso{
 Other index methods:

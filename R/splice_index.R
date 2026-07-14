@@ -4,15 +4,19 @@
 #' index series. Splicing on multiple points combines the results with a
 #' geometric mean.
 #'
-#' @param x A list of equal-length numeric vectors giving the period-over-period
-#'   indexes for each window.
-#' @param periods An integer vector giving the splice points for each window.
-#'   The default splices on each point in the window.
-#' @param initial A numeric vector giving an initial period-over-period index
+#' @family price index functions
+#' @export
+#'
+#' @param x `[list]` A list of equal-length numeric vectors giving the
+#'   period-over-period indexes for each window.
+#' @param periods `[integer]` An integer vector giving the splice points for
+#'   each window. The default splices on each point in the window.
+#' @param initial `[numeric]` A numeric vector giving an initial
+#'   period-over-period index
 #'   series onto which the elements of `x` are spliced. The default uses the
 #'   first element of `x`.
-#' @param published Should the splice be done against the published series? The
-#'   default splices using the recalculated index series.
+#' @param published `[logical(1)]` Should the splice be done against the
+#'   published series? The default splices using the recalculated index series.
 #'
 #' @returns
 #' A numeric vector giving the spliced (fixed-base) index series.
@@ -42,8 +46,6 @@
 #' # Splicing on the published series preserves the within-window
 #' # movement of the index series.
 #' splice_index(x, 1, published = TRUE)
-#' @family price index functions
-#' @export
 splice_index <- function(x, periods = NULL, initial = NULL, published = FALSE) {
   x <- as.list(x)
   if (do.call(different_length, x)) {

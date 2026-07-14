@@ -3,18 +3,22 @@
 #' Offset a vector prices or quantities by computing the position one (or more)
 #' period backwards for each product.
 #'
-#' @param period A factor, or something that can be coerced into one, that
+#' @export
+#'
+#' @param period `[factor]` A factor, or something that can be coerced into one,
+#'   that
 #'   gives the time period for each transaction. The ordering of time periods
 #'   follows the levels of `period` to agree with
 #'   [`cut()`][cut.Date].
-#' @param product A factor, or something that can be coerced into one, that
-#'    gives the product identifier for each transaction. The default is to
-#'    assume that all transactions are for the same product.
-#' @param match_first Should products in the first period match with
-#'   themselves (the default)?
-#' @param offset The number of periods to offset. The default offsets by one
-#'   period (back period). Setting to `nlevels(period)` gives the the base
-#'   period.
+#' @param product `[factor]` A factor, or something that can be coerced into
+#'   one, that
+#'   gives the product identifier for each transaction. The default is to
+#'   assume that all transactions are for the same product.
+#' @param match_first `[logical(1)]` Should products in the first period match
+#'   with themselves (the default)?
+#' @param offset `[integer(1)]` The number of periods to offset. The default
+#'   offsets by one period (back period). Setting to `nlevels(period)` gives
+#'   the the base period.
 #'
 #' @returns
 #' A numeric vector of indices giving the position of the the back periods.
@@ -40,22 +44,18 @@
 #' with(prices, back_period(period, product))
 #'
 #' # Make fixed-base price relatives.
-#'
 #' with(
 #'   prices,
 #'   price / price[back_period(period, product, offset = nlevels(period))]
 #' )
 #'
 #' # Change the base period with relevel().
-#'
 #' with(
 #'   prices,
 #'   price / price[
 #'     back_period(relevel(period, "2"), product, offset = nlevels(period))
 #'   ]
 #' )
-#'
-#' @export
 back_period <- function(
   period,
   product = NULL,

@@ -2,8 +2,12 @@
 #'
 #' Identify missing values in a price index.
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param recursive Check if `x` also has missing percent-change
+#' @family index methods
+#' @export
+#'
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param recursive `[logical(1)]` Check if `x` also has missing percent-change
 #'   contributions. By default only index values are checked for missingness.
 #'
 #' @returns
@@ -19,13 +23,9 @@
 #' anyNA(index)
 #' is.na(index)
 #'
-#' # Carry forward imputation
-#'
+#' # Carry forward imputation.
 #' index[is.na(index)] <- 1
 #' index
-#'
-#' @family index methods
-#' @export
 is.na.piar_index <- function(x) {
   is.na(as.matrix(x))
 }

@@ -9,8 +9,11 @@
 #' each elementary aggregate, a column of labels for each level in the
 #' aggregation structure, and a column of weights for the elementary aggregates.
 #'
-#' @param x An object to coerce into an aggregation structure.
-#' @param weights A numeric vector of aggregation weights for the elementary
+#' @export
+#'
+#' @param x `[object]` An object to coerce into an aggregation structure.
+#' @param weights `[numeric >= 0]` A numeric vector of aggregation weights for
+#'   the elementary
 #'   aggregates. The default is to give each elementary aggregate the same
 #'   weight.
 #' @param ... Further arguments passed to or used by methods.
@@ -32,7 +35,6 @@
 #' #  |---+---|       |
 #' #  111     112     121
 #' #  (1)     (3)     (4)
-#'
 #' aggregation_weights <- data.frame(
 #'   level1 = c("1", "1", "1"),
 #'   level2 = c("11", "11", "12"),
@@ -54,8 +56,6 @@
 #'   pias,
 #'   as_aggregation_structure(as.matrix(aggregation_weights))
 #' )
-#'
-#' @export
 as_aggregation_structure <- function(x, ...) {
   UseMethod("as_aggregation_structure")
 }
