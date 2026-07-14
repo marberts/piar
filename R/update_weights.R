@@ -42,7 +42,7 @@
 #' @family math functions
 #' @export
 update_weights <- function(x, weights = NULL, order = 1) {
-  if (!is.finite(order)) {
+  if (not_finite_scalar(order)) {
     stop("`order` must be a finite number")
   }
   if (!is.null(weights) && length(x) != length(weights)) {

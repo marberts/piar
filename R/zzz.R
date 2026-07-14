@@ -4,5 +4,3 @@ release_questions <- function() {
     "Is inst/CITATION up-to-date?"
   )
 }
-
-gpindex::transmute_weights(0, 1)

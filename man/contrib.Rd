@@ -77,7 +77,9 @@ contrib2DF(index)
 
 # Calculate EA contributions for the chained index
 
-library(gpindex)
+arithmetic_contributions <- function(x, w, r = 1) {
+  (x - 1) * transmute_weights(x, w, r, to = 1)
+}
 
 arithmetic_contributions(
   as.matrix(chain(index))[c("a", "b", "c"), 2],

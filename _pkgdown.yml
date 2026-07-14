@@ -64,6 +64,12 @@ reference:
   - price_relative
   - back_period
   - outliers
+  
+- title: Multilateral indexes
+  desc: Functions to build multilateral elementary indexes
+  contents:
+  - geks_index
+  - splice_index
 
 - title: Aggregation structure
   desc: Functions to make and work with price-index aggregation structures.

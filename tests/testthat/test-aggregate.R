@@ -452,7 +452,7 @@ test_that("a fixed-based index aggregates correctly", {
   prices$pop_rel <- price_relative(prices, price ~ period + product)
   prices$fx_rel <- with(
     prices,
-    price / price[gpindex::base_period(period, product)]
+    price / price[back_period(period, product, offset = 3)]
   )
 
   pias <- aggregation_structure(list(c("1", "1"), c("f1", "f2")), 1:2)
@@ -513,10 +513,13 @@ test_that("partial contributions are correct", {
     1:3
   )
 
+  arithmetic_contributions <- function(x, w, r = 1) {
+    (x - 1) * transmute_weights(x, w, r, to = 1)
+  }
   index <- aggregate(epr, pias)
   expect_equal(
     sum(contrib(index[, 1])),
-    sum(gpindex::arithmetic_contributions(
+    sum(arithmetic_contributions(
       as.numeric(index[letters[1:3], 1]),
       weights(pias, ea_only = TRUE)
     )[1:2])
@@ -525,7 +528,7 @@ test_that("partial contributions are correct", {
   pias2 <- update(pias, index[, 1])
   expect_equal(
     sum(contrib(index[, 2])),
-    sum(gpindex::arithmetic_contributions(
+    sum(arithmetic_contributions(
       as.numeric(index[letters[1:3], 2]),
       weights(pias2, ea_only = TRUE)
     )[1:2])
@@ -778,10 +781,8 @@ test_that("superlative index aggregates correctly", {
   )
 
   # Example from vignette.
-  geometric_weights <- gpindex::transmute_weights(0, 1)
-
   w <- mapply(
-    \(x, y) geometric_weights(c(x, y)),
+    \(x, y) transmute_weights(c(x, y)),
     as.numeric(res1[1]),
     as.numeric(res2[1])
   )
@@ -867,8 +868,8 @@ test_that("impute rules work", {
     as.numeric(res[1]),
     c(
       2.5,
-      gpindex::arithmetic_mean(c(1, 5, 6), c(2.5, 2, 3)),
-      gpindex::arithmetic_mean(7:9, c(2.5, 10, 18))
+      gmean(c(1, 5, 6), c(2.5, 2, 3)),
+      gmean(7:9, c(2.5, 10, 18))
     )
   )
 })

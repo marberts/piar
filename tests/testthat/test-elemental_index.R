@@ -20,11 +20,8 @@ fw <- function(x, w1, w2) {
 }
 
 ms_prices2 <- na.omit(ms_prices)
-
-w <- with(
-  ms_prices2,
-  gpindex::grouped(fw)(rel, w1, w2, group = interaction(period, business))
-)
+f <- interaction(ms_prices2$period, ms_prices2$business)
+w <- unsplit(lapply(split(ms_prices2, f), \(df) fw(df$rel, df$w1, df$w2)), f)
 
 epr3 <- elementary_index(
   ms_prices2,
@@ -76,10 +73,8 @@ test_that("Fisher calculation agrees with manual calculation", {
     v1 + v2
   }
 
-  w <- with(
-    ms_prices2,
-    gpindex::grouped(fw)(rel, w1, w2, group = interaction(period, business))
-  )
+  f <- interaction(ms_prices2$period, ms_prices2$business)
+  w <- unsplit(lapply(split(ms_prices2, f), \(df) fw(df$rel, df$w1, df$w2)), f)
 
   sepr <- elementary_index(ms_prices2, rel ~ period + business, weights = w)
 

@@ -41,10 +41,10 @@
 #' @family math functions
 #' @export
 transmute_weights <- function(x, weights = NULL, order = 0, to = 1, mean = NA) {
-  if (length(order) != 1L || !is.finite(order)) {
+  if (not_finite_scalar(order)) {
     stop("`order` must be a finite number")
   }
-  if (length(to) != 1L || !is.finite(to)) {
+  if (not_finite_scalar(to)) {
     stop("`to` must be a finite number")
   }
   if (!is.null(weights) && length(x) != length(weights)) {
@@ -114,13 +114,13 @@ transmute_weights2 <- function(
   if (different_length(x, weights[[1]], weights[[2]])) {
     stop("`x` and non-NULL components of `weights` must be the same length")
   }
-  if (length(order) != 2L && !all(is.finite(order))) {
+  if (not_finite_pair(order)) {
     stop("`order` must be a pair of finite numbers")
   }
   if (length(weights) != length(order)) {
     stop("`weights` and `order` must be the same length")
   }
-  na_mask <- if (anyNA(x) || anyNA(weights[[1]]) || anyNA(weights[[2]])) {
+  na_mask <- if (anyNA(x) || anyNA(weights, recursive = TRUE)) {
     stats::complete.cases(x, weights[[1]], weights[[2]])
   }
   if (!is.null(na_mask)) {

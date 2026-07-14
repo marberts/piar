@@ -63,11 +63,9 @@ over a 3 quarter rolling window and use a mean splice to make a single
 time series.
 
 ```{r}
-library(gpindex)
-
 geks_elementals <- with(
   scanner_prices,
-  fisher_geks(price, quantity, period, product, window = 3)
+  geks_index(price, quantity, period, product, window = 3)
 ) |>
   splice_index() |>
   t() |>

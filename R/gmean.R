@@ -64,7 +64,7 @@
 #' @family math functions
 #' @export
 gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
-  if (length(order) != 1L || !is.finite(order)) {
+  if (not_finite_scalar(order)) {
     stop("`order` must be a finite number")
   }
   if (!is.null(weights) && length(x) != length(weights)) {
@@ -122,15 +122,13 @@ nested_gmean <- function(
   if (different_length(x, weights[[1]], weights[[2]])) {
     stop("`x` and non-NULL components of `weights` must be the same length")
   }
-  if (length(order) != 2L && !all(is.finite(order))) {
+  if (not_finite_pair(order)) {
     stop("`order` must be a pair of finite numbers")
   }
   if (length(weights) != length(order)) {
     stop("`weights` and `order` must be the same length")
   }
-  na_mask <- if (
-    na.rm && (anyNA(x) || anyNA(weights[[1]]) || anyNA(weights[[2]]))
-  ) {
+  na_mask <- if (na.rm && (anyNA(x) || anyNA(weights, recursive = TRUE))) {
     stats::complete.cases(x, weights[[1]], weights[[2]])
   }
   inner_mean <- c(

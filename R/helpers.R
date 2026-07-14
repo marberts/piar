@@ -37,6 +37,14 @@ same_hierarchy <- function(x, y) {
   identical(x[1:2], x[1:2])
 }
 
+not_finite_scalar <- function(x) {
+  length(x) != 1L || !is.finite(x)
+}
+
+not_finite_pair <- function(x) {
+  length(x) != 2L || !all(is.finite(x))
+}
+
 #---- Replacing contributions ----
 valid_contrib <- function(contrib) {
   if (is.null(names(contrib))) {
@@ -98,9 +106,9 @@ valid_product_names <- function(x, period = NULL) {
 }
 
 #---- Validate vector inputs ----
-different_length <- function(x, ...) {
+different_length <- function(...) {
   res <- lengths(Filter(Negate(is.null), list(...)))
-  any(length(x) != res)
+  any(res != res[1L])
 }
 
 formula_vars <- function(formula, x, n = 2L) {
@@ -198,6 +206,16 @@ index_skeleton <- function(levels, time) {
 
 contrib_skeleton <- function(levels, time) {
   matrix(list(numeric(0L)), length(levels), length(time))
+}
+
+#---- Multilaterals ----
+balance_products <- function(product, period) {
+  ux <- unique(product)
+  product <- split(product, period)
+  if (duplicate_products(product)) {
+    warning("there are duplicated period-product pairs")
+  }
+  lapply(product, \(x) match(ux, x, incomparables = NA))
 }
 
 # Backport Reduce and %||%
