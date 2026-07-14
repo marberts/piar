@@ -6,12 +6,12 @@
 #'
 #' This function generalizes the result in section C.5 of Chapter 9 of the PPI
 #' Manual for chaining the Young index, and gives a way to chain
-#' generalized-mean price indexes over time.
+#' generalized-mean price indexes over time. It returns a value such that
 #'
 #' \preformatted{gmean(x * y, w) == gmean(x, w) * gmean(y, update_weights(x, w))}
 #'
-#' Factoring weights return a value that is the same length as `x`,
-#' so any missing values in `x` or the weights will return `NA`.
+#' Factoring weights returns a value that is the same length as `x`,
+#' so any missing values in `x` or `weights` will return `NA`.
 #' Unless all values are `NA`, however, the result will still satisfy
 #' the above identity when `na.rm = TRUE`.
 #'

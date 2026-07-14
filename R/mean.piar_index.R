@@ -126,25 +126,26 @@ mean_index <- function(
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
     if (any(weights < 0, na.rm = TRUE)) {
-      stop("all elements of 'weights' must be non-negative")
+      stop("all elements of `weights` must be non-negative")
     }
     if (length(weights) != ntime(x) * nlevels(x)) {
-      stop("'weights' must have a value for each index value in 'x'")
+      stop("`weights` must have a value for each index value in 'x'")
     }
     dim(weights) <- c(nlevels(x), ntime(x))
   }
 
+  r <- as.numeric(r)
   window <- as.integer(window %||% ntime(x))
   if (window < 1L) {
-    stop("'window' must be a positive integer")
+    stop("`window` must be a positive integer")
   }
   if (window > ntime(x)) {
-    stop("'x' must have at least 'window' time periods")
+    stop("`x` must have at least `window` time periods")
   }
 
   # Get the starting location for each window.
   if (ntime(x) %% window != 0) {
-    warning("'window' is not a multiple of the number of time periods in 'x'")
+    warning("`window` is not a multiple of the number of time periods in `x`")
   }
   len <- ntime(x) %/% window
   loc <- seq.int(1L, by = window, length.out = len)

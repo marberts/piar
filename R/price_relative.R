@@ -48,7 +48,7 @@ price_relative.default <- function(x, period, product, ...) {
   product <- as.factor(product)
 
   if (different_length(x, period, product)) {
-    stop("'x', 'period', and 'product' must be the same length")
+    stop("`x`, `period`, and `product` must be the same length")
   }
 
   res <- x / x[back_period(period, product)]

@@ -3,10 +3,10 @@
 #' Aggregate elementary price indexes with a price index aggregation structure.
 #'
 #' The `aggregate()` method loops over each time period in `x` and
-#' 1. aggregates the elementary indexes with `gmean()` for each level of `pias`;
+#' 1. aggregates the elementary indexes with [`gmean()`] for each level of `pias`;
 #' 2. aggregates percent-change contributions for each level of
 #' `pias` (if there are any and `contrib = TRUE`);
-#' 3. price updates the weights in `pias` with `update_weights()` (only for
+#' 3. price updates the weights in `pias` with [`update_weights()`] (only for
 #' period-over-period elementary indexes).
 #'
 #' The result is a collection of aggregated period-over-period indexes that
@@ -215,7 +215,7 @@ aggregate_index <- function(
   pias <- as_aggregation_structure(pias)
   r <- as.numeric(r)
   has_contrib <- !is.null(x$contrib) && contrib
-  res <- aggregate_(
+  res <- .aggregate(
     x,
     pias,
     na.rm,
@@ -230,18 +230,18 @@ aggregate_index <- function(
   if (!is.null(pias2)) {
     pias2 <- as_aggregation_structure(pias2)
     if (!same_hierarchy(pias, pias2)) {
-      stop("'pias' and 'pias2' must represent the same aggregation structure")
+      stop("`pias` and `pias2` must represent the same aggregation structure")
     }
     if (
       contrib &&
         any(missing_weights(pias$weights) != missing_weights(pias2$weights))
     ) {
       stop(
-        "any NA or zero weights must appear in both 'pias' and 'pias2' when",
-        " 'contrib = TRUE'"
+        "any NA or zero weights must appear in both `pias` and `pias2` when",
+        " `contrib` is TRUE"
       )
     }
-    res2 <- aggregate_(
+    res2 <- .aggregate(
       x,
       pias2,
       na.rm,
@@ -274,7 +274,7 @@ aggregate_index <- function(
   piar_index(res$index, res$contrib, lev, x$time, chainable = chainable)
 }
 
-aggregate_ <- function(
+.aggregate <- function(
   x,
   pias,
   na.rm,

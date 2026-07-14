@@ -72,10 +72,10 @@ expand_classification <- function(x, width = 1L, pad = NA) {
   }
   width <- as.integer(width)
   if (anyNA(width)) {
-    stop("'width' cannot contain NAs")
+    stop("`width` cannot contain NAs")
   }
   if (any(width <= 0L)) {
-    stop("'width' must be at least 1")
+    stop("`width` must be at least 1")
   }
 
   if (length(width) == 1L) {
@@ -101,14 +101,14 @@ interact_classifications <- function(..., sep = ":") {
     return(list())
   }
   if (any(lengths(dots) == 0L)) {
-    stop("each element in '...' must be a non-empty list")
+    stop("each element in `...` must be a non-empty list")
   }
   len <- unlist(lapply(dots, lengths), use.names = FALSE)
   n <- len[1L]
   atomics <- unlist(lapply(dots, \(x) lapply(x, is.atomic)), use.names = FALSE)
   if (any(len != n) || n == 0L || !all(atomics)) {
     stop(
-      "each element in '...' must contain a list representing an ",
+      "each element in `...` must contain a list representing an ",
       "aggregation structure"
     )
   }

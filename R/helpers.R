@@ -2,7 +2,7 @@
 padded_extract <- function(x, i, pad) {
   pad <- as.character(pad)
   if (length(pad) != 1L) {
-    stop("'pad' must be a length 1 character")
+    stop("`pad` must be a length 1 character")
   }
   res <- x[seq_len(i)]
   res[seq.int(to = i, length.out = max(i - length(x), 0L))] <- pad
@@ -98,20 +98,20 @@ valid_product_names <- function(x, period = NULL) {
 }
 
 #---- Validate vector inputs ----
-different_length <- function(...) {
+different_length <- function(x, ...) {
   res <- lengths(Filter(Negate(is.null), list(...)))
-  any(res != res[1L])
+  any(length(x) != res)
 }
 
 formula_vars <- function(formula, x, n = 2L) {
   formula <- stats::as.formula(formula)
   if (length(formula) != 3L) {
-    stop("'formula' must have a left-hand and right-hand side")
+    stop("`formula` must have a left-hand and right-hand side")
   }
   fterms <- stats::terms(formula, data = x)
   x <- eval(attr(fterms, "variables"), x, environment(formula))
   if (length(x) != n + 1L) {
-    stop(gettextf("right-hand side of 'formula' must have exactly %s terms", n))
+    stop(gettextf("right-hand side of `formula` must have exactly %s terms", n))
   }
   x
 }
@@ -146,8 +146,8 @@ subscript_index_matrix <- function(x, i) {
   if (is.logical(i)) {
     if (nrow(i) != nlevels(x) || ncol(i) != ntime(x)) {
       stop(
-        "'i' must have a row for each level and a column for each ",
-        "time period in 'x'"
+        "`i` must have a row for each level and a column for each ",
+        "time period in `x`"
       )
     }
     if (anyNA(i)) {
@@ -157,7 +157,7 @@ subscript_index_matrix <- function(x, i) {
   }
 
   if (ncol(i) != 2L) {
-    stop("'i' must have exactly two columns")
+    stop("`i` must have exactly two columns")
   }
   if (is.numeric(i) && any(i < 0L, na.rm = TRUE)) {
     stop("cannot subscript an index using a matrix with negative values")

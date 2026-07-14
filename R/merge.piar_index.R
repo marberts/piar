@@ -53,10 +53,10 @@ merge.direct_piar_index <- function(x, y, ...) {
 merge.piar_index <- function(x, y, ...) {
   chkDots(...)
   if (ntime(x) != ntime(y) || any(x$time != y$time)) {
-    stop("'x' and 'y' must be indexes for the same time periods")
+    stop("`x` and `y` must be indexes for the same time periods")
   }
   if (any(x$levels %in% y$levels)) {
-    stop("the same levels cannot appear in both 'x' and 'y'")
+    stop("the same levels cannot appear in both `x` and `y`")
   }
   x$index <- rbind(x$index, y$index)
   if (is.null(x$contrib) && !is.null(y$contrib)) {

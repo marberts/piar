@@ -186,9 +186,10 @@ elementary_index.numeric <- function(
   if (!is.null(weights)) {
     weights <- as.numeric(weights)
     if (any(weights < 0, na.rm = TRUE)) {
-      stop("all elements of 'weights' must be non-negative")
+      stop("all elements of `weights` must be non-negative")
     }
   }
+  r <- as.numeric(r)
   period <- as.factor(period %||% gl(1, length(x)))
   ea <- as.factor(ea %||% gl(1, length(x)))
 
@@ -196,7 +197,7 @@ elementary_index.numeric <- function(
     stop("input vectors must be the same length")
   }
   if (any(x <= 0, na.rm = TRUE)) {
-    stop("all elements of 'x' must be strictly positive")
+    stop("all elements of `x` must be strictly positive")
   }
   ea_by_period <- period:ea
   time <- levels(period)

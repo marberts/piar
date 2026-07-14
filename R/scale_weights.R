@@ -2,7 +2,7 @@
 #'
 #' Scale a vector of weights so that they sum to 1.
 #'
-#' @inheritParams gmean
+#' @param x A positive numeric vector with at least one non-zero element.
 #'
 #' @returns
 #' A numeric vector that sums to 1. If there are `NA`s in `x` then the result

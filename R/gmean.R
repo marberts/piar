@@ -8,9 +8,7 @@
 #' Both `x` and `weights` should be strictly positive
 #' (and finite), especially for the purpose of making a price index. This is not
 #' enforced, but the results may not make sense if the generalized mean is not
-#' defined.
-#'
-#' There are two exceptions to this.
+#' defined. There are two exceptions to this.
 #' 1. The convention by Hardy et al. (1952, p. 13) is used in cases where `x`
 #' has zeros: the generalized mean is 0 whenever the weights are strictly positive
 #' and `order < 0`. The analogous convention holds whenever at least one
@@ -30,7 +28,8 @@
 #' @param x A strictly positive numeric vector.
 #' @param weights A strictly positive numeric vector of weights, the same length
 #'   as `x`. The default is to equally weight each element of `x`.
-#' @param order A finite number giving the order of the generalized mean.
+#' @param order A finite number giving the order of the generalized mean. The
+#'   default calculates an arithmetic mean.
 #' @param na.rm Should missing values be removed? By default, missing values are
 #'   not removed.
 #'
@@ -65,7 +64,7 @@
 #' @family math functions
 #' @export
 gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
-  if (!is.finite(order)) {
+  if (length(order) != 1L || !is.finite(order)) {
     stop("`order` must be a finite number")
   }
   if (!is.null(weights) && length(x) != length(weights)) {
@@ -80,13 +79,13 @@ gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
 #' Nested generalized means
 #'
 #' Calculate a weighted (outer) generalized mean of two (inner) generalized
-#' means.
+#' means (i.e., crossing means).
 #'
 #' @param x A strictly positive numeric vector.
 #' @param weights A list of strictly positive numeric vector of weights, each
-#'   the same length as `x`, for each of the inner generalized means. `NULL`
+#'   the same length as `x`, for both of the inner generalized means. `NULL`
 #'   elements of `weights` equally weight each element of `x`. The default
-#'   uses equal weights for each inner generalized mean.
+#'   uses equal weights for both inner generalized mean.
 #' @param order A finite numeric vector giving the order of each of the inner
 #'   generalized means. The default computes an arithmetic mean and a harmonic
 #'   mean.
@@ -94,7 +93,7 @@ gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
 #'   the inner generalized means as used in the outer generalized mean. The
 #'   default weights each inner generalized mean equally.
 #' @param outer_order A finite number giving the order of the outer generalized
-#'   mean.
+#'   mean. The default uses a geometric mean.
 #' @param na.rm Should missing values in `x` and `weights` be removed? By
 #'   default missing values are not removed. Note that removal of missing values
 #'   is balanced across `x` and both elements of `weights`.
@@ -103,8 +102,13 @@ gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
 #' A numeric value for the nested generalized mean.
 #'
 #' @examples
-#' # example code
+#' x <- 1:3
+#' w1 <- c(0.25, 0.25, 0.5)
+#' w2 <- c(0.3, 0.3, 0.4)
+#' # Calculate the geometric mean of the arithmetic and harmonic means
+#' # to make a Fisher index.
 #'
+#' nested_gmean(x, list(w1, w2))
 #' @family math functions
 #' @export
 nested_gmean <- function(
@@ -120,6 +124,9 @@ nested_gmean <- function(
   }
   if (length(order) != 2L && !all(is.finite(order))) {
     stop("`order` must be a pair of finite numbers")
+  }
+  if (length(weights) != length(order)) {
+    stop("`weights` and `order` must be the same length")
   }
   na_mask <- if (
     na.rm && (anyNA(x) || anyNA(weights[[1]]) || anyNA(weights[[2]]))

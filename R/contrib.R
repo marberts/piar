@@ -71,7 +71,7 @@ contrib <- function(x, level = NULL, period = NULL, pad = 0) {
   }
   pad <- as.numeric(pad)
   if (length(pad) != 1L) {
-    stop("'pad' must be a length 1 numeric value")
+    stop("`pad` must be a length 1 numeric value")
   }
   if (is.null(x$contrib)) {
     return(

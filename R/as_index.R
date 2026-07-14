@@ -93,7 +93,7 @@ as_index.matrix <- function(x, ..., chainable = TRUE, contrib = FALSE) {
 as_index.data.frame <- function(x, ..., contrib = FALSE) {
   if (length(x) < 3L) {
     stop(
-      "'x' must have a column of time periods, index levels, and index values"
+      "`x` must have a column of time periods, index levels, and index values"
     )
   }
   x[1:2] <- lapply(x[1:2], as.factor)

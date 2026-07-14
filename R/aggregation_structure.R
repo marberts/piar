@@ -93,7 +93,7 @@ aggregation_structure <- function(x, weights = NULL) {
     stop("cannot make an aggregation structure with no elementary aggregates")
   }
   if (anyNA(x, recursive = TRUE)) {
-    stop("'x' cannot contain NAs")
+    stop("`x` cannot contain NAs")
   }
 
   if (is.null(weights)) {
@@ -101,7 +101,7 @@ aggregation_structure <- function(x, weights = NULL) {
   } else {
     weights <- as.numeric(weights)
     if (any(missing_weights(weights))) {
-      warning("some elements of 'weights' are NA or zero")
+      warning("some elements of `weights` are NA or zero")
     }
   }
 
@@ -112,14 +112,14 @@ aggregation_structure <- function(x, weights = NULL) {
   }
   if (anyDuplicated(ea)) {
     stop(
-      "there are duplicated elementary aggregates; the last vector in 'x' ",
+      "there are duplicated elementary aggregates; the last vector in `x` ",
       "should not have duplicates"
     )
   }
   if (anyDuplicated(unlist(lapply(x, unique), use.names = FALSE))) {
     stop(
       "there are duplicated nodes in the aggregation structure; the same ",
-      "value cannot appear across multiple levels of 'x'"
+      "value cannot appear across multiple levels of `x`"
     )
   }
   upper <- x[-len] # nodes above eas

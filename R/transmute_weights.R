@@ -1,11 +1,26 @@
 #' Transmute weights for a generalized mean
 #'
 #' Transmute weight to turn a generalized mean of a given order into a
-#' generalized mean of order `to`. Useful for calculating additive and
+#' generalized mean of any other order. Useful for calculating additive and
 #' multiplicative decompositions for generalized-mean indexes.
+#' See `vignette("decomposing-indexes")` for more details.
+#'
+#' This function generalizes the additive and multiplicative decompositions
+#' for arithmetic and geometric indexes by Balk (2008, Chapter 4). It returns
+#' a value such that
+#'
+#' \preformatted{gmean(x, w, r) == gmean(x, transmute_weights(x, w, r, s), s)}
+#'
+#' Transmuting weights returns a value that is the same length as `x`,
+#' so any missing values in `x` or `weights` will return `NA`.
+#' Unless all values are `NA`, however, the result will still satisfy
+#' the above identity when `na.rm = TRUE`.
 #'
 #' @inheritParams gmean
+#' @param order A finite number giving the order of the generalized mean. The
+#'   default transmutes the weights for a geometric mean.
 #' @param to A finite number giving the order of the target generalized mean.
+#'   The default computes weights for an arithmetic mean.
 #' @param mean A finite number giving the generalized mean of `x` and `weights`,
 #'   if known. The default computes this values.
 #'
@@ -13,7 +28,8 @@
 #' A numeric vector, the same length as `x`, that sums to 1.
 #'
 #' @references
-#' See `vignette("decomposing-indexes")` for more details.
+#' Balk, B. M. (2008). *Price and Quantity Index Numbers*.
+#' Cambridge University Press.
 #'
 #' @examples
 #' x <- 1:3
@@ -25,10 +41,10 @@
 #' @family math functions
 #' @export
 transmute_weights <- function(x, weights = NULL, order = 0, to = 1, mean = NA) {
-  if (!is.finite(order)) {
+  if (length(order) != 1L || !is.finite(order)) {
     stop("`order` must be a finite number")
   }
-  if (!is.finite(to)) {
+  if (length(to) != 1L || !is.finite(to)) {
     stop("`to` must be a finite number")
   }
   if (!is.null(weights) && length(x) != length(weights)) {
@@ -43,9 +59,22 @@ transmute_weights <- function(x, weights = NULL, order = 0, to = 1, mean = NA) {
 #' Transmute weights for a nested generalized mean
 #'
 #' Transmute weights to turn a nested generalized mean of a given order into a
-#' generalized mean of order `to`. Useful for calculating additive and
+#' generalized mean of any order. Useful for calculating additive and
 #' multiplicative decompositions for an index made
 #' of nested generalized means (e.g., Fisher index).
+#' See `vignette("decomposing-indexes")` for details.
+#'
+#' This function generalizes the additive and multiplicative decompositions
+#' for the Fisher index by Balk (2008, Chapter 4). It returns
+#' a value such that
+#'
+#' \preformatted{nested_gmean(x, list(w1, w2), c(r1, r2)) ==
+#'     gmean(x, transmute_weights2(x, list(w1, w2), c(r1, r2), to = s), s)}
+#'
+#' Transmuting weights returns a value that is the same length as `x`,
+#' so any missing values in `x` or `weights` will return `NA`.
+#' Unless all values are `NA`, however, the result will still satisfy
+#' the above identity when `na.rm = TRUE`.
 #'
 #' @inheritParams nested_gmean
 #' @param to A finite number giving the order of the target generalized mean for
@@ -54,13 +83,13 @@ transmute_weights <- function(x, weights = NULL, order = 0, to = 1, mean = NA) {
 #' @param pivot A finite number giving the pivot value for the transmuted
 #'   weights. The default uses the order of the outer generalized mean,
 #'   otherwise `to` is common alternative.
-#'   See `vignette("decomposing-indexes")` for details.
 #'
 #' @returns
 #' A numeric vector, the same length as `x`, that sums to 1.
 #'
 #' @references
-#' See `vignette("decomposing-indexes")` for more details.
+#' Balk, B. M. (2008). *Price and Quantity Index Numbers*.
+#' Cambridge University Press.
 #'
 #' @examples
 #' x <- 1:3
@@ -88,8 +117,11 @@ transmute_weights2 <- function(
   if (length(order) != 2L && !all(is.finite(order))) {
     stop("`order` must be a pair of finite numbers")
   }
+  if (length(weights) != length(order)) {
+    stop("`weights` and `order` must be the same length")
+  }
   na_mask <- if (anyNA(x) || anyNA(weights[[1]]) || anyNA(weights[[2]])) {
-    stats::complete.cases(x, weights)
+    stats::complete.cases(x, weights[[1]], weights[[2]])
   }
   if (!is.null(na_mask)) {
     x[!na_mask] <- NA_real_

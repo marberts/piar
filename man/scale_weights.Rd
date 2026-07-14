@@ -7,7 +7,7 @@
 scale_weights(x)
 }
 \arguments{
-\item{x}{A strictly positive numeric vector.}
+\item{x}{A positive numeric vector with at least one non-zero element.}
 }
 \value{
 A numeric vector that sums to 1. If there are \code{NA}s in \code{x} then the result

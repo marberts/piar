@@ -83,7 +83,7 @@ chain.chainable_piar_index <- function(x, ..., link = NULL) {
   if (!is.null(link)) {
     link <- as.numeric(link)
     if (length(link) != nlevels(x)) {
-      stop("'link' must have a value for each level of 'x'")
+      stop("`link` must have a value for each level of `x`")
     }
     x$index[, 1L] <- x$index[, 1L] * link
   }
@@ -126,7 +126,7 @@ unchain.direct_piar_index <- function(x, ..., base = NULL) {
     } else {
       base <- as.numeric(base)
       if (length(base) != nlevels(x)) {
-        stop("'base' must have a value for each level of 'x'")
+        stop("`base` must have a value for each level of `x`")
       }
     }
   }
@@ -166,7 +166,7 @@ rebase.direct_piar_index <- function(x, ..., base = NULL) {
     } else {
       base <- as.numeric(base)
       if (length(base) != nlevels(x)) {
-        stop("'base' must have a value for each level of 'x'")
+        stop("`base` must have a value for each level of `x`")
       }
     }
     x$index[] <- x$index / base

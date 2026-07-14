@@ -57,10 +57,10 @@ cut.piar_aggregation_structure <- function(
   level <- as.integer(level)
   n <- nlevels(x)
   if (level < 1L) {
-    stop("'level' must be greater than or equal to 1")
+    stop("`level` must be greater than or equal to 1")
   }
   if (level > n) {
-    stop("'level' must be smaller than the number of levels in 'x'")
+    stop("`level` must be smaller than the number of levels in `x`")
   }
   if ((!upper && level == 1L) || (upper && level == n)) {
     return(x)

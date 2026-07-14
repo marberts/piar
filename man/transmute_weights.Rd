@@ -12,9 +12,11 @@ transmute_weights(x, weights = NULL, order = 0, to = 1, mean = NA)
 \item{weights}{A strictly positive numeric vector of weights, the same length
 as \code{x}. The default is to equally weight each element of \code{x}.}
 
-\item{order}{A finite number giving the order of the generalized mean.}
+\item{order}{A finite number giving the order of the generalized mean. The
+default transmutes the weights for a geometric mean.}
 
-\item{to}{A finite number giving the order of the target generalized mean.}
+\item{to}{A finite number giving the order of the target generalized mean.
+The default computes weights for an arithmetic mean.}
 
 \item{mean}{A finite number giving the generalized mean of \code{x} and \code{weights},
 if known. The default computes this values.}
@@ -24,8 +26,21 @@ A numeric vector, the same length as \code{x}, that sums to 1.
 }
 \description{
 Transmute weight to turn a generalized mean of a given order into a
-generalized mean of order \code{to}. Useful for calculating additive and
+generalized mean of any other order. Useful for calculating additive and
 multiplicative decompositions for generalized-mean indexes.
+See \code{vignette("decomposing-indexes")} for more details.
+}
+\details{
+This function generalizes the additive and multiplicative decompositions
+for arithmetic and geometric indexes by Balk (2008, Chapter 4). It returns
+a value such that
+
+\preformatted{gmean(x, w, r) == gmean(x, transmute_weights(x, w, r, s), s)}
+
+Transmuting weights returns a value that is the same length as \code{x},
+so any missing values in \code{x} or \code{weights} will return \code{NA}.
+Unless all values are \code{NA}, however, the result will still satisfy
+the above identity when \code{na.rm = TRUE}.
 }
 \examples{
 x <- 1:3
@@ -36,7 +51,8 @@ gmean(x, order = 0)
 gmean(x, transmute_weights(x, order = 0, to = 1), order = 1)
 }
 \references{
-See \code{vignette("decomposing-indexes")} for more details.
+Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}.
+Cambridge University Press.
 }
 \seealso{
 Other math functions:

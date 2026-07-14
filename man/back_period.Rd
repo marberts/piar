@@ -63,7 +63,7 @@ with(
 
 }
 \seealso{
-\code{outliers()} for common methods to detect outliers for price relatives.
+\code{\link[=outliers]{outliers()}} for common methods to detect outliers for price relatives.
 
 \code{rs_pairs} in the \pkg{rsmatrix} package for making sales pairs.
 }

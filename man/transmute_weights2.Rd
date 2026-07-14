@@ -18,9 +18,9 @@ transmute_weights2(
 \item{x}{A strictly positive numeric vector.}
 
 \item{weights}{A list of strictly positive numeric vector of weights, each
-the same length as \code{x}, for each of the inner generalized means. \code{NULL}
+the same length as \code{x}, for both of the inner generalized means. \code{NULL}
 elements of \code{weights} equally weight each element of \code{x}. The default
-uses equal weights for each inner generalized mean.}
+uses equal weights for both inner generalized mean.}
 
 \item{order}{A finite numeric vector giving the order of each of the inner
 generalized means. The default computes an arithmetic mean and a harmonic
@@ -31,7 +31,7 @@ the inner generalized means as used in the outer generalized mean. The
 default weights each inner generalized mean equally.}
 
 \item{outer_order}{A finite number giving the order of the outer generalized
-mean.}
+mean. The default uses a geometric mean.}
 
 \item{to}{A finite number giving the order of the target generalized mean for
 the transmuted weights. The default constructs weights for an arithmetic
@@ -39,17 +39,30 @@ mean.}
 
 \item{pivot}{A finite number giving the pivot value for the transmuted
 weights. The default uses the order of the outer generalized mean,
-otherwise \code{to} is common alternative.
-See \code{vignette("decomposing-indexes")} for details.}
+otherwise \code{to} is common alternative.}
 }
 \value{
 A numeric vector, the same length as \code{x}, that sums to 1.
 }
 \description{
 Transmute weights to turn a nested generalized mean of a given order into a
-generalized mean of order \code{to}. Useful for calculating additive and
+generalized mean of any order. Useful for calculating additive and
 multiplicative decompositions for an index made
 of nested generalized means (e.g., Fisher index).
+See \code{vignette("decomposing-indexes")} for details.
+}
+\details{
+This function generalizes the additive and multiplicative decompositions
+for the Fisher index by Balk (2008, Chapter 4). It returns
+a value such that
+
+\preformatted{nested_gmean(x, list(w1, w2), c(r1, r2)) ==
+    gmean(x, transmute_weights2(x, list(w1, w2), c(r1, r2), to = s), s)}
+
+Transmuting weights returns a value that is the same length as \code{x},
+so any missing values in \code{x} or \code{weights} will return \code{NA}.
+Unless all values are \code{NA}, however, the result will still satisfy
+the above identity when \code{na.rm = TRUE}.
 }
 \examples{
 x <- 1:3
@@ -62,7 +75,8 @@ nested_gmean(x, list(w1, w2))
 gmean(x, transmute_weights2(x, list(w1, w2), to = 1))
 }
 \references{
-See \code{vignette("decomposing-indexes")} for more details.
+Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}.
+Cambridge University Press.
 }
 \seealso{
 Other math functions:

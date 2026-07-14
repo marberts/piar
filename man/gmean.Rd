@@ -12,7 +12,8 @@ gmean(x, weights = NULL, order = 1, na.rm = FALSE)
 \item{weights}{A strictly positive numeric vector of weights, the same length
 as \code{x}. The default is to equally weight each element of \code{x}.}
 
-\item{order}{A finite number giving the order of the generalized mean.}
+\item{order}{A finite number giving the order of the generalized mean. The
+default calculates an arithmetic mean.}
 
 \item{na.rm}{Should missing values be removed? By default, missing values are
 not removed.}
@@ -30,9 +31,7 @@ mean; see Bullen (2003, p. 175) for details.
 Both \code{x} and \code{weights} should be strictly positive
 (and finite), especially for the purpose of making a price index. This is not
 enforced, but the results may not make sense if the generalized mean is not
-defined.
-
-There are two exceptions to this.
+defined. There are two exceptions to this.
 \enumerate{
 \item The convention by Hardy et al. (1952, p. 13) is used in cases where \code{x}
 has zeros: the generalized mean is 0 whenever the weights are strictly positive

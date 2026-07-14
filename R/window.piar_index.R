@@ -48,7 +48,7 @@ index_window <- function(x, start, end) {
   end <- if (!is.null(end)) match_time(as.character(end), x) else ntime(x)
 
   if (start > end) {
-    stop("'start' must refer to a time period before 'end'")
+    stop("`start` must refer to a time period before `end`")
   }
   seq.int(start, end)
 }

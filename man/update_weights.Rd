@@ -12,7 +12,8 @@ update_weights(x, weights = NULL, order = 1)
 \item{weights}{A strictly positive numeric vector of weights, the same length
 as \code{x}. The default is to equally weight each element of \code{x}.}
 
-\item{order}{A finite number giving the order of the generalized mean.}
+\item{order}{A finite number giving the order of the generalized mean. The
+default calculates an arithmetic mean.}
 }
 \value{
 A numeric vector the same length as \code{x}.
@@ -25,12 +26,12 @@ generalized-mean index.
 \details{
 This function generalizes the result in section C.5 of Chapter 9 of the PPI
 Manual for chaining the Young index, and gives a way to chain
-generalized-mean price indexes over time.
+generalized-mean price indexes over time. It returns a value such that
 
 \preformatted{gmean(x * y, w) == gmean(x, w) * gmean(y, update_weights(x, w))}
 
-Factoring weights return a value that is the same length as \code{x},
-so any missing values in \code{x} or the weights will return \code{NA}.
+Factoring weights returns a value that is the same length as \code{x},
+so any missing values in \code{x} or \code{weights} will return \code{NA}.
 Unless all values are \code{NA}, however, the result will still satisfy
 the above identity when \code{na.rm = TRUE}.
 }

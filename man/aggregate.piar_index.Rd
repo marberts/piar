@@ -83,10 +83,10 @@ Aggregate elementary price indexes with a price index aggregation structure.
 \details{
 The \code{aggregate()} method loops over each time period in \code{x} and
 \enumerate{
-\item aggregates the elementary indexes with \code{gmean()} for each level of \code{pias};
+\item aggregates the elementary indexes with \code{\link[=gmean]{gmean()}} for each level of \code{pias};
 \item aggregates percent-change contributions for each level of
 \code{pias} (if there are any and \code{contrib = TRUE});
-\item price updates the weights in \code{pias} with \code{update_weights()} (only for
+\item price updates the weights in \code{pias} with \code{\link[=update_weights]{update_weights()}} (only for
 period-over-period elementary indexes).
 }
 

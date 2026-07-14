@@ -44,7 +44,7 @@ combine_classifications_ <- function(x, y, sep) {
     return(x)
   }
   if (any(lx != lx[1L]) || any(ly != lx[1L])) {
-    stop("each component of '...' must have the same number of elements")
+    stop("each component of `...` must have the same number of elements")
   }
 
   c(x, lapply(y, \(y) paste(last(x), y, sep = sep)))

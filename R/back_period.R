@@ -26,7 +26,7 @@
 #' time is always the first position for that product in the previous period.
 #'
 #' @seealso
-#' `outliers()` for common methods to detect outliers for price relatives.
+#' [`outliers()`] for common methods to detect outliers for price relatives.
 #'
 #' `rs_pairs` in the \pkg{rsmatrix} package for making sales pairs.
 #'
