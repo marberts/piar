@@ -59,7 +59,7 @@
 #'   product weights), or something that can be coerced into one. The default is
 #'   to give each price equal weight. This is evaluated in `x` for the data
 #'   frame method.
-#' @param r `[numeric(1)]` A pair of numeric values. The first gives the order
+#' @param r `[numeric(2)]` A pair of numeric values. The first gives the order
 #'   of the generalized-mean price index used to calculate the
 #'   elementary price indexes, defaulting to a geometric index. The second
 #'   gives the order of the generalized-mean price index used to aggregate the
@@ -153,6 +153,9 @@ impute_prices.matrix <- function(
   period <- as.factor(period)
   product <- as.factor(product)
   attributes(product) <- NULL
+  if (not_finite_pair(r)) {
+    stop("`r` must be a pair of finite numbers")
+  }
   if (!is.null(ea)) {
     ea <- as.factor(ea)
   }
@@ -251,6 +254,9 @@ impute_prices.numeric <- function(
   }
   product <- as.factor(product)
   attributes(product) <- NULL
+  if (not_finite_pair(r)) {
+    stop("`r` must be a pair of finite numbers")
+  }
   if (!is.null(ea)) {
     ea <- as.factor(ea)
   }

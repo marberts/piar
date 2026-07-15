@@ -165,7 +165,7 @@ aggregate.chainable_piar_index <- function(
     include_ea = include_ea,
     chainable = TRUE,
     duplicate_contrib = match.arg(duplicate_contrib),
-    impute_rules
+    impute_rules = impute_rules
   )
 }
 
@@ -194,7 +194,7 @@ aggregate.direct_piar_index <- function(
     include_ea = include_ea,
     chainable = FALSE,
     duplicate_contrib = match.arg(duplicate_contrib),
-    impute_rules
+    impute_rules = impute_rules
   )
 }
 

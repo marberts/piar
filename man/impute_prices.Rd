@@ -83,7 +83,7 @@ structure, or something that can be
 coerced into one, as made with \code{\link[=aggregation_structure]{aggregation_structure()}}. The default
 imputes from elementary indexes only (i.e., not recursively).}
 
-\item{r}{\verb{[numeric(1)]} A pair of numeric values. The first gives the order
+\item{r}{\verb{[numeric(2)]} A pair of numeric values. The first gives the order
 of the generalized-mean price index used to calculate the
 elementary price indexes, defaulting to a geometric index. The second
 gives the order of the generalized-mean price index used to aggregate the
