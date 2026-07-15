@@ -16,7 +16,7 @@ nested_gmean(
 \arguments{
 \item{x}{\verb{[numeric > 0]} A strictly positive numeric vector.}
 
-\item{weights}{\verb{[list]} A list of strictly positive numeric vector of
+\item{weights}{\verb{[list]} A list of positive numeric vector of
 weights, each
 the same length as \code{x}, for both of the inner generalized means. \code{NULL}
 elements of \code{weights} equally weight each element of \code{x}. The default
@@ -53,7 +53,6 @@ w1 <- c(0.25, 0.25, 0.5)
 w2 <- c(0.3, 0.3, 0.4)
 # Calculate the geometric mean of the arithmetic and harmonic means
 # to make a Fisher index.
-
 nested_gmean(x, list(w1, w2))
 }
 \seealso{

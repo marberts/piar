@@ -107,7 +107,7 @@ transmute_weights2 <- function(
   x,
   weights = list(NULL, NULL),
   order = c(1, -1),
-  outer_weights = c(1, 1),
+  outer_weights = NULL,
   outer_order = 0,
   to = 1,
   pivot = outer_order

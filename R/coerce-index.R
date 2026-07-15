@@ -87,7 +87,8 @@ as.double.piar_index <- function(x, ...) {
 #'
 #' Turn an index into a regular time series, represented as a [`ts`] object.
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
 #' @param ... Additional arguments passed to [`ts()`].
 #'
 #' @returns A time series object.

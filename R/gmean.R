@@ -82,8 +82,11 @@ gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
 #' Calculate a weighted (outer) generalized mean of two (inner) generalized
 #' means (i.e., crossing means).
 #'
+#' @family math functions
+#' @export
+#'
 #' @param x `[numeric > 0]` A strictly positive numeric vector.
-#' @param weights `[list]` A list of strictly positive numeric vector of
+#' @param weights `[list]` A list of positive numeric vector of
 #'   weights, each
 #'   the same length as `x`, for both of the inner generalized means. `NULL`
 #'   elements of `weights` equally weight each element of `x`. The default
@@ -112,10 +115,7 @@ gmean <- function(x, weights = NULL, order = 1, na.rm = FALSE) {
 #' w2 <- c(0.3, 0.3, 0.4)
 #' # Calculate the geometric mean of the arithmetic and harmonic means
 #' # to make a Fisher index.
-#'
 #' nested_gmean(x, list(w1, w2))
-#' @family math functions
-#' @export
 nested_gmean <- function(
   x,
   weights = list(NULL, NULL),

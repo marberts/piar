@@ -54,7 +54,7 @@ periods in \code{window}, setting \code{n = 1} gives the index for period 13. Th
 default gives an index for each period in \code{window}. Non-integers are
 truncated towards zero.}
 
-\item{order}{\verb{[numeric(1)} A finite number giving the order of the
+\item{order}{\verb{[numeric(1)]} A finite number giving the order of the
 generalized mean used to
 average price indexes over the rolling window. The default uses a
 geometric mean.}

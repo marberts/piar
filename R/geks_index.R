@@ -10,7 +10,7 @@
 #'   index. Usually a Törnqvist, Fisher (the default), or Walsh index.
 #'   It must have arguments `p1`, `p0`, `q1`, and `q0`, and satisfy the
 #'   time-reversal test.
-#' @param order `[numeric(1)` A finite number giving the order of the
+#' @param order `[numeric(1)]` A finite number giving the order of the
 #'   generalized mean used to
 #'   average price indexes over the rolling window. The default uses a
 #'   geometric mean.

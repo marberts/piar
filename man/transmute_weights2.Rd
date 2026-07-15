@@ -8,7 +8,7 @@ transmute_weights2(
   x,
   weights = list(NULL, NULL),
   order = c(1, -1),
-  outer_weights = c(1, 1),
+  outer_weights = NULL,
   outer_order = 0,
   to = 1,
   pivot = outer_order
@@ -17,7 +17,7 @@ transmute_weights2(
 \arguments{
 \item{x}{\verb{[numeric > 0]} A strictly positive numeric vector.}
 
-\item{weights}{\verb{[list]} A list of strictly positive numeric vector of
+\item{weights}{\verb{[list]} A list of positive numeric vector of
 weights, each
 the same length as \code{x}, for both of the inner generalized means. \code{NULL}
 elements of \code{weights} equally weight each element of \code{x}. The default
