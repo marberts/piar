@@ -92,7 +92,8 @@ are possible;
 see \code{\link[=gmean]{gmean()}} for details.}
 
 \item{method}{\verb{[character(1)]} Name of the imputation method, one
-of \code{"overall-mean"}, \code{"carry-forward"}, or \code{"carry-backward"}.}
+of \code{"overall-mean"} (the default), \code{"carry-forward"},
+or \code{"carry-backward"}.}
 
 \item{impute_rules}{\verb{[function]} (Experimental) A function that applies
 imputation

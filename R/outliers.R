@@ -51,8 +51,8 @@
 #'   cutoffs for
 #'   each element of `x`. By default the lower cutoff is the same as the upper
 #'   cutoff
-#' @param method `[character(1)]` The outlier detection method, one `"quartile"`
-#'   (the default), `"resistant-fences"`, `"kimber"`, `"robust-z"`,
+#' @param method `[character(1)]` The outlier detection method, one of
+#'   `"quartile"` (the default), `"resistant-fences"`, `"kimber"`, `"robust-z"`,
 #'   or `"tukey"`.
 #' @param scale `[0 <= numeric(1) <= 1]` A number between 0 and 1 giving the
 #'   scale factor for the

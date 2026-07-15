@@ -9,7 +9,7 @@
 #' @param x `[piar_aggregation_structure]` A price index aggregation structure,
 #'   as made by [aggregation_structure()].
 #' @param ... Not currently used.
-#' @param level `[integer(1)]` A positive integer, or something that can be
+#' @param level `[integer(1) > 0]` A positive integer, or something that can be
 #'   coerced into one, giving the level at which to cut `x`.
 #' @param na.rm `[logical(1)]` Should missing values be removed when aggregating
 #'   the weights? By default, missing values are not removed.
@@ -17,7 +17,7 @@
 #'   (the default); otherwise, return the part of `x` below `level`.
 #'
 #' @returns
-#' A price index aggregation structure of class `[piar_aggregation_structure]`.
+#' A price index aggregation structure of class [`piar_aggregation_structure`].
 #'
 #' @examples
 #' # A simple aggregation structure.

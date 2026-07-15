@@ -13,7 +13,7 @@ is_chainable_index(x)
 is_direct_index(x)
 }
 \arguments{
-\item{x}{An object to test.}
+\item{x}{\verb{[object]} An object to test.}
 }
 \value{
 \code{is_index()} returns \code{TRUE} if \code{x} inherits from \code{\link{piar_index}}.

@@ -161,7 +161,7 @@ print.piar_index <- function(x, ...) {
 #'
 #' Test if an object is a index object or a subclass of an index object.
 #'
-#' @param x An object to test.
+#' @param x `[object]` An object to test.
 #'
 #' @returns
 #' `is_index()` returns `TRUE` if `x` inherits from [`piar_index`].

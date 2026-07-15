@@ -10,7 +10,7 @@
 \item{x}{\verb{[piar_aggregation_structure]} A price index aggregation structure,
 as made by \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
-\item{level}{\verb{[integer(1)]} A positive integer, or something that can be
+\item{level}{\verb{[integer(1) > 0]} A positive integer, or something that can be
 coerced into one, giving the level at which to cut \code{x}.}
 
 \item{...}{Not currently used.}
@@ -22,7 +22,7 @@ the weights? By default, missing values are not removed.}
 (the default); otherwise, return the part of \code{x} below \code{level}.}
 }
 \value{
-A price index aggregation structure of class \verb{[piar_aggregation_structure]}.
+A price index aggregation structure of class \code{\link{piar_aggregation_structure}}.
 }
 \description{
 Keep only the part of an aggregation structure above or below a certain

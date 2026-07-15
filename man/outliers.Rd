@@ -25,8 +25,8 @@ cutoffs for
 each element of \code{x}. By default the lower cutoff is the same as the upper
 cutoff}
 
-\item{method}{\verb{[character(1)]} The outlier detection method, one \code{"quartile"}
-(the default), \code{"resistant-fences"}, \code{"kimber"}, \code{"robust-z"},
+\item{method}{\verb{[character(1)]} The outlier detection method, one of
+\code{"quartile"} (the default), \code{"resistant-fences"}, \code{"kimber"}, \code{"robust-z"},
 or \code{"tukey"}.}
 
 \item{scale}{\verb{[0 <= numeric(1) <= 1]} A number between 0 and 1 giving the

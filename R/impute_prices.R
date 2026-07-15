@@ -70,7 +70,8 @@
 #'   coerced into one, with prices on the left-hand
 #'   side and time periods and products on the right-hand side (in that order).
 #' @param method `[character(1)]` Name of the imputation method, one
-#'   of `"overall-mean"`, `"carry-forward"`, or `"carry-backward"`.
+#'   of `"overall-mean"` (the default), `"carry-forward"`,
+#'   or `"carry-backward"`.
 #' @param ... Further arguments passed to or used by methods.
 #' @param impute_rules `[function]` (Experimental) A function that applies
 #'   imputation

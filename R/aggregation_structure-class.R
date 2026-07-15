@@ -102,7 +102,7 @@ str.piar_aggregation_structure <- function(object, ...) {
 #'
 #' Test if an object is a price index aggregation structure.
 #'
-#' @param x An object to test.
+#' @param x `[object]` An object to test.
 #'
 #' @returns
 #' Returns `TRUE` if `x` inherits from [`piar_aggregation_structure`].

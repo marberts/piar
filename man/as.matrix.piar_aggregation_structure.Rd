@@ -20,7 +20,7 @@ as made by \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 \pkg{Matrix}? This is faster for large aggregation structures. The default
 returns an ordinary dense matrix.}
 
-\item{row.names}{\verb{[character | NULL]} See \code{\link[=as.data.frame]{as.data.frame()}}.}
+\item{row.names}{\verb{[character]} See \code{\link[=as.data.frame]{as.data.frame()}}.}
 
 \item{optional}{Not currently used.}
 }
@@ -33,7 +33,7 @@ aggregated index.
 frame that could have generated it.
 }
 \description{
-Coerce a price index aggregation structure into an aggregation matrix, or a
+Coerce a price index aggregation structure into an aggregation matrix or a
 data frame.
 }
 \examples{

@@ -7,10 +7,9 @@
 #'
 #' @param x `[piar_index]` A price index, as made by,
 #'   e.g., [elementary_index()].
-#' @param row.names `[character | NULL]` See [as.data.frame()].
+#' @param row.names `[character]` See [as.data.frame()].
 #' @param stringsAsFactors `[logical(1)]` See [as.data.frame()].
-#' @param optional Not currently used.
-#' @param ... Not currently used.
+#' @param optional,... Not currently used.
 #' @param contrib `[logical(1)]` Include percent-change contributions
 #'   (the default does not include them).
 #'

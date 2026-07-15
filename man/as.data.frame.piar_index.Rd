@@ -20,11 +20,9 @@
 \item{x}{\verb{[piar_index]} A price index, as made by,
 e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{row.names}{\verb{[character | NULL]} See \code{\link[=as.data.frame]{as.data.frame()}}.}
+\item{row.names}{\verb{[character]} See \code{\link[=as.data.frame]{as.data.frame()}}.}
 
-\item{optional}{Not currently used.}
-
-\item{...}{Not currently used.}
+\item{optional, ...}{Not currently used.}
 
 \item{contrib}{\verb{[logical(1)]} Include percent-change contributions
 (the default does not include them).}

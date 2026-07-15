@@ -1,6 +1,6 @@
 #' Coerce an aggregation structure into a tabular form
 #'
-#' Coerce a price index aggregation structure into an aggregation matrix, or a
+#' Coerce a price index aggregation structure into an aggregation matrix or a
 #' data frame.
 #'
 #' @family aggregation structure methods
@@ -11,7 +11,7 @@
 #' @param sparse `[logical(1)]` Should the result be a sparse matrix from
 #'   \pkg{Matrix}? This is faster for large aggregation structures. The default
 #'   returns an ordinary dense matrix.
-#' @param row.names `[character | NULL]` See [as.data.frame()].
+#' @param row.names `[character]` See [as.data.frame()].
 #' @param optional Not currently used.
 #' @param ... Not currently used for the matrix method. Extra arguments to
 #'   [as.data.frame.list()] for the data frame method.
