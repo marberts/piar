@@ -19,16 +19,16 @@ Description: Most price indexes are made with a two-step procedure, where
     <doi:10.5089/9781484354841.069>) and PPI manual
     (2004, <doi:10.5089/9781589063044.069>) for bilateral price indexes.
 Depends: R (>= 4.1)
-Imports:
+Imports: 
     stats,
     utils,
     Matrix (>= 1.5-0)
-Suggests:
+Suggests: 
     data.tree,
     knitr,
     quarto,
     sps,
-    testthat (>= 3.0.0),
+    tinytest,
     treemap
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -36,6 +36,5 @@ URL: https://marberts.github.io/piar/, https://github.com/marberts/piar
 BugReports: https://github.com/marberts/piar/issues
 LazyData: true
 VignetteBuilder: quarto
-Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.0.0

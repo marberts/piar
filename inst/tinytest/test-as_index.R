@@ -1,0 +1,120 @@
+dat <- data.frame(
+  rel = c(1:6, NA, 7, 8),
+  period = c(1, 1, 1, 1, 1, 2, 2, 2, 2),
+  ea = c("11", "11", "12", "12", "13", "11", "12", "11", "14")
+)
+
+pias <- as_aggregation_structure(
+  data.frame(level1 = 1, level2 = c(11, 12, 13, 14), weight = 1)
+)
+
+epr <- elementary_index(dat, rel ~ period + ea, contrib = TRUE)
+epr2 <- elementary_index(dat, rel ~ period + ea, contrib = FALSE)
+index <- aggregate(epr, pias)
+
+# as_index makes a valid index.
+local({
+  res <- as_index(matrix(1:6, 2))
+  expect_identical(levels(res), as.character(1:2))
+  expect_identical(time(res), as.character(1:3))
+  expect_error(as_index(numeric(0)))
+  expect_error(as_index(matrix(1:2, 2, dimnames = list(c(1, 1), 2))))
+  expect_error(as_index(matrix(1:2, 1, dimnames = list(1, c(2, 2)))))
+  expect_error(as_index(matrix(1:2, 1, dimnames = list(1, c(NA, 2)))))
+})
+
+# as_index works with matrices.
+local({
+  expect_equal(as_index(as.matrix(epr)), epr2)
+  expect_equivalent(
+    contrib(as_index(as.matrix(epr), contrib = TRUE)),
+    as.matrix(epr)[1, , drop = FALSE] - 1,
+  )
+
+  # A character vector used to get pass through without coercion.
+  mat <- as.matrix(epr)
+  mat[] <- as.character(mat)
+  expect_equal(as_index(mat), epr2)
+  expect_equal(as_index(as.matrix(chain(epr)), chainable = FALSE), chain(epr))
+})
+
+# as_index works for data frames.
+local({
+  expect_equal(as_index(as.data.frame(epr)), epr2)
+  expect_equivalent(
+    contrib(as_index(as.data.frame(epr), contrib = TRUE)),
+    as.matrix(epr)[1, , drop = FALSE] - 1
+  )
+  df <- as.data.frame(epr)
+  df[[1]] <- factor(df[[1]], levels = 2:1)
+  expect_equal(
+    as_index(df),
+    with(
+      dat,
+      elementary_index(rel, period = factor(period, levels = 2:1), ea = ea)
+    )
+  )
+
+  expect_equal(
+    as_index(data.frame(1:5, 1:5, 1:5)),
+    as_index(matrix(replace(NA, c(1, 7, 13, 19, 25), 1:5), 5))
+  )
+
+  expect_error(as_index(df[1:2]))
+})
+
+# as_index works for ts.
+local({
+  expect_identical(
+    as_index(ts(matrix(1:6, 2))),
+    as_index(matrix(
+      c(1, 3, 5, 2, 4, 6),
+      3,
+      dimnames = list(paste("Series", 1:3), 1:2)
+    ))
+  )
+})
+
+# as_index works with contribs.
+local({
+  expect_equal(
+    as_index(as.data.frame(epr, contrib = TRUE), contrib = TRUE),
+    epr
+  )
+
+  contrib(epr2) <- numeric(0)
+  expect_equal(
+    as_index(as.data.frame(epr2, contrib = TRUE), contrib = TRUE),
+    epr2
+  )
+
+  index2 <- aggregate(epr, pias, contrib = FALSE)
+  index2df <- as.data.frame(index2, contrib = TRUE)
+  contrib(index2) <- numeric(0)
+  expect_equal(
+    as_index(index2df, contrib = TRUE),
+    index2
+  )
+
+  index2df[1, 4][[1]] <- list(c(a = 0))
+  expect_equal(
+    as.data.frame(as_index(index2df, contrib = TRUE), contrib = TRUE),
+    index2df
+  )
+
+  index2df[1, 4][[1]] <- list(c(a = 2, a = 1, b = NA))
+  expect_warning(index2 <- as_index(index2df, contrib = TRUE))
+  expect_identical(rownames(contrib(index2)), c("a", "a.1", "b"))
+})
+
+# as_index works for index.
+local({
+  expect_equal(as_index(epr), epr)
+  expect_equal(as_index(index), index)
+  expect_equal(as_index(epr, chainable = FALSE), chain(epr))
+  expect_equal(as_index(index, chainable = FALSE), chain(index))
+  expect_equal(
+    as_index(chain(aggregate(epr, pias, na.rm = TRUE)), chainable = TRUE),
+    aggregate(epr2, pias, na.rm = TRUE)
+  )
+})

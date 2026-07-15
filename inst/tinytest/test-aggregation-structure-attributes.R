@@ -1,0 +1,103 @@
+x1 <- c("1", "2", "1", "1")
+x2 <- c("11", "21", "12", "11")
+x3 <- c("111", "211", "121", "112")
+agg <- aggregation_structure(list(x1, x2, x3))
+
+# Levels.
+local({
+  expect_identical(
+    levels(agg),
+    list(
+      level1 = c("1", "2"),
+      level2 = c("11", "21", "12"),
+      ea = c("111", "211", "121", "112")
+    )
+  )
+  expect_error(levels(agg) <- 1:9)
+
+  expect_identical(levels(agg), lapply(weights(agg, ea_only = FALSE), names))
+})
+
+# Weights.
+local({
+  expect_equal(
+    weights(agg, ea_only = FALSE),
+    list(
+      level1 = c("1" = 3, "2" = 1),
+      level2 = c("11" = 2, "21" = 1, "12" = 1),
+      ea = c("111" = 1, "211" = 1, "121" = 1, "112" = 1)
+    )
+  )
+  expect_equal(
+    weights(agg, ea_only = TRUE),
+    c("111" = 1, "211" = 1, "121" = 1, "112" = 1)
+  )
+  expect_equal(
+    weights(aggregation_structure(list(x1, x2, x3), 1:4), ea_only = FALSE),
+    list(
+      level1 = c("1" = 8, "2" = 2),
+      level2 = c("11" = 5, "21" = 2, "12" = 3),
+      ea = c("111" = 1, "211" = 2, "121" = 3, "112" = 4)
+    )
+  )
+
+  expect_equal(
+    weights(as_aggregation_structure(1:5, weights = 2), ea_only = FALSE),
+    list(
+      level1 = c("1" = 2),
+      level2 = c("2" = 2),
+      level3 = c("3" = 2),
+      level4 = c("4" = 2),
+      ea = c("5" = 2)
+    )
+  )
+  expect_equal(
+    weights(as_aggregation_structure(1:5, weights = 2), ea_only = TRUE),
+    c("5" = 2)
+  )
+  expect_equal(
+    weights(
+      as_aggregation_structure(list(1:5), weights = 1:5),
+      ea_only = FALSE
+    ),
+    list(ea = c("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5))
+  )
+  expect_equal(
+    weights(as_aggregation_structure(list(1:5), weights = 1:5), ea_only = TRUE),
+    c("1" = 1, "2" = 2, "3" = 3, "4" = 4, "5" = 5)
+  )
+})
+
+# NAs move up the aggregation structure
+local({
+  expect_equal(
+    weights(
+      suppressWarnings(aggregation_structure(list(x1, x2, x3), c(NA, 2:4))),
+      ea_only = FALSE
+    ),
+    list(
+      level1 = c("1" = NA, "2" = 2),
+      level2 = c("11" = NA, "21" = 2, "12" = 3),
+      ea = c("111" = NA, "211" = 2, "121" = 3, "112" = 4)
+    )
+  )
+
+  expect_equal(
+    weights(
+      suppressWarnings(aggregation_structure(list(x1, x2, x3), c(NA, 2:4))),
+      ea_only = FALSE,
+      na.rm = TRUE
+    ),
+    list(
+      level1 = c("1" = 7, "2" = 2),
+      level2 = c("11" = 4, "21" = 2, "12" = 3),
+      ea = c("111" = NA, "211" = 2, "121" = 3, "112" = 4)
+    )
+  )
+})
+
+# Replacement methods.
+local({
+  weights(agg)[c(1, 3, 4)] <- 10
+  expect_equal(weights(agg), c("111" = 10, "211" = 1, "121" = 10, "112" = 10))
+})
