@@ -10,12 +10,12 @@
 Source:
 [`inst/CITATION`](https://github.com/marberts/piar/blob/main/inst/CITATION)
 
-Martin S (2024). “piar: Price Index Aggregation R.” *Journal of Open
+Martin S (2024). “piar: Price Index Aggregation in R.” *Journal of Open
 Source Software*, **9**(101), 6781.
 [doi:10.21105/joss.06781](https://doi.org/10.21105/joss.06781).
 
     @Article{,
-      title = {{piar}: Price Index Aggregation R},
+      title = {{piar}: Price Index Aggregation in R},
       author = {Steve Martin},
       year = {2024},
       doi = {10.21105/joss.06781},
@@ -23,17 +23,4 @@ Source Software*, **9**(101), 6781.
       volume = {9},
       number = {101},
       pages = {6781},
-    }
-
-Martin S (2026). *piar: Price Index Aggregation*.
-[doi:10.5281/zenodo.10110046](https://doi.org/10.5281/zenodo.10110046).
-R package version 0.9.0.9004, <https://cran.r-project.org/package=piar>.
-
-    @Manual{,
-      title = {{piar}: Price Index Aggregation},
-      author = {Steve Martin},
-      year = {2026},
-      doi = {10.5281/zenodo.10110046},
-      url = {https://cran.r-project.org/package=piar},
-      note = {R package version 0.9.0.9004},
     }
