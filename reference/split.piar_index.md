@@ -17,17 +17,18 @@ split(x, f, drop = FALSE, ..., along = c("levels", "time")) <- value
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - f:
 
-  A factor or list of factors to group elements of `x`.
+  `[factor | list]` A factor or list of factors to group elements of
+  `x`.
 
 - drop:
 
-  Should levels that do not occur in `f` be dropped? By default all
-  levels are kept.
+  `[logical(1)]` Should levels that do not occur in `f` be dropped? By
+  default all levels are kept.
 
 - ...:
 
@@ -36,13 +37,13 @@ split(x, f, drop = FALSE, ..., along = c("levels", "time")) <- value
 
 - along:
 
-  Either `"levels"` to split over the levels of `x` (the default), or
-  `"time"` to split over the time periods of `x`.
+  `[character(1)]` Either `"levels"` to split over the levels of `x`
+  (the default), or `"time"` to split over the time periods of `x`.
 
 - value:
 
-  A list of values compatible with the splitting of `x`, or something
-  that can be coerced into one, recycled if necessary.
+  `[list]` A list of values compatible with the splitting of `x`, or
+  something that can be coerced into one, recycled if necessary.
 
 ## Value
 

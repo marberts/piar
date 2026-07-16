@@ -2,9 +2,28 @@
 
 ## piar (development version)
 
+### Significant changes
+
+- Many functions from [gpindex](https://marberts.github.io/gpindex/) are
+  now part of [piar](https://marberts.github.io/piar/). This gives a
+  somewhat more consistent experience and allows for improvements that
+  would be difficult with two separate packages. In particular:
+
+  - A new function
+    [`outliers()`](https://marberts.github.io/piar/reference/outliers.md)
+    to find extreme price relatives.
+
+  - Functions for multilateral indexes.
+
+  - Core mathematical machinery used to aggregate indexes and make
+    product contributions.
+
+  - A new vignette outlining some theory that unlies how indexes are
+    calculated.
+
 ### Improvements
 
-- `aggregate(index)` gets am experimental new argument `impute_rules` to
+- `aggregate(index)` gets an experimental new argument `impute_rules` to
   specify specific imputation rules during aggregation.
 
 ### Bugs fixes

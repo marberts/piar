@@ -1,7 +1,7 @@
 # Coerce an aggregation structure into a tabular form
 
-Coerce a price index aggregation structure into an aggregation matrix,
-or a data frame.
+Coerce a price index aggregation structure into an aggregation matrix or
+a data frame.
 
 ## Usage
 
@@ -17,7 +17,8 @@ as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
 - x:
 
-  A price index aggregation structure, as made by
+  `[piar_agregation_structure]` A price index aggregation structure, as
+  made by
   [`aggregation_structure()`](https://marberts.github.io/piar/reference/aggregation_structure.md).
 
 - ...:
@@ -28,13 +29,14 @@ as.data.frame(x, row.names = NULL, optional = FALSE, ...)
 
 - sparse:
 
-  Should the result be a sparse matrix from Matrix? This is faster for
-  large aggregation structures. The default returns an ordinary dense
-  matrix.
+  `[logical(1)]` Should the result be a sparse matrix from Matrix? This
+  is faster for large aggregation structures. The default returns an
+  ordinary dense matrix.
 
 - row.names:
 
-  See [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html).
+  `[character]` See
+  [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html).
 
 - optional:
 
@@ -68,14 +70,13 @@ Other aggregation structure methods:
 ## Examples
 
 ``` r
-# A simple aggregation structure
+# A simple aggregation structure.
 #            1
 #      |-----+-----|
 #      11          12
 #  |---+---|       |
 #  111     112     121
 #  (1)     (3)     (4)
-
 aggregation_weights <- data.frame(
   level1 = c("1", "1", "1"),
   level2 = c("11", "11", "12"),

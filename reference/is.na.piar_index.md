@@ -16,13 +16,14 @@ anyNA(x, recursive = FALSE)
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - recursive:
 
-  Check if `x` also has missing percent-change contributions. By default
-  only index values are checked for missingness.
+  `[logical(1)]` Check if `x` also has missing percent-change
+  contributions. By default only index values are checked for
+  missingness.
 
 ## Value
 
@@ -65,8 +66,7 @@ is.na(index)
 #>      1 FALSE FALSE FALSE
 #>      2 FALSE  TRUE  TRUE
 
-# Carry forward imputation
-
+# Carry forward imputation.
 index[is.na(index)] <- 1
 index
 #> Period-over-period price index for 2 levels over 3 time periods 

@@ -14,19 +14,20 @@ aggregation_structure(x, weights = NULL)
 
 - x:
 
-  A list of character vectors that give the codes/labels for each level
-  of the classification, ordered so that moving down the list goes down
-  the hierarchy. The last vector gives the elementary aggregates, which
-  should have no duplicates. All vectors should be the same length,
-  without `NA`s, and there should be no duplicates across different
-  levels of `x`. Names for `x` are used as level names; otherwise,
-  levels are named 'level1', 'level2', ..., 'ea'.
+  `[list]` A list of character vectors that give the codes/labels for
+  each level of the classification, ordered so that moving down the list
+  goes down the hierarchy. The last vector gives the elementary
+  aggregates, which should have no duplicates. All vectors should be the
+  same length, without `NA`s, and there should be no duplicates across
+  different levels of `x`. Names for `x` are used as level names;
+  otherwise, levels are named 'level1', 'level2', ..., 'ea'.
 
 - weights:
 
-  A numeric vector of aggregation weights for the elementary aggregates
-  (i.e., the last vector in `x`), or something that can be coerced into
-  one. The default is to give each elementary aggregate the same weight.
+  `[numeric >= 0]` A numeric vector of aggregation weights for the
+  elementary aggregates (i.e., the last vector in `x`), or something
+  that can be coerced into one. The default is to give each elementary
+  aggregate the same weight.
 
 ## Value
 
@@ -88,14 +89,13 @@ index.
 ## Examples
 
 ``` r
-# A simple aggregation structure
+# A simple aggregation structure.
 #            1
 #      |-----+-----|
 #      11          12
 #  |---+---|       |
 #  111     112     121
 #  (1)     (3)     (4)
-
 aggregation_weights <- data.frame(
   level1 = c("1", "1", "1"),
   level2 = c("11", "11", "12"),
@@ -114,8 +114,7 @@ aggregation_structure(
 #> 3      1     12 121      4
 
 # The aggregation structure can also be made by expanding the
-# elementary aggregates
-
+# elementary aggregates.
 with(
   aggregation_weights,
   aggregation_structure(expand_classification(ea), weight)

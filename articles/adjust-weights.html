@@ -11,11 +11,20 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
+  window.MathJax = {
+    chtml: {
+      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
+    }
+  };
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Adjusting annual weights">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="adjust-weights_files/libs/quarto-html/popper.min.js"></script><script src="adjust-weights_files/libs/quarto-html/tippy.umd.min.js"></script><link href="adjust-weights_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="adjust-weights_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Adjusting annual weights">
+<meta property="og:image" content="https://marberts.github.io/piar/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -60,31 +69,27 @@
 
 
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Adjusting annual weights</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/main/vignettes/adjust-weights.Rmd" class="external-link"><code>vignettes/adjust-weights.Rmd</code></a></small>
-      <div class="d-none name"><code>adjust-weights.Rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/main/vignettes/adjust-weights.qmd" class="external-link"><code>vignettes/adjust-weights.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<p>Making a monthly or quarterly Lowe index with annual expenditure or
-revenue weights requires adjusting these weights so that the implicit
-annual quantity vector is used as the fixed basket when making the index
-with the usual two-step procedure. This can be done by price updating
-the annual weights to the base period of the index, and it serves as a
-good example of extending the functions in this package.</p>
-<p>Let’s start by making some annual weights and quarterly indexes for a
-year.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+
+
+
+
+
+    <p>Making a monthly or quarterly Lowe index with annual expenditure or revenue weights requires adjusting these weights so that the implicit annual quantity vector is used as the fixed basket when making the index with the usual two-step procedure. This can be done by price updating the annual weights to the base period of the index, and it serves as a good example of extending the functions in this package.</p>
+<p>Let’s start by making some annual weights and quarterly indexes for a year.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">54321</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://marberts.github.io/piar/">piar</a></span><span class="op">)</span></span>
@@ -105,23 +110,23 @@ year.</p>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/as_aggregation_structure.html">as_aggregation_structure</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">pias</span></span></code></pre></div>
-<pre><code><span><span class="co">## Aggregation structure for 12 elementary aggregates with 3 levels above the elementary aggregates </span></span>
-<span><span class="co">##    level1 level2 level3  ea weight</span></span>
-<span><span class="co">## 1       1     11    111 B01      1</span></span>
-<span><span class="co">## 2       1     11    111 B02      2</span></span>
-<span><span class="co">## 3       1     11    112 B03      3</span></span>
-<span><span class="co">## 4       1     11    112 B04      4</span></span>
-<span><span class="co">## 5       1     12    121 B05      5</span></span>
-<span><span class="co">## 6       1     12    121 B06      6</span></span>
-<span><span class="co">## 7       1     12    122 B07      7</span></span>
-<span><span class="co">## 8       1     12    122 B08      8</span></span>
-<span><span class="co">## 9       1     13    131 B09      9</span></span>
-<span><span class="co">## 10      1     13    131 B10     10</span></span>
-<span><span class="co">## 11      1     13    132 B11     11</span></span>
-<span><span class="co">## 12      1     13    132 B12     12</span></span></code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Make elementary indexes over 4 quarters.</span></span>
+<span><span class="va">pias</span></span>
+<span><span class="co">#&gt; Aggregation structure for 12 elementary aggregates with 3 levels above the elementary aggregates </span></span>
+<span><span class="co">#&gt;    level1 level2 level3  ea weight</span></span>
+<span><span class="co">#&gt; 1       1     11    111 B01      1</span></span>
+<span><span class="co">#&gt; 2       1     11    111 B02      2</span></span>
+<span><span class="co">#&gt; 3       1     11    112 B03      3</span></span>
+<span><span class="co">#&gt; 4       1     11    112 B04      4</span></span>
+<span><span class="co">#&gt; 5       1     12    121 B05      5</span></span>
+<span><span class="co">#&gt; 6       1     12    121 B06      6</span></span>
+<span><span class="co">#&gt; 7       1     12    122 B07      7</span></span>
+<span><span class="co">#&gt; 8       1     12    122 B08      8</span></span>
+<span><span class="co">#&gt; 9       1     13    131 B09      9</span></span>
+<span><span class="co">#&gt; 10      1     13    131 B10     10</span></span>
+<span><span class="co">#&gt; 11      1     13    132 B11     11</span></span>
+<span><span class="co">#&gt; 12      1     13    132 B12     12</span></span>
+<span></span>
+<span><span class="co"># Make elementary indexes over 4 quarters.</span></span>
 <span><span class="va">elementals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">12</span> <span class="op">*</span> <span class="fl">4</span>, <span class="fl">0.4</span>, <span class="fl">1.2</span><span class="op">)</span>,</span>
 <span>  nrow <span class="op">=</span> <span class="fl">12</span>,</span>
@@ -129,39 +134,35 @@ year.</p>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/as_index.html">as_index</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">elementals</span></span></code></pre></div>
-<pre><code><span><span class="co">## Period-over-period price index for 12 levels over 4 time periods </span></span>
-<span><span class="co">##       time</span></span>
-<span><span class="co">## levels        Q1        Q2        Q3        Q4</span></span>
-<span><span class="co">##    B01 0.7432063 0.4362399 1.1441564 1.1277327</span></span>
-<span><span class="co">##    B02 0.7987443 0.9221768 0.8326890 0.9997250</span></span>
-<span><span class="co">##    B03 0.5413539 1.1952528 0.9594449 1.0966120</span></span>
-<span><span class="co">##    B04 0.6195148 0.9421099 1.0672886 0.8581942</span></span>
-<span><span class="co">##    B05 0.5732081 1.1348361 0.4098346 1.1227607</span></span>
-<span><span class="co">##    B06 1.0930889 0.7699560 1.1682339 0.5616191</span></span>
-<span><span class="co">##    B07 0.4395281 0.8571318 0.9445658 0.9494140</span></span>
-<span><span class="co">##    B08 0.5673079 0.7615511 0.4677992 0.7279183</span></span>
-<span><span class="co">##    B09 0.6732899 0.5341656 1.1756704 1.1541544</span></span>
-<span><span class="co">##    B10 0.6973270 0.4546091 0.4928318 0.8646791</span></span>
-<span><span class="co">##    B11 0.5093139 1.1175286 1.1014889 0.8980850</span></span>
-<span><span class="co">##    B12 0.9408381 0.6190696 0.7101399 1.1024539</span></span></code></pre>
-<p>Adjusting the weights is simple when there are no missing elementary
-indexes: the weight for each elementary aggregate is just divided by the
-average (fixed-base) index for each quarter.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/weights.html" class="external-link">weights</a></span><span class="op">(</span><span class="va">pias</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="va">elementals</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       B01       B02       B03       B04       B05       B06       B07       B08 </span></span>
-<span><span class="co">##  2.154344  2.896610  4.819251  6.777709 11.175522  6.916156 18.543541 23.728960 </span></span>
-<span><span class="co">##       B09       B10       B11       B12 </span></span>
-<span><span class="co">## 18.520664 30.635776 19.396354 20.059400</span></span></code></pre>
-<p>The procedure is more complicated with missing elementary indexes as
-reaggregating these indexes with the newly adjusted weights will
-generally result in different imputations for the missing elementary
-indexes, which in turn gives a different adjustment for the weights. In
-practice this procedure is done a few times until the index values
-converge to a fixed point. The following function shows how to do this
-adjustment using the tools in this package.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<span><span class="va">elementals</span></span>
+<span><span class="co">#&gt; Period-over-period price index for 12 levels over 4 time periods </span></span>
+<span><span class="co">#&gt;       time</span></span>
+<span><span class="co">#&gt; levels        Q1        Q2        Q3        Q4</span></span>
+<span><span class="co">#&gt;    B01 0.7432063 0.4362399 1.1441564 1.1277327</span></span>
+<span><span class="co">#&gt;    B02 0.7987443 0.9221768 0.8326890 0.9997250</span></span>
+<span><span class="co">#&gt;    B03 0.5413539 1.1952528 0.9594449 1.0966120</span></span>
+<span><span class="co">#&gt;    B04 0.6195148 0.9421099 1.0672886 0.8581942</span></span>
+<span><span class="co">#&gt;    B05 0.5732081 1.1348361 0.4098346 1.1227607</span></span>
+<span><span class="co">#&gt;    B06 1.0930889 0.7699560 1.1682339 0.5616191</span></span>
+<span><span class="co">#&gt;    B07 0.4395281 0.8571318 0.9445658 0.9494140</span></span>
+<span><span class="co">#&gt;    B08 0.5673079 0.7615511 0.4677992 0.7279183</span></span>
+<span><span class="co">#&gt;    B09 0.6732899 0.5341656 1.1756704 1.1541544</span></span>
+<span><span class="co">#&gt;    B10 0.6973270 0.4546091 0.4928318 0.8646791</span></span>
+<span><span class="co">#&gt;    B11 0.5093139 1.1175286 1.1014889 0.8980850</span></span>
+<span><span class="co">#&gt;    B12 0.9408381 0.6190696 0.7101399 1.1024539</span></span></code></pre></div>
+</div>
+<p>Adjusting the weights is simple when there are no missing elementary indexes: the weight for each elementary aggregate is just divided by the average (fixed-base) index for each quarter.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/weights.html" class="external-link">weights</a></span><span class="op">(</span><span class="va">pias</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="../reference/chain.html">chain</a></span><span class="op">(</span><span class="va">elementals</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       B01       B02       B03       B04       B05       B06       B07       B08 </span></span>
+<span><span class="co">#&gt;  2.154344  2.896610  4.819251  6.777709 11.175522  6.916156 18.543541 23.728960 </span></span>
+<span><span class="co">#&gt;       B09       B10       B11       B12 </span></span>
+<span><span class="co">#&gt; 18.520664 30.635776 19.396354 20.059400</span></span></code></pre></div>
+</div>
+<p>The procedure is more complicated with missing elementary indexes as reaggregating these indexes with the newly adjusted weights will generally result in different imputations for the missing elementary indexes, which in turn gives a different adjustment for the weights. In practice this procedure is done a few times until the index values converge to a fixed point. The following function shows how to do this adjustment using the tools in this package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Function to adjust annual weights.</span></span>
 <span><span class="va">adjust_weights</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span></span>
 <span>  <span class="va">index</span>,</span>
@@ -188,28 +189,116 @@ adjustment using the tools in this package.</p>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/warning.html" class="external-link">warning</a></span><span class="op">(</span><span class="st">"weights adjustment did not converge"</span><span class="op">)</span></span>
 <span>  <span class="va">adj_pias</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">elementals</span><span class="op">[</span><span class="fl">11</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
 <span></span>
-<span><span class="fu">adjust_weights</span><span class="op">(</span><span class="va">elementals</span>, <span class="va">pias</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Converged after 2 iterations</span></span></code></pre>
-<pre><code><span><span class="co">## Aggregation structure for 12 elementary aggregates with 3 levels above the elementary aggregates </span></span>
-<span><span class="co">##    level1 level2 level3  ea    weight</span></span>
-<span><span class="co">## 1       1     11    111 B01  2.154344</span></span>
-<span><span class="co">## 2       1     11    111 B02  2.896610</span></span>
-<span><span class="co">## 3       1     11    112 B03  4.819251</span></span>
-<span><span class="co">## 4       1     11    112 B04  6.777709</span></span>
-<span><span class="co">## 5       1     12    121 B05 11.175522</span></span>
-<span><span class="co">## 6       1     12    121 B06  6.916156</span></span>
-<span><span class="co">## 7       1     12    122 B07 18.543541</span></span>
-<span><span class="co">## 8       1     12    122 B08 23.728960</span></span>
-<span><span class="co">## 9       1     13    131 B09 18.520664</span></span>
-<span><span class="co">## 10      1     13    131 B10 30.635776</span></span>
-<span><span class="co">## 11      1     13    132 B11 28.458991</span></span>
-<span><span class="co">## 12      1     13    132 B12 31.046172</span></span></code></pre>
-  </main>
+<span><span class="fu">adjust_weights</span><span class="op">(</span><span class="va">elementals</span>, <span class="va">pias</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Converged after 2 iterations</span></span>
+<span><span class="co">#&gt; Aggregation structure for 12 elementary aggregates with 3 levels above the elementary aggregates </span></span>
+<span><span class="co">#&gt;    level1 level2 level3  ea    weight</span></span>
+<span><span class="co">#&gt; 1       1     11    111 B01  2.154344</span></span>
+<span><span class="co">#&gt; 2       1     11    111 B02  2.896610</span></span>
+<span><span class="co">#&gt; 3       1     11    112 B03  4.819251</span></span>
+<span><span class="co">#&gt; 4       1     11    112 B04  6.777709</span></span>
+<span><span class="co">#&gt; 5       1     12    121 B05 11.175522</span></span>
+<span><span class="co">#&gt; 6       1     12    121 B06  6.916156</span></span>
+<span><span class="co">#&gt; 7       1     12    122 B07 18.543541</span></span>
+<span><span class="co">#&gt; 8       1     12    122 B08 23.728960</span></span>
+<span><span class="co">#&gt; 9       1     13    131 B09 18.520664</span></span>
+<span><span class="co">#&gt; 10      1     13    131 B10 30.635776</span></span>
+<span><span class="co">#&gt; 11      1     13    132 B11 28.458991</span></span>
+<span><span class="co">#&gt; 12      1     13    132 B12 31.046172</span></span></code></pre></div>
 </div>
 
+
+
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script></main>
+</div>
 
 
     <footer><div class="pkgdown-footer-left">
@@ -217,7 +306,7 @@ adjustment using the tools in this package.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

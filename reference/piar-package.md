@@ -14,6 +14,8 @@ methods described by Balk (2008,
 [doi:10.3726/978-3-653-01120-3](https://doi.org/10.3726/978-3-653-01120-3)
 ), and the CPI manual (2020,
 [doi:10.5089/9781484354841.069](https://doi.org/10.5089/9781484354841.069)
+) and PPI manual (2004,
+[doi:10.5089/9781589063044.069](https://doi.org/10.5089/9781589063044.069)
 ) for bilateral price indexes.
 
 ## See also

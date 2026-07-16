@@ -16,7 +16,7 @@ is_direct_index(x)
 
 - x:
 
-  An object to test.
+  `[object]` An object to test.
 
 ## Value
 

@@ -26,19 +26,15 @@ elementals <- matrix(c(rep(1, 6), runif(6 * 3, 0.8, 1.2)), nrow = 6) |>
   set_levels(paste0("B", 1:6))
 
 head(elementals)
-```
-
-    ## Period-over-period price index for 6 levels over 4 time periods 
-    ##       time
-    ## levels 1         2         3         4
-    ##     B1 1 1.0883616 0.9300382 1.0942740
-    ##     B2 1 1.1503093 1.0036897 0.8004546
-    ##     B3 1 1.1043929 1.0910821 0.9564813
-    ##     B4 1 1.1544498 1.1958948 0.9849979
-    ##     B5 1 0.9825924 0.8138142 0.9552576
-    ##     B6 1 0.8665487 0.8609494 0.9609941
-
-``` r
+#> Period-over-period price index for 6 levels over 4 time periods 
+#>       time
+#> levels 1         2         3         4
+#>     B1 1 1.0883616 0.9300382 1.0942740
+#>     B2 1 1.1503093 1.0036897 0.8004546
+#>     B3 1 1.1043929 1.0910821 0.9564813
+#>     B4 1 1.1544498 1.1958948 0.9849979
+#>     B5 1 0.9825924 0.8138142 0.9552576
+#>     B6 1 0.8665487 0.8609494 0.9609941
 
 # Make aggregation weights over 4 time periods.
 #            1
@@ -56,15 +52,14 @@ weights <- data.frame(
 )
 
 head(weights)
+#>   level1 level2 ea  weights period
+#> 1      1     11 B1 117.8964      1
+#> 2      1     11 B2 195.1659      1
+#> 3      1     11 B3 145.3728      1
+#> 4      1     12 B4 132.6752      1
+#> 5      1     12 B5 196.5415      1
+#> 6      1     12 B6 170.7482      1
 ```
-
-    ##   level1 level2 ea  weights period
-    ## 1      1     11 B1 117.8964      1
-    ## 2      1     11 B2 195.1659      1
-    ## 3      1     11 B3 145.3728      1
-    ## 4      1     12 B4 132.6752      1
-    ## 5      1     12 B5 196.5415      1
-    ## 6      1     12 B6 170.7482      1
 
 The key tools to deal with time-varying aggregation weights are the
 [`stack()`](https://rdrr.io/r/utils/stack.html) and
@@ -116,14 +111,13 @@ paasche <- Map(
   Reduce(stack, x = _)
 
 paasche
+#> Period-over-period price index for 3 levels over 4 time periods 
+#>       time
+#> levels 1         2         3         4
+#>     1  1 1.0504784 0.9666398 0.9468934
+#>     11 1 1.1117341 0.9920294 0.9329698
+#>     12 1 0.9898158 0.9447976 0.9647535
 ```
-
-    ## Period-over-period price index for 3 levels over 4 time periods 
-    ##       time
-    ## levels 1         2         3         4
-    ##     1  1 1.0504784 0.9666398 0.9468934
-    ##     11 1 1.1117341 0.9920294 0.9329698
-    ##     12 1 0.9898158 0.9447976 0.9647535
 
 ## Making a Fisher index
 
@@ -149,14 +143,13 @@ fisher <- Map(
   Reduce(stack, x = _)
 
 fisher
+#> Period-over-period price index for 3 levels over 4 time periods 
+#>       time
+#> levels 1         2         3         4
+#>     1  1 1.0509134 0.9783795 0.9600792
+#>     11 1 1.1157686 1.0007074 0.9557479
+#>     12 1 0.9891911 0.9567760 0.9665552
 ```
-
-    ## Period-over-period price index for 3 levels over 4 time periods 
-    ##       time
-    ## levels 1         2         3         4
-    ##     1  1 1.0509134 0.9783795 0.9600792
-    ##     11 1 1.1157686 1.0007074 0.9557479
-    ##     12 1 0.9891911 0.9567760 0.9665552
 
 This gives the same result as calculating the Laspeyres and Paasche
 indexes individually, and then calculating the Fisher index manually.
@@ -173,13 +166,12 @@ laspeyres <- Map(
   Reduce(stack, x = _)
 
 sqrt(as.matrix(laspeyres) * as.matrix(paasche))
+#>       time
+#> levels 1         2         3         4
+#>     1  1 1.0509134 0.9783795 0.9600792
+#>     11 1 1.1157686 1.0007074 0.9557479
+#>     12 1 0.9891911 0.9567760 0.9665552
 ```
-
-    ##       time
-    ## levels 1         2         3         4
-    ##     1  1 1.0509134 0.9783795 0.9600792
-    ##     11 1 1.1157686 1.0007074 0.9557479
-    ##     12 1 0.9891911 0.9567760 0.9665552
 
 [^1]: [`split()`](https://rdrr.io/r/base/split.html) can also be used
     for this.

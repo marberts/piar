@@ -19,8 +19,8 @@ price_relative(x, formula, ...)
 
 - x:
 
-  Either a numeric vector (or something that can be coerced into one) or
-  data frame of prices.
+  `[object]` Either a numeric vector (or something that can be coerced
+  into one) or data frame of prices.
 
 - ...:
 
@@ -28,21 +28,21 @@ price_relative(x, formula, ...)
 
 - period:
 
-  A factor, or something that can be coerced into one, that gives the
-  corresponding time period for each element in `x`. The ordering of
-  time periods follows the levels of `period` to agree with
+  `[factor]` A factor, or something that can be coerced into one, that
+  gives the corresponding time period for each element in `x`. The
+  ordering of time periods follows the levels of `period` to agree with
   [`cut()`](https://rdrr.io/r/base/cut.POSIXt.html).
 
 - product:
 
-  A factor, or something that can be coerced into one, that gives the
-  corresponding product identifier for each element in `x`.
+  `[factor]` A factor, or something that can be coerced into one, that
+  gives the corresponding product identifier for each element in `x`.
 
 - formula:
 
-  A two-sided formula, or something that can be coerced into one, with
-  prices on the left-hand side and time periods and products (in that
-  order) on the right-hand side.
+  `[formula]` A two-sided formula, or something that can be coerced into
+  one, with prices on the left-hand side and time periods and products
+  (in that order) on the right-hand side.
 
 ## Value
 
@@ -50,16 +50,13 @@ A numeric vector of price relatives, with `product` as names.
 
 ## See also
 
-[`gpindex::back_period()`](https://marberts.github.io/gpindex/reference/back_period.html)
-to get only the back price.
-
-[`gpindex::base_period()`](https://marberts.github.io/gpindex/reference/back_period.html)
-for making fixed-base price relatives.
+[`back_period()`](https://marberts.github.io/piar/reference/back_period.md)
+to get only the back price or base price.
 
 [`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
 to impute missing prices.
 
-[`gpindex::outliers`](https://marberts.github.io/gpindex/reference/outliers.html)
+[`outliers()`](https://marberts.github.io/piar/reference/outliers.md)
 for methods to identify outliers with price relatives.
 
 ## Examples

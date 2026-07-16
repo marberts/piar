@@ -81,6 +81,20 @@ Helpful functions for working with prices.
   : Impute missing prices
 - [`price_relative()`](https://marberts.github.io/piar/reference/price_relative.md)
   : Calculate period-over-period price relatives
+- [`back_period()`](https://marberts.github.io/piar/reference/back_period.md)
+  : Back period
+- [`outliers()`](https://marberts.github.io/piar/reference/outliers.md)
+  [`hb_transform()`](https://marberts.github.io/piar/reference/outliers.md)
+  : Outlier detection for price relatives
+
+## Multilateral indexes
+
+Functions to build multilateral elementary indexes.
+
+- [`geks_index()`](https://marberts.github.io/piar/reference/geks_index.md)
+  : GEKS index
+- [`splice_index()`](https://marberts.github.io/piar/reference/splice_index.md)
+  : Splice an index series
 
 ## Aggregation structure
 
@@ -134,3 +148,21 @@ The model used to represent price indexes.
   [`fs_prices`](https://marberts.github.io/piar/reference/price_data.md)
   [`fs_weights`](https://marberts.github.io/piar/reference/price_data.md)
   : Price data
+
+## Mathematical machinery
+
+Lower-level functions to implement the core tools for calculating price
+indexes.
+
+- [`gmean()`](https://marberts.github.io/piar/reference/gmean.md) :
+  Generalized mean
+- [`nested_gmean()`](https://marberts.github.io/piar/reference/nested_gmean.md)
+  : Nested generalized means
+- [`transmute_weights()`](https://marberts.github.io/piar/reference/transmute_weights.md)
+  : Transmute weights for a generalized mean
+- [`transmute_weights2()`](https://marberts.github.io/piar/reference/transmute_weights2.md)
+  : Transmute weights for a nested generalized mean
+- [`scale_weights()`](https://marberts.github.io/piar/reference/scale_weights.md)
+  : Scale weights
+- [`update_weights()`](https://marberts.github.io/piar/reference/update_weights.md)
+  : Update weights

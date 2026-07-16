@@ -23,25 +23,27 @@ as.matrix(x, ...)
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
-- row.names, stringsAsFactors:
+- row.names:
 
-  See [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html).
+  `[character]` See
+  [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html).
 
-- optional:
-
-  Not currently used.
-
-- ...:
+- optional, ...:
 
   Not currently used.
 
 - contrib:
 
-  Include percent-change contributions (the default does not include
-  them).
+  `[logical(1)]` Include percent-change contributions (the default does
+  not include them).
+
+- stringsAsFactors:
+
+  `[logical(1)]` See
+  [`as.data.frame()`](https://rdrr.io/r/base/as.data.frame.html).
 
 ## Value
 

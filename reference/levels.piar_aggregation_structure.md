@@ -14,7 +14,8 @@ levels(x)
 
 - x:
 
-  A price index aggregation structure, as made by
+  `[piar_aggregation_structure]` A price index aggregation structure, as
+  made by
   [`aggregation_structure()`](https://marberts.github.io/piar/reference/aggregation_structure.md).
 
 ## Value

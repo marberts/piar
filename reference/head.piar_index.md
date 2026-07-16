@@ -16,12 +16,12 @@ tail(x, n = 6L, ...)
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - n:
 
-  See
+  `[integer]` See
   [`head()`](https://rdrr.io/r/utils/head.html)/[`tail()`](https://rdrr.io/r/utils/head.html).
   The default takes the first/last 6 levels of `x`.
 

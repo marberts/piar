@@ -41,7 +41,7 @@ rebase(x, ..., base = NULL)
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - ...:
@@ -50,18 +50,18 @@ rebase(x, ..., base = NULL)
 
 - link:
 
-  A numeric vector, or something that can coerced into one, of link
-  values for each level in `x`. The default is equivalent to a vector of
-  1s so that no linking is done.
+  `[numeric > 0]` A numeric vector, or something that can coerced into
+  one, of link values for each level in `x`. The default is equivalent
+  to a vector of 1s so that no linking is done.
 
 - base:
 
-  A numeric vector, or something that can coerced into one, of
-  base-period index values for each level in `x`. The default is a
-  equivalent to a vector of 1s so that the base period remains the same.
-  If `base` is a length-one character vector giving a time period of `x`
-  then the index values for this time period are used as the base-period
-  values.
+  `[numeric > 0 | character(1)]` A numeric vector, or something that can
+  coerced into one, of base-period index values for each level in `x`.
+  The default is a equivalent to a vector of 1s so that the base period
+  remains the same. If `base` is a length-one character vector giving a
+  time period of `x` then the index values for this time period are used
+  as the base-period values.
 
 ## Value
 
@@ -116,8 +116,7 @@ Other index methods:
 ``` r
 index <- as_index(matrix(1:9, 3))
 
-# Make period 0 the fixed base period
-
+# Make period 0 the fixed base period.
 chain(index)
 #> Fixed-base price index for 3 levels over 3 time periods 
 #>       time
@@ -126,14 +125,12 @@ chain(index)
 #>      2 2 10  80
 #>      3 3 18 162
 
-# Chaining and unchaining reverse each other
-
+# Chaining and unchaining reverse each other.
 all.equal(index, unchain(chain(index)))
 #> [1] TRUE
 
 # Change the base period to period 2 (note the
-# loss of information for period 0)
-
+# loss of information for period 0).
 index <- chain(index)
 rebase(index, base = index[, 2])
 #> Fixed-base price index for 3 levels over 3 time periods 

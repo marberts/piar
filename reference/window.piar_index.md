@@ -16,18 +16,18 @@ window(x, start = NULL, end = NULL, ...) <- value
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - start:
 
-  The time period to start the window. The default in the first period
-  of `x`.
+  `[character(1)]` The time period to start the window. The default in
+  the first period of `x`.
 
 - end:
 
-  The time period to end the window. The default is the last period of
-  `x`.
+  `[character(1)]` The time period to end the window. The default is the
+  last period of `x`.
 
 - ...:
 
@@ -35,7 +35,7 @@ window(x, start = NULL, end = NULL, ...) <- value
 
 - value:
 
-  A numeric vector or price index.
+  `[numeric > 0 | piar_index]` A numeric vector or price index.
 
 ## Value
 

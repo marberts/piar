@@ -13,13 +13,14 @@ split_classification(x, split, ..., sep = ".", pad = NA)
 
 - x:
 
-  A character vector, or something that can be coerced into one, of
-  codes/labels for a specific level in a classification (e.g., 5-digit
-  COICOP).
+  `[character]` A character vector, or something that can be coerced
+  into one, of codes/labels for a specific level in a classification
+  (e.g., 5-digit COICOP).
 
 - split:
 
-  A regular expression to delineate and split the levels in `x`. See
+  `[character(1)]` A regular expression to delineate and split the
+  levels in `x`. See
   [`strsplit()`](https://rdrr.io/r/base/strsplit.html).
 
 - ...:
@@ -29,13 +30,13 @@ split_classification(x, split, ..., sep = ".", pad = NA)
 
 - sep:
 
-  A character used to delineate levels in `x` in the result. The default
-  separates levels by `"."`.
+  `[character(1)]` A character used to delineate levels in `x` in the
+  result. The default separates levels by `"."`.
 
 - pad:
 
-  A string used to pad the shorter labels for an unbalanced
-  classification. The default pads with `NA`.
+  `[character(1)]` A string used to pad the shorter labels for an
+  unbalanced classification. The default pads with `NA`.
 
 ## Value
 
@@ -56,7 +57,7 @@ for combining multiple hierarchical classifications.
 ## Examples
 
 ``` r
-#' # A simple classification structure
+#' # A simple classification structure.
 #            1
 #      |-----+-----|
 #      11          12
@@ -74,8 +75,7 @@ split_classification(c("111", "112", "121"), "")
 #> [1] "1.1.1" "1.1.2" "1.2.1"
 #> 
 
-# Useful if there are delimiters in the classification (like COICOP)
-
+# Useful if there are delimiters in the classification (like COICOP).
 split_classification(c("01.1.1", "01.1.2", "01.2.1"), ".", fixed = TRUE)
 #> [[1]]
 #> [1] "01" "01" "01"

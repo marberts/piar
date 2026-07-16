@@ -35,7 +35,7 @@ mean(
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - ...:
@@ -44,45 +44,47 @@ mean(
 
 - weights:
 
-  A numeric vector of weights for the index values in `x`, or something
-  that can be coerced into one. The default is equal weights. It is
-  usually easiest to specify these weights as a matrix with a row for
-  each index value in `x` and a column for each time period.
+  `[numeric >= 0]` A numeric vector of weights for the index values in
+  `x`, or something that can be coerced into one. The default is equal
+  weights. It is usually easiest to specify these weights as a matrix
+  with a row for each index value in `x` and a column for each time
+  period.
 
 - window:
 
-  A positive integer giving the size of the window used to average index
-  values across subperiods. The default averages over all periods in
-  `x`. Non-integers are truncated towards 0.
+  `[integer(1) > 0]` A positive integer giving the size of the window
+  used to average index values across subperiods. The default averages
+  over all periods in `x`. Non-integers are truncated towards 0.
 
 - na.rm:
 
-  Should missing values be removed? By default, missing values are not
-  removed. Setting `na.rm = TRUE` is equivalent to overall mean
-  imputation.
+  `[logical(1)]` Should missing values be removed? By default, missing
+  values are not removed. Setting `na.rm = TRUE` is equivalent to
+  overall mean imputation.
 
 - contrib:
 
-  Aggregate percent-change contributions in `x`? By default
-  contributions are aggregated.
+  `[logical(1)]` Aggregate percent-change contributions in `x`? By
+  default contributions are aggregated.
 
 - r:
 
-  Order of the generalized mean to aggregate index values. 0 for a
-  geometric index (the default for making elementary indexes), 1 for an
-  arithmetic index (the default for aggregating elementary indexes and
-  averaging indexes over subperiods), or -1 for a harmonic index
-  (usually for a Paasche index). Other values are possible; see
-  [`gpindex::generalized_mean()`](https://marberts.github.io/gpindex/reference/generalized_mean.html)
-  for details.
+  `[numeric(1)]` Order of the generalized mean to aggregate index
+  values. 0 for a geometric index (the default for making elementary
+  indexes), 1 for an arithmetic index (the default for aggregating
+  elementary indexes and averaging indexes over subperiods), or -1 for a
+  harmonic index (usually for a Paasche index). Other values are
+  possible; see
+  [`gmean()`](https://marberts.github.io/piar/reference/gmean.md) for
+  details.
 
 - duplicate_contrib:
 
-  The method to deal with duplicate product contributions. Either
-  `"make.unique"` to make duplicate product names unique with
-  [`make.unique()`](https://rdrr.io/r/base/make.unique.html) or `"sum"`
-  to add contributions for the same products across subperiods (the
-  default).
+  `[character(1)]` The method to deal with duplicate product
+  contributions. Either `"make.unique"` to make duplicate product names
+  unique with [`make.unique()`](https://rdrr.io/r/base/make.unique.html)
+  or `"sum"` to add contributions for the same products across
+  subperiods (the default).
 
 ## Value
 
@@ -135,7 +137,7 @@ Other index methods:
 ``` r
 index <- as_index(matrix(c(1:12, 12:1), 2, byrow = TRUE), chainable = FALSE)
 
-# Turn a monthly index into a quarterly index
+# Turn a monthly index into a quarterly index.
 mean(index, window = 3)
 #> Fixed-base price index for 2 levels over 4 time periods 
 #>       time

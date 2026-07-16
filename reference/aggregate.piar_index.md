@@ -39,13 +39,13 @@ aggregate(
 
 - x:
 
-  A price index, usually made by
+  `[piar_index]` A price index, usually made by
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - pias:
 
-  A price index aggregation structure or something that can be coerced
-  into one. This can be made with
+  `[piar_aggregation_structure]` A price index aggregation structure or
+  something that can be coerced into one. This can be made with
   [`aggregation_structure()`](https://marberts.github.io/piar/reference/aggregation_structure.md).
 
 - ...:
@@ -54,51 +54,54 @@ aggregate(
 
 - pias2:
 
-  An optional secondary aggregation structure, usually with
-  current-period weights, to make a superlative index. See details.
+  `[piar_aggregation_structure]` An optional secondary aggregation
+  structure, usually with current-period weights, to make a superlative
+  index. See details.
 
 - na.rm:
 
-  Should missing values be removed? By default, missing values are not
-  removed. Setting `na.rm = TRUE` is equivalent to overall mean
-  imputation.
+  `[logical(1)]` Should missing values be removed? By default, missing
+  values are not removed. Setting `na.rm = TRUE` is equivalent to
+  overall mean imputation.
 
 - contrib:
 
-  Aggregate percent-change contributions in `x`? By default
-  contributions are aggregated.
+  `[logical(1)]` Aggregate percent-change contributions in `x`? By
+  default contributions are aggregated.
 
 - r:
 
-  Order of the generalized mean to aggregate index values. 0 for a
-  geometric index (the default for making elementary indexes), 1 for an
-  arithmetic index (the default for aggregating elementary indexes and
-  averaging indexes over subperiods), or -1 for a harmonic index
-  (usually for a Paasche index). Other values are possible; see
-  [`gpindex::generalized_mean()`](https://marberts.github.io/gpindex/reference/generalized_mean.html)
-  for details. If `pias2` is given then the index is aggregated with a
+  `[numeric(1)]` Order of the generalized mean to aggregate index
+  values. 0 for a geometric index (the default for making elementary
+  indexes), 1 for an arithmetic index (the default for aggregating
+  elementary indexes and averaging indexes over subperiods), or -1 for a
+  harmonic index (usually for a Paasche index). Other values are
+  possible; see
+  [`gmean()`](https://marberts.github.io/piar/reference/gmean.md) for
+  details. If `pias2` is given then the index is aggregated with a
   quadratic mean of order `2*r`.
 
 - include_ea:
 
-  Should indexes for the elementary aggregates be included along with
-  the aggregated indexes? By default, all index values are returned.
+  `[logical(1)]` Should indexes for the elementary aggregates be
+  included along with the aggregated indexes? By default, all index
+  values are returned.
 
 - duplicate_contrib:
 
-  The method to deal with duplicate product contributions. Either
-  `"make.unique"` to treat duplicate products as distinct products and
-  make their names unique with
+  `[character(1)]` The method to deal with duplicate product
+  contributions. Either `"make.unique"` to treat duplicate products as
+  distinct products and make their names unique with
   [`make.unique()`](https://rdrr.io/r/base/make.unique.html) or `"sum"`
   to add contributions for each product (the default).
 
 - impute_rules:
 
-  (Experimental) A function that applies imputation rules to the
-  elementary indexes in each time period prior to aggregation. It takes
-  two arguments, the elementary indexes for a given time period and the
-  (price updated) aggregation structure, and must return back the
-  elementary indexes.
+  `[function]` (Experimental) A function that applies imputation rules
+  to the elementary indexes in each time period prior to aggregation. It
+  takes two arguments, the elementary indexes for a given time period
+  and the (price updated) aggregation structure, and must return back
+  the elementary indexes.
 
 ## Value
 
@@ -110,14 +113,14 @@ The [`aggregate()`](https://rdrr.io/r/stats/aggregate.html) method loops
 over each time period in `x` and
 
 1.  aggregates the elementary indexes with
-    [`gpindex::generalized_mean(r)()`](https://marberts.github.io/gpindex/reference/generalized_mean.html)
-    for each level of `pias`;
+    [`gmean()`](https://marberts.github.io/piar/reference/gmean.md) for
+    each level of `pias`;
 
 2.  aggregates percent-change contributions for each level of `pias` (if
     there are any and `contrib = TRUE`);
 
 3.  price updates the weights in `pias` with
-    [`gpindex::factor_weights(r)()`](https://marberts.github.io/gpindex/reference/factor_weights.html)
+    [`update_weights()`](https://marberts.github.io/piar/reference/update_weights.md)
     (only for period-over-period elementary indexes).
 
 The result is a collection of aggregated period-over-period indexes that
@@ -130,7 +133,7 @@ By default, missing elementary indexes will propagate when aggregating
 the index. Missing elementary indexes can be due to both missingness of
 these values in `x`, and the presence of elementary aggregates in `pias`
 that are not part of `x`. Setting `na.rm = TRUE` ignores missing values,
-and is equivalent to parental (or overall mean) imputation. As an
+and is equivalent to overall mean (or parental) imputation. As an
 aggregated price index generally cannot have missing values (for
 otherwise it can't be chained over time and weights can't be price
 updated), any missing values for a level of `pias` are removed and
@@ -150,7 +153,7 @@ Aggregating percent-change contributions uses the method in chapter 9 of
 the CPI manual (equations 9.26 and 9.28) when aggregating with an
 arithmetic mean. With a non-arithmetic mean, arithmetic weights are
 constructed using
-[`gpindex::transmute_weights(r, 1)()`](https://marberts.github.io/gpindex/reference/transmute_weights.html)
+[`transmute_weights()`](https://marberts.github.io/piar/reference/transmute_weights.md)
 in order to apply this method.
 
 There may not be contributions for all prices relatives in an elementary
@@ -168,7 +171,7 @@ with a generalized mean of order `-r`. The resulting indexes are
 combined with a geometric mean to make a superlative quadratic mean of
 order `2*r` index. Percent-change contributions are combined using a
 generalized van IJzeren decomposition; see
-[`gpindex::nested_transmute()`](https://marberts.github.io/gpindex/reference/transmute_weights.html)
+[`transmute_weights2()`](https://marberts.github.io/piar/reference/transmute_weights2.md)
 for details.
 
 ## Note
@@ -220,15 +223,13 @@ prices <- data.frame(
   ea = rep(letters[1:2], 4)
 )
 
-# A two-level aggregation structure
-
+# A two-level aggregation structure.
 pias <- aggregation_structure(
   list(c("top", "top", "top"), c("a", "b", "c")),
   weights = 1:3
 )
 
-# Calculate Jevons elementary indexes
-
+# Calculate Jevons elementary indexes.
 (elementary <- elementary_index(prices, rel ~ period + ea))
 #> Period-over-period price index for 2 levels over 2 time periods 
 #>       time
@@ -236,8 +237,7 @@ pias <- aggregation_structure(
 #>      a 1.732051 5.916080
 #>      b 2.828427 6.928203
 
-# Aggregate (note the imputation for elementary index 'c')
-
+# Aggregate (note the imputation for elementary index 'c').
 (index <- aggregate(elementary, pias, na.rm = TRUE))
 #> Period-over-period price index for 4 levels over 2 time periods 
 #>       time
@@ -247,8 +247,7 @@ pias <- aggregation_structure(
 #>    b   2.828427 6.928203
 #>    c   2.462968 6.690949
 
-# Aggregation can equivalently be done as matrix multiplication
-
+# Aggregation can equivalently be done as matrix multiplication.
 as.matrix(pias) %*% as.matrix(chain(index[letters[1:3]]))
 #>       time
 #> levels        1       2

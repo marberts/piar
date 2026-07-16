@@ -13,13 +13,14 @@ update(object, index, ..., period = NULL, r = 1)
 
 - object:
 
-  A price index aggregation structure, as made by
+  `[piar_aggregation_structure]` A price index aggregation structure, as
+  made by
   [`aggregation_structure()`](https://marberts.github.io/piar/reference/aggregation_structure.md).
 
 - index:
 
-  A fixed-base (direct) price index, or something that can be coerced
-  into one. Usually an aggregate price index as made by
+  `[piar_index]` A fixed-base (direct) price index, or something that
+  can be coerced into one. Usually an aggregate price index as made by
   [`aggregate()`](https://marberts.github.io/piar/reference/aggregate.piar_index.md).
 
 - ...:
@@ -28,13 +29,13 @@ update(object, index, ..., period = NULL, r = 1)
 
 - period:
 
-  The time period used to price update the weights. The default uses the
-  last period in `index`.
+  `[character(1)]` The time period used to price update the weights. The
+  default uses the last period in `index`.
 
 - r:
 
-  Order of the generalized mean to update the weights. The default is 1
-  for an arithmetic index.
+  `[numeric(1)]` Order of the generalized mean to update the weights.
+  The default is 1 for an arithmetic index.
 
 ## Value
 
@@ -55,14 +56,13 @@ Other aggregation structure methods:
 ## Examples
 
 ``` r
-# A simple aggregation structure
+# A simple aggregation structure.
 #            1
 #      |-----+-----|
 #      11          12
 #  |---+---|       |
 #  111     112     121
 #  (1)     (3)     (4)
-
 aggregation_weights <- data.frame(
   level1 = c("1", "1", "1"),
   level2 = c("11", "11", "12"),

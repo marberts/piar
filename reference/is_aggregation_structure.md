@@ -12,7 +12,7 @@ is_aggregation_structure(x)
 
 - x:
 
-  An object to test.
+  `[object]` An object to test.
 
 ## Value
 

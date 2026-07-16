@@ -30,7 +30,7 @@ as_index(x, ...)
 
 - x:
 
-  An object to coerce into a price index.
+  `[object]` An object to coerce into a price index.
 
 - ...:
 
@@ -38,14 +38,14 @@ as_index(x, ...)
 
 - chainable:
 
-  Are the index values in `x` period-over-period indexes, suitable for a
-  chained calculation (the default)? This should be `FALSE` when `x`
-  contains fixed-base (direct) index values.
+  `[logical(1)]` Are the index values in `x` period-over-period indexes,
+  suitable for a chained calculation (the default)? This should be
+  `FALSE` when `x` contains fixed-base (direct) index values.
 
 - contrib:
 
-  Should the index values in `x` be used to construct percent-change
-  contributions? The default does not make contributions.
+  `[logical(1)]` Should the index values in `x` be used to construct
+  percent-change contributions? The default does not make contributions.
 
 ## Value
 

@@ -21,14 +21,14 @@ merge(x, y, ...)
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - y:
 
-  A price index, or something that can coerced into one. If `x` is a
-  period-over-period index then `y` is coerced into a chainable index;
-  otherwise, `y` is coerced into a direct index.
+  `[piar_index]` A price index, or something that can coerced into one.
+  If `x` is a period-over-period index then `y` is coerced into a
+  chainable index; otherwise, `y` is coerced into a direct index.
 
 - ...:
 

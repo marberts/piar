@@ -21,7 +21,7 @@ as_aggregation_structure(x, ...)
 
 - x:
 
-  An object to coerce into an aggregation structure.
+  `[object]` An object to coerce into an aggregation structure.
 
 - ...:
 
@@ -29,8 +29,9 @@ as_aggregation_structure(x, ...)
 
 - weights:
 
-  A numeric vector of aggregation weights for the elementary aggregates.
-  The default is to give each elementary aggregate the same weight.
+  `[numeric >= 0]` A numeric vector of aggregation weights for the
+  elementary aggregates. The default is to give each elementary
+  aggregate the same weight.
 
 ## Value
 
@@ -64,7 +65,6 @@ for coercing an aggregation structure into a tabular form.
 #  |---+---|       |
 #  111     112     121
 #  (1)     (3)     (4)
-
 aggregation_weights <- data.frame(
   level1 = c("1", "1", "1"),
   level2 = c("11", "11", "12"),

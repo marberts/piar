@@ -28,7 +28,7 @@ ntime(x)
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - ...:
@@ -37,8 +37,8 @@ ntime(x)
 
 - value:
 
-  A character vector, or something that can be coerced into one, giving
-  the replacement time periods for `x`.
+  `[character]` A character vector, or something that can be coerced
+  into one, giving the replacement time periods for `x`.
 
 ## Value
 

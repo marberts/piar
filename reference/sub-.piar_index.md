@@ -16,12 +16,13 @@ x[i, j, ...] <- value
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - i, j:
 
-  Indices for the levels and time periods of a price index. See details.
+  `[integer | logical | character | matrix]` Indices for the levels and
+  time periods of a price index. See details.
 
 - ...:
 
@@ -29,7 +30,8 @@ x[i, j, ...] <- value
 
 - value:
 
-  A numeric vector, price index, or list of price indexes. See details.
+  `[numeric > 0 | piar_index | list]` A numeric vector, price index, or
+  list of price indexes. See details.
 
 ## Value
 

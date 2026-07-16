@@ -11,11 +11,20 @@
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
+  window.MathJax = {
+    chtml: {
+      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
+    }
+  };
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Spatial price indexes">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="spatial-price-index_files/libs/quarto-html/popper.min.js"></script><script src="spatial-price-index_files/libs/quarto-html/tippy.umd.min.js"></script><link href="spatial-price-index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="spatial-price-index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Spatial price indexes">
+<meta property="og:image" content="https://marberts.github.io/piar/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -60,35 +69,27 @@
 
 
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Spatial price indexes</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/main/vignettes/spatial-price-index.Rmd" class="external-link"><code>vignettes/spatial-price-index.Rmd</code></a></small>
-      <div class="d-none name"><code>spatial-price-index.Rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/marberts/piar/blob/main/vignettes/spatial-price-index.qmd" class="external-link"><code>vignettes/spatial-price-index.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<p>It is possible to rework the functions in this package to make a
-spatial, rather than temporal, price index using a star model by simply
-replacing “time” with “space”. Although this is not a suitable approach
-for making a system of purchasing power parities, is it useful for
-making indexes that adjust pay for cost-of-living differences relative
-to a fixed location. These sorts of indexes are made by the United
-Nations International Civil Service Commission, Eurostat, and various
-governments and private-sector organizations for administering
-cost-of-living allowances.</p>
-<p>The basic workflow is the same as with a temporal index, just
-treating each country as a different “time period” in a fixed-based
-index.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+
+
+
+
+
+    <p>It is possible to rework the functions in this package to make a spatial, rather than temporal, price index using a star model by simply replacing “time” with “space”. Although this is not a suitable approach for making a system of purchasing power parities, is it useful for making indexes that adjust pay for cost-of-living differences relative to a fixed location. These sorts of indexes are made by the United Nations International Civil Service Commission, Eurostat, and various governments and private-sector organizations for administering cost-of-living allowances.</p>
+<p>The basic workflow is the same as with a temporal index, just treating each country as a different “time period” in a fixed-based index.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://marberts.github.io/piar/">piar</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span>
@@ -104,18 +105,18 @@ index.</p>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/as_index.html">as_index</a></span><span class="op">(</span>chainable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bh_index</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Fixed-base price index for 6 levels over 4 time periods </span></span>
-<span><span class="co">##       time</span></span>
-<span><span class="co">## levels Country 1 Country 2 Country 3 Country 4</span></span>
-<span><span class="co">##    BH1         1 1.0883616 0.9300382 1.0942740</span></span>
-<span><span class="co">##    BH2         1 1.1503093 1.0036897 0.8004546</span></span>
-<span><span class="co">##    BH3         1 1.1043929 1.0910821 0.9564813</span></span>
-<span><span class="co">##    BH4         1 1.1544498 1.1958948 0.9849979</span></span>
-<span><span class="co">##    BH5         1 0.9825924 0.8138142 0.9552576</span></span>
-<span><span class="co">##    BH6         1 0.8665487 0.8609494 0.9609941</span></span></code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Make fixed aggregation weights.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bh_index</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Fixed-base price index for 6 levels over 4 time periods </span></span>
+<span><span class="co">#&gt;       time</span></span>
+<span><span class="co">#&gt; levels Country 1 Country 2 Country 3 Country 4</span></span>
+<span><span class="co">#&gt;    BH1         1 1.0883616 0.9300382 1.0942740</span></span>
+<span><span class="co">#&gt;    BH2         1 1.1503093 1.0036897 0.8004546</span></span>
+<span><span class="co">#&gt;    BH3         1 1.1043929 1.0910821 0.9564813</span></span>
+<span><span class="co">#&gt;    BH4         1 1.1544498 1.1958948 0.9849979</span></span>
+<span><span class="co">#&gt;    BH5         1 0.9825924 0.8138142 0.9552576</span></span>
+<span><span class="co">#&gt;    BH6         1 0.8665487 0.8609494 0.9609941</span></span>
+<span></span>
+<span><span class="co"># Make fixed aggregation weights.</span></span>
 <span><span class="co">#            1</span></span>
 <span><span class="co">#      |-----+-----|</span></span>
 <span><span class="co">#      11          12</span></span>
@@ -129,39 +130,123 @@ index.</p>
 <span>  weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">100</span>, <span class="fl">200</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">weights</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   level1 level2  bh  weights</span></span>
-<span><span class="co">## 1      1     11 BH1 117.8964</span></span>
-<span><span class="co">## 2      1     11 BH2 195.1659</span></span>
-<span><span class="co">## 3      1     11 BH3 145.3728</span></span>
-<span><span class="co">## 4      1     12 BH4 132.6752</span></span>
-<span><span class="co">## 5      1     12 BH5 196.5415</span></span>
-<span><span class="co">## 6      1     12 BH6 170.7482</span></span></code></pre>
-<p>The indexes at the basic-heading level can be aggregated as usual to
-get a collection of indexes that give the difference in purchasing power
-relative to the base country (country 1 in this example). Different
-choices for weights make different assumptions about how people change
-their spending patterns between each country and the base country.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">weights</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   level1 level2  bh  weights</span></span>
+<span><span class="co">#&gt; 1      1     11 BH1 117.8964</span></span>
+<span><span class="co">#&gt; 2      1     11 BH2 195.1659</span></span>
+<span><span class="co">#&gt; 3      1     11 BH3 145.3728</span></span>
+<span><span class="co">#&gt; 4      1     12 BH4 132.6752</span></span>
+<span><span class="co">#&gt; 5      1     12 BH5 196.5415</span></span>
+<span><span class="co">#&gt; 6      1     12 BH6 170.7482</span></span></code></pre></div>
+</div>
+<p>The indexes at the basic-heading level can be aggregated as usual to get a collection of indexes that give the difference in purchasing power relative to the base country (country 1 in this example). Different choices for weights make different assumptions about how people change their spending patterns between each country and the base country.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate</a></span><span class="op">(</span><span class="va">bh_index</span>, <span class="va">weights</span><span class="op">)</span></span></code></pre></div>
-<p>As it can be costly to collect price data from various countries on a
-regular basis, these sorts of indexes are often updated over time by
-changes in exchange rates and inflation rates for each country.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">index</span><span class="op">[</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##       time</span></span>
-<span><span class="co">## levels Country 2 Country 3 Country 4</span></span>
-<span><span class="co">##      1  1.051349 0.9701244 0.9461596</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">update_factors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0.8</span>, <span class="fl">1.2</span><span class="op">)</span></span>
+</div>
+<p>As it can be costly to collect price data from various countries on a regular basis, these sorts of indexes are often updated over time by changes in exchange rates and inflation rates for each country.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">index</span><span class="op">[</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;       time</span></span>
+<span><span class="co">#&gt; levels Country 2 Country 3 Country 4</span></span>
+<span><span class="co">#&gt;      1  1.051349 0.9701244 0.9461596</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">index</span><span class="op">[</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">*</span> <span class="va">update_factors</span></span></code></pre></div>
-<pre><code><span><span class="co">##       time</span></span>
-<span><span class="co">## levels Country 2 Country 3 Country 4</span></span>
-<span><span class="co">##      1  1.112134 0.9273724  1.021301</span></span></code></pre>
-  </main>
+<span><span class="va">update_factors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0.8</span>, <span class="fl">1.2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">index</span><span class="op">[</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">*</span> <span class="va">update_factors</span></span>
+<span><span class="co">#&gt;       time</span></span>
+<span><span class="co">#&gt; levels Country 2 Country 3 Country 4</span></span>
+<span><span class="co">#&gt;      1  1.112134 0.9273724  1.021301</span></span></code></pre></div>
 </div>
 
+
+
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script></main>
+</div>
 
 
     <footer><div class="pkgdown-footer-left">
@@ -169,7 +254,7 @@ changes in exchange rates and inflation rates for each country.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

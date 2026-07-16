@@ -16,32 +16,32 @@ interact_classifications(..., sep = ":")
 
 - x:
 
-  A character vector, or something that can be coerced into one, of
-  codes/labels for a specific level in a classification (e.g., 5-digit
-  COICOP, 5-digit NAICS, 4-digit SIC).
+  `[character]` A character vector, or something that can be coerced
+  into one, of codes/labels for a specific level in a classification
+  (e.g., 5-digit COICOP, 5-digit NAICS, 4-digit SIC).
 
 - width:
 
-  An integer vector that gives the width of each digit in `x`. A single
-  value is recycled to span the longest element in `x`. This cannot
-  contain NAs. The default assumes each digit has a width of 1, as in
-  the NAICS, NAPCS, and SIC classifications.
+  `[integer > 0]` An integer vector that gives the width of each digit
+  in `x`. A single value is recycled to span the longest element in `x`.
+  This cannot contain NAs. The default assumes each digit has a width of
+  1, as in the NAICS, NAPCS, and SIC classifications.
 
 - pad:
 
-  A string used to pad the shorter labels for an unbalanced
-  classification. The default pads with NA.
+  `[character(1)]` A string used to pad the shorter labels for an
+  unbalanced classification. The default pads with NA.
 
 - ...:
 
-  Lists of character vectors that give the codes/labels for each level
-  of the classification, ordered so that moving down the list goes down
-  the hierarchy (as made by `expand_classification()`).
+  `[list]` Lists of character vectors that give the codes/labels for
+  each level of the classification, ordered so that moving down the list
+  goes down the hierarchy (as made by `expand_classification()`).
 
 - sep:
 
-  A character used to combine codes/labels across elements of `...`. The
-  default uses `":"`.
+  `[character(1)]` A character used to combine codes/labels across
+  elements of `...`. The default uses `":"`.
 
 ## Value
 
@@ -68,7 +68,7 @@ unbalanced classifications.
 ## Examples
 
 ``` r
-# A simple classification structure
+# A simple classification structure.
 #            1
 #      |-----+-----|
 #      11          12
@@ -86,9 +86,8 @@ expand_classification(c("111", "112", "121"))
 #> [1] "111" "112" "121"
 #> 
 
-# Expanding more complex classifications
-# ... if last 'digit' is either TA or TS
-
+# Expanding more complex classifications:
+# ... if last 'digit' is either TA or TS.
 expand_classification(
   c("111TA", "112TA", "121TS"),
   width = c(1, 1, 1, 2)
@@ -106,8 +105,7 @@ expand_classification(
 #> [1] "111TA" "112TA" "121TS"
 #> 
 
-# ... if first 'digit' is either 11 or 12
-
+# ... if first 'digit' is either 11 or 12.
 expand_classification(c("111", "112", "121"), width = c(2, 1))
 #> [[1]]
 #> [1] "11" "11" "12"
@@ -116,8 +114,7 @@ expand_classification(c("111", "112", "121"), width = c(2, 1))
 #> [1] "111" "112" "121"
 #> 
 
-# ...if there are delimiters in the classification (like COICOP)
-
+# ...if there are delimiters in the classification (like COICOP).
 expand_classification(c("01.1.1", "01.1.2", "01.2.1"), width = 2)
 #> [[1]]
 #> [1] "01" "01" "01"

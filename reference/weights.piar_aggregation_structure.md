@@ -20,7 +20,8 @@ set_weights(object, value)
 
 - object:
 
-  A price index aggregation structure, as made by
+  `[piar_aggregation_structure]` A price index aggregation structure, as
+  made by
   [`aggregation_structure()`](https://marberts.github.io/piar/reference/aggregation_structure.md).
 
 - ...:
@@ -29,18 +30,20 @@ set_weights(object, value)
 
 - ea_only:
 
-  Should weights be returned for only the elementary aggregates (the
-  default)? Setting to `FALSE` gives the weights for the entire
-  aggregation structure.
+  `[logical(1)]` Should weights be returned for only the elementary
+  aggregates (the default)? Setting to `FALSE` gives the weights for the
+  entire aggregation structure.
 
 - na.rm:
 
-  Should missing values be removed when aggregating the weights (i.e.,
-  when `ea_only = FALSE`)? By default, missing values are not removed.
+  `[logical(1)]` Should missing values be removed when aggregating the
+  weights (i.e., when `ea_only = FALSE`)? By default, missing values are
+  not removed.
 
 - value:
 
-  A numeric vector of weights for the elementary aggregates of `object`.
+  `[numeric >= 0]` A numeric vector of weights for the elementary
+  aggregates of `object`.
 
 ## Value
 
@@ -63,14 +66,13 @@ Other aggregation structure methods:
 ## Examples
 
 ``` r
-# A simple aggregation structure
+# A simple aggregation structure.
 #            1
 #      |-----+-----|
 #      11          12
 #  |---+---|       |
 #  111     112     121
 #  (1)     (3)     (4)
-
 aggregation_weights <- data.frame(
   level1 = c("1", "1", "1"),
   level2 = c("11", "11", "12"),
@@ -80,14 +82,12 @@ aggregation_weights <- data.frame(
 
 pias <- as_aggregation_structure(aggregation_weights)
 
-# Extract the weights
-
+# Extract the weights.
 weights(pias)
 #> 111 112 121 
 #>   1   3   4 
 
-# ... or update them
-
+# ... or update them.
 weights(pias) <- 1:3
 weights(pias)
 #> 111 112 121 

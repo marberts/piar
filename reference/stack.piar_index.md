@@ -30,14 +30,14 @@ unstack(x, ...)
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - y:
 
-  A price index, or something that can coerced into one. If `x` is a
-  period-over-period index then `y` is coerced into a chainable index;
-  otherwise, `y` is coerced into a direct index.
+  `[piar_index]` A price index, or something that can coerced into one.
+  If `x` is a period-over-period index then `y` is coerced into a
+  chainable index; otherwise, `y` is coerced into a direct index.
 
 - ...:
 
@@ -91,8 +91,7 @@ stack(index1, index2)
 #>      1 1 3 5 1 3 5
 #>      2 2 4 6 2 4 6
 
-# Unstack does the reverse
-
+# Unstack does the reverse.
 all.equal(
   c(unstack(index1), unstack(index2)),
   unstack(stack(index1, index2))

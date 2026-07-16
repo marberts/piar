@@ -13,16 +13,17 @@ combine_classifications(..., sep = ".")
 
 - ...:
 
-  A collection of lists, one for each classification, each giving the
-  "digits" that represent each level in the hierarchy, as made by
+  `[list]` A collection of lists, one for each classification, each
+  giving the "digits" that represent each level in the hierarchy, as
+  made by
   [`expand_classification()`](https://marberts.github.io/piar/reference/expand_classification.md)
   or
   [`split_classification()`](https://marberts.github.io/piar/reference/split_classification.md).
 
 - sep:
 
-  A character used to separate the classifications in `...`. The default
-  separates levels across classifications by `"."`.
+  `[character(1)]` A character used to separate the classifications in
+  `...`. The default separates levels across classifications by `"."`.
 
 ## Value
 
@@ -32,8 +33,7 @@ A list with a entry for each level in the combined classification.
 
 ``` r
 # Combine an unbalanced industry classification with a balanced
-# geographic classification
-
+# geographic classification.
 industry <- c("111", "112", "12")
 region <- c("11", "21", "22")
 

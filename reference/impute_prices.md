@@ -53,9 +53,9 @@ shadow_price(x, ...)
 
 - x:
 
-  Either a numeric vector (or something that can be coerced into one), a
-  data frame of prices, or a two-column matrix of current prices and
-  back prices (in that order).
+  `[object]` Either a numeric vector (or something that can be coerced
+  into one), a data frame of prices, or a two-column matrix of current
+  prices and back prices (in that order).
 
 - ...:
 
@@ -63,67 +63,68 @@ shadow_price(x, ...)
 
 - period:
 
-  A factor, or something that can be coerced into one, giving the time
-  period associated with each price in `x`. The ordering of time periods
-  follows of the levels of `period`, to agree with
+  `[factor]` A factor, or something that can be coerced into one, giving
+  the time period associated with each price in `x`. The ordering of
+  time periods follows of the levels of `period`, to agree with
   [`cut()`](https://rdrr.io/r/base/cut.POSIXt.html).
 
 - product:
 
-  A factor, or something that can be coerced into one, giving the
-  product associated with each price in `x`.
+  `[factor]` A factor, or something that can be coerced into one, giving
+  the product associated with each price in `x`.
 
 - ea:
 
-  A factor, or something that can be coerced into one, giving the
-  elementary aggregate associated with each price in `x`. This is
+  `[factor]` A factor, or something that can be coerced into one, giving
+  the elementary aggregate associated with each price in `x`. This is
   evaluated in `x` for the data frame method. The default pools all data
   into one elementary aggregate.
 
 - weights:
 
-  A numeric vector of weights for the prices in `x` (i.e., product
-  weights), or something that can be coerced into one. The default is to
-  give each price equal weight. This is evaluated in `x` for the data
-  frame method.
+  `[numeric >= 0]` A numeric vector of weights for the prices in `x`
+  (i.e., product weights), or something that can be coerced into one.
+  The default is to give each price equal weight. This is evaluated in
+  `x` for the data frame method.
 
 - pias:
 
-  A price index aggregation structure, or something that can be coerced
-  into one, as made with
+  `[piar_aggregation_structure]` A price index aggregation structure, or
+  something that can be coerced into one, as made with
   [`aggregation_structure()`](https://marberts.github.io/piar/reference/aggregation_structure.md).
   The default imputes from elementary indexes only (i.e., not
   recursively).
 
 - r:
 
-  A pair of numeric values. The first gives the order of the
-  generalized-mean price index used to calculate the elementary price
-  indexes, defaulting to a geometric index. The second gives the order
-  of the generalized-mean price index used to aggregate the elementary
-  price indexes, defaulting to an arithmetic index. Other values are
-  possible; see
-  [`gpindex::generalized_mean()`](https://marberts.github.io/gpindex/reference/generalized_mean.html)
-  for details.
+  `[numeric(2)]` A pair of numeric values. The first gives the order of
+  the generalized-mean price index used to calculate the elementary
+  price indexes, defaulting to a geometric index. The second gives the
+  order of the generalized-mean price index used to aggregate the
+  elementary price indexes, defaulting to an arithmetic index. Other
+  values are possible; see
+  [`gmean()`](https://marberts.github.io/piar/reference/gmean.md) for
+  details.
 
 - method:
 
-  Name of the imputation method, one of `"overall-mean"`,
-  `"carry-forward"`, or `"carry-backward"`.
+  `[character(1)]` Name of the imputation method, one of
+  `"overall-mean"` (the default), `"carry-forward"`, or
+  `"carry-backward"`.
 
 - impute_rules:
 
-  (Experimental) A function that applies imputation rules to the
-  elementary indexes in each time period prior to aggregation. It takes
-  two arguments, the elementary indexes for a given time period and the
-  (price updated) aggregation structure, and must return back the
-  elementary indexes.
+  `[function]` (Experimental) A function that applies imputation rules
+  to the elementary indexes in each time period prior to aggregation. It
+  takes two arguments, the elementary indexes for a given time period
+  and the (price updated) aggregation structure, and must return back
+  the elementary indexes.
 
 - formula:
 
-  A two-sided formula, or something that can be coerced into one, with
-  prices on the left-hand side and time periods and products on the
-  right-hand side (in that order).
+  `[formula]` A two-sided formula, or something that can be coerced into
+  one, with prices on the left-hand side and time periods and products
+  on the right-hand side (in that order).
 
 ## Value
 
@@ -194,7 +195,7 @@ impute_prices(
 # Can also be done with current price-back price formulation.
 prices$back_price <- with(
   prices,
-  price[gpindex::back_period(period, product)]
+  price[back_period(period, product)]
 )
 
 impute_prices(

@@ -18,13 +18,13 @@ set_levels(x, value)
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - value:
 
-  A character vector, or something that can be coerced into one, giving
-  the replacement levels for `x`.
+  `[character]` A character vector, or something that can be coerced
+  into one, giving the replacement levels for `x`.
 
 ## Value
 

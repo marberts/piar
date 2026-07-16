@@ -21,30 +21,32 @@ set_contrib_from_index(x)
 
 - x:
 
-  A price index, as made by, e.g.,
+  `[piar_index]` A price index, as made by, e.g.,
   [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 
 - level, levels:
 
-  The level of an index for which percent-change contributions are
-  desired, defaulting to the first level (usually the top-level for an
-  aggregate index). `contrib2DF()` can accept multiple levels.
+  `[character]` The level of an index for which percent-change
+  contributions are desired, defaulting to the first level (usually the
+  top-level for an aggregate index). `contrib2DF()` can accept multiple
+  levels.
 
 - period:
 
-  The time periods for which percent-change contributions are desired,
-  defaulting to all time periods.
+  `[character]` The time periods for which percent-change contributions
+  are desired, defaulting to all time periods.
 
 - pad:
 
-  A numeric value to pad contributions so that they fit into a
-  rectangular array when products differ over time. The default is 0.
+  `[numeric(1)]` A numeric value to pad contributions so that they fit
+  into a rectangular array when products differ over time. The default
+  is 0.
 
 - value:
 
-  A numeric matrix of replacement contributions with a row for each
-  product and a column for each time period. Recycling occurs along time
-  periods.
+  `[matrix]` A numeric matrix of replacement contributions with a row
+  for each product and a column for each time period. Recycling occurs
+  along time periods.
 
 ## Value
 
@@ -96,8 +98,7 @@ pias <- aggregation_structure(
 
 index <- aggregate(index, pias, na.rm = TRUE)
 
-# Percent-change contributions for the top-level index
-
+# Percent-change contributions for the top-level index.
 contrib(index)
 #>        time
 #> product         1         2
@@ -117,9 +118,10 @@ contrib2DF(index)
 #> 7      2   top     b.1 2.0513858
 #> 8      2   top     b.2 2.4871732
 
-# Calculate EA contributions for the chained index
-
-library(gpindex)
+# Calculate EA contributions for the chained index.
+arithmetic_contributions <- function(x, w, r = 1) {
+  (x - 1) * transmute_weights(x, w, r, to = 1)
+}
 
 arithmetic_contributions(
   as.matrix(chain(index))[c("a", "b", "c"), 2],

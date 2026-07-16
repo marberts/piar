@@ -24,6 +24,8 @@ More advanced price-index methods.
 - [Contributions](https://marberts.github.io/piar/articles/contributions.md):
 - [Adjusting annual
   weights](https://marberts.github.io/piar/articles/adjust-weights.md):
+- [Decomposing price
+  indexes](https://marberts.github.io/piar/articles/decomposing-indexes.md):
 
 ### Other topics
 
