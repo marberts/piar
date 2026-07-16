@@ -20,7 +20,7 @@
 #' index. Missing elementary indexes can be due to both missingness of these
 #' values in `x`, and the presence of elementary aggregates in `pias`
 #' that are not part of `x`. Setting `na.rm = TRUE` ignores missing
-#' values, and is equivalent to parental (or overall mean) imputation. As an
+#' values, and is equivalent to overall mean (or parental) imputation. As an
 #' aggregated price index generally cannot have missing values (for otherwise
 #' it can't be chained over time and weights can't be price updated), any
 #' missing values for a level of `pias` are removed and recursively replaced

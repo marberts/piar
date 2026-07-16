@@ -120,3 +120,19 @@ local({
   expect_equal(index1_rebase, rebase(index1_chain, base = end(index1_chain)))
   expect_equal(index2, unchain(index1_rebase, base = end(index1_rebase)))
 })
+
+# It used to be possible to get negative indexes values.
+local({
+  x <- as_index(matrix(1:9, 3))
+  expect_error(chain(x, link = c(-1, 2, 3)), "`link` must be strictly positive")
+
+  x <- chain(x)
+  expect_error(
+    unchain(x, base = c(-1, 2, 3)),
+    "`base` must be strictly positive"
+  )
+  expect_error(
+    rebase(x, base = c(-1, 2, 3)),
+    "`base` must be strictly positive"
+  )
+})

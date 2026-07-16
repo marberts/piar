@@ -105,7 +105,7 @@ By default, missing elementary indexes will propagate when aggregating the
 index. Missing elementary indexes can be due to both missingness of these
 values in \code{x}, and the presence of elementary aggregates in \code{pias}
 that are not part of \code{x}. Setting \code{na.rm = TRUE} ignores missing
-values, and is equivalent to parental (or overall mean) imputation. As an
+values, and is equivalent to overall mean (or parental) imputation. As an
 aggregated price index generally cannot have missing values (for otherwise
 it can't be chained over time and weights can't be price updated), any
 missing values for a level of \code{pias} are removed and recursively replaced
