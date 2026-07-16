@@ -33,43 +33,47 @@
 )
 }
 \arguments{
-\item{x}{A price index, usually made by \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, usually made by \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{pias}{A price index aggregation structure or something that can be
-coerced into one. This can be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
+\item{pias}{\verb{[piar_aggregation_structure]} A price index
+aggregation structure or something that can be coerced into one. This can
+be made with \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 
 \item{...}{Not currently used.}
 
-\item{pias2}{An optional secondary aggregation structure, usually with
-current-period weights, to make a superlative index. See details.}
+\item{pias2}{\verb{[piar_aggregation_structure]} An optional secondary
+aggregation structure, usually with current-period weights, to make a
+superlative index. See details.}
 
-\item{na.rm}{Should missing values be removed? By default, missing values
-are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
-imputation.}
+\item{na.rm}{\verb{[logical(1)]} Should missing values be removed? By default,
+missing values are not removed. Setting \code{na.rm = TRUE} is equivalent to
+overall mean imputation.}
 
-\item{contrib}{Aggregate percent-change contributions in \code{x}? By default
-contributions are aggregated.}
+\item{contrib}{\verb{[logical(1)]} Aggregate percent-change contributions in \code{x}?
+By default contributions are aggregated.}
 
-\item{r}{Order of the generalized mean to aggregate index values. 0 for a
+\item{r}{\verb{[numeric(1)]} Order of the generalized mean to aggregate index
+values. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
-\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details. If \code{pias2} is given then the
+\code{\link[=gmean]{gmean()}} for details. If \code{pias2} is given then the
 index is aggregated with a quadratic mean of order \code{2*r}.}
 
-\item{include_ea}{Should indexes for the elementary aggregates be included
-along with the aggregated indexes? By default, all index values are
-returned.}
+\item{include_ea}{\verb{[logical(1)]} Should indexes for the elementary aggregates
+be included along with the aggregated indexes? By default, all index values
+are returned.}
 
-\item{duplicate_contrib}{The method to deal with duplicate product
-contributions. Either \code{"make.unique"} to treat duplicate
+\item{duplicate_contrib}{\verb{[character(1)]} The method to deal with duplicate
+product contributions. Either \code{"make.unique"} to treat duplicate
 products as distinct products and make their names unique
 with \code{\link[=make.unique]{make.unique()}} or \code{"sum"} to add contributions for each product
 (the default).}
 
-\item{impute_rules}{(Experimental) A function that applies imputation
-rules to the elementary indexes in each time period prior to aggregation.
+\item{impute_rules}{\verb{[function]} (Experimental) A function that applies
+imputation rules to the elementary indexes in each time period prior to
+aggregation.
 It takes two arguments, the elementary indexes for a given time period and
 the (price updated) aggregation structure, and must return back the
 elementary indexes.}
@@ -83,13 +87,11 @@ Aggregate elementary price indexes with a price index aggregation structure.
 \details{
 The \code{aggregate()} method loops over each time period in \code{x} and
 \enumerate{
-\item aggregates the elementary indexes with
-\code{\link[gpindex:generalized_mean]{gpindex::generalized_mean(r)()}} for each level
+\item aggregates the elementary indexes with \code{\link[=gmean]{gmean()}} for each level
 of \code{pias};
 \item aggregates percent-change contributions for each level of
 \code{pias} (if there are any and \code{contrib = TRUE});
-\item price updates the weights in \code{pias} with
-\code{\link[gpindex:factor_weights]{gpindex::factor_weights(r)()}} (only for
+\item price updates the weights in \code{pias} with \code{\link[=update_weights]{update_weights()}} (only for
 period-over-period elementary indexes).
 }
 
@@ -103,7 +105,7 @@ By default, missing elementary indexes will propagate when aggregating the
 index. Missing elementary indexes can be due to both missingness of these
 values in \code{x}, and the presence of elementary aggregates in \code{pias}
 that are not part of \code{x}. Setting \code{na.rm = TRUE} ignores missing
-values, and is equivalent to parental (or overall mean) imputation. As an
+values, and is equivalent to overall mean (or parental) imputation. As an
 aggregated price index generally cannot have missing values (for otherwise
 it can't be chained over time and weights can't be price updated), any
 missing values for a level of \code{pias} are removed and recursively replaced
@@ -122,8 +124,7 @@ point in time.
 Aggregating percent-change contributions uses the method in chapter 9 of the
 CPI manual (equations 9.26 and 9.28) when aggregating with an arithmetic
 mean. With a non-arithmetic mean, arithmetic weights are constructed using
-\code{\link[gpindex:transmute_weights]{gpindex::transmute_weights(r, 1)()}} in order
-to apply this method.
+\code{\link[=transmute_weights]{transmute_weights()}} in order to apply this method.
 
 There may not be contributions for all prices relatives in an elementary
 aggregate if the elementary indexes are built from several sources (as with
@@ -137,7 +138,7 @@ generalized mean of order \code{r} the aggregation for \code{pias2} done with a
 generalized mean of order \code{-r}. The resulting indexes are combined with a
 geometric mean to make a superlative quadratic mean of order \code{2*r} index.
 Percent-change contributions are combined using a generalized van IJzeren
-decomposition; see \code{\link[gpindex:nested_transmute]{gpindex::nested_transmute()}} for details.
+decomposition; see \code{\link[=transmute_weights2]{transmute_weights2()}} for details.
 }
 \note{
 For large indexes it can be much faster to turn the aggregation structure
@@ -153,25 +154,20 @@ prices <- data.frame(
   ea = rep(letters[1:2], 4)
 )
 
-# A two-level aggregation structure
-
+# A two-level aggregation structure.
 pias <- aggregation_structure(
   list(c("top", "top", "top"), c("a", "b", "c")),
   weights = 1:3
 )
 
-# Calculate Jevons elementary indexes
-
+# Calculate Jevons elementary indexes.
 (elementary <- elementary_index(prices, rel ~ period + ea))
 
-# Aggregate (note the imputation for elementary index 'c')
-
+# Aggregate (note the imputation for elementary index 'c').
 (index <- aggregate(elementary, pias, na.rm = TRUE))
 
-# Aggregation can equivalently be done as matrix multiplication
-
+# Aggregation can equivalently be done as matrix multiplication.
 as.matrix(pias) \%*\% as.matrix(chain(index[letters[1:3]]))
-
 }
 \references{
 Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}.

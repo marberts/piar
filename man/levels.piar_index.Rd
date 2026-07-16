@@ -13,10 +13,11 @@
 set_levels(x, value)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{value}{A character vector, or something that can be coerced into one,
-giving the replacement levels for \code{x}.}
+\item{value}{\verb{[character]} A character vector, or something that can be
+coerced into one, giving the replacement levels for \code{x}.}
 }
 \value{
 \code{levels()} returns a character vector with the levels for a price index.

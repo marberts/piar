@@ -20,11 +20,15 @@
 #' corresponding percent-change contributions (if any). When replacing with a
 #' matrix, `value` can be a list of index objects.
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param i,j Indices for the levels and time periods of a price index. See
-#'   details.
-#' @param value A numeric vector, price index, or list of price indexes.
-#'   See details.
+#' @family index methods
+#' @export
+#'
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param i,j `[integer | logical | character | matrix]` Indices for the levels
+#'   and time periods of a price index. See details.
+#' @param value `[numeric > 0 | piar_index | list]` A numeric vector,
+#'   price index, or list of price indexes. See details.
 #' @param ... Not currently used.
 #'
 #' @returns
@@ -40,9 +44,6 @@
 #' index[1, ] <- 1 # can be useful for doing specific imputations
 #'
 #' index
-#'
-#' @family index methods
-#' @export
 `[.piar_index` <- function(x, i, j, ...) {
   chkDots(...)
   if (!missing(i) && is.matrix(i)) {
@@ -108,11 +109,11 @@ extract_index <- function(x, levels, periods) {
 `[<-.chainable_piar_index` <- function(x, i, j, ..., value) {
   if (is_index(value)) {
     if (!is_chainable_index(value)) {
-      stop("'value' must be a period-over-period index")
+      stop("`value` must be a period-over-period index")
     }
   } else if (is.list(value)) {
     if (!all(vapply(value, is_chainable_index, logical(1L)))) {
-      stop("all elements of 'value' must be period-over-period indexes")
+      stop("all elements of `value` must be period-over-period indexes")
     }
   }
   NextMethod("[<-")
@@ -122,11 +123,11 @@ extract_index <- function(x, levels, periods) {
 `[<-.direct_piar_index` <- function(x, i, j, ..., value) {
   if (is_index(value)) {
     if (!is_direct_index(value)) {
-      stop("'value' must be a fixed-base index")
+      stop("`value` must be a fixed-base index")
     }
   } else if (is.list(value)) {
     if (!all(vapply(value, is_direct_index, logical(1L)))) {
-      stop("all elements of 'value' must be fixed-base indexes")
+      stop("all elements of `value` must be fixed-base indexes")
     }
   }
   NextMethod("[<-")
@@ -148,7 +149,7 @@ replace_matrix_list <- function(x, i, value) {
     )
   }
   if (any(vapply(value, \(x) ntime(x) * nlevels(x), integer(1L)) > 1L)) {
-    stop("'value' must be a list of indexes with one level and time period")
+    stop("`value` must be a list of indexes with one level and time period")
   }
   # Make `value` the same length as replacement to avoid two warnings.
   index <- rep_len(vapply(value, \(x) x$index[[1]], numeric(1L)), nrow(i))
@@ -182,7 +183,7 @@ replace_index <- function(x, levels, periods, value) {
   }
 
   if (ntime(value) != length(periods)) {
-    stop("'x' and 'value' must have the same number of time periods")
+    stop("`x` and `value` must have the same number of time periods")
   }
   if (length(levels) %% nlevels(value) != 0) {
     stop("number of items to replace is not a multiple of replacement length")

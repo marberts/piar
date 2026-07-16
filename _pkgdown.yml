@@ -3,6 +3,7 @@ url: https://marberts.github.io/piar
 template:
   bootstrap: 5
   bootswatch: united
+  math-rendering: mathjax
   
 articles:
 - title: Aggregation
@@ -21,6 +22,7 @@ articles:
   - index-number-formulas
   - contributions
   - adjust-weights
+  - decomposing-indexes
 
 - title: Other topics
   desc: Miscellaneous articles showing useful features.
@@ -60,6 +62,14 @@ reference:
   contents:
   - impute_prices
   - price_relative
+  - back_period
+  - outliers
+  
+- title: Multilateral indexes
+  desc: Functions to build multilateral elementary indexes.
+  contents:
+  - geks_index
+  - splice_index
 
 - title: Aggregation structure
   desc: Functions to make and work with price-index aggregation structures.
@@ -85,3 +95,13 @@ reference:
 - title: Sample data
   contents:
   - price_data
+
+- title: Mathematical machinery
+  desc: Lower-level functions to implement the core tools for calculating price indexes.
+  contents:
+  - gmean
+  - nested_gmean
+  - transmute_weights
+  - transmute_weights2
+  - scale_weights
+  - update_weights

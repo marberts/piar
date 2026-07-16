@@ -7,11 +7,13 @@
 combine_classifications(..., sep = ".")
 }
 \arguments{
-\item{...}{A collection of lists, one for each classification, each giving
+\item{...}{\verb{[list]} A collection of lists, one for each classification,
+each giving
 the "digits" that represent each level in the hierarchy, as made
 by \code{\link[=expand_classification]{expand_classification()}} or \code{\link[=split_classification]{split_classification()}}.}
 
-\item{sep}{A character used to separate the classifications in \code{...}. The
+\item{sep}{\verb{[character(1)]} A character used to separate the classifications
+in \code{...}. The
 default separates levels across classifications by \code{"."}.}
 }
 \value{
@@ -23,8 +25,7 @@ another.
 }
 \examples{
 # Combine an unbalanced industry classification with a balanced
-# geographic classification
-
+# geographic classification.
 industry <- c("111", "112", "12")
 region <- c("11", "21", "22")
 

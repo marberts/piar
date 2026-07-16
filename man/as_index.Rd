@@ -25,16 +25,18 @@ as_index(x, ...)
 \method{as_index}{mts}(x, ...)
 }
 \arguments{
-\item{x}{An object to coerce into a price index.}
+\item{x}{\verb{[object]} An object to coerce into a price index.}
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{chainable}{Are the index values in \code{x} period-over-period
+\item{chainable}{\verb{[logical(1)]} Are the index values in \code{x}
+period-over-period
 indexes, suitable for a chained calculation (the default)? This should be
 \code{FALSE} when \code{x} contains fixed-base (direct) index values.}
 
-\item{contrib}{Should the index values in \code{x} be used to construct
-percent-change contributions? The default does not make contributions.}
+\item{contrib}{\verb{[logical(1)]} Should the index values in \code{x} be used to
+construct percent-change contributions? The default does not make
+contributions.}
 }
 \value{
 A price index that inherits from
@@ -82,7 +84,6 @@ index <- elementary_index(prices, rel ~ period + ea)
 
 all.equal(as_index(as.data.frame(index)), index)
 all.equal(as_index(as.matrix(index)), index)
-
 }
 \seealso{
 \code{\link[=as.matrix.piar_index]{as.matrix()}} and

@@ -10,20 +10,22 @@
 \method{split}{piar_index}(x, f, drop = FALSE, ..., along = c("levels", "time")) <- value
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{f}{A factor or list of factors to group elements of \code{x}.}
+\item{f}{\verb{[factor | list]} A factor or list of factors to group elements
+of \code{x}.}
 
-\item{drop}{Should levels that do not occur in \code{f} be dropped? By default
-all levels are kept.}
+\item{drop}{\verb{[logical(1)]} Should levels that do not occur in \code{f} be dropped?
+By default all levels are kept.}
 
 \item{...}{Further arguments passed to \code{\link[=split.default]{split.default()}}.}
 
-\item{along}{Either \code{"levels"} to split over the levels of \code{x} (the default),
-or \code{"time"} to split over the time periods of \code{x}.}
+\item{along}{\verb{[character(1)]} Either \code{"levels"} to split over the levels
+of \code{x} (the default), or \code{"time"} to split over the time periods of \code{x}.}
 
-\item{value}{A list of values compatible with the splitting of \code{x}, or
-something that can be coerced into one, recycled if necessary.}
+\item{value}{\verb{[list]} A list of values compatible with the splitting of \code{x},
+or something that can be coerced into one, recycled if necessary.}
 }
 \value{
 \code{split()} returns a list of index objects for each level in \code{f}. The
@@ -40,7 +42,6 @@ index <- as_index(matrix(1:6, 2))
 split(index, 1:2)
 
 split(index, c(1, 1, 2), along = "time")
-
 }
 \seealso{
 Other index methods:

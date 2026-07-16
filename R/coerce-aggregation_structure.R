@@ -1,14 +1,17 @@
 #' Coerce an aggregation structure into a tabular form
 #'
-#' Coerce a price index aggregation structure into an aggregation matrix, or a
+#' Coerce a price index aggregation structure into an aggregation matrix or a
 #' data frame.
 #'
-#' @param x A price index aggregation structure, as made by
-#'   [aggregation_structure()].
-#' @param sparse Should the result be a sparse matrix from \pkg{Matrix}? This
-#'   is faster for large aggregation structures. The default returns an ordinary
-#'   dense matrix.
-#' @param row.names See [as.data.frame()].
+#' @family aggregation structure methods
+#' @export
+#'
+#' @param x `[piar_agregation_structure]` A price index aggregation structure,
+#'   as made by [aggregation_structure()].
+#' @param sparse `[logical(1)]` Should the result be a sparse matrix from
+#'   \pkg{Matrix}? This is faster for large aggregation structures. The default
+#'   returns an ordinary dense matrix.
+#' @param row.names `[character]` See [as.data.frame()].
 #' @param optional Not currently used.
 #' @param ... Not currently used for the matrix method. Extra arguments to
 #'   [as.data.frame.list()] for the data frame method.
@@ -28,14 +31,13 @@
 #' aggregation structure.
 #'
 #' @examples
-#' # A simple aggregation structure
+#' # A simple aggregation structure.
 #' #            1
 #' #      |-----+-----|
 #' #      11          12
 #' #  |---+---|       |
 #' #  111     112     121
 #' #  (1)     (3)     (4)
-#'
 #' aggregation_weights <- data.frame(
 #'   level1 = c("1", "1", "1"),
 #'   level2 = c("11", "11", "12"),
@@ -65,9 +67,6 @@
 #' )
 #' plot(data.tree::as.Node(aggregation_weights))
 #' }
-#'
-#' @family aggregation structure methods
-#' @export
 as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
   chkDots(...)
   nea <- length(x$weights)
@@ -91,7 +90,7 @@ as.matrix.piar_aggregation_structure <- function(x, ..., sparse = FALSE) {
   # Generate the rows for each level of the matrix and rbind together.
   for (i in seq_along(res)) {
     w <- unsplit(
-      lapply(split(x$weights, lev[[i]]), gpindex::scale_weights),
+      lapply(split(x$weights, lev[[i]]), scale_weights),
       lev[[i]]
     )
     if (sparse) {

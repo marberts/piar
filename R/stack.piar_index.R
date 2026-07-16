@@ -12,6 +12,9 @@
 #'
 #' @name stack.piar_index
 #' @aliases stack.piar_index
+#' @importFrom utils stack
+#' @family index methods
+#' @export
 #'
 #' @inheritParams merge.piar_index
 #'
@@ -33,16 +36,11 @@
 #'
 #' stack(index1, index2)
 #'
-#' # Unstack does the reverse
-#'
+#' # Unstack does the reverse.
 #' all.equal(
 #'   c(unstack(index1), unstack(index2)),
 #'   unstack(stack(index1, index2))
 #' )
-#'
-#' @family index methods
-#' @importFrom utils stack
-#' @export
 stack.chainable_piar_index <- function(x, y, ...) {
   y <- as_index(y, chainable = TRUE)
   res <- NextMethod("stack")
@@ -67,10 +65,10 @@ stack.direct_piar_index <- function(x, y, ...) {
 stack.piar_index <- function(x, y, ...) {
   chkDots(...)
   if (nlevels(x) != nlevels(y) || !setequal(x$levels, y$levels)) {
-    stop("'x' and 'y' must be indexes for the same levels")
+    stop("`x` and `y` must be indexes for the same levels")
   }
   if (any(x$time %in% y$time)) {
-    stop("the same time periods cannot appear in both 'x' and 'y'")
+    stop("the same time periods cannot appear in both `x` and `y`")
   }
   if (any(x$levels != y$levels)) {
     y <- y[x$levels]

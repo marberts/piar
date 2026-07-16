@@ -3,27 +3,30 @@
 #' Keep only the part of an aggregation structure above or below a certain
 #' level.
 #'
-#' @param x A price index aggregation structure, as made by
-#' [aggregation_structure()].
-#' @param ... Not currently used.
-#' @param level A positive integer, or something that can be coerced into one,
-#'   giving the level at which to cut `x`.
-#' @param na.rm Should missing values be removed when aggregating the
-#'   weights? By default, missing values are not removed.
-#' @param upper Keep only the part of `x` above `level` (the default);
-#'   otherwise, return the part of `x` below `level`.
+#' @family aggregation structure methods
+#' @export
 #'
-#' @returns A price index aggregation structure.
+#' @param x `[piar_aggregation_structure]` A price index aggregation structure,
+#'   as made by [aggregation_structure()].
+#' @param ... Not currently used.
+#' @param level `[integer(1) > 0]` A positive integer, or something that can be
+#'   coerced into one, giving the level at which to cut `x`.
+#' @param na.rm `[logical(1)]` Should missing values be removed when aggregating
+#'   the weights? By default, missing values are not removed.
+#' @param upper `[logical(1)]` Keep only the part of `x` above `level`
+#'   (the default); otherwise, return the part of `x` below `level`.
+#'
+#' @returns
+#' A price index aggregation structure of class [`piar_aggregation_structure`].
 #'
 #' @examples
-#' # A simple aggregation structure
+#' # A simple aggregation structure.
 #' #            1
 #' #      |-----+-----|
 #' #      11          12
 #' #  |---+---|       |
 #' #  111     112     121
 #' #  (1)     (3)     (4)
-#'
 #' aggregation_weights <- data.frame(
 #'   level1 = c("1", "1", "1"),
 #'   level2 = c("11", "11", "12"),
@@ -41,11 +44,7 @@
 #' #      |-----+-----|
 #' #      11          12
 #' #     (4)         (4)
-#'
 #' cut(pias, 2)
-#'
-#' @family aggregation structure methods
-#' @export
 cut.piar_aggregation_structure <- function(
   x,
   level,
@@ -57,10 +56,10 @@ cut.piar_aggregation_structure <- function(
   level <- as.integer(level)
   n <- nlevels(x)
   if (level < 1L) {
-    stop("'level' must be greater than or equal to 1")
+    stop("`level` must be greater than or equal to 1")
   }
   if (level > n) {
-    stop("'level' must be smaller than the number of levels in 'x'")
+    stop("`level` must be smaller than the number of levels in `x`")
   }
   if ((!upper && level == 1L) || (upper && level == n)) {
     return(x)

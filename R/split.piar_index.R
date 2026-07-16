@@ -3,14 +3,19 @@
 #' Split an index into groups of indexes according to a factor, along either
 #' the levels or time periods of the index.
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param f A factor or list of factors to group elements of `x`.
-#' @param drop Should levels that do not occur in `f` be dropped? By default
-#'   all levels are kept.
-#' @param along Either `"levels"` to split over the levels of `x` (the default),
-#'   or `"time"` to split over the time periods of `x`.
-#' @param value A list of values compatible with the splitting of `x`, or
-#'   something that can be coerced into one, recycled if necessary.
+#' @family index methods
+#' @export
+#'
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param f `[factor | list]` A factor or list of factors to group elements
+#'   of `x`.
+#' @param drop `[logical(1)]` Should levels that do not occur in `f` be dropped?
+#'   By default all levels are kept.
+#' @param along `[character(1)]` Either `"levels"` to split over the levels
+#'   of `x` (the default), or `"time"` to split over the time periods of `x`.
+#' @param value `[list]` A list of values compatible with the splitting of `x`,
+#'   or something that can be coerced into one, recycled if necessary.
 #' @param ... Further arguments passed to [`split.default()`].
 #'
 #' @returns
@@ -24,9 +29,6 @@
 #' split(index, 1:2)
 #'
 #' split(index, c(1, 1, 2), along = "time")
-#'
-#' @family index methods
-#' @export
 split.piar_index <- function(
   x,
   f,

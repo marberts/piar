@@ -2,15 +2,19 @@
 #'
 #' Price update the weights in a price index aggregation structure.
 #'
-#' @param object A price index aggregation structure, as made by
-#'   [aggregation_structure()].
-#' @param index A fixed-base (direct) price index, or something that can be
-#'   coerced into one. Usually an aggregate price index as made by
+#' @importFrom stats update
+#' @family aggregation structure methods
+#' @export
+#'
+#' @param object `[piar_aggregation_structure]` A price index aggregation
+#'   structure, as made by [aggregation_structure()].
+#' @param index `[piar_index]` A fixed-base (direct) price index, or something
+#'   that can be coerced into one. Usually an aggregate price index as made by
 #'   [`aggregate()`][aggregate.piar_index].
-#' @param period The time period used to price update the weights. The default
-#'   uses the last period in `index`.
-#' @param r Order of the generalized mean to update the weights. The default is
-#'   1 for an arithmetic index.
+#' @param period `[character(1)]` The time period used to price update the
+#'   weights. The default uses the last period in `index`.
+#' @param r `[numeric(1)]` Order of the generalized mean to update the weights.
+#'   The default is 1 for an arithmetic index.
 #' @param ... Not currently used.
 #'
 #' @returns
@@ -21,14 +25,13 @@
 #' [`aggregate()`][aggregate.piar_index] to make an aggregated price index.
 #'
 #' @examples
-#' # A simple aggregation structure
+#' # A simple aggregation structure.
 #' #            1
 #' #      |-----+-----|
 #' #      11          12
 #' #  |---+---|       |
 #' #  111     112     121
 #' #  (1)     (3)     (4)
-#'
 #' aggregation_weights <- data.frame(
 #'   level1 = c("1", "1", "1"),
 #'   level2 = c("11", "11", "12"),
@@ -45,10 +48,6 @@
 #' weights(pias, ea_only = FALSE)
 #'
 #' weights(update(pias, index), ea_only = FALSE)
-#'
-#' @importFrom stats update
-#' @family aggregation structure methods
-#' @export
 update.piar_aggregation_structure <- function(
   object,
   index,
@@ -57,8 +56,8 @@ update.piar_aggregation_structure <- function(
   r = 1
 ) {
   chkDots(...)
-  price_update <- gpindex::factor_weights(r)
   index <- as_index(index, chainable = FALSE)
+  r <- as.numeric(r)
   period <- if (!is.null(period)) {
     match_time(as.character(period), index)
   } else {
@@ -66,8 +65,12 @@ update.piar_aggregation_structure <- function(
   }
   eas <- match_eas(object, index)
   if (anyNA(eas)) {
-    warning("not all weights in 'object' have a corresponding index value")
+    warning("not all weights in `object` have a corresponding index value")
   }
-  weights(object) <- price_update(index$index[, period][eas], object$weights)
+  weights(object) <- update_weights(
+    index$index[, period][eas],
+    object$weights,
+    r
+  )
   object
 }

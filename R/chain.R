@@ -28,11 +28,17 @@
 #' Percent-change contributions are removed when chaining/unchaining/rebasing
 #' an index as it's not usually possible to update them correctly.
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param link A numeric vector, or something that can coerced into one, of
+#' @family index methods
+#' @export
+#'
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param link `[numeric > 0]` A numeric vector, or something that can coerced
+#'   into one, of
 #'   link values for each level in `x`. The default is equivalent to a vector
 #'   of 1s so that no linking is done.
-#' @param base A numeric vector, or something that can coerced into one, of
+#' @param base `[numeric > 0 | character(1)]` A numeric vector, or something
+#'   that can coerced into one, of
 #'   base-period index values for each level in `x`. The default is a equivalent
 #'   to a vector
 #'   of 1s so that the base period remains the same. If `base` is a length-one
@@ -50,22 +56,16 @@
 #' @examples
 #' index <- as_index(matrix(1:9, 3))
 #'
-#' # Make period 0 the fixed base period
-#'
+#' # Make period 0 the fixed base period.
 #' chain(index)
 #'
-#' # Chaining and unchaining reverse each other
-#'
+#' # Chaining and unchaining reverse each other.
 #' all.equal(index, unchain(chain(index)))
 #'
 #' # Change the base period to period 2 (note the
-#' # loss of information for period 0)
-#'
+#' # loss of information for period 0).
 #' index <- chain(index)
 #' rebase(index, base = index[, 2])
-#'
-#' @family index methods
-#' @export chain
 chain <- function(x, ...) {
   UseMethod("chain")
 }
@@ -82,8 +82,11 @@ chain.chainable_piar_index <- function(x, ..., link = NULL) {
   chkDots(...)
   if (!is.null(link)) {
     link <- as.numeric(link)
+    if (any(link <= 0, na.rm = TRUE)) {
+      stop("`link` must be strictly positive")
+    }
     if (length(link) != nlevels(x)) {
-      stop("'link' must have a value for each level of 'x'")
+      stop("`link` must have a value for each level of `x`")
     }
     x$index[, 1L] <- x$index[, 1L] * link
   }
@@ -125,8 +128,11 @@ unchain.direct_piar_index <- function(x, ..., base = NULL) {
       base <- x$index[, match_time(base, x)] / x$index[, 1L]
     } else {
       base <- as.numeric(base)
+      if (any(base <= 0, na.rm = TRUE)) {
+        stop("`base` must be strictly positive")
+      }
       if (length(base) != nlevels(x)) {
-        stop("'base' must have a value for each level of 'x'")
+        stop("`base` must have a value for each level of `x`")
       }
     }
   }
@@ -165,8 +171,11 @@ rebase.direct_piar_index <- function(x, ..., base = NULL) {
       base <- x$index[, match_time(base, x)]
     } else {
       base <- as.numeric(base)
+      if (any(base <= 0, na.rm = TRUE)) {
+        stop("`base` must be strictly positive")
+      }
       if (length(base) != nlevels(x)) {
-        stop("'base' must have a value for each level of 'x'")
+        stop("`base` must have a value for each level of `x`")
       }
     }
     x$index[] <- x$index / base

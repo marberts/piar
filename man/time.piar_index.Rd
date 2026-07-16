@@ -25,12 +25,13 @@ set_time(x, value)
 ntime(x)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{...}{Not currently used.}
 
-\item{value}{A character vector, or something that can be coerced into one,
-giving the replacement time periods for \code{x}.}
+\item{value}{\verb{[character]} A character vector, or something that can be
+coerced into one, giving the replacement time periods for \code{x}.}
 }
 \value{
 \code{time()} returns a character vector with the time periods for a price index.

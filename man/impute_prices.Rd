@@ -50,53 +50,60 @@ carry_backward(x, ...)
 shadow_price(x, ...)
 }
 \arguments{
-\item{x}{Either a numeric vector (or something that can be coerced into one),
+\item{x}{\verb{[object]} Either a numeric vector (or something that can be
+coerced into one),
 a data frame of prices, or a two-column matrix of current prices
 and back prices (in that order).}
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{period}{A factor, or something that can be coerced into one, giving
+\item{period}{\verb{[factor]} A factor, or something that can be coerced into one,
+giving
 the time period associated with each price in \code{x}. The ordering of time
 periods follows of the levels of \code{period}, to agree with
 \code{\link[=cut.Date]{cut()}}.}
 
-\item{product}{A factor, or something that can be coerced into one, giving
-the product associated with each price in \code{x}.}
+\item{product}{\verb{[factor]} A factor, or something that can be coerced into
+one, giving the product associated with each price in \code{x}.}
 
-\item{ea}{A factor, or something that can be coerced into one, giving the
+\item{ea}{\verb{[factor]} A factor, or something that can be coerced into one,
+giving the
 elementary aggregate associated with each price in \code{x}. This is evaluated
 in \code{x} for the data frame method. The default pools all data into one
 elementary aggregate.}
 
-\item{weights}{A numeric vector of weights for the prices in \code{x} (i.e.,
+\item{weights}{\verb{[numeric >= 0]} A numeric vector of weights for the prices
+in \code{x} (i.e.,
 product weights), or something that can be coerced into one. The default is
 to give each price equal weight. This is evaluated in \code{x} for the data
 frame method.}
 
-\item{pias}{A price index aggregation structure, or something that can be
+\item{pias}{\verb{[piar_aggregation_structure]} A price index aggregation
+structure, or something that can be
 coerced into one, as made with \code{\link[=aggregation_structure]{aggregation_structure()}}. The default
 imputes from elementary indexes only (i.e., not recursively).}
 
-\item{r}{A pair of numeric values. The first gives the order of the
-generalized-mean price index used to calculate the
+\item{r}{\verb{[numeric(2)]} A pair of numeric values. The first gives the order
+of the generalized-mean price index used to calculate the
 elementary price indexes, defaulting to a geometric index. The second
 gives the order of the generalized-mean price index used to aggregate the
 elementary price indexes, defaulting to an arithmetic index. Other values
 are possible;
-see \code{\link[gpindex:generalized_mean]{gpindex::generalized_mean()}} for details.}
+see \code{\link[=gmean]{gmean()}} for details.}
 
-\item{method}{Name of the imputation method, one of \code{"overall-mean"},
-\code{"carry-forward"}, or \code{"carry-backward"}.}
+\item{method}{\verb{[character(1)]} Name of the imputation method, one
+of \code{"overall-mean"} (the default), \code{"carry-forward"},
+or \code{"carry-backward"}.}
 
-\item{impute_rules}{(Experimental) A function that applies imputation
+\item{impute_rules}{\verb{[function]} (Experimental) A function that applies
+imputation
 rules to the elementary indexes in each time period prior to aggregation.
 It takes two arguments, the elementary indexes for a given time period and
 the (price updated) aggregation structure, and must return back the
 elementary indexes.}
 
-\item{formula}{A two-sided formula, or something that can be coerced into
-one, with prices on the left-hand
+\item{formula}{\verb{[formula]} A two-sided formula, or something that can be
+coerced into one, with prices on the left-hand
 side and time periods and products on the right-hand side (in that order).}
 }
 \value{
@@ -156,7 +163,7 @@ impute_prices(
 # Can also be done with current price-back price formulation.
 prices$back_price <- with(
   prices,
-  price[gpindex::back_period(period, product)]
+  price[back_period(period, product)]
 )
 
 impute_prices(
@@ -165,7 +172,6 @@ impute_prices(
   ea = ea,
   method = "overall-mean"
 )
-
 }
 \references{
 IMF, ILO, OECD, Eurostat, UNECE, and World Bank. (2020).

@@ -3,16 +3,18 @@
 #' Expand a character representation of a hierarchical classification to make a
 #' price index aggregation structure by splitting along a delimiter.
 #'
-#' @param x A character vector, or something that can be coerced into one, of
-#'   codes/labels for a specific level in a classification (e.g., 5-digit
-#'   COICOP).
-#' @param split A regular expression to delineate and split the levels in `x`.
-#'   See [strsplit()].
+#' @export
+#'
+#' @param x `[character]` A character vector, or something that can be coerced
+#'   into one, of codes/labels for a specific level in a classification
+#'   (e.g., 5-digit COICOP).
+#' @param split `[character(1)]` A regular expression to delineate and split the
+#'   levels in `x`. See [strsplit()].
 #' @param ... Additional argument to pass to [strsplit()].
-#' @param sep A character used to delineate levels in `x` in the result. The
-#'   default separates levels by `"."`.
-#' @param pad A string used to pad the shorter labels for an unbalanced
-#'   classification. The default pads with `NA`.
+#' @param sep `[character(1)]` A character used to delineate levels in `x` in
+#'   the result. The default separates levels by `"."`.
+#' @param pad `[character(1)]` A string used to pad the shorter labels for an
+#'   unbalanced classification. The default pads with `NA`.
 #'
 #' @returns
 #' A list with a entry for each level in `x` giving the "digits" that
@@ -28,7 +30,7 @@
 #' classifications.
 #'
 #' @examples
-#' #' # A simple classification structure
+#' #' # A simple classification structure.
 #' #            1
 #' #      |-----+-----|
 #' #      11          12
@@ -37,11 +39,8 @@
 #'
 #' split_classification(c("111", "112", "121"), "")
 #'
-#' # Useful if there are delimiters in the classification (like COICOP)
-#'
+#' # Useful if there are delimiters in the classification (like COICOP).
 #' split_classification(c("01.1.1", "01.1.2", "01.2.1"), ".", fixed = TRUE)
-#'
-#' @export
 split_classification <- function(x, split, ..., sep = ".", pad = NA) {
   x <- as.character(x)
   if (length(x) == 0L) {

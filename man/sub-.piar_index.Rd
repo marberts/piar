@@ -10,15 +10,16 @@
 \method{[}{piar_index}(x, i, j, ...) <- value
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{i, j}{Indices for the levels and time periods of a price index. See
-details.}
+\item{i, j}{\verb{[integer | logical | character | matrix]} Indices for the levels
+and time periods of a price index. See details.}
 
 \item{...}{Not currently used.}
 
-\item{value}{A numeric vector, price index, or list of price indexes.
-See details.}
+\item{value}{\verb{[numeric > 0 | piar_index | list]} A numeric vector,
+price index, or list of price indexes. See details.}
 }
 \value{
 A price index that inherits from the same class as \code{x}.
@@ -55,7 +56,6 @@ index[, 2]
 index[1, ] <- 1 # can be useful for doing specific imputations
 
 index
-
 }
 \seealso{
 Other index methods:

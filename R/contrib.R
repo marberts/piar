@@ -3,18 +3,23 @@
 #' Extract a matrix or data frame of percent-change contributions from a price
 #' index.
 #'
-#' @param x A price index, as made by, e.g., [elementary_index()].
-#' @param level,levels The level of an index for which percent-change
-#'   contributions
+#' @export contrib
+#' @family index methods
+#'
+#' @param x `[piar_index]` A price index, as made by,
+#'   e.g., [elementary_index()].
+#' @param level,levels `[character]` The level of an index for which
+#'   percent-change contributions
 #'   are desired, defaulting to the first level (usually the top-level for an
 #'   aggregate index). `contrib2DF()` can accept multiple levels.
-#' @param period The time periods for which percent-change contributions are
-#'   desired, defaulting to all time periods.
-#' @param pad A numeric value to pad contributions so that they fit into a
+#' @param period `[character]` The time periods for which percent-change
+#'   contributions are desired, defaulting to all time periods.
+#' @param pad `[numeric(1)]` A numeric value to pad contributions so that they
+#'   fit into a
 #'   rectangular array when products differ over time. The default is 0.
-#' @param value A numeric matrix of replacement contributions with a row for
-#'   each product and a column for each time period. Recycling occurs along time
-#'   periods.
+#' @param value `[matrix]` A numeric matrix of replacement contributions with a
+#'   row for each product and a column for each time period. Recycling occurs
+#'   along time periods.
 #'
 #' @returns
 #' `contrib()` returns a matrix of percent-change contributions with a column
@@ -45,23 +50,20 @@
 #'
 #' index <- aggregate(index, pias, na.rm = TRUE)
 #'
-#' # Percent-change contributions for the top-level index
-#'
+#' # Percent-change contributions for the top-level index.
 #' contrib(index)
 #'
 #' contrib2DF(index)
 #'
-#' # Calculate EA contributions for the chained index
-#'
-#' library(gpindex)
+#' # Calculate EA contributions for the chained index.
+#' arithmetic_contributions <- function(x, w, r = 1) {
+#'   (x - 1) * transmute_weights(x, w, r, to = 1)
+#' }
 #'
 #' arithmetic_contributions(
 #'   as.matrix(chain(index))[c("a", "b", "c"), 2],
 #'   weights(pias)
 #' )
-#'
-#' @export contrib
-#' @family index methods
 contrib <- function(x, level = NULL, period = NULL, pad = 0) {
   level <- if (!is.null(level)) match_levels(as.character(level), x) else 1L
   period <- if (!is.null(period)) {
@@ -71,7 +73,7 @@ contrib <- function(x, level = NULL, period = NULL, pad = 0) {
   }
   pad <- as.numeric(pad)
   if (length(pad) != 1L) {
-    stop("'pad' must be a length 1 numeric value")
+    stop("`pad` must be a length 1 numeric value")
   }
   if (is.null(x$contrib)) {
     return(

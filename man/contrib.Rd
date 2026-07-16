@@ -19,22 +19,24 @@ set_contrib(x, level = NULL, period = NULL, value)
 set_contrib_from_index(x)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{level, levels}{The level of an index for which percent-change
-contributions
+\item{level, levels}{\verb{[character]} The level of an index for which
+percent-change contributions
 are desired, defaulting to the first level (usually the top-level for an
 aggregate index). \code{contrib2DF()} can accept multiple levels.}
 
-\item{period}{The time periods for which percent-change contributions are
-desired, defaulting to all time periods.}
+\item{period}{\verb{[character]} The time periods for which percent-change
+contributions are desired, defaulting to all time periods.}
 
-\item{pad}{A numeric value to pad contributions so that they fit into a
+\item{pad}{\verb{[numeric(1)]} A numeric value to pad contributions so that they
+fit into a
 rectangular array when products differ over time. The default is 0.}
 
-\item{value}{A numeric matrix of replacement contributions with a row for
-each product and a column for each time period. Recycling occurs along time
-periods.}
+\item{value}{\verb{[matrix]} A numeric matrix of replacement contributions with a
+row for each product and a column for each time period. Recycling occurs
+along time periods.}
 }
 \value{
 \code{contrib()} returns a matrix of percent-change contributions with a column
@@ -69,21 +71,20 @@ pias <- aggregation_structure(
 
 index <- aggregate(index, pias, na.rm = TRUE)
 
-# Percent-change contributions for the top-level index
-
+# Percent-change contributions for the top-level index.
 contrib(index)
 
 contrib2DF(index)
 
-# Calculate EA contributions for the chained index
-
-library(gpindex)
+# Calculate EA contributions for the chained index.
+arithmetic_contributions <- function(x, w, r = 1) {
+  (x - 1) * transmute_weights(x, w, r, to = 1)
+}
 
 arithmetic_contributions(
   as.matrix(chain(index))[c("a", "b", "c"), 2],
   weights(pias)
 )
-
 }
 \seealso{
 Other index methods:

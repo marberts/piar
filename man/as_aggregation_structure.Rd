@@ -16,11 +16,12 @@ as_aggregation_structure(x, ...)
 \method{as_aggregation_structure}{matrix}(x, ...)
 }
 \arguments{
-\item{x}{An object to coerce into an aggregation structure.}
+\item{x}{\verb{[object]} An object to coerce into an aggregation structure.}
 
 \item{...}{Further arguments passed to or used by methods.}
 
-\item{weights}{A numeric vector of aggregation weights for the elementary
+\item{weights}{\verb{[numeric >= 0]} A numeric vector of aggregation weights for
+the elementary
 aggregates. The default is to give each elementary aggregate the same
 weight.}
 }
@@ -47,7 +48,6 @@ aggregation structure, and a column of weights for the elementary aggregates.
 #  |---+---|       |
 #  111     112     121
 #  (1)     (3)     (4)
-
 aggregation_weights <- data.frame(
   level1 = c("1", "1", "1"),
   level2 = c("11", "11", "12"),
@@ -69,7 +69,6 @@ all.equal(
   pias,
   as_aggregation_structure(as.matrix(aggregation_weights))
 )
-
 }
 \seealso{
 \code{\link[=as.matrix.piar_aggregation_structure]{as.matrix()}} and

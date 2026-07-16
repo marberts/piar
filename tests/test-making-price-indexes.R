@@ -141,10 +141,6 @@ elementary_index(ms_prices, relatives ~ period + business, na.rm = TRUE, r = -1)
 ms_prices2 <- transform(ms_prices, quantity = 10 - price)
 
 ## -----------------------------------------------------------------------------
-library(gpindex)
-
-tw <- grouped(index_weights("Tornqvist"))
-
 ms_prices2[c("back_price", "back_quantity")] <-
   ms_prices2[
     back_period(ms_prices2$period, ms_prices2$product),
@@ -153,16 +149,15 @@ ms_prices2[c("back_price", "back_quantity")] <-
 
 ms_prices2 <- na.omit(ms_prices2) # can't have NAs for Tornqvist weights
 
-ms_prices2$weight <- with(
-  ms_prices2,
-  tw(
-    price,
-    back_price,
-    quantity,
-    back_quantity,
-    group = interaction(period, business)
-  )
-)
+period_by_business <- interaction(ms_prices2$period, ms_prices2$business)
+
+ms_prices2$weight <- split(ms_prices2, ~period_by_business) |>
+  lapply(\(df) {
+    0.5 *
+      scale_weights(df$price * df$quantity) +
+      0.5 * scale_weights(df$back_price * df$back_quantity)
+  }) |>
+  unsplit(period_by_business)
 
 ## -----------------------------------------------------------------------------
 elementary_index(
@@ -315,10 +310,8 @@ fisher <- sqrt(as.matrix(laspeyres) * as.matrix(paasche))
 fisher
 
 ## -----------------------------------------------------------------------------
-geometric_weights <- transmute_weights(0, 1)
-
 w <- mapply(
-  \(x, y) scale_weights(geometric_weights(c(x, y))),
+  \(x, y) transmute_weights(c(x, y)),
   as.numeric(laspeyres[1]),
   as.numeric(paasche[1])
 )

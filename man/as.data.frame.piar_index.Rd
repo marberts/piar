@@ -17,16 +17,17 @@
 \method{as.matrix}{piar_index}(x, ...)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
-\item{row.names, stringsAsFactors}{See \code{\link[=as.data.frame]{as.data.frame()}}.}
+\item{row.names}{\verb{[character]} See \code{\link[=as.data.frame]{as.data.frame()}}.}
 
-\item{optional}{Not currently used.}
+\item{optional, ...}{Not currently used.}
 
-\item{...}{Not currently used.}
+\item{contrib}{\verb{[logical(1)]} Include percent-change contributions
+(the default does not include them).}
 
-\item{contrib}{Include percent-change contributions (the default does not
-include them).}
+\item{stringsAsFactors}{\verb{[logical(1)]} See \code{\link[=as.data.frame]{as.data.frame()}}.}
 }
 \value{
 \code{as.data.frame()} returns the index values in \code{x} as a data frame with three
@@ -45,7 +46,6 @@ index <- as_index(matrix(1:6, 2))
 as.data.frame(index)
 
 as.matrix(index)
-
 }
 \seealso{
 \code{\link[=as_index]{as_index()}} to coerce a matrix/data frame of index values into an index

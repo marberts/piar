@@ -7,8 +7,8 @@
 \method{levels}{piar_aggregation_structure}(x)
 }
 \arguments{
-\item{x}{A price index aggregation structure, as made by
-\code{\link[=aggregation_structure]{aggregation_structure()}}.}
+\item{x}{\verb{[piar_aggregation_structure]} A price index aggregation structure,
+as made by \code{\link[=aggregation_structure]{aggregation_structure()}}.}
 }
 \value{
 A list of character vectors giving the levels for each position in the

@@ -7,7 +7,8 @@
 \method{as.ts}{piar_index}(x, ...)
 }
 \arguments{
-\item{x}{A price index, as made by, e.g., \code{\link[=elementary_index]{elementary_index()}}.}
+\item{x}{\verb{[piar_index]} A price index, as made by,
+e.g., \code{\link[=elementary_index]{elementary_index()}}.}
 
 \item{...}{Additional arguments passed to \code{\link[=ts]{ts()}}.}
 }
