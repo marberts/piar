@@ -30,10 +30,6 @@
 #' `max(length(x), length(y))`, giving the component-wise extended mean
 #' of `x` and `y`.
 #'
-#' @seealso
-#' [transmute_weights()] uses the extended mean to turn a generalized
-#' mean of a given order into a generalized mean of any other order.
-#'
 #' @references
 #' Bullen, P. S. (2003). *Handbook of Means and Their Inequalities*.
 #' Springer Science+Business Media.

@@ -69,9 +69,6 @@ Bullen, P. S. (2003). \emph{Handbook of Means and Their Inequalities}.
 Springer Science+Business Media.
 }
 \seealso{
-\code{\link[=transmute_weights]{transmute_weights()}} uses the extended mean to turn a generalized
-mean of a given order into a generalized mean of any other order.
-
 Other math functions:
 \code{\link[=gmean]{gmean()}},
 \code{\link[=nested_gmean]{nested_gmean()}},
