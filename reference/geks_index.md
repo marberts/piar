@@ -11,7 +11,7 @@ geks_index(
   quantity,
   period,
   product,
-  index_number = function(p1, p0, q1, q0) {
+  index_formula = function(p1, p0, q1, q0) {
      nested_gmean(p1/p0, list(p0 * q0, p1 *
     q1), na.rm = TRUE)
  },
@@ -48,12 +48,14 @@ geks_index(
   gives the corresponding product identifier for each element in `price`
   and `quantity`.
 
-- index_number:
+- index_formula:
 
   `[function]` A function giving the index-number formula in the GEKS
   index. Usually a Törnqvist, Fisher (the default), or Walsh index. It
   must have arguments `p1`, `p0`, `q1`, and `q0`, and satisfy the
-  time-reversal test.
+  time-reversal test. See
+  [`vignette("index-number-formulas")`](https://marberts.github.io/piar/articles/index-number-formulas.md)
+  for details.
 
 - window:
 
@@ -159,7 +161,7 @@ geks_index(
   quantity,
   period,
   product,
-  index_number = \(p1, p0, ...) gmean(p1 / p0, na.rm = TRUE, order = 0)
+  index_formula = \(p1, p0, ...) gmean(p1 / p0, na.rm = TRUE, order = 0)
 )
 #> [[1]]
 #>        2        3        4        5 

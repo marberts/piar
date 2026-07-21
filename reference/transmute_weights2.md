@@ -89,6 +89,7 @@ University Press.
 ## See also
 
 Other math functions:
+[`emean()`](https://marberts.github.io/piar/reference/emean.md),
 [`gmean()`](https://marberts.github.io/piar/reference/gmean.md),
 [`nested_gmean()`](https://marberts.github.io/piar/reference/nested_gmean.md),
 [`scale_weights()`](https://marberts.github.io/piar/reference/scale_weights.md),

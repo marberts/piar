@@ -78,6 +78,7 @@ edition). Cambridge University Press.
 ## See also
 
 Other math functions:
+[`emean()`](https://marberts.github.io/piar/reference/emean.md),
 [`nested_gmean()`](https://marberts.github.io/piar/reference/nested_gmean.md),
 [`scale_weights()`](https://marberts.github.io/piar/reference/scale_weights.md),
 [`transmute_weights()`](https://marberts.github.io/piar/reference/transmute_weights.md),

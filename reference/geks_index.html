@@ -63,7 +63,7 @@ window.</p>
 <span>  <span class="va">quantity</span>,</span>
 <span>  <span class="va">period</span>,</span>
 <span>  <span class="va">product</span>,</span>
-<span>  index_number <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  index_formula <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="op">{</span></span>
 <span>     <span class="fu"><a href="nested_gmean.html">nested_gmean</a></span><span class="op">(</span><span class="va">p1</span><span class="op">/</span><span class="va">p0</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span>, <span class="va">p1</span> <span class="op">*</span></span>
 <span>    <span class="va">q1</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span> <span class="op">}</span>,</span>
@@ -102,12 +102,12 @@ gives the corresponding product identifier for each element in <code>price</code
 <code>quantity</code>.</p></dd>
 
 
-<dt id="arg-index-number">index_number<a class="anchor" aria-label="anchor" href="#arg-index-number"></a></dt>
+<dt id="arg-index-formula">index_formula<a class="anchor" aria-label="anchor" href="#arg-index-formula"></a></dt>
 <dd><p><code>[function]</code> A function giving the index-number formula
 in the GEKS
 index. Usually a Törnqvist, Fisher (the default), or Walsh index.
 It must have arguments <code>p1</code>, <code>p0</code>, <code>q1</code>, and <code>q0</code>, and satisfy the
-time-reversal test.</p></dd>
+time-reversal test. See <code><a href="../articles/index-number-formulas.html">vignette("index-number-formulas")</a></code> for details.</p></dd>
 
 
 <dt id="arg-window">window<a class="anchor" aria-label="anchor" href="#arg-window"></a></dt>
@@ -213,7 +213,7 @@ GEKS index with more options.</p>
 <span class="r-in"><span>  <span class="va">quantity</span>,</span></span>
 <span class="r-in"><span>  <span class="va">period</span>,</span></span>
 <span class="r-in"><span>  <span class="va">product</span>,</span></span>
-<span class="r-in"><span>  index_number <span class="op">=</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">...</span><span class="op">)</span> <span class="fu"><a href="gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, order <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  index_formula <span class="op">=</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">...</span><span class="op">)</span> <span class="fu"><a href="gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, order <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        2        3        4        5 </span>

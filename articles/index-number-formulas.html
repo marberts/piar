@@ -86,7 +86,7 @@
 
 
 
-    <p>Price indexes based on a generalized mean of price relatives constitute a large family of bilateral index-number formulas that are consistent in aggregation, and any index based on the generalized mean can be used to make and aggregate elementary indexes. To see how to make superlative indexes as well, let’s start with a simple dataset of prices and quantities for two businesses over three periods. We’ll be making extensive use of the lower-level math functions in this package functions; see the help pages for these functions to get more detail and <code><a href="../articles/decomposing-indexes.html">vignette("decomposing-indexes")</a></code> for the theoretical background.</p>
+    <p>Price indexes based on a generalized mean of price relatives constitute a large family of bilateral index-number formulas that are consistent in aggregation, and any index based on the generalized mean can be used to make and aggregate elementary indexes. See <a href="#sec-appendix" class="quarto-xref">Section 4</a> for a comprehensive list. To see how to make superlative indexes as well, let’s start with a simple dataset of prices and quantities for two businesses over three periods. We’ll be making extensive use of the lower-level math functions in this package functions; see the help pages for these functions to get more detail and <code><a href="../articles/decomposing-indexes.html">vignette("decomposing-indexes")</a></code> for the theoretical background.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://marberts.github.io/piar/">piar</a></span><span class="op">)</span></span>
@@ -258,6 +258,132 @@
 <span><span class="co">#&gt;       3 0 0.9388222 0.2124170</span></span></code></pre></div>
 </div>
 <p>Aggregating the elementary indexes will then consistently aggregate the contributions for both businesses, even though they use different methods.</p>
+</section><section class="level2"><h2 id="sec-appendix">Indexes based on generalized means<a class="anchor" aria-label="anchor" href="#sec-appendix"></a>
+</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># ---- Arithmetic mean ----</span></span>
+<span><span class="co"># Carli</span></span>
+<span><span class="va">carli</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Dutot</span></span>
+<span><span class="va">dutot</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Laspeyres</span></span>
+<span><span class="va">laspeyres</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Palgrave</span></span>
+<span><span class="va">palgrave</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p1</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Walsh-1</span></span>
+<span><span class="va">walsh1</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p0</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">q0</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Marshall-Edgeworth</span></span>
+<span><span class="va">marshall_edgeworth</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p0</span> <span class="op">*</span> <span class="op">(</span><span class="va">q0</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Geay-Khamis</span></span>
+<span><span class="va">geary_khamis</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p0</span> <span class="op">/</span> <span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="va">q0</span> <span class="op">+</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">q1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Hybrid CSWD</span></span>
+<span><span class="va">hybrid_cswd</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">/</span> <span class="va">p1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Martini</span></span>
+<span><span class="va">martini</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span>, <span class="va">a</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span> <span class="op">*</span> <span class="op">(</span><span class="va">q1</span> <span class="op">/</span> <span class="va">p0</span><span class="op">)</span><span class="op">^</span><span class="va">a</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ---- Geometric mean ----</span></span>
+<span><span class="co"># Jevons</span></span>
+<span><span class="va">jevons</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, order <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Geometric Laspeyres (Jöhr)</span></span>
+<span><span class="va">geo_laspeyres</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span>, order <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Geometric Paasche</span></span>
+<span><span class="va">geo_paasche</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p1</span> <span class="op">*</span> <span class="va">q1</span>, order <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Walsh-2</span></span>
+<span><span class="va">walsh2</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="va">p1</span> <span class="op">*</span> <span class="va">q0</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span>, order <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Theil</span></span>
+<span><span class="va">theil</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">w0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scale_weights.html">scale_weights</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span><span class="op">)</span></span>
+<span>  <span class="va">w1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scale_weights.html">scale_weights</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="op">(</span><span class="op">(</span><span class="va">w0</span> <span class="op">+</span> <span class="va">w1</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">w0</span> <span class="op">*</span> <span class="va">w1</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span>, order <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Rao</span></span>
+<span><span class="va">rao</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">w0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scale_weights.html">scale_weights</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span><span class="op">)</span></span>
+<span>  <span class="va">w1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scale_weights.html">scale_weights</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">w0</span> <span class="op">*</span> <span class="va">w1</span> <span class="op">/</span> <span class="op">(</span><span class="va">w0</span> <span class="op">+</span> <span class="va">w1</span><span class="op">)</span>, order <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Sato-Vartia</span></span>
+<span><span class="va">sato_vartia</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">v0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scale_weights.html">scale_weights</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span><span class="op">)</span></span>
+<span>  <span class="va">v1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scale_weights.html">scale_weights</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="fu"><a href="../reference/emean.html">emean</a></span><span class="op">(</span><span class="va">v0</span>, <span class="va">v1</span><span class="op">)</span>, order <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># ---- Harmonic mean ----</span></span>
+<span><span class="co"># Coggeshall</span></span>
+<span><span class="va">coggeshall</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, order <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Paasche</span></span>
+<span><span class="va">paasche</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p1</span> <span class="op">*</span> <span class="va">q1</span>, order <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Harmonic Laspeyres</span></span>
+<span><span class="va">harm_laspeyres</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span>, order <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ---- Generalized mean ----</span></span>
+<span><span class="co"># Lloyd-Moulton</span></span>
+<span><span class="va">lloyd_moulton</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span>, <span class="va">sigma</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/gmean.html">gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span>, order <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">sigma</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># ---- Nested means ----</span></span>
+<span><span class="co"># Drobisch (Sidgwick)</span></span>
+<span><span class="va">drobisch</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/nested_gmean.html">nested_gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span>, <span class="va">p1</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span>, outer_order <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Unnamed</span></span>
+<span><span class="va">unnamed</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/nested_gmean.html">nested_gmean</a></span><span class="op">(</span></span>
+<span>    <span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span>, <span class="va">p1</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span>,</span>
+<span>    order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    outer_order <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Törnqvist-Theil</span></span>
+<span><span class="va">tornqvist</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/nested_gmean.html">nested_gmean</a></span><span class="op">(</span></span>
+<span>    <span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span>, <span class="va">p1</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span>,</span>
+<span>    order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># Fisher</span></span>
+<span><span class="va">fisher</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/nested_gmean.html">nested_gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span>, <span class="va">p1</span> <span class="op">*</span> <span class="va">q1</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># CSWD</span></span>
+<span><span class="va">cswd</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/nested_gmean.html">nested_gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Balk-Walsh</span></span>
+<span><span class="va">balk_walsh</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span><span class="op">)</span> <span class="fu"><a href="../reference/nested_gmean.html">nested_gmean</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>, order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="op">-</span><span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Geometric AG mean</span></span>
+<span><span class="va">ag_mean</span> <span class="op">&lt;-</span> \<span class="op">(</span><span class="va">p1</span>, <span class="va">p0</span>, <span class="va">q1</span>, <span class="va">q0</span>, <span class="va">elasticity</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/nested_gmean.html">nested_gmean</a></span><span class="op">(</span></span>
+<span>    <span class="va">p1</span> <span class="op">/</span> <span class="va">p0</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span>, <span class="va">p0</span> <span class="op">*</span> <span class="va">q0</span><span class="op">)</span>,</span>
+<span>    order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    outer_weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">elasticity</span>, <span class="fl">1</span> <span class="op">-</span> <span class="va">elasticity</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+</div>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);

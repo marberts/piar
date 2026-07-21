@@ -332,6 +332,8 @@ indexes.
   : Scale weights
 - [`update_weights()`](https://marberts.github.io/piar/reference/update_weights.md)
   : Update weights
+- [`emean()`](https://marberts.github.io/piar/reference/emean.md) :
+  Extended mean
 
 # Articles
 
