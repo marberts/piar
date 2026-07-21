@@ -229,7 +229,7 @@ martini <- \(p1, p0, q1, q0, a) gmean(p1 / p0, p0 * q0 * (q1 / p0)^a)
 # Jevons
 jevons <- \(p1, p0, q1, q0) gmean(p1 / p0, order = 0)
 
-# Geometric Laspeyres / Jöhr
+# Geometric Laspeyres (Jöhr)
 geo_laspeyres <- \(p1, p0, q1, q0) gmean(p1 / p0, p0 * q0, order = 0)
 
 # Geometric Paasche
@@ -276,7 +276,7 @@ lloyd_moulton <- \(p1, p0, q1, q0, sigma) {
 }
 
 # ---- Nested means ----
-# Drobisch/Sidgwick
+# Drobisch (Sidgwick)
 drobisch <- \(p1, p0, q1, q0) {
   nested_gmean(p1 / p0, list(p0 * q0, p1 * q1), outer_order = 1)
 }

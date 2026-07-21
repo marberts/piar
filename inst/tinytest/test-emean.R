@@ -35,8 +35,7 @@ expect_equal(
     matrix(c(a, b), ncol = 2),
     1,
     \(x) {
-      (gmean(x, order = -1) * gmean(x, order = 0)^2)^(1 /
-        3)
+      (gmean(x, order = -1) * gmean(x, order = 0)^2)^(1 / 3)
     }
   )
 )
