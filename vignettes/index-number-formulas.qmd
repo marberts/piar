@@ -193,7 +193,7 @@ contrib(fisher_index, "B1")
 Aggregating the elementary indexes will then consistently aggregate the contributions
 for both businesses, even though they use different methods.
 
-## Indexed based on generalized means {#sec-appendix}
+## Indexes based on generalized means {#sec-appendix}
 
 ```{r}
 #| eval: false

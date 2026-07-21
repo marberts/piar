@@ -40,7 +40,7 @@ gives the corresponding product identifier for each element in \code{price} and
 in the GEKS
 index. Usually a Törnqvist, Fisher (the default), or Walsh index.
 It must have arguments \code{p1}, \code{p0}, \code{q1}, and \code{q0}, and satisfy the
-time-reversal test.}
+time-reversal test. See \code{vignette("index-number-formulas")} for details.}
 
 \item{window}{\verb{[integer(1) > 0]} A positive integer giving the length of the
 rolling window.
