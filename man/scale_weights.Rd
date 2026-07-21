@@ -24,6 +24,7 @@ scale_weights(c(1:5, NA))
 }
 \seealso{
 Other math functions:
+\code{\link[=emean]{emean()}},
 \code{\link[=gmean]{gmean()}},
 \code{\link[=nested_gmean]{nested_gmean()}},
 \code{\link[=transmute_weights]{transmute_weights()}},

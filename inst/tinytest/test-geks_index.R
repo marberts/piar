@@ -82,7 +82,7 @@ local({
             quantity,
             period,
             product,
-            index_number = tornqvist_index
+            index_formula = tornqvist_index
           )
         ))
       )
@@ -112,7 +112,7 @@ local({
             quantity,
             period,
             product,
-            index_number = jevons_index
+            index_formula = jevons_index
           )
         ))
       )
@@ -225,7 +225,7 @@ local({
               period,
               product,
               match_method = "back-price",
-              index_number = walsh_index
+              index_formula = walsh_index
             )
           )
         )
@@ -256,7 +256,7 @@ local({
       10,
       3,
       match_method = "back-price",
-      index_number = walsh_index
+      index_formula = walsh_index
     )
   )
   expect_equal(
@@ -287,7 +287,7 @@ local({
               quantity,
               period,
               product,
-              index_number = tornqvist_index
+              index_formula = tornqvist_index
             )
           )
         )
@@ -318,7 +318,7 @@ local({
             quantity,
             period,
             product,
-            index_number = jevons_index
+            index_formula = jevons_index
           )
         ))
       )
@@ -366,7 +366,7 @@ local({
               period,
               product,
               2,
-              index_number = walsh_index
+              index_formula = walsh_index
             )
           )
         )
@@ -401,7 +401,7 @@ local({
           period,
           product,
           window = 7,
-          index_number = tornqvist_index
+          index_formula = tornqvist_index
         )
       )
     ),
@@ -456,7 +456,7 @@ local({
           period,
           product,
           window = 6,
-          index_number = jevons_index
+          index_formula = jevons_index
         )
       ),
       periods = 3

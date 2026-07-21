@@ -5,11 +5,11 @@
 #'
 #' @export
 #'
-#' @param index_number `[function]` A function giving the index-number formula
+#' @param index_formula `[function]` A function giving the index-number formula
 #'   in the GEKS
 #'   index. Usually a Törnqvist, Fisher (the default), or Walsh index.
 #'   It must have arguments `p1`, `p0`, `q1`, and `q0`, and satisfy the
-#'   time-reversal test.
+#'   time-reversal test. See `vignette("index-number-formulas")` for details.
 #' @param order `[numeric(1)]` A finite number giving the order of the
 #'   generalized mean used to
 #'   average price indexes over the rolling window. The default uses a
@@ -93,14 +93,14 @@
 #'   quantity,
 #'   period,
 #'   product,
-#'   index_number = \(p1, p0, ...) gmean(p1 / p0, na.rm = TRUE, order = 0)
+#'   index_formula = \(p1, p0, ...) gmean(p1 / p0, na.rm = TRUE, order = 0)
 #' )
 geks_index <- function(
   price,
   quantity,
   period,
   product,
-  index_number = \(p1, p0, q1, q0) {
+  index_formula = \(p1, p0, q1, q0) {
     nested_gmean(p1 / p0, list(p0 * q0, p1 * q1), na.rm = TRUE)
   },
   window = nlevels(period),
@@ -144,7 +144,7 @@ geks_index <- function(
   }
 
   mat <- geks_matrix(
-    index_number,
+    index_formula,
     price,
     quantity,
     period,
@@ -172,7 +172,7 @@ geks_index <- function(
 #' Make the GEKS matrix
 #' @noRd
 geks_matrix <- function(
-  index_number,
+  index_formula,
   price,
   quantity,
   period,
@@ -204,18 +204,18 @@ geks_matrix <- function(
       # to minimize the number of back prices to find.
       js <- seq.int(to = i - 1L, length.out = min(window, i) - 1L)
       if (method == "all") {
-        ans <- Map(index_number, p1 = p[js], p0 = p[i], q1 = q[js], q0 = q[i])
+        ans <- Map(index_formula, p1 = p[js], p0 = p[i], q1 = q[js], q0 = q[i])
       } else {
         m <- Map(match, product[js], product[i])
         bp <- Map(`[`, p[i], m)
         bq <- Map(`[`, q[i], m)
-        ans <- Map(index_number, p1 = p[js], p0 = bp, q1 = q[js], q0 = bq)
+        ans <- Map(index_formula, p1 = p[js], p0 = bp, q1 = q[js], q0 = bq)
       }
     }
     # Add the diagonal at the end and pad with NAs.
     ans <- c(
       unlist(ans, use.names = FALSE),
-      index_number(p[[i]], p[[i]], q[[i]], q[[i]])
+      index_formula(p[[i]], p[[i]], q[[i]], q[[i]])
     )
     front_pad <- rep_len(NA_real_, max(i - window, 0L))
     back_pad <- rep_len(NA_real_, length(lt) - length(ans) - length(front_pad))

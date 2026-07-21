@@ -9,7 +9,7 @@ geks_index(
   quantity,
   period,
   product,
-  index_number = function(p1, p0, q1, q0) {
+  index_formula = function(p1, p0, q1, q0) {
      nested_gmean(p1/p0, list(p0 * q0, p1 *
     q1), na.rm = TRUE)
  },
@@ -36,11 +36,11 @@ one, that
 gives the corresponding product identifier for each element in \code{price} and
 \code{quantity}.}
 
-\item{index_number}{\verb{[function]} A function giving the index-number formula
+\item{index_formula}{\verb{[function]} A function giving the index-number formula
 in the GEKS
 index. Usually a Törnqvist, Fisher (the default), or Walsh index.
 It must have arguments \code{p1}, \code{p0}, \code{q1}, and \code{q0}, and satisfy the
-time-reversal test.}
+time-reversal test. See \code{vignette("index-number-formulas")} for details.}
 
 \item{window}{\verb{[integer(1) > 0]} A positive integer giving the length of the
 rolling window.
@@ -102,7 +102,7 @@ geks_index(
   quantity,
   period,
   product,
-  index_number = \(p1, p0, ...) gmean(p1 / p0, na.rm = TRUE, order = 0)
+  index_formula = \(p1, p0, ...) gmean(p1 / p0, na.rm = TRUE, order = 0)
 )
 }
 \references{
