@@ -57,6 +57,7 @@ nested_gmean(x, list(w1, w2))
 }
 \seealso{
 Other math functions:
+\code{\link[=emean]{emean()}},
 \code{\link[=gmean]{gmean()}},
 \code{\link[=scale_weights]{scale_weights()}},
 \code{\link[=transmute_weights]{transmute_weights()}},

@@ -105,3 +105,4 @@ reference:
   - transmute_weights2
   - scale_weights
   - update_weights
+  - emean

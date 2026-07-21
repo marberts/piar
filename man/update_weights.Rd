@@ -56,6 +56,7 @@ International Monetary Fund.
 }
 \seealso{
 Other math functions:
+\code{\link[=emean]{emean()}},
 \code{\link[=gmean]{gmean()}},
 \code{\link[=nested_gmean]{nested_gmean()}},
 \code{\link[=scale_weights]{scale_weights()}},
