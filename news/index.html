@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,12 +53,13 @@
 <div class="section level3">
 <h3 id="significant-changes-development-version">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
 <ul><li>
-<p>Many functions from <a href="https://marberts.github.io/gpindex/" class="external-link">gpindex</a> are now part of <a href="https://marberts.github.io/piar/">piar</a>. This gives a somewhat more consistent experience and allows for improvements that would be difficult with two separate packages. In particular:</p>
+<p>Many functions from <a href="https://marberts.github.io/gpindex/" class="external-link">gpindex</a> are now part of this package. This gives a somewhat more consistent experience and allows for improvements that would be difficult with two separate packages. In particular:</p>
 <ul><li><p>A new function <code><a href="../reference/outliers.html">outliers()</a></code> to find extreme price relatives.</p></li>
-<li><p>Functions for multilateral indexes.</p></li>
+<li><p>Functions for multilateral GEKS indexes.</p></li>
 <li><p>Core mathematical machinery used to aggregate indexes and make product contributions.</p></li>
 <li><p>A new vignette outlining some theory that unlies how indexes are calculated.</p></li>
 </ul></li>
+<li><p>The argument <code>r</code> in <code><a href="../reference/elementary_index.html">elementary_index()</a></code>, <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code>, <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code>, and <code><a href="../reference/impute_prices.html">impute_prices()</a></code> is deprecated and will be removed in a future version. Use <code>order</code> instead.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>

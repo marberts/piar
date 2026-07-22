@@ -34,6 +34,9 @@ the component-wise extended mean of `x` and `y`.
 
 ## Details
 
+The extended mean is also called the difference mean, Stolarsky mean, or
+extended mean-value mean; see Bullen (2003, p. 393) for details.
+
 Both `x` and `y` should be strictly positive. This is not enforced, but
 the results may not make sense when the extended mean is not defined.
 The usual recycling rules apply when `x` and `y` are not the same

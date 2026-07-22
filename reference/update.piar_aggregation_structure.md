@@ -6,7 +6,7 @@ Price update the weights in a price index aggregation structure.
 
 ``` r
 # S3 method for class 'piar_aggregation_structure'
-update(object, index, ..., period = NULL, r = 1)
+update(object, index, ..., period = NULL, order = 1, r = order)
 ```
 
 ## Arguments
@@ -32,7 +32,7 @@ update(object, index, ..., period = NULL, r = 1)
   `[character(1)]` The time period used to price update the weights. The
   default uses the last period in `index`.
 
-- r:
+- order, r:
 
   `[numeric(1)]` Order of the generalized mean to update the weights.
   The default is 1 for an arithmetic index.

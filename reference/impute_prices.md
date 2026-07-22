@@ -20,7 +20,8 @@ impute_prices(
   ea = NULL,
   weights = NULL,
   pias = NULL,
-  r = c(0, 1),
+  order = c(0, 1),
+  r = order,
   method = c("overall-mean", "carry-forward"),
   impute_rules = NULL
 )
@@ -34,7 +35,8 @@ impute_prices(
   ea = NULL,
   weights = NULL,
   pias = NULL,
-  r = c(0, 1),
+  order = c(0, 1),
+  r = order,
   method = c("overall-mean", "carry-forward", "carry-backward"),
   impute_rules = NULL
 )
@@ -95,7 +97,7 @@ shadow_price(x, ...)
   The default imputes from elementary indexes only (i.e., not
   recursively).
 
-- r:
+- order, r:
 
   `[numeric(2)]` A pair of numeric values. The first gives the order of
   the generalized-mean price index used to calculate the elementary

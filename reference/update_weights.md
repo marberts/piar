@@ -23,8 +23,8 @@ update_weights(x, weights = NULL, order = 1)
 
 - order:
 
-  `[numeric(1)]` A finite number giving the order of the generalized
-  mean. The default calculates an arithmetic mean.
+  `[numeric(1)]` A finite number giving the order (or exponent) of the
+  generalized mean. The default calculates an arithmetic mean.
 
 ## Value
 

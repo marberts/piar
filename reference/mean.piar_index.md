@@ -14,7 +14,8 @@ mean(
   window = NULL,
   na.rm = FALSE,
   contrib = TRUE,
-  r = 1,
+  order = 1,
+  r = order,
   duplicate_contrib = c("sum", "make.unique")
 )
 
@@ -26,7 +27,8 @@ mean(
   window = NULL,
   na.rm = FALSE,
   contrib = TRUE,
-  r = 1,
+  order = 1,
+  r = order,
   duplicate_contrib = c("sum", "make.unique")
 )
 ```
@@ -67,7 +69,7 @@ mean(
   `[logical(1)]` Aggregate percent-change contributions in `x`? By
   default contributions are aggregated.
 
-- r:
+- order, r:
 
   `[numeric(1)]` Order of the generalized mean to aggregate index
   values. 0 for a geometric index (the default for making elementary

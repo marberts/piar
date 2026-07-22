@@ -21,8 +21,8 @@ gmean(x, weights = NULL, order = 1, na.rm = FALSE)
 
 - order:
 
-  `[numeric(1)]` A finite number giving the order of the generalized
-  mean. The default calculates an arithmetic mean.
+  `[numeric(1)]` A finite number giving the order (or exponent) of the
+  generalized mean. The default calculates an arithmetic mean.
 
 - na.rm:
 

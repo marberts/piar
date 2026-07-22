@@ -23,7 +23,8 @@ elementary_index(
   chainable = TRUE,
   na.rm = FALSE,
   contrib = FALSE,
-  r = 0
+  order = 0,
+  r = order
 )
 
 # S3 method for class 'data.frame'
@@ -91,7 +92,7 @@ elemental_index(x, ...)
   `[logical(1)]` Should percent-change contributions be calculated? The
   default does not calculate contributions.
 
-- r:
+- order, r:
 
   `[numeric(1)]` Order of the generalized mean to aggregate price
   relatives. 0 for a geometric index (the default for making elementary
@@ -127,9 +128,9 @@ wrapper that applies
 (if `contrib = TRUE`) to `x` and `weights` grouped by `ea` and `period`.
 That is, for every combination of elementary aggregate and time period,
 `elementary_index()` calculates an index based on a generalized mean of
-order `r` and, optionally, percent-change contributions. Product names
-should be unique within each elementary aggregate at each time period
-when making contributions and, if not, are passed to
+order `order` and, optionally, percent-change contributions. Product
+names should be unique within each elementary aggregate at each time
+period when making contributions and, if not, are passed to
 [`make.unique()`](https://rdrr.io/r/base/make.unique.html) with a
 warning. The default (`r = 0` and no weights) makes Jevons elementary
 indexes. See chapter 8 (pp. 175–190) of the CPI manual (2020) for more
@@ -246,6 +247,8 @@ elementary_index(
   weights = unsplit(cswd_weights, interaction(period, ea)),
   r = 1
 )
+#> Warning: `r` is deprecated and will be removed; use `order` instead
+#> Warning: `r` is deprecated and will be removed; use `order` instead
 #> Period-over-period price index for 2 levels over 2 time periods 
 #>       time
 #> levels        1        2

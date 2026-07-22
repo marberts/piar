@@ -5,21 +5,30 @@
 ### Significant changes
 
 - Many functions from [gpindex](https://marberts.github.io/gpindex/) are
-  now part of [piar](https://marberts.github.io/piar/). This gives a
-  somewhat more consistent experience and allows for improvements that
-  would be difficult with two separate packages. In particular:
+  now part of this package. This gives a somewhat more consistent
+  experience and allows for improvements that would be difficult with
+  two separate packages. In particular:
 
   - A new function
     [`outliers()`](https://marberts.github.io/piar/reference/outliers.md)
     to find extreme price relatives.
 
-  - Functions for multilateral indexes.
+  - Functions for multilateral GEKS indexes.
 
   - Core mathematical machinery used to aggregate indexes and make
     product contributions.
 
   - A new vignette outlining some theory that unlies how indexes are
     calculated.
+
+- The argument `r` in
+  [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md),
+  [`aggregate()`](https://rdrr.io/r/stats/aggregate.html),
+  [`mean()`](https://rdrr.io/r/base/mean.html),
+  [`update()`](https://rdrr.io/r/stats/update.html), and
+  [`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  is deprecated and will be removed in a future version. Use `order`
+  instead.
 
 ### Improvements
 

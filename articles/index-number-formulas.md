@@ -56,7 +56,7 @@ An order of 1 corresponds to an arithmetic mean.
 ``` r
 
 prices |>
-  elementary_index(price / back_price ~ period + business, r = 1)
+  elementary_index(price / back_price ~ period + business, order = 1)
 #> Period-over-period price index for 2 levels over 3 time periods 
 #>       time
 #> levels 1        2        3
@@ -72,7 +72,7 @@ an order `r` of -1.
 ``` r
 
 prices |>
-  elementary_index(price / back_price ~ period + business, r = -1)
+  elementary_index(price / back_price ~ period + business, order = -1)
 #> Period-over-period price index for 2 levels over 3 time periods 
 #>       time
 #> levels 1        2        3
