@@ -23,7 +23,7 @@ local({
   expect_error(suppressWarnings(stack(index1, epr1)))
   time(epr2) <- time(epr1)
   expect_error(stack(epr1, epr2))
-  expect_error(stack(index1, aggregate(epr2, pias2, r = 0)))
+  expect_error(stack(index1, aggregate(epr2, pias2, order = 0)))
 })
 
 # Stacking and unstacking are opposite operations.

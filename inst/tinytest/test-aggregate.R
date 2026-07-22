@@ -224,7 +224,7 @@ local({
     price_relative(price, period = period, product = product) ~
       period + business,
     contrib = TRUE,
-    r = 0.2
+    order = 0.2
   )
 
   ms_pias <- with(
@@ -235,7 +235,7 @@ local({
     )
   )
 
-  ms_index <- aggregate(ms_epr, ms_pias, r = -1.7, na.rm = TRUE)
+  ms_index <- aggregate(ms_epr, ms_pias, order = -1.7, na.rm = TRUE)
 
   res <- c(
     1,
@@ -283,11 +283,14 @@ local({
   expect_equal(as.matrix(ms_index), res)
 
   expect_equal(
-    as.matrix(aggregate(ms_index, ms_pias, r = -1.7, na.rm = TRUE)),
+    as.matrix(aggregate(ms_index, ms_pias, order = -1.7, na.rm = TRUE)),
     as.matrix(ms_index)
   )
 
-  expect_equal(aggregate(chain(ms_index), ms_pias, r = -1.7), chain(ms_index))
+  expect_equal(
+    aggregate(chain(ms_index), ms_pias, order = -1.7),
+    chain(ms_index)
+  )
 
   expect_equal(
     as.matrix(ms_index)[1, ],
@@ -295,10 +298,11 @@ local({
   )
   expect_equal(
     as.matrix(ms_index)[1, ],
-    colSums(contrib(aggregate(ms_index, ms_pias, r = -1.7)), na.rm = TRUE) + 1
+    colSums(contrib(aggregate(ms_index, ms_pias, order = -1.7)), na.rm = TRUE) +
+      1
   )
   expect_equal(
-    aggregate(ms_index, ms_pias, r = -1.7, duplicate_contrib = "sum"),
+    aggregate(ms_index, ms_pias, order = -1.7, duplicate_contrib = "sum"),
     ms_index
   )
 
@@ -320,9 +324,9 @@ local({
     as.matrix(chain(ms_index[1:3, ]))
   )
 
-  ms_index <- aggregate(ms_epr, ms_pias, r = -1.7)
+  ms_index <- aggregate(ms_epr, ms_pias, order = -1.7)
 
-  expect_equal(aggregate(ms_index, ms_pias, r = -1.7), ms_index)
+  expect_equal(aggregate(ms_index, ms_pias, order = -1.7), ms_index)
 
   expect_equal(as.matrix(ms_index)[1, ], colSums(contrib(ms_index)) + 1)
   expect_equal(
@@ -476,8 +480,8 @@ local({
 
   # Should work for a non-arithmetic index
   expect_equal(
-    chain(aggregate(epr_pop, pias, r = 3)),
-    aggregate(epr_fx, pias, r = 3)
+    chain(aggregate(epr_pop, pias, order = 3)),
+    aggregate(epr_fx, pias, order = 3)
   )
 
   # Consistency in aggregation holds with a change in base period
@@ -519,8 +523,8 @@ local({
     1:3
   )
 
-  arithmetic_contributions <- function(x, w, r = 1) {
-    (x - 1) * transmute_weights(x, w, r, to = 1)
+  arithmetic_contributions <- function(x, w, order = 1) {
+    (x - 1) * transmute_weights(x, w, order, to = 1)
   }
   index <- aggregate(epr, pias)
   expect_equal(
@@ -548,7 +552,7 @@ local({
     ea = gl(2, 2),
     period = gl(1, 4),
     contrib = TRUE,
-    r = 1
+    order = 1
   )
   epr2 <- epr1
   levels(epr2) <- 3:4
@@ -621,9 +625,9 @@ local({
   )
   levels(epr2) <- c(211, 221, 222)
 
-  index <- aggregate(merge(epr1, epr2), pias, r = 0.5)
-  index1 <- aggregate(epr1, pias, r = 0.5)
-  index2 <- aggregate(epr2, pias, r = 0.5)
+  index <- aggregate(merge(epr1, epr2), pias, order = 0.5)
+  index1 <- aggregate(epr1, pias, order = 0.5)
+  index2 <- aggregate(epr2, pias, order = 0.5)
 
   expect_equal(index[1], index1[1])
   expect_equal(index[2], index2[2])
@@ -691,11 +695,14 @@ local({
     )
   )
 
-  ms_index <- chain(aggregate(ms_epr, ms_pias, na.rm = TRUE, r = 2))
+  ms_index <- chain(aggregate(ms_epr, ms_pias, na.rm = TRUE, order = 2))
 
   ms_index2 <- unchain(ms_index[, -3])
 
-  expect_equal(chain(aggregate(ms_index2, ms_pias, r = 2))[, 3], ms_index[, 4])
+  expect_equal(
+    chain(aggregate(ms_index2, ms_pias, order = 2))[, 3],
+    ms_index[, 4]
+  )
 })
 
 # Skipping eas works.
@@ -778,7 +785,7 @@ local({
   )
   res <- aggregate(epr, pias, pias2 = pias2, na.rm = TRUE)
   res1 <- aggregate(epr, pias, na.rm = TRUE)
-  res2 <- aggregate(epr, pias2, r = -1, na.rm = TRUE)
+  res2 <- aggregate(epr, pias2, order = -1, na.rm = TRUE)
 
   expect_equal(
     sqrt(as.matrix(res1) * as.matrix(res2)),
@@ -812,8 +819,8 @@ local({
 
   # Tornqvist.
   expect_equal(
-    aggregate(epr, pias, r = 0, na.rm = TRUE),
-    aggregate(epr, pias, pias2 = pias, r = 0, na.rm = TRUE)
+    aggregate(epr, pias, order = 0, na.rm = TRUE),
+    aggregate(epr, pias, pias2 = pias, order = 0, na.rm = TRUE)
   )
 })
 

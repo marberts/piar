@@ -9,7 +9,8 @@
 #' (if `contrib = TRUE`) to `x` and `weights` grouped by `ea` and `period`. That
 #' is, for every combination of elementary aggregate and time period,
 #' `elementary_index()` calculates an index based on a generalized mean of
-#' order `r` and, optionally, percent-change contributions. Product names should
+#' order `order` and, optionally, percent-change contributions. Product names
+#' should
 #' be unique within each elementary aggregate at each time period when making
 #' contributions and, if not, are
 #' passed to [make.unique()] with a warning. The default
@@ -81,8 +82,8 @@
 #'   missing values
 #'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #'   imputation.
-#' @param r `[numeric(1)]` Order of the generalized mean to aggregate price
-#'   relatives. 0 for a
+#' @param order,r `[numeric(1)]` Order of the generalized mean to aggregate
+#'   price relatives. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
@@ -163,6 +164,9 @@
 #'   r = 1
 #' )
 elementary_index <- function(x, ...) {
+  if ("r" %in% ...names()) {
+    warning("`r` is deprecated and will be removed; use `order` instead")
+  }
   UseMethod("elementary_index")
 }
 
@@ -184,7 +188,8 @@ elementary_index.numeric <- function(
   chainable = TRUE,
   na.rm = FALSE,
   contrib = FALSE,
-  r = 0
+  order = 0,
+  r = order
 ) {
   chkDots(...)
   if (!is.null(weights)) {

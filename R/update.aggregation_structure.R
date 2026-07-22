@@ -13,8 +13,8 @@
 #'   [`aggregate()`][aggregate.piar_index].
 #' @param period `[character(1)]` The time period used to price update the
 #'   weights. The default uses the last period in `index`.
-#' @param r `[numeric(1)]` Order of the generalized mean to update the weights.
-#'   The default is 1 for an arithmetic index.
+#' @param order,r `[numeric(1)]` Order of the generalized mean to update the
+#'   weights. The default is 1 for an arithmetic index.
 #' @param ... Not currently used.
 #'
 #' @returns
@@ -53,8 +53,12 @@ update.piar_aggregation_structure <- function(
   index,
   ...,
   period = NULL,
-  r = 1
+  order = 1,
+  r = order
 ) {
+  if ("r" %in% names(sys.call())) {
+    warning("`r` is deprecated and will be removed; use `order` instead")
+  }
   chkDots(...)
   index <- as_index(index, chainable = FALSE)
   r <- as.numeric(r)
@@ -70,7 +74,7 @@ update.piar_aggregation_structure <- function(
   weights(object) <- update_weights(
     index$index[, period][eas],
     object$weights,
-    r
+    order = r
   )
   object
 }

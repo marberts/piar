@@ -63,7 +63,7 @@ local({
     ms_epr,
     weights = w,
     window = 2,
-    r = 2.5,
+    order = 2.5,
     na.rm = TRUE,
     duplicate_contrib = "sum"
   )
@@ -78,7 +78,7 @@ local({
 local({
   x <- as_index(matrix(1:9, 3))
   expect_equal(mean(x, window = 1), x)
-  expect_equal(mean(x, weights = 9:1, window = 1, r = 0), x)
+  expect_equal(mean(x, weights = 9:1, window = 1, order = 0), x)
   expect_equal(mean(window(x, end(x))), window(x, end(x)))
 })
 

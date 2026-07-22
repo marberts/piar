@@ -92,7 +92,7 @@ paasche <- Map(
   paasche_pias,
   na.rm = TRUE,
   include_ea = FALSE,
-  r = -1
+  order = -1
 ) |>
   Reduce(stack, x = _)
 

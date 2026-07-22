@@ -2,17 +2,21 @@
 
 ## Significant changes
 
-- Many functions from `{gpindex}` are now part of `{piar}`. This gives a somewhat
+- Many functions from `{gpindex}` are now part of this package. This gives a somewhat
 more consistent experience and allows for improvements that would be difficult with
 two separate packages. In particular:
 
     - A new function `outliers()` to find extreme price relatives.
 
-    - Functions for multilateral indexes.
+    - Functions for multilateral GEKS indexes.
 
     - Core mathematical machinery used to aggregate indexes and make product contributions.
     
     - A new vignette outlining some theory that unlies how indexes are calculated.
+    
+- The argument `r` in `elementary_index()`, `aggregate()`, `mean()`, `update()`,
+and `impute_prices()` is deprecated and will be removed in a future version.
+Use `order` instead.
 
 ## Improvements
 

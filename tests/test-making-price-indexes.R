@@ -132,10 +132,20 @@ ms_elementary2
 aggregate(ms_elementary2, pias, na.rm = TRUE)
 
 ## -----------------------------------------------------------------------------
-elementary_index(ms_prices, relatives ~ period + business, na.rm = TRUE, r = 1)
+elementary_index(
+  ms_prices,
+  relatives ~ period + business,
+  na.rm = TRUE,
+  order = 1
+)
 
 ## -----------------------------------------------------------------------------
-elementary_index(ms_prices, relatives ~ period + business, na.rm = TRUE, r = -1)
+elementary_index(
+  ms_prices,
+  relatives ~ period + business,
+  na.rm = TRUE,
+  order = -1
+)
 
 ## -----------------------------------------------------------------------------
 ms_prices2 <- transform(ms_prices, quantity = 10 - price)
@@ -294,7 +304,7 @@ pias <- with(
 ## -----------------------------------------------------------------------------
 paasche <- Reduce(
   stack,
-  Map(aggregate, ms_elementary, pias, na.rm = TRUE, r = -1)
+  Map(aggregate, ms_elementary, pias, na.rm = TRUE, order = -1)
 )
 
 paasche
