@@ -52,7 +52,7 @@ corresponds to an arithmetic mean.
 
 ```{r}
 prices |>
-  elementary_index(price / back_price ~ period + business, r = 1)
+  elementary_index(price / back_price ~ period + business, order = 1)
 ```
 
 The Coggeshall index (equally-weighted harmonic mean of price relatives)
@@ -62,7 +62,7 @@ an order `r` of -1.
 
 ```{r}
 prices |>
-  elementary_index(price / back_price ~ period + business, r = -1)
+  elementary_index(price / back_price ~ period + business, order = -1)
 ```
 
 Weights can be added to make, for example, elementary indexes using the

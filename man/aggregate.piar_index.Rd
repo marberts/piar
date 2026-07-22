@@ -13,7 +13,8 @@
   pias2 = NULL,
   na.rm = FALSE,
   contrib = TRUE,
-  r = 1,
+  order = 1,
+  r = order,
   include_ea = TRUE,
   duplicate_contrib = c("sum", "make.unique"),
   impute_rules = NULL
@@ -26,7 +27,8 @@
   pias2 = NULL,
   na.rm = FALSE,
   contrib = TRUE,
-  r = 1,
+  order = 1,
+  r = order,
   include_ea = TRUE,
   duplicate_contrib = c("sum", "make.unique"),
   impute_rules = NULL
@@ -52,8 +54,8 @@ overall mean imputation.}
 \item{contrib}{\verb{[logical(1)]} Aggregate percent-change contributions in \code{x}?
 By default contributions are aggregated.}
 
-\item{r}{\verb{[numeric(1)]} Order of the generalized mean to aggregate index
-values. 0 for a
+\item{order, r}{\verb{[numeric(1)]} Order of the generalized mean to aggregate
+index values. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for

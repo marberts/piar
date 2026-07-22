@@ -32,7 +32,7 @@ local({
     )
   )
   expect_equal(
-    weights(update(agg, index, r = 0), ea_only = FALSE),
+    weights(update(agg, index, order = 0), ea_only = FALSE),
     list(
       level1 = c("1" = NA_real_, "2" = NA),
       level2 = c("11" = NA_real_, "21" = NA, "12" = 1),

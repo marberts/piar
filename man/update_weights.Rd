@@ -12,8 +12,8 @@ update_weights(x, weights = NULL, order = 1)
 \item{weights}{\verb{[numeric >= 0]} A positive numeric vector of weights, the
 same length as \code{x}. The default is to equally weight each element of \code{x}.}
 
-\item{order}{\verb{[numeric(1)]} A finite number giving the order of the
-generalized mean. The default calculates an arithmetic mean.}
+\item{order}{\verb{[numeric(1)]} A finite number giving the order (or exponent) of
+the generalized mean. The default calculates an arithmetic mean.}
 }
 \value{
 A numeric vector the same length as \code{x}.

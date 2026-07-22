@@ -7,7 +7,7 @@ epr1 <- elementary_index(ms_prices, rel ~ period + business, contrib = TRUE)
 epr2 <- elementary_index(
   ms_prices,
   rel ~ period + business,
-  r = -1,
+  order = -1,
   contrib = TRUE,
   na.rm = TRUE
 )
@@ -58,13 +58,13 @@ local({
     ms_prices2,
     rel ~ period + business,
     weights = w1,
-    r = 1
+    order = 1
   )
   p <- elementary_index(
     ms_prices2,
     rel ~ period + business,
     weights = w2,
-    r = -1
+    order = -1
   )
   expect_equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(epr3))
 
@@ -80,12 +80,12 @@ local({
 
   sepr <- elementary_index(ms_prices2, rel ~ period + business, weights = w)
 
-  l <- elementary_index(ms_prices2, rel ~ period + business, r = 1.5)
+  l <- elementary_index(ms_prices2, rel ~ period + business, order = 1.5)
   p <- elementary_index(
     ms_prices2,
     rel ~ period + business,
     weights = w2,
-    r = -1.5
+    order = -1.5
   )
   expect_equal(sqrt(as.matrix(l) * as.matrix(p)), as.matrix(sepr))
 })
@@ -117,7 +117,7 @@ local({
   expect_error(elementary_index(1:3, period = factor(1:3, levels = numeric(0))))
   expect_error(elementary_index(1:3, ea = factor(1:3, levels = numeric(0))))
   expect_error(elementary_index(setNames(1:3, c("", 1, 2)), contrib = TRUE))
-  expect_error(elementary_index(-1:1, period = 1:3, ea = 1:3, r = 1))
+  expect_error(elementary_index(-1:1, period = 1:3, ea = 1:3, order = 1))
   expect_warning(elementary_index(
     setNames(1:3, rep(1, 3)),
     period = gl(1, 3),

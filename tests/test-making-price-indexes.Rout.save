@@ -299,7 +299,12 @@ levels 202001    202002    202003   202004
     B5      1 1.1721550 1.0400686 4.576286
 > 
 > ## -----------------------------------------------------------------------------
-> elementary_index(ms_prices, relatives ~ period + business, na.rm = TRUE, r = 1)
+> elementary_index(
++   ms_prices,
++   relatives ~ period + business,
++   na.rm = TRUE,
++   order = 1
++ )
 Period-over-period price index for 4 levels over 4 time periods 
       time
 levels 202001     202002    202003   202004
@@ -309,7 +314,12 @@ levels 202001     202002    202003   202004
     B4    NaN        NaN       NaN 9.368610
 > 
 > ## -----------------------------------------------------------------------------
-> elementary_index(ms_prices, relatives ~ period + business, na.rm = TRUE, r = -1)
+> elementary_index(
++  ms_prices,
++  relatives ~ period + business,
++  na.rm = TRUE,
++  order = -1
++ )
 Period-over-period price index for 4 levels over 4 time periods 
       time
 levels 202001    202002    202003    202004
@@ -636,7 +646,7 @@ levels   202004
 > ## -----------------------------------------------------------------------------
 > paasche <- Reduce(
 +   stack,
-+   Map(aggregate, ms_elementary, pias, na.rm = TRUE, r = -1)
++   Map(aggregate, ms_elementary, pias, na.rm = TRUE, order = -1)
 + )
 > 
 > paasche

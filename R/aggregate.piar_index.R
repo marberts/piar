@@ -71,8 +71,8 @@
 #' @param na.rm `[logical(1)]` Should missing values be removed? By default,
 #'   missing values are not removed. Setting `na.rm = TRUE` is equivalent to
 #'   overall mean imputation.
-#' @param r `[numeric(1)]` Order of the generalized mean to aggregate index
-#'   values. 0 for a
+#' @param order,r `[numeric(1)]` Order of the generalized mean to aggregate
+#'   index values. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
@@ -149,11 +149,15 @@ aggregate.chainable_piar_index <- function(
   pias2 = NULL,
   na.rm = FALSE,
   contrib = TRUE,
-  r = 1,
+  order = 1,
+  r = order,
   include_ea = TRUE,
   duplicate_contrib = c("sum", "make.unique"),
   impute_rules = NULL
 ) {
+  if ("r" %in% names(sys.call())) {
+    warning("`r` is deprecated and will be removed; use `order` instead")
+  }
   chkDots(...)
   aggregate_index(
     x,
@@ -161,7 +165,7 @@ aggregate.chainable_piar_index <- function(
     pias2,
     na.rm = na.rm,
     contrib = contrib,
-    r = r,
+    order = r,
     include_ea = include_ea,
     chainable = TRUE,
     duplicate_contrib = match.arg(duplicate_contrib),
@@ -178,11 +182,15 @@ aggregate.direct_piar_index <- function(
   pias2 = NULL,
   na.rm = FALSE,
   contrib = TRUE,
-  r = 1,
+  order = 1,
+  r = order,
   include_ea = TRUE,
   duplicate_contrib = c("sum", "make.unique"),
   impute_rules = NULL
 ) {
+  if ("r" %in% names(sys.call())) {
+    warning("`r` is deprecated and will be removed; use `order` instead")
+  }
   chkDots(...)
   aggregate_index(
     x,
@@ -190,7 +198,7 @@ aggregate.direct_piar_index <- function(
     pias2,
     na.rm = na.rm,
     contrib = contrib,
-    r = r,
+    order = r,
     include_ea = include_ea,
     chainable = FALSE,
     duplicate_contrib = match.arg(duplicate_contrib),
@@ -206,21 +214,21 @@ aggregate_index <- function(
   pias2,
   na.rm,
   contrib,
-  r,
+  order,
   include_ea,
   chainable,
   duplicate_contrib,
   impute_rules
 ) {
   pias <- as_aggregation_structure(pias)
-  r <- as.numeric(r)
+  order <- as.numeric(order)
   has_contrib <- !is.null(x$contrib) && contrib
   res <- .aggregate(
     x,
     pias,
     na.rm,
     has_contrib,
-    r,
+    order,
     include_ea,
     chainable,
     duplicate_contrib,
@@ -246,7 +254,7 @@ aggregate_index <- function(
       pias2,
       na.rm,
       has_contrib,
-      -r,
+      -order,
       include_ea,
       chainable,
       duplicate_contrib,
@@ -259,7 +267,7 @@ aggregate_index <- function(
         res2$contrib,
         res$index,
         res2$index,
-        r = 0
+        order = 0
       )
     }
     res$index[] <- (res$index * res2$index)^0.5
@@ -279,7 +287,7 @@ aggregate_index <- function(
   pias,
   na.rm,
   has_contrib,
-  r,
+  order,
   include_ea,
   chainable,
   duplicate_contrib,
@@ -311,7 +319,7 @@ aggregate_index <- function(
       nodes <- unname(pias$child[[i - 1L]])
       rel[[i]] <- vapply(
         nodes,
-        \(z) gmean(rel[[i - 1L]][z], w[[i - 1L]][z], r, na.rm),
+        \(z) gmean(rel[[i - 1L]][z], w[[i - 1L]][z], order, na.rm),
         numeric(1L)
       )
       if (has_contrib) {
@@ -322,7 +330,7 @@ aggregate_index <- function(
               con[[i - 1L]][nodes[[j]]],
               rel[[i - 1L]][nodes[[j]]],
               w[[i - 1L]][nodes[[j]]],
-              r,
+              order,
               rel[[i]][j],
               duplicate_contrib
             )
@@ -343,7 +351,7 @@ aggregate_index <- function(
 
     # Price update weights for all periods after the first.
     if (chainable) {
-      pias$weights <- update_weights(rel[[1L]], w[[1L]], r)
+      pias$weights <- update_weights(rel[[1L]], w[[1L]], order)
     }
 
     if (!include_ea && length(rel) > 1L) {
@@ -359,8 +367,8 @@ aggregate_index <- function(
 
 #' Aggregate product contributions
 #' @noRd
-aggregate_contrib <- function(x, rel, w, r, index, duplicate_contrib) {
-  w <- transmute_weights(rel, w, r, to = 1, mean = index)
+aggregate_contrib <- function(x, rel, w, order, index, duplicate_contrib) {
+  w <- transmute_weights(rel, w, order, to = 1, mean = index)
   res <- Map(`*`, x, w)
   if (all(lengths(res) == 0L)) {
     return(numeric(0L))
@@ -385,7 +393,7 @@ aggregate_contrib <- function(x, rel, w, r, index, duplicate_contrib) {
 
 #' Aggregate product contributions for a superlative index
 #' @noRd
-super_aggregate_contrib <- function(x, y, rel1, rel2, r) {
-  w <- transmute_weights(c(rel1, rel2), order = r, to = 1)
+super_aggregate_contrib <- function(x, y, rel1, rel2, order) {
+  w <- transmute_weights(c(rel1, rel2), order = order, to = 1)
   w[1L] * x + w[2L] * y
 }

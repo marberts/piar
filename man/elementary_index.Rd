@@ -22,7 +22,8 @@ elementary_index(x, ...)
   chainable = TRUE,
   na.rm = FALSE,
   contrib = FALSE,
-  r = 0
+  order = 0,
+  r = order
 )
 
 \method{elementary_index}{data.frame}(x, formula, ..., weights = NULL, product = NULL)
@@ -72,8 +73,8 @@ imputation.}
 \item{contrib}{\verb{[logical(1)]} Should percent-change contributions be
 calculated? The default does not calculate contributions.}
 
-\item{r}{\verb{[numeric(1)]} Order of the generalized mean to aggregate price
-relatives. 0 for a
+\item{order, r}{\verb{[numeric(1)]} Order of the generalized mean to aggregate
+price relatives. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
@@ -102,7 +103,8 @@ wrapper that applies \code{\link[=gmean]{gmean()}} and \code{\link[=transmute_we
 (if \code{contrib = TRUE}) to \code{x} and \code{weights} grouped by \code{ea} and \code{period}. That
 is, for every combination of elementary aggregate and time period,
 \code{elementary_index()} calculates an index based on a generalized mean of
-order \code{r} and, optionally, percent-change contributions. Product names should
+order \code{order} and, optionally, percent-change contributions. Product names
+should
 be unique within each elementary aggregate at each time period when making
 contributions and, if not, are
 passed to \code{\link[=make.unique]{make.unique()}} with a warning. The default

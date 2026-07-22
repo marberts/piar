@@ -59,8 +59,8 @@
 #'   product weights), or something that can be coerced into one. The default is
 #'   to give each price equal weight. This is evaluated in `x` for the data
 #'   frame method.
-#' @param r `[numeric(2)]` A pair of numeric values. The first gives the order
-#'   of the generalized-mean price index used to calculate the
+#' @param order,r `[numeric(2)]` A pair of numeric values. The first gives the
+#'   order of the generalized-mean price index used to calculate the
 #'   elementary price indexes, defaulting to a geometric index. The second
 #'   gives the order of the generalized-mean price index used to aggregate the
 #'   elementary price indexes, defaulting to an arithmetic index. Other values
@@ -123,6 +123,9 @@
 #'   method = "overall-mean"
 #' )
 impute_prices <- function(x, ...) {
+  if ("r" %in% ...names()) {
+    warning("`r` is deprecated and will be removed; use `order` instead")
+  }
   UseMethod("impute_prices")
 }
 
@@ -142,7 +145,8 @@ impute_prices.matrix <- function(
   ea = NULL,
   weights = NULL,
   pias = NULL,
-  r = c(0, 1),
+  order = c(0, 1),
+  r = order,
   method = c("overall-mean", "carry-forward"),
   impute_rules = NULL
 ) {
@@ -192,7 +196,7 @@ impute_prices.matrix <- function(
         ea = ea[[t]],
         weights = weights[[t]],
         na.rm = TRUE,
-        r = r[1L]
+        order = r[1L]
       )
       time(index) <- names(res)[t]
       if (!is.null(pias)) {
@@ -200,10 +204,10 @@ impute_prices.matrix <- function(
           index,
           pias,
           na.rm = TRUE,
-          r = r[2L],
+          order = r[2L],
           impute_rules = impute_rules
         )
-        pias <- update(pias, index, r = r[2L])
+        pias <- update(pias, index, order = r[2L])
       }
       eas <- if (!is.null(ea)) {
         match(as.character(ea[[t]][impute]), index$levels)
@@ -240,7 +244,8 @@ impute_prices.numeric <- function(
   ea = NULL,
   weights = NULL,
   pias = NULL,
-  r = c(0, 1),
+  order = c(0, 1),
+  r = order,
   method = c("overall-mean", "carry-forward", "carry-backward"),
   impute_rules = NULL
 ) {
@@ -296,7 +301,7 @@ impute_prices.numeric <- function(
         ea = ea[[t]],
         weights = weights[[t]],
         na.rm = TRUE,
-        r = r[1L]
+        order = r[1L]
       )
       time(index) <- names(res)[t]
       if (!is.null(pias)) {
@@ -304,10 +309,10 @@ impute_prices.numeric <- function(
           index,
           pias,
           na.rm = TRUE,
-          r = r[2L],
+          order = r[2L],
           impute_rules = impute_rules
         )
-        pias <- update(pias, index, r = r[2L])
+        pias <- update(pias, index, order = r[2L])
       }
       eas <- if (!is.null(ea)) {
         match(as.character(ea[[t]][impute]), index$levels)

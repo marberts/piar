@@ -1,4 +1,4 @@
-# Extended mean satisfied key identities.
+# Extended mean satisfies key identities.
 a <- 1:5
 b <- c(1, 5, 4, 1, 2)
 
@@ -20,6 +20,7 @@ expect_equal(
   emean(a, b, order = c(1, 1)),
   emean(b, a, order = c(1, 1))
 )
+
 # Identities.
 expect_equal(
   emean(a, b, order = c(-1, 1)),
@@ -66,4 +67,30 @@ expect_equal(
 )
 
 # Errors when expected.
-expect_error(emean(a, b, tol = 1:10))
+expect_error(emean(a, b, tol = 1:10), "`tol` cannot be longer than `x` or `y`")
+expect_error(
+  emean(a, b, order = 1:3),
+  "`order` must be a pair of finite numbers"
+)
+
+# Recycling works
+expect_warning(
+  emean(1:3, 1:5),
+  "length of `x` is not a multiple of length of `y`"
+)
+expect_equal(
+  suppressWarnings(emean(1:3, 1:5)),
+  emean(c(1:3, 1:2), 1:5)
+)
+expect_equal(emean(1:5, numeric(0)), numeric(0))
+
+expect_warning(
+  emean(1:5, 1:3),
+  "length of `y` is not a multiple of length of `x`"
+)
+expect_equal(
+  suppressWarnings(emean(1:5, 1:3)),
+  emean(1:5, c(1:3, 1:2))
+)
+expect_equal(emean(numeric(0), 1:5), numeric(0))
+expect_equal(emean(numeric(0), numeric(0)), numeric(0))

@@ -39,8 +39,8 @@
 #'   missing values
 #'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
 #'   imputation.
-#' @param r `[numeric(1)]` Order of the generalized mean to aggregate index
-#'   values. 0 for a
+#' @param order,r `[numeric(1)]` Order of the generalized mean to aggregate
+#'   index values. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
 #'   averaging indexes over subperiods), or -1 for a harmonic index (usually for
@@ -74,17 +74,21 @@ mean.chainable_piar_index <- function(
   window = NULL,
   na.rm = FALSE,
   contrib = TRUE,
-  r = 1,
+  order = 1,
+  r = order,
   duplicate_contrib = c("sum", "make.unique")
 ) {
   chkDots(...)
+  if ("r" %in% names(sys.call())) {
+    warning("`r` is deprecated and will be removed; use `order` instead")
+  }
   mean_index(
     x,
     weights,
     window = window,
     na.rm = na.rm,
     contrib = contrib,
-    r = r,
+    order = r,
     chainable = TRUE,
     duplicate_contrib = match.arg(duplicate_contrib)
   )
@@ -99,17 +103,21 @@ mean.direct_piar_index <- function(
   window = NULL,
   na.rm = FALSE,
   contrib = TRUE,
-  r = 1,
+  order = 1,
+  r = order,
   duplicate_contrib = c("sum", "make.unique")
 ) {
   chkDots(...)
+  if ("r" %in% names(sys.call())) {
+    warning("`r` is deprecated and will be removed; use `order` instead")
+  }
   mean_index(
     x,
     weights,
     window = window,
     na.rm = na.rm,
     contrib = contrib,
-    r = r,
+    order = r,
     chainable = FALSE,
     duplicate_contrib = match.arg(duplicate_contrib)
   )
@@ -123,7 +131,7 @@ mean_index <- function(
   window,
   na.rm,
   contrib,
-  r,
+  order,
   chainable,
   duplicate_contrib
 ) {
@@ -138,7 +146,7 @@ mean_index <- function(
     dim(weights) <- c(nlevels(x), ntime(x))
   }
 
-  r <- as.numeric(r)
+  order <- as.numeric(order)
   window <- as.integer(window %||% ntime(x))
   if (window < 1L) {
     stop("`window` must be a positive integer")
@@ -166,7 +174,7 @@ mean_index <- function(
     if (!is.null(weights)) {
       w <- split_rows(weights[, j, drop = FALSE], rows)
     }
-    res[[i]] <- mapply(gmean, rel, w, r, na.rm = na.rm, USE.NAMES = FALSE)
+    res[[i]] <- mapply(gmean, rel, w, order, na.rm = na.rm, USE.NAMES = FALSE)
     if (has_contrib) {
       con <- split_rows(x$contrib[, j, drop = FALSE], rows)
       contrib[[i]] <- mapply(
@@ -174,7 +182,7 @@ mean_index <- function(
         con,
         rel,
         w,
-        r,
+        order,
         res[[i]],
         duplicate_contrib,
         SIMPLIFY = FALSE,

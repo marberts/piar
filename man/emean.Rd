@@ -26,6 +26,9 @@ of \code{x} and \code{y}.
 Calculate the component-wise extended mean.
 }
 \details{
+The extended mean is also called the difference mean, Stolarsky mean, or
+extended mean-value mean; see Bullen (2003, p. 393) for details.
+
 Both \code{x} and \code{y} should be strictly positive. This is not enforced, but the
 results may not make sense when the extended mean is not defined. The usual
 recycling rules apply when \code{x} and \code{y} are not the same length.

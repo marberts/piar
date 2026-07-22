@@ -2,6 +2,9 @@
 #'
 #' Calculate the component-wise extended mean.
 #'
+#' The extended mean is also called the difference mean, Stolarsky mean, or
+#' extended mean-value mean; see Bullen (2003, p. 393) for details.
+#'
 #' Both `x` and `y` should be strictly positive. This is not enforced, but the
 #' results may not make sense when the extended mean is not defined. The usual
 #' recycling rules apply when `x` and `y` are not the same length.
@@ -74,19 +77,20 @@ emean <- function(
   # Recycling x and y here avoids multiple warnings if one is not a multiple
   # length of the other.
   if (length(x) > length(y)) {
-    if (length(x) %% length(y) != 0) {
-      warning("length of `x` is not a multiple of length of `y")
-      y <- rep_len(length(x))
+    if (length(y) > 0 && length(x) %% length(y) != 0) {
+      warning("length of `y` is not a multiple of length of `x`")
+      y <- rep_len(y, length(x))
     }
   } else if (length(x) < length(y)) {
-    if (length(y) %% length(x) != 0) {
-      warning("length of `y` is not a multiple of length of `x")
-      x <- rep_len(length(y))
+    if (length(x) > 0 && length(y) %% length(x) != 0) {
+      warning("length of `x` is not a multiple of length of `y`")
+      x <- rep_len(x, length(y))
     }
   }
 
-  if (length(tol) > max(length(x), length(y))) {
-    stop("'tol' cannot be longer than 'x' or 'y'")
+  max_len <- max(length(x), length(y))
+  if (max_len > 0 && length(tol) > max_len) {
+    stop("`tol` cannot be longer than `x` or `y`")
   }
 
   if (r == 0 && s == 0) {
