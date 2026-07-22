@@ -31,8 +31,8 @@
 #' @param x `[numeric > 0]` A strictly positive numeric vector.
 #' @param weights `[numeric >= 0]` A positive numeric vector of weights, the
 #'   same length as `x`. The default is to equally weight each element of `x`.
-#' @param order `[numeric(1)]` A finite number giving the order of the
-#'   generalized mean. The default calculates an arithmetic mean.
+#' @param order `[numeric(1)]` A finite number giving the order (or exponent) of
+#'   the generalized mean. The default calculates an arithmetic mean.
 #' @param na.rm `[logical(1)]` Should missing values be removed? By default,
 #'   missing values are not removed.
 #'
