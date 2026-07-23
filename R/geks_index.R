@@ -53,10 +53,12 @@
 #' subtle implications for a multilateral index.
 #'
 #' @seealso
+#' [`splice_index()`] to splice the rolling-window indexes together.
+#'
 #' `GEKSIndex()` in the \pkg{IndexNumR} package for an implementation of the
 #' GEKS index with more options.
 #'
-#' [`splice_index()`] to splice the rolling-window indexes together.
+#' The \pkg{rsmatrix} package for multilateral repeat-sales indexes.
 #'
 #' @references
 #' Balk, B. M. (2008). *Price and Quantity Index Numbers*.
@@ -125,8 +127,8 @@ geks_index <- function(
   }
 
   window <- as.integer(window)
-  if (length(window) > 1L || window < 2L) {
-    stop("`window` must be a integer greater than or equal to 2")
+  if (window < 2L) {
+    stop("`window` must be greater than or equal to 2")
   }
   if (window > nlevels(period)) {
     stop(
@@ -136,8 +138,8 @@ geks_index <- function(
   }
 
   n <- as.integer(n)
-  if (length(n) > 1L || n < 1L) {
-    stop("`n` must be an integer greater than or equal to 1")
+  if (n < 1L) {
+    stop("`n` must be greater than or equal to 1")
   }
   if (n > window - 1L) {
     stop("`n` must be less than or equal to `window` minus 1")

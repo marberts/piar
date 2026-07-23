@@ -118,8 +118,10 @@ aggregation and the construction of price indexes.
 \emph{Journal of Econometrics}, 161(1): 24--35.
 }
 \seealso{
+\code{\link[=splice_index]{splice_index()}} to splice the rolling-window indexes together.
+
 \code{GEKSIndex()} in the \pkg{IndexNumR} package for an implementation of the
 GEKS index with more options.
 
-\code{\link[=splice_index]{splice_index()}} to splice the rolling-window indexes together.
+The \pkg{rsmatrix} package for multilateral repeat-sales indexes.
 }

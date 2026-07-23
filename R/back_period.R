@@ -66,9 +66,6 @@ back_period <- function(
     x[c(rep.int(1L, offset), seq_len(length(x) - offset))]
   }
   offset <- as.integer(offset)
-  if (offset < 0L || offset > length(period)) {
-    stop("`offset` must be a positive integer less than the length of `period`")
-  }
   period <- as.factor(period)
   product <- as.factor(product %||% gl(1, length(period)))
   attributes(product) <- NULL # matching is faster on factor codes
@@ -79,6 +76,9 @@ back_period <- function(
   # Factors with no levels throw an error below.
   if (nlevels(period) == 0L) {
     return(rep.int(NA_integer_, length(period)))
+  }
+  if (offset < 0L || offset > nlevels(period)) {
+    stop("`offset` must be a positive integer less than `nlevels(period)`")
   }
 
   product <- split(product, period)

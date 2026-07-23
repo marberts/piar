@@ -27,6 +27,7 @@ Suggests:
     data.tree,
     knitr,
     quarto,
+    rsmatrix,
     sps,
     tinytest,
     treemap

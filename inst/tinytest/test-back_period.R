@@ -83,6 +83,16 @@ local({
 
 # Warnings and errors.
 local({
-  expect_warning(back_period(c(1, 1, 2, 3)))
-  expect_error(back_period(1:5, 1:4))
+  expect_warning(
+    back_period(c(1, 1, 2, 3)),
+    "there are duplicated period-product pairs"
+  )
+  expect_error(
+    back_period(1:5, 1:4),
+    "`period` and `product` must be the same length"
+  )
+  expect_error(
+    back_period(c(1, 1, 2, 2), c(1, 2, 1, 2), offset = 3),
+    "`offset` must be a positive integer less than `nlevels\\(period\\)`"
+  )
 })
