@@ -78,12 +78,12 @@ emean <- function(
   # length of the other.
   if (length(x) > length(y)) {
     if (length(y) > 0 && length(x) %% length(y) != 0) {
-      warning("length of `y` is not a multiple of length of `x`")
+      warning("length of `x` is not a multiple of length of `y`")
       y <- rep_len(y, length(x))
     }
   } else if (length(x) < length(y)) {
     if (length(x) > 0 && length(y) %% length(x) != 0) {
-      warning("length of `x` is not a multiple of length of `y`")
+      warning("length of `y` is not a multiple of length of `x`")
       x <- rep_len(x, length(y))
     }
   }

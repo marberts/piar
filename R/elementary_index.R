@@ -201,8 +201,11 @@ elementary_index.numeric <- function(
   r <- as.numeric(r)
   period <- as.factor(period %||% gl(1, length(x)))
   ea <- as.factor(ea %||% gl(1, length(x)))
+  if (!is.null(product)) {
+    product <- as.character(product)
+  }
 
-  if (different_length(x, period, ea, weights)) {
+  if (different_length(x, period, ea, weights, product)) {
     stop("input vectors must be the same length")
   }
   if (any(x <= 0, na.rm = TRUE)) {
@@ -214,7 +217,7 @@ elementary_index.numeric <- function(
 
   if (contrib) {
     if (!is.null(product)) {
-      names(x) <- as.character(product)
+      names(x) <- product
     }
     if (is.null(names(x))) {
       names(x) <- paste(ea, sequential_names(period, ea), sep = ".")
