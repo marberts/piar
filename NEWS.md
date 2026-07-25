@@ -31,6 +31,8 @@ contributions.
 - `impute_prices()` no longer matches missing products across consecutive time
 periods when passed a matrix.
 
+- `impute_prices()` no longer returns all `NA`s with no time periods.
+
 - Setting `include_ea = FALSE` in `aggregate(index)` no longer gives an error with
 a one-level aggregation structure.
 

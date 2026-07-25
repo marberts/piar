@@ -50,8 +50,8 @@ local({
     c(1L, 2L, 3L, 4L, 4L, 3L, 2L, 1L, NA)
   )
   expect_identical(
-    back_period(factor(period, levels = NA), id),
-    rep(NA_integer_, 10)
+    back_period(factor(period, levels = NA), id, offset = 0),
+    1:10
   )
 
   # Change time periods again

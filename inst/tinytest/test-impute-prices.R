@@ -45,7 +45,7 @@ local({
       pias = pias,
       method = "overall-mean"
     ),
-    matrix(numeric(0), 0, 2)
+    cbind(integer(0), integer(0))
   )
 })
 
@@ -179,7 +179,7 @@ local({
   )
 })
 
-# Carrying forward/backwards imputation works.s
+# Carrying forward/backwards imputation works.
 local({
   df <- data.frame(
     price = c(NA, 1, 2, NA, 3),
@@ -218,6 +218,11 @@ local({
       method = "carry-forward"
     ),
     matrix(c(1, 2, 1, 4, 5, 6, 3, 2, 1, 1, 2, 3), ncol = 2)
+  )
+
+  expect_error(
+    impute_prices(matrix(1:9, 3), period = 1:3, product = 1:3),
+    "`x` must be a two-column matrix"
   )
 })
 
