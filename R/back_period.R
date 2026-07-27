@@ -86,7 +86,7 @@ back_period <- function(
     warning("there are duplicated period-product pairs")
   }
   if (offset == 0L) {
-    return(seq_len(length(period)))
+    return(seq_along(period))
   }
   m <- Map(match, product, f(product, offset), incomparables = NA)
   if (!match_first) {
