@@ -2,12 +2,8 @@
 title: "Matrix aggregation"
 vignette: >
   %\VignetteIndexEntry{Matrix aggregation}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
 Aggregating a price index can be done as a matrix operation. Although

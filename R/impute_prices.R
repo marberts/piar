@@ -154,12 +154,15 @@ impute_prices.matrix <- function(
   # it just does it period-by-period and keeps track of prices to impute.
   chkDots(...)
   method <- match.arg(method)
-  period <- as.factor(period)
-  product <- as.factor(product)
-  attributes(product) <- NULL
   if (not_finite_pair(r)) {
     stop("`r` must be a pair of finite numbers")
   }
+  if (ncol(x) != 2L) {
+    stop("`x` must be a two-column matrix")
+  }
+  period <- as.factor(period)
+  product <- as.factor(product)
+  attributes(product) <- NULL
   if (!is.null(ea)) {
     ea <- as.factor(ea)
   }
@@ -169,9 +172,6 @@ impute_prices.matrix <- function(
 
   if (different_length(x[, 1L], period, product, ea, weights)) {
     stop("input vectors must be the same length")
-  }
-  if (nlevels(period) == 0L) {
-    return(matrix(NA_real_, nrow = length(period), ncol = 2))
   }
 
   res <- split.data.frame(x, period)
@@ -253,15 +253,15 @@ impute_prices.numeric <- function(
   # it just does it period-by-period and keeps track of prices to impute.
   chkDots(...)
   method <- match.arg(method)
+  if (not_finite_pair(r)) {
+    stop("`r` must be a pair of finite numbers")
+  }
   period <- as.factor(period)
   if (method == "carry-backward") {
     period <- factor(period, rev(levels(period)))
   }
   product <- as.factor(product)
   attributes(product) <- NULL
-  if (not_finite_pair(r)) {
-    stop("`r` must be a pair of finite numbers")
-  }
   if (!is.null(ea)) {
     ea <- as.factor(ea)
   }
@@ -271,9 +271,6 @@ impute_prices.numeric <- function(
 
   if (different_length(x, period, product, ea, weights)) {
     stop("input vectors must be the same length")
-  }
-  if (nlevels(period) == 0L) {
-    return(rep.int(NA_real_, length(period)))
   }
 
   res <- split(x, period)
@@ -329,7 +326,8 @@ impute_prices.numeric <- function(
       res[[t]][impute] <- res[[t - 1L]][matches]
     }
   }
-  unsplit(res, period)
+  split(x, period) <- res
+  x
 }
 
 #' @rdname impute_prices
@@ -353,25 +351,4 @@ impute_prices.data.frame <- function(
     weights = weights,
     ...
   )
-}
-
-#' @rdname impute_prices
-#' @export
-carry_forward <- function(x, ...) {
-  warning("'carry_forward() is deprecated; use 'impute_prices()' instead")
-  impute_prices(x, method = "carry-forward", ...)
-}
-
-#' @rdname impute_prices
-#' @export
-carry_backward <- function(x, ...) {
-  warning("'carry_backward() is deprecated; use 'impute_prices()' instead")
-  impute_prices(x, method = "carry-backward", ...)
-}
-
-#' @rdname impute_prices
-#' @export
-shadow_price <- function(x, ...) {
-  warning("'shadow_price() is deprecated; use 'impute_prices()' instead")
-  impute_prices(x, method = "overall-mean", ...)
 }

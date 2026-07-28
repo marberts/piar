@@ -9,7 +9,8 @@
 #' @param end `[character(1)]` The time period to end the window. The default
 #'   is the last period of `x`.
 #' @param ... Not currently used.
-#' @param value `[numeric > 0 | piar_index]` A numeric vector or price index.
+#' @param value `[numeric > 0 | piar_index]` A numeric vector or price index
+#'   of replacement values.
 #'
 #' @returns
 #' `window()` extracts a price index over a window of time periods that

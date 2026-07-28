@@ -56,8 +56,8 @@
 #' contrib2DF(index)
 #'
 #' # Calculate EA contributions for the chained index.
-#' arithmetic_contributions <- function(x, w, r = 1) {
-#'   (x - 1) * transmute_weights(x, w, r, to = 1)
+#' arithmetic_contributions <- function(x, w, order = 1) {
+#'   (x - 1) * transmute_weights(x, w, order, to = 1)
 #' }
 #'
 #' arithmetic_contributions(

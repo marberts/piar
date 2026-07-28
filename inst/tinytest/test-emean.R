@@ -76,7 +76,7 @@ expect_error(
 # Recycling works
 expect_warning(
   emean(1:3, 1:5),
-  "length of `x` is not a multiple of length of `y`"
+  "length of `y` is not a multiple of length of `x`"
 )
 expect_equal(
   suppressWarnings(emean(1:3, 1:5)),
@@ -86,7 +86,7 @@ expect_equal(emean(1:5, numeric(0)), numeric(0))
 
 expect_warning(
   emean(1:5, 1:3),
-  "length of `y` is not a multiple of length of `x`"
+  "length of `x` is not a multiple of length of `y`"
 )
 expect_equal(
   suppressWarnings(emean(1:5, 1:3)),

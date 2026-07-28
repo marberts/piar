@@ -66,24 +66,27 @@ back_period <- function(
     x[c(rep.int(1L, offset), seq_len(length(x) - offset))]
   }
   offset <- as.integer(offset)
-  if (offset < 0L || offset > length(period)) {
-    stop("`offset` must be a positive integer less than the length of `period`")
-  }
   period <- as.factor(period)
-  product <- as.factor(product %||% gl(1, length(period)))
-  attributes(product) <- NULL # matching is faster on factor codes
+  if (!is.null(product)) {
+    product <- as.factor(product)
+    attributes(product) <- NULL # matching is faster on factor codes
+  } else {
+    product <- rep.int(1L, length(period))
+  }
 
   if (length(period) != length(product)) {
     stop("`period` and `product` must be the same length")
   }
-  # Factors with no levels throw an error below.
-  if (nlevels(period) == 0L) {
-    return(rep.int(NA_integer_, length(period)))
+  if (offset < 0L || offset > nlevels(period)) {
+    stop("`offset` must be a positive integer less than `nlevels(period)`")
   }
 
   product <- split(product, period)
   if (duplicate_products(product)) {
     warning("there are duplicated period-product pairs")
+  }
+  if (offset == 0L) {
+    return(seq_along(period))
   }
   m <- Map(match, product, f(product, offset), incomparables = NA)
   if (!match_first) {

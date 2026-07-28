@@ -136,9 +136,9 @@ contributions will not equal the change in the value of the index.
 
 If two aggregation structures are given then the steps above are done for
 each aggregation structure, with the aggregation for \code{pias} done with a
-generalized mean of order \code{r} the aggregation for \code{pias2} done with a
-generalized mean of order \code{-r}. The resulting indexes are combined with a
-geometric mean to make a superlative quadratic mean of order \code{2*r} index.
+generalized mean of order \code{order} the aggregation for \code{pias2} done with a
+generalized mean of order \code{-order}. The resulting indexes are combined with a
+geometric mean to make a superlative quadratic mean of order \code{2*order} index.
 Percent-change contributions are combined using a generalized van IJzeren
 decomposition; see \code{\link[=transmute_weights2]{transmute_weights2()}} for details.
 }

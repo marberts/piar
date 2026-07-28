@@ -124,7 +124,7 @@ aggregation_structure <- function(x, weights = NULL) {
   }
   upper <- x[-len] # nodes above eas
   lower <- x[-1L] # nodes below initial nodes
-  child <- parent <- vector("list", len)[-1L]
+  child <- parent <- vector("list", length(upper))
   # Produce a list for each level with all the parent and child nodes.
   for (i in seq_along(upper)) {
     child[[i]] <- lapply(

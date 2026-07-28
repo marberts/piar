@@ -2,12 +2,8 @@
 title: "Aggregating across dimensions"
 vignette: >
   %\VignetteIndexEntry{Aggregating across dimensions}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
 Price indexes are often aggregated over multiple dimensions. Matched

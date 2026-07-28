@@ -14,7 +14,7 @@
 #' be unique within each elementary aggregate at each time period when making
 #' contributions and, if not, are
 #' passed to [make.unique()] with a warning. The default
-#' (\code{r = 0} and no weights) makes Jevons elementary indexes. See chapter 8
+#' (`order = 0` and no weights) makes Jevons elementary indexes. See chapter 8
 #' (pp. 175--190) of the CPI manual (2020) for more detail about making
 #' elementary indexes, or chapter 9 of the PPI manual (2004), and chapter 5 of
 #' Balk (2008).
@@ -161,7 +161,7 @@
 #'   prices,
 #'   rel ~ period + ea,
 #'   weights = unsplit(cswd_weights, interaction(period, ea)),
-#'   r = 1
+#'   order = 1
 #' )
 elementary_index <- function(x, ...) {
   if ("r" %in% ...names()) {
@@ -201,8 +201,11 @@ elementary_index.numeric <- function(
   r <- as.numeric(r)
   period <- as.factor(period %||% gl(1, length(x)))
   ea <- as.factor(ea %||% gl(1, length(x)))
+  if (!is.null(product)) {
+    product <- as.character(product)
+  }
 
-  if (different_length(x, period, ea, weights)) {
+  if (different_length(x, period, ea, weights, product)) {
     stop("input vectors must be the same length")
   }
   if (any(x <= 0, na.rm = TRUE)) {
@@ -214,7 +217,7 @@ elementary_index.numeric <- function(
 
   if (contrib) {
     if (!is.null(product)) {
-      names(x) <- as.character(product)
+      names(x) <- product
     }
     if (is.null(names(x))) {
       names(x) <- paste(ea, sequential_names(period, ea), sep = ".")

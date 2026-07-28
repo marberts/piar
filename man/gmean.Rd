@@ -28,7 +28,7 @@ Calculated a weighted generalized mean.
 The generalized mean is also called the power mean, Hölder mean, or \eqn{l_p}
 mean; see Bullen (2003, p. 175) for details.
 
-Both \code{x} and \code{weights} should be strictly positive
+Both \code{x} and \code{weights} are usually strictly positive
 (and finite), especially for the purpose of making a price index. This is not
 enforced, but the results may not make sense if the generalized mean is not
 defined. There are two exceptions to this.
@@ -38,7 +38,7 @@ has zeros: the generalized mean is 0 whenever the weights are strictly
 positive and \code{order < 0}. The analogous convention holds whenever at least
 one element of \code{x} is \code{Inf}: the generalized mean is \code{Inf} whenever the
 weights are strictly positive and \code{order > 0}.
-\item Some authors let the weighs be non-negative and sum to 1. If there are
+\item Some authors let the weights be non-negative and sum to 1. If there are
 zero weights then the corresponding element
 of \code{x} has no impact on the result whenever \code{x} is strictly
 positive. Unlike \code{\link[=weighted.mean]{weighted.mean()}}, however,

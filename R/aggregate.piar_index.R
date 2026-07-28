@@ -49,9 +49,9 @@
 #'
 #' If two aggregation structures are given then the steps above are done for
 #' each aggregation structure, with the aggregation for `pias` done with a
-#' generalized mean of order `r` the aggregation for `pias2` done with a
-#' generalized mean of order `-r`. The resulting indexes are combined with a
-#' geometric mean to make a superlative quadratic mean of order `2*r` index.
+#' generalized mean of order `order` the aggregation for `pias2` done with a
+#' generalized mean of order `-order`. The resulting indexes are combined with a
+#' geometric mean to make a superlative quadratic mean of order `2*order` index.
 #' Percent-change contributions are combined using a generalized van IJzeren
 #' decomposition; see [`transmute_weights2()`] for details.
 #'

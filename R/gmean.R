@@ -5,7 +5,7 @@
 #' The generalized mean is also called the power mean, Hölder mean, or \eqn{l_p}
 #' mean; see Bullen (2003, p. 175) for details.
 #'
-#' Both `x` and `weights` should be strictly positive
+#' Both `x` and `weights` are usually strictly positive
 #' (and finite), especially for the purpose of making a price index. This is not
 #' enforced, but the results may not make sense if the generalized mean is not
 #' defined. There are two exceptions to this.
@@ -15,7 +15,7 @@
 #' one element of `x` is `Inf`: the generalized mean is `Inf` whenever the
 #' weights are strictly positive and `order > 0`.
 #'
-#' 2. Some authors let the weighs be non-negative and sum to 1. If there are
+#' 2. Some authors let the weights be non-negative and sum to 1. If there are
 #' zero weights then the corresponding element
 #' of `x` has no impact on the result whenever `x` is strictly
 #' positive. Unlike [weighted.mean()], however,

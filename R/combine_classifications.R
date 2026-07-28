@@ -29,7 +29,7 @@
 combine_classifications <- function(..., sep = ".") {
   dots <- lapply(list(...), \(x) lapply(x, as.character))
   Reduce(
-    \(x, y) combine_classifications_(x, y, sep = sep),
+    \(x, y) .combine_classifications(x, y, sep = sep),
     dots,
     simplify = FALSE
   )
@@ -37,7 +37,7 @@ combine_classifications <- function(..., sep = ".") {
 
 #' Combine classifications (internal)
 #' @noRd
-combine_classifications_ <- function(x, y, sep) {
+.combine_classifications <- function(x, y, sep) {
   lx <- lengths(x)
   if (length(lx) == 0L) {
     return(y)

@@ -21,7 +21,8 @@ is the last period of \code{x}.}
 
 \item{...}{Not currently used.}
 
-\item{value}{\verb{[numeric > 0 | piar_index]} A numeric vector or price index.}
+\item{value}{\verb{[numeric > 0 | piar_index]} A numeric vector or price index
+of replacement values.}
 }
 \value{
 \code{window()} extracts a price index over a window of time periods that
