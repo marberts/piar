@@ -43,12 +43,6 @@ impute_prices(
 
 # S3 method for class 'data.frame'
 impute_prices(x, formula, ..., ea = NULL, weights = NULL)
-
-carry_forward(x, ...)
-
-carry_backward(x, ...)
-
-shadow_price(x, ...)
 ```
 
 ## Arguments

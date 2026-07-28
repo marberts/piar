@@ -35,7 +35,8 @@ window(x, start = NULL, end = NULL, ...) <- value
 
 - value:
 
-  `[numeric > 0 | piar_index]` A numeric vector or price index.
+  `[numeric > 0 | piar_index]` A numeric vector or price index of
+  replacement values.
 
 ## Value
 

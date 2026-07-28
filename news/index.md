@@ -18,7 +18,7 @@
   - Core mathematical machinery used to aggregate indexes and make
     product contributions.
 
-  - A new vignette outlining some theory that unlies how indexes are
+  - A new vignette outlining some theory that underlies how indexes are
     calculated.
 
 - The argument `r` in
@@ -43,6 +43,9 @@
 - [`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
   no longer matches missing products across consecutive time periods
   when passed a matrix.
+
+- [`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  no longer returns all `NA`s with no time periods.
 
 - Setting `include_ea = FALSE` in `aggregate(index)` no longer gives an
   error with a one-level aggregation structure.
@@ -114,11 +117,8 @@ CRAN release: 2026-05-06
 
 ### Deprecations
 
-- [`carry_forward()`](https://marberts.github.io/piar/reference/impute_prices.md),
-  [`carry_backward()`](https://marberts.github.io/piar/reference/impute_prices.md),
-  and
-  [`shadow_price()`](https://marberts.github.io/piar/reference/impute_prices.md)
-  are deprecated. Use
+- `carry_forward()`, `carry_backward()`, and `shadow_price()` are
+  deprecated. Use
   [`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
   instead.
 
@@ -229,12 +229,9 @@ CRAN release: 2024-09-12
 
 - [`elemental_index()`](https://marberts.github.io/piar/reference/elementary_index.md),
   [`price_relative()`](https://marberts.github.io/piar/reference/price_relative.md),
-  [`shadow_price()`](https://marberts.github.io/piar/reference/impute_prices.md),
-  [`carry_forward()`](https://marberts.github.io/piar/reference/impute_prices.md),
-  and
-  [`carry_backward()`](https://marberts.github.io/piar/reference/impute_prices.md)
-  now have a formula interface to select the relevant, e.g., price
-  variables from a data frame instead of using
+  `shadow_price()`, `carry_forward()`, and `carry_backward()` now have a
+  formula interface to select the relevant, e.g., price variables from a
+  data frame instead of using
   [`with()`](https://rdrr.io/r/base/with.html). This changes the
   signature of these functions, and may break old code if argument were
   not named.
@@ -271,11 +268,8 @@ CRAN release: 2024-09-12
 
 - [`elemental_index()`](https://marberts.github.io/piar/reference/elementary_index.md),
   [`price_relative()`](https://marberts.github.io/piar/reference/price_relative.md),
-  [`shadow_price()`](https://marberts.github.io/piar/reference/impute_prices.md),
-  [`carry_forward()`](https://marberts.github.io/piar/reference/impute_prices.md),
-  and
-  [`carry_backward()`](https://marberts.github.io/piar/reference/impute_prices.md)
-  now require the arguments for time periods, products, and elemental
+  `shadow_price()`, `carry_forward()`, and `carry_backward()` now
+  require the arguments for time periods, products, and elemental
   aggregates to be named so as to avoid accidentally changing the order
   of these arguments ([\#7](https://github.com/marberts/piar/issues/7),
   [@schneiderpy](https://github.com/schneiderpy)).

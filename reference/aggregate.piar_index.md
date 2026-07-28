@@ -168,11 +168,11 @@ the change in the value of the index.
 
 If two aggregation structures are given then the steps above are done
 for each aggregation structure, with the aggregation for `pias` done
-with a generalized mean of order `r` the aggregation for `pias2` done
-with a generalized mean of order `-r`. The resulting indexes are
-combined with a geometric mean to make a superlative quadratic mean of
-order `2*r` index. Percent-change contributions are combined using a
-generalized van IJzeren decomposition; see
+with a generalized mean of order `order` the aggregation for `pias2`
+done with a generalized mean of order `-order`. The resulting indexes
+are combined with a geometric mean to make a superlative quadratic mean
+of order `2*order` index. Percent-change contributions are combined
+using a generalized van IJzeren decomposition; see
 [`transmute_weights2()`](https://marberts.github.io/piar/reference/transmute_weights2.md)
 for details.
 

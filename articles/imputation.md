@@ -40,14 +40,15 @@ elementals <- ms_prices |>
   )
 
 elementals
-#> Period-over-period price index for 4 levels over 4 time periods 
-#>       time
-#> levels 202001    202002    202003   202004
-#>     B1      1 0.8949097 0.5781816 1.000000
-#>     B2      1 1.0000000 0.1777227 2.770456
-#>     B3      1 2.0200036 1.6353355 0.537996
-#>     B4    NaN       NaN       NaN 4.576286
 ```
+
+    ## Period-over-period price index for 4 levels over 4 time periods 
+    ##       time
+    ## levels 202001    202002    202003   202004
+    ##     B1      1 0.8949097 0.5781816 1.000000
+    ##     B2      1 1.0000000 0.1777227 2.770456
+    ##     B3      1 2.0200036 1.6353355 0.537996
+    ##     B4    NaN       NaN       NaN 4.576286
 
 ## Non-parental imputation during aggregation
 
@@ -69,14 +70,15 @@ elementals2 <- elementals
 elementals2["B4", 1:3] <- 1
 
 elementals2
-#> Period-over-period price index for 4 levels over 4 time periods 
-#>       time
-#> levels 202001    202002    202003   202004
-#>     B1      1 0.8949097 0.5781816 1.000000
-#>     B2      1 1.0000000 0.1777227 2.770456
-#>     B3      1 2.0200036 1.6353355 0.537996
-#>     B4      1 1.0000000 1.0000000 4.576286
 ```
+
+    ## Period-over-period price index for 4 levels over 4 time periods 
+    ##       time
+    ## levels 202001    202002    202003   202004
+    ##     B1      1 0.8949097 0.5781816 1.000000
+    ##     B2      1 1.0000000 0.1777227 2.770456
+    ##     B3      1 2.0200036 1.6353355 0.537996
+    ##     B4      1 1.0000000 1.0000000 4.576286
 
 Aggregating these elementary indexes now incorporates this imputation.
 
@@ -89,18 +91,19 @@ pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
   as_aggregation_structure()
 
 aggregate(elementals2, pias, na.rm = TRUE)
-#> Period-over-period price index for 8 levels over 4 time periods 
-#>       time
-#> levels 202001    202002    202003    202004
-#>     1       1 1.1056136 0.8753168 2.3138631
-#>     11      1 1.1721550 0.8082981 0.8093718
-#>     12      1 1.0000000 1.0000000 4.5762862
-#>     B1      1 0.8949097 0.5781816 1.0000000
-#>     B2      1 1.0000000 0.1777227 2.7704563
-#>     B3      1 2.0200036 1.6353355 0.5379960
-#>     B4      1 1.0000000 1.0000000 4.5762862
-#>     B5      1 1.0000000 1.0000000 4.5762862
 ```
+
+    ## Period-over-period price index for 8 levels over 4 time periods 
+    ##       time
+    ## levels 202001    202002    202003    202004
+    ##     1       1 1.1056136 0.8753168 2.3138631
+    ##     11      1 1.1721550 0.8082981 0.8093718
+    ##     12      1 1.0000000 1.0000000 4.5762862
+    ##     B1      1 0.8949097 0.5781816 1.0000000
+    ##     B2      1 1.0000000 0.1777227 2.7704563
+    ##     B3      1 2.0200036 1.6353355 0.5379960
+    ##     B4      1 1.0000000 1.0000000 4.5762862
+    ##     B5      1 1.0000000 1.0000000 4.5762862
 
 It is also possible to supply a function with these rules that can be
 used by [`aggregate()`](https://rdrr.io/r/stats/aggregate.html).
@@ -113,15 +116,16 @@ impute <- function(x, pias) {
 }
 
 aggregate(elementals, pias, na.rm = TRUE, impute_rules = impute)
-#> Period-over-period price index for 8 levels over 4 time periods 
-#>       time
-#> levels 202001    202002    202003    202004
-#>     1       1 1.1056136 0.8753168 2.3138631
-#>     11      1 1.1721550 0.8082981 0.8093718
-#>     12      1 1.0000000 1.0000000 4.5762862
-#>     B1      1 0.8949097 0.5781816 1.0000000
-#>     B2      1 1.0000000 0.1777227 2.7704563
-#>     B3      1 2.0200036 1.6353355 0.5379960
-#>     B4      1 1.0000000 1.0000000 4.5762862
-#>     B5      1 1.0000000 1.0000000 4.5762862
 ```
+
+    ## Period-over-period price index for 8 levels over 4 time periods 
+    ##       time
+    ## levels 202001    202002    202003    202004
+    ##     1       1 1.1056136 0.8753168 2.3138631
+    ##     11      1 1.1721550 0.8082981 0.8093718
+    ##     12      1 1.0000000 1.0000000 4.5762862
+    ##     B1      1 0.8949097 0.5781816 1.0000000
+    ##     B2      1 1.0000000 0.1777227 2.7704563
+    ##     B3      1 2.0200036 1.6353355 0.5379960
+    ##     B4      1 1.0000000 1.0000000 4.5762862
+    ##     B5      1 1.0000000 1.0000000 4.5762862

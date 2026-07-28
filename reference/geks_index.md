@@ -112,11 +112,13 @@ Econometrics*, 161(1): 24–35.
 
 ## See also
 
+[`splice_index()`](https://marberts.github.io/piar/reference/splice_index.md)
+to splice the rolling-window indexes together.
+
 `GEKSIndex()` in the IndexNumR package for an implementation of the GEKS
 index with more options.
 
-[`splice_index()`](https://marberts.github.io/piar/reference/splice_index.md)
-to splice the rolling-window indexes together.
+The rsmatrix package for multilateral repeat-sales indexes.
 
 ## Examples
 

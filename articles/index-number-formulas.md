@@ -3,9 +3,9 @@
 Price indexes based on a generalized mean of price relatives constitute
 a large family of bilateral index-number formulas that are consistent in
 aggregation, and any index based on the generalized mean can be used to
-make and aggregate elementary indexes. See [Section 4](#sec-appendix)
-for a comprehensive list. To see how to make superlative indexes as
-well, let’s start with a simple dataset of prices and quantities for two
+make and aggregate elementary indexes. See the last section for a
+comprehensive list. To see how to make superlative indexes as well,
+let’s start with a simple dataset of prices and quantities for two
 businesses over three periods. We’ll be making extensive use of the
 lower-level math functions in this package functions; see the help pages
 for these functions to get more detail and
@@ -28,14 +28,15 @@ prices[c("back_price", "back_quantity")] <-
   prices[back_period(prices$period, prices$product), c("price", "quantity")]
 
 head(prices)
-#>   period product business price quantity back_price back_quantity
-#> 1      1      P1       B1     1       18          1            18
-#> 2      1      P2       B1     2       17          2            17
-#> 3      1      P3       B1     3       16          3            16
-#> 4      1      P4       B2     4       15          4            15
-#> 5      1      P5       B2     5       14          5            14
-#> 6      1      P6       B2     6       13          6            13
 ```
+
+    ##   period product business price quantity back_price back_quantity
+    ## 1      1      P1       B1     1       18          1            18
+    ## 2      1      P2       B1     2       17          2            17
+    ## 3      1      P3       B1     3       16          3            16
+    ## 4      1      P4       B2     4       15          4            15
+    ## 5      1      P5       B2     5       14          5            14
+    ## 6      1      P6       B2     6       13          6            13
 
 ## Basic indexes
 
@@ -57,12 +58,13 @@ An order of 1 corresponds to an arithmetic mean.
 
 prices |>
   elementary_index(price / back_price ~ period + business, order = 1)
-#> Period-over-period price index for 2 levels over 3 time periods 
-#>       time
-#> levels 1        2        3
-#>     B1 1 4.666667 1.757937
-#>     B2 1 2.233333 1.548485
 ```
+
+    ## Period-over-period price index for 2 levels over 3 time periods 
+    ##       time
+    ## levels 1        2        3
+    ##     B1 1 4.666667 1.757937
+    ##     B2 1 2.233333 1.548485
 
 The Coggeshall index (equally-weighted harmonic mean of price relatives)
 is another competitor to the Jevons, but is seldom used in practice.
@@ -73,12 +75,13 @@ an order `r` of -1.
 
 prices |>
   elementary_index(price / back_price ~ period + business, order = -1)
-#> Period-over-period price index for 2 levels over 3 time periods 
-#>       time
-#> levels 1        2        3
-#>     B1 1 4.131148 1.754499
-#>     B2 1 2.214765 1.547408
 ```
+
+    ## Period-over-period price index for 2 levels over 3 time periods 
+    ##       time
+    ## levels 1        2        3
+    ##     B1 1 4.131148 1.754499
+    ##     B2 1 2.214765 1.547408
 
 Weights can be added to make, for example, elementary indexes using the
 geometric Laspeyres formula.
@@ -90,12 +93,13 @@ prices |>
     price / back_price ~ period + business,
     weights = back_price * back_quantity
   )
-#> Period-over-period price index for 2 levels over 3 time periods 
-#>       time
-#> levels 1        2        3
-#>     B1 1 3.853330 1.754015
-#>     B2 1 2.202496 1.549081
 ```
+
+    ## Period-over-period price index for 2 levels over 3 time periods 
+    ##       time
+    ## levels 1        2        3
+    ##     B1 1 3.853330 1.754015
+    ##     B2 1 2.202496 1.549081
 
 The type of mean used to aggregate elementary indexes can be controlled
 in the same way in the call to
@@ -131,12 +135,13 @@ prices |>
     price / back_price ~ period + business,
     weights = tornqvist_weights
   )
-#> Period-over-period price index for 2 levels over 3 time periods 
-#>       time
-#> levels 1        2        3
-#>     B1 1 4.087422 1.759213
-#>     B2 1 2.215995 1.556014
 ```
+
+    ## Period-over-period price index for 2 levels over 3 time periods 
+    ##       time
+    ## levels 1        2        3
+    ##     B1 1 4.087422 1.759213
+    ##     B2 1 2.215995 1.556014
 
 Making a Fisher index is more complex because it does not belong to the
 generalized-mean family. Despite this, it is possible to make weights to
@@ -159,12 +164,13 @@ prices |>
     price / back_price ~ period + business,
     weights = fisher_weights
   )
-#> Period-over-period price index for 2 levels over 3 time periods 
-#>       time
-#> levels 1        2        3
-#>     B1 1 4.076840 1.759215
-#>     B2 1 2.215934 1.556046
 ```
+
+    ## Period-over-period price index for 2 levels over 3 time periods 
+    ##       time
+    ## levels 1        2        3
+    ##     B1 1 4.076840 1.759215
+    ##     B2 1 2.215934 1.556046
 
 Aggregating with a superlative index is more complex, and is the subject
 of
@@ -196,12 +202,13 @@ fisher_index <- prices |>
   )
 
 contrib(fisher_index, "B1")
-#>        time
-#> product 1         2         3
-#>    B1.1 0 1.1024526 0.2899319
-#>    B1.2 0 1.0256151 0.2530718
-#>    B1.3 0 0.9487724 0.2162114
 ```
+
+    ##        time
+    ## product 1         2         3
+    ##    B1.1 0 1.1024526 0.2899319
+    ##    B1.2 0 1.0256151 0.2530718
+    ##    B1.3 0 0.9487724 0.2162114
 
 We can change the method used to make contributions for, say, business
 `B1` by making a function to compute contributions according to a
@@ -238,12 +245,13 @@ contrib(fisher_index, "B1") <- subset(prices, business == "B1") |>
   )
 
 contrib(fisher_index, "B1")
-#>        time
-#> product 1         2         3
-#>       1 0 1.1124046 0.2937263
-#>       2 0 1.0256134 0.2530717
-#>       3 0 0.9388222 0.2124170
 ```
+
+    ##        time
+    ## product 1         2         3
+    ##       1 0 1.1124046 0.2937263
+    ##       2 0 1.0256134 0.2530717
+    ##       3 0 0.9388222 0.2124170
 
 Aggregating the elementary indexes will then consistently aggregate the
 contributions for both businesses, even though they use different

@@ -35,18 +35,19 @@ index <- elementals |>
   chain()
 
 index
-#> Fixed-base price index for 8 levels over 4 time periods 
-#>       time
-#> levels 202001    202002    202003    202004
-#>     1       1 1.3007239 1.3827662 3.7815355
-#>     11      1 1.3007239 1.3827662 2.1771866
-#>     12      1 1.3007239 1.3827662 6.3279338
-#>     B1      1 0.8949097 0.2991629 0.4710366
-#>     B2      1 1.3007239 1.3827662 3.8308934
-#>     B3      1 2.0200036 3.3033836 1.7772072
-#>     B4      1 1.3007239 1.3827662 6.3279338
-#>     B5      1 1.3007239 1.3827662 6.3279338
 ```
+
+    ## Fixed-base price index for 8 levels over 4 time periods 
+    ##       time
+    ## levels 202001    202002    202003    202004
+    ##     1       1 1.3007239 1.3827662 3.7815355
+    ##     11      1 1.3007239 1.3827662 2.1771866
+    ##     12      1 1.3007239 1.3827662 6.3279338
+    ##     B1      1 0.8949097 0.2991629 0.4710366
+    ##     B2      1 1.3007239 1.3827662 3.8308934
+    ##     B3      1 2.0200036 3.3033836 1.7772072
+    ##     B4      1 1.3007239 1.3827662 6.3279338
+    ##     B5      1 1.3007239 1.3827662 6.3279338
 
 The key to do this aggregation as a matrix operation is to first turn
 the aggregation structure into an aggregation matrix.
@@ -56,12 +57,13 @@ the aggregation structure into an aggregation matrix.
 pias_matrix <- as.matrix(pias)
 
 pias_matrix
-#>       
-#> levels        B1        B2        B3        B4        B5
-#>     1  0.2245229 0.2622818 0.1266748 0.2525376 0.1339829
-#>     11 0.3659828 0.4275314 0.2064858 0.0000000 0.0000000
-#>     12 0.0000000 0.0000000 0.0000000 0.6533613 0.3466387
 ```
+
+    ##       
+    ## levels        B1        B2        B3        B4        B5
+    ##     1  0.2245229 0.2622818 0.1266748 0.2525376 0.1339829
+    ##     11 0.3659828 0.4275314 0.2064858 0.0000000 0.0000000
+    ##     12 0.0000000 0.0000000 0.0000000 0.6533613 0.3466387
 
 Multiplying this matrix with a matrix of fixed-base elementary indexes
 now computes the aggregate index in each time period.
@@ -69,12 +71,13 @@ now computes the aggregate index in each time period.
 ``` r
 
 pias_matrix %*% as.matrix(index[levels(pias)$business])
-#>       time
-#> levels 202001   202002   202003   202004
-#>     1       1 1.300724 1.382766 3.781536
-#>     11      1 1.300724 1.382766 2.177187
-#>     12      1 1.300724 1.382766 6.327934
 ```
+
+    ##       time
+    ## levels 202001   202002   202003   202004
+    ##     1       1 1.300724 1.382766 3.781536
+    ##     11      1 1.300724 1.382766 2.177187
+    ##     12      1 1.300724 1.382766 6.327934
 
 ## Computing the shadow of an index
 
@@ -92,12 +95,13 @@ index.
 pias_matrix <- as.matrix(pias) > 0
 
 pias_matrix %*% is.na(elementals) / rowSums(pias_matrix)
-#>       time
-#> levels 202001    202002    202003    202004
-#>     1     0.4 0.6000000 0.6000000 0.4000000
-#>     11    0.0 0.3333333 0.3333333 0.3333333
-#>     12    1.0 1.0000000 1.0000000 0.5000000
 ```
+
+    ##       time
+    ## levels 202001    202002    202003    202004
+    ##     1     0.4 0.6000000 0.6000000 0.4000000
+    ##     11    0.0 0.3333333 0.3333333 0.3333333
+    ##     12    1.0 1.0000000 1.0000000 0.5000000
 
 A value of 1 means that there are no non-missing elementary indexes, and
 that the value for this level of the index is imputed from its parent in
@@ -116,10 +120,11 @@ aggregation matrix.
 ``` r
 
 as.matrix(pias, sparse = TRUE)
-#> 3 x 5 sparse Matrix of class "dgCMatrix"
-#>       
-#> levels        B1        B2        B3        B4        B5
-#>     1  0.2245229 0.2622818 0.1266748 0.2525376 0.1339829
-#>     11 0.3659828 0.4275314 0.2064858 .         .        
-#>     12 .         .         .         0.6533613 0.3466387
 ```
+
+    ## 3 x 5 sparse Matrix of class "dgCMatrix"
+    ##       
+    ## levels        B1        B2        B3        B4        B5
+    ##     1  0.2245229 0.2622818 0.1266748 0.2525376 0.1339829
+    ##     11 0.3659828 0.4275314 0.2064858 .         .        
+    ##     12 .         .         .         0.6533613 0.3466387

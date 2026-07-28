@@ -42,22 +42,27 @@ emblematic of the kinds of survey data used to make price indexes.
 library(piar)
 
 head(ms_prices)
-#>   period business product price
-#> 1 202001       B1       1  1.14
-#> 2 202001       B1       2    NA
-#> 3 202001       B1       3  6.09
-#> 4 202001       B2       4  6.23
-#> 5 202001       B2       5  8.61
-#> 6 202001       B2       6  6.40
+```
+
+    ##   period business product price
+    ## 1 202001       B1       1  1.14
+    ## 2 202001       B1       2    NA
+    ## 3 202001       B1       3  6.09
+    ## 4 202001       B2       4  6.23
+    ## 5 202001       B2       5  8.61
+    ## 6 202001       B2       6  6.40
+
+``` r
 
 ms_weights
-#>   business classification weight
-#> 1       B1             11    553
-#> 2       B2             11    646
-#> 3       B3             11    312
-#> 4       B4             12    622
-#> 5       B5             12    330
 ```
+
+    ##   business classification weight
+    ## 1       B1             11    553
+    ## 2       B2             11    646
+    ## 3       B3             11    312
+    ## 4       B4             12    622
+    ## 5       B5             12    330
 
 The
 [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md)
@@ -80,14 +85,15 @@ elementals <- ms_prices |>
   elementary_index(relative ~ period + business, na.rm = TRUE)
 
 elementals
-#> Period-over-period price index for 4 levels over 4 time periods 
-#>       time
-#> levels 202001    202002    202003   202004
-#>     B1      1 0.8949097 0.3342939      NaN
-#>     B2      1       NaN       NaN 2.770456
-#>     B3      1 2.0200036 1.6353355 0.537996
-#>     B4    NaN       NaN       NaN 4.576286
 ```
+
+    ## Period-over-period price index for 4 levels over 4 time periods 
+    ##       time
+    ## levels 202001    202002    202003   202004
+    ##     B1      1 0.8949097 0.3342939      NaN
+    ##     B2      1       NaN       NaN 2.770456
+    ##     B3      1 2.0200036 1.6353355 0.537996
+    ##     B4    NaN       NaN       NaN 4.576286
 
 As with most functions in **R**, missing values are contagious by
 default. Setting `na.rm = TRUE` in
@@ -107,21 +113,26 @@ indexes to be extracted like a matrix even though it’s not a matrix.[^1]
 ``` r
 
 elementals[, "202004"]
-#> Period-over-period price index for 4 levels over 1 time periods 
-#>       time
-#> levels   202004
-#>     B1      NaN
-#>     B2 2.770456
-#>     B3 0.537996
-#>     B4 4.576286
+```
+
+    ## Period-over-period price index for 4 levels over 1 time periods 
+    ##       time
+    ## levels   202004
+    ##     B1      NaN
+    ##     B2 2.770456
+    ##     B3 0.537996
+    ##     B4 4.576286
+
+``` r
 
 elementals[c("B1", "B3"), ]
-#> Period-over-period price index for 2 levels over 4 time periods 
-#>       time
-#> levels 202001    202002    202003   202004
-#>     B1      1 0.8949097 0.3342939      NaN
-#>     B3      1 2.0200036 1.6353355 0.537996
 ```
+
+    ## Period-over-period price index for 2 levels over 4 time periods 
+    ##       time
+    ## levels 202001    202002    202003   202004
+    ##     B1      1 0.8949097 0.3342939      NaN
+    ##     B3      1 2.0200036 1.6353355 0.537996
 
 With the elementary indexes out of the way, it’s time to make a
 price-index aggregation structure that maps each business to its
@@ -153,18 +164,19 @@ filled in to ensure the index can be chained over time.
 index <- aggregate(elementals, pias, na.rm = TRUE)
 
 index
-#> Period-over-period price index for 8 levels over 4 time periods 
-#>       time
-#> levels 202001    202002    202003   202004
-#>     1       1 1.3007239 1.0630743 2.734761
-#>     11      1 1.3007239 1.0630743 1.574515
-#>     12      1 1.3007239 1.0630743 4.576286
-#>     B1      1 0.8949097 0.3342939 1.574515
-#>     B2      1 1.3007239 1.0630743 2.770456
-#>     B3      1 2.0200036 1.6353355 0.537996
-#>     B4      1 1.3007239 1.0630743 4.576286
-#>     B5      1 1.3007239 1.0630743 4.576286
 ```
+
+    ## Period-over-period price index for 8 levels over 4 time periods 
+    ##       time
+    ## levels 202001    202002    202003   202004
+    ##     1       1 1.3007239 1.0630743 2.734761
+    ##     11      1 1.3007239 1.0630743 1.574515
+    ##     12      1 1.3007239 1.0630743 4.576286
+    ##     B1      1 0.8949097 0.3342939 1.574515
+    ##     B2      1 1.3007239 1.0630743 2.770456
+    ##     B3      1 2.0200036 1.6353355 0.537996
+    ##     B4      1 1.3007239 1.0630743 4.576286
+    ##     B5      1 1.3007239 1.0630743 4.576286
 
 ## Chaining
 
@@ -184,18 +196,19 @@ function can be used to chain the values in an index object.
 chained_index <- chain(index)
 
 chained_index
-#> Fixed-base price index for 8 levels over 4 time periods 
-#>       time
-#> levels 202001    202002    202003    202004
-#>     1       1 1.3007239 1.3827662 3.7815355
-#>     11      1 1.3007239 1.3827662 2.1771866
-#>     12      1 1.3007239 1.3827662 6.3279338
-#>     B1      1 0.8949097 0.2991629 0.4710366
-#>     B2      1 1.3007239 1.3827662 3.8308934
-#>     B3      1 2.0200036 3.3033836 1.7772072
-#>     B4      1 1.3007239 1.3827662 6.3279338
-#>     B5      1 1.3007239 1.3827662 6.3279338
 ```
+
+    ## Fixed-base price index for 8 levels over 4 time periods 
+    ##       time
+    ## levels 202001    202002    202003    202004
+    ##     1       1 1.3007239 1.3827662 3.7815355
+    ##     11      1 1.3007239 1.3827662 2.1771866
+    ##     12      1 1.3007239 1.3827662 6.3279338
+    ##     B1      1 0.8949097 0.2991629 0.4710366
+    ##     B2      1 1.3007239 1.3827662 3.8308934
+    ##     B3      1 2.0200036 3.3033836 1.7772072
+    ##     B4      1 1.3007239 1.3827662 6.3279338
+    ##     B5      1 1.3007239 1.3827662 6.3279338
 
 This gives almost the same result as directly manipulating the index as
 a matrix, except that the former returns an index object (not a matrix).
@@ -208,20 +221,22 @@ period just requires dividing the chained index by the slice for 202004.
 ``` r
 
 rebase(chained_index, chained_index[, "202004"])
-#> Warning: In rebase.direct_piar_index(chained_index, chained_index[, "202004"]) :
-#>  extra argument  will be disregarded
-#> Fixed-base price index for 8 levels over 4 time periods 
-#>       time
-#> levels 202001    202002    202003    202004
-#>     1       1 1.3007239 1.3827662 3.7815355
-#>     11      1 1.3007239 1.3827662 2.1771866
-#>     12      1 1.3007239 1.3827662 6.3279338
-#>     B1      1 0.8949097 0.2991629 0.4710366
-#>     B2      1 1.3007239 1.3827662 3.8308934
-#>     B3      1 2.0200036 3.3033836 1.7772072
-#>     B4      1 1.3007239 1.3827662 6.3279338
-#>     B5      1 1.3007239 1.3827662 6.3279338
 ```
+
+    ## Warning: In rebase.direct_piar_index(chained_index, chained_index[, "202004"]) :
+    ##  extra argument  will be disregarded
+
+    ## Fixed-base price index for 8 levels over 4 time periods 
+    ##       time
+    ## levels 202001    202002    202003    202004
+    ##     1       1 1.3007239 1.3827662 3.7815355
+    ##     11      1 1.3007239 1.3827662 2.1771866
+    ##     12      1 1.3007239 1.3827662 6.3279338
+    ##     B1      1 0.8949097 0.2991629 0.4710366
+    ##     B2      1 1.3007239 1.3827662 3.8308934
+    ##     B3      1 2.0200036 3.3033836 1.7772072
+    ##     B4      1 1.3007239 1.3827662 6.3279338
+    ##     B5      1 1.3007239 1.3827662 6.3279338
 
 ## Working with indexes
 
@@ -232,57 +247,59 @@ a matrix
 ``` r
 
 as.matrix(chained_index)
-#>       time
-#> levels 202001    202002    202003    202004
-#>     1       1 1.3007239 1.3827662 3.7815355
-#>     11      1 1.3007239 1.3827662 2.1771866
-#>     12      1 1.3007239 1.3827662 6.3279338
-#>     B1      1 0.8949097 0.2991629 0.4710366
-#>     B2      1 1.3007239 1.3827662 3.8308934
-#>     B3      1 2.0200036 3.3033836 1.7772072
-#>     B4      1 1.3007239 1.3827662 6.3279338
-#>     B5      1 1.3007239 1.3827662 6.3279338
 ```
+
+    ##       time
+    ## levels 202001    202002    202003    202004
+    ##     1       1 1.3007239 1.3827662 3.7815355
+    ##     11      1 1.3007239 1.3827662 2.1771866
+    ##     12      1 1.3007239 1.3827662 6.3279338
+    ##     B1      1 0.8949097 0.2991629 0.4710366
+    ##     B2      1 1.3007239 1.3827662 3.8308934
+    ##     B3      1 2.0200036 3.3033836 1.7772072
+    ##     B4      1 1.3007239 1.3827662 6.3279338
+    ##     B5      1 1.3007239 1.3827662 6.3279338
 
 or a data frame
 
 ``` r
 
 as.data.frame(chained_index)
-#>    period level     value
-#> 1  202001     1 1.0000000
-#> 2  202001    11 1.0000000
-#> 3  202001    12 1.0000000
-#> 4  202001    B1 1.0000000
-#> 5  202001    B2 1.0000000
-#> 6  202001    B3 1.0000000
-#> 7  202001    B4 1.0000000
-#> 8  202001    B5 1.0000000
-#> 9  202002     1 1.3007239
-#> 10 202002    11 1.3007239
-#> 11 202002    12 1.3007239
-#> 12 202002    B1 0.8949097
-#> 13 202002    B2 1.3007239
-#> 14 202002    B3 2.0200036
-#> 15 202002    B4 1.3007239
-#> 16 202002    B5 1.3007239
-#> 17 202003     1 1.3827662
-#> 18 202003    11 1.3827662
-#> 19 202003    12 1.3827662
-#> 20 202003    B1 0.2991629
-#> 21 202003    B2 1.3827662
-#> 22 202003    B3 3.3033836
-#> 23 202003    B4 1.3827662
-#> 24 202003    B5 1.3827662
-#> 25 202004     1 3.7815355
-#> 26 202004    11 2.1771866
-#> 27 202004    12 6.3279338
-#> 28 202004    B1 0.4710366
-#> 29 202004    B2 3.8308934
-#> 30 202004    B3 1.7772072
-#> 31 202004    B4 6.3279338
-#> 32 202004    B5 6.3279338
 ```
+
+    ##    period level     value
+    ## 1  202001     1 1.0000000
+    ## 2  202001    11 1.0000000
+    ## 3  202001    12 1.0000000
+    ## 4  202001    B1 1.0000000
+    ## 5  202001    B2 1.0000000
+    ## 6  202001    B3 1.0000000
+    ## 7  202001    B4 1.0000000
+    ## 8  202001    B5 1.0000000
+    ## 9  202002     1 1.3007239
+    ## 10 202002    11 1.3007239
+    ## 11 202002    12 1.3007239
+    ## 12 202002    B1 0.8949097
+    ## 13 202002    B2 1.3007239
+    ## 14 202002    B3 2.0200036
+    ## 15 202002    B4 1.3007239
+    ## 16 202002    B5 1.3007239
+    ## 17 202003     1 1.3827662
+    ## 18 202003    11 1.3827662
+    ## 19 202003    12 1.3827662
+    ## 20 202003    B1 0.2991629
+    ## 21 202003    B2 1.3827662
+    ## 22 202003    B3 3.3033836
+    ## 23 202003    B4 1.3827662
+    ## 24 202003    B5 1.3827662
+    ## 25 202004     1 3.7815355
+    ## 26 202004    11 2.1771866
+    ## 27 202004    12 6.3279338
+    ## 28 202004    B1 0.4710366
+    ## 29 202004    B2 3.8308934
+    ## 30 202004    B3 1.7772072
+    ## 31 202004    B4 6.3279338
+    ## 32 202004    B5 6.3279338
 
 It is also sometimes useful to get the price-updated weights used to
 aggregate the index; these can be calculated by first updating the
@@ -292,13 +309,14 @@ aggregation structure with the aggregated index, then made into a table.
 
 update(pias, index) |>
   as.data.frame()
-#>   level1 level2 business    weight
-#> 1      1     11       B1  260.4832
-#> 2      1     11       B2 2474.7571
-#> 3      1     11       B3  554.4886
-#> 4      1     12       B4 3935.9748
-#> 5      1     12       B5 2088.2182
 ```
+
+    ##   level1 level2 business    weight
+    ## 1      1     11       B1  260.4832
+    ## 2      1     11       B2 2474.7571
+    ## 3      1     11       B3  554.4886
+    ## 4      1     12       B4 3935.9748
+    ## 5      1     12       B5 2088.2182
 
 [^1]: Note that there are only indexes for four businesses, not five,
     because the fifth business never reports any prices. An elementary
