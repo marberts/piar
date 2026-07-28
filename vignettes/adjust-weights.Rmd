@@ -2,12 +2,8 @@
 title: "Adjusting annual weights"
 vignette: >
   %\VignetteIndexEntry{Adjusting annual weights}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
 Making a monthly or quarterly Lowe index with annual expenditure or revenue

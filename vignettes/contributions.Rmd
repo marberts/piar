@@ -2,12 +2,8 @@
 title: "Contributions"
 vignette: >
   %\VignetteIndexEntry{Contributions}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
 ## Product contributions

@@ -2,12 +2,8 @@
 title: "Multiple sources of data"
 vignette: >
   %\VignetteIndexEntry{Multiple sources of data}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
 Price indexes are usually made from several sources of data. An
