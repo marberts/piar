@@ -314,4 +314,4 @@ von der Lippe, P. (2007). _Index Theory and Price Statistics_. Peter Lang. https
 
 von der Lippe, P. (2015). _Generalized Statistical Means and New Price Index Formulas, Notes on some unexplored index formulas, their interpretations and generalizations_. Munich Personal RePEc Archive paper no. 64952.
 
-Webster, M. B., Tarnow-Mordi, R. C. (2019). _Decomposing multilateral price indexes into the contributions of individual commodities_. Journal of Official Statistics, 35(2): 461--486. https://doi.org/10.2478/jos-2019-0020. 
+Webster, M. B., Tarnow-Mordi, R. C. (2019). _Decomposing multilateral price indexes into the contributions of individual commodities_. Journal of Official Statistics, 35(2): 461--486. https://doi.org/10.2478/jos-2019-0020.
