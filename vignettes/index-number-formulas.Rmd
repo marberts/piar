@@ -9,7 +9,7 @@ vignette: >
 Price indexes based on a generalized mean of price relatives constitute
 a large family of bilateral index-number formulas that are consistent in
 aggregation, and any index based on the generalized mean can be used to
-make and aggregate elementary indexes. See @sec-appendix for a comprehensive list.
+make and aggregate elementary indexes. See the last section for a comprehensive list.
 To see how to make superlative
 indexes as well, let's start with a simple dataset of prices and
 quantities for two businesses over three periods. We'll be making
