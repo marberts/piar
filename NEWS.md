@@ -12,7 +12,7 @@ two separate packages. In particular:
 
     - Core mathematical machinery used to aggregate indexes and make product contributions.
     
-    - A new vignette outlining some theory that unlies how indexes are calculated.
+    - A new vignette outlining some theory that underlies how indexes are calculated.
     
 - The argument `r` in `elementary_index()`, `aggregate()`, `mean()`, `update()`,
 and `impute_prices()` is deprecated and will be removed in a future version.
