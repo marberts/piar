@@ -2,12 +2,8 @@
 title: "Index-number formulas"
 vignette: >
   %\VignetteIndexEntry{Index-number formulas}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
 Price indexes based on a generalized mean of price relatives constitute

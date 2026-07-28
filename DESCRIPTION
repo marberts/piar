@@ -25,8 +25,7 @@ Imports:
     Matrix (>= 1.5-0)
 Suggests:
     data.tree,
-    knitr,
-    quarto,
+    litedown,
     rsmatrix,
     spelling,
     sps,
@@ -37,7 +36,7 @@ Encoding: UTF-8
 URL: https://marberts.github.io/piar/, https://github.com/marberts/piar
 BugReports: https://github.com/marberts/piar/issues
 LazyData: true
-VignetteBuilder: quarto
+VignetteBuilder: litedown
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.0.0
 Language: en-US

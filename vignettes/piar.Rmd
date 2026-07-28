@@ -2,12 +2,8 @@
 title: "Making price indexes"
 vignette: >
   %\VignetteIndexEntry{Making price indexes}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
 Most price indexes are made with a two-step procedure, where

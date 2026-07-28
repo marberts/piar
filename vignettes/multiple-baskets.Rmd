@@ -2,12 +2,8 @@
 title: "Aggregating across baskets"
 vignette: >
   %\VignetteIndexEntry{Aggregating across baskets}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
 Most prices indexes use the same set of weights to aggregate elementary

@@ -2,12 +2,8 @@
 title: "Spatial price indexes"
 vignette: >
   %\VignetteIndexEntry{Spatial price indexes}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
 It is possible to rework the functions in this package to make a spatial, rather

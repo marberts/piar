@@ -2,12 +2,8 @@
 title: "Imputation"
 vignette: >
   %\VignetteIndexEntry{Imputation}
-  %\VignetteEngine{quarto::html}
+  %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk: 
-    collapse: true
-    comment: '#>'
 ---
 
 The example in `vignette("piar")` used parental imputation to both
