@@ -1,14 +1,15 @@
-# piar (development version)
+# piar 0.10.0
 
 ## Significant changes
 
 - Many functions from `{gpindex}` are now part of this package. This gives a somewhat
-more consistent experience and allows for improvements that would be difficult with
-two separate packages. In particular:
+more consistent experience and allows for improvements that would otherwise be difficult with
+two separate packages. With the exception of `transmute_weights()`, these functions
+either have new names or behave the same as the functions from `{gpindex}`. In particular:
 
     - A new function `outliers()` to find extreme price relatives.
 
-    - Functions for multilateral GEKS indexes.
+    - Functions to calculate and splice multilateral GEKS indexes.
 
     - Core mathematical machinery used to aggregate indexes and make product contributions.
     

@@ -6,6 +6,9 @@
 \alias{impute_prices.matrix}
 \alias{impute_prices.numeric}
 \alias{impute_prices.data.frame}
+\alias{carry_forward}
+\alias{carry_backward}
+\alias{shadow_price}
 \title{Impute missing prices}
 \usage{
 impute_prices(x, ...)
@@ -41,6 +44,12 @@ impute_prices(x, ...)
 )
 
 \method{impute_prices}{data.frame}(x, formula, ..., ea = NULL, weights = NULL)
+
+carry_forward(x, ...)
+
+carry_backward(x, ...)
+
+shadow_price(x, ...)
 }
 \arguments{
 \item{x}{\verb{[object]} Either a numeric vector (or something that can be

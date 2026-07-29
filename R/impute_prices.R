@@ -352,3 +352,24 @@ impute_prices.data.frame <- function(
     ...
   )
 }
+
+#' @rdname impute_prices
+#' @export
+carry_forward <- function(x, ...) {
+  warning("'carry_forward() is deprecated; use 'impute_prices()' instead")
+  impute_prices(x, method = "carry-forward", ...)
+}
+
+#' @rdname impute_prices
+#' @export
+carry_backward <- function(x, ...) {
+  warning("'carry_backward() is deprecated; use 'impute_prices()' instead")
+  impute_prices(x, method = "carry-backward", ...)
+}
+
+#' @rdname impute_prices
+#' @export
+shadow_price <- function(x, ...) {
+  warning("'shadow_price() is deprecated; use 'impute_prices()' instead")
+  impute_prices(x, method = "overall-mean", ...)
+}
