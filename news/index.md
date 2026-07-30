@@ -1,6 +1,6 @@
 # Changelog
 
-## piar 0.10.0
+## piar 0.10.1
 
 ### Significant changes
 

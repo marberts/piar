@@ -49,9 +49,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.10.0" id="piar-0100">piar 0.10.0<a class="anchor" aria-label="anchor" href="#piar-0100"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.10.1" id="piar-0101">piar 0.10.1<a class="anchor" aria-label="anchor" href="#piar-0101"></a></h2>
 <div class="section level3">
-<h3 id="significant-changes-0-10-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-10-0"></a></h3>
+<h3 id="significant-changes-0-10-1">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-10-1"></a></h3>
 <ul><li>
 <p>Many functions from <a href="https://marberts.github.io/gpindex/" class="external-link">gpindex</a> are now part of this package. This gives a somewhat more consistent experience and allows for improvements that would otherwise be difficult with two separate packages. With the exception of <code><a href="../reference/transmute_weights.html">transmute_weights()</a></code>, these functions either have new names or behave the same as the functions from <a href="https://marberts.github.io/gpindex/" class="external-link">gpindex</a>. In particular:</p>
 <ul><li><p>A new function <code><a href="../reference/outliers.html">outliers()</a></code> to find extreme price relatives.</p></li>
@@ -62,12 +62,12 @@
 <li><p>The argument <code>r</code> in <code><a href="../reference/elementary_index.html">elementary_index()</a></code>, <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code>, <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code>, and <code><a href="../reference/impute_prices.html">impute_prices()</a></code> is deprecated and will be removed in a future version. Use <code>order</code> instead.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="improvements-0-10-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-10-0"></a></h3>
+<h3 id="improvements-0-10-1">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-10-1"></a></h3>
 <ul><li>
 <code>aggregate(index)</code> gets an experimental new argument <code>impute_rules</code> to specify specific imputation rules during aggregation.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bugs-fixes-0-10-0">Bugs fixes<a class="anchor" aria-label="anchor" href="#bugs-fixes-0-10-0"></a></h3>
+<h3 id="bugs-fixes-0-10-1">Bugs fixes<a class="anchor" aria-label="anchor" href="#bugs-fixes-0-10-1"></a></h3>
 <ul><li><p><code>head(index)</code> and <code>tail(index)</code> now work correctly if there are no product contributions.</p></li>
 <li><p><code><a href="../reference/impute_prices.html">impute_prices()</a></code> no longer matches missing products across consecutive time periods when passed a matrix.</p></li>
 <li><p><code><a href="../reference/impute_prices.html">impute_prices()</a></code> no longer returns all <code>NA</code>s with no time periods.</p></li>
