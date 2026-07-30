@@ -167,7 +167,7 @@ University Press. <https://doi.org/10.1017/CBO9780511720758>.
 
 ILO, IMF, UNECE, OECD, and World Bank. (2004). *Producer Price Index
 Manual: Theory and Practice*. International Monetary Fund.
-<https://doi.org/0.5089/9781589063044.069>.
+<https://doi.org/10.5089/9781589063044.069>.
 
 IMF, ILO, Eurostat, UNECE, OECD, and World Bank. (2020). *Consumer Price
 Index Manual: Concepts and Methods*. International Monetary Fund.
