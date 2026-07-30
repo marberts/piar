@@ -1,3 +1,7 @@
+## Resubmission
+
+Invalid URL in README was corrected and is now valid.
+
 ## Test environments
 
 - local Ubuntu 24.04 installation, R 4.6.1
