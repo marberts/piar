@@ -220,7 +220,7 @@ Nonetheless, the limited case of uniqueness will be useful in
 ### Numerical example
 
 Consider the following numerical example for decomposing a
-quadratic-mean index (von der lippe, 2007, p. 61) (i.e., a producer
+quadratic-mean index (von der Lippe, 2007, p. 61) (i.e., a producer
 price index with an elasticity of substitution of -1) made using the
 price and quantity data from Balk (2008, tab. 3.1–3.2). The
 [`transmute_weights()`](https://marberts.github.io/piar/reference/transmute_weights.md)
@@ -601,7 +601,7 @@ price indexes to approximate a superlative index. *Journal of Official
 Statistics*, 25(1): 149–149.
 
 Martin, S. (2021). A note on generalized decompositions for price
-indexes. *Prices Analyical Series*, Statistics Canada.
+indexes. *Prices Analytical Series*, Statistics Canada.
 
 Martin, S. (2026). A note on the additive decomposition of GEKS indexes.
 *Journal of Official Statistics*, 0282423X261451318.

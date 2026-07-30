@@ -2,11 +2,11 @@
 
 The example in
 [`vignette("piar")`](https://marberts.github.io/piar/articles/piar.md)
-used parental imputation to both impute missing price relatives when
+used overall-mean imputation to both impute missing price relatives when
 calculating the elementary indexes and to impute missing elementary
-indexes during aggregation. Although parental imputation is simple and
-transparent, it is not the only way to impute missing prices or index
-values.
+indexes during aggregation. Although overall-mean imputation is simple
+and transparent, it is not the only way to impute missing prices or
+index values.
 
 ## Imputing missing prices
 
@@ -50,10 +50,10 @@ elementals
     ##     B3      1 2.0200036 1.6353355 0.537996
     ##     B4    NaN       NaN       NaN 4.576286
 
-## Non-parental imputation during aggregation
+## Imputation during aggregation
 
-Parental imputation is the usual way to impute missing elementary index
-values during aggregation, and it is simple to do with
+Overall-mean imputation is the usual way to impute missing elementary
+index values during aggregation, and it is simple to do with
 [`aggregate()`](https://rdrr.io/r/stats/aggregate.html). In some cases,
 however, an elementary index may get imputed with the value for, say,
 another elementary aggregate, rather than for an entire group of

@@ -49,7 +49,7 @@ index
     ##     B4      1 1.3007239 1.3827662 6.3279338
     ##     B5      1 1.3007239 1.3827662 6.3279338
 
-The key to do this aggregation as a matrix operation is to first turn
+The key to doing this aggregation as a matrix operation is to first turn
 the aggregation structure into an aggregation matrix.
 
 ``` r

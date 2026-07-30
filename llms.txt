@@ -153,16 +153,18 @@ the contribution guidelines for this project for more information.
 ## References
 
 Balk, B. M. (2008). *Price and Quantity Index Numbers*. Cambridge
-University Press.
+University Press. <https://doi.org/10.1017/CBO9780511720758>.
 
 ILO, IMF, UNECE, OECD, and World Bank. (2004). *Producer Price Index
 Manual: Theory and Practice*. International Monetary Fund.
+<https://doi.org/0.5089/9781589063044.069>.
 
 IMF, ILO, Eurostat, UNECE, OECD, and World Bank. (2020). *Consumer Price
 Index Manual: Concepts and Methods*. International Monetary Fund.
+<https://doi.org/10.5089/9781484354841.069>.
 
 von der Lippe, P. (2007). *Index Theory and Price Statistics*. Peter
-Lang.
+Lang. <https://doi.org/10.3726/978-3-653-01120-3>
 
 # Package index
 
@@ -241,6 +243,9 @@ Helpful functions for working with price indexes.
 Helpful functions for working with prices.
 
 - [`impute_prices()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  [`carry_forward()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  [`carry_backward()`](https://marberts.github.io/piar/reference/impute_prices.md)
+  [`shadow_price()`](https://marberts.github.io/piar/reference/impute_prices.md)
   : Impute missing prices
 - [`price_relative()`](https://marberts.github.io/piar/reference/price_relative.md)
   : Calculate period-over-period price relatives

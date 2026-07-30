@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,8 +89,8 @@ can be used to make and aggregate elementary indexes. See the last
 section for a comprehensive list. To see how to make superlative indexes
 as well, let’s start with a simple dataset of prices and quantities for
 two businesses over three periods. We’ll be making extensive use of the
-lower-level math functions in this package functions; see the help pages
-for these functions to get more detail and
+lower-level math functions in this package; see the help pages for these
+functions to get more detail and
 <code><a href="../articles/decomposing-indexes.html">vignette("decomposing-indexes")</a></code> for the theoretical
 background.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -125,9 +125,9 @@ the standard index-number formula for making elementary indexes, many
 other types of index-numbers are possible. Among the unweighted
 index-number formulas, the Carli index (equally-weighted arithmetic mean
 of price relatives) is the historical competitor to the Jevons, and
-requires specifying the order of the generalized mean <code>r</code>
-when calling <code><a href="../reference/elementary_index.html">elementary_index()</a></code>. An order of 1 corresponds
-to an arithmetic mean.</p>
+requires specifying the order of the generalized mean
+<code>order = 1</code> when calling <code><a href="../reference/elementary_index.html">elementary_index()</a></code>. An
+order of 1 corresponds to an arithmetic mean.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prices</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span><span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, order <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -139,7 +139,7 @@ to an arithmetic mean.</p>
 <p>The Coggeshall index (equally-weighted harmonic mean of price
 relatives) is another competitor to the Jevons, but is seldom used in
 practice. Despite it being more exotic, it is just as easy to make by
-specifying an order <code>r</code> of -1.</p>
+specifying an <code>order = -1</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prices</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/elementary_index.html">elementary_index</a></span><span class="op">(</span><span class="va">price</span> <span class="op">/</span> <span class="va">back_price</span> <span class="op">~</span> <span class="va">period</span> <span class="op">+</span> <span class="va">business</span>, order <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -183,8 +183,7 @@ that is needed to make a Törnqvist index is the weights.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fl">0.5</span> <span class="op">*</span> <span class="fu"><a href="../reference/scale_weights.html">scale_weights</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">price</span> <span class="op">*</span> <span class="va">df</span><span class="op">$</span><span class="va">quantity</span><span class="op">)</span> <span class="op">+</span></span>
 <span>      <span class="fl">0.5</span> <span class="op">*</span> <span class="fu"><a href="../reference/scale_weights.html">scale_weights</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">back_price</span> <span class="op">*</span> <span class="va">df</span><span class="op">$</span><span class="va">back_quantity</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">unsplit</a></span><span class="op">(</span><span class="va">period_by_business</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">prices</span> <span class="op">|&gt;</span></span>

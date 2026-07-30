@@ -85,14 +85,14 @@ elemental_index(x, ...)
 
   `[logical(1)]` Should missing values be removed? By default, missing
   values are not removed. Setting `na.rm = TRUE` is equivalent to
-  overall mean imputation.
+  overall-mean imputation.
 
 - contrib:
 
   `[logical(1)]` Should percent-change contributions be calculated? The
   default does not calculate contributions.
 
-- order, r:
+- order:
 
   `[numeric(1)]` Order of the generalized mean to aggregate price
   relatives. 0 for a geometric index (the default for making elementary
@@ -102,6 +102,10 @@ elemental_index(x, ...)
   possible; see
   [`gmean()`](https://marberts.github.io/piar/reference/gmean.md) for
   details.
+
+- r:
+
+  Deprecated.
 
 - formula:
 
@@ -152,10 +156,10 @@ chained calculation should be used.
 
 By default, missing price relatives in `x` will propagate throughout the
 index calculation. Ignoring missing values with `na.rm = TRUE` is the
-same as overall mean (parental) imputation, and needs to be explicitly
-set in the call to `elementary_index()`. Explicit imputation of missing
-relatives, and especially imputation of missing prices, should be done
-prior to calling `elementary_index()`.
+same as overall-mean imputation, and needs to be explicitly set in the
+call to `elementary_index()`. Explicit imputation of missing relatives,
+and especially imputation of missing prices, should be done prior to
+calling `elementary_index()`.
 
 Indexes based on nested generalized means, like the Fisher index (and
 superlative quadratic mean indexes more generally), can be calculated by

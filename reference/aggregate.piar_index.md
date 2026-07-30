@@ -64,14 +64,14 @@ aggregate(
 
   `[logical(1)]` Should missing values be removed? By default, missing
   values are not removed. Setting `na.rm = TRUE` is equivalent to
-  overall mean imputation.
+  overall-mean imputation.
 
 - contrib:
 
   `[logical(1)]` Aggregate percent-change contributions in `x`? By
   default contributions are aggregated.
 
-- order, r:
+- order:
 
   `[numeric(1)]` Order of the generalized mean to aggregate index
   values. 0 for a geometric index (the default for making elementary
@@ -82,6 +82,10 @@ aggregate(
   [`gmean()`](https://marberts.github.io/piar/reference/gmean.md) for
   details. If `pias2` is given then the index is aggregated with a
   quadratic mean of order `2*r`.
+
+- r:
+
+  Deprecated.
 
 - include_ea:
 
@@ -135,7 +139,7 @@ By default, missing elementary indexes will propagate when aggregating
 the index. Missing elementary indexes can be due to both missingness of
 these values in `x`, and the presence of elementary aggregates in `pias`
 that are not part of `x`. Setting `na.rm = TRUE` ignores missing values,
-and is equivalent to overall mean (or parental) imputation. As an
+and is equivalent to overall-mean (or parental) imputation. As an
 aggregated price index generally cannot have missing values (for
 otherwise it can't be chained over time and weights can't be price
 updated), any missing values for a level of `pias` are removed and

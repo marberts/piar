@@ -15,7 +15,7 @@ self-correcting overall mean method."><meta property="og:image" content="https:/
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,7 +94,13 @@ self-correcting overall mean method.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'data.frame'</span></span>
-<span><span class="fu">impute_prices</span><span class="op">(</span><span class="va">x</span>, <span class="va">formula</span>, <span class="va">...</span>, ea <span class="op">=</span> <span class="cn">NULL</span>, weights <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">impute_prices</span><span class="op">(</span><span class="va">x</span>, <span class="va">formula</span>, <span class="va">...</span>, ea <span class="op">=</span> <span class="cn">NULL</span>, weights <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">carry_forward</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">carry_backward</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">shadow_price</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -148,7 +154,7 @@ coerced into one, as made with <code><a href="aggregation_structure.html">aggreg
 imputes from elementary indexes only (i.e., not recursively).</p></dd>
 
 
-<dt id="arg-order-r">order, r<a class="anchor" aria-label="anchor" href="#arg-order-r"></a></dt>
+<dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
 <dd><p><code>[numeric(2)]</code> A pair of numeric values. The first gives the
 order of the generalized-mean price index used to calculate the
 elementary price indexes, defaulting to a geometric index. The second
@@ -156,6 +162,10 @@ gives the order of the generalized-mean price index used to aggregate the
 elementary price indexes, defaulting to an arithmetic index. Other values
 are possible;
 see <code><a href="gmean.html">gmean()</a></code> for details.</p></dd>
+
+
+<dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
+<dd><p>Deprecated.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>

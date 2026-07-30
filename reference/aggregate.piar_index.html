@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,7 +113,7 @@ superlative index. See details.</p></dd>
 <dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
 <dd><p><code>[logical(1)]</code> Should missing values be removed? By default,
 missing values are not removed. Setting <code>na.rm = TRUE</code> is equivalent to
-overall mean imputation.</p></dd>
+overall-mean imputation.</p></dd>
 
 
 <dt id="arg-contrib">contrib<a class="anchor" aria-label="anchor" href="#arg-contrib"></a></dt>
@@ -121,7 +121,7 @@ overall mean imputation.</p></dd>
 By default contributions are aggregated.</p></dd>
 
 
-<dt id="arg-order-r">order, r<a class="anchor" aria-label="anchor" href="#arg-order-r"></a></dt>
+<dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
 <dd><p><code>[numeric(1)]</code> Order of the generalized mean to aggregate
 index values. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
@@ -130,6 +130,10 @@ averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 <code><a href="gmean.html">gmean()</a></code> for details. If <code>pias2</code> is given then the
 index is aggregated with a quadratic mean of order <code>2*r</code>.</p></dd>
+
+
+<dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
+<dd><p>Deprecated.</p></dd>
 
 
 <dt id="arg-include-ea">include_ea<a class="anchor" aria-label="anchor" href="#arg-include-ea"></a></dt>
@@ -176,7 +180,7 @@ elementary indexes, the result is a collection of aggregated fixed-base
 index. Missing elementary indexes can be due to both missingness of these
 values in <code>x</code>, and the presence of elementary aggregates in <code>pias</code>
 that are not part of <code>x</code>. Setting <code>na.rm = TRUE</code> ignores missing
-values, and is equivalent to overall mean (or parental) imputation. As an
+values, and is equivalent to overall-mean (or parental) imputation. As an
 aggregated price index generally cannot have missing values (for otherwise
 it can't be chained over time and weights can't be price updated), any
 missing values for a level of <code>pias</code> are removed and recursively replaced

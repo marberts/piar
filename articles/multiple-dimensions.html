@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,10 +82,11 @@
 
     
     
-<p>Price indexes are often aggregated over multiple dimensions. Matched
-sample indexes that use sequential Poisson sampling to draw a sample of
-businesses are a good example, as there are usually take-all and
-take-some strata in addition to, say, an industry classification.</p>
+<p>Price indexes are often aggregated over multiple hierarchical
+dimensions. Matched sample indexes that use sequential Poisson sampling
+to draw a sample of businesses are a good example, as there are usually
+take-all and take-some strata in addition to, say, an industry
+classification.</p>
 <p>Let’s extend <code><a href="../articles/piar.html">vignette("piar")</a></code> by adding another
 dimension to the classification to say if a business belongs to the
 take-all or take-some sampling stratum.</p>
@@ -108,15 +109,15 @@ take-all or take-some sampling stratum.</p>
 <span><span class="co">## 4       B4             12    622      TS</span></span>
 <span><span class="co">## 5       B5             12    330      TS</span></span></code></pre>
 <p>The easiest way to deal with multiple digit-wise classifications is
-to concatenate them into one classification. In this example the
+to concatenate them into one classification with the
+<code>combined_classifications()</code> function. In this example the
 “stratum” dimension comes before the “classification” dimension for the
-purposes of parental imputation. This classification can be expanded
-with the <code><a href="../reference/expand_classification.html">expand_classification()</a></code> function as before, just
-with an extra instruction to say that the last “digit” in the
-classification is two characters wide, not one.</p>
+purposes of overall-mean imputation.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">classification_sps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">ms_weights</span><span class="op">$</span><span class="va">classification</span>, <span class="va">ms_weights</span><span class="op">$</span><span class="va">stratum</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/expand_classification.html">expand_classification</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">classification_sps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/combine_classifications.html">combine_classifications</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/expand_classification.html">expand_classification</a></span><span class="op">(</span><span class="va">ms_weights</span><span class="op">$</span><span class="va">classification</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ms_weights</span><span class="op">$</span><span class="va">stratum</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">pias_sps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aggregation_structure.html">aggregation_structure</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">classification_sps</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">ms_weights</span><span class="op">$</span><span class="va">business</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -126,11 +127,11 @@ classification is two characters wide, not one.</p>
 <span><span class="va">pias_sps</span></span></code></pre></div>
 <pre><code><span><span class="co">## Aggregation structure for 5 elementary aggregates with 3 levels above the elementary aggregates </span></span>
 <span><span class="co">##   level1 level2 level3 ea weight</span></span>
-<span><span class="co">## 1      1     11   11TS B1    553</span></span>
-<span><span class="co">## 2      1     11   11TA B2    646</span></span>
-<span><span class="co">## 3      1     11   11TS B3    312</span></span>
-<span><span class="co">## 4      1     12   12TS B4    622</span></span>
-<span><span class="co">## 5      1     12   12TS B5    330</span></span></code></pre>
+<span><span class="co">## 1      1     11  11.TS B1    553</span></span>
+<span><span class="co">## 2      1     11  11.TA B2    646</span></span>
+<span><span class="co">## 3      1     11  11.TS B3    312</span></span>
+<span><span class="co">## 4      1     12  12.TS B4    622</span></span>
+<span><span class="co">## 5      1     12  12.TS B5    330</span></span></code></pre>
 <p>The elementary indexes can now be aggregated according to this new
 aggregation structure.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -138,19 +139,19 @@ aggregation structure.</p>
 <span></span>
 <span><span class="va">index_sps</span></span></code></pre></div>
 <pre><code><span><span class="co">## Period-over-period price index for 11 levels over 4 time periods </span></span>
-<span><span class="co">##       time</span></span>
-<span><span class="co">## levels 202001    202002    202003   202004</span></span>
-<span><span class="co">##   1         1 1.3007239 1.0630743 2.684412</span></span>
-<span><span class="co">##   11        1 1.3007239 1.0630743 1.492443</span></span>
-<span><span class="co">##   12        1 1.3007239 1.0630743 4.576286</span></span>
-<span><span class="co">##   11TS      1 1.3007239 1.0630743 0.537996</span></span>
-<span><span class="co">##   11TA      1 1.3007239 1.0630743 2.770456</span></span>
-<span><span class="co">##   12TS      1 1.3007239 1.0630743 4.576286</span></span>
-<span><span class="co">##   B1        1 0.8949097 0.3342939 0.537996</span></span>
-<span><span class="co">##   B2        1 1.3007239 1.0630743 2.770456</span></span>
-<span><span class="co">##   B3        1 2.0200036 1.6353355 0.537996</span></span>
-<span><span class="co">##   B4        1 1.3007239 1.0630743 4.576286</span></span>
-<span><span class="co">##   B5        1 1.3007239 1.0630743 4.576286</span></span></code></pre>
+<span><span class="co">##        time</span></span>
+<span><span class="co">## levels  202001    202002    202003   202004</span></span>
+<span><span class="co">##   1          1 1.3007239 1.0630743 2.684412</span></span>
+<span><span class="co">##   11         1 1.3007239 1.0630743 1.492443</span></span>
+<span><span class="co">##   12         1 1.3007239 1.0630743 4.576286</span></span>
+<span><span class="co">##   11.TS      1 1.3007239 1.0630743 0.537996</span></span>
+<span><span class="co">##   11.TA      1 1.3007239 1.0630743 2.770456</span></span>
+<span><span class="co">##   12.TS      1 1.3007239 1.0630743 4.576286</span></span>
+<span><span class="co">##   B1         1 0.8949097 0.3342939 0.537996</span></span>
+<span><span class="co">##   B2         1 1.3007239 1.0630743 2.770456</span></span>
+<span><span class="co">##   B3         1 2.0200036 1.6353355 0.537996</span></span>
+<span><span class="co">##   B4         1 1.3007239 1.0630743 4.576286</span></span>
+<span><span class="co">##   B5         1 1.3007239 1.0630743 4.576286</span></span></code></pre>
 <p>When a price index has many dimensions (e.g., industry, sampling
 stratum, region), it can be useful to interact the classifications for
 these different dimensions to get all possible aggregation structures.

@@ -100,15 +100,16 @@ default. Setting `na.rm = TRUE` in
 [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md)
 means that missing price relatives are ignored, which is equivalent to
 imputing these missing relatives with the value of the elementary index
-for the respective businesses (i.e., parental or overall mean
-imputation). Other types of imputation are covered in
+for the respective businesses (i.e., overall-mean imputation). Other
+types of imputation are covered in
 [`vignette("imputation")`](https://marberts.github.io/piar/articles/imputation.md).
 
 The
 [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md)
 function returns a special index object, and there are a number of
 methods for working with these objects. For example, the resulting
-indexes to be extracted like a matrix even though it’s not a matrix.[^1]
+indexes to be extracted like a matrix (even though it’s not a
+matrix).[^1]
 
 ``` r
 
@@ -155,9 +156,10 @@ It is now simple to aggregate the elementary indexes according to this
 aggregation structure with the
 [`aggregate()`](https://rdrr.io/r/stats/aggregate.html) function. As
 with the elementary indexes, missing values are ignored by setting
-`na.rm = TRUE`, which is equivalent to parentally imputing missing
-values. Note that, unlike the elementary indexes, missing values are
-filled in to ensure the index can be chained over time.
+`na.rm = TRUE`, which is equivalent to (recursively) imputing a missing
+value for a point in the aggregation structure by that of its parent.
+Note that, unlike the elementary indexes, missing values are filled in
+to ensure the index can be chained over time.
 
 ``` r
 
@@ -220,23 +222,20 @@ period just requires dividing the chained index by the slice for 202004.
 
 ``` r
 
-rebase(chained_index, chained_index[, "202004"])
+rebase(chained_index, base = chained_index[, "202004"])
 ```
-
-    ## Warning: In rebase.direct_piar_index(chained_index, chained_index[, "202004"]) :
-    ##  extra argument  will be disregarded
 
     ## Fixed-base price index for 8 levels over 4 time periods 
     ##       time
-    ## levels 202001    202002    202003    202004
-    ##     1       1 1.3007239 1.3827662 3.7815355
-    ##     11      1 1.3007239 1.3827662 2.1771866
-    ##     12      1 1.3007239 1.3827662 6.3279338
-    ##     B1      1 0.8949097 0.2991629 0.4710366
-    ##     B2      1 1.3007239 1.3827662 3.8308934
-    ##     B3      1 2.0200036 3.3033836 1.7772072
-    ##     B4      1 1.3007239 1.3827662 6.3279338
-    ##     B5      1 1.3007239 1.3827662 6.3279338
+    ## levels    202001    202002    202003 202004
+    ##     1  0.2644428 0.3439671 0.3656626      1
+    ##     11 0.4593084 0.5974334 0.6351161      1
+    ##     12 0.1580295 0.2055527 0.2185178      1
+    ##     B1 2.1229774 1.8998731 0.6351161      1
+    ##     B2 0.2610357 0.3395354 0.3609514      1
+    ##     B3 0.5626806 1.1366169 1.8587499      1
+    ##     B4 0.1580295 0.2055527 0.2185178      1
+    ##     B5 0.1580295 0.2055527 0.2185178      1
 
 ## Working with indexes
 

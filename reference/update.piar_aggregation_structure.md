@@ -32,10 +32,14 @@ update(object, index, ..., period = NULL, order = 1, r = order)
   `[character(1)]` The time period used to price update the weights. The
   default uses the last period in `index`.
 
-- order, r:
+- order:
 
   `[numeric(1)]` Order of the generalized mean to update the weights.
   The default is 1 for an arithmetic index.
+
+- r:
+
+  Deprecated.
 
 ## Value
 

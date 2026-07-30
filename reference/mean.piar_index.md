@@ -62,14 +62,14 @@ mean(
 
   `[logical(1)]` Should missing values be removed? By default, missing
   values are not removed. Setting `na.rm = TRUE` is equivalent to
-  overall mean imputation.
+  overall-mean imputation.
 
 - contrib:
 
   `[logical(1)]` Aggregate percent-change contributions in `x`? By
   default contributions are aggregated.
 
-- order, r:
+- order:
 
   `[numeric(1)]` Order of the generalized mean to aggregate index
   values. 0 for a geometric index (the default for making elementary
@@ -79,6 +79,10 @@ mean(
   possible; see
   [`gmean()`](https://marberts.github.io/piar/reference/gmean.md) for
   details.
+
+- r:
+
+  Deprecated.
 
 - duplicate_contrib:
 

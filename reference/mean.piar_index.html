@@ -15,7 +15,7 @@ of index values over consecutive windows of subperiods."><meta property="og:imag
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@ periods in <code>x</code>. Non-integers are truncated towards 0.</p></dd>
 <dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
 <dd><p><code>[logical(1)]</code> Should missing values be removed? By default,
 missing values
-are not removed. Setting <code>na.rm = TRUE</code> is equivalent to overall mean
+are not removed. Setting <code>na.rm = TRUE</code> is equivalent to overall-mean
 imputation.</p></dd>
 
 
@@ -126,7 +126,7 @@ imputation.</p></dd>
 By default contributions are aggregated.</p></dd>
 
 
-<dt id="arg-order-r">order, r<a class="anchor" aria-label="anchor" href="#arg-order-r"></a></dt>
+<dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
 <dd><p><code>[numeric(1)]</code> Order of the generalized mean to aggregate
 index values. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
@@ -134,6 +134,10 @@ arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 <code><a href="gmean.html">gmean()</a></code> for details.</p></dd>
+
+
+<dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
+<dd><p>Deprecated.</p></dd>
 
 
 <dt id="arg-duplicate-contrib">duplicate_contrib<a class="anchor" aria-label="anchor" href="#arg-duplicate-contrib"></a></dt>

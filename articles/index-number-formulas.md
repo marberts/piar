@@ -7,8 +7,8 @@ make and aggregate elementary indexes. See the last section for a
 comprehensive list. To see how to make superlative indexes as well,
 let’s start with a simple dataset of prices and quantities for two
 businesses over three periods. We’ll be making extensive use of the
-lower-level math functions in this package functions; see the help pages
-for these functions to get more detail and
+lower-level math functions in this package; see the help pages for these
+functions to get more detail and
 [`vignette("decomposing-indexes")`](https://marberts.github.io/piar/articles/decomposing-indexes.md)
 for the theoretical background.
 
@@ -50,7 +50,7 @@ making elementary indexes, many other types of index-numbers are
 possible. Among the unweighted index-number formulas, the Carli index
 (equally-weighted arithmetic mean of price relatives) is the historical
 competitor to the Jevons, and requires specifying the order of the
-generalized mean `r` when calling
+generalized mean `order = 1` when calling
 [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md).
 An order of 1 corresponds to an arithmetic mean.
 
@@ -69,7 +69,7 @@ prices |>
 The Coggeshall index (equally-weighted harmonic mean of price relatives)
 is another competitor to the Jevons, but is seldom used in practice.
 Despite it being more exotic, it is just as easy to make by specifying
-an order `r` of -1.
+an `order = -1`.
 
 ``` r
 
@@ -126,8 +126,7 @@ tornqvist_weights <- split(prices, ~period_by_business) |>
   lapply(\(df) {
     0.5 * scale_weights(df$price * df$quantity) +
       0.5 * scale_weights(df$back_price * df$back_quantity)
-  }
-  ) |>
+  }) |>
   unsplit(period_by_business)
 
 prices |>

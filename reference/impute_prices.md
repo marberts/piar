@@ -43,6 +43,12 @@ impute_prices(
 
 # S3 method for class 'data.frame'
 impute_prices(x, formula, ..., ea = NULL, weights = NULL)
+
+carry_forward(x, ...)
+
+carry_backward(x, ...)
+
+shadow_price(x, ...)
 ```
 
 ## Arguments
@@ -91,7 +97,7 @@ impute_prices(x, formula, ..., ea = NULL, weights = NULL)
   The default imputes from elementary indexes only (i.e., not
   recursively).
 
-- order, r:
+- order:
 
   `[numeric(2)]` A pair of numeric values. The first gives the order of
   the generalized-mean price index used to calculate the elementary
@@ -101,6 +107,10 @@ impute_prices(x, formula, ..., ea = NULL, weights = NULL)
   values are possible; see
   [`gmean()`](https://marberts.github.io/piar/reference/gmean.md) for
   details.
+
+- r:
+
+  Deprecated.
 
 - method:
 

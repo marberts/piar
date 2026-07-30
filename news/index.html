@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,25 +49,25 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="piar-development-version">piar (development version)<a class="anchor" aria-label="anchor" href="#piar-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.10.0" id="piar-0100">piar 0.10.0<a class="anchor" aria-label="anchor" href="#piar-0100"></a></h2>
 <div class="section level3">
-<h3 id="significant-changes-development-version">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-development-version"></a></h3>
+<h3 id="significant-changes-0-10-0">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-10-0"></a></h3>
 <ul><li>
-<p>Many functions from <a href="https://marberts.github.io/gpindex/" class="external-link">gpindex</a> are now part of this package. This gives a somewhat more consistent experience and allows for improvements that would be difficult with two separate packages. In particular:</p>
+<p>Many functions from <a href="https://marberts.github.io/gpindex/" class="external-link">gpindex</a> are now part of this package. This gives a somewhat more consistent experience and allows for improvements that would otherwise be difficult with two separate packages. With the exception of <code><a href="../reference/transmute_weights.html">transmute_weights()</a></code>, these functions either have new names or behave the same as the functions from <a href="https://marberts.github.io/gpindex/" class="external-link">gpindex</a>. In particular:</p>
 <ul><li><p>A new function <code><a href="../reference/outliers.html">outliers()</a></code> to find extreme price relatives.</p></li>
-<li><p>Functions for multilateral GEKS indexes.</p></li>
+<li><p>Functions to calculate and splice multilateral GEKS indexes.</p></li>
 <li><p>Core mathematical machinery used to aggregate indexes and make product contributions.</p></li>
 <li><p>A new vignette outlining some theory that underlies how indexes are calculated.</p></li>
 </ul></li>
 <li><p>The argument <code>r</code> in <code><a href="../reference/elementary_index.html">elementary_index()</a></code>, <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code>, <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/update.html" class="external-link">update()</a></code>, and <code><a href="../reference/impute_prices.html">impute_prices()</a></code> is deprecated and will be removed in a future version. Use <code>order</code> instead.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="improvements-development-version">Improvements<a class="anchor" aria-label="anchor" href="#improvements-development-version"></a></h3>
+<h3 id="improvements-0-10-0">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-10-0"></a></h3>
 <ul><li>
 <code>aggregate(index)</code> gets an experimental new argument <code>impute_rules</code> to specify specific imputation rules during aggregation.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bugs-fixes-development-version">Bugs fixes<a class="anchor" aria-label="anchor" href="#bugs-fixes-development-version"></a></h3>
+<h3 id="bugs-fixes-0-10-0">Bugs fixes<a class="anchor" aria-label="anchor" href="#bugs-fixes-0-10-0"></a></h3>
 <ul><li><p><code>head(index)</code> and <code>tail(index)</code> now work correctly if there are no product contributions.</p></li>
 <li><p><code><a href="../reference/impute_prices.html">impute_prices()</a></code> no longer matches missing products across consecutive time periods when passed a matrix.</p></li>
 <li><p><code><a href="../reference/impute_prices.html">impute_prices()</a></code> no longer returns all <code>NA</code>s with no time periods.</p></li>
@@ -106,7 +106,7 @@
 <div class="section level3">
 <h3 id="deprecations-0-9-0">Deprecations<a class="anchor" aria-label="anchor" href="#deprecations-0-9-0"></a></h3>
 <ul><li>
-<code>carry_forward()</code>, <code>carry_backward()</code>, and <code>shadow_price()</code> are deprecated. Use <code><a href="../reference/impute_prices.html">impute_prices()</a></code> instead.</li>
+<code><a href="../reference/impute_prices.html">carry_forward()</a></code>, <code><a href="../reference/impute_prices.html">carry_backward()</a></code>, and <code><a href="../reference/impute_prices.html">shadow_price()</a></code> are deprecated. Use <code><a href="../reference/impute_prices.html">impute_prices()</a></code> instead.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -151,7 +151,7 @@
 <div class="section level3">
 <h3 id="significant-changes-0-8-1">Significant changes<a class="anchor" aria-label="anchor" href="#significant-changes-0-8-1"></a></h3>
 <ul><li>
-<p><code><a href="../reference/elementary_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code>shadow_price()</code>, <code>carry_forward()</code>, and <code>carry_backward()</code> now have a formula interface to select the relevant, e.g., price variables from a data frame instead of using <code><a href="https://rdrr.io/r/base/with.html" class="external-link">with()</a></code>. This changes the signature of these functions, and may break old code if argument were not named.</p>
+<p><code><a href="../reference/elementary_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code><a href="../reference/impute_prices.html">shadow_price()</a></code>, <code><a href="../reference/impute_prices.html">carry_forward()</a></code>, and <code><a href="../reference/impute_prices.html">carry_backward()</a></code> now have a formula interface to select the relevant, e.g., price variables from a data frame instead of using <code><a href="https://rdrr.io/r/base/with.html" class="external-link">with()</a></code>. This changes the signature of these functions, and may break old code if argument were not named.</p>
 <ul><li>
 <code>as_aggregation_structure(list)</code> and <code>mean(index)</code> now require the <code>weights</code> argument to be named to be consistent with other functions.</li>
 </ul></li>
@@ -163,7 +163,7 @@
 <h3 id="improvements-0-8-1">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-8-1"></a></h3>
 <ul><li><p><code><a href="../reference/as_index.html">as_index()</a></code> gains a new argument <code>contrib</code> to add contributions to pre-computed indexes.</p></li>
 <li><p>Added <code><a href="../reference/contrib.html">contrib2DF()</a></code> to extract percent-change contributions as a data frame.</p></li>
-<li><p><code><a href="../reference/elementary_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code>shadow_price()</code>, <code>carry_forward()</code>, and <code>carry_backward()</code> now require the arguments for time periods, products, and elemental aggregates to be named so as to avoid accidentally changing the order of these arguments (<a href="https://github.com/marberts/piar/issues/7" class="external-link">#7</a>, <a href="https://github.com/schneiderpy" class="external-link">@schneiderpy</a>).</p></li>
+<li><p><code><a href="../reference/elementary_index.html">elemental_index()</a></code>, <code><a href="../reference/price_relative.html">price_relative()</a></code>, <code><a href="../reference/impute_prices.html">shadow_price()</a></code>, <code><a href="../reference/impute_prices.html">carry_forward()</a></code>, and <code><a href="../reference/impute_prices.html">carry_backward()</a></code> now require the arguments for time periods, products, and elemental aggregates to be named so as to avoid accidentally changing the order of these arguments (<a href="https://github.com/marberts/piar/issues/7" class="external-link">#7</a>, <a href="https://github.com/schneiderpy" class="external-link">@schneiderpy</a>).</p></li>
 <li><p>Added <code><a href="../reference/expand_classification.html">interact_classifications()</a></code> to get the interaction of different dimensions for a hierarchical classification.</p></li>
 <li><p><code><a href="../reference/chain.html">unchain()</a></code> gets an new argument <code>base</code> for better interaction with <code><a href="../reference/chain.html">chain()</a></code> and <code><a href="../reference/chain.html">rebase()</a></code>.</p></li>
 <li><p><code>aggregate(index)</code> gets a new argument <code>include_ea</code> to control whether elemental indexes are returned when aggregating.</p></li>

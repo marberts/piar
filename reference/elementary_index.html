@@ -17,7 +17,7 @@ product."><meta property="og:image" content="https://marberts.github.io/piar/log
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,7 +142,7 @@ should be <code>FALSE</code> when <code>x</code> contains fixed-base relatives.<
 <dt id="arg-na-rm">na.rm<a class="anchor" aria-label="anchor" href="#arg-na-rm"></a></dt>
 <dd><p><code>[logical(1)]</code> Should missing values be removed? By default,
 missing values
-are not removed. Setting <code>na.rm = TRUE</code> is equivalent to overall mean
+are not removed. Setting <code>na.rm = TRUE</code> is equivalent to overall-mean
 imputation.</p></dd>
 
 
@@ -151,7 +151,7 @@ imputation.</p></dd>
 calculated? The default does not calculate contributions.</p></dd>
 
 
-<dt id="arg-order-r">order, r<a class="anchor" aria-label="anchor" href="#arg-order-r"></a></dt>
+<dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
 <dd><p><code>[numeric(1)]</code> Order of the generalized mean to aggregate
 price relatives. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
@@ -159,6 +159,10 @@ arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 <code><a href="gmean.html">gmean()</a></code> for details.</p></dd>
+
+
+<dt id="arg-r">r<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
+<dd><p>Deprecated.</p></dd>
 
 
 <dt id="arg-formula">formula<a class="anchor" aria-label="anchor" href="#arg-formula"></a></dt>
@@ -204,7 +208,7 @@ should be set to <code>FALSE</code> so that no subsequent methods assume that a
 chained calculation should be used.</p>
 <p>By default, missing price relatives in <code>x</code> will propagate throughout
 the index calculation. Ignoring missing values with <code>na.rm = TRUE</code> is
-the same as overall mean (parental) imputation, and needs to be explicitly
+the same as overall-mean imputation, and needs to be explicitly
 set in the call to <code>elementary_index()</code>. Explicit imputation of missing
 relatives, and especially imputation of missing prices, should be done prior
 to calling <code>elementary_index()</code>.</p>

@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">piar</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.10.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,11 +82,11 @@
 
     
     
-<p>The example in <code><a href="../articles/piar.html">vignette("piar")</a></code> used parental imputation
-to both impute missing price relatives when calculating the elementary
-indexes and to impute missing elementary indexes during aggregation.
-Although parental imputation is simple and transparent, it is not the
-only way to impute missing prices or index values.</p>
+<p>The example in <code><a href="../articles/piar.html">vignette("piar")</a></code> used overall-mean
+imputation to both impute missing price relatives when calculating the
+elementary indexes and to impute missing elementary indexes during
+aggregation. Although overall-mean imputation is simple and transparent,
+it is not the only way to impute missing prices or index values.</p>
 <div class="section level2">
 <h2 id="imputing-missing-prices">Imputing missing prices<a class="anchor" aria-label="anchor" href="#imputing-missing-prices"></a>
 </h2>
@@ -126,9 +126,9 @@ because not all missing prices can be imputed.)</p>
 <span><span class="co">##     B4    NaN       NaN       NaN 4.576286</span></span></code></pre>
 </div>
 <div class="section level2">
-<h2 id="non-parental-imputation-during-aggregation">Non-parental imputation during aggregation<a class="anchor" aria-label="anchor" href="#non-parental-imputation-during-aggregation"></a>
+<h2 id="imputation-during-aggregation">Imputation during aggregation<a class="anchor" aria-label="anchor" href="#imputation-during-aggregation"></a>
 </h2>
-<p>Parental imputation is the usual way to impute missing elementary
+<p>Overall-mean imputation is the usual way to impute missing elementary
 index values during aggregation, and it is simple to do with
 <code><a href="https://rdrr.io/r/stats/aggregate.html" class="external-link">aggregate()</a></code>. In some cases, however, an elementary index
 may get imputed with the value for, say, another elementary aggregate,
