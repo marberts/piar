@@ -82,7 +82,7 @@
 #'   missing values
 #'   are not removed. Setting `na.rm = TRUE` is equivalent to overall-mean
 #'   imputation.
-#' @param order,r `[numeric(1)]` Order of the generalized mean to aggregate
+#' @param order `[numeric(1)]` Order of the generalized mean to aggregate
 #'   price relatives. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
@@ -94,6 +94,7 @@
 #'   coerced into one, with price relatives on the left-hand
 #'   side and time periods and elementary aggregates (in that order) on the
 #'   right-hand side.
+#' @param r Deprecated.
 #'
 #' @returns
 #' A price index that inherits from [`piar_index`]. If

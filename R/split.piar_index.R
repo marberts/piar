@@ -37,7 +37,7 @@ split.piar_index <- function(
   along = c("levels", "time")
 ) {
   along <- match.arg(along)
-  ix <- split(seq_along(x[[along]]), f = f, drop = drop, ...)
+  ix <- split(x = seq_along(x[[along]]), f = f, drop = drop, ...)
   if (along == "levels") {
     lapply(ix, \(i) x[i, ])
   } else {
@@ -57,7 +57,7 @@ split.piar_index <- function(
 ) {
   value <- as.list(value)
   along <- match.arg(along)
-  ix <- split(seq_along(x[[along]]), f = f, drop = drop, ...)
+  ix <- split(x = seq_along(x[[along]]), f = f, drop = drop, ...)
   n <- length(value)
   if (n > 0L && length(ix) %% n != 0) {
     warning(

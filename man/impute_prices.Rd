@@ -85,13 +85,15 @@ structure, or something that can be
 coerced into one, as made with \code{\link[=aggregation_structure]{aggregation_structure()}}. The default
 imputes from elementary indexes only (i.e., not recursively).}
 
-\item{order, r}{\verb{[numeric(2)]} A pair of numeric values. The first gives the
+\item{order}{\verb{[numeric(2)]} A pair of numeric values. The first gives the
 order of the generalized-mean price index used to calculate the
 elementary price indexes, defaulting to a geometric index. The second
 gives the order of the generalized-mean price index used to aggregate the
 elementary price indexes, defaulting to an arithmetic index. Other values
 are possible;
 see \code{\link[=gmean]{gmean()}} for details.}
+
+\item{r}{Deprecated.}
 
 \item{method}{\verb{[character(1)]} Name of the imputation method, one
 of \code{"overall-mean"} (the default), \code{"carry-forward"},

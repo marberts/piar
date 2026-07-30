@@ -56,13 +56,15 @@ imputation.}
 \item{contrib}{\verb{[logical(1)]} Aggregate percent-change contributions in \code{x}?
 By default contributions are aggregated.}
 
-\item{order, r}{\verb{[numeric(1)]} Order of the generalized mean to aggregate
+\item{order}{\verb{[numeric(1)]} Order of the generalized mean to aggregate
 index values. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[=gmean]{gmean()}} for details.}
+
+\item{r}{Deprecated.}
 
 \item{duplicate_contrib}{\verb{[character(1)]} The method to deal with duplicate
 product contributions. Either \code{"make.unique"} to make duplicate product

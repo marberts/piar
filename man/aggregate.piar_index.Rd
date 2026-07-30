@@ -54,7 +54,7 @@ overall-mean imputation.}
 \item{contrib}{\verb{[logical(1)]} Aggregate percent-change contributions in \code{x}?
 By default contributions are aggregated.}
 
-\item{order, r}{\verb{[numeric(1)]} Order of the generalized mean to aggregate
+\item{order}{\verb{[numeric(1)]} Order of the generalized mean to aggregate
 index values. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
@@ -62,6 +62,8 @@ averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[=gmean]{gmean()}} for details. If \code{pias2} is given then the
 index is aggregated with a quadratic mean of order \code{2*r}.}
+
+\item{r}{Deprecated.}
 
 \item{include_ea}{\verb{[logical(1)]} Should indexes for the elementary aggregates
 be included along with the aggregated indexes? By default, all index values

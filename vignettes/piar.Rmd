@@ -77,8 +77,8 @@ types of imputation are covered in `vignette("imputation")`.
 
 The `elementary_index()` function returns a special index object, and
 there are a number of methods for working with these objects. For
-example, the resulting indexes to be extracted like a matrix even
-though it's not a matrix.[^1]
+example, the resulting indexes to be extracted like a matrix (even
+though it's not a matrix).[^1]
 
 [^1]: Note that there are only indexes for four businesses, not five,
     because the fifth business never reports any prices. An elementary
@@ -145,7 +145,7 @@ the base period just requires dividing the chained index by the slice
 for 202004.
 
 ```{r}
-rebase(chained_index, chained_index[, "202004"])
+rebase(chained_index, base = chained_index[, "202004"])
 ```
 
 ## Working with indexes

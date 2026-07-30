@@ -19,8 +19,10 @@ that can be coerced into one. Usually an aggregate price index as made by
 \item{period}{\verb{[character(1)]} The time period used to price update the
 weights. The default uses the last period in \code{index}.}
 
-\item{order, r}{\verb{[numeric(1)]} Order of the generalized mean to update the
+\item{order}{\verb{[numeric(1)]} Order of the generalized mean to update the
 weights. The default is 1 for an arithmetic index.}
+
+\item{r}{Deprecated.}
 }
 \value{
 A copy of \code{object} with price-updated weights using the index
