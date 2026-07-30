@@ -38,7 +38,7 @@ index <- elementals |>
 index
 ```
 
-The key to do this aggregation as a matrix operation is to first turn
+The key to doing this aggregation as a matrix operation is to first turn
 the aggregation structure into an aggregation matrix.
 
 ```{r}

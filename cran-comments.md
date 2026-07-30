@@ -1,11 +1,14 @@
 ## Test environments
 
-- local Ubuntu 20.04 installation, R 4.5.3
-- win-builder (devel)
+- local Ubuntu 24.04 installation, R 4.6.1
+- mac-builder (devel and release)
+- win-builder (devel, release, and old-release)
 
 ## R CMD check results
 
-There were no ERRORs or WARNINGs or NOTEs.
+There were no ERRORs or WARNINGs.
+
+NOTE about spelling mistake in DESCRIPTION is a false positive.
 
 ## Downstream dependencies
 

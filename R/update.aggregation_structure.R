@@ -13,9 +13,10 @@
 #'   [`aggregate()`][aggregate.piar_index].
 #' @param period `[character(1)]` The time period used to price update the
 #'   weights. The default uses the last period in `index`.
-#' @param order,r `[numeric(1)]` Order of the generalized mean to update the
+#' @param order `[numeric(1)]` Order of the generalized mean to update the
 #'   weights. The default is 1 for an arithmetic index.
 #' @param ... Not currently used.
+#' @param r Deprecated.
 #'
 #' @returns
 #' A copy of `object` with price-updated weights using the index

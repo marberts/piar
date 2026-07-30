@@ -59,7 +59,7 @@
 #'   product weights), or something that can be coerced into one. The default is
 #'   to give each price equal weight. This is evaluated in `x` for the data
 #'   frame method.
-#' @param order,r `[numeric(2)]` A pair of numeric values. The first gives the
+#' @param order `[numeric(2)]` A pair of numeric values. The first gives the
 #'   order of the generalized-mean price index used to calculate the
 #'   elementary price indexes, defaulting to a geometric index. The second
 #'   gives the order of the generalized-mean price index used to aggregate the
@@ -79,6 +79,7 @@
 #'   It takes two arguments, the elementary indexes for a given time period and
 #'   the (price updated) aggregation structure, and must return back the
 #'   elementary indexes.
+#' @param r Deprecated.
 #'
 #' @returns
 #' A numeric vector or matrix of prices with missing values replaced
@@ -351,4 +352,25 @@ impute_prices.data.frame <- function(
     weights = weights,
     ...
   )
+}
+
+#' @rdname impute_prices
+#' @export
+carry_forward <- function(x, ...) {
+  warning("'carry_forward() is deprecated; use 'impute_prices()' instead")
+  impute_prices(x, method = "carry-forward", ...)
+}
+
+#' @rdname impute_prices
+#' @export
+carry_backward <- function(x, ...) {
+  warning("'carry_backward() is deprecated; use 'impute_prices()' instead")
+  impute_prices(x, method = "carry-backward", ...)
+}
+
+#' @rdname impute_prices
+#' @export
+shadow_price <- function(x, ...) {
+  warning("'shadow_price() is deprecated; use 'impute_prices()' instead")
+  impute_prices(x, method = "overall-mean", ...)
 }

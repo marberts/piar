@@ -34,7 +34,7 @@
 #'
 #' By default, missing price relatives in `x` will propagate throughout
 #' the index calculation. Ignoring missing values with `na.rm = TRUE` is
-#' the same as overall mean (parental) imputation, and needs to be explicitly
+#' the same as overall-mean imputation, and needs to be explicitly
 #' set in the call to `elementary_index()`. Explicit imputation of missing
 #' relatives, and especially imputation of missing prices, should be done prior
 #' to calling `elementary_index()`.
@@ -80,9 +80,9 @@
 #'   should be `FALSE` when `x` contains fixed-base relatives.
 #' @param na.rm `[logical(1)]` Should missing values be removed? By default,
 #'   missing values
-#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
+#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall-mean
 #'   imputation.
-#' @param order,r `[numeric(1)]` Order of the generalized mean to aggregate
+#' @param order `[numeric(1)]` Order of the generalized mean to aggregate
 #'   price relatives. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
@@ -94,6 +94,7 @@
 #'   coerced into one, with price relatives on the left-hand
 #'   side and time periods and elementary aggregates (in that order) on the
 #'   right-hand side.
+#' @param r Deprecated.
 #'
 #' @returns
 #' A price index that inherits from [`piar_index`]. If

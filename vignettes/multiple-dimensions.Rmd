@@ -6,7 +6,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Price indexes are often aggregated over multiple dimensions. Matched
+Price indexes are often aggregated over multiple hierarchical dimensions. Matched
 sample indexes that use sequential Poisson sampling to draw a sample of
 businesses are a good example, as there are usually take-all and
 take-some strata in addition to, say, an industry classification.
@@ -32,16 +32,16 @@ ms_weights
 ```
 
 The easiest way to deal with multiple digit-wise classifications is to
-concatenate them into one classification. In this example the "stratum"
+concatenate them into one classification with the `combined_classifications()`
+function. In this example the "stratum"
 dimension comes before the "classification" dimension for the purposes
-of parental imputation. This classification can be expanded with the
-`expand_classification()` function as before, just with an extra
-instruction to say that the last "digit" in the classification is two
-characters wide, not one.
+of overall-mean imputation.
 
 ```{r}
-classification_sps <- paste0(ms_weights$classification, ms_weights$stratum) |>
-  expand_classification(width = c(1, 1, 2))
+classification_sps <- combine_classifications(
+  expand_classification(ms_weights$classification),
+  list(ms_weights$stratum)
+)
 
 pias_sps <- aggregation_structure(
   c(classification_sps, list(ms_weights$business)),

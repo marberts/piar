@@ -37,9 +37,9 @@
 #'   periods in `x`. Non-integers are truncated towards 0.
 #' @param na.rm `[logical(1)]` Should missing values be removed? By default,
 #'   missing values
-#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
+#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall-mean
 #'   imputation.
-#' @param order,r `[numeric(1)]` Order of the generalized mean to aggregate
+#' @param order `[numeric(1)]` Order of the generalized mean to aggregate
 #'   index values. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
@@ -53,6 +53,7 @@
 #'   product contributions. Either `"make.unique"` to make duplicate product
 #'   names unique with [make.unique()] or `"sum"` to add contributions for the
 #'   same products across subperiods (the default).
+#' @param r Deprecated.
 #'
 #' @returns
 #' A price index, averaged over subperiods, that inherits from the same

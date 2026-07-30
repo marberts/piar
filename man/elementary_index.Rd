@@ -67,19 +67,21 @@ should be \code{FALSE} when \code{x} contains fixed-base relatives.}
 
 \item{na.rm}{\verb{[logical(1)]} Should missing values be removed? By default,
 missing values
-are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
+are not removed. Setting \code{na.rm = TRUE} is equivalent to overall-mean
 imputation.}
 
 \item{contrib}{\verb{[logical(1)]} Should percent-change contributions be
 calculated? The default does not calculate contributions.}
 
-\item{order, r}{\verb{[numeric(1)]} Order of the generalized mean to aggregate
+\item{order}{\verb{[numeric(1)]} Order of the generalized mean to aggregate
 price relatives. 0 for a
 geometric index (the default for making elementary indexes), 1 for an
 arithmetic index (the default for aggregating elementary indexes and
 averaging indexes over subperiods), or -1 for a harmonic index (usually for
 a Paasche index). Other values are possible; see
 \code{\link[=gmean]{gmean()}} for details.}
+
+\item{r}{Deprecated.}
 
 \item{formula}{\verb{[formula]} A two-sided formula, or something that can be
 coerced into one, with price relatives on the left-hand
@@ -128,7 +130,7 @@ chained calculation should be used.
 
 By default, missing price relatives in \code{x} will propagate throughout
 the index calculation. Ignoring missing values with \code{na.rm = TRUE} is
-the same as overall mean (parental) imputation, and needs to be explicitly
+the same as overall-mean imputation, and needs to be explicitly
 set in the call to \code{elementary_index()}. Explicit imputation of missing
 relatives, and especially imputation of missing prices, should be done prior
 to calling \code{elementary_index()}.

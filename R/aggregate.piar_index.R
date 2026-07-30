@@ -20,7 +20,7 @@
 #' index. Missing elementary indexes can be due to both missingness of these
 #' values in `x`, and the presence of elementary aggregates in `pias`
 #' that are not part of `x`. Setting `na.rm = TRUE` ignores missing
-#' values, and is equivalent to overall mean (or parental) imputation. As an
+#' values, and is equivalent to overall-mean (or parental) imputation. As an
 #' aggregated price index generally cannot have missing values (for otherwise
 #' it can't be chained over time and weights can't be price updated), any
 #' missing values for a level of `pias` are removed and recursively replaced
@@ -70,8 +70,8 @@
 #'   superlative index. See details.
 #' @param na.rm `[logical(1)]` Should missing values be removed? By default,
 #'   missing values are not removed. Setting `na.rm = TRUE` is equivalent to
-#'   overall mean imputation.
-#' @param order,r `[numeric(1)]` Order of the generalized mean to aggregate
+#'   overall-mean imputation.
+#' @param order `[numeric(1)]` Order of the generalized mean to aggregate
 #'   index values. 0 for a
 #'   geometric index (the default for making elementary indexes), 1 for an
 #'   arithmetic index (the default for aggregating elementary indexes and
@@ -96,6 +96,7 @@
 #'   It takes two arguments, the elementary indexes for a given time period and
 #'   the (price updated) aggregation structure, and must return back the
 #'   elementary indexes.
+#' @param r Deprecated.
 #'
 #' @returns
 #' An aggregate price index that inherits from the class of `x`.
