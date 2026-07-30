@@ -34,7 +34,7 @@ ms_weights
 The easiest way to deal with multiple digit-wise classifications is to
 concatenate them into one classification. In this example the "stratum"
 dimension comes before the "classification" dimension for the purposes
-of parental imputation. This classification can be expanded with the
+of overall-mean imputation. This classification can be expanded with the
 `expand_classification()` function as before, just with an extra
 instruction to say that the last "digit" in the classification is two
 characters wide, not one.

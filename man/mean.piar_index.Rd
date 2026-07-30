@@ -50,7 +50,7 @@ periods in \code{x}. Non-integers are truncated towards 0.}
 
 \item{na.rm}{\verb{[logical(1)]} Should missing values be removed? By default,
 missing values
-are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
+are not removed. Setting \code{na.rm = TRUE} is equivalent to overall-mean
 imputation.}
 
 \item{contrib}{\verb{[logical(1)]} Aggregate percent-change contributions in \code{x}?

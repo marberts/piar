@@ -72,7 +72,7 @@ As with most functions in **R**, missing values are contagious by
 default. Setting `na.rm = TRUE` in `elementary_index()` means that
 missing price relatives are ignored, which is equivalent to imputing
 these missing relatives with the value of the elementary index for the
-respective businesses (i.e., parental or overall mean imputation). Other
+respective businesses (i.e., overall-mean imputation). Other
 types of imputation are covered in `vignette("imputation")`.
 
 The `elementary_index()` function returns a special index object, and
@@ -108,7 +108,8 @@ pias <- ms_weights[c("level1", "level2", "business", "weight")] |>
 It is now simple to aggregate the elementary indexes according to this
 aggregation structure with the `aggregate()` function. As with the
 elementary indexes, missing values are ignored by setting `na.rm = TRUE`,
-which is equivalent to parentally imputing missing values. Note that,
+which is equivalent to (recursively) imputing a missing value for a point in the
+aggregation structure by that of its parent. Note that,
 unlike the elementary indexes, missing values are filled in to ensure the
 index can be chained over time.
 

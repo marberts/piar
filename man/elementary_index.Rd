@@ -67,7 +67,7 @@ should be \code{FALSE} when \code{x} contains fixed-base relatives.}
 
 \item{na.rm}{\verb{[logical(1)]} Should missing values be removed? By default,
 missing values
-are not removed. Setting \code{na.rm = TRUE} is equivalent to overall mean
+are not removed. Setting \code{na.rm = TRUE} is equivalent to overall-mean
 imputation.}
 
 \item{contrib}{\verb{[logical(1)]} Should percent-change contributions be
@@ -128,7 +128,7 @@ chained calculation should be used.
 
 By default, missing price relatives in \code{x} will propagate throughout
 the index calculation. Ignoring missing values with \code{na.rm = TRUE} is
-the same as overall mean (parental) imputation, and needs to be explicitly
+the same as overall-mean imputation, and needs to be explicitly
 set in the call to \code{elementary_index()}. Explicit imputation of missing
 relatives, and especially imputation of missing prices, should be done prior
 to calling \code{elementary_index()}.

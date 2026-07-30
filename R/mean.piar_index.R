@@ -37,7 +37,7 @@
 #'   periods in `x`. Non-integers are truncated towards 0.
 #' @param na.rm `[logical(1)]` Should missing values be removed? By default,
 #'   missing values
-#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall mean
+#'   are not removed. Setting `na.rm = TRUE` is equivalent to overall-mean
 #'   imputation.
 #' @param order,r `[numeric(1)]` Order of the generalized mean to aggregate
 #'   index values. 0 for a
