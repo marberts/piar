@@ -6,6 +6,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r}
+#| echo: false
+litedown::reactor(print = NA)
+```
+
 The example in `vignette("piar")` used overall-mean imputation to both
 impute missing price relatives when calculating the elementary indexes
 and to impute missing elementary indexes during aggregation. Although

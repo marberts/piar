@@ -6,6 +6,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r}
+#| echo: false
+litedown::reactor(print = NA)
+```
+
 Most prices indexes use the same set of weights to aggregate elementary
 indexes for several years, periodically updating these weights and
 adding or removing elementary aggregates. The general approach to keep

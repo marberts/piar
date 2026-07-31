@@ -6,6 +6,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r}
+#| echo: false
+litedown::reactor(print = NA)
+```
+
 It is possible to rework the functions in this package to make a spatial, rather
 than temporal, price index using a star model by simply replacing "time" with "space".
 Although this is not a suitable

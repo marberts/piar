@@ -6,6 +6,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r}
+#| echo: false
+litedown::reactor(print = NA)
+```
+
 Aggregating a price index can be done as a matrix operation. Although
 this approach is less flexible than the `aggregate()` method used in
 `vignette("piar")` (i.e., there can be no missing elementary indexes), it

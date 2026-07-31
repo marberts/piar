@@ -1,3 +1,9 @@
+# piar (development version)
+
+## Bug fixes
+
+- Tables in vignettes are now rendered correctly.
+
 # piar 0.10.1
 
 ## Significant changes

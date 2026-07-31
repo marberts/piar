@@ -11,6 +11,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r}
+#| echo: false
+litedown::reactor(print = NA)
+```
+
 *This vignette presents an extended version of Martin (2021), and shows how to use the tools in this package to make these decompositions.*
 
 It is often useful to be able to decompose a price index into an additive or multiplicative form to evaluate how each input to the index affects its value. Following Balk (2008), a price index is said to admit an additive decomposition if there exist weights that allow it to be represented as an arithmetic mean of price relatives, and is said to admit a multiplicative decomposition if there are weights that allow it to be represented as a geometric mean. Switching prices for quantities gives the analogous statements for a quantity index, and nothing is lost by focusing on price indexes.
