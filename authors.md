@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/marberts/piar/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/marberts/piar/blob/v0.10.1/inst/CITATION)
 
 Martin S (2024). “piar: Price Index Aggregation in R.” *Journal of Open
 Source Software*, **9**(101), 6781.

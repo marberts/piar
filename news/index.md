@@ -2,6 +2,8 @@
 
 ## piar 0.10.1
 
+CRAN release: 2026-07-30
+
 ### Significant changes
 
 - Many functions from [gpindex](https://marberts.github.io/gpindex/) are
