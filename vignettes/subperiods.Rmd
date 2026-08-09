@@ -6,6 +6,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r}
+#| echo: false
+litedown::reactor(print = NA)
+```
+
 With the exception of `vignette("spatial-price-index")`, all the examples so far
 have revolved around aggregating over the levels of a price index for each
 time period. Although this is the core workflow in this package, it is also

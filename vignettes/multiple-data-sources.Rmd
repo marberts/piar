@@ -6,6 +6,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r}
+#| echo: false
+litedown::reactor(print = NA)
+```
+
 Price indexes are usually made from several sources of data. An
 important benefit of the usual two-step workflow to make price indexes
 is that the elementary indexes can be built piecemeal---using different

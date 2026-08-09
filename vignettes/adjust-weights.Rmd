@@ -6,6 +6,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r}
+#| echo: false
+litedown::reactor(print = NA)
+```
+
 Making a monthly or quarterly Lowe index with annual expenditure or revenue
 weights requires adjusting these weights so that the implicit annual quantity vector
 is used as the fixed basket when making the index with the usual two-step procedure. This

@@ -1,10 +1,15 @@
 ---
-title: "Making price indexes"
+title: "Getting started with piar"
 vignette: >
-  %\VignetteIndexEntry{Making price indexes}
+  %\VignetteIndexEntry{Getting started with piar}
   %\VignetteEngine{litedown::vignette}
   %\VignetteEncoding{UTF-8}
 ---
+
+```{r}
+#| echo: false
+litedown::reactor(print = NA)
+```
 
 Most price indexes are made with a two-step procedure, where
 period-over-period *elementary indexes* are calculated for a collection
