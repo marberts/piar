@@ -58,7 +58,7 @@ prices |>
 The Coggeshall index (equally-weighted harmonic mean of price relatives)
 is another competitor to the Jevons, but is seldom used in practice.
 Despite it being more exotic, it is just as easy to make by specifying
-an `order = -1`.
+`order = -1`.
 
 ```{r}
 prices |>
@@ -88,12 +88,12 @@ information about quantities. The Törnqvist index is a popular superlative
 index-number formula, using average period-over-period value shares as
 the weights in a geometric mean. As `elementary_index()` makes a
 geometric index by default, all that is needed to make a Törnqvist index
-is the weights.
+are the weights.
 
 ```{r}
 period_by_business <- interaction(prices$period, prices$business)
 
-tornqvist_weights <- split(prices, ~period_by_business) |>
+tornqvist_weights <- split(prices, period_by_business) |>
   lapply(\(df) {
     0.5 * scale_weights(df$price * df$quantity) +
       0.5 * scale_weights(df$back_price * df$back_quantity)
@@ -112,7 +112,7 @@ generalized-mean family. Despite this, it is possible to make weights to
 represent a Fisher index as a generalized mean of any order.
 
 ```{r}
-fisher_weights <- split(prices, ~period_by_business) |>
+fisher_weights <- split(prices, period_by_business) |>
   lapply(\(df) {
     transmute_weights2(
       df$price / df$back_price,
@@ -192,7 +192,7 @@ contrib(fisher_index, "B1")
 Aggregating the elementary indexes will then consistently aggregate the contributions
 for both businesses, even though they use different methods.
 
-## Indexes based on generalized means {#sec-appendix}
+## Indexes based on generalized means
 
 ```{r}
 #| eval: false
