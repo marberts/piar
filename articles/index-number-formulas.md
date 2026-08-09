@@ -69,7 +69,7 @@ prices |>
 The Coggeshall index (equally-weighted harmonic mean of price relatives)
 is another competitor to the Jevons, but is seldom used in practice.
 Despite it being more exotic, it is just as easy to make by specifying
-an `order = -1`.
+`order = -1`.
 
 ``` r
 
@@ -116,13 +116,13 @@ superlative index-number formula, using average period-over-period value
 shares as the weights in a geometric mean. As
 [`elementary_index()`](https://marberts.github.io/piar/reference/elementary_index.md)
 makes a geometric index by default, all that is needed to make a
-Törnqvist index is the weights.
+Törnqvist index are the weights.
 
 ``` r
 
 period_by_business <- interaction(prices$period, prices$business)
 
-tornqvist_weights <- split(prices, ~period_by_business) |>
+tornqvist_weights <- split(prices, period_by_business) |>
   lapply(\(df) {
     0.5 * scale_weights(df$price * df$quantity) +
       0.5 * scale_weights(df$back_price * df$back_quantity)
@@ -148,7 +148,7 @@ represent a Fisher index as a generalized mean of any order.
 
 ``` r
 
-fisher_weights <- split(prices, ~period_by_business) |>
+fisher_weights <- split(prices, period_by_business) |>
   lapply(\(df) {
     transmute_weights2(
       df$price / df$back_price,

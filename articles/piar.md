@@ -1,4 +1,4 @@
-# Making price indexes
+# Getting started with piar
 
 Most price indexes are made with a two-step procedure, where
 period-over-period *elementary indexes* are calculated for a collection

@@ -1,5 +1,11 @@
 # Changelog
 
+## piar (development version)
+
+### Bug fixes
+
+- Tables in vignettes are now rendered correctly.
+
 ## piar 0.10.1
 
 CRAN release: 2026-07-30
