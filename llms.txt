@@ -1,5 +1,7 @@
 # Price Index Aggregation in R
 
+**Moved to [codeberg](https://codeberg.org/marberts/piar)**
+
 Most price indexes are made with a two-step procedure, where
 period-over-period *elementary indexes* are first calculated for a
 collection of *elementary aggregates* at each point in time, and then
