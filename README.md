@@ -1,4 +1,4 @@
-
+**Moved to [codeberg](https://codeberg.org/marberts/piar)**
 <!-- README.md is generated from README.Rmd. Please edit that file. -->
 
 # Price Index Aggregation in R <a href="https://marberts.github.io/piar/"><img src="man/figures/logo.png" align="right" height="139" alt="piar website" /></a>
